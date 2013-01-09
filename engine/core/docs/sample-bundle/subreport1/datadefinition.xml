@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-definition xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/data/1.0">
+  <!--
+   The data-definition section contains the connection to the data-sources as well as the functions
+   and parameters used by this report.
+
+   If this report is a master-report, then all parameters from the global "parameter.xml" file will be
+   available as data-sources here.
+
+   If this report is a subreport, then all parameters that can be accepted by this report must be listed
+   here as import- and export-parameters. For subreports no parameter-validator will be used.
+   never be used to generate parameter-input pages for end-users. If any of these parameters should be
+   queried from an user-frontend, then the parent-reports have to pass this parameter through.
+   -->
+
+  <parameter-mapping>
+    <!-- For subreports, the parameter type is not enforced. It is a design time property. -->
+    <input-parameter name="parameter" alias=""/>
+    <export-parameter name="parameter" alias=""/>
+  </parameter-mapping>
+
+  <data-source report-query="default" limit="50"/>
+
+  <expression/>
+</data-definition>

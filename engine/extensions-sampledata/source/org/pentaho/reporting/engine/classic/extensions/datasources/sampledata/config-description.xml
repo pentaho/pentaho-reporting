@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.sampledata.data-factories.namespace.sampledata" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.sampledata.data-factories.namespace.xpath" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.sampledata.data-factories.tag.sampledata.sampledata-datasource" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.sample-datafactory.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.sampledata" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.sampledata" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+
+</config-description>

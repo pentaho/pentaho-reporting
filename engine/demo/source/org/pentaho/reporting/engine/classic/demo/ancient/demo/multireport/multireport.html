@@ -1,0 +1,208 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Multireport demo</title>
+</head>
+
+<body>
+<h2>Printing multiple tables</h2>
+
+<p>
+  This demo introduces the JoiningTableModel and shows how to use this class
+  to print reports with multiple table models.
+</p>
+
+<h3>The JoiningTableModel</h3>
+
+<p>
+  We use the JoiningTableModel to join both tablemodels. That
+  tablemodel behaves like a primitive version of an SQL-Union
+  operation.
+</p>
+
+<p>
+  The Joining Tablemodel combines two independent Tables into
+  one large tablemodel. The resulting tablemodel contains all
+  columns of the both models and an additional column called
+  'TablePrefix'. The column namess of the original table models
+  are preceeded by the value stored in the TablePrefix column.
+</p>
+
+<p>
+  Assume we have the following table models:
+</p>
+
+<p>
+  <code>TableModel modelA = new DefaultTableModel();</code>
+  Contents:
+</p>
+<table border="1">
+  <tr>
+    <th>T1C1</th>
+    <th>T1C2</th>
+  </tr>
+  <tr>
+    <td>A</td>
+    <td>B</td>
+  </tr>
+  <tr>
+    <td>C</td>
+    <td>D</td>
+  </tr>
+</table>
+<p>
+  <code>TableModel modelB = new DefaultTableModel();</code>
+  Contents:
+</p>
+<table border="1">
+  <tr>
+    <th>T2C1</th>
+    <th>T2C2</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>4</td>
+  </tr>
+</table>
+<p>
+  We join the tablemodels with the following code:
+  <pre>
+    JoinedTableModel joinedTable = new JoinedTableModel();
+    joinedTable.add ("t_1", modelA);
+    joinedTable.add ("t_2", modelB);
+  </pre>
+</p>
+
+<p>
+  The resulting tablemodel contents will be:
+</p>
+<table border="1">
+  <tr>
+    <th>TablePrefix</th>
+    <th>t_1.T1C1</th>
+    <th>t_1.T1C2</th>
+    <th>t_2.T2C1</th>
+    <th>t_2.T2C2</th>
+  </tr>
+  <tr>
+    <td>t_1</td>
+    <td>A</td>
+    <td>B</td>
+    <td>-</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>t_1</td>
+    <td>C</td>
+    <td>D</td>
+    <td>-</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>t_2</td>
+    <td>-</td>
+    <td>-</td>
+    <td>1</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>t_2</td>
+    <td>-</td>
+    <td>-</td>
+    <td>3</td>
+    <td>4</td>
+  </tr>
+</table>
+
+<h3>General Structure</h3>
+
+<p>
+  When printing the report we have to alter the visibility of
+  those bands, which should not be printed for the current
+  row type.
+</p>
+
+<p>
+  For that task, we add a function, that preforms that task for
+  us. To make things easier for the function and to increase
+  maintainability of the report definition, we put all elements
+  for a certain row type into separate bands. The
+  <code>HideElementByNameFunction</code> we use to alter the
+  bands visiblities expects the name of the band, that should be changed by
+  the function, to match the contents of the "TablePrefix" column.
+</p>
+
+<p>
+  We added one function for every record type. The record types
+  used are 'fruit' for the fruit table data and 'color' for the
+  color table.
+  <pre>
+    &lt;function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction"
+    name="hideColors"&gt;
+    &lt;properties&gt;
+    &lt;property name="element"&gt;color&lt;/property&gt;
+    &lt;property name="field"&gt;TablePrefix&lt;/property&gt;
+    &lt;/properties&gt;
+    &lt;/function&gt;
+
+    &lt;function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction"
+    name="hideFruits"&gt;
+    &lt;properties&gt;
+    &lt;property name="element"&gt;fruit&lt;/property&gt;
+    &lt;property name="field"&gt;TablePrefix&lt;/property&gt;
+    &lt;/properties&gt;
+    &lt;/function&gt;
+  </pre>
+</p>
+
+<p>
+  When comparing the combined report agains the single reports,
+  you will notice that all table column references have the name
+  of the table (as specified in the JoinedTableModel.add(..)
+  method) added as prefix to the column name.
+</p>
+
+<h3>Groups</h3>
+
+<p>
+  To separate the two reports, we introduce a group level
+  that separates the reports by it's "TablePrefix" column.
+</p>
+
+<p>
+  That top-level group only has an empty Group-header which
+  is used to force a pagebreak between the two reports.
+</p>
+
+<p>
+  Within the invoice and advertising reports, all group field
+  definitions have been extended to contain the "TablePrefix"
+  column as group column.
+</p>
+
+<p>
+  To get a defined order of the reports, the joined version of
+  the advertising report needs to add all fields from the deepest
+  group of the invoice report. Technically, the advertising
+  report is now a child report of the invoice report. As the
+  HideElementByNameFunction hides the invoice report contents
+  whenever 'Advertising' contents are printed, that dependency
+  is hidden and has no visual representation to the user.
+</p>
+
+<h3>Note</h3>
+
+<p>
+  Although the report definition is split into separate files, this is no
+  requirement to generate this kind of reports. The separate files are used
+  only for the purpose to mirror the logically separation on a physical level.
+</p>
+</body>
+</html>

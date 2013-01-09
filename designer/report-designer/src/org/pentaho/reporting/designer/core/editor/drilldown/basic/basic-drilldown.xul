@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<!--
+  ~ This library is free software; you can redistribute it and/or
+  ~ modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either
+  ~ version 2.1 of the License, or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  ~ Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public
+  ~ License along with this library; if not, write to the Free Software
+  ~ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  ~
+  ~ Copyright 2009 Pentaho Corporation.  All rights reserved.
+  -->
+
+<dialog
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:pen="http://www.pentaho.org/2008/xul"
+    resizable="true">
+  <vbox flex="1" id="root">
+    <label value="Warning: This is a Generic Editor as no suitable drill-down editor was found. Only manual parameter are available."/>
+    <label value="Path:"/>
+    <textbox id="path" />
+
+    <hbox id="tooltip-and-target-panel">
+      <vbox flex="1">
+        <label value="Target:"/>
+        <pen:formula-field id="link-target">
+          <listitem value=""/>
+          <listitem value="=&quot;_TOP&quot;"/>
+          <listitem value="=&quot;_BLANK&quot;"/>
+          <listitem value="=&quot;_PARENT&quot;"/>
+        </pen:formula-field>
+      </vbox>
+      <vbox flex="1">
+        <label value="Tooltip:"/>
+        <pen:formula-field id="link-tooltip"/>
+      </vbox>
+    </hbox>
+    
+    <pen:parameter-table id="parameter-table" flex="1" pen:title="Parameter:"
+                         pen:showRefreshButton="false" pen:allowCustomParameter="true"
+                         pen:singleTabMode="true" pen:showHideParameterUiCheckbox="false"/>
+<!--
+    <label value="Preview"/>
+    <textbox id="preview" disabled="true" />
+    -->
+  </vbox>
+</dialog>

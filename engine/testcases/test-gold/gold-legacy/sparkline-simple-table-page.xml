@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="11">
+    <cols>
+      <column width="300"/>
+      <column width="40"/>
+      <column width="111"/>
+    </cols>
+    <row height="25">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="306.09" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="0.0" y="0.0" width="306.09" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <inline type="InlineRenderBox" x="0.0" y="0.0" width="204.43" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar as inline graphics using formula:"/>
+              <text x="0.0" y="0.0" width="41.67" height="10.0">Sparkline</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="44.44" y="0.0" width="14.45" height="10.0">bar</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="61.66" y="0.0" width="10.56" height="10.0">as</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="74.99" y="0.0" width="23.34" height="10.0">inline</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="101.1" y="0.0" width="37.79" height="10.0">graphics</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="141.66" y="0.0" width="23.9" height="10.0">using</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="168.33" y="0.0" width="36.1" height="10.0">formula:</text>
+            </inline>
+            <replaced-content x="204.43" y="0.0" width="40.0" height="10.0" source="null" content-width="0.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline"/>
+            </replaced-content>
+            <inline type="InlineRenderBox" x="244.43" y="0.0" width="61.66" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sales Volume"/>
+              <text x="244.43" y="0.0" width="25.0" height="10.0">Sales</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="272.2" y="0.0" width="33.89" height="10.0">Volume</text>
+            </inline>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="5">
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar as positioned field using formula:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="30.0" width="207.2" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="30.0" width="41.67" height="10.0">Sparkline</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="44.44" y="30.0" width="14.45" height="10.0">bar</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="61.66" y="30.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="74.99" y="30.0" width="45.57" height="10.0">positioned</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="123.33" y="30.0" width="18.33" height="10.0">field</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="144.43" y="30.0" width="23.9" height="10.0">using</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="171.1" y="30.0" width="36.1" height="10.0">formula:</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+    </row>
+    <row height="5">
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline line as positioned field using formula:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="50.0" width="208.31" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="50.0" width="41.67" height="10.0">Sparkline</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="44.44" y="50.0" width="15.56" height="10.0">line</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="62.77" y="50.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="76.1" y="50.0" width="45.57" height="10.0">positioned</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="124.44" y="50.0" width="18.33" height="10.0">field</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="145.54" y="50.0" width="23.9" height="10.0">using</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="172.21" y="50.0" width="36.1" height="10.0">formula:</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline2"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+    </row>
+    <row height="5">
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar changing styles:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="70.0" width="133.33" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="70.0" width="41.67" height="10.0">Sparkline</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="44.44" y="70.0" width="14.45" height="10.0">bar</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="61.66" y="70.0" width="40.58" height="10.0">changing</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="105.01" y="70.0" width="28.32" height="10.0">styles:</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline3"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="40">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="578">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

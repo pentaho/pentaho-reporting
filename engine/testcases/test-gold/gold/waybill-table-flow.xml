@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="2">
+    <cols>
+      <column width="117"/>
+      <column width="351"/>
+    </cols>
+    <row height="15">
+      <empty-cell border-top-color="#c8f1ec" border-top-width="1.0" border-top-style="solid" border-left-color="#c8f1ec" border-left-width="1.0" border-left-style="solid" border-bottom-color="#00c2b0" border-bottom-width="1.0" border-bottom-style="solid" background-color="#c8f1ec">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Container Group"/>
+      </empty-cell>
+      <empty-cell border-top-color="#c8f1ec" border-top-width="1.0" border-top-style="solid" border-bottom-color="#00c2b0" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#c8f1ec" border-right-width="1.0" border-right-style="solid" background-color="#c8f1ec">
+      </empty-cell>
+    </row>
+    <row height="15">
+      <cell border-top-color="#c8f1ec" border-top-width="1.0" border-top-style="solid" border-left-color="#c8f1ec" border-left-width="1.0" border-left-style="solid" border-bottom-color="#00c2b0" border-bottom-width="1.0" border-bottom-style="solid" background-color="#c8f1ec" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total Weight:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="15.0" width="70.62" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="15.0" width="26.652" height="12.0">Total</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="29.976" y="15.0" width="40.644" height="12.0">Weight:</text>
+        </line>
+      </cell>
+      <cell border-top-color="#c8f1ec" border-top-width="1.0" border-top-style="solid" border-bottom-color="#00c2b0" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#c8f1ec" border-right-width="1.0" border-right-style="solid" background-color="#c8f1ec" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="weightTotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00 kg"/>
+        <line type="ParagraphPoolBox" x="117.0" y="15.0" width="39.336" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="117.0" y="15.0" width="23.34" height="12.0">0.00</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="143.664" y="15.0" width="12.672" height="12.0">kg</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

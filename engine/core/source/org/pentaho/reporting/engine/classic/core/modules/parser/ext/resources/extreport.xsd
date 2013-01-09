@@ -1,0 +1,1174 @@
+<xsd:schema version="0.89"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the Extended-Report-Definition format.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:simpleType name="orientation-type">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="portrait"/>
+      <xsd:enumeration value="landscape"/>
+      <xsd:enumeration value="reverse_landscape"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:simpleType name="pageformat-type">
+    <xsd:restriction base="xsd:NMTOKEN">
+      <xsd:enumeration value="PAPER10X11"/>
+      <xsd:enumeration value="PAPER10X13"/>
+      <xsd:enumeration value="PAPER10X14"/>
+      <xsd:enumeration value="PAPER12X11"/>
+      <xsd:enumeration value="PAPER15X11"/>
+      <xsd:enumeration value="PAPER7X9"/>
+      <xsd:enumeration value="PAPER8X10"/>
+      <xsd:enumeration value="PAPER10X11"/>
+      <xsd:enumeration value="PAPER10X11"/>
+      <xsd:enumeration value="PAPER9X11"/>
+      <xsd:enumeration value="PAPER9X12"/>
+      <xsd:enumeration value="A0"/>
+      <xsd:enumeration value="A1"/>
+      <xsd:enumeration value="A2"/>
+      <xsd:enumeration value="A3"/>
+      <xsd:enumeration value="A3_TRANSVERSE"/>
+      <xsd:enumeration value="A3_EXTRA"/>
+      <xsd:enumeration value="A3_EXTRATRANSVERSE"/>
+      <xsd:enumeration value="A3_ROTATED"/>
+      <xsd:enumeration value="A4"/>
+      <xsd:enumeration value="A4_TRANSVERSE"/>
+      <xsd:enumeration value="A4_EXTRA"/>
+      <xsd:enumeration value="A4_PLUS"/>
+      <xsd:enumeration value="A4_ROTATED"/>
+      <xsd:enumeration value="A4_SMALL"/>
+      <xsd:enumeration value="A5"/>
+      <xsd:enumeration value="A5_TRANSVERSE"/>
+      <xsd:enumeration value="A5_EXTRA"/>
+      <xsd:enumeration value="A5_ROTATED"/>
+      <xsd:enumeration value="A6"/>
+      <xsd:enumeration value="A6_ROTATED"/>
+      <xsd:enumeration value="A7"/>
+      <xsd:enumeration value="A8"/>
+      <xsd:enumeration value="A9"/>
+      <xsd:enumeration value="A10"/>
+      <xsd:enumeration value="ANSIC"/>
+      <xsd:enumeration value="ANSID"/>
+      <xsd:enumeration value="ANSIE"/>
+      <xsd:enumeration value="ARCHA"/>
+      <xsd:enumeration value="ARCHB"/>
+      <xsd:enumeration value="ARCHC"/>
+      <xsd:enumeration value="ARCHD"/>
+      <xsd:enumeration value="ARCHE"/>
+      <xsd:enumeration value="B0"/>
+      <xsd:enumeration value="B1"/>
+      <xsd:enumeration value="B2"/>
+      <xsd:enumeration value="B3"/>
+      <xsd:enumeration value="B4"/>
+      <xsd:enumeration value="B4_ROTATED"/>
+      <xsd:enumeration value="B5"/>
+      <xsd:enumeration value="B5_TRANSVERSE"/>
+      <xsd:enumeration value="B5_ROTATED"/>
+      <xsd:enumeration value="B6"/>
+      <xsd:enumeration value="B6_ROTATED"/>
+      <xsd:enumeration value="B7"/>
+      <xsd:enumeration value="B8"/>
+      <xsd:enumeration value="B9"/>
+      <xsd:enumeration value="B10"/>
+      <xsd:enumeration value="C4"/>
+      <xsd:enumeration value="C5"/>
+      <xsd:enumeration value="C6"/>
+      <xsd:enumeration value="COMM10"/>
+      <xsd:enumeration value="DL"/>
+      <xsd:enumeration value="DOUBLEPOSTCARD"/>
+      <xsd:enumeration value="DOUBLEPOSTCARD_ROTATED"/>
+      <xsd:enumeration value="ENV9"/>
+      <xsd:enumeration value="ENV10"/>
+      <xsd:enumeration value="ENV11"/>
+      <xsd:enumeration value="ENV12"/>
+      <xsd:enumeration value="ENV14"/>
+      <xsd:enumeration value="ENVC0"/>
+      <xsd:enumeration value="ENVC1"/>
+      <xsd:enumeration value="ENVC2"/>
+      <xsd:enumeration value="ENVC3"/>
+      <xsd:enumeration value="ENVC4"/>
+      <xsd:enumeration value="ENVC5"/>
+      <xsd:enumeration value="ENVC6"/>
+      <xsd:enumeration value="ENVC65"/>
+      <xsd:enumeration value="ENVC7"/>
+      <xsd:enumeration value="ENVCHOU3"/>
+      <xsd:enumeration value="ENVCHOU3_ROTATED"/>
+      <xsd:enumeration value="ENVCHOU4"/>
+      <xsd:enumeration value="ENVCHOU4_ROTATED"/>
+      <xsd:enumeration value="ENVDL"/>
+      <xsd:enumeration value="ENVINVITE"/>
+      <xsd:enumeration value="ENVISOB4"/>
+      <xsd:enumeration value="ENVISOB5"/>
+      <xsd:enumeration value="ENVISOB6"/>
+      <xsd:enumeration value="ENVITALIAN"/>
+      <xsd:enumeration value="ENVKAKU2"/>
+      <xsd:enumeration value="ENVKAKU2_ROTATED"/>
+      <xsd:enumeration value="ENVKAKU3"/>
+      <xsd:enumeration value="ENVKAKU3_ROTATED"/>
+      <xsd:enumeration value="ENVMONARCH"/>
+      <xsd:enumeration value="ENVPERSONAL"/>
+      <xsd:enumeration value="ENVPRC1"/>
+      <xsd:enumeration value="ENVPRC1_ROTATED"/>
+      <xsd:enumeration value="ENVPRC2"/>
+      <xsd:enumeration value="ENVPRC2_ROTATED"/>
+      <xsd:enumeration value="ENVPRC3"/>
+      <xsd:enumeration value="ENVPRC3_ROTATED"/>
+      <xsd:enumeration value="ENVPRC4"/>
+      <xsd:enumeration value="ENVPRC4_ROTATED"/>
+      <xsd:enumeration value="ENVPRC5"/>
+      <xsd:enumeration value="ENVPRC5_ROTATED"/>
+      <xsd:enumeration value="ENVPRC6"/>
+      <xsd:enumeration value="ENVPRC6_ROTATED"/>
+      <xsd:enumeration value="ENVPRC7"/>
+      <xsd:enumeration value="ENVPRC7_ROTATED"/>
+      <xsd:enumeration value="ENVPRC8"/>
+      <xsd:enumeration value="ENVPRC8_ROTATED"/>
+      <xsd:enumeration value="ENVPRC9"/>
+      <xsd:enumeration value="ENVPRC9_ROTATED"/>
+      <xsd:enumeration value="ENVPRC10"/>
+      <xsd:enumeration value="ENVPRC10_ROTATED"/>
+      <xsd:enumeration value="ENVYOU4"/>
+      <xsd:enumeration value="ENVYOU4_ROTATED"/>
+      <xsd:enumeration value="EXECUTIVE"/>
+      <xsd:enumeration value="FANFOLDUS"/>
+      <xsd:enumeration value="FANFOLDGERMAN"/>
+      <xsd:enumeration value="FANFOLDGERMANLEGAL"/>
+      <xsd:enumeration value="FOLIO"/>
+      <xsd:enumeration value="ISOB0"/>
+      <xsd:enumeration value="ISOB1"/>
+      <xsd:enumeration value="ISOB2"/>
+      <xsd:enumeration value="ISOB3"/>
+      <xsd:enumeration value="ISOB4"/>
+      <xsd:enumeration value="ISOB5"/>
+      <xsd:enumeration value="ISOB5_EXTRA"/>
+      <xsd:enumeration value="ISOB6"/>
+      <xsd:enumeration value="ISOB7"/>
+      <xsd:enumeration value="ISOB8"/>
+      <xsd:enumeration value="ISOB9"/>
+      <xsd:enumeration value="ISOB10"/>
+      <xsd:enumeration value="LEDGER"/>
+      <xsd:enumeration value="LEGAL"/>
+      <xsd:enumeration value="LEGAL_EXTRA"/>
+      <xsd:enumeration value="LETTER"/>
+      <xsd:enumeration value="LETTER_TRANSVERSE"/>
+      <xsd:enumeration value="LETTER_EXTRA"/>
+      <xsd:enumeration value="LETTER_EXTRATRANSVERSE"/>
+      <xsd:enumeration value="LETTER_PLUS"/>
+      <xsd:enumeration value="LETTER_ROTATED"/>
+      <xsd:enumeration value="LETTER_SMALL"/>
+      <xsd:enumeration value="MONARCH"/>
+      <xsd:enumeration value="NOTE"/>
+      <xsd:enumeration value="POSTCARD"/>
+      <xsd:enumeration value="POSTCARD_ROTATED"/>
+      <xsd:enumeration value="PRC16K"/>
+      <xsd:enumeration value="PRC16K_ROTATED"/>
+      <xsd:enumeration value="PRC32K"/>
+      <xsd:enumeration value="PRC32K_ROTATED"/>
+      <xsd:enumeration value="PRC32K_BIG"/>
+      <xsd:enumeration value="PRC32K_BIGROTATED"/>
+      <xsd:enumeration value="QUARTO"/>
+      <xsd:enumeration value="STATEMENT"/>
+      <xsd:enumeration value="SUPERA"/>
+      <xsd:enumeration value="SUPERB"/>
+      <xsd:enumeration value="TABLOID"/>
+      <xsd:enumeration value="TABLOIDEXTRA"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="report-definition-type">
+    <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+        <xsd:sequence maxOccurs="unbounded">
+          <xsd:element ref="parser-config" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="report-config" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="styles" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="templates" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="report-description" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="functions" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="include" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:element name="include">
+    <xsd:annotation>
+      <xsd:documentation>
+        A reference to a report definition. The definition will be parsed
+        and the rootbands defined therein will be merged with the current
+        report definition.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="src" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="functions">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains all global functions and expressions.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence maxOccurs="unbounded">
+            <xsd:element ref="expression" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="function" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="property-ref" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="property-ref">
+    <xsd:annotation>
+      <xsd:documentation>
+        A reference to a report property. This property is predefined here
+        and can be accessed as any datasource. The value defaults to null
+        if no more data is given.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="report-description">
+    <xsd:annotation>
+      <xsd:documentation>
+
+        The report description defines the visual appearance of the report, the bands
+        and elemnts that make up the resulting output.
+
+        A report constists of several elements, which are all optional:
+
+        * reportheader
+          printed at the first page
+
+        * reportfooter
+          printed on the last page
+
+        * a page header
+          Printed before any content is printed to the page.
+
+        * a page footer
+          printed, after the last content for the page is printed
+          The pagefooter is always positionated at the bottom of a page,
+          regardless how much space of the page is filled.
+
+        * one or more group definitions in the "groups" element
+          If no groups are defined, a default group is created to contain
+          all data elements of the current report.
+
+        * the item band. This is where the data rows are printed.
+          If no item band is defined, only printing the items is disabled. All
+          calculations are performed regardless of the appearance of the
+          item elements.
+
+        All bands can contain either bands or elements.
+        Defining page break properties for inner bands or elements has no effect,
+        pagebreak-before and pagebreak-after are only used for root level bands.
+
+        Bands may not define either datasources or templates.
+
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="report-header" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="report-footer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="page-header" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="page-footer" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="watermark" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="no-data-band" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="groups" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="itemband" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="expression-type">
+    <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+        <xsd:sequence>
+          <xsd:element ref="properties" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="formula" type="xsd:string" use="optional"/>
+        <xsd:attribute name="initial" type="xsd:string" use="optional"/>
+        <xsd:attribute name="class" use="optional"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:element name="function">
+    <xsd:annotation>
+      <xsd:documentation>
+        A defined function has a valid implementing class that implement
+        the org.pentaho.reporting.engine.classic.core.function.Function interface. Functions have access to the datarow and
+        can access other functions or expressions or the datasource. Functions are statefull and maintain
+        their state during the report generation. For stateless user defined computations consider using
+        an expression instead of functions, as expression are cheaper to compute and maintain when using
+        huge reports.
+
+        Function parameters are given by propery elements. For visual
+        editing, function must obey to the java-beans rules (use get*/set*
+        methods, perhaps provide beaninfo and so on)
+
+        The deplevel attribute can be used to priorize the functions. Functions with an higher depencylevel
+        are executed before any function with lower depency levels. Depencylevels lower than 0 are not allowed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="expression-type">
+          <xsd:attribute name="name" use="required"/>
+          <xsd:attribute name="deplevel" use="optional"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="expression">
+    <xsd:annotation>
+      <xsd:documentation>
+        An expression is a stateless user defined function. It can access the datarow and the reportproperties
+        to perform its task. Using the datarow an expression has access to the datasource and other functions
+        and expressions.
+
+        Expression parameters are given by propery elements. For visual
+        editing, Expressions must obey to the java-beans rules (use get*/set*
+        methods, perhaps provide beaninfo and so on)
+
+        The deplevel attribute can be used to priorize the functions. Functions with an higher depencylevel
+        are executed before any function with lower depency levels. Depencylevels lower than 0 are not allowed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="expression-type">
+          <xsd:attribute name="name" use="required"/>
+          <xsd:attribute name="deplevel" use="optional"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="style-expression">
+    <xsd:annotation>
+      <xsd:documentation>
+        A style expression can be any expression. The returned value will
+        be set as style-sheet value (if it has the correct type) or will
+        be converted into the correct type if it is a string.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="expression-type">
+          <xsd:attribute name="style-key" use="required"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="groups">
+    <xsd:annotation>
+      <xsd:documentation>
+        The tag encapsulates all groups. This tag helps to keep parsing
+        simple. If no groups are defined, a default group is created and
+        contains all elements of the report datarow
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="group" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="group">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a group. The fields element is required, as it defines the
+        group fields and therefore the position of the group within the group list.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="fields" minOccurs="1"/>
+            <xsd:element ref="group-header" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="group-footer" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+          <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="fields">
+    <xsd:annotation>
+      <xsd:documentation>
+        the name of the elements that have to change for
+        a group break.
+
+        A report group may have more than one group element.
+        A group element may only contain Strings defining the
+        names of the items which form a group. This is not
+        limited to items from the data model, you may also
+        enter functions here.
+
+        If you define a subgroup, then you'll have to include all
+        fields of the parent group and at least one new field.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="field" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="field" type="xsd:string"/>
+
+  <xsd:complexType name="band-type">
+    <xsd:complexContent>
+      <xsd:restriction base="xsd:anyType">
+        <xsd:sequence>
+          <xsd:element ref="style" minOccurs="0" maxOccurs="1"/>
+          <xsd:element ref="style-expression" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element ref="band" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="element" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="optional"/>
+      </xsd:restriction>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="root-band-type">
+    <xsd:complexContent>
+      <xsd:extension base="band-type">
+        <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="sub-report"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:element name="report-header" type="root-band-type"/>
+  <xsd:element name="report-footer" type="root-band-type"/>
+  <xsd:element name="group-header" type="root-band-type"/>
+  <xsd:element name="group-footer" type="root-band-type"/>
+  <xsd:element name="itemband" type="root-band-type"/>
+  <xsd:element name="no-data-band" type="root-band-type"/>
+  <xsd:element name="page-header" type="band-type"/>
+  <xsd:element name="page-footer" type="band-type"/>
+  <xsd:element name="watermark" type="band-type"/>
+
+  <xsd:element name="band">
+    <xsd:annotation>
+      <xsd:documentation>
+        An Band is a container element that can contain other bands or elements.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="band-type"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="element">
+    <xsd:annotation>
+      <xsd:documentation>
+        Elements are defined and selected by their content type. To create
+        a text element, the required content type is "text/plain". ShapeElements
+        are created when specifying the content type of "shape/generic".
+
+        Be carefull when defining a relative width and height, unless the parent
+        band defines a maximum size, the element will try to consume as much space
+        as possible.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="style" minOccurs="0" maxOccurs="1"/>
+            <xsd:element ref="style-expression" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:choice>
+              <xsd:element ref="template" minOccurs="0" maxOccurs="1"/>
+              <xsd:element ref="datasource" minOccurs="0" maxOccurs="1"/>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="name" type="xsd:string" use="optional"/>
+          <xsd:attribute name="type" type="xsd:string" use="required"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        The data source definition can be used to assign a datasource to the
+        element. If the datasource is a DataFilter implementation, then the
+        datasource may contain other datasources.
+
+        The datasource type is specified by the "type" attribute. The
+        attribute must be defined in the DataSourceFactory. There is no
+        reference manual for that factory yet.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="datasource" minOccurs="0" maxOccurs="1"/>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="basic-object"/>
+          <xsd:element ref="compound-object"/>
+        </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="optional"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+      <xsd:attribute name="type" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="style">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a single style sheet. If the stylesheet is defined in the styles
+        section, defining a name is mandatory, or the style sheet cannot be referenced
+        later.
+
+        Stylesheet consist of several style keys, either basic keys or compound keys.
+        The valid keys are defined by the StyleKeyFactory, the defined factories must
+        contain a description for all used keys, or the report generation will fail.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="extends" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+              <xsd:element ref="basic-key"/>
+              <xsd:element ref="compound-key"/>
+            </xsd:choice>
+          </xsd:sequence>
+          <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="extends">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a parent stylesheet for a style sheet definition. The parent is
+        provides default values for the style keys and is queried, if the requested
+        stylekey is not defined in the stylesheet.
+
+        Assigning parents allows the definition of cascading style sheets and report
+        wide style definitions.
+
+        The specified parent style sheet must be defined before it can be referenced.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="basic-key">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a basic style key. Such a key contains a basic object inside,
+        an object, that just needs a single string property to be configured.
+
+        The class parameter can be used to request the creation of a specific
+        subclass of the style key value object type. If you specify an incompatible
+        class, you'll get ClassCastExceptions during the parsing process.
+
+        The object factory is used to create the defined object, the specified
+        class must be known to the object factories. If the specified object definition
+        is no basic object, the object creation will also fail.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="compound-key">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a compound style key. Such a key contains a compound object inside,
+        an object, that needs more than a single property to be configured.
+
+        The class parameter can be used to request the creation of a specific
+        subclass of the style key value object type. If you specify an incompatible
+        class, you'll get ClassCastExceptions during the parsing process.
+
+        The object factory is used to create the defined object, the specified
+        class must be known to the object factories.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="unbounded">
+        <xsd:element ref="basic-object" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="compound-object" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="compound-object">
+    <xsd:annotation>
+      <xsd:documentation>
+        Creates a compound object. Compound objects are complex object that need
+        more than one property to be defined and can contain other objects in
+        their properties.
+
+        The defined properties for an object are specified by an object description.
+        The object description is registered in a ClassFactory, the class factory is
+        then used to lookup the object description and to create the object.
+
+        For a description of the class factories, have a look at the object-factory
+        element definition. A reference document can be generated for every object
+        factory.
+
+        The class parameter can be used to request the creation of a specific
+        subclass of the style key value object type. If you specify an incompatible
+        class, you'll get ClassCastExceptions during the parsing process.
+
+        The object factory is used to create the defined object, the specified
+        class must be known to the object factories.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="unbounded">
+        <xsd:element ref="basic-object" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="compound-object" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="basic-object">
+    <xsd:annotation>
+      <xsd:documentation>
+        Creates a basic object. Basic objects are object that just need
+        a single property to be defined and cannot contain other objects inside.
+        Basic objects are mostly used to define the primitive data objects of
+        java.lang, such as Float, Long, String etc.
+
+        The defined properties for an object are specified by an object description.
+        The object description is registered in a ClassFactory, the class factory is
+        then used to lookup the object description and to create the object.
+
+        For a description of the class factories, have a look at the object-factory
+        element definition. A reference document can be generated for every object
+        factory.
+
+        The class parameter can be used to request the creation of a specific
+        subclass of the style key value object type. If you specify an incompatible
+        class, you'll get ClassCastExceptions during the parsing process.
+
+        The object factory is used to create the defined object, the specified
+        class must be known to the object factories.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="styles">
+    <xsd:annotation>
+      <xsd:documentation>
+        The styles section can be used to predefine stylesheets, which can
+        be applied to the report elements and bands.
+
+        Stylesheets can inherit values from other style sheets, the inherited
+        style key definitions can be overridden by own style definitions.
+
+        The order of the styles definition is important. A style sheet cannot
+        be referenced, until it is defined, so parent style sheets must be defined
+        before their childs.
+
+        A global library of stylesheets can be defined using the 'include' tag.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="style" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="template">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a template. Templates are common use cases of the datasource interfaces.
+        They act as facade to hide the complex composition of datasources from the user.
+        Advanced users, who want to control every aspect of the data conversion within
+        the filter chain are free to use raw data source and data filters instead.
+
+        The templates define a set of properties for the use cases, these properties can
+        be defined using basic or compound objects.
+
+        A reference for the defined properties of the known template implementations of
+        JFreeReport can be found in the object-factory reference documents.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence maxOccurs="unbounded">
+        <xsd:element ref="basic-object" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element ref="compound-object" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="optional"/>
+      <xsd:attribute name="references" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="templates">
+    <xsd:annotation>
+      <xsd:documentation>
+        The Templates section can be used to define a common set of properties
+        for all referenced templates. This works like the inheritance of
+        stylesheet properties, but is not dynamic. Once defined, the properties
+        of the parent template are copied into the child, parents and child are
+        not connected in any way after the creation process is completed.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="template" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:element name="report-config">
+    <xsd:annotation>
+      <xsd:documentation>
+        The report config is used to define the ReportConfiguration properties
+        and the default page format for the report.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element ref="data-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:choice>
+              <xsd:element ref="simple-page-definition" minOccurs="0" maxOccurs="unbounded"/>
+              <xsd:element ref="page-definition" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:choice>
+            <xsd:element ref="configuration" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="configuration">
+    <xsd:annotation>
+      <xsd:documentation>
+        A list of all report properties that should be set for the report.
+        The report properties are defined as strings.
+
+        This configuration will be merged with any super-configuration. If
+        the report is a master report, the super-configuration will be the
+        global configuration. If the report is a sub-report, this configuration
+        will be merged with the master-report's configuration.
+
+        Settings made here override settings made in the super-configuration.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="property" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="properties">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a collection of properties (usually as parameters to an
+        expression or function).
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="property" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="parser-properties">
+    <xsd:annotation>
+      <xsd:documentation>
+        Defines a collection of parser-properties. These properties can be
+        used to fill in place-holders during the parsing.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="property" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="property">
+    <xsd:annotation>
+      <xsd:documentation>
+        A name value mapping. The value is given as CData.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType mixed="true">
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="class" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="page-definition">
+    <xsd:annotation>
+      <xsd:documentation>
+        A page-definition describes a logical page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="page" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="simple-page-definition">
+    <xsd:annotation>
+      <xsd:documentation>
+        A simple-page-definition describes a logical page, where all physical
+        pages share the same properties. The (x,y) coordinates of the enclosed
+        page element will be ignored.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence>
+            <xsd:element ref="page" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+          <xsd:attribute name="width" type="xsd:unsignedInt" use="optional"/>
+          <xsd:attribute name="height" type="xsd:unsignedInt" use="optional"/>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="page">
+    <xsd:annotation>
+      <xsd:documentation>
+        A page describes a single physical page.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="x" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="y" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="width" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="height" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="pageformat" type="pageformat-type" use="optional"/>
+      <xsd:attribute name="orientation" type="orientation-type" use="optional"/>
+      <xsd:attribute name="leftmargin" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="rightmargin" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="bottommargin" type="xsd:unsignedInt" use="optional"/>
+      <xsd:attribute name="topmargin" type="xsd:unsignedInt" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="data-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+        An data factory controlls the creation of report datasources. It is only
+        valid on master-reports and can contain the name of a query, and either
+        a reference to a XML-description of a datafactory or the classname
+        of the data-factory, that should be instantiated directly.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="type" type="xsd:string" use="optional"/>
+      <xsd:attribute name="href" type="xsd:anyURI" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:element name="element-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+        An element factory defines what report element types are available.
+        The class name given must point to a valid
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.ElementFactory
+        implementation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="stylekey-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+
+        The style key factory is used to defined style keys for element style sheets.
+        The style keys consist of various objects.
+
+        There are 2 kinds of style key definitions:
+
+        Basic Style keys:
+          - contain a single string defining the value of the style key.
+
+        Compound style keys:
+          - contain a compound object, which consists of one or more other objects.
+
+        The stylekey reference documents all known stylekeys of the base distribution.
+        The reference can be generated by calling org.pentaho.reporting.engine.classic.extensions.ReferenceDocGenerator
+
+        The class name given must point to a valid
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.StyleKeyFactory
+        implementation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="template-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+        The template factory is used to generate templates. Templates are Facade
+        implementations for the data source interface. A template defines a common
+        usecase, f.I. a label, and provides a simple beanified interface for that
+        usecase, hiding the complexity of the datasource implementation from the
+        user.
+
+        The reference for the defined templates is included in the Object-Factory
+        reference. All Template object descriptions of the base distribution are
+        defined in the class factory
+
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.TemplateClassFactory
+
+        The class name given must point to a valid
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.TemplateCollection
+        implementation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="object-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+        The object factory is used to create all data objects for the report
+        definition. Objects are described in an
+
+          org.jfree.xml.factory.objects.ObjectDescription
+
+        The system knows BasicObjectDescriptions, for objects, which only
+        have a single string property called "value" defined, and compound
+        object descriptions for complex objects which can contain other objects.
+
+        The basic object descriptions are mainly used for primitive data
+        objects, like Float, String, Long, Int etc.
+
+        A complete reference of all known object types and their defined
+        properties can be generated by calling
+        org.pentaho.reporting.engine.classic.extensions.ReferenceDocGenerator
+
+        The class name given must point to a valid
+        org.jfree.xml.factory.objects.ClassFactory implementation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="datasource-factory">
+    <xsd:annotation>
+      <xsd:documentation>
+        The DataSource factory is a specialized ObjectFactory for generating
+        org.pentaho.reporting.engine.classic.core.filter.DataSource objects.
+
+        If the data source is a DataFilter, then an other data source can be
+        stacked into it, generating a filter chain for simple data conversion.
+
+        An alternative for using DataSources is the template factory. Templates
+        define common usecases for DataSources and allow the easy configuration
+        of these usecases on a single interface.
+
+        The reference for the defined datasources is included in the Object-Factory
+        reference. All DataSource object descriptions of the base distribution are
+        defined in the class factory
+
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory
+
+        The class name given must point to a valid
+        org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DataSourceFactory
+        implementation.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="class" type="xsd:string" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="parser-config">
+    <xsd:annotation>
+      <xsd:documentation>
+        The parser config is used to configure the available factories for the
+        parser. The parser itself does not create any objects, all object
+        creation code is outsourced to the factory implementations.
+
+        The parser can handle more than one factory per type.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:restriction base="xsd:anyType">
+          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+            <xsd:element ref="element-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="stylekey-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="template-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="object-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="datasource-factory" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="parser-properties" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:restriction>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:element name="report-definition">
+    <xsd:annotation>
+      <xsd:documentation>
+        The root element for all extended report definitions. The order of the
+        child elements does matter.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="report-definition-type">
+          <xsd:attribute name="name" type="xsd:string" use="optional"/>
+          <xsd:attribute name="query" type="xsd:string" use="optional"/>
+          <xsd:attribute name="engine-version" type="xsd:string" use="optional"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="import-parameter">
+    <xsd:annotation>
+      <xsd:documentation>
+        An input parameter definition. The column specified by 'name' of the
+        master report is mapped into the subreport. If an alias is given, the
+        parameter will be mapped by that name instead by its original name.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="alias" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="export-parameter">
+    <xsd:annotation>
+      <xsd:documentation>
+        An output parameter definition. The column specified by 'name' of the
+        subreport report is exported into the master report. If an alias is
+        given, the parameter will be mapped by that name instead by its
+        original name.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="alias" type="xsd:string" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="sub-report">
+    <xsd:annotation>
+      <xsd:documentation>
+        A subreport is a report-definition that does not define an own pageformat
+        or data-factory.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="report-definition-type">
+          <xsd:sequence>
+            <xsd:element ref="import-parameter" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element ref="export-parameter" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+          <xsd:attribute name="query" type="xsd:string" use="optional"/>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

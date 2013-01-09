@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="SubReport" orientation="landscape" pageformat="A4"
+        bottommargin="72" leftmargin="72" rightmargin="72" topmargin="72">
+
+  <!--
+   This report joins both other reports, all bands defined there and all functions.
+
+   The PageHeader is defined here, so that the reports share common page headers and
+   footers.
+  -->
+
+  <!--
+  Now load the reports. Everything that is defined until now, is also available
+  in the included report; all bands, all parser configurations ..
+
+  Order does matter - which ever report is mentioned first, is also loaded first.
+  In our case it is not important, as both included reports are fully disjunct,
+  they do not touch the others bands.
+
+  We can even set parameters for the reports using the parser-config.
+  -->
+
+  <parser-config>
+    <property name="GroupBackground">#98fff4</property>
+    <property name="ItemBackground">#dafffb</property>
+  </parser-config>
+
+  <reportheader>
+    <sub-report href="subreport-test-first.xml" query="fruit"/>
+  </reportheader>
+
+  <parser-config>
+    <property name="GroupBackground">#fffb98</property>
+    <property name="ItemBackground">#f9f6b2</property>
+  </parser-config>
+
+  <reportheader>
+    <sub-report href="subreport-test-second.xml" query="color">
+      <export-parameter name="SumColorKeys" alias="item"/>
+    </sub-report>
+  </reportheader>
+
+  <reportfooter>
+    <line name="PH2" x1="0" y1="18" x2="100%" y2="18" color="#CFCFCF" weight="2.0"/>
+    <number-field x="200" y="3" width="200" height="15" fieldname="item"/>
+  </reportfooter>
+  <!--
+    <pageheader height="24" fontname="Serif" fontstyle="plain" fontsize="10" onfirstpage="true">
+      <rectangle name="PH0" x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0"/>
+      <line name="PH2" x1="0" y1="18" x2="100%" y2="18" color="#CFCFCF" weight="2.0"/>
+      <date-field x="50%" y="0" width="50%" height="100%" vertical-alignment="middle" alignment="right" format="d-MMM-yyyy" fieldname="report.date"/>
+    </pageheader>
+
+    <pagefooter height="24">
+      <rectangle name="PF0" x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0" draw="false" fill="true"/>
+      <line x1="0" y1="0" x2="100%" y2="0" weight="0.5"/>
+      <string-field fieldname="pageXofY" x="0" y="4" width="100%" height="100%" alignment="right" vertical-alignment="middle"/>
+    </pagefooter>
+  -->
+  <functions>
+    <property-ref name="report.date"/>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction" name="pageXofY"/>
+    <expression name="itemsum" class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction">
+      <properties>
+        <property name="field">item</property>
+      </properties>
+    </expression>
+  </functions>
+  <!--
+    <functions>
+      <expression name="monitor" class="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction">
+        <properties>
+          <property name="deepTraversing">true</property>
+        </properties>
+      </expression>
+    </functions>
+  -->
+</report>

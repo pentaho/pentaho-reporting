@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Quadrant For Region" orientation="portrait" pageformat="LETTER"
+    topmargin="36" leftmargin="36" bottommargin="36" rightmargin="36"
+    query="default">
+
+  <data-factory href="sql-datasource.sqlds"/>
+
+
+  <reportheader>
+    <rectangle x="0" y="0" width="100%" height="50"
+               color="#0000CC" fill="true" draw="false"/>
+    <label x="0" y="0" width="100%" height="50" fontname="Arial" color="white"
+            vertical-alignment="middle" alignment="center"
+           fontsize="18" fontstyle="bold">Exciting Quadrant Data</label>
+  </reportheader>
+
+  <!--
+  <pageheader height="32" onfirstpage="true" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <message-field x="0" y="0" width="100%" height="20" alignment="center">Region: $(REGION)</message-field>
+  </pageheader>
+
+  <pagefooter height="24" onfirstpage="true" onlastpage="true" fontname="Serif" fontstyle="plain" fontsize="9">
+    <line x1="0" y1="0" x2="100%" y2="0" weight="0.5"/>
+    <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="4" width="25%" height="18" alignment="left"/>
+    <message-field x="75%" y="4" width="25%" height="18" alignment="right">$(page) / $(pages)</message-field>
+  </pagefooter>
+ -->
+
+  <groups>
+    <group name="RegionGroup">
+      <fields>
+        <field>REGION</field>
+      </fields>
+      <groupheader fontname="Arial" fontsize="18" fontstyle="bold">
+        <string-field x="0" y="0" width="310" height="23" fieldname="REGION" color="#009999"/>
+      </groupheader>
+      <groupfooter fontname="Arial" fontsize="12" fontstyle="bold" pagebreak-after-print="true" >
+        <rectangle x="0" y="0" width="100%" height="100%" color="#009999" draw="false" fill="true"/>
+        <message-field x="0" y="0" width="246" height="15" color="white">$(REGION) Total</message-field>
+        <number-field x="246" y="0" width="98" height="15" fieldname="RegionActual" format="$#,##0" alignment="right" />
+        <number-field x="344" y="0" width="98" height="15" fieldname="RegionBudget" format="$#,##0" alignment="right" />
+        <number-field name="Variance Region Field" x="442" y="0" width="98" height="15" fieldname="RegionVariance" format="$#,##0" alignment="right">
+          <style-expression style-key="paint" formula="report:IF([RegionVariance] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+        </number-field>
+      </groupfooter>
+    </group>
+
+    <group name="DepartmentGroup">
+      <fields>
+        <field>REGION</field>
+        <field>DEPARTMENT</field>
+      </fields>
+      <groupheader fontname="Arial" fontsize="11" fontstyle="bold">
+        <rectangle x="0" y="0" width="100%" height="100%" color="#FF6600" draw="false" fill="true"/>
+        <message-field x="0" y="4" width="100%" height="18" color="white" fontsize="12">Department: $(DEPARTMENT)</message-field>
+        <label x="19" y="25" width="227" height="14">Position</label>
+        <label x="246" y="25" width="98" height="14">Actual</label>
+        <label x="344" y="25" width="98" height="14">Budget</label>
+        <label x="442" y="25" width="98" height="14">Variance</label>
+      </groupheader>
+      <!--
+      By specifiying a band height that is greater than the used size, we
+      enforce some empty space between the groups.
+      -->
+      <groupfooter fontname="Arial" fontsize="11" fontstyle="bold" height="24">
+        <rectangle x="19" y="0" width="100%" height="14" color="#66FF66" fill="true"/>
+        <label x="19" y="0" width="227" height="14">Total</label>
+        <number-field x="246" y="0" width="98" height="14" fieldname="DepartmentActual" format="$#,##0" alignment="right" />
+        <number-field x="344" y="0" width="98" height="14" fieldname="DepartmentBudget" format="$#,##0" alignment="right" />
+        <number-field name="Variance Department Field" x="442" y="0" width="98" height="14" fieldname="DepartmentVariance" format="$#,##0" alignment="right">
+          <style-expression style-key="paint" formula="report:IF([DepartmentVariance] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+        </number-field>
+      </groupfooter>
+    </group>
+  </groups>
+
+  <!-- This is what is called 'detail' in JasperReports -->
+  <items fontname="Arial" fontsize="10">
+    <string-field x="19" y="0" width="227" height="12" fieldname="POSITIONTITLE"/>
+    <number-field x="246" y="0" width="98" height="12" fieldname="ACTUAL" format="$#,##0" alignment="right" />
+    <number-field x="344" y="0" width="98" height="12" fieldname="BUDGET" format="$#,##0" alignment="right" />
+    <number-field name="Variance Field" x="442" y="0" width="98" height="12" fieldname="VARIANCE" format="$#,##0" alignment="right">
+      <style-expression style-key="paint" formula="report:IF([VARIANCE] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+    </number-field>
+  </items>
+
+  <functions>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="RegionActual">
+      <properties>
+        <property name="field">ACTUAL</property>
+        <property name="group">RegionGroup</property>
+      </properties>
+    </expression>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="RegionBudget">
+      <properties>
+        <property name="field">BUDGET</property>
+        <property name="group">RegionGroup</property>
+      </properties>
+    </expression>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="RegionVariance">
+      <properties>
+        <property name="field">VARIANCE</property>
+        <property name="group">RegionGroup</property>
+      </properties>
+    </expression>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="DepartmentActual">
+      <properties>
+        <property name="field">ACTUAL</property>
+        <property name="group">DepartmentGroup</property>
+      </properties>
+    </expression>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="DepartmentBudget">
+      <properties>
+        <property name="field">BUDGET</property>
+        <property name="group">DepartmentGroup</property>
+      </properties>
+    </expression>
+
+    <expression class="org.jfree.report.function.ItemSumFunction"
+                name="DepartmentVariance">
+      <properties>
+        <property name="field">VARIANCE</property>
+        <property name="group">DepartmentGroup</property>
+      </properties>
+    </expression>
+
+    <property-ref name="report.date"/>
+    <expression name="page" class="org.jfree.report.function.PageFunction"/>
+    <expression name="pages" class="org.jfree.report.function.PageTotalFunction"/>
+  </functions>
+</report>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="1">
+    <cols>
+      <column width="555"/>
+    </cols>
+    <row height="802">
+      <empty-cell>
+      </empty-cell>
+    </row>
+  </table>
+</layout-output>

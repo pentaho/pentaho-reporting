@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+
+  <groups>
+    <!-- This grouping allows to print multiple invoices in one report ... -->
+    <!-- This is the second report, therefore it has to include *all*
+         group fields from the first report. This way we get a linear
+         order of the groups
+     -->
+    <group name="Advertising">
+      <fields>
+        <field>TablePrefix</field>
+        <field>ad.advertise</field>
+        <field>invoice.invoice</field>
+        <field>dummy-field</field>
+      </fields>
+
+      <groupheader layout-cachable="false">
+        <band name="ad" fontname="SansSerif" fontstyle="plain" fontsize="11" height="375">
+          <!-- Who we are ... -->
+          <label name="ShopAddress1" x="0" y="12" width="200" height="12"
+                 alignment="left">Sparky's Computer Store</label>
+          <label name="ShopAddress2" x="0" y="24" width="200" height="12" alignment="left">332 Umbrella Drive</label>
+          <label name="ShopAddress3" x="0" y="48" width="200" height="12" alignment="left">12345 AnyTown</label>
+          <!--
+          Put your logo here, if wanted. Uses WMF, JPG, GIF or PNG files as source
+          Create a usefull logo before 0.8.5 is fully released ...
+          <imageref x="200" y="48" width="100" height="90" src="anim0002.wmf" name="logo" dynamic="false" scale="true" keepAspectRatio="false"/>
+          -->
+          <message-field name="customer.nameExpression"
+                         x="0" y="84" width="200" height="12" alignment="left"
+              >$("ad.customer.firstName") $("ad.customer.lastName")</message-field>
+          <string-field name="customer.street" fieldname="ad.customer.street"
+                        x="0" y="96" width="200" height="12" alignment="left"/>
+          <message-field name="customer.townExpression"
+                         x="0" y="120" width="200" height="12" alignment="left"
+              >$("ad.customer.postalCode") $("ad.customer.country")</message-field>
+          <message-field name="invoice.subject"
+                         x="0" y="224" width="75%" height="12" alignment="left" fontstyle="plain"
+              >Special Offers #$("ad.ad.number")</message-field>
+          <message-field name="invoice.date"
+                         x="75%" y="224" width="25%" height="12" alignment="right" fontstyle="plain"
+              >$("ad.ad.date",date,"yyyy-MM-dd")</message-field>
+
+          <message-field name="customer.salutationExpression"
+                         x="0" y="290" width="450" height="12" alignment="left" fontstyle="plain" fontsize="11"
+              >Dear $("ad.customer.salutation") $("ad.customer.lastName")</message-field>
+
+          <label name="Received" x="0" y="314" width="450" height="24" alignment="left"
+              >This week our sales people must be crazy! We cut our own throat by offering you these valuable bargains:</label>
+
+          <!-- The table header for the invoice ... -->
+          <label name="article.number" x="0" y="350" width="60" height="12" alignment="left">Product code</label>
+          <label name="article.name" x="60" y="350" width="190" height="12" alignment="left">Product</label>
+          <label name="article.count" x="250" y="350" width="50" height="12" alignment="left">Old Price</label>
+          <label name="article.price" x="325" y="350" width="50" height="12" alignment="left">Reduced Price</label>
+          <label name="article.total" x="400" y="350" width="50" height="12" alignment="left">You'll Save ...</label>
+
+          <line name="line.end" x1="0" y1="365" x2="0" y2="365" weight="0.5"/>
+        </band>
+      </groupheader>
+
+      <groupfooter layout-cachable="false">
+        <band name="ad" fontname="SansSerif" fontstyle="plain" fontsize="11">
+
+          <label x="0" y="24" width="100%" height="0" alignment="left" dynamic="true" vertical-alignment="top"
+              >Order today and you'll get a free copy of
+'Lies, Bribes and Dirty Tricks - Marketing in the 21st and a half century'
+by Duck Dodgers, the current #1 Best-Seller author.
+
+Yours sincerely,
+
+John W. Doe, Salesman</label>
+        </band>
+      </groupfooter>
+    </group>
+  </groups>
+
+  <items layout-cachable="false">
+    <band name="ad">
+      <string-field x="0" y="0" width="50" height="12" fieldname="ad.article.number"/>
+      <string-field x="60" y="0" width="190" height="12" fieldname="ad.article.name"/>
+      <number-field x="250" y="0" width="75" height="12" format="'$' #,##0.00" fieldname="ad.article.price"/>
+      <number-field x="325" y="0" width="75" height="12" format="'$' #,##0.00" fieldname="ad.article.reducedPrice"/>
+      <number-field x="400" y="0" width="70" height="12" format="##0.00%" fieldname="saved"/>
+      <!-- the name will be referenced in the hide function to lookup this element -->
+      <string-field name="ad.details" x="70" y="12" fsitalic="true" width="230" height="0"
+                    dynamic="true" trim-text-content="true" fieldname="ad.article.details">
+        <style-expression style-key="visible" formula="=NOT(ISEMPTY([ad.article.details]))"/>
+      </string-field>
+    </band>
+  </items>
+
+  <functions>
+    <function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction" name="hideAd">
+      <properties>
+        <property name="element">ad</property>
+        <property name="field">TablePrefix</property>
+      </properties>
+    </function>
+    <property-ref name="report.date"/>
+    <expression name="saved" class="org.pentaho.reporting.engine.classic.core.function.PercentageExpression">
+      <properties>
+        <property name="dividend">ad.article.price</property>
+        <property name="divisor">ad.article.reducedPrice</property>
+        <property name="useDifference">true</property>
+      </properties>
+    </expression>
+  </functions>
+
+</report>

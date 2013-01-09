@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<report name="label report" pageformat="A4"
+        xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        orientation="portrait" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+  <reportheader color="#000000" fontname="SansSerif" fontsize="12" fontstyle="plain">
+    <line name="line-green" color="green" weight="2" width="100%" x1="0%" x2="100%" y1="1" y2="1" />
+    <line name="line-red" color="red" weight="0.5" width="100%" x1="0%" x2="100%" y1="3" y2="3" />
+    <band name="band" x="0" y="9">
+      <message-field name="message" vertical-alignment="middle" alignment="right" height="14" width="100%" x="0" y="0">Test</message-field>
+    </band>
+    <line name="line-blue" color="blue" weight="0.5" x1="0%" x2="100%" y1="56" y2="56" />
+    <line name="line-yellow" color="yellow" weight="2" x1="0%" x2="100%" y1="58" y2="58" />
+  </reportheader>
+</report>

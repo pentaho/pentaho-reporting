@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="6">
+    <cols>
+      <column width="234"/>
+      <column width="234"/>
+    </cols>
+    <row height="18">
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="PH0"/>
+      </empty-cell>
+      <cell background-color="#afafaf" row-span="2" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="d-MMM-yyyy"/>
+        <line type="ParagraphPoolBox" x="417.99" y="7.0" width="50.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="417.99" y="7.0" width="50.01" height="10.0">7-Apr-2011</text>
+        </line>
+      </cell>
+    </row>
+    <row height="6">
+      <empty-cell border-top-color="#cfcfcf" border-top-width="2.0" border-top-style="solid" background-color="#afafaf">
+      </empty-cell>
+      <spanned-cell/>
+    </row>
+    <row height="600">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="4">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="PF0"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#afafaf">
+      </empty-cell>
+    </row>
+    <row height="20">
+      <cell row-span="2" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="pageXofY"/>
+        <line type="ParagraphPoolBox" x="416.9" y="635.0" width="51.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="416.9" y="635.0" width="23.34" height="10.0">Page</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="443.01" y="635.0" width="5.56" height="10.0">1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="451.34" y="635.0" width="8.33" height="10.0">of</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="462.44" y="635.0" width="5.56" height="10.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="4">
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+  </table>
+</layout-output>

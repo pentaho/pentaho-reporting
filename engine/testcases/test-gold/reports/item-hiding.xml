@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Hide Items Demo" pageformat="A4"
+    topmargin="70" leftmargin="70" bottommargin="70" rightmargin="70">
+
+  <!-- REPORT HEADER -->
+  <reportheader height="144" fontname="SansSerif" fontstyle="bold" fontsize="18">
+    <label x="0" y="0" width="100%" height="20" alignment="center">Sample Report Two B</label>
+    <label x="0" y="24" width="100%" height="10" fontsize="10" alignment="center">Demonstrate the ItemHideFunction on the Color Element</label>
+  </reportheader>
+
+  <!-- REPORT FOOTER -->
+  <reportfooter height="24" fontname="SansSerif" fontstyle="bold" fontsize="10">
+    <label x="0" y="0" width="100%" height="20" alignment="center">END OF REPORT</label>
+  </reportfooter>
+
+  <!-- PAGE HEADER -->
+  <pageheader height="32" onfirstpage="false" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <label x="0" y="0" width="100%" height="20" alignment="center">PAGE HEADER</label>
+  </pageheader>
+
+  <!-- PAGE FOOTER -->
+  <pagefooter height="24" onfirstpage="true" onlastpage="true" fontname="Serif" fontstyle="italic" fontsize="9">
+    <line x1="0" y1="4" x2="100%" y2="4" weight="0.5"/>
+    <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="4" width="100" height="18" alignment="left"/>
+    <number-field fieldname="PageNumber" format="Page 0" x="50%" y="4" width="100%" height="18" alignment="right"/>
+  </pagefooter>
+
+  <!-- GROUPS -->
+  <groups>
+
+    <!-- FIRST GROUP -->
+    <group name="Letter Group">
+      <!-- GROUP FIELDS -->
+      <fields>
+        <field>Letter</field>
+      </fields>
+
+      <!-- GROUP HEADER -->
+      <groupheader height="20" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="1" width="120" height="9" alignment="left">LETTER GROUP:</label>
+        <string-field x="120" y="1" width="76" height="9" alignment="left" fieldname="Letter"/>
+        <line x1="0" y1="12" x2="100%" y2="12" weight="0.25"/>
+        <line x1="0" y1="14" x2="100%" y2="14" weight="0.25"/>
+      </groupheader>
+
+      <!-- GROUP FOOTER -->
+      <groupfooter height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="0" width="270" height="12" alignment="left">Total for letter:</label>
+        <number-field fieldname="Sum2" format="#,##0.00" x="276" y="0" width="176" height="12" alignment="right"/>
+      </groupfooter>
+
+    </group>
+
+  </groups>
+
+  <!-- ITEMS -->
+  <items height="10" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <string-field x="0" y="0" width="140" height="8" alignment="left" fieldname="Name"/>
+    <number-field x="140" y="0" width="40" height="8" alignment="right" format="0" fieldname="Count1"/>
+    <string-field x="210" y="0" width="60" height="8" alignment="left" fieldname="Letter"/>
+    <string-field name="Color Element" x="280" y="0" width="56" height="8" alignment="left" fieldname="Color" />
+    <number-field x="340" y="0" width="46" height="8" alignment="right" format="#,##0" fieldname="Integer"/>
+    <number-field x="390" y="0" width="46" height="8" alignment="right" format="#,##0.00" fieldname="Double"/>
+  </items>
+
+  <!-- FUNCTIONS -->
+  <functions>
+    <property-ref name="report.date"/>
+    <function name="PageNumber" class="org.jfree.report.function.PageFunction"/>
+    <function name="Count1" class="org.jfree.report.function.ItemCountFunction">
+      <properties>
+        <property name="group">Letter Group</property>
+      </properties>
+    </function>
+    <function name="Sum2" class="org.jfree.report.function.ItemSumFunction">
+      <properties>
+        <property name="field">Double</property>
+        <property name="group">Letter Group</property>
+      </properties>
+    </function>
+
+    <function name="ItemHide1" class="org.jfree.report.function.ItemHideFunction">
+      <properties>
+        <property name="field">Color</property>
+        <property name="element">Color Element</property>
+      </properties>
+    </function>
+
+  </functions>
+</report>

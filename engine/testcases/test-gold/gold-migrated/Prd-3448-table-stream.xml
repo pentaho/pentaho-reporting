@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="2">
+    <cols>
+      <column width="400"/>
+      <column width="100"/>
+      <column width="59.001"/>
+    </cols>
+    <row height="42">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+    </row>
+    <row height="300">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-chart"/>
+      </cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

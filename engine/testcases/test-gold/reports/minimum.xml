@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report name="label report"  pageformat="A4"
+        orientation="portrait" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+  <reportheader>
+    <rectangle x="0" y="0" width="100%" height="10" color="blue" fill="true" draw="false"/>
+  </reportheader>
+  <items>
+    <!-- This label has no text. -->
+    <label height="12" width="100%" x="0" y="0"/>
+  </items>
+  <reportfooter>
+    <rectangle x="0" y="0" width="100%" height="10" color="green" fill="true" draw="false"/>
+  </reportfooter>
+</report>

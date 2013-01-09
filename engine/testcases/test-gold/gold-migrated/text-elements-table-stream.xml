@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="7">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="30">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Text Elements Gallery"/>
+        <line type="ParagraphPoolBox" x="135.71" y="0.0" width="196.58" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="135.71" y="0.0" width="38.86" height="20.0">Text</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="180.11" y="0.0" width="83.32" height="20.0">Elements</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="268.97" y="0.0" width="63.32" height="20.0">Gallery</text>
+        </line>
+      </cell>
+    </row>
+    <row height="120">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="This report chains several subreports together to demonstrate all textelements that are available in the reporting engine.&#x000a;&#x000a;Please refer to the report-header in the subreports to see how these elements are defined."/>
+        <line type="ParagraphPoolBox" x="19.03" y="30.0" width="448.97" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="19.03" y="30.0" width="37.76" height="20.0">This</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="62.33" y="30.0" width="52.22" height="20.0">report</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="120.09" y="30.0" width="57.8" height="20.0">chains</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="183.43" y="30.0" width="64.46" height="20.0">several</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="253.43" y="30.0" width="94.46" height="20.0">subreports</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="353.43" y="30.0" width="73.34" height="20.0">together</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="432.31" y="30.0" width="16.66" height="20.0">to</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.15" y="50.0" width="467.85" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.15" y="50.0" width="111.12" height="20.0">demonstrate</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="116.81" y="50.0" width="20.0" height="20.0">all</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="142.35" y="50.0" width="113.32" height="20.0">textelements</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="261.21" y="50.0" width="33.32" height="20.0">that</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="300.07" y="50.0" width="28.9" height="20.0">are</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="334.51" y="50.0" width="78.92" height="20.0">available</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="418.97" y="50.0" width="15.56" height="20.0">in</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="440.07" y="50.0" width="27.78" height="20.0">the</text>
+        </line>
+        <line type="ParagraphPoolBox" x="158.99" y="70.0" width="150.02" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="158.99" y="70.0" width="78.9" height="20.0">reporting</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="243.43" y="70.0" width="65.58" height="20.0">engine.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="234.0" y="90.0" width="0.0" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="234.0" y="90.0" width="0.0" height="20.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.71" y="110.0" width="467.29" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.71" y="110.0" width="61.12" height="20.0">Please</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="67.37" y="110.0" width="41.1" height="20.0">refer</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="114.01" y="110.0" width="16.66" height="20.0">to</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="136.21" y="110.0" width="27.78" height="20.0">the</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="169.53" y="110.0" width="121.14" height="20.0">report-header</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="296.21" y="110.0" width="15.56" height="20.0">in</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="317.31" y="110.0" width="27.78" height="20.0">the</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="350.63" y="110.0" width="94.46" height="20.0">subreports</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="450.63" y="110.0" width="16.66" height="20.0">to</text>
+        </line>
+        <line type="ParagraphPoolBox" x="70.67" y="130.0" width="326.66" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="70.67" y="130.0" width="32.24" height="20.0">see</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="108.45" y="130.0" width="36.68" height="20.0">how</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="150.67" y="130.0" width="48.9" height="20.0">these</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="205.11" y="130.0" width="81.12" height="20.0">elements</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="291.77" y="130.0" width="28.9" height="20.0">are</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="326.21" y="130.0" width="71.12" height="20.0">defined.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="30">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="209.54" y="150.0" width="48.92" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="209.54" y="150.0" width="48.92" height="20.0">Label</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <cell row-span="2" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A label represents static text. Labels do not change during the report processing."/>
+        <line type="ParagraphPoolBox" x="7.37" y="180.0" width="460.63" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="7.37" y="180.0" width="13.32" height="20.0">A</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="26.23" y="180.0" width="42.24" height="20.0">label</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="74.01" y="180.0" width="94.46" height="20.0">represents</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="174.01" y="180.0" width="46.64" height="20.0">static</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="226.19" y="180.0" width="37.74" height="20.0">text.</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="269.47" y="180.0" width="58.92" height="20.0">Labels</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="333.93" y="180.0" width="22.24" height="20.0">do</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="361.71" y="180.0" width="27.78" height="20.0">not</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="395.03" y="180.0" width="65.6" height="20.0">change</text>
+        </line>
+        <line type="ParagraphPoolBox" x="106.78" y="200.0" width="254.44" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="106.78" y="200.0" width="55.58" height="20.0">during</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="167.9" y="200.0" width="27.78" height="20.0">the</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="201.22" y="200.0" width="52.22" height="20.0">report</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="258.98" y="200.0" width="102.24" height="20.0">processing.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Like all text fields, labels can have their own font."/>
+        <line type="ParagraphPoolBox" x="0.0" y="220.0" width="259.92" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="220.0" width="22.008" height="12.0">Like</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="25.332" y="220.0" width="12.0" height="12.0">all</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="40.656" y="220.0" width="19.32" height="12.0">text</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="63.3" y="220.0" width="31.32" height="12.0">fields,</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="97.944" y="220.0" width="31.344" height="12.0">labels</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="132.612" y="220.0" width="19.344" height="12.0">can</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="155.28" y="220.0" width="26.016" height="12.0">have</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="184.62" y="220.0" width="23.328" height="12.0">their</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="211.272" y="220.0" width="22.008" height="12.0">own</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="236.604" y="220.0" width="23.316" height="12.0">font.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="15">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=".. and/or font style."/>
+        <line type="ParagraphPoolBox" x="0.0" y="240.0" width="98.604" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="240.0" width="6.648" height="12.0">..</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="9.972" y="240.0" width="34.008" height="12.0">and/or</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="47.304" y="240.0" width="19.992" height="12.0">font</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="70.62" y="240.0" width="27.984" height="12.0">style.</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

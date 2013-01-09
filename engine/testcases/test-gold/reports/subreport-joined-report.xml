@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+
+  <!--
+   This report joins both other reports, all bands defined there and all functions.
+
+   The PageHeader is defined here, so that the reports share common page headers and
+   footers.
+  -->
+
+  <!--
+   Uncomment this group definition to enforce a pagebreak between the
+   reports ..
+   -->
+  <!--
+  <groups>
+    <group name="Prefix-Group" >
+      <fields>
+        <field>TablePrefix</field>
+      </fields>
+      <groupheader pagebreak-before-print="true"/>
+    </group>
+  </groups>
+  -->
+
+  <!--
+  During an Include, the report parser does not create new groups, if a group
+  with a certain name is already defined. We use that, to define all groups here,
+  and fill the group bands in the included reports.
+  -->
+  <groups>
+    <group name="A Group" >
+      <fields>
+        <!-- TablePrefix describes, which group is currently active -->
+        <field>TablePrefix</field>
+        <field>Color.Group</field>
+        <field>Fruit.Cat</field>
+      </fields>
+    </group>
+  </groups>
+
+  <!--
+  Now load the reports. Everything that is defined until now, is also available
+  in the included report; all bands, all parser configurations ..
+
+  Order does matter - which ever report is mentioned first, is also loaded first.
+  In our case it is not important, as both included reports are fully disjunct,
+  they do not touch the others bands.
+
+  We can even set parameters for the reports using the parser-config.
+  -->
+  <parser-config>
+    <property name="GroupBackground">#fffb98</property>
+    <property name="ItemBackground">#f9f6b2</property>
+  </parser-config>
+  <include src="color-report.subreport"/>
+
+  <parser-config>
+    <property name="GroupBackground">#98fff4</property>
+    <property name="ItemBackground">#dafffb</property>
+  </parser-config>
+  <include src="fruit-report.subreport"/>
+
+  <pageheader height="24" fontname="Serif" fontstyle="plain" fontsize="10" onfirstpage="true">
+    <rectangle name="PH0" x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0"/>
+    <line name="PH2" x1="0" y1="18" x2="100%" y2="18" color="#CFCFCF" weight="2.0"/>
+    <string-field x="0" y="0" width="50%" height="100%" vertical-alignment="middle" alignment="left" fieldname="TablePrefix"/>
+    <date-field x="50%" y="0" width="50%" height="100%" vertical-alignment="middle" alignment="right" format="d-MMM-yyyy" fieldname="report.date"/>
+  </pageheader>
+
+  <pagefooter height="24">
+    <rectangle name="PF0" x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0" draw="false" fill="true"/>
+    <line x1="0" y1="0" x2="100%" y2="0" weight="0.5"/>
+    <string-field fieldname="pageXofY" x="0" y="4" width="100%" height="100%" alignment="right" vertical-alignment="middle"/>
+  </pagefooter>
+
+  <functions>
+    <property-ref name="report.date"/>
+    <function class="org.jfree.report.function.PageOfPagesFunction" name="pageXofY">
+      <properties>
+        <property name="format">Page {0} of {1}</property>
+      </properties>
+    </function>
+
+  </functions>
+</report>

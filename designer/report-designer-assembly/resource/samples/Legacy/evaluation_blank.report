@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+    <property name="name">Report</property>
+    <child type="org.pentaho.reportdesigner.crm.report.model.dataset.DataSetsReportElement">
+        <property name="name">Element@19488744</property>
+        <child type="org.pentaho.reportdesigner.crm.report.datasetplugin.multidataset.MultiDataSetReportElement">
+            <property name="name">Element@26490427</property>
+            <property name="connectionType">JNDI</property>
+            <property name="xQueryDataFile"></property>
+            <property name="xmiDefinitionFile"></property>
+            <property name="useMondrianCubeDefinition">false</property>
+            <property name="mondrianCubeDefinitionFile"></property>
+            <property name="limitPreviewRows">true</property>
+            <property name="maxPreviewRows">10000</property>
+            <query queryName="default">
+                <property name="query">SELECT
+     CUSTOMER_W_TER.TERRITORY,
+     ORDERFACT.STATUS,
+     PRODUCTS.PRODUCTNAME,
+     PRODUCTS.PRODUCTLINE,
+     ORDERFACT.TOTALPRICE
+FROM
+     ORDERFACT INNER JOIN CUSTOMER_W_TER ON ORDERFACT.CUSTOMERNUMBER = CUSTOMER_W_TER.CUSTOMERNUMBER
+     INNER JOIN PRODUCTS ON ORDERFACT.PRODUCTCODE = PRODUCTS.PRODUCTCODE
+WHERE
+     ORDERFACT.STATUS = &apos;Cancelled&apos;
+ORDER BY
+     CUSTOMER_W_TER.TERRITORY ASC,
+     PRODUCTS.PRODUCTLINE ASC,
+     PRODUCTS.PRODUCTNAME ASC</property>
+            </query>
+            <columnInfo columnName="TERRITORY" friendlyColumnName="TERRITORY" columnClassName="java.lang.String"
+                        tableName=""></columnInfo>
+            <columnInfo columnName="STATUS" friendlyColumnName="STATUS" columnClassName="java.lang.String"
+                        tableName=""></columnInfo>
+            <columnInfo columnName="PRODUCTNAME" friendlyColumnName="PRODUCTNAME" columnClassName="java.lang.String"
+                        tableName=""></columnInfo>
+            <columnInfo columnName="PRODUCTLINE" friendlyColumnName="PRODUCTLINE" columnClassName="java.lang.String"
+                        tableName=""></columnInfo>
+            <columnInfo columnName="TOTALPRICE" friendlyColumnName="TOTALPRICE" columnClassName="java.lang.Double"
+                        tableName=""></columnInfo>
+            <selectedJNDIDataSource jndiName="h_sampledata" driverClass="org.hsqldb.jdbcDriver"
+                                    connectionString="jdbc:hsqldb:hsql://localhost/sampledata" userName="pentaho_user"
+                                    password="password"></selectedJNDIDataSource>
+        </child>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.ReportFunctionsElement">
+        <property name="name">Element@5312057</property>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelPageReportElement"
+           bandToplevelType="PAGE_HEADER">
+        <property name="name">Band14053479</property>
+        <child type="org.pentaho.reportdesigner.crm.report.model.LabelReportElement">
+            <property name="name">Element@1859025</property>
+            <property name="minimumSize">555.0, 16.0</property>
+            <property name="font">dialog,12,0</property>
+            <property name="foreground">0, 0, 0, 255</property>
+            <property name="underline">false</property>
+            <property name="strikethrough">false</property>
+            <property name="embedFont">false</property>
+            <property name="lineHeight">0.0</property>
+            <property name="verticalAlignment">TOP</property>
+            <property name="horizontalAlignment">CENTER</property>
+            <property name="reservedLiteral">..</property>
+            <property name="trimTextContent">true</property>
+            <property name="wrapTextInExcel">false</property>
+            <property name="text">Pentaho Report Designer Walkthrough Sample Report</property>
+        </child>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">true</property>
+        <property name="visualHeight">103.0</property>
+        <verticalLinealModel></verticalLinealModel>
+        <property name="displayOnFirstPage">true</property>
+        <property name="displayOnLastPage">true</property>
+        <property name="sticky">false</property>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement"
+           bandToplevelType="REPORT_HEADER">
+        <property name="name">Band3564915</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">true</property>
+        <property name="visualHeight">106.0</property>
+        <verticalLinealModel></verticalLinealModel>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelItemReportElement"
+           bandToplevelType="ITEM_BAND">
+        <property name="name">Band29853275</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">true</property>
+        <property name="visualHeight">100.0</property>
+        <verticalLinealModel></verticalLinealModel>
+        <rowBandingDefinition enabled="false" color="192, 192, 192, 255" startState="true"
+                              switchItemCount="1"></rowBandingDefinition>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement"
+           bandToplevelType="REPORT_FOOTER">
+        <property name="name">Band21933769</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">true</property>
+        <property name="visualHeight">100.0</property>
+        <verticalLinealModel></verticalLinealModel>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelPageReportElement"
+           bandToplevelType="PAGE_FOOTER">
+        <property name="name">Band7190308</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">true</property>
+        <property name="visualHeight">100.0</property>
+        <verticalLinealModel></verticalLinealModel>
+        <property name="displayOnFirstPage">true</property>
+        <property name="displayOnLastPage">true</property>
+        <property name="sticky">false</property>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement" bandToplevelType="NO_DATA_BAND">
+        <property name="name">Band14823211</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">false</property>
+        <property name="visualHeight">100.0</property>
+        <verticalLinealModel></verticalLinealModel>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.BandToplevelReportElement" bandToplevelType="WATERMARK">
+        <property name="name">Band28232762</property>
+        <property name="pageBreakBefore">false</property>
+        <property name="pageBreakAfter">false</property>
+        <property name="showInLayoutGUI">false</property>
+        <property name="visualHeight">100.0</property>
+        <verticalLinealModel></verticalLinealModel>
+    </child>
+    <child type="org.pentaho.reportdesigner.crm.report.model.ReportGroups">
+        <property name="name">Element@18012736</property>
+    </child>
+    <property name="defaultLocale">en_US_</property>
+    <horizontalLinealModel></horizontalLinealModel>
+    <pageDefinition pageSize="595.0, 842.0" topBorder="20.0" bottomBorder="20.0" leftBorder="20.0"
+                    rightBorder="20.0"></pageDefinition>
+    <reportConfiguration></reportConfiguration>
+    <property name="useMaxCharBounds">true</property>
+</report>

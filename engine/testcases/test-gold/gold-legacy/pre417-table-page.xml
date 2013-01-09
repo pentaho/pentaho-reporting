@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="3">
+    <cols>
+      <column width="66"/>
+      <column width="100"/>
+      <column width="285"/>
+    </cols>
+    <row height="14">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="663">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

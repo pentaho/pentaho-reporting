@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="1">
+    <cols>
+      <column width="451"/>
+    </cols>
+    <row height="12">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Some large text (spanning the complete width)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="206.08" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="26.11" height="10.0">Some</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="28.88" y="0.0" width="22.23" height="10.0">large</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="53.88" y="0.0" width="16.1" height="10.0">text</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="72.75" y="0.0" width="43.91" height="10.0">(spanning</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="119.43" y="0.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="136.09" y="0.0" width="40.56" height="10.0">complete</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="179.42" y="0.0" width="26.66" height="10.0">width)</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

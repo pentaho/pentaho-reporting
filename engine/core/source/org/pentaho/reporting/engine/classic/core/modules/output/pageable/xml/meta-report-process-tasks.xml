@@ -1,0 +1,9 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <process-task name="pageable/xml"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.PageableXmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.PageableXmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.">
+      <alias>xml+page</alias>
+  </process-task>
+</meta-data>

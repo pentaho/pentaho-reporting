@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="${ivy.artifact.group}" module="${ivy.artifact.id}" revision="${project.revision}" />
+
+	<configurations>
+    <conf name="default_internal"/>
+    <conf name="default_external"/>
+    <conf name="default" extends="default_internal, default_external"/>
+		<conf name="test" visibility="private" />
+		<conf name="source" />
+	</configurations>
+
+	<publications>
+		<artifact name="${ivy.artifact.id}" type="jar" conf="default" />
+		<artifact name="${ivy.artifact.id}" m:classifier="sources" type="source" ext="jar" conf="source" />
+	</publications>
+
+	<dependencies defaultconf="default_internal->default">
+		<!--  internal dependencies -->
+		<dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}" transitive="true" changing="true" />
+
+		<!-- we need hibernate, but we need to explicitly define the hibernate dependencies -->
+		<dependency org="org.hibernate" name="hibernate-core" rev="3.6.9.Final" transitive="false" conf="default_external->default"/>
+		<dependency org="antlr"               name="antlr"               rev="2.7.6"  transitive="false"  conf="default_external->default"/>
+		<dependency org="asm"                 name="asm"                 rev="2.2.3"  transitive="false"  conf="default_external->default"/>
+		<dependency org="asm"                 name="asm-attrs"           rev="2.2.3"  transitive="false"  conf="default_external->default"/>
+		<dependency org="cglib"               name="cglib-nodep"         rev="2.2"  transitive="false"  conf="default_external->default"/>
+		<dependency org="commons-collections" name="commons-collections" rev="2.1.1"  transitive="false"  conf="default_external->default"/>
+		<dependency org="commons-logging"     name="commons-logging"     rev="1.0.4"  transitive="false"  conf="default_external->default"/>
+		<dependency org="dom4j"               name="dom4j"               rev="1.6.1"  transitive="false"  conf="default_external->default"/>
+		<dependency org="javax.transaction"   name="jta"                 rev="1.1" transitive="false"  conf="default_external->default"/>
+
+		<!--  testing dependencies -->
+		<dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default" />
+		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="test->default" />
+    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
+                rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
+
+	</dependencies>
+</ivy-module>

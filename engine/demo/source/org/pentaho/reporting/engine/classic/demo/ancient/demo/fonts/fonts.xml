@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Font Selection Demo" pageformat="A4" topmargin="70" leftmargin="70" bottommargin="70" rightmargin="70">
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
+  </configuration>
+
+  <groups>
+    <group name="fontfamily">
+      <groupheader height="16" fontname="SansSerif" fontstyle="plain" fontsize="11">
+        <line x1="0" y1="16" x2="100%" y2="16" color="#CFCFCF" weight="2.0"/>
+        <label x="0" y="0" width="40%" height="100%"
+            >Family</label>
+        <string-field x="40%" y="0" width="60%" height="100%" alignment="left" fieldname="family"/>
+      </groupheader>
+
+      <groupfooter height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="0" width="80%" height="16" alignment="left">Number of Fonts in this family:</label>
+        <number-field x="80%" y="0" width="20%" height="16" alignment="right" format="#,##0" fieldname="Count1"/>
+      </groupfooter>
+
+      <fields>
+        <field>family</field>
+      </fields>
+    </group>
+  </groups>
+
+  <items height="30" fontname="Monospaced" fontstyle="plain" fontsize="10">
+    <string-field x="0" y="0" width="40%" height="15" alignment="left" fieldname="fontname"/>
+    <string-field x="10%" y="15" width="90%" height="15" alignment="left" fieldname="sample" dynamic="true">
+      <style-expression style-key="font" formula="=[fontname]"/>
+    </string-field>
+  </items>
+
+  <functions>
+    <property-ref name="sample">The five boxing wizards jump quickly.</property-ref>
+    <!-- The fontmod function will change the font of the Element to the fontname specified in field font -->
+    <function name="Count1" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+      <properties>
+        <property name="group">fontfamily</property>
+      </properties>
+    </function>
+  </functions>
+
+</report>

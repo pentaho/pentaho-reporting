@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="3">
+    <cols>
+      <column width="200"/>
+      <column width="268"/>
+    </cols>
+    <row height="12">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Some text to make the page-footer appear"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="187.75" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="26.11" height="10.0">Some</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="28.88" y="0.0" width="16.1" height="10.0">text</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="47.75" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="58.85" y="0.0" width="24.45" height="10.0">make</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="86.07" y="0.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="102.73" y="0.0" width="51.12" height="10.0">page-footer</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="156.62" y="0.0" width="31.13" height="10.0">appear</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="624">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Some text again"/>
+        <line type="ParagraphPoolBox" x="1.0" y="637.0" width="72.21" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="637.0" width="26.11" height="10.0">Some</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="29.88" y="637.0" width="16.1" height="10.0">text</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="48.75" y="637.0" width="24.46" height="10.0">again</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

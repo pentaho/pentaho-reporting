@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="4">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label 1"/>
+              <text x="0.0" y="0.0" width="24.46" height="10.0">Label</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="27.23" y="0.0" width="5.56" height="10.0">1</text>
+            </inline>
+          </inline>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label 2"/>
+              <text x="0.0" y="0.0" width="24.46" height="10.0">Label</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="27.23" y="0.0" width="5.56" height="10.0">2</text>
+            </inline>
+          </inline>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="0.0" y="20.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <inline type="InlineRenderBox" x="0.0" y="20.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label 3"/>
+              <text x="0.0" y="20.0" width="24.46" height="10.0">Label</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="27.23" y="20.0" width="5.56" height="10.0">3</text>
+            </inline>
+          </inline>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <inline type="InlineRenderBox" x="0.0" y="0.0" width="32.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label 4"/>
+              <text x="0.0" y="0.0" width="24.46" height="10.0">Label</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="27.23" y="0.0" width="5.56" height="10.0">4</text>
+            </inline>
+          </inline>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

@@ -1,0 +1,42 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors.  All rights reserved.
+ */
+
+package org.pentaho.reporting.tools.configeditor.model;
+
+import javax.swing.tree.TreeNode;
+
+/**
+ * The config tree is the base class for all nodes in the ConfigTreeModel.
+ *
+ * @author Thomas Morgner
+ */
+public interface ConfigTreeNode extends TreeNode
+{
+  /**
+   * Returns the name of the node.
+   *
+   * @return the name of the node.
+   */
+  public String getName();
+
+  /**
+   * Defines the parent of this node; this replaces all previously defined parents.
+   *
+   * @param parent the new parent node.
+   */
+  public void setParent(TreeNode parent);
+}

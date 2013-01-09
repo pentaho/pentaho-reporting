@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="5" row-count="3">
+    <cols>
+      <column width="220"/>
+      <column width="80"/>
+      <column width="100"/>
+      <column width="60"/>
+      <column width="115"/>
+    </cols>
+    <row height="14">
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="CONTINENT:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="61.05" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="61.05" height="10.0">CONTINENT:</text>
+        </line>
+      </cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#94b2db" border-right-width="1.0" border-right-style="solid" background-color="#94b2db" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="count"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0"/>
+        <line type="ParagraphPoolBox" x="460.0" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="460.0" y="0.0" width="5.56" height="10.0">0</text>
+        </line>
+      </cell>
+    </row>
+    <row height="14">
+      <cell border-top-color="#dde3ee" border-top-width="1.0" border-top-style="solid" border-left-color="#dde3ee" border-left-width="1.0" border-left-style="solid" border-bottom-color="#dde3ee" border-bottom-width="1.0" border-bottom-style="solid" background-color="#dde3ee" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Country"/>
+        <line type="ParagraphPoolBox" x="0.0" y="14.0" width="35.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="14.0" width="35.0" height="10.0">Country</text>
+        </line>
+      </cell>
+      <empty-cell border-top-color="#dde3ee" border-top-width="1.0" border-top-style="solid" border-bottom-color="#dde3ee" border-bottom-width="1.0" border-bottom-style="solid" background-color="#dde3ee">
+      </empty-cell>
+      <cell border-top-color="#dde3ee" border-top-width="1.0" border-top-style="solid" border-bottom-color="#dde3ee" border-bottom-width="1.0" border-bottom-style="solid" background-color="#dde3ee" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="ISO Code"/>
+        <line type="ParagraphPoolBox" x="300.0" y="14.0" width="43.87" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="14.0" width="17.2" height="10.0">ISO</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="319.97" y="14.0" width="23.9" height="10.0">Code</text>
+        </line>
+      </cell>
+      <cell border-top-color="#dde3ee" border-top-width="1.0" border-top-style="solid" border-bottom-color="#dde3ee" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#dde3ee" border-right-width="1.0" border-right-style="solid" background-color="#dde3ee" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Population"/>
+        <line type="ParagraphPoolBox" x="400.0" y="14.0" width="47.23" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="400.0" y="14.0" width="47.23" height="10.0">Population</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="16">
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Population:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="28.0" width="70.0" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="true" font-style-underline="true" font-style-strikethrough="false">
+          <text x="0.0" y="28.0" width="70.0" height="14.0">Population:</text>
+        </line>
+      </cell>
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0"/>
+        <line type="ParagraphPoolBox" x="220.0" y="28.0" width="7.784" height="14.0" color="black" font-face="Monospaced" font-size="14" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="220.0" y="28.0" width="7.784" height="14.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#94b2db" border-right-width="1.0" border-right-style="solid" background-color="#94b2db">
+      </empty-cell>
+    </row>
+  </table>
+</layout-output>

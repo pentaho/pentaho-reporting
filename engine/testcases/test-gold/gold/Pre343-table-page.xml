@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="7">
+    <cols>
+      <column width="49"/>
+      <column width="406"/>
+      <column width="100"/>
+    </cols>
+    <row height="33">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Report"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="35">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@1161738"/>
+        <line type="ParagraphPoolBox" x="188.188" y="33.0" width="178.624" height="16.0" color="black" font-face="Arial" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="188.188" y="33.0" width="41.76" height="16.0">Blurry</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="234.38" y="33.0" width="39.104" height="16.0">Chart</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="277.916" y="33.0" width="53.376" height="16.0">Legend</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="335.724" y="33.0" width="31.088" height="16.0">Test</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="27">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@23026053"/>
+        <line type="ParagraphPoolBox" x="0.0" y="68.0" width="29.328" height="12.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="68.0" width="29.328" height="12.0">Chart</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="315">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Chart2"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="27">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@23026053"/>
+        <line type="ParagraphPoolBox" x="0.0" y="410.0" width="29.328" height="12.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="410.0" width="29.328" height="12.0">Chart</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="315">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Chart2"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

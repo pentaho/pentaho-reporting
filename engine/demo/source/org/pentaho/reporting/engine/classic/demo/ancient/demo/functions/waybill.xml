@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+  <groups>
+    <group name="Container Group">
+      <fields>
+        <field>Container</field>
+      </fields>
+
+      <groupheader fontname="SansSerif" fontsize="12" fsbold="true">
+        <rectangle x="0" y="0" width="100%" height="15" color="#C8F1EC"/>
+        <line x1="0" y1="15" x2="100%" y2="15" color="#00C2B0"/>
+        <string-field x="0" y="0" width="100%" height="12" fieldname="Container"/>
+      </groupheader>
+
+      <!-- The header is named by the value for which it should be hidden. -->
+      <groupfooter name="FreightWeightBand" fontname="SansSerif" fontsize="12" fsbold="true">
+        <rectangle x="0" y="0" width="100%" height="15" color="#C8F1EC"/>
+        <line x1="0" y1="15" x2="100%" y2="15" color="#00C2B0"/>
+        <label x="0" y="0" width="25%" height="12">Total Weight:</label>
+        <number-field x="25%" y="0" width="15%" height="12" fieldname="weightTotal" format="#,##0.00 'kg'"/>
+      </groupfooter>
+    </group>
+  </groups>
+
+  <items fontname="SansSerif" fontsize="10">
+    <band name="FreightWeightBand">
+      <string-field x="0" y="0" width="25%" height="10" fieldname="Item"/>
+      <number-field x="25%" y="0" width="15%" height="10" fieldname="Weight" format="#,##0.00 'kg'"/>
+      <string-field x="40%" y="0" width="60%" height="10" fieldname="Notes"/>
+    </band>
+    <band name="Notes">
+      <string-field x="10%" y="0" width="80%" height="10" fieldname="Notes"/>
+    </band>
+  </items>
+
+  <functions>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="weightTotal">
+      <properties>
+        <property name="field">Weight</property>
+        <property name="group">Container Group</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction" name="hideNotes">
+      <properties>
+        <property name="field">Container</property>
+        <property name="element">Notes</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementByNameFunction"
+                name="showElements">
+      <properties>
+        <property name="element">FreightWeightBand</property>
+        <property name="field">Container</property>
+        <property name="values[0]" class="java.lang.String">Notes</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

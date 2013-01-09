@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+     xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+     name="Shape and Drawable Demo" orientation="portrait" pageformat="LETTER"
+     topmargin="72" leftmargin="72" bottommargin="72" rightmargin="72">
+
+  <reportheader height="60">
+    <round-rectangle x="0" y="0" width="100%" height="100" color="yellow" arc-height="10" arc-width="10"/>
+    <round-rectangle x="0" y="0" width="100%" height="100" color="black" draw="true" fill="false" arc-height="10" arc-width="10"/>
+    <label name="Label1" x="15" y="15" width="150" height="20" vertical-alignment="top">Hello World :)</label>
+    <label name="Label2" x="115" y="35" width="150" height="20" vertical-alignment="top">I love shapes :)</label>
+  </reportheader>
+
+  <no-data-band>
+    <label x="25%" y="48" width="50%" height="12">This report does not contain any other data.</label>
+    <shape-field x="15" y="15" width="100%" height="30" fieldname="shapecreator" color="blue" fill="true"/>
+  </no-data-band>
+
+  <groups>
+    <group name="default">
+      <fields></fields>
+      <groupheader>
+        <line x1="0" y1="6" x2="45%" y2="6" weight="1" stroke-style="solid"/>
+        <label x="50%" y="0" width="50%" height="12">solid</label>
+        <line x1="0" y1="18" x2="45%" y2="18" weight="1" stroke-style="dashed"/>
+        <label x="50%" y="12" width="50%" height="12">dashed</label>
+        <line x1="0" y1="30" x2="45%" y2="30" weight="1" stroke-style="dotted"/>
+        <label x="50%" y="24" width="50%" height="12">dotted</label>
+        <line x1="0" y1="42" x2="45%" y2="42" weight="1" stroke-style="dot-dash"/>
+        <label x="50%" y="36" width="50%" height="12">dot-dash</label>
+        <line x1="0" y1="54" x2="45%" y2="54" weight="1" stroke-style="dot-dot-dash"/>
+        <label x="50%" y="48" width="50%" height="12">dot-dot-dash</label>
+      </groupheader>
+
+      <groupfooter>
+        <line x1="76" y1="3" x2="276" y2="3" weight="2" color="#000000"/>
+        <rectangle x="56" y="56" width="525" weight="2" height="50" color="black" draw="true" fill="false"/>
+      </groupfooter>
+    </group>
+  </groups>
+
+  <reportfooter height="50">
+    <drawable-field x="15" y="15" width="100%" height="30" fieldname="drawable"/>
+    <line x1="0" y1="40" x2="257" y2="80" color="#000000" weight="1" />
+    <line x1="0" y1="80" x2="257" y2="40" color="#000000" weight="1" />
+  </reportfooter>
+
+  <functions>
+    <expression name="drawable" class="org.jfree.report.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+          import org.jfree.report.demo.helper.DemoDrawable;
+
+          Object getValue()
+          {
+          return new DemoDrawable();
+          }
+        </property>
+      </properties>
+    </expression>
+    <expression name="shapecreator" class="org.jfree.report.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+          import java.awt.geom.*;
+
+          Object getValue()
+          {
+          return new Arc2D.Float(100,15,40,20, 5,90, Arc2D.PIE);
+          }
+        </property>
+      </properties>
+    </expression>
+  </functions>
+
+</report>

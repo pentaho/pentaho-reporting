@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="5" row-count="8">
+    <cols>
+      <column width="100"/>
+      <column width="200"/>
+      <column width="100"/>
+      <column width="51"/>
+      <column width="49"/>
+    </cols>
+    <row height="24">
+      <cell border-top-color="yellow" border-top-width="1.0" border-top-style="solid" border-left-color="yellow" border-left-width="1.0" border-left-style="solid" border-right-color="yellow" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Some large text (spanning the complete width)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="206.08" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="26.11" height="10.0">Some</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="28.88" y="0.0" width="22.23" height="10.0">large</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="53.88" y="0.0" width="16.1" height="10.0">text</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="72.75" y="0.0" width="43.91" height="10.0">(spanning</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="119.43" y="0.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="136.09" y="0.0" width="40.56" height="10.0">complete</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="179.42" y="0.0" width="26.66" height="10.0">width)</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <empty-cell border-left-color="yellow" border-left-width="1.0" border-left-style="solid" border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="small Chunk"/>
+        <line type="ParagraphPoolBox" x="300.0" y="24.0" width="55.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="24.0" width="23.33" height="10.0">small</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="326.1" y="24.0" width="28.9" height="10.0">Chunk</text>
+        </line>
+      </cell>
+      <empty-cell border-bottom-color="yellow" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="yellow" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-left-color="green" border-left-width="1.0" border-left-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Some large text (spanning the complete width)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="36.0" width="206.08" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="36.0" width="26.11" height="10.0">Some</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="28.88" y="36.0" width="22.23" height="10.0">large</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="53.88" y="36.0" width="16.1" height="10.0">text</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="72.75" y="36.0" width="43.91" height="10.0">(spanning</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="119.43" y="36.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="136.09" y="36.0" width="40.56" height="10.0">complete</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="179.42" y="36.0" width="26.66" height="10.0">width)</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <empty-cell border-left-color="green" border-left-width="1.0" border-left-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="blue" border-top-width="1.0" border-top-style="solid" border-left-color="blue" border-left-width="1.0" border-left-style="solid" border-bottom-color="blue" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-top-color="blue" border-top-width="1.0" border-top-style="solid" border-bottom-color="blue" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="blue" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <cell border-left-color="green" border-left-width="1.0" border-left-style="solid" border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="small Chunk"/>
+        <line type="ParagraphPoolBox" x="0.0" y="60.0" width="55.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="60.0" width="23.33" height="10.0">small</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="26.1" y="60.0" width="28.9" height="10.0">Chunk</text>
+        </line>
+      </cell>
+      <cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="small Chunk"/>
+        <line type="ParagraphPoolBox" x="100.0" y="60.0" width="55.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="60.0" width="23.33" height="10.0">small</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="126.1" y="60.0" width="28.9" height="10.0">Chunk</text>
+        </line>
+      </cell>
+      <cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="small Chunk"/>
+        <line type="ParagraphPoolBox" x="300.0" y="60.0" width="55.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="60.0" width="23.33" height="10.0">small</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="326.1" y="60.0" width="28.9" height="10.0">Chunk</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="small Chunk"/>
+        <line type="ParagraphPoolBox" x="400.0" y="60.0" width="82.67" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="400.0" y="60.0" width="23.33" height="10.0">small</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="453.77" y="60.0" width="28.9" height="10.0">Chunk</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="one"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="80">
+      <cell border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid" row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="After Fzg typ"/>
+        <line type="ParagraphPoolBox" x="197.19" y="92.0" width="56.62" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="197.19" y="92.0" width="21.09" height="10.0">After</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="221.05" y="92.0" width="16.66" height="10.0">Fzg</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="240.48" y="92.0" width="13.33" height="10.0">typ</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="526">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report pageformat="A4" name="A bug, squash it ..." >
+  <reportheader>
+  <!--
+    <rectangle x="0" y="0" width="100%" height="100%" draw="true" fill="false" color="green" />
+-->
+    <label x="0" y="0" width="100%" height="12">Some large text (spanning the complete width)</label>
+<!--
+    <label x="0" y="12" width="100" height="12">small Chunk</label>
+    <label x="100" y="12" width="100" height="12">small Chunk</label>
+    <label x="200" y="12" width="100" height="12">small Chunk</label>
+    <label x="300" y="12" width="100" height="12">small Chunk</label>
+    <label x="400" y="12" width="100" height="12">small Chunk</label>
+-->
+  </reportheader>
+</report>

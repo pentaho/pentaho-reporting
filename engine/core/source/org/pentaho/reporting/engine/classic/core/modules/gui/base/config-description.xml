@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.ActionFactory" global="true" hidden="true">
+    <description>Internal Configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.LargeIcons" global="false" hidden="false">
+    <description>Defines, whether the toolbar will contain large icons. This is enabled by default.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumZoom" global="true" hidden="false">
+    <description>Defines the Maximum Zoom allowed in the preview pane. This is a floating point number which represents a  percentage (1.0 = 100%). The default value is 20.0 corresponds to 2000%.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.MenuBarAvailable" global="true" hidden="false">
+    <description>Defines, whether a menubar will be created and be available in the preview.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.MinimumZoom" global="true" hidden="false">
+    <description>Defines the Minimum Zoom allowed in the preview pane. This is a floating point number which represents a percentage (1.0 = 100%). The default value is 0.01 which corresponds to 1%</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressBarEnabled" global="true" hidden="false">
+    <description>Defines, whether the progress bar should be visible when repaginating the report. The progress bar is not available for the other exports.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressDialogEnabled" global="true" hidden="false">
+    <description>Defines, whether the progress dialog should be visible when repaginating the report. Whether the dialog is enabled or disabled for the various exports, can be configured in the export modules.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarAvailable" global="false" hidden="false">
+    <description>Defines, whether a toolbar will be available in the preview.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarFloatable" global="false" hidden="false">
+    <description>Defines, whether the toolbar will be floatable. This is not enabled by default.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether the About-Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether the About-Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of the About-Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.about.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of the Close-Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.close.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-first.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-last.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-previous.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-custom.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-in.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-out.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.help.about" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.close" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.go-to" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.go-to-first" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.go-to-last" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.go-to-next" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.report.go-to-previous" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.view.zoom-custom" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.view.zoom-in" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.view.zoom-list" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.view.zoom-out" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.go-to.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.go-to.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.go-to.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.go-to.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.help.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.help.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.help.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.help.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.report.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.report.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.report.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.report.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.view.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.view.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.view.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.view.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.user-defined-category.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+</config-description>

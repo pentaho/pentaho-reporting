@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="4" row-count="1">
+    <cols>
+      <column width="300"/>
+      <column width="50"/>
+      <column width="50"/>
+      <column width="51"/>
+    </cols>
+    <row height="110">
+      <empty-cell border-top-color="blue" border-top-width="1.0" border-top-style="solid" border-left-color="blue" border-left-width="1.0" border-left-style="solid" border-bottom-color="blue" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="blue" border-right-width="1.0" border-right-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Invalid alignment .."/>
+      </empty-cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="T"/>
+        <line type="ParagraphPoolBox" x="300.0" y="0.0" width="24.4" height="40.0" color="black" font-face="Serif" font-size="40" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="0.0" width="24.4" height="40.0">T</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="M"/>
+        <line type="ParagraphPoolBox" x="350.0" y="35.0" width="33.32" height="40.0" color="black" font-face="Serif" font-size="40" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="350.0" y="35.0" width="33.32" height="40.0">M</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="B"/>
+        <line type="ParagraphPoolBox" x="400.0" y="70.0" width="26.64" height="40.0" color="black" font-face="Serif" font-size="40" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="400.0" y="70.0" width="26.64" height="40.0">B</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

@@ -1,0 +1,419 @@
+The Module system of JFreeReport
+
+1. Introduction
+
+Since version 0.8.4 most of the functionality has been removed from
+the hardcoded core and was relocated into separated modules. A module
+contains of a Module descriptor and one or more packages of ordinary
+java classes.
+
+Modules are used to cleanly separate independent functionality and to
+create a controlled way of initializing the various subsystems of
+JFreeReport.
+
+The architecture will make sure, that modules are configured and
+initialized in the order of their dependency, so that a module implementor
+can be sure that all dependent modules are already initialized.
+
+All modules contain a version numbers. The package manager will verify
+the versions of all required modules during the boot process and will
+deny to load the module if the version does not fit the requirements.
+
+2. The Boot process
+
+Modules are loaded during the boot process of JFreeReport. The Package
+manager is responsible to load the modules and to verify the availability
+of all required modules.
+
+Booting is done by calling "JFreeReportBoot.getInstance().start()".
+
+If the boot code was not called manually by the user code, the boot is
+started before the report configuration or a component using this
+configuration is used for the first time. This automated boot process
+cannot guarantee that all subsystems are initialized in the correct order.
+
+During the boot process, all known modules will be loaded and their
+dependencies are resolved. If a required module could not be loaded or
+the dependencies for that module could not be fully resolved, the loading
+for this and all modules depending on this module will fail. Unrelated
+modules are not affected by such an failure.
+
+User modules which should be loaded during the boottime may be specified
+using the system property "org.pentaho.reporting.engine.classic.core.boot.Modules". This property
+expects a comma separated list of classnames, all classes must implement
+the Module interface.
+
+User defined modules may also be added by referencing their Module class
+under the name space "org.pentaho.reporting.engine.classic.core.userdefined.modules". A module
+'Foobar' with the Module implementation named 'org.jfree.example.FoobarModule'
+would be picked up by the system using the configuration key
+
+  org.pentaho.reporting.engine.classic.core.userdefined.modules.Foobar.Module=org.jfree.example.FoobarModule
+
+Modules may also be added manually by using the PackageManager.
+
+3. Deploying modules
+
+Modules are deployed by including them in the classpath of the application
+and inserting them into the boot process, either by specifying their name
+in the systemproperty or by loading them manually.
+
+The module inserts itself into the core classes during the initialzation
+phase.
+
+4. Available Modules in the base project
+
+4.1. XML Parser Modules
+
+These modules contain support for parsing XML report definitions. If
+your application defines the reports using the API, you can safely remove
+the packages from the target system.
+
+4.1.1 xml-parser-base (*-parser-base.jar)
+
+This module provides a set of base classes used by all parser modules.
+It is required by all parser modules.
+
+This package requires XML parser classes to be present on the classpath.
+The default distribution uses GNUJaxp as parser (contained in "gnujaxp.jar").
+
+4.1.2 ext-xml-parser (*-parser-ext.jar)
+
+The module provides support for the extended xml report description for
+JFreeReport. This module requires the xml-parser-base to be present.
+
+The DTD used for this parser can be found in the module package as file
+"org/pentaho/reporting/engine/classic/core/modules/parser/ext/resources/extparser.dtd" and is
+also downloadable from "http://jfreereport.sourceforge.net/extreport-085.dtd".
+
+4.1.3 simple-xml-parser (*-parser-simple.jar)
+
+This module provides support for the simple xml report definition format
+of JFreeReport. This module also required the xml-parser-base to be present.
+
+The DTD used for this parser can be found in the module package as file
+"org/pentaho/reporting/engine/classic/core/modules/parser/simple/resources/parser.dtd" and is
+also downloadable from "http://jfreereport.sourceforge.net/report-085.dtd".
+
+4.1.4 report-writer (*-parser-extwriter.jar)
+
+This module provides support for writing a report definition from a given
+JFreeReport object. In most cases it is not required in a production system.
+This module also required the xml-parser-base to be present.
+
+The generated report definition will fit the extended report definition
+format.
+
+
+4.2 Output target modules
+
+These modules provide means to print or export the reports into several
+formats, like PDF, PlainText, HTML or Excel tables.
+
+JFreeReport knows three kinds of output targets:
+
+The simplest way of exporting reports is provided by the raw targets
+(csv-raw and xml-raw). These targets just dump the report contents into the
+output stream without any preprocessing of the report contents.
+
+The pageable output targets process the reports to fit on one or more
+pages. The report content will be paginated and pagebreaks will be inserted
+if necessary. All paper oriented output targets (like Printing and PDF export)
+prefer this kind of output.
+
+The last output possibility is the table style output. This export type
+will try to create a table for the content and will print the report contents
+into this table. All table targets share the limitation, that no overlapping
+cells are allowed. The Excel and HTML output are examples for this export
+type.
+
+4.2.1 output-csv
+
+This module contains support for exporting the datarow of reports into
+CSV files. Elements defined in the report are ignored and the raw data
+from the DataRow is written to the output stream.
+
+4.2.2 output-xml
+
+This module contains support for exporting the elements of an report into
+xml files. The elements are printing in the order of definition, but no
+layouting is done.
+
+This target was an educational example to show how to write an output target.
+It is not suitable nor intendet to be used for production systems.
+
+4.2.3 output-support-itext
+
+This module provides base services for all iText related output targets,
+like the PDF pageable target or the RTF target. This module manages the
+font definitions of the iText library and is able to search for fonts
+in the system specific font directories.
+
+This package depends on the config-store modules, as the font information
+will be cached for faster startup times.
+
+The module requires the external library iText in version 1.00 to be
+present in the classpath.
+
+4.2.4 output-support-pagelayout
+
+This module contains the control code for the common pagelayouter. This
+code is responsible for translating report events into output events and
+is the base of all layout dependent output targets.
+
+4.2.5 output-meta
+
+This module contains the base classes for the meta elements. These classes
+hold the layouted content until the content creator performs the final
+output.
+
+4.2.6 Pageable output targets
+
+4.2.6.1 output-pageable-base
+
+This module contains common base classes for all pageable output targets.
+It is required by all pageable targets and by the preview components.
+
+It depends on the output-support-pageable module and the output-meta
+module and will not work without them.
+
+4.2.6.2 output-pageable-graphics
+
+The Graphics2D support module enables JFreeReport to output the report
+content to an java.awt.Graphics2D object. The preview components and the
+printing depends on it. You will also need this module, if you want to
+export your reports into an java.awt.Image.
+
+This module requires the pageable export base for work.
+
+4.2.6.3 output-pageable-pdf
+
+This module provides support to generate PDF content using the iText
+library. iText supports the generation of PDF documents supporting the
+PDF specification version 1.2 to 1.5.
+
+This module will not work, if the iText support or the pageable-export-base
+modules are missing.
+
+4.2.6.4 output-pageable-plaintext
+
+The plaintext export can be used to generate text content from an report.
+This output target has several limitations:
+
+The plain text target is a special export target. Due to the limitation of
+the plain text format, the report need to be carefully prepared for that
+format.
+
+If the exported report contains rather small elements, then running the
+reporting may produce this exception. The elements in the report must be
+greater or equal to the specified font size on the plaintext output target.
+
+The plain text output target support either 6 LPI or 10 LPI, so all elements
+must be either at least 12 points (for 6 LPI = 6 lines per inch / 72 dots
+per inch) or 7.2 points heigh. In most cases the width is not the killer,
+as the system would simply remove all non-displayable characters on that
+line.
+
+The plain text target is intended to be used in conjunction with matrix
+printers, if just want to get parsable (or editable) text, you should
+have a look at the html target.
+
+Images and shapes are not supported right now.
+
+In conjunction with Epson or IBM printers, it is possible to support some
+limited text formating capabilities (like bold, italic or underlined).
+
+Most users searching an way to edit the generated report contents after
+the generation, should have a look at the HTML export. The HTML target is
+not as complicated to feed as this one and supports a greater range of
+text formating options.
+
+The plaintext export depends on the pageable base classes, of course.
+
+4.2.7 Table based output targets
+
+4.2.7.1 output-table-base
+
+This module contains all base classes required for the table export.
+It depends on the output-support-pageable module.
+
+4.2.7.2 output-table-csv
+
+The CSV table export layouts the report content into a tablegrid. The
+generated table is printed into the CSV file. One row of the table
+results in a line in the csv file, every cell of the table will result
+in a value in the file. Cell- or Row-Spanning is not supported due to
+the limitations of the export format.
+
+This module depends on the "output-table-base".
+
+4.2.7.3 output-table-html
+
+The HTML taget supports the generation of XHTML1.0 or HTML4.01 content.
+Images will be included in the generated content, depending on the selected
+export type.
+
+The stream export will include images only if the image was loaded from
+an external file or http resource or has been specified using an
+URLImageContainer.
+
+The directory and zip export will include all images and provide an option
+to copy all image content into the target files or directory.
+
+The module will not work, if the "output-table-base" module is missing.
+
+4.2.7.4 output-table-html
+
+This target is barely usable now. The RTF content creation does not yet
+support images. All generated content is held in memory and printed when
+the reporting finishes. This binds the report content to the size of the
+available memory.
+
+The module requires the "output-support-itext" and the "output-table-base"
+to be present.
+
+4.2.7.5 output-table-excel
+
+The excel export writes the report content into a MS-Office Excel file.
+The generated file will be compatible with Excel 97/2000.
+
+This target does not support the generation of images yet.
+
+The Apache POI library version 2.0-pre3 or higher must be present in the
+classpath as well as the "table-export-base" module.
+
+4.2.7.5 output-table-rtf
+
+The RichTextFormat export writes the report content into a RTF file.
+The file will contain a large table containing all content.
+
+iText and the output-support-itext module must be present to use this
+export method.
+
+4.3 GUI classes
+
+4.3.1 gui-base
+
+This module contains base components used by most other gui classes and
+(of course) the preview components. You will need this module, if you
+want to preview the report. All export guis will plug into this module
+to provide access to their functionality.
+
+The module depends on the "pageable-export-base" and the
+"graphics2d-pageable-export".
+
+4.3.2 gui-csv
+
+Provides a gui for the raw and table export into CSV files. Both export
+modules and the preview-base classes must be present.
+
+4.3.3 gui-html
+
+Provides a gui for the HTML export. The html export module and the
+preview-base classes must be present.
+
+4.3.4 gui-pdf
+
+Provides a gui for the PDF export. The pdf-pageable-export module and the
+preview-base-module must be activated to make this module work.
+
+4.3.5 gui-plaintext
+
+Provides a gui for the plaintext export. This module requires the
+plaintext-pageable-export and the preview-base classes to be present.
+
+4.3.6 gui-print
+
+Provides support for the Java 1.2 printing API. The preview-base classes
+must be present.
+
+4.3.7 gui-xls
+
+Provides a gui for the HTML export. The html export module and the
+preview-base classes must be present.
+
+4.3.8 gui-config
+
+This module contains an editor to create jfreereport.properties files, which
+can be used to provide a local configuration for JFreeReport. The file
+need to be located in the root of the classpath.
+
+The editor list all available report settings and contains help texts for
+each property.
+
+The preview-base must be present in the system to make this editor work.
+
+4.3.9 gui-converter
+
+The report converter can be used to convert reports from the simple report
+definition format or from older JFreeReport versions to the new name space
+of JFreeReport 0.8.4.
+
+Please make sure you've read the "migration.txt" before starting to convert
+older reports.
+
+This module requires all parser modules to be present and will also use
+the preview-base module.
+
+4.4 Other modules
+
+4.4.1 misc-beanshell
+
+The bean-shell module provides support for the BSHExpression, which is
+an simple way of adding small scripts to the xml report definitions.
+
+Users which define their reports using the API will be faster when
+implementing the expressions as own classes.
+
+This requires the beanshell classes (contained in "bsh-1.3.jar") to be
+present in the classpath.
+
+4.4.2 misc-referencedoc
+
+This module provides a reference documentation for the used object
+descriptions of the extended parser. Starting the ReferenceDocGenerator
+will place the generated files into your home directory.
+
+This module depends on the parser-ext, the output-pageable-pdf and the
+output-table-html modules.
+
+4.4.3 misc-tablemodel
+
+The classes contained in this module contain utility methods to ease the
+handling of tablemodels. The ResultSetTableModelFactory provides a simple
+way of creating tablemodels from java.sql.ResultSet objects. The
+TableModelInfo class will print some debugging info on tablemodels and can
+be used to verify the correctness of an tablemodel implementation.
+
+The module has no external dependencies.
+
+4.4.4 misc-configstore-base
+
+The config store is used to store property files in a location independent
+way. This module contains base classes for the config store, and depends
+on no other modules.
+
+4.4.5 misc-configstore-filesystem
+
+The filesystem config store provides a method to write the stored property
+files into a repository located in the local filesystem.
+
+This module will not work without the "misc-configstore-base".
+
+4.4.6 misc-bsf
+
+The bean-scripting framework module provides support for scripting using one
+of the supported languages of the Apache-BeanScripting framework. This is
+an simple way of adding small scripts to the xml report definitions.
+
+Users which define their reports using the API will be faster when
+implementing the expressions as own classes.
+
+This requires the bean scripting framework classes (contained in
+"bsf-2.3.0.jar") to be present in the classpath.
+
+4.4.7 misc-datafactory
+
+Contains Datafactory-implementations for JDBC-Datasources and another
+implementation for Java-Datasources using the reflection API to call
+parametrizable methods which build TableModels for the reporting.

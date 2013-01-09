@@ -1,0 +1,94 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
+ */
+
+package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
+
+import java.awt.event.ActionEvent;
+import java.net.URL;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
+import org.pentaho.reporting.designer.core.actions.report.SaveReportAction;
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+
+/**
+ * User: Martin Date: 25.01.2006 Time: 11:26:24
+ */
+public class PublishToServerAction extends AbstractReportContextAction
+{
+  public PublishToServerAction()
+  {
+    putValue(Action.NAME, Messages.getInstance().getString("PublishToServerAction.Text"));
+    putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("PublishToServerAction.Description"));
+    final URL url = PublishToServerAction.class.getResource
+        ("/org/pentaho/reporting/designer/extensions/pentaho/repository/resources/PublishToServerIcon.png");
+    if (url != null)
+    {
+      putValue(Action.SMALL_ICON, new ImageIcon(url));
+    }
+    putValue(Action.ACCELERATOR_KEY, Messages.getInstance().getKeyStroke("PublishToServerAction.Accelerator"));
+  }
+
+  /**
+   * Invoked when an action occurs.
+   */
+  public void actionPerformed(final ActionEvent e)
+  {
+
+    final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
+    final ReportRenderContext activeContext = getActiveContext();
+    if (activeContext == null)
+    {
+      return;
+    }
+
+    if (activeContext.isChanged())
+    {
+      // ask the user and maybe save the report..
+      final int option = JOptionPane.showConfirmDialog(reportDesignerContext.getParent(),
+          Messages.getInstance().getString("PublishToServerAction.ReportModifiedWarning.Message"),
+          Messages.getInstance().getString("PublishToServerAction.ReportModifiedWarning.Title"),
+          JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+      if (option == JOptionPane.YES_OPTION)
+      {
+        if (SaveReportAction.saveReport
+            (reportDesignerContext, activeContext, reportDesignerContext.getParent()) == false)
+        {
+          return;
+        }
+      }
+      if (option == JOptionPane.CANCEL_OPTION)
+      {
+        return;
+      }
+    }
+
+    final PublishToServerTask publishToServerTask =
+        new PublishToServerTask(reportDesignerContext, reportDesignerContext.getParent());
+    final LoginTask loginTask = new LoginTask
+        (reportDesignerContext, reportDesignerContext.getParent(), publishToServerTask);
+
+    SwingUtilities.invokeLater(loginTask);
+
+  }
+
+}

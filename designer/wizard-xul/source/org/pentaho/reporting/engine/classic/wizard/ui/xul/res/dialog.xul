@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog 
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+  xmlns:pen="http://www.pentaho.org/2008/xul"
+  title="${CHOOSE_TYPE}"
+  id="datasource_type_dialog" width="200" height="400" resizeable="false" >
+  
+  <listbox id="datasource_selections_box" flex="1"/>
+</dialog>

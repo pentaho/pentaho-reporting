@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="PageFooter Demo" pageformat="A4">
+  <reportheader>
+    <rectangle x="0" y="0" width="100%" height="100%" color="#7fff7f" fill="true" draw="false"/>
+    <label x="0" y="0" width="100%" height="12">The report header</label>
+  </reportheader>
+
+  <!-- PAGE HEADER -->
+  <pageheader height="32" onfirstpage="true" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <label x="0" y="12" width="100%" height="20" alignment="center">PAGE HEADER</label>
+  </pageheader>
+
+  <!-- ITEMS -->
+  <items height="10" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <string-field x="0" y="0" width="110" height="8" alignment="left" fieldname="Name"/>
+    <number-field x="110" y="0" width="40" height="8" alignment="right" format="0" fieldname="Count1"/>
+    <string-field x="210" y="0" width="60" height="8" alignment="left" fieldname="Letter"/>
+    <string-field x="270" y="0" width="40" height="8" alignment="left" fieldname="Color"/>
+    <number-field x="310" y="0" width="66" height="8" alignment="right" format="#,##0" fieldname="Integer"/>
+    <number-field x="376" y="0" width="76" height="8" alignment="right" format="#,##0.00" fieldname="Double"/>
+
+    <band name="PlaceholderBand" y="10" width="100%" height="10" x="0"/>
+  </items>
+
+  <!--
+    The report footer should contain a white rectangle with a fixed height which is
+    as large as the page footer. This is needed to fool the layouting engine or weird
+    effects will happen. Even with that, that trick is nothing more than a cheap hack
+    and no guarantees can be given.
+    -->
+  <reportfooter layout-cachable="false" >
+    <rectangle x="0" y="0" width="100%" height="100" color="#efefef" fill="true" draw="false"/>
+    <label x="0" y="0" width="100%" height="24">(hidden band)</label>
+  </reportfooter>
+
+  <pagefooter onlastpage="false"  layout-cachable="false" >
+    <rectangle x="0" y="0" width="100%" height="100" color="#7f7fff" fill="false" draw="true"/>
+    <label x="0" y="0" width="80%" height="12">Number of items displayed: </label>
+    <number-field x="80%" y="0" width="20%" height="12" fieldname="itemcount"/>
+    <label x="0" y="12" width="100%" height="88" fontname="SansSerif">
+This is just some report footer content declared in the page footer, so that it is
+printed at the bottom of the page.
+
+The grey area is the real report footer (make it white to be invisible, but do not remove it).
+The blue-bordered area is the page footer, which gets abused as a report footer.
+    </label>
+  </pagefooter>
+
+  <functions>
+    <function class="org.jfree.report.function.ItemCountFunction" name="itemcount"/>
+    <function class="org.jfree.report.function.TriggerPageFooterFunction" name="trigger"/>
+
+    <function name="Count1" class="org.jfree.report.function.ItemCountFunction">
+      <properties>
+        <property name="group">Color Group</property>
+      </properties>
+    </function>
+
+    <function class="org.jfree.report.function.ElementVisibilitySwitchFunction" name="switch">
+      <properties>
+        <property name="element">PlaceholderBand</property>
+        <property name="numberOfElements">5</property>
+        <property name="initialState">true</property>
+      </properties>
+    </function>
+  </functions>
+
+</report>

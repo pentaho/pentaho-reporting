@@ -1,0 +1,45 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<body>
+<h2>Advertising Demo</h2>
+
+<p>
+  This report shows a typical advertising letter praising the latest offerings
+  from a local computer store. It is a variation of the 'invoice' type demos.
+</p>
+
+<p>
+  The report definition uses a <code>message-field</code> tag to concat strings
+  within an element.
+  <pre>
+    &lt;message-field name="customer.salutationExpression"
+    x="0" y="290" width="450" height="12"
+    alignment="left" fontstyle="plain" fontsize="11"
+    &gt;Dear $("customer.salutation") $("customer.lastName")&lt;/message-field&gt;
+  </pre>
+</p>
+
+<p>
+  A message field will print the current values for the given datarow column
+  names
+  whenever the underlying band is printed. As the implementation uses a
+  <code>java.text.MessageFormat</code> object to actually generate the contents
+  for
+  the element, you can also add additional message format arguments:
+</p>
+<pre>
+  &lt;message-field name="invoice.date"
+  x="75%" y="224" width="25%" height="12"
+  alignment="right" fontstyle="plain"
+  &gt;$("ad.date",date,"yyyy-MM-dd")&lt;/message-field&gt;
+</pre>
+
+<p>
+  If the article description is empty, it is hidden using a custom function.
+  As usual in such cases, the element to be hidden is referenced by its name.
+</p>
+</body>
+</html>

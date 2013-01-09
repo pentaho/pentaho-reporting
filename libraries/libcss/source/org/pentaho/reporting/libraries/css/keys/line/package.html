@@ -1,0 +1,111 @@
+<html>
+<head>
+
+</head>
+
+<body>
+<pre>
+  5.1. Initial line
+
+  On a block element containing inline elements, the initial line is very often
+  presented differently. For example it may use a difference typeface, a color,
+  font-size or even casing (like all uppercase). The presentation of that
+  initial
+  line can be controlled by applying a limited set of style properties to the
+  ::first-line pseudo element. Only the following properties can be applied to
+  the
+  ::first-line pseudo elements:
+
+  * font properties
+  * color properties
+  * background properties
+  * text decoration properties
+  * baseline alignment properties
+  * 'word-spacing'
+  * 'letter-spacing'
+  * 'line-height' (may be ignored depending on the block line-stacking strategy)
+  * 'text-shadow'
+  * 'clear'
+
+  Although there is no properties only applicable to ::first-line pseudo
+  elements,
+  in essence the 'text-indent' property which is applied to 'block-level'
+  elements
+  is in fact only effective on the first line of the block element.
+
+  5.2. Drop Initial overview
+
+  Drop initial is a typographic effect emphasizing the initial letter(s) of a
+  block element with a presentation similar to a 'floated' element. It can be
+  described as the combination of the following effects:
+
+  *
+
+  For the purpose of drop initial, an initial letter has two alignment points:
+  an 'after' alignment point and a 'before' alignment point. (For
+  writing-mode:lr-tb, 'after' corresponds to bottom and 'before' to 'top').
+  *
+
+  The 'after' alignment point connects with one of the alignment point of the
+  nth line of the block element of which the initial letter is part of. The
+  value 'n' is the number of lines by which the initial letter is dropped. That
+  connection point is called the primary connection point. The union of the two
+  alignment lines makes a connection line.
+  *
+
+  If no drop initial size is explicitly provided, there is a secondary
+  connection point where the 'before' alignment points connects with one of the
+  alignment point of the initial line. In that case the initial letter is
+  totally sunken.
+  *
+
+  If a drop initial size is provided, there is no secondary connection point as
+  it would result otherwise in an over constraint situation. In that case the
+  initial letter may not be totally sunken, especially if the size is provided
+  in 'line' unit with a number larger than the drop.
+  *
+
+  The values provided above result in the creation of an 'ink box' which is
+  filled by the initial letter. Depending on the selected alignment points, part
+  of the glyphs may bleed beyond the ink box.
+  *
+
+  The character content of the drop initial influences greatly how the drop
+  initial letters are best aligned with the rest of the block element content.
+
+  The CSS mechanism to 'select' the drop initial content is the ::first-letter
+  pseudo element. The first letter is defined as including all starting
+  punctuation characters (defined in Unicode as 'open' (Ps), 'close' (Pe) and
+  'other' (Po), if any, followed by the first non-punctuation character cluster.
+  A character cluster may be a single character, a combining sequences (base
+  character followed by combining characters) or a stacked set of characters
+  (like in Thai).
+
+  Only the following properties can be applied to the ::first-letter pseudo
+  elements:
+
+  * font properties
+  * color properties
+  * background properties
+  * text decoration properties
+  * baseline alignment properties (only if 'float' is 'none')
+  * 'text-transform'
+  * 'letter-spacing'
+  * 'line-height' (may be ignored depending on the block line-stacking strategy)
+  * margin properties
+  * padding properties
+  * border properties
+  * 'float'
+  * text-shadow
+  * 'clear'
+  * all properties described in this section (drop-initial-...)
+
+  In addition, one property: 'text-indent' although applying to block-level
+  elements is in fact effective on its first line of text and has therefore an
+  influence on the indentation of the first-letter versus the start edge of the
+  containing block. Using the 'text-indent' allows the correction of optical
+  effect (like uppercase 'O') or even pushing the starting piece of the initial
+  letter in a 'virtual' margin.
+</pre>
+</body>
+</html>

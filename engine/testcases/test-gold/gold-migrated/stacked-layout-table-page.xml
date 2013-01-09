@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="2">
+    <cols>
+      <column width="451"/>
+    </cols>
+    <row height="35">
+      <empty-cell background-color="#ffcccc">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="ReportProperty Demo (Using the stacked layout)"/>
+      </empty-cell>
+    </row>
+    <row height="663">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

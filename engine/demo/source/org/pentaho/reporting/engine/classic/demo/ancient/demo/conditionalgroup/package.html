@@ -1,0 +1,100 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<body>
+<p>
+  This demo shows how to define conditional groups. The report for
+  this demo creates a Profit and Loss Statement report for the Open
+  Source accounting package jGnash. The expected output is:
+</p>
+<pre>
+Income
+  Account 1                                      9999.99
+  Account 2                                      9999.99
+Total Income                                    99999.99
+
+Expense
+  Account A
+    Account Z                                      99.99
+    Account Y                                     999.99
+  Total Account A                                9999.99
+
+  Account B                                      9999.99
+
+Total Expense                                   99999.99
+
+Net Profit/Loss                                 99999.99
+</pre>
+<p>
+  The data is formatted as:
+<table>
+  <tr>
+    <th>type</th>
+    <th>level-one-account</th>
+    <th>level-two-account</th>
+    <th>balance</th>
+  </tr>
+  <tr>
+    <td>Income</td>
+    <td>Account 1</td>
+    <td>-</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Income</td>
+    <td>Account 2</td>
+    <td>-</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account A</td>
+    <td>Account Z</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account A</td>
+    <td>Account Y</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account B</td>
+    <td></td>
+    <td>9999.99</td>
+  </tr>
+</table>
+</p>
+<p>
+  The magical work is done by two functions, TriggerNestedGroupFunction
+  and TriggerTypeFunction.
+</p>
+
+<p>
+  The TriggerTypeFunction processes the top group and shows and hides
+  the income and expense headers depending on the content of the
+  "type" column of the assigned tablemodel.
+</p>
+
+<p>
+  The TriggerNestedGroupFunction checks, whether the current group
+  is a nested group. A nested group is recognized by its non-null
+  content in the column "level-two-account". Depending on whether a nested
+  group is found, either the itemband for the nested group and the
+  group header and footer for that group are made visible or the
+  normal, non-nested itemband is made visible.
+</p>
+
+<p>
+  A third custom function collects the totals from the income and expense
+  group and computes the netto profit. As this function reuses the results
+  from other function, we have to make sure, that the used functions are
+  executed before the netto-profit function tries to query the sums.
+  This is done by declaring a dependency level for the used functions,
+  which is higher than the dependency level for the netto-profit function
+  (which defaults to '0').
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Survey Scale Demo Report" pageformat="A4"
+    topmargin="36" leftmargin="36" bottommargin="36" rightmargin="36">
+
+  <!-- use a watermark to draw a frame around the page... -->
+  <watermark>
+    <rectangle x="0" y="0" width="100%" height="100%" weight="1"
+               color="black" draw="true" fill="false"/>
+  </watermark>
+
+  <pageheader>
+    <label x="0" y="10" width="100%" height="28" fontname="SansSerif"
+           fontsize="18" fontstyle="bold" alignment="center"
+            >Free / Open Source Software Survey</label>
+    <message-field x="0" y="38" width="100%" height="14" fontname="SansSerif"
+            fontsize="12" fontstyle="bold"
+            >Respondent: $(RESPONDENT_NAME)</message-field>
+    <label x="0" y="58" width="100%" height="28" fontname="SansSerif"
+           fontsize="11" fontstyle="italic" alignment="center" href="" href-window=""
+            >Please note that the questions AND responses presented below were INVENTED for the the purpose of this demo report.  They are NOT real.</label>
+  </pageheader>
+
+  <pagefooter fontname="Serif" fontsize="8">
+    <line name="PH2" x1="0" y1="0" x2="100%" y2="0" color="black" weight="1.0"/>
+    <string-field x="485" y="50" width="85" height="16"
+                  fieldname="PAGE_N_OF_M" alignment="right" fsitalic="true"/>
+    <label x="0" y="50" width="485" height="15">Copyright �2004 Object Refinery Limited. All Rights Reserved.</label>
+  </pagefooter>
+
+  <groups>
+    <group name="default">
+      <fields><!-- Intentionally left empty --></fields>
+      <groupheader fontsize="7" fontname="SansSerif" vertical-alignment="bottom" alignment="center">
+        <label x="220" y="0" width="35" height="30">Not Important</label>
+        <label x="360" y="0" width="35" height="30">Very Important</label>
+        <rectangle x="15" y="30" width="220" height="20" color="black" draw="true" fill="false"/>
+        <rectangle x="15" y="30" width="220" height="20" color="#dcffdc" draw="false" fill="true"/>
+        <rectangle x="235" y="30" width="176" height="20" color="black" draw="true" fill="false"/>
+        <rectangle x="235" y="30" width="176" height="20" color="#dcffdc" draw="false" fill="true"/>
+        <drawable-field x="220" y="30" width="176" height="20" fieldname="SCALE_HEADER"/>
+
+        <rectangle x="400" y="30" width="85" height="20" color="black" draw="true" fill="false"/>
+        <rectangle x="400" y="30" width="85" height="20" color="#dcffdc" draw="false" fill="true"/>
+        <label x="400" y="30" width="85" height="20" fontsize="8">Your Response</label>
+
+        <rectangle x="485" y="30" width="85" height="20" color="black" draw="true" fill="false"/>
+        <rectangle x="485" y="30" width="85" height="20" color="#dcffdc" draw="false" fill="true"/>
+        <label x="485" y="30" width="85" height="20" fontsize="8">Average Response</label>
+      </groupheader>
+    </group>
+
+    <group name="Category Group">
+      <fields>
+        <field>Category</field>
+      </fields>
+      <!--
+      The stacked layout manager always places elements at the left-most position
+      and places each element below the other.
+       -->
+      <groupheader repeat="true" layout="org.jfree.report.layout.StackedLayoutManager">
+        <string-field width="100%" height="16" fieldname="Category"
+                      fontname="SansSerif" fontsize="12" fsbold="true"
+                      trim-text-content="true" dynamic="true"/>
+        <string-field width="100%" height="16" fieldname="Category Description"
+                      fontname="Serif" fontsize="12" fsbold="true"
+                      trim-text-content="true" dynamic="true"/>
+      </groupheader>
+    </group>
+  </groups>
+
+  <items fontname="Serif" fontsize="11" vertical-alignment="top">
+    <message-field x="0" y="7" width="25" height="16">$(ITEM_COUNT).</message-field>
+    <string-field x="25" y="7" width="195" height="16" fieldname="Item" dynamic="true" trim-text-content="true"/>
+    <drawable-field x="220" y="6" width="176" height="15" fieldname="Survey Response"/>
+    <number-field x="400" y="7" width="85" height="16" fieldname="Your Response" format="0.00" alignment="center"/>
+    <number-field x="485" y="7" width="85" height="16" fieldname="Average Response" format="0.00" alignment="center"/>
+  </items>
+
+  <functions>
+    <function name="ITEM_COUNT" class="org.jfree.report.function.ItemCountFunction"/>
+
+    <property-ref name="RESPONDENT_NAME">Dave</property-ref>
+    <expression name="SCALE_HEADER" class="org.jfree.report.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+import org.jfree.report.modules.misc.survey.SurveyScale;
+import java.awt.Font;
+
+Object getValue()
+{
+  final SurveyScale scaleHeader = new SurveyScale(1, 5, null);
+  scaleHeader.setDrawScaleValues(true);
+  scaleHeader.setDrawTickMarks(false);
+  scaleHeader.setScaleValueFont(new Font("SansSerif", Font.PLAIN, 9));
+  return scaleHeader;
+}
+        </property>
+      </properties>
+    </expression>
+    <expression name="Survey Response" class="org.jfree.report.modules.misc.survey.SurveyScaleExpression">
+      <properties>
+        <property name="lowest">1</property>
+        <property name="highest">5</property>
+        <property name="field[0]">Your Response</property>
+        <property name="field[1]">Average Response</property>
+      </properties>
+    </expression>
+
+    <expression name="PAGE_N_OF_M" class="org.jfree.report.function.PageOfPagesFunction"/>
+  </functions>
+</report>

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="2">
+    <cols>
+      <column width="3"/>
+      <column width="552"/>
+    </cols>
+    <row height="32">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Report"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="770">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@18653132"/>
+        <line type="ParagraphPoolBox" x="3.0" y="32.0" width="86.676" height="12.0" color="black" font-face="dialog" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="3.0" y="32.0" width="47.352" height="12.0">Headline</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="53.676" y="32.0" width="36.0" height="12.0">Report</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+  <table col-count="1" row-count="3">
+    <cols>
+      <column width="555"/>
+    </cols>
+    <row height="45">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="group"/>
+      </empty-cell>
+    </row>
+    <row height="16">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@16511239"/>
+      </empty-cell>
+    </row>
+    <row height="741">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

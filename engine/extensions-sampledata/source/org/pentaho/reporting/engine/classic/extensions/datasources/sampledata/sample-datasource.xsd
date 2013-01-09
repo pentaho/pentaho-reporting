@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright (c) 2008, Your Corporation. All Rights Reserved.
+  -->
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://reporting.pentaho.org/namespaces/datasources/sample"
+            targetNamespace="http://reporting.pentaho.org/namespaces/datasources/sample">
+
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of SQL-Datasource definitions in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.10 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="sample-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        An datasource consists of an (optional) connection info block and a
+        sequence of named queries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="query" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="query">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

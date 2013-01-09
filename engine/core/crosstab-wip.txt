@@ -1,0 +1,77 @@
+Major changes to the engine:
+
+(1) We no longer assume that groups have a header and a footer. Only
+    relational-groups and crosstab, crosstab-other group have header
+    and footer.
+(2) We no longer assume that there is a itemband, detail-header or footer or a no-database next to the itemband.
+(3) Setters for these bands are gone (use GroupDataBody's accessors instead), getters now may return <null>.
+(4) Crosstab-content is now organized in cells, using a generic "dimension-key" as method to map measure
+    and summary cells to their respective position. A cell in itself does not constitute a content definition.
+    Must be matched by a row-group and column-group entry. Reference can be generic via ::group-<n> syntax
+    where <n> is the sequence number of the group. Only valid for crosstab groups. 
+(5) CT: Visibility for full row/col is controlled on the group-header. Visible false on crosstab-cell produces
+    empty cell.
+(6) CT-cells: are not used as part of a table. CT-Cells are placed *into* table-cells. Border/Background is
+    applied to table-cell, crosstab-cell style for these properties is cleared.
+
+Crosstabs have a no-data-band placed in front of the crosstab, with an (future) option
+in the generator to disable any generation of the crosstab-table when no data exists.
+
+
+A CSS style node matching exists now on the ReportElements.
+
+
+
+  // Definitions:
+  //
+  // BCW: Block context width = the size against which percentages are resolved
+  // CW: Computed Width = the computed size of the box. This is a rough estaminate of how the box will be sized later.
+  //
+  //Canvas in Block :  cw  = bcw of parent
+  //                   bcw = cw - insets
+  //Inline in Block :  cw  = bcw of parent
+  //                   bcw = 0
+  //Row in Block :     cw  = bcw of parent
+  //                   bcw = cw - insets
+  //Block in Block  :  cw  = bcw of parent
+  //                   bcw = cw - insets
+  //---------------------------------------------
+  //Canvas in Inline : cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //Inline in Inline : cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //Row in Inline   :  cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //Block in Inline :  cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //---------------------------------------------
+  //Canvas in Canvas : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //Inline in Canvas : cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //Row in Canvas    : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //Block in Canvas  : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //----------------------------------------------
+  //Canvas in row    : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //Inline in row    : cw  = specified width resolved against bcw
+  //                   bcw = 0
+  //Row in row       : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //Block in row     : cw  = specified width resolved against bcw
+  //                   bcw = cw - insets
+  //
+
+
+-------------------------
+
+after parsing a report:
+- check whether the strict-compatiblity flag is set. If set, out.
+- If version < 4.0, set strict compatiblity flag.
+
+PRD:
+- Offer an option to convert old reports to new system.
+- Compatiblity updater.
+

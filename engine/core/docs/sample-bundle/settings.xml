@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+ The settings file contains global settings that apply to the master as well as all sub-reports.
+  -->
+<settings xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/settings/1.0">
+  <!--
+  The settings file contains the local report configuration
+    -->
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.AnyConfigKey">AnyConfigValue</property>
+    <property name="org.pentaho.reporting.engine.classic.core.AnyConfigKey2">AnyConfigValue</property>
+  </configuration>
+
+  <!--
+   The runtime section contains the list of dependencies required to run this report.
+   This allows applications to gracefully fail in case of missing dependencies.
+   -->
+  <runtime>
+    <module name="core-module" major-version="1" minor-version="0" patch-version="0"/>
+    <module name="swing-module" major-version="1" minor-version="0" patch-version="0"/>
+  </runtime>
+</settings>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report  xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Open Source Java Projects" pageformat="A4" leftmargin="72" topmargin="72">
+
+  <!-- REPORT HEADER -->
+  <!-- This band appears once at the beginning of the report.  In this example, -->
+  <!-- the header contains four labels. -->
+  <reportheader height="110"
+    fontname="SansSerif" fontstyle="plain" fontsize="10">
+
+    <rectangle name="green-bg" x="104" y="0" width="100%" height="30"
+      color="#CCFFCC" weight="0"/>
+
+    <rectangle name="green-border" x="104" y="0" width="100%" height="30"
+      color="#CCCCCC" weight="1" draw="true" fill="false"/>
+
+    <rectangle name="gray-img" x="0" y="0" width="102" height="102"
+      color="#CCCCCC" weight="0"/>
+
+    <image-field x="1" y="1" width="100" height="100" fieldname="logo"/>
+
+    <label fontstyle="bold" fontsize="18"
+      x="104" y="7" width="100%" height="18"
+      alignment="center" name="RH-01"
+      >Open Source Java Projects</label>
+
+    <label x="104" y="36" width="100%" height="10" trim-text-content="true"
+      fontname="Serif" alignment="left" dynamic="true" name="RH-02"
+      >This report lists a number of Open Source Java projects that you might find useful. The report has been generated using JFreeReport. For an up-to-date list, please visit the following web page:</label>
+
+    <label x="104" y="75" width="100%" height="10"
+      fontname="Monospaced" fontsize="9" trim-text-content="true"
+      alignment="center" vertical-alignment="top"  name="RH-03"
+      href="http://www.object-refinery.com/open.html"
+      >http://www.object-refinery.com/open.html</label>
+
+    <line x1="0" y1="104" x2="100%" y2="104"
+      color="#CCCCCC" weight="0.5"/>
+
+  </reportheader>
+
+  <!-- REPORT FOOTER -->
+  <!-- Displays item count and total bytes for icons listed in the report. -->
+
+  <reportfooter height="30"
+    fontname="SansSerif" fontstyle="bold" fontsize="12">
+  </reportfooter>
+
+  <!-- PAGE HEADER -->
+  <!-- Displays the report name and date. -->
+  <!-- Suppressed on the first page to avoid duplication with report header. -->
+  <pageheader height="18" onfirstpage="true"
+    fontname="SansSerif" fontstyle="bold" fontsize="9">
+    <label x="0" y="0" width="200" height="14"
+      alignment="left">Open Source Java Projects</label>
+    <date-field x="200" y="0" width="100%" height="14" alignment="right" format="d-MMM-yyyy" fieldname="report.date"/>
+    <line x1="0" y1="16" x2="100%" y2="16" color="#CFCFCF" weight="2.0"/>
+  </pageheader>
+
+  <!-- PAGE FOOTER -->
+  <!-- Displays the page number, centered at the bottom of the page. -->
+  <pagefooter height="14"
+    onfirstpage="true" onlastpage="true"
+    fontname="SansSerif" fontstyle="plain" fontsize="9">
+    <number-field fieldname="PageNumber" format="Page 0" x="0" y="3" width="100%" height="9"
+      alignment="center" nullstring="hull"/>
+  </pagefooter>
+
+  <groups>
+    <group name="Category Group">
+      <fields>
+        <field>Category</field>
+      </fields>
+      <groupheader height="28" fontname="SansSerif" fontstyle="bold" fontsize="12" pagebreak-before-print="false">
+        <string-field x="0" y="11" width="250" height="12" alignment="left" fieldname="Category"/>
+        <line x1="0" y1="23" x2="100%" y2="23" weight="0.5"/>
+      </groupheader>
+    </group>
+  </groups>
+
+  <!-- THE ITEM BAND -->
+  <!-- This band is printed once for each row of data in the TableModel. -->
+  <items height="0"
+    fontname="SansSerif" fontstyle="plain" fontsize="9">
+
+    <string-field x="0" y="8" width="140" height="10" alignment="left"
+      fontstyle="bold" fontsize="10"
+      fieldname="Name"/>
+
+    <string-field x="140" y="8" width="100%" height="10" alignment="right"
+      fontname="Monospaced" fontstyle="plain" fontsize="8" vertical-alignment="bottom"
+      name="URL-Field" fieldname="URL" href-window="_blank">
+      <style-expression style-key="href-target" formula="report:[URL]"/>
+    </string-field>
+
+    <string-field x="0" y="24" width="100%" height="0" alignment="left"
+      fontname="Serif"
+      fieldname="Description" dynamic="true"/>
+
+
+  </items>
+
+  <!-- FUNCTIONS -->
+  <!-- Declares the functions used in this report. -->
+  <functions>
+    <property-ref name="report.date"/>
+    <property-ref name="logo"/>
+
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction"/>
+
+    <function name="OverallCount"
+      class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction"/>
+  </functions>
+</report>

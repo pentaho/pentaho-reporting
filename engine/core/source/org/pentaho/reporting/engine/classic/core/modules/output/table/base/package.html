@@ -1,0 +1,41 @@
+<html>
+<body>
+<p>
+  Common base classes for the table style output targets.
+</p>
+
+<h3>Limitations</h3>
+
+<p>
+  The TableExports add several restrictions to the report layouts.
+</p>
+
+<p>
+  Report elements must not overlay each other. It is ok for bands,
+  but the actual data must never overlap. Once a cell is occupied,
+  it cannot be redefined to contain data from other elements.
+  CellData cannot be combined.
+</p>
+
+<p>
+  Backgrounds can only be defined for the complete cell.
+</p>
+
+<h3>How does the table export work?</h3>
+
+<p>
+  All table targets use a two step process to create the output. In
+  the first step, the layout is computed and styles information is collected.
+  The style information will later be reused to form cascading stylesheets
+  or to fill the Excel style tables.
+</p>
+
+<p>
+  Cell backgrounds are computed during the pagination phase and are stored
+  in the SheetLayout; The content itself is only stored during the content-generation
+  phase and is held in the TableContentProducer. Once the page is completed
+  the computed content and the sheet-layout instace are forwarded to the
+  Output-processor implementations.
+</p>
+</body>
+</html>

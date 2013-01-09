@@ -1,0 +1,1088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+  <title>Style Guide</title>
+
+  <section>
+    <title>Introduction</title>
+
+    <para>Whenever more than one developer comes together to work on a shared
+    project, questions of style consistency arise. As every developer has his
+    own habit of formating code, naming methods and variables, the resulting
+    mix becomes confusing and hard to read, as soon as two incompatible styles
+    get mixed up. The only way to avoid such a chaos, is to define mandatory
+    rules, which every developer has to follow.</para>
+
+    <para>This style guide defines such a set of common style rules for
+    JFreeReport and all adjacent projects.</para>
+
+    <para>Some of the given rules are mandatory and must not be ignored or
+    violated. Other rules given in this document can be considered
+    recommendations, they should be followed as closely as possible, but can
+    be violated if there is a known (and documented) reason for it.</para>
+
+    <para>As Java is a complex language, which gives you a great freedom in
+    writing your code, there will be many fields, which remain uncovered by
+    the rules given in this document. Where ever possible, we will try to give
+    examples for such known cases to reduce the number of different variations
+    of these cases.</para>
+  </section>
+
+  <section>
+    <title>Source-Code Level</title>
+
+    <para>This source code style guide uses the same structure as the <ulink
+        url="http://java.sun.com/docs/codeconv/html/CodeConvTOC.doc.html">Java
+    style guide</ulink> written by Sun. Where ever possible, we will refer to
+    the rules in that Guide.</para>
+
+    <section>
+      <title>Project Directory Structure and File Names</title>
+
+      <para>All projects should share a common structure. All files for a
+      project <emphasis>must</emphasis> reside below a single directory, which
+      <emphasis>must</emphasis> be named after the project. All Java source
+      files must be contained in a directory called
+      "<filename>source</filename>", which must be located directly under the
+      project's root directory. Jar-Files the project might depend on must be
+      located inside a directory called "<filename>lib</filename>", which also
+      must be located directly under the project's root directory.</para>
+
+      <para>All projects must provide ANT-build scripts, which create the
+      release distribution files. The build scripts must be self contained and
+      <emphasis>should</emphasis> not have any private dependencies outside
+      the project's directory. All external dependencies on the build script
+      <emphasis>must</emphasis> be documented and <emphasis>must
+      not</emphasis> include non-open source components. Every user of the
+      project must be able to fully rebuild the complete project.</para>
+
+      <para>Every project should provide at least a
+      <filename>ChangeLog</filename> file, which documents the development
+      progress and a README file, which describes the purpose of the project,
+      how to get started with the files in the project and which gives
+      pointers to where to find additional documentation, if available.</para>
+
+      <para>Finally, to comply with the GPL or LGPL, every project must
+      contain a copy of its licence in the root of its project
+      directory.</para>
+    </section>
+
+    <section>
+      <title>Java File Structure</title>
+
+      <para>Each Java source file must contain a single public class or
+      interface. Every package level class must be a public class, which is
+      defined in it's own Java source file. Package protected or private outer
+      classes must not be used, every use of these classes should be replaced
+      by the use of either public outer classes or inner classes.</para>
+
+      <para>Java source files must have the following ordering:<itemizedlist>
+          <listitem>
+            <para>Beginning comment</para>
+          </listitem>
+
+          <listitem>
+            <para>Package and import statements</para>
+          </listitem>
+
+          <listitem>
+            <para>Public Class or Interface declaration</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>All Java source files should be encoded using the ISO-8859-1
+      encoding. Non-ASCII Unicode characters should be escaped.</para>
+
+      <section>
+        <title>Beginning Comments</title>
+
+        <para>All source files must begin with a c-style comment that holds
+        the copyright and licence information, the class name, original author
+        and contributors and a ChangeLog covering the milestones in the file's
+        development history.</para>
+
+        <para>This header comment must always include a CVS-ID tag.</para>
+
+        <para><programlisting>/**
+ * ========================================
+ * &lt;project-name&gt; : &lt;a short project description&gt;
+ * ========================================
+ * * Project Info: &lt;web site of the project&gt;
+ * Project Lead: &lt;project maintainer(s)&gt;
+ *
+ * (C) Copyright 2000-2005, by &lt;copyright holder for the project or file&gt;.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ * ---------
+ * &lt;filename.java&gt;
+ * ---------
+ * (C) Copyright 2000-2005, by &lt;copyright holder for the project or file&gt;.
+ * 
+ * Original Author: &lt;name and email of the initial author of the class&gt;
+ * Contributor(s): &lt;list of all contributors&gt;
+ *
+ * $Id$
+ *
+ * Changes (from &lt;date of the first appearance in the project&gt;)
+ * -------------------------
+ * 08-Feb-2002 : &lt;what changed&gt;
+ */</programlisting></para>
+      </section>
+
+      <section>
+        <title>Package and Import Statements</title>
+
+        <para>The first non-comment line of the file must be the package
+        statement. No project class should be contained in the default
+        package.</para>
+
+        <para>The following package spaces should be used for the JFreeReport
+        projects:<itemizedlist>
+            <listitem>
+              <para><code>org.pentaho.reporting.engine.classic.core</code> for the JFreeReport core
+              project</para>
+            </listitem>
+
+            <listitem>
+              <para><code>org.pentaho.reporting.engine.classic.extensions</code> for the JFreeReport
+              extension project</para>
+            </listitem>
+
+            <listitem>
+              <para><code>org.jfree.pixie</code> for the Pixie image
+              library</para>
+            </listitem>
+
+            <listitem>
+              <para><code>org.pentaho.reporting.engine.classic.core.dev</code> for the JFreeReport
+              development tools</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>Package imports (<emphasis>*</emphasis>-imports) must not be
+        used. This method of importing all classes of a certain package is
+        dangerous, as it might cause naming conflicts between two classes with
+        the same name, which were imported from different packages.
+        Additionally, it is no longer obvious to the human reader, which
+        classes get used by a certain Java source file, thus making it harder
+        to track dependencies.</para>
+
+        <para>All package names must be written in lowercase ASCII-characters.
+        Although Java allows almost any Unicode character in the names of
+        packages as well as in class names, the correct representation of such
+        names in the file system of the user and developers cannot be
+        guaranteed for non-ASCII names. Therefore the safest bet is, to avoid
+        such things altogether.</para>
+
+        <para>Package names in Java are case-sensitive, a package named "com"
+        is not the same as a package named "COM". Windows, for example does
+        not have a case-sensitive filesystem, therefore the package
+        directories for "COM" and "com" will be mapped to the same filesystem
+        entry and thus making it hard to work with these packages in the same
+        project.</para>
+
+        <para>If the IDE used for development supports it, the import
+        statements should be sorted alphabetically in each block. Import
+        statements for the <code>java</code> and <code>javax</code> packages
+        should be written first, followed by a blank line and finally followed
+        by all other imports.</para>
+
+        <para>Example: <programlisting>package org.pentaho.reporting.engine.classic.core;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import org.pentaho.reporting.engine.classic.core.layout.BandLayoutManager;
+import org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet; </programlisting></para>
+      </section>
+
+      <section>
+        <title>Public Class or Interface Declaration</title>
+
+        <para>Every Java source file must contain only one public outer scope
+        class or interface declaration.</para>
+
+        <para>Every class or interface declaration must be preceded by a
+        JavaDoc class comment describing the purpose of the class. The
+        documentation comment should contain examples on how to use that
+        class, where ever it seem applicable. The JavaDoc @author tag is
+        mandatory. Multiple @author tags are allowed.</para>
+
+        <para>The class documentation must be followed by a valid <code>public
+        class</code> or <code>interface</code> declaration.</para>
+
+        <para>If necessary, a non JavaDoc comment might follow immediately
+        after the class declaration, describing internal details of the
+        implementation of this class.</para>
+
+        <para>The order of the class members should be as follows.
+        <orderedlist>
+            <listitem>
+              <para>Constant declarations (<code>public</code>,
+              <code>protected</code> or <code>private static final</code>
+              variables).</para>
+
+              <para>Only immutable classes should be used as constant values.
+              </para>
+
+              <para>The final keyword protects the local variable from any
+              changes. As Java always stores references when dealing with
+              objects only the reference is now write-protected. That means,
+              you cannot change the object's reference (i.e. let the variable
+              point to a different object), but nothing prevents you from
+              changing the internals of the referenced object (assumed that
+              the object's implementation allows it). Array contents are
+              always mutable - there is no way to make the contents of an
+              array immutable.</para>
+
+              <para>Classes are considered immutable, if there exists no
+              operation that changes the public behaviour of the class. An
+              immutable class always returns the same results on calls to its
+              public or protected methods whenever these methods are called
+              with the same parameters. Immutable classes do not change their
+              behaviour.</para>
+
+              <para>See also: <itemizedlist>
+                  <listitem>
+                    <para><ulink
+                        url="http://java.sun.com/docs/books/jls/second_edition/html/typesValues.doc.html#10931">Java
+                    Language Specification: The final keyword</ulink></para>
+                  </listitem>
+
+                  <listitem>
+                    <para><ulink
+                        url="http://www.javapractices.com/Topic29.cjp">Immutable
+                    Objects</ulink></para>
+                  </listitem>
+                </itemizedlist></para>
+            </listitem>
+
+            <listitem>
+              <para>Inner classes.</para>
+
+              <para>Inner classes should always be used in favor of anonymous
+              inner classes. </para>
+
+              <para>If possible, such classes should be static, as this
+              greatly reduces the chances of creating memory leaks when
+              passing these objects around. (All non-static inner classes hold
+              an invisible reference to their outer class instance, and
+              therefore the garbage collector cannot free the outer class
+              unless all inner classes can be garbage collected.)</para>
+            </listitem>
+
+            <listitem>
+              <para>Static member variables</para>
+
+              <para>All non-final static member variables must be private. If
+              necessary, create protected accessor methods for these
+              variables. Static variables should be avoided, except for
+              Singleton implementations, as such variables make it hard to
+              trace bugs in a managed application (like Servlet or
+              EJB-Containers).</para>
+
+              <para>All access to such variables must be properly
+              synchronized.</para>
+            </listitem>
+
+            <listitem>
+              <para>Non-static member variables</para>
+
+              <para>All member variables must be private. If you need to
+              access these variables from a derived class, create protected
+              accessor methods for them.</para>
+            </listitem>
+
+            <listitem>
+              <para>Constructors</para>
+
+              <para>Every class must declare at least one constructor. If
+              there are more than one constructor, the default constructor
+              should always be the first in the list of constructors, even if
+              it is private.</para>
+
+              <para>If the class is an utility class and does only contain
+              static methods, then a private default constructor should be
+              added. This prevents unnecessary object creation of such
+              classes.</para>
+            </listitem>
+
+            <listitem>
+              <para>Methods</para>
+
+              <para>The methods should be grouped by functionality rather than
+              by visibility or name. The main goal should always be to make
+              the source code as readable as possible.</para>
+            </listitem>
+          </orderedlist></para>
+      </section>
+    </section>
+
+    <section>
+      <title>Indentation and Braces</title>
+
+      <para>To conserve space, two spaces should be used as unit of
+      indentation. All indentations must be done with spaces.</para>
+
+      <para>Tab characters must not be used. How Tab characters will be
+      displayed primarily depends on the settings of the user's editor.
+      Usually this leads to inconsistent indentation across the source files
+      once two developers with different Tab-settings edit that document. To
+      avoid such troubles at the first place, the use of Tab characters is
+      forbidden. This way, all files look consistent, no matter whether the
+      tab size is 2 or 8.</para>
+
+      <para>References: <itemizedlist>
+          <listitem>
+            <para><ulink
+                url="http://xarg.net/writing/tabs">http://xarg.net/writing/tabs</ulink></para>
+          </listitem>
+
+          <listitem>
+            <para><ulink url="http://www.jwz.org/doc/tabs-vs-spaces.html">Tabs
+            versus Spaces: An Eternal Holy War</ulink></para>
+          </listitem>
+        </itemizedlist></para>
+
+      <section>
+        <title>Forced Line Breaks</title>
+
+        <para>On some constructs of the Java language, we require mandatory
+        line breaks.</para>
+
+        <para>First of all, and most important: Every statement should be
+        placed on an own line. The old times, where code must be written in a
+        way, that as less as possible paper was used for a program are long
+        time over. There is plenty of space in a Java source file, so there is
+        no reason to press more than one statement on a single line of
+        code.</para>
+
+        <para>To increase the readability of the code, a blank line should be
+        inserted after each structural element, like method, constructor or
+        class or member variables.</para>
+      </section>
+
+      <section>
+        <title>Line Wrapping</title>
+
+        <para>If an overly long expression does not fit on a single line,
+        break it according to these general principles:<itemizedlist>
+            <listitem>
+              <para>Break after a comma</para>
+            </listitem>
+
+            <listitem>
+              <para>Break after an operator</para>
+            </listitem>
+
+            <listitem>
+              <para>Prefer higher-level breaks to lower-level breaks.</para>
+            </listitem>
+
+            <listitem>
+              <para>Align the new line with the beginning of the expression at
+              the same level on the previous line.</para>
+            </listitem>
+
+            <listitem>
+              <para>If the above rules lead to confusing code or to code
+              that's squished up against the right margin, just indent 8
+              spaces instead.</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>Whenever possible, line breaks within expressions should be
+        avoided. If the expression is used in an assignment and the right
+        value of the assignment would fit on the next line, the line break
+        should be inserted after the assignment operator.</para>
+
+        <para>But after all the best way to handle such cases is to avoid them
+        altogether. Overly long lines of code make your source code hard to
+        read and can be usually split into several separate statements.
+        Introduce local variables to split your code or to compute complex
+        parameters. This will greatly increase the readability of the source
+        code.</para>
+
+        <para>The following keywords must always be placed on a new line:
+        <itemizedlist>
+            <listitem>
+              <para>else</para>
+
+              <para>Note: An else followed immediately by an if, can be kept
+              on the same line as the if statement.</para>
+            </listitem>
+
+            <listitem>
+              <para>while</para>
+            </listitem>
+
+            <listitem>
+              <para>do</para>
+            </listitem>
+
+            <listitem>
+              <para>try</para>
+            </listitem>
+
+            <listitem>
+              <para>catch</para>
+            </listitem>
+
+            <listitem>
+              <para>finally</para>
+            </listitem>
+          </itemizedlist></para>
+      </section>
+
+      <section>
+        <title>Placement of Braces</title>
+
+        <para>All curly braces should be placed at the beginning of the next
+        line. The braces itself should have the same indention as their
+        preceding statement. All statements inside the curly braces must be
+        indented by two more spaces than the statements outside the braces.
+        The closing brace must be at the same horizontal position as the
+        corresponding opening brace.</para>
+
+        <para>All code blocks must be held in curly braces, even if it is just
+        a single line of an <code>if</code>, <code>for</code> or
+        <code>while</code> statement.</para>
+
+        <para>A curly brace must always be the only non-whitespace character
+        on the line.</para>
+
+        <para>Using a single line for every curly brace makes it harder to
+        overlook these characters and greatly increase the readability of the
+        source code. The structure of even deeply nested code can be
+        recognized by a short look at it. This way, it is easy to identify the
+        blocks of code of a certain method. Having braces around all of these
+        code blocks makes it easier to add statements without accidentally
+        introducing bugs due to forgetting to add these braces.</para>
+      </section>
+
+      <section>
+        <title>Example</title>
+
+        <para>Here is some properly aligned example code that shows how to
+        apply the above rules:<programlisting>
+public class Foo
+{
+  private class InnerClass 
+        implements I1, I2
+  {
+    public void bar ()
+            throws E1, E2
+    {
+    }
+  }
+
+  public void foo (boolean longNamedVarA, 
+                   int longNamedVarB,
+                   int longNamedVarC, 
+                   int longNamedVarD)
+  {
+    do
+    {
+      try
+      {
+        if (longNamedVarB &gt; 0)
+        {
+          int someVariable = longNamedVarA ?
+                  longNamedVarC : longNamedVarD;
+        }
+        else if (longNamedVarB &lt; 0)
+        {
+          int someVariable = 
+               (longNamedVarC + longNamedVarD);
+          someVariable = longNamedVarB =
+                         longNamedVarC + longNamedVarD;
+        }
+        else
+        {
+          for (int i = 0; i &lt; 5; i++)
+          {
+            doSomething(i);
+          }
+        }
+        switch (a)
+        {
+          case 0:
+          {
+            doCase0();
+            break;
+          }
+          default:
+          {
+            doDefault();
+          }
+        }
+      }
+      catch (Exception e)
+      {
+        processException(e.getMessage(),
+                longNamedVarB + longNamedVarC, 
+                longNamedVarD, longNamedVarA);
+      }
+      finally
+      {
+        processFinally();
+      }
+    }
+    while (true);
+
+    if (2 &lt; 3)
+    {
+      return;
+    }
+
+    if (3 &lt; 4)
+    {
+      return;
+    }
+    
+    int x = 0;
+    do
+    {
+      x++
+    }
+    while (x &lt; 10000);
+
+    x = 0;
+    while (x &lt; 50000)
+    {
+      x++;
+    }
+
+    for (int i = 0; i &lt; 5; i++)
+    {
+      System.out.println(i);
+    }
+  }
+}</programlisting></para>
+      </section>
+    </section>
+
+    <section>
+      <title>Comments</title>
+
+      <para>All source code should be commented.</para>
+
+      <para>Java offers several types of comments. The most noticeable
+      comments are the JavaDoc comments ( /** .. */). The other ones are the
+      line comments (//) and the C-style comments (/* .. */). The later
+      comment types should be used to document the implementation and design
+      decisions leading to that implementation.</para>
+
+      <section>
+        <title>JavaDoc Comments</title>
+
+        <para>We require valid and complete JavaDoc comments for every class,
+        method and member variable of the source code.</para>
+
+        <para>All classes must have at least a short documentary comment
+        describing the purpose of the class. An <code>@author</code> tag is
+        required for every top level class. For inner classes, the it is
+        assumed, that the author of the top level class also wrote the inner
+        class.</para>
+
+        <para>When applicable, the documentation should contain a textual
+        description on how and where to use that class and how this class fits
+        into the big picture. Example code is always a good addition to
+        illustrate the comments.</para>
+
+        <para>Methods must at least document their parameters, exceptions and
+        return values using the corresponding JavaDoc tags. For every object
+        parameter, it should be documented, whether null values are allowed.
+        Runtime exceptions, which are known to be thrown by that method should
+        also be documented in the JavaDoc comment (together with the condition
+        that might trigger the exception).</para>
+
+        <para>The methods JavaDoc documentation should not contain
+        implementation details, except this particular knowledge is a
+        requirement to successfully use the method. Be aware, that this is
+        almost always an indication for a design error. It should be
+        considered to refactor such methods or classes to clarify that
+        problematic case.</para>
+
+        <para>All member variables must have at least a short comment
+        documenting their purpose.</para>
+      </section>
+
+      <section>
+        <title>Implementation Comments</title>
+
+        <para>Implementation comments should always be added to the code where
+        ever it increases the readability of the code.</para>
+
+        <para>However, if you find yourself documenting methods, which are
+        hard to read or understand, you should consider to rewrite such tricky
+        or unclear code by using meaningful (or so-called 'speaking') variable
+        names. In general you should strive for self-documenting code by using
+        well-known patterns and simple structures.</para>
+      </section>
+    </section>
+
+    <section>
+      <title>Declarations</title>
+
+      <section>
+        <title>Class and Interface Declarations</title>
+
+        <para>Top level classes must always be declared as public classes. The
+        package protected access level must never be used. Package protected
+        classes cannot be used outside the package, therefore they cannot be
+        used or extended from an foreign implementor. The package protected
+        access level leaves the classes open to be abused by unrelated classes
+        from the same package. It is better to either lock down the class
+        using the private modifier or to open it to all child classes by using
+        the protected modifier.</para>
+
+        <para>Methods declared in interfaces must be explicitly marked by the
+        keyword public.</para>
+      </section>
+
+      <section>
+        <title>Variables Declarations</title>
+
+        <para>As a general rule, there should be only one variable declaration
+        per line.</para>
+
+        <para>Class and member variables must always have an explicit access
+        level modifier. The use of the package protected access level is not
+        allowed in any code conforming to this style guide. Variables which
+        are not declared 'static final' must always have the private access
+        level. There is no sane reason to allow any other code to modify the
+        internal state of a class. If it should be allowed to modify the value
+        of a class or member variable, accessor methods should be provided for
+        that purpose.</para>
+
+        <para>The visibility of variables should be as little as possible.
+        This leads to the rule, that variables should be declared whenever
+        they are used. Declaring variables at the beginning of a method, as
+        done in C or Pascal leads to confusing code, as it is hard to see,
+        where in a method such a variable might have been already used. If a
+        variable is only used in a certain code block, make sure, that it is
+        declared in that block only.</para>
+
+        <para>Variables, which are assigned only once in their lifetime should
+        be declared as final variables. This way, it will be easier for the
+        compiler to generate optimized code. An other positive side effect is,
+        that you can always be sure about the value of that particular
+        variable, which in return leads to better and easily understandable
+        code.</para>
+
+        <para>Non-static member variables should not be initialized in their
+        declaring statement. If the initial value of a variable differs from
+        the default value for that variable (<code>false</code> for boolean
+        variables, zero for numeric variables and <code>null</code> for object
+        references), the variable should be initialized in the
+        constructor(s).</para>
+      </section>
+    </section>
+
+    <section>
+      <title>Naming Conventions</title>
+
+      <para>Generally, identifiers in your program should be speaking
+      identifiers. A reader of your code should be able to recognize the
+      purpose of the variable or method by the its name. A name should be
+      preferably short, but long enough to clearly describe the purpose
+      without being either chatty nor cryptic. Choosing the right name is an
+      art, but always worth the effort, as it (like nothing else) increases
+      the readability and maintainability of the source code.</para>
+
+      <para>For the sake of compatibility with non-unicode systems, package
+      and class names must be restricted to ASCII characters only. To avoid
+      encoding troubles, we also require, that all method and variable names
+      must be chosen in a way that only ASCII characters get used.</para>
+
+      <section>
+        <title>Package Names</title>
+
+        <para>The prefix of a unique package name is always written in
+        all-lowercase ASCII letters and should be one of the top-level domain
+        names, currently <code>com</code>, <code>edu</code>, <code>gov</code>,
+        <code>mil</code>, <code>net</code>, <code>org</code>, or one of the
+        English two-letter codes identifying countries as specified in ISO
+        Standard 3166, 1981.</para>
+
+        <para>Subsequent components of the package name vary according to an
+        organization's own internal naming conventions. Such conventions might
+        specify that certain directory name components be division,
+        department, project, machine, or login names.</para>
+
+        <para>All package names must be in lower case.</para>
+      </section>
+
+      <section>
+        <title>Class and Interface Names</title>
+
+        <para>Class names should be nouns, in mixed case with the first letter
+        of each internal word capitalized. Try to keep your class names simple
+        and descriptive. Use whole words-avoid acronyms and abbreviations
+        (unless the abbreviation is much more widely used than the long form,
+        such as URL or HTML).</para>
+      </section>
+
+      <section>
+        <title>Method Names</title>
+
+        <para>Names for methods should begin with an English verb (as methods
+        usually 'do' something) possibly extended by a noun or adjective. The
+        name of the method should be speaking, so that the name itself gives a
+        correct indication on what the method will do. Examples for a method
+        that computes a layout would be '<code>compute</code>',
+        '<code>computeLayout</code> or '<code>computeReportLayout'.</code>
+        Which of these names would be the best depends on the context where it
+        was declared and where it is going to be used.</para>
+
+        <para>Method names should be mixed case with the first letter
+        lowercase, with the first letter of each internal word capitalized.
+        Underscore characters must not be used.</para>
+
+        <para>Accessor methods to class or instance variables should follow
+        the Java Beans name style. Methods to set the variable XXX should be
+        called 'setXXX' and methods to read the variable should be called
+        'getXXX'. <programlisting>public class BeanExample
+{
+  private Object variable;
+
+  public Object getVariable ()
+  {
+    return variable;
+  }
+
+  public void setVariable (Object variable)
+  {
+    // possibly check for valid values
+    if (variable == null)
+    {
+      throw new NullPointerException ("Variable must not be null.");
+    }
+    this.variable = variable;
+  }
+}</programlisting></para>
+      </section>
+
+      <section>
+        <title>Variable Names</title>
+
+        <para>Except for constants, all instance, class, and class variables
+        are in mixed case with a lowercase first letter. Internal words start
+        with capital letters. Variable names should not start with underscore
+        _ or dollar sign $ characters, even though both are allowed.</para>
+
+        <para>When choosing identifiers for your program, you should use full
+        English descriptions for names. Avoid using abbreviations. Use names
+        like <code>firstName</code>, <code>lastName</code>, and
+        <code>middleInitial</code> rather than the shorter versions
+        <code>fName</code>, <code>lName</code>, and <code>mi</code>.</para>
+
+        <para>As a thumb rule, names for variables should be an English noun,
+        possibly preceded by an adjective. The name should match the purpose
+        of the member variable. Examples for such names would be
+        <code>limit</code>, <code>upperLimit</code> or
+        <code>lowerLimit</code>.</para>
+
+        <para>One-character variable names should be avoided except for
+        temporary "throwaway" variables. Common names for temporary variables
+        are i, j, k, m, and n for integers; c, d, and e for characters.</para>
+      </section>
+
+      <section>
+        <title>Constants</title>
+
+        <para>The names of variables declared class constants should be all
+        uppercase with words separated by underscores ("_").
+        REPORT_DATE_PROPERTY would be an example for a valid name for a
+        constant variable.</para>
+      </section>
+    </section>
+
+    <section>
+      <title>Programming Practices</title>
+
+      <para>Finally, this guide provides some best-practices when writing Java
+      code. Most of these practices should be common among all programmers and
+      all of them are a requirement for code that should be acceptable for
+      JFreeReport and its related projects.</para>
+
+      <para>A failure to obey to these rules typically leads to bugs, so that
+      the failure to obey to the rule itself is considered a bug.</para>
+
+      <section>
+        <title>Always Define a Constructor</title>
+
+        <para>Every class should have an explicit constructor definition. If
+        the class is an utility class and defined only static methods and
+        variables, this constructor should be private to avoid unnecessary
+        object creations.</para>
+
+        <para>Although Java creates an invisible default constructor for
+        classes, which do not define their own constructor, an explicit
+        declaration is more obvious to the causal reader and provides a
+        convenient place to initialize the instance variables.</para>
+      </section>
+
+      <section>
+        <title>Providing Access to Class or Instance Variables</title>
+
+        <para>Class or instance variables must never be accessible directly.
+        If you need to read or modify the variables, define suitable accessor
+        methods for them.</para>
+
+        <para>Non-private member variables make it impossible for a certain
+        implementation to maintain a valid internal state. Foreign code could
+        easily modify the variable in an invalid way causing state-dependent
+        bugs, which are particular hard to trace. If accessor methods are
+        used, the implementor of these methods can check the given parameters
+        for validity, refusing to alter the classes internal state.</para>
+
+        <para>When providing access to mutable internal variables, you might
+        as well open a big black hole in your code, causing similar bugs as if
+        you'd have allowed direct non-accessor access to the internal variable
+        itself. Avoid returning mutable shared instances of private
+        variables.</para>
+
+        <para>For performance reasons, mutable variables might be returned to
+        derived classes under the assumption, that the creator of the derived
+        class is aware of the possible side effects. Still, this is dangerous
+        and it should be considered to introduce a special container class for
+        that purpose, which protects the internal state actively or to
+        introduce additional methods to avoid that situation
+        altogether.</para>
+
+        <para>Not every internal variable need to have accessor methods
+        defined. As a general rule you should minimize the public or protected
+        interface of an class as much as applicable.</para>
+      </section>
+
+      <section>
+        <title id="style_ref_to_class_vars" xreflabel="">Referring to Class
+        Variables and Methods</title>
+
+        <para>Avoid using an object to access a class (static) variable or
+        method. Use a class name instead. For example:<programlisting>classMethod();             //OK
+AClass.classMethod();      //OK
+anObject.classMethod();    //AVOID!</programlisting></para>
+      </section>
+
+      <section>
+        <title>Avoid Declaring Constant Pools in Interfaces</title>
+
+        <para>Sometimes, it is necessary to define a set of common constants
+        to be used in several, otherwise unrelated classes.</para>
+
+        <para>A common practice among Java Programmers to solve this problem
+        seems to be, to define that set of constants in an Interface
+        declaration. Later that interface is implemented in all classes, which
+        want to use these constants.</para>
+
+        <para>Especially when dealing with a large set of (possibly inherited)
+        classes, it is hard to trace, where a certain constant is originally
+        defined. This problem can be avoided by defining all constants in a
+        final class, which only has a private constructor, to disallow object
+        creation of this class.</para>
+
+        <para>Using the class name to access the constants (<link
+            linkend="style_ref_to_class_vars">Referring to Class Variables and
+        Methods</link>), makes it is always obvious, where a particular
+        constant is defined.</para>
+      </section>
+
+      <section>
+        <title>Variable Assignments</title>
+
+        <para>Avoid assigning several variables to the same value in a single
+        statement. It is hard to read.</para>
+
+        <para>Example:<programlisting>fooBar.fChar = barFoo.lchar = 'c'; // AVOID!</programlisting></para>
+
+        <para>Do not use the assignment operator in a place where it can be
+        easily confused with the equality operator. Example:<programlisting>if (c++ = d++) {        // AVOID! (Java disallows)
+    ...
+}</programlisting>should be written as<programlisting>if ((c++ = d++) != 0) {
+    ...
+}</programlisting></para>
+
+        <para>Do not use embedded assignments in an attempt to improve
+        run-time performance. This is the job of the compiler.
+        Example:<programlisting>d = (a = b + c) + r;        // AVOID!</programlisting></para>
+
+        <para>should be written as<programlisting>a = b + c;
+d = a + r;</programlisting></para>
+      </section>
+
+      <section>
+        <title>Always Check Parameter Values</title>
+
+        <para>When ever a public or protected method accepts parameters, these
+        parameters should be checked for validity.</para>
+
+        <para>Most of the hard to trace bugs in a program are caused by an
+        invalid object state. The only way, a valid object implementation can
+        get into an invalid state, is by accepting invalid parameter in
+        methods, which alter the state of the object. That mean, if methods do
+        never accept invalid parameters and the instance variables cannot
+        changed directly, the object cannot get into an invalid state.</para>
+
+        <para>Be paranoid.</para>
+
+        <para>Designing stable programs begins at the very basic level of the
+        program. Checking parameters and failing fast is a very safe strategy
+        to ensure that the contract between the object designer and the object
+        user is not violated. Do hope, that the caller will only provide valid
+        values, as there will be at least one time in your life, where he will
+        not.</para>
+
+        <para>Common tests for parameters include range checks or checks,
+        whether a value is null.</para>
+
+        <para>Don't repair invalid input.</para>
+
+        <para>Never assume, that you can read the original programmers mind in
+        a safe way, so that you will be able to fix invalid parameters. You
+        won't. If a caller provides invalid values, fail. Often the caller is
+        not even aware that the given values are invalid and as long as the
+        program does not crash (or at least an exception is thrown), he might
+        not notice his fault. If you want to provide self-repairing abilities
+        for your code, provide it in a safe and separate way, so that a caller
+        has to validate (and possibly repair) the input in a separate step.
+        This way, the programmer will be aware, that the input got possibly
+        modified before it is acceptable for the object.</para>
+      </section>
+
+      <section>
+        <title>Avoid Overly Long or Complex Methods</title>
+
+        <para>A method should not be longer than 150 lines of code.</para>
+
+        <para>Long methods are usually a clear indication, that the code of
+        this method should be split into separate sub methods. A common
+        example for such long methods can be found in the various GUI builders
+        out there. The JBuilder, for instance puts all GUI initialization code
+        into a single method, called jbinit(). Once the GUI is more complex
+        than a HelloWorld example, the code in there becomes confusing and
+        hard to read and understand. Splitting the method into several sub
+        methods helps to make the code easier to read. Staying with the GUI
+        example, one could, for instance, separate the initialization of the
+        tool bars, panels and menus into their own methods. Developers, who
+        want to work with Menu-code won't have to cope with panels or tool
+        bars anymore.<programlisting>public class ExampleGUI extends JFrame
+{
+
+  ..
+
+  public ExampleGUI ()
+  {
+    init();
+  }
+ 
+  private void init()
+  {
+    initalizeMenu();
+    initalizeToolbar();
+    initalizePanel();
+  }
+
+  private void initializeMenu() 
+  {
+    ..
+  }
+
+  ..
+
+}</programlisting></para>
+      </section>
+
+      <section>
+        <title>Prefer Simple Structures</title>
+
+        <para>"Complex structures contain complex bugs. Simple structures
+        contain simple bugs."</para>
+
+        <para>Complex, deeply nested functions are very hard to read and most
+        programmers will not understand their purpose, effects and error
+        conditions, unless they spent hours and hours to study them.
+        Functions, which are not fully understandable by the very first look
+        at it, should be redesigned. Complex nested loop bodies should be
+        moved into own methods, so that readers of the code don't have to care
+        about the details, unless they are really interested in them.</para>
+
+        <para>Expressions with many, many parentheses or numerous inline
+        parameter computations are also hard to read and harder to understand.
+        Simplify them. The structure of Java allows almost self-documenting
+        code. Use these options. Write small and simple methods, possibly by
+        outsourcing code to other methods.</para>
+
+        <para>The main aim for all programmers should always be to write
+        maintainable and understandable code.</para>
+
+        <para>References: <ulink
+            url="???">http://c2.com/cgi/wiki?KeepItSimple</ulink></para>
+      </section>
+
+      <section>
+        <title>Error Handling</title>
+
+        <para>Java, as most other modern languages, uses the Exception-model
+        as preferred way to handle unexpected error conditions. Once
+        Exceptions are thrown, they interrupt the current method and transfer
+        the control to a registered error handling code in one of the calling
+        methods. If no error handler was found, the current thread will be
+        finished.</para>
+
+        <para>Error state variables should be avoided. As by definition all
+        programmers are lazy, error states often remain unchecked. Exceptions
+        should always be used to signal, that something unexpected happened.
+        Error return values should be used in case the error was expected. For
+        instance, trying to add an element to a list containing only unique
+        values, which does already contain that element, should not trigger an
+        exception. It is fully sufficient to indicate success or failure by
+        using a certain return value. But, adding an element to a list, which
+        does not expect this kind of element (adding a string to a list of
+        numbers), might throw an exception. Trying to add an invalid type
+        might in this case indicates a programming error and is
+        prevented.</para>
+
+        <para>As a thumb rule: If the error is expected and no invalid state
+        is caused by it, use return values. If the error is unexpected or
+        would cause an invalid program state if ignored, then throw an
+        exception.</para>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <title>Design Decisions</title>
+
+    <para>This sections covers general JFreeReport specific design decisions.
+    It does not document features and should serve as guide to the philosophy
+    behind the JFreeReport code base.</para>
+
+    <para>To be filled ..</para>
+
+    <section>
+      <title></title>
+
+      <para></para>
+    </section>
+  </section>
+</chapter>

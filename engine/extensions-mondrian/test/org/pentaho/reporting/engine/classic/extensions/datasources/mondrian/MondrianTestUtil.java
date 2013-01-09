@@ -1,0 +1,136 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2000 - 2011 Pentaho Corporation and Contributors...  
+ * All rights reserved.
+ */
+
+package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
+
+public class MondrianTestUtil
+{
+  /**
+   * A zero-dimensional query resulting a single-cell result-set, having no row and no column-dimensions. This can be
+   * displayed by having the "field" property of column and row-groups set to &lt;null&gt;
+   */
+  private static final String QUERY_1 = "select from [SteelWheelsSales]";
+  /**
+   * A one-dimensional query. Results in a table with one dimension and a measure.
+   */
+  private static final String QUERY_2 = "select [Product].Children on 0 from [SteelWheelsSales]";
+  /**
+   * A two-dimensional query, where one axis is empty. The result-set has no measures. (this ends up empty because the
+   * parent of 'all' is null, and null members are implicitly filtered)
+   */
+  private static final String QUERY_3 = "select [Product].parent on 0, [Time].Children on 1 from [SteelWheelsSales]";
+  private static final String QUERY_3A = "select [Time].Children on 0, [Product].parent on 1 from [SteelWheelsSales]";
+
+  /**
+   * A two-dimensional query, where one axis is empty. The result-set has no measures. (this ends up empty because the
+   * parent of 'all' is null, and null members are implicitly filtered)
+   */
+  private static final String QUERY_4 = "select crossjoin([Markets].Children, {[Measures].[Quantity], [Measures].[Sales]}) on 0, " +
+      "crossjoin([Product].Children, [Time].Children) on 1 from [SteelWheelsSales]";
+
+  /**
+   * Same as query4, but measures are not right above the cell set (i.e. the last dimension on the columns axis)
+   */
+  private static final String QUERY_5 = "select crossjoin({[Measures].[Quantity], [Measures].[Sales]}, [Markets].Children) on 0, " +
+      "crossjoin([Product].Children, [Time].Children) on 1 from [SteelWheelsSales]";
+
+  /**
+   * Same as query4 but with measures on the columns
+   */
+  private static final String QUERY_6 = "select crossjoin([Product].Children, [Markets].Children) on 0, crossjoin({[Measures].[Quantity], " +
+      "[Measures].[Sales]}, [Time].Children) on 1 from [SteelWheelsSales]";
+
+  /**
+   * Cells with properties.
+   */
+  private static final String QUERY_7 = "with member [Measures].[Foo] as  ' [Measures].[Sales] / 2 ',\n" +
+      "   format_string = '$#,###',\n" +
+      "   back_color = 'yellow',  \n" +
+      "   my_property = iif([Measures].CurrentMember > 10, \"foo\", \"bar\")\n" +
+      "select {[Measures].[Foo], [Measures].[Sales]} on 0,\n" +
+      " [Product].Children on 1\n" +
+      "from [SteelWheelsSales]";
+
+  /**
+   * A query with a ragged hierarchy.
+   */
+  private static final String QUERY_8 = "select {[Markets].[All Markets].[APAC], [Markets].[All Markets].[EMEA], " +
+      "[Markets].[All Markets].[Japan], [Markets].[All Markets], " +
+      "[Markets].[All Markets].[NA]} ON COLUMNS,\n" +
+      "  Hierarchize(Union(Union(Union(Union(Union(Union(Crossjoin({[Product].[All Products].[Classic Cars]}, " +
+      "{[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]}), " +
+      "Crossjoin({[Product].[All Products].[Motorcycles]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Union(Crossjoin({[Product].[All Products].[Planes]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]}), Crossjoin({[Product].[All Products].[Planes]}, " +
+      "[Time].[All Years].[2004].Children))), Crossjoin({[Product].[All Products].[Ships]}, " +
+      "{[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Crossjoin({[Product].[All Products].[Trains]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]})), Crossjoin({[Product].[All Products].[Trucks " +
+      "and Buses]}, {[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Crossjoin({[Product].[All Products].[Vintage Cars]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]}))) ON ROWS\n" +
+      "from [SteelWheelsSales]\n";
+
+  /**
+   * A query with a ragged hierarchy (flipped).
+   */
+  private static final String QUERY_9 = "select " +
+      "  Hierarchize(Union(Union(Union(Union(Union(Union(Crossjoin({[Product].[All Products].[Classic Cars]}, " +
+      "{[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]}), " +
+      "Crossjoin({[Product].[All Products].[Motorcycles]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Union(Crossjoin({[Product].[All Products].[Planes]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]}), Crossjoin({[Product].[All Products].[Planes]}, " +
+      "[Time].[All Years].[2004].Children))), Crossjoin({[Product].[All Products].[Ships]}, " +
+      "{[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Crossjoin({[Product].[All Products].[Trains]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]})), Crossjoin({[Product].[All Products].[Trucks " +
+      "and Buses]}, {[Time].[All Years].[2003], [Time].[All Years].[2004], [Time].[All Years].[2005]})), " +
+      "Crossjoin({[Product].[All Products].[Vintage Cars]}, {[Time].[All Years].[2003], " +
+      "[Time].[All Years].[2004], [Time].[All Years].[2005]}))) " +
+      "ON COLUMNS,\n" +
+      "{[Markets].[All Markets].[APAC], [Markets].[All Markets].[EMEA], " +
+      "[Markets].[All Markets].[Japan], [Markets].[All Markets], " +
+      "[Markets].[All Markets].[NA]} " +
+      "ON ROWS\n" +
+      "from [SteelWheelsSales]\n";
+
+  public static String[][] createQueryArray(final String id)
+  {
+    return new String[][]{
+        {QUERY_1, "query1" + id + "-results.txt"},
+        {QUERY_2, "query2" + id + "-results.txt"},
+        {QUERY_3, "query3" + id + "-results.txt"},
+        {QUERY_3A, "query3a" + id + "-results.txt"},
+        {QUERY_4, "query4" + id + "-results.txt"},
+        {QUERY_5, "query5" + id + "-results.txt"},
+        {QUERY_6, "query6" + id + "-results.txt"},
+        {QUERY_7, "query7" + id + "-results.txt"},
+        {QUERY_8, "query8" + id + "-results.txt"},
+        {QUERY_9, "query9" + id + "-results.txt"},
+    };
+  }
+
+  public static void main(String[] args) throws Exception
+  {
+    BandedQueryDataSourceDriverTest._main(args);
+    DenormalizedDataSourceDriverTest._main(args);
+    LegacyBandedDataSourceDriverTest._main(args);
+  }
+}

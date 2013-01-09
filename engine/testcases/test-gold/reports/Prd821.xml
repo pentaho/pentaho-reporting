@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+<report name="font-to-pdf" xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple" pageformat="A4" leftmargin="72" rightmargin="72" topmargin="72" bottommargin="72">
+  <configuration>
+    <property name="org.jfree.report.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">Identity-H</property>
+    <property name="org.jfree.report.modules.output.pageable.pdf.PDFOutputTarget.default.EmbedFonts">true</property>
+  </configuration>
+
+  <reportheader height="70" fontname="Serif" fontsize="10">
+    <band x="0" y="0" width="100%" height="70" padding-top="10" padding-left="10" padding-right="10" border-style="solid" border-width="1" border-color="green">
+      <rectangle x="0" y="0" width="100%" height="70" fill="true"/>
+    </band>
+  </reportheader>
+
+  <reportfooter height="70" fontname="Serif" fontsize="10">
+    <band x="0" y="0" width="451" height="70" padding-top="10" padding-left="10" padding-right="10" border-style="solid" border-width="1" border-color="green">
+      <rectangle x="0" y="0" width="451" height="70" fill="true"/>
+    </band>
+  </reportfooter>
+
+
+</report>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="4">
+    <cols>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="355"/>
+    </cols>
+    <row height="58">
+      <empty-cell background-color="yellow">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="band"/>
+      </empty-cell>
+      <empty-cell background-color="yellow">
+      </empty-cell>
+      <empty-cell background-color="yellow">
+      </empty-cell>
+    </row>
+    <row height="30">
+      <empty-cell background-color="yellow">
+      </empty-cell>
+      <cell background-color="green" row-span="2" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="dummy"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="CHY3"/>
+        <line type="ParagraphPoolBox" x="100.0" y="58.0" width="26.66" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="58.0" width="26.66" height="10.0">CHY3</text>
+        </line>
+      </cell>
+      <empty-cell background-color="yellow">
+      </empty-cell>
+    </row>
+    <row height="12">
+      <cell background-color="red" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="dummy"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="CHX3"/>
+        <line type="ParagraphPoolBox" x="0.0" y="88.0" width="26.66" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="88.0" width="26.66" height="10.0">CHX3</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell background-color="yellow">
+      </empty-cell>
+    </row>
+    <row height="702">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

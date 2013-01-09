@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="SportsCouncil" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
+  <configuration>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
+  </configuration>
+
+  <reportheader>
+<!--
+    <band width="100%" height="100%">
+      <rectangle x="0" y="0" width="100%" height="100%" fill="true" color="#AF8FAF"/>
+
+      <band y="25%" width="50%" height="50%">
+        <rectangle x="0" y="0" width="100%" height="100%" fill="true" color="#efef55"/>
+      </band>
+
+      <band x="0" y="50%" width="50%" height="50%">
+        <rectangle x="0" y="0" width="100%" height="100%" fill="true" color="orange"/>
+        <label x="100" y="0" width="300" height="20" alignment="center" vertical-alignment="middle">LOGO</label>
+      </band>
+
+      <rectangle x="0" y="0" width="100%" height="300" fill="false" draw="true" color="#EF8FAF"/>
+      <rectangle x="0" y="150" width="100%" height="150" fill="false" draw="true" color="green"/>
+
+    </band>
+    -->
+    <band width="100%">
+      <band width="100%">
+        <label x="100" y="0" width="300" height="20" alignment="center" vertical-alignment="middle">LOGO</label>
+      </band>
+    </band>
+  </reportheader>
+
+  <groups>
+    <group name="orgGroup">
+      <groupheader>
+        <band name="logoSection" x="0" y="0" width="100%" fontname="SansSerif" fontsize="20">
+          <rectangle x="100" y="0" width="300" height="50" fill="true" color="#8F8F8F"/>
+          <label x="100" y="0" width="300" height="50" alignment="center" vertical-alignment="middle">LOGO</label>
+          <label x="0" y="55" width="100%" height="20" alignment="center" vertical-alignment="middle">Club Sports Council Organizations</label>
+        </band>
+
+        <band name="addressSection" x="0" y="110">
+          <label x="0" y="0" width="100%" height="15" fontsize="15">About</label>
+          <line x1="0" y1="17" x2="100%" y2="17" color="grey"/>
+
+          <band name="addressArea" x="50" y="20" height="120" fontname="SansSerif" fontsize="10">
+            <rectangle x="0" y="0" width="100%" height="100%" fill="true" color="#AF8FAF"/>
+
+            <line x1="1" y1="0" x2="1" y2="100"/>
+            <string-field x="5" y="0" width="80%" height="10" fieldname="council.orgName" fsbold="true"/>
+            <string-field x="5" y="10" width="80%" height="10" fieldname="council.street1"/>
+            <string-field x="5" y="20" width="80%" height="10" fieldname="council.street2"/>
+            <string-field x="5" y="30" width="80%" height="10" fieldname="council.town-expression"/>
+
+            <label x="5" y="50" width="60" height="10">Phone:</label>
+            <string-field x="65" y="50" width="80%" height="10" fieldname="council.phoneNumber"/>
+            <label x="5" y="60" width="60" height="10">Fax:</label>
+            <string-field x="65" y="60" width="80%" height="10" fieldname="council.faxNumber"/>
+            <string-field x="5" y="70" width="80%" height="10" fieldname="council.orgEmail" fsunderline="true"/>
+
+            <label x="5" y="90" width="60" height="10">Website:</label>
+            <string-field x="65" y="90" width="80%" height="10" fieldname="council.internalWebsite" fsunderline="true"/>
+          </band>
+        </band>
+      </groupheader>
+
+      <groupfooter>
+        <band name="eventsFooterSection" x="0" y="20" height="50" fontsize="10" fontname="SansSerif">
+          <label x="0" y="0" width="100%" height="15" fontsize="15" fsbold="true">Events</label>
+          <line x1="0" y1="17" x2="100%" y2="17" color="grey"/>
+
+          <label x="0%" y="30" width="20%" height="10" fsbold="true">Events this year:</label>
+          <number-field x="20%" y="30" width="4%" height="10" fieldname="council.yearEventCount"/>
+          <line x1="25%" y1="30" x2="25%" y2="40" color="black"/>
+
+          <label x="26%" y="30" width="19%" height="10" fsbold="true">Events this month:</label>
+          <number-field x="45%" y="30" width="4%" height="10" fieldname="council.thisMonthEventCount"/>
+          <line x1="50%" y1="30" x2="50%" y2="40" color="black"/>
+
+          <label x="51%" y="30" width="19%" height="10" fsbold="true">Events last month:</label>
+          <number-field x="70%" y="30" width="4%" height="10" fieldname="council.lastMonthEventCount"/>
+          <line x1="75%" y1="30" x2="75%" y2="40" color="black"/>
+
+          <label x="76%" y="30" width="19%" height="10" fsbold="true">Future events:</label>
+          <number-field x="95%" y="30" width="4%" height="10" fieldname="council.futureEventCount"/>
+        </band>
+
+        <band name="demographicsSection" x="0" y="70" fontsize="10" fontname="SansSerif">
+          <label x="0" y="0" width="100%" height="15" fontsize="15" fsbold="true">Demographics</label>
+          <line x1="0" y1="17" x2="100%" y2="17" color="grey"/>
+
+          <label x="0" y="30" width="20%" height="10" fsbold="true">Total Members:</label>
+          <number-field x="20%" y="30" width="5%" height="10" fieldname="council.totalMembers-expression"/>
+
+          <line x1="25%" y1="40" x2="25%" y2="50" color="black"/>
+          <label x="0" y="40" width="20%" height="10" fsbold="true" alignment="right">Men:</label>
+          <number-field x="20%" y="40" width="5%" height="10" fieldname="council.totalMen-expression"/>
+
+          <label x="25%" y="40" width="20%" height="10" fsbold="true" alignment="right">Women:</label>
+          <number-field x="45%" y="40" width="5%" height="10" fieldname="council.totalWomen-expression"/>
+        </band>
+      </groupfooter>
+
+      <fields>
+        <field>orgID</field>
+      </fields>
+    </group>
+
+    <group name="detailGroup">
+      <groupheader>
+        <band name="leader" x="0" y="20" height="40" fontsize="10" fsbold="true">
+          <label x="0" y="0" width="100%" height="15" fontsize="15">Leadership</label>
+          <line x1="0" y1="17" x2="100%" y2="17" color="grey"/>
+
+          <label x="0" y="20" width="25%" height="10">Name</label>
+          <label x="25%" y="20" width="25%" height="10">Position</label>
+          <label x="50%" y="20" width="25%" height="10">Phone #</label>
+          <label x="75%" y="20" width="25%" height="10">E-Mail</label>
+        </band>
+
+        <band name="org" x="0" y="20" height="40" fsbold="true">
+          <label x="0" y="0" width="100%" height="15" fontsize="15">Club Sports Council Organizations</label>
+          <line x1="0" y1="17" x2="100%" y2="17" color="grey"/>
+
+          <label x="0" y="20" width="40%" height="10">Name</label>
+          <label x="40%" y="20" width="25%" height="10">Members</label>
+          <label x="65%" y="20" width="35%" height="10">E-Mail</label>
+        </band>
+      </groupheader>
+
+      <fields>
+        <field>orgID</field>
+        <field>recordID</field>
+      </fields>
+
+    </group>
+
+  </groups>
+
+  <items>
+    <band name="leader" x="0" y="0">
+      <string-field x="0" y="0" width="25%" height="10" fieldname="leader.name"/>
+      <string-field x="25%" y="0" width="25%" height="10" fieldname="leader.position"/>
+      <string-field x="50%" y="0" width="25%" height="10" fieldname="leader.leadershipPhoneNumber"/>
+      <string-field x="75%" y="0" width="25%" height="10" fieldname="leader.email"/>
+    </band>
+
+    <band x="0" y="0" name="org">
+      <string-field x="0" y="0" width="40%" height="10" fieldname="org.name"/>
+      <number-field x="40%" y="0" width="25%" height="10" fieldname="org.totalMembers"/>
+      <string-field x="65%" y="0" width="35%" height="10" fieldname="org.email"/>
+
+    </band>
+  </items>
+
+  <functions>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression"
+                name="org.totalMembers">
+      <properties>
+        <property name="expression">
+          Object getValue()
+          {
+            if (dataRow == null)
+            {
+              return null;
+            }
+            Number male = dataRow.get("org.maleGenderCount");
+            Number female = dataRow.get("org.femaleGenderCount");
+            if (male == null &amp;&amp; female == null)
+            {
+              return new Integer(0);
+            }
+            if (male == null)
+            {
+              return new Integer (female.intValue());
+            }
+            if (female == null)
+            {
+              return new Integet (male.intValue());
+            }
+            return new Integer (male.intValue() + female.intValue());
+          }
+        </property>
+      </properties>
+    </expression>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction"
+              name="council.totalMembers-expression">
+      <properties>
+        <property name="group">orgGroup</property>
+        <property name="field">org.totalMembers</property>
+      </properties>
+    </function>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction"
+              name="council.totalMen-expression">
+      <properties>
+        <property name="group">orgGroup</property>
+        <property name="field">org.maleGenderCount</property>
+      </properties>
+    </function>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction"
+              name="council.totalWomen-expression">
+      <properties>
+        <property name="group">orgGroup</property>
+        <property name="field">org.femaleGenderCount</property>
+      </properties>
+    </function>
+
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression"
+                name="council.town-expression">
+      <properties>
+        <property name="pattern">{0}, {1} {2}</property>
+        <property name="field[0]">council.city</property>
+        <property name="field[1]">council.state</property>
+        <property name="field[2]">council.zip</property>
+      </properties>
+    </expression>
+
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression" name="leader.name">
+      <properties>
+        <property name="pattern">{0} {1}</property>
+        <property name="field[0]">leader.firstName</property>
+        <property name="field[1]">leader.lastName</property>
+      </properties>
+    </expression>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction"
+              name="LeaderVisibility">
+      <properties>
+        <property name="element">leader</property>
+        <property name="field">recordID</property>
+      </properties>
+    </function>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction" name="OrgVisibility">
+      <properties>
+        <property name="element">org</property>
+        <property name="field">recordID</property>
+      </properties>
+    </function>
+  </functions>
+</report>

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="4">
+    <cols>
+      <column width="56.16"/>
+      <column width="56.16"/>
+      <column width="355.68"/>
+    </cols>
+    <row height="12">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Event Log"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="45.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="25.55" height="10.0">Event</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="28.32" y="0.0" width="16.68" height="10.0">Log</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Day: $(timestamp,date,short)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="12.0" width="50.54" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="12.0" width="20.55" height="10.0">Day:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="23.32" y="12.0" width="27.22" height="10.0">&lt;null&gt;</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="12">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Time"/>
+        <line type="ParagraphPoolBox" x="0.0" y="32.0" width="22.21" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="32.0" width="22.21" height="10.0">Time</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Event"/>
+        <line type="ParagraphPoolBox" x="56.16" y="32.0" width="25.55" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="56.16" y="32.0" width="25.55" height="10.0">Event</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Description"/>
+        <line type="ParagraphPoolBox" x="112.32" y="32.0" width="50.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="112.32" y="32.0" width="50.0" height="10.0">Description</text>
+        </line>
+      </cell>
+    </row>
+    <row height="604">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

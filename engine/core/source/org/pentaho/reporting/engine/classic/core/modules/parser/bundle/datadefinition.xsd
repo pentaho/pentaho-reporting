@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           targetNamespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/data/1.0"
+           xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/data/1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="data-definition" type="data-definitionType"/>
+
+  <xs:complexType name="import-parameterType">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="alias" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="export-parameterType">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="alias" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="plain-parameterType">
+    <xs:sequence>
+      <xs:element type="parameterAttributeType" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="type" use="required"/>
+    <xs:attribute type="xs:boolean" name="mandatory"/>
+    <xs:attribute type="xs:string" name="default-value"/>
+  </xs:complexType>
+
+  <xs:complexType name="data-sourceType">
+    <xs:sequence>
+      <xs:element type="parameterAttributeType" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="ref" use="optional"/>
+    <xs:attribute type="xs:string" name="report-query" use="optional"/>
+    <xs:attribute type="xs:nonNegativeInteger" name="limit" use="optional"/>
+    <xs:attribute type="xs:nonNegativeInteger" name="timeout" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="list-parameterType">
+    <xs:sequence>
+      <xs:element type="parameterAttributeType" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="type" use="required"/>
+    <xs:attribute type="xs:boolean" name="mandatory"/>
+    <xs:attribute type="xs:string" name="default-value"/>
+
+    <xs:attribute type="xs:string" name="query" use="required"/>
+    <xs:attribute type="xs:string" name="key-column" use="required"/>
+    <!-- Either value-column or value-formula can be specified. -->
+    <xs:attribute type="xs:string" name="value-column" use="optional"/>
+    <xs:attribute type="xs:string" name="value-formula" use="optional"/>
+    <xs:attribute type="xs:boolean" name="strict-values" use="optional"/>
+    <xs:attribute type="xs:boolean" name="allow-multi-selection" use="optional"/>
+    <xs:anyAttribute/>
+  </xs:complexType>
+
+  <xs:complexType name="parameter-definitionType">
+    <xs:sequence>
+      <xs:element type="plain-parameterType" name="plain-parameter" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Like in the platform, all parameters contribute to a commom pool. We define a similiar set of
+      capabilities as the existing secure-parameter component, to ease the transition between the two of them.
+
+      However, this version here is well-defined. :) (Once it is defined, of course)
+
+      All possible inputs have to be declared here. During the resolve process, each parameter's
+      underlying implementation is queried to check whether the parameter-context already contains
+      all required information to process the report.
+
+      We have at least two parameter types:
+
+      (1) Plain Value: Input fields.
+      (2) List Selection
+          (2a) Single-Value Selection
+          (2b) Multi-Value Selection
+
+      Lists are always fed from a query; the query-implementation can be a list of hard-coded values.
+      List-Data has two columns: Key and Presentation value. Simple lists can be created from a single
+      column which simply maps key and presentation value to the same column in the dataset.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element type="list-parameterType" name="list-parameter" maxOccurs="unbounded" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The single-selection returns the key value.
+            A multi-selection type returns a array of the specified type.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <!--
+       For sub-reports, only import and export parameters can be defined.
+       -->
+      <xs:element type="export-parameterType" name="import-parameter" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element type="import-parameterType" name="export-parameter" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="validator" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="data-definitionType">
+    <xs:sequence>
+      <xs:element type="parameter-definitionType" name="parameter-definition" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>
+            The data-definition section contains the connection to the data-sources as well as the functions
+            and parameters used by this report.
+
+            If this report is a master-report, then all parameters from the global "parameter.xml" file will be
+            available as data-sources here.
+
+            If this report is a subreport, then all parameters that can be accepted by this report must be listed
+            here. For subreports, the parameter-validator will only be used internally. Subreport parameters will
+            never be used to generate parameter-input pages for end-users. If any of these parameters should be
+            queried from an user-frontend, then the parent-reports have to pass this parameter through.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element type="data-sourceType" name="data-source" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="expressionType" name="expression" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="namedPropertyType">
+    <xs:complexContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="class" type="xs:string" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="expressionType">
+    <xs:sequence>
+      <xs:element type="propertiesType" name="properties" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="formula" type="xs:string" use="optional"/>
+    <xs:attribute name="initial" type="xs:string" use="optional"/>
+    <xs:attribute name="class" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="propertiesType">
+    <xs:sequence>
+      <xs:element name="property" type="namedPropertyType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <xs:complexType name="parameterAttributeType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="namespace" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="optional" default="java.lang.String"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>

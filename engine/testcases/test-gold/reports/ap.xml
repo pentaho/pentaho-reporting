@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report
+  name="AP Letter"
+  pageformat="LETTER"
+  topmargin="36"
+  leftmargin="36"
+  bottommargin="36"
+  rightmargin="36"
+  orientation="portrait">
+  <!-- REPORT HEADER -->
+  <!-- This band appears once at the beginning of the report. -->
+  <reportheader
+    height="18"
+    fontname="Serif"
+    fontstyle="plain"
+    fontsize="11">
+  </reportheader>
+  <!-- GROUPS -->
+  <!-- Data items are grouped by category. -->
+  <groups>
+    <!-- Following Paragraph Group -->
+    <group name="test">
+      <groupheader
+        height="12"
+        fontname="Serif"
+        fontstyle="plain"
+        fontsize="11"
+        pagebreak-before-print="true">
+        <label name="label1"
+          fontname="Serif"
+          x="158"
+          y="12"
+          width="100%"
+          height="12"
+          dynamic="true">Limited Partnerships 0 - 5 years Options 0 - 5 years Futures 0 - 5 years Certificates of Deposit 0 - 5 years Partnership 0 - 5 years Mutual Funds 0 - 5 years Bonds 0 - 5 years Stocks 0 - 5 years</label>
+      </groupheader>
+
+      <fields>
+        <field>A-test</field>
+      </fields>
+    </group>
+  </groups>
+</report>

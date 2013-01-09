@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/datasources/static"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/datasources/static">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of named Static-Datasource definitions in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.8 and 0.9 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:import namespace="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+              schemaLocation="file:/../../base/core-types.xsd"/>
+
+  <xsd:element name="direct-static-datasource" type="xsd:string"/>
+
+  <xsd:element name="static-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        An datasource consists of an sequence of named queries.
+        Queries must be given in one of the following formats:
+
+        * &lt;full-qualified-classname&gt;#methodName(Parameters)
+        * &lt;full-qualified-classname&gt;(constructorparams)#methodName(Parameters)
+        * &lt;full-qualified-classname&gt;(constructorparams)
+
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="queryType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+</xsd:schema>

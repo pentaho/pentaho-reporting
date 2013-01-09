@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="7">
+    <cols>
+      <column width="406.5"/>
+      <column width="406.5"/>
+    </cols>
+    <row height="12">
+      <cell background-color="#003b79" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="L4"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="L2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="13.344" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="13.344" height="12.0">L2</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="12">
+      <cell background-color="#003b79" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="L3"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Labe"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
+        <line type="ParagraphPoolBox" x="0.0" y="12.0" width="26.688" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="12.0" width="26.688" height="12.0">Labe</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <empty-cell background-color="#003b79">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band2"/>
+      </empty-cell>
+      <empty-cell background-color="#003b79">
+      </empty-cell>
+    </row>
+    <row height="14">
+      <cell background-color="#003b79" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="B1-L1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Item (Slit)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="45.0" width="51.276" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="45.0" width="23.316" height="12.0">Item</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="26.64" y="45.0" width="24.636" height="12.0">(Slit)</text>
+        </line>
+      </cell>
+      <cell background-color="#003b79" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="B1-L2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Item (Slit)"/>
+        <line type="ParagraphPoolBox" x="406.5" y="45.0" width="51.276" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="406.5" y="45.0" width="23.316" height="12.0">Item</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="433.14" y="45.0" width="24.636" height="12.0">(Slit)</text>
+        </line>
+      </cell>
+    </row>
+    <row height="11">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-color="#6689af"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-style="solid"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-width="0.5"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:only-show-changing-values="false"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-color="#6689af"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-style="solid"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:grid-width="0.5"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:only-show-changing-values="false"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="487">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

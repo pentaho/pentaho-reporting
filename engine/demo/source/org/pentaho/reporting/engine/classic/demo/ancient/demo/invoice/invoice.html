@@ -1,0 +1,51 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<body>
+<h2>Computer Shop Invoice Demo</h2>
+
+<p>
+  This demo prints a invoice for a computer shop. Some articles have an extended
+  description (a serial number, a warning etc). The field for the extended
+  description should not be visible, if there is no description at all.
+</p>
+
+<h3>General structure</h3>
+
+<p>
+  The report is grouped at its top level by the invoice column. That column holds the invoice object,
+  important for the reporting is: The contents of this column are the same for all
+  rows of a single invoice.
+</p>
+
+<p>
+  The group header and footer are used to print the invoice header and summary sections.
+  A second group with a dummy fields has been added to print the table header. The table
+  header is repeated on every new page.
+</p>
+
+<h3>Special elements used in this report</h3>
+
+<p>
+  To hide the extendend article description element, if it is not used, the report
+  uses a style-expression on the <code>visible</code> style-key to hide the article-details.
+  Everytime the ItemBand is printed (that's when the method <code>itemAdvenced(..)</code>
+  get called) this function checks, whether the "details" column contains a value and
+  updates the element's visibility accordingly.
+</p>
+
+<p>
+  To concat strings from the tablemodel and print them in one element, this report
+  utilizes the TextFormatExpression. This expression looks up several values from the
+  data row and inserts these values into a java.text.MessageFormat object. The resulting
+  string can be printed using a <code>string-field</code>.
+</p>
+
+<p>
+  Since JFreeReport 0.8.5 the <code>message-field</code> offers an alternate way to
+  format strings for the output.
+</p>
+</body>
+</html>

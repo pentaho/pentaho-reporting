@@ -1,0 +1,151 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Empty Cart Demo</title>
+</head>
+<body>
+<h2>Card demo</h2>
+
+<p>
+  An internet cafe provides several payment models for their customers.
+  Whenever a user pays for an account, he gets a printed card with the account
+  details and can use the data on these cards to login to the systems.
+</p>
+
+<p>
+  There are several card types available:
+<ul>
+  <li>
+    <h4>Free card</h4>
+
+    <p>
+      From time to time, the internet cafes grants free access, ususally during
+      a large scale advertising campaign or as bonus to customers.
+    </p>
+  </li>
+  <li>
+    <h4>Prepaid card</h4>
+
+    <p>
+      The user paid a certain amount of cash, without giving account details to
+      the internet cafe. Great for the occasional user. The card number is
+      used for the login.
+    </p>
+  </li>
+  <li>
+    <h4>Account card</h4>
+
+    <p>
+      An account for a certain user. The account does not expire.
+      The user has an unique login name and password to access the systems.
+    </p>
+  </li>
+  <li>
+    <h4>User card</h4>
+
+    <p>
+      An account for a certain user. The account remains open for the duration
+      of the contract (1 month, 3 month, 1 year, ..). The user has an unique
+      login name and password.
+    </p>
+  </li>
+  <li>
+    <h4>Admin card</h4>
+
+    <p>
+      Our admins get unlimited bandwidth when using the system. Of course they
+      also have a user name and password.
+    </p>
+  </li>
+</ul>
+</p>
+<p>
+  This demo simulates the printing functionality of that internet cafe management
+  software.
+</p>
+
+<h3>Skipping previously printed cards</h3>
+
+<p>
+  Usually it is not economic to start a new sheet of paper for each single card
+  printed. It must be possible to skip previously printed cards from the sheet
+  of paper. Instances of 'EmptyCard' got added to the report as placeholders for
+  sections that should not be printed on.
+</p>
+
+<h3>Data structure</h3>
+
+<p>
+  All cards that should be printed get added to the CardTableModel. That model
+  is a union over all possible properties each available card may have. The first
+  column contains the card type identifier. Columns not used by the given card
+  type remain empty (null).
+</p>
+
+<p>
+  We want to print two cards in a row. JFreeReport's code assumes, that each
+  row in the tablemodel is mapped to an item band in the report. We are having
+  a single card per row, so we have to modify the tablemodel to map two
+  cards to a row.
+</p>
+
+<p>
+  For that purpose, we introduced a 'WrappingTablemodel', which performs that
+  mapping. Two rows of the original tablemodel get mapped into a single row
+  of the WrappingTableModel. The first and all odd-numbered rows of the original
+  tablemodel form the left side of the table. All these columns are prefixed
+  with a 'C1_'. All even numbered rows form the right side of the resulting
+  table and all columns there are prefixed with 'C2_'.
+</p>
+
+<h3>Report Layout</h3>
+
+<p>
+  The itemband will have to double all elements as we have to print the cards
+  for the left (C1_) and right (C2_) side of the table. For each card type,
+  a subband will be used, which is triggered visible or invisible depending
+  on the card type to be printed.
+</p>
+
+<p>
+  The report uses the extended XML configuration. First, we define the styles
+  for all report elements in the 'style' section. This reduces the redundancy
+  of the report definition, as we can use shared styles.
+</p>
+
+<p>
+  In a second step, we define the 'templates' for the band elements. Templates
+  define, how data is processed for the output. As we are mostly using string
+  fields, the templates of this report are rather simple. The 'simple-datefield'
+  template defined in this report shows how templates could be used to reduce
+  the redundancy of the data definition in a similiar fashion as it was done with
+  the style definitions above.
+</p>
+
+<p>
+  Finally we construct the itemband (the only root level band in this report).
+  The itemband contains two direct childs, a band for the left and one for the
+  right card. In each of these child bands, exactly the same subband definitions
+  get used. Each element definition there consists of a single style definition
+  and a single template definition, inheriting their properties from the global
+  definition sections.
+</p>
+
+<h3>Functions</h3>
+
+<p>
+  To control the visibility of the band, a special function is used. The
+  'SelectCardFunction' uses the specified card type column to trigger the
+  visiblity of the card bands. Two instances of this function get used,
+  one for the left side and one for the right side of the itemband.
+</p>
+
+<p>
+  The report properties used to define the internet cafe's name are initialized
+  with default values.
+</p>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<sql-datasource
+        xmlns="http://jfreereport.sourceforge.net/namespaces/datasources/sql"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+  <connection>
+    <driver>org.hsqldb.jdbcDriver</driver>
+    <url>jdbc:hsqldb:mem:SampleData</url>
+    <properties>
+      <property name="user">sa</property>
+      <property name="password"></property>
+      <property name="holdResultsOpenOverStatementClose">true</property>
+    </properties>
+  </connection>
+
+  <query name="default">SELECT
+     CUSTOMERS.CUSTOMERNAME,
+     CUSTOMERS.ADDRESSLINE1,
+     CUSTOMERS.ADDRESSLINE2,
+     CUSTOMERS.CITY,
+     CUSTOMERS.STATE,
+     CUSTOMERS.POSTALCODE,
+     CUSTOMERS.COUNTRY,
+     CUSTOMERS.SALESREPEMPLOYEENUMBER,
+     CUSTOMERS.CONTACTFIRSTNAME,
+     CUSTOMERS.CONTACTLASTNAME,
+     ORDERS.STATUS,
+     ORDERS.CUSTOMERNUMBER,
+     ORDERS.ORDERNUMBER,
+     ORDERS.ORDERDATE,
+     ORDERDETAILS.ORDERLINENUMBER,
+     PRODUCTS.PRODUCTNAME,
+     ORDERDETAILS.QUANTITYORDERED,
+     ORDERDETAILS.PRODUCTCODE,
+     ORDERDETAILS.PRICEEACH,
+     PRODUCTS.QUANTITYINSTOCK,
+     (ORDERDETAILS.QUANTITYORDERED*ORDERDETAILS.PRICEEACH)SOLD_PRICE
+FROM
+     ORDERS,
+     ORDERDETAILS,
+     PRODUCTS,
+     CUSTOMERS
+WHERE
+     (ORDERS.ORDERNUMBER = ORDERDETAILS.ORDERNUMBER
+ AND PRODUCTS.PRODUCTCODE = ORDERDETAILS.PRODUCTCODE
+ AND ORDERS.CUSTOMERNUMBER = CUSTOMERS.CUSTOMERNUMBER)
+ AND ORDERS.CUSTOMERNUMBER = 333
+ AND ORDERS.CUSTOMERNUMBER = 333
+ORDER BY
+     CUSTOMERS.CUSTOMERNAME ASC,
+     ORDERS.ORDERNUMBER ASC,
+     ORDERDETAILS.ORDERLINENUMBER ASC
+  </query>
+</sql-datasource>

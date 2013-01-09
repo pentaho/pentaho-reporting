@@ -1,0 +1,107 @@
+<html>
+<body>
+<p>
+  This module provides basic preview capabilities for JFreeReport. The
+  preview components use worker threads to perform the pagination and
+  exports.
+</p>
+
+<p>
+  The various export dialogs will register at this module an plug their
+  functionality into the preview components.
+</p>
+
+<p>
+  The preview components should be closed when they are no longer used,
+  by calling "close()" to shutdown the workerthreads and to free the used
+  resources.
+</p>
+
+<p>This module requires the Graphics2D output target to be present.</p>
+
+<h2>Configuration keys:</h2>
+
+<table border="1">
+
+  <tr>
+    <th>Property name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewBase.ToolbarFloatable</td>
+    <td>boolean</td>
+    <td>Defines, whether the toolbar will be floatable. This is not enabled by default.</td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredWidth</td>
+    <td>relative-int</td>
+    <td>Defines a preferred size for the preview frame. Both width and height must be set,
+      proportional values are allowed (100%, 90% etc). They have the same syntax as the
+      proportional values in the xml definition.
+    </td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.PreferredHeight</td>
+    <td>relative-int</td>
+    <td>Defines a preferred size for the preview frame. Both width and height must be set,
+      proportional values are allowed (100%, 90% etc). They have the same syntax as the
+      proportional values in the xml definition.
+    </td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumWidth</td>
+    <td>relative-int</td>
+    <td>Defines a maximum size for the preview frame. Both width and height must be set,
+      proportional values are allowed (100%, 90% etc). They have the same syntax as the
+      proportional values in the xml definition.
+    </td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.MaximumHeight</td>
+    <td>relative-int</td>
+    <td>Defines a maximum size for the preview frame. Both width and height must be set,
+      proportional values are allowed (100%, 90% etc). They have the same syntax as the
+      proportional values in the xml definition.
+    </td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.EncodingsAvailable</td>
+    <td>string</td>
+    <td><p>The property that defines which encodings are available in the export dialogs.
+      This property defaults to "all" and can be set to either "all", "none" or "file".
+    </p>
+
+      <p>
+        If the property is set to "file", then the list of available properties is read
+        from the file defined in the property "org.pentaho.reporting.engine.classic.core.encodings.file".</p></td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.EncodingsFile</td>
+    <td>string</td>
+    <td>
+      <p>The name of the properties file used to define the available encodings.
+        The property points to a resources in the classpath, not to a real file!</p>
+
+      <p>This setting defaults to
+        "/org/pentaho/reporting/engine/classic/core/modules/gui/base/components/jfreereport-encodings.properties"</p>
+    </td>
+  </tr>
+
+  <tr>
+    <td>org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingDialogTranslation</td>
+    <td>boolean</td>
+    <td>Defines, whether to translate the default components of Swing. This is disabled by default</td>
+  </tr>
+
+</table>
+
+</body>
+</html>

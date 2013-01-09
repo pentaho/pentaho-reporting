@@ -1,0 +1,3 @@
+Implementation-Title: pentaho-reporting-engine-classic-ext-hibernate
+Implementation-Vendor: Pentaho Corporation
+Implementation-ProductID: pentaho-reporting-engine-classic-extensions-hibernate

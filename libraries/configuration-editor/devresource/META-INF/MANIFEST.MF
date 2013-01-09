@@ -1,0 +1,3 @@
+Implementation-Title: configuration-editor
+Implementation-Vendor: Pentaho Corporation
+Implementation-ProductID: configuration-editor

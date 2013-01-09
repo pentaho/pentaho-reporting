@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
+  <physical-page page-x="0" page-y="0" page-width="595" page-height="842" margin-top="72" margin-left="72" margin-bottom="72" margin-right="72">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <block name="Header-1" type="SectionRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="451.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Sparkline demos"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:compatibility-level="3.8.0"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="451.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="451.0" height="120.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+          <p type="ParagraphRenderBox" x="0.0" y="0.0" width="451.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+            <line type="ParagraphPoolBox" x="0.0" y="0.0" width="306.09" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <inline type="InlineRenderBox" x="0.0" y="0.0" width="306.09" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                <inline type="InlineRenderBox" x="0.0" y="0.0" width="204.43" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar as inline graphics using formula:"/>
+                  <text x="0.0" y="0.0" width="41.67" height="10.0">Sparkline</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="44.44" y="0.0" width="14.45" height="10.0">bar</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="61.66" y="0.0" width="10.56" height="10.0">as</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="74.99" y="0.0" width="23.34" height="10.0">inline</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="101.1" y="0.0" width="37.79" height="10.0">graphics</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="141.66" y="0.0" width="23.9" height="10.0">using</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="168.33" y="0.0" width="36.1" height="10.0">formula:</text>
+                </inline>
+                <replaced-content x="204.43" y="0.0" width="40.0" height="10.0" source="null" content-width="0.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline"/>
+                </replaced-content>
+                <inline type="InlineRenderBox" x="244.43" y="0.0" width="61.66" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sales Volume"/>
+                  <text x="244.43" y="0.0" width="25.0" height="10.0">Sales</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="272.2" y="0.0" width="33.89" height="10.0">Volume</text>
+                </inline>
+              </inline>
+            </line>
+          </p>
+          <replaced-content x="0.0" y="25.0" width="451.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+          </replaced-content>
+          <p type="ParagraphRenderBox" x="0.0" y="30.0" width="300.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar as positioned field using formula:"/>
+            <line type="ParagraphPoolBox" x="0.0" y="30.0" width="207.2" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="0.0" y="30.0" width="41.67" height="10.0">Sparkline</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="44.44" y="30.0" width="14.45" height="10.0">bar</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="61.66" y="30.0" width="10.56" height="10.0">as</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="74.99" y="30.0" width="45.57" height="10.0">positioned</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="123.33" y="30.0" width="18.33" height="10.0">field</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="144.43" y="30.0" width="23.9" height="10.0">using</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="171.1" y="30.0" width="36.1" height="10.0">formula:</text>
+            </line>
+          </p>
+          <replaced-content x="300.0" y="30.0" width="40.0" height="10.0" source="null" content-width="0.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline"/>
+          </replaced-content>
+          <replaced-content x="0.0" y="45.0" width="451.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+          </replaced-content>
+          <p type="ParagraphRenderBox" x="0.0" y="50.0" width="300.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline line as positioned field using formula:"/>
+            <line type="ParagraphPoolBox" x="0.0" y="50.0" width="208.31" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="0.0" y="50.0" width="41.67" height="10.0">Sparkline</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="44.44" y="50.0" width="15.56" height="10.0">line</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="62.77" y="50.0" width="10.56" height="10.0">as</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="76.1" y="50.0" width="45.57" height="10.0">positioned</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="124.44" y="50.0" width="18.33" height="10.0">field</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="145.54" y="50.0" width="23.9" height="10.0">using</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="172.21" y="50.0" width="36.1" height="10.0">formula:</text>
+            </line>
+          </p>
+          <replaced-content x="300.0" y="50.0" width="40.0" height="10.0" source="null" content-width="0.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline2"/>
+          </replaced-content>
+          <replaced-content x="0.0" y="65.0" width="451.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+          </replaced-content>
+          <p type="ParagraphRenderBox" x="0.0" y="70.0" width="300.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sparkline bar changing styles:"/>
+            <line type="ParagraphPoolBox" x="0.0" y="70.0" width="133.33" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="0.0" y="70.0" width="41.67" height="10.0">Sparkline</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="44.44" y="70.0" width="14.45" height="10.0">bar</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="61.66" y="70.0" width="40.58" height="10.0">changing</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="105.01" y="70.0" width="28.32" height="10.0">styles:</text>
+            </line>
+          </p>
+          <replaced-content x="300.0" y="70.0" width="40.0" height="10.0" source="null" content-width="0.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline3"/>
+          </replaced-content>
+        </canvas>
+      </block>
+      <block name="relational-group" type="BlockRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <block name="Section-0" type="SectionRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block type="ProgressMarkerRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          </block>
+        </block>
+        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          <block name="Section-0" type="SectionRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="ProgressMarkerRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            </block>
+          </block>
+        </block>
+        <block name="Section-0" type="SectionRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block type="ProgressMarkerRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          </block>
+        </block>
+      </block>
+      <block name="Section-0" type="SectionRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="120.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+      <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <block name="Footer-2" type="SectionRenderBox" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </page-area>
+  </physical-page>
+</layout-output>

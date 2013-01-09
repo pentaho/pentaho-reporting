@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="10" row-count="4">
+    <cols>
+      <column width="23.24"/>
+      <column width="0.5"/>
+      <column width="12.296"/>
+      <column width="17.768"/>
+      <column width="100"/>
+      <column width="23.24"/>
+      <column width="0.5"/>
+      <column width="12.296"/>
+      <column width="15.944"/>
+      <column width="491.216"/>
+    </cols>
+    <row height="1">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="3" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="137.756" y="3.0" width="16.048" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="137.756" y="3.0" width="16.048" height="8.0">Label</text>
+        </line>
+      </cell>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="3" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="289.736" y="3.0" width="16.048" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="289.736" y="3.0" width="16.048" height="8.0">Label</text>
+        </line>
+      </cell>
+    </row>
+    <row height="12">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Costcenter"/>
+        <line type="ParagraphPoolBox" x="0.0" y="3.0" width="18.24" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="3.0" width="18.24" height="8.0">00001</text>
+        </line>
+      </cell>
+      <empty-cell border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="test"/>
+      </empty-cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Quantity"/>
+        <line type="ParagraphPoolBox" x="23.74" y="3.0" width="7.296" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="23.74" y="3.0" width="7.296" height="8.0">22</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Revenue"/>
+        <line type="ParagraphPoolBox" x="36.036" y="3.0" width="12.768" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="36.036" y="3.0" width="12.768" height="8.0">0.34</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Costcenter"/>
+        <line type="ParagraphPoolBox" x="153.804" y="3.0" width="18.24" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="153.804" y="3.0" width="18.24" height="8.0">00002</text>
+        </line>
+      </cell>
+      <empty-cell border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid" background-color="#e8e6e2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="test"/>
+      </empty-cell>
+      <cell background-color="#e8e6e2" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Quantity"/>
+        <line type="ParagraphPoolBox" x="177.544" y="3.0" width="7.296" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="177.544" y="3.0" width="7.296" height="8.0">11</text>
+        </line>
+      </cell>
+      <cell background-color="#e8e6e2" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Revenue"/>
+        <line type="ParagraphPoolBox" x="189.84" y="3.0" width="10.944" height="8.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="189.84" y="3.0" width="10.944" height="8.0">213</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="1">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="437">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

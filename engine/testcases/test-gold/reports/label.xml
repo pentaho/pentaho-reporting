@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report name="Sample Report 1"
+     xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    query="default">
+
+  <reportheader>
+    <label x="0" y="0" width="100%" height="24" fontsize="20" alignment="center"
+        >Label</label>
+    <label x="0" y="30" width="100%" height="12" fontsize="20" alignment="center"
+        >A label represents static text. Labels do not change during the report processing.</label>
+
+    <label x="0" y="50" width="400" height="15" fontsize="12">A simple Lable</label>
+    <label x="0" y="70" width="400" height="15" fontsize="12" fontname="monospaced">Like all text fields, labels can have their own font.</label>
+    <label x="0" y="90" width="400" height="15" fontsize="12" fontname="monospaced" fontstyle="bold-italic">.. and/or font style.</label>
+  </reportheader>
+</report>

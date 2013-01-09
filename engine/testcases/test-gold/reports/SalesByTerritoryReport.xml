@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5" "http://jfreereport.sourceforge.net/report-085.dtd">
+
+<report bottommargin="10" topmargin="10" rightmargin="10" leftmargin="10" pageformat="LETTER" orientation="landscape" name="JFreeReport-WizardReport">
+  <parser-config>
+    <property name="group1">TERRITORY</property>
+    <property name="Report_Title">Sales By Territory.</property>
+    <property name="Report_Sub_Title1">Order Details</property>
+    <property name="pageheader_left">Authored by</property>
+    <property name="pageheader_center">$(PageofPages)</property>
+    <property name="pagefooter_left">Report Title</property>
+    <property name="pagefooter_center">$(PageofPages)</property>
+    <property name="pagefooter_right">Report SubTitle</property>
+  </parser-config>
+
+<reportheader color="#000000" fontname="SansSerif" fontsize="12" fontstyle="plain">
+    <line color="#5C7485" weight="2" width="100%" x1="0%" x2="100%" y1="0" y2="0"/>
+    <line color="#5C7485" weight=".5" width="100%" x1="0%" x2="100%" y1="3" y2="3"/>
+    <band x="0" y="9">
+    <message-field vertical-alignment="middle" alignment="right" height="14" width="50%" x="50%" y="0">${Report_Title}</message-field>
+	<message-field vertical-alignment="middle" alignment="right" height="14" width="50%" x="50%" y="14">${Report_Sub_Title1}</message-field>
+    </band>
+    <!-- message-field vertical-alignment="middle" alignment="left" height="10" width="33%" x="0%" y="16">$(username)</message-field -->
+    <imageref src="sw_logo.jpg" width="50%" height="40" keepAspectRatio="true" scale="true" x="0%" y="14"/>
+    <line color="#5C7485" weight=".5" x1="0%" x2="100%" y1="57" y2="57"/>
+    <line color="#5C7485" weight="2" width="100%" x1="0%" x2="100%" y1="60" y2="60"/>
+    <rectangle color="white" fill="false" height="18" width="100%" x="0" y="61" draw="false"/>
+    <message-field height="15" alignment="center" fontsize="14" fontname="Arial" width="100%" x="0" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${Report_Title}</message-field>
+    <message-field height="15" alignment="center" fontsize="12" fontname="Arial" width="100%" x="0" y="15" vertical-alignment="middle" nullstring="&quot; &quot;">${Report_Sub_Title1}</message-field>
+    <line color="#5C7485" weight="1" width="100%" x1="0%" x2="100%" y1="45" y2="45"/>
+    <line color="#5C7485" weight="2" width="100%" x1="0%" x2="100%" y1="60" y2="60"/>    
+</reportheader>
+
+  <reportfooter height="45">
+       <band name="Show_Column3" x="0" y="0">
+			<message-field height="15" width="20%" x="20%" y="78" alignment="left" vertical-alignment="top">Max PriceEach</message-field>
+			<message-field height="15" width="20%" x="40%" y="78" alignment="left" vertical-alignment="top">Min PriceEach</message-field>
+			<message-field height="15" width="20%" x="60%" y="78" alignment="left" vertical-alignment="top">Total PriceEach</message-field>
+			<message-field height="15" width="20%" x="80%" y="78" alignment="left" vertical-alignment="top">Percent PriceEach</message-field>	        
+        </band>
+       <band name="Show_Column3" x="0" y="10">
+<!--  	        <number-field fieldname="TotalPriceEachMaxExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="20%" y="84"/>        
+	        <number-field fieldname="TotalPriceEachMinExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="40%" y="84"/>        	        
+	        <number-field fieldname="TotalPriceEachCalculationExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="60%" y="84"/>
+	        <number-field fieldname="ItemPercentagePriceEachExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="80%" y="84"/>-->
+        </band>
+  </reportfooter>
+  <pageheader fontsize="8" height="36">
+    <band name="phb2" x="0" y="10" height="9">
+      <message-field alignment="left" height="9" width="33%" x="0%" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${pageheader_left}</message-field>
+      <message-field alignment="center" height="9" width="33%" x="33%" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${pageheader_center}</message-field>
+    </band>
+    <line color="#5C7485" weight="2" width="100%" x1="0%" x2="100%" y1="36" y2="36"/>
+  </pageheader>
+  <pagefooter fontsize="8" height="48">
+    <line color="#5C7485" weight="1" width="100%" x1="0%" x2="100%" y1="9" y2="9"/>
+    <band name="pfb2" x="0" y="18" height="9">
+      <message-field alignment="left" height="9" width="33%" x="0%" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${pagefooter_left}</message-field>
+      <message-field alignment="center" height="9" width="33%" x="33%" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${pagefooter_center}</message-field>
+      <message-field alignment="right" height="9" width="34%" x="66%" y="0" vertical-alignment="middle" nullstring="&quot; &quot;">${pagefooter_right}</message-field>
+    </band>
+  </pagefooter>
+  <groups>
+    <group name="TERRITORY">
+      <fields>
+        <field>TERRITORY</field>
+      </fields>
+      <groupheader repeat="true" pagebreak-before-print="false" color="#000000" fontname="Tahoma" fontsize="9" fontstyle="bold">
+        <rectangle color="#FFC607" draw="false" fill="true" height="15" width="100%" x="0" y="0"/>
+        <message-field height="15" vertical-alignment="middle" alignment="left" width="99%" x="1%" y="0">TERRITORY   : $(TERRITORY)</message-field>
+      	 <band name="Show_Column3" x="0%" y="5">
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="0%" y="15">Order #</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="7%" y="15">Name</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="14%" y="15">Avg</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="21%" y="15">Status</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="28%" y="15">Qty</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="35%" y="15">Price</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="42%" y="15">Total</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="49%" y="15">Diff</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="56%" y="15">Div</label>
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="63%" y="15">Max</label>		     
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="70%" y="15">Min</label>		     		     
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="77%" y="15">Sum</label>		     		     		     
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="84%" y="15">Avg</label>		     		     		     		     
+		     <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="12" vertical-alignment="top" alignment="left" width="7%" x="91%" y="15">Quotient</label>		     		     		     		     		     
+         </band>  
+         <rectangle color="white" fill="false" height="4" width="100%" x="0" y="61" draw="false"/>
+     </groupheader>
+      <groupfooter>
+       <band name="Show_Column3" x="0" y="0">
+			<message-field height="15" width="20%" x="20%" y="78" alignment="left" vertical-alignment="top">Group Count</message-field>
+			<message-field height="15" width="20%" x="40%" y="78" alignment="left" vertical-alignment="top">Group Sum</message-field>
+			<message-field height="15" width="20%" x="60%" y="78" alignment="left" vertical-alignment="top">Group Sum Quotient</message-field>
+			<message-field height="15" width="20%" x="80%" y="78" alignment="left" vertical-alignment="top">Group Quotient Percent</message-field>	        
+        </band>
+       <band name="Show_Column3" x="0" y="10">
+	        <number-field fieldname="TerritoryGroupCountExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="20%" y="84"/>        
+	        <number-field fieldname="TerritoryGroupSumExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="40%" y="84"/>        	        
+	        <number-field fieldname="TerritoryGroupSumQuotientExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="60%" y="84"/>
+	        <number-field fieldname="TerritoryGroupSumQuotientPercentExpression" height="15" vertical-alignment="top" alignment="left" width="20%" x="80%" y="84"/>
+        </band>
+     </groupfooter>
+    </group>
+  </groups>
+  
+  <items color="#000000" fontname="SansSerif" fontsize="9" fontstyle="bold">
+    <band name="Show_Column3" x="0" y="0">
+	    <rectangle name="rowBandingElement" color="#E0E0E0" draw="false" fill="true" height="11" x="0%" width="100%" y="0"/>  
+        <string-field fieldname="ORDERNUMBER" vertical-alignment="top" alignment="left" width="7%" x="0%" y="30" height="12"/>  
+	    <string-field fieldname="PRODUCTCODETokenized" height="12" vertical-alignment="top" alignment="left" width="7%" x="7%" y="30"/>	        	        	        
+	    <number-field fieldname="PriceEachAverageExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="14%" y="30" height="12"/>  	   	    
+	    <string-field fieldname="LowerCaseStringExpression" height="12" vertical-alignment="top" alignment="left" width="7%" x="21%" y="30"/>	        	        	        	        
+	    <number-field fieldname="QUANTITYORDERED" height="12" vertical-alignment="top" alignment="left" width="7%" x="28%" y="30"/>	        	        	        	        	    
+	    <number-field fieldname="PRICEEACH" height="12" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="35%" y="30"/>	        	        	        	        	    	    
+	    <number-field fieldname="TOTALPRICEExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="42%" y="30" height="12"/>  
+	    <number-field fieldname="DiffExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="49%" y="30" height="12"/>  
+   	    <number-field fieldname="DivExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="56%" y="30" height="12"/>  
+   	    <number-field fieldname="MaxExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="63%" y="30" height="12"/>  	    
+	    <number-field fieldname="MinExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="70%" y="30" height="12"/>     	    
+   	    <number-field fieldname="SumExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="77%" y="30" height="12"/>  
+	    <number-field fieldname="AvgExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="84%" y="30" height="12"/>  
+	    <number-field fieldname="ColumnQuotientExpression" format="#,###.##" vertical-alignment="top" alignment="left" width="7%" x="91%" y="30" height="12"/>
+    </band>
+  </items>
+  <functions>
+    <function class="org.pentaho.reporting.engine.classic.core.function.PageOfPagesFunction" name="PageofPages"/>
+    <function name="backgroundTrigger" class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties> 
+        <property name="element">rowBandingElement</property>  
+        <property name="numberOfElements">1</property>  
+        <property name="initialState">true</property> 
+      </properties> 
+    </function>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.HideElementIfDataAvailableExpression" name="noDataLabelElementHideIfNullTrigger">
+      <properties> 
+        <property name="element">noDataLabelElement</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="dummyGroupFooterHideIfNullTrigger">
+      <properties> 
+        <property name="element">dummyGroupFooter</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_QUANTITYINSTOCKExpression">
+      <properties> 
+        <property name="field">QUANTITYINSTOCK</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_BUYPRICEExpression">
+      <properties> 
+        <property name="field">BUYPRICE</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_MSRPExpression">
+      <properties> 
+        <property name="field">MSRP</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="PRODUCTLINEGroupHeaderHideIfNullTrigger">
+      <properties> 
+        <property name="element">PRODUCTLINEGroupHeader</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="PRODUCTLINEGroupFooterHideIfNullTrigger">
+      <properties> 
+        <property name="element">PRODUCTLINEGroupFooter</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTLINEQUANTITYINSTOCKExpression">
+      <properties> 
+        <property name="field">QUANTITYINSTOCK</property>  
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTLINEBUYPRICEExpression">
+      <properties> 
+        <property name="field">BUYPRICE</property>  
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTLINEMSRPExpression">
+      <properties> 
+        <property name="field">MSRP</property>  
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression> 
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="PRODUCTVENDORGroupHeaderHideIfNullTrigger">
+      <properties> 
+        <property name="element">PRODUCTVENDORGroupHeader</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="PRODUCTVENDORGroupFooterHideIfNullTrigger">
+      <properties> 
+        <property name="element">PRODUCTVENDORGroupFooter</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTVENDORQUANTITYINSTOCKExpression">
+      <properties> 
+        <property name="field">QUANTITYINSTOCK</property>  
+        <property name="group">PRODUCTVENDOR</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTVENDORBUYPRICEExpression">
+      <properties> 
+        <property name="field">BUYPRICE</property>  
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="PRODUCTVENDORMSRPExpression">
+      <properties> 
+        <property name="field">MSRP</property>  
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>     
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalGroupCountFunction" name="TerritoryGroupCountExpression">
+      <properties> 
+        <property name="group">PRICEEACH</property> 
+      </properties> 
+    </expression>    
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction" name="TerritoryGroupSumExpression">
+      <properties> 
+        <property name="field">TOTALPRICE</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>   
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumQuotientFunction" name="TerritoryGroupSumQuotientExpression">
+      <properties> 
+        <property name="group">TERRITORY</property> 
+	    <property name="dividend">TOTALPRICE</property>
+	    <property name="divisor">PRICEEACH</property>
+      </properties> 
+    </expression>  
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumQuotientPercentFunction" name="TerritoryGroupSumQuotientPercentExpression">
+      <properties> 
+        <property name="group">TERRITORY</property> 
+	    <property name="dividend">TOTALPRICE</property>
+	    <property name="divisor">PRICEEACH</property>
+      </properties> 
+    </expression>
+<!--     <expression class="org.pentaho.reporting.engine.classic.core.function.TotalItemMaxFunction" name="TotalPriceEachMaxExpression">
+      <properties> 
+        <property name="field">QUANTITYORDERED</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalItemMinFunction" name="TotalPriceEachMinExpression">
+      <properties> 
+        <property name="field">QUANTITYORDERED</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>-->  
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemAvgFunction" name="ItemPriceEachAvgExpression">
+      <properties> 
+        <property name="field">PRICEEACH</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemMinFunction" name="ItemPriceEachMinExpression">
+      <properties> 
+        <property name="field">PRICEEACH</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>    
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemMaxFunction" name="ItemPriceEachMaxExpression">
+      <properties> 
+        <property name="field">PRICEEACH</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>     
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalCalculationFunction" name="TotalPriceEachCalculationExpression">
+      <properties> 
+        <property name="field">PRICEEACH</property>  
+        <property name="group">TERRITORY</property> 
+      </properties> 
+    </expression>    
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemPercentageFunction" name="ItemPercentagePriceEachExpression">
+      <properties> 
+        <property name="field">PRICEEACH</property>  
+      </properties> 
+    </expression> 
+    <expression name="ColumnQuotientExpression" class="org.pentaho.reporting.engine.classic.core.function.ItemColumnQuotientExpression">
+	  <properties>
+    	<property name="dividend">TOTALPRICE</property>
+	    <property name="divisor">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="PriceEachAverageExpression" class="org.pentaho.reporting.engine.classic.core.function.AverageExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="DivExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnDivisionExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="DiffExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnDifferenceExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="MaxExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnMaximumExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="MinExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnMinimumExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="SumExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnSumExpression">
+	  <properties>
+    	<property name="field\[0]">TOTALPRICE</property>
+	    <property name="field\[1]">PRICEEACH</property>
+	  </properties>
+	</expression>
+    <expression name="TOTALPRICEExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnMultiplyExpression">
+	  <properties>
+    	<property name="field\[0]">PRICEEACH</property>
+	    <property name="field\[1]">QUANTITYORDERED</property>
+	  </properties>
+	</expression>	
+    <expression name="AvgExpression" class="org.pentaho.reporting.engine.classic.core.function.ColumnAverageExpression">
+	  <properties>
+    	<property name="field\[0]">PRICEEACH</property>
+	    <property name="field\[1]">QUANTITYORDERED</property>
+	  </properties>
+	</expression>	
+    <expression name="ConvertToNumberExpression" class="org.pentaho.reporting.engine.classic.core.function.ConvertToNumberExpression">
+	  <properties>
+    	<property name="field">ORDERDATE</property>
+	  </properties>
+	</expression>	
+    <expression name="ConvertToDateExpression" class="org.pentaho.reporting.engine.classic.core.function.ConvertToDateExpression">
+	  <properties>
+    	<property name="field">PRODUCTCODE</property>
+	  </properties>
+	</expression>	
+    <expression name="LowerCaseStringExpression" class="org.pentaho.reporting.engine.classic.core.function.strings.ToLowerCaseStringExpression">
+	  <properties>
+    	<property name="field">STATUS</property>
+	  </properties>
+	</expression>	
+    <expression name="PRODUCTLINEUpperCaseStringExpression" class="org.pentaho.reporting.engine.classic.core.function.strings.ToUpperCaseStringExpression">
+	  <properties>
+    	<property name="field">PRODUCTCODE</property>
+	  </properties>
+	</expression>	
+    <expression name="IsNullExpression" class="org.pentaho.reporting.engine.classic.core.function.IsNullExpression">
+	  <properties>
+    	<property name="field">BUYPRICE</property>
+	  </properties>
+	</expression>	
+    <expression name="IsEmptyExpression" class="org.pentaho.reporting.engine.classic.core.function.IsEmptyExpression">
+	  <properties>
+    	<property name="field">BUYPRICE</property>
+	  </properties>
+	</expression>	
+    <expression name="CapitalizeStringExpression" class="org.pentaho.reporting.engine.classic.core.function.strings.CapitalizeStringExpression">
+	  <properties>
+    	<property name="field">PRODUCTCODE</property>
+	  </properties>
+	</expression>	
+    <expression name="CompareStringExpression" class="org.pentaho.reporting.engine.classic.core.function.strings.CompareStringExpression">
+	  <properties>
+    	<property name="field">PRODUCTLINE</property>
+    	<property name="text">Motorcycles</property> 
+    	<property name="compareMethod">equal</property>     	
+	  </properties>
+	</expression>	
+    <expression name="CompareFieldsExpression" class="org.pentaho.reporting.engine.classic.core.function.CompareFieldsExpression">
+	  <properties>
+    	<property name="field">BUYPRICE</property>
+    	<property name="otherField">MSRP</property> 
+	  </properties>
+	</expression>	
+	
+    <expression name="PRODUCTCODETrimmed" class="org.pentaho.reporting.engine.classic.core.function.strings.SubStringExpression">
+	  <properties>
+    	<property name="field">PRODUCTCODE</property>
+    	<property name="ellipsis"></property>
+     	<property name="start">0</property>
+     	<property name="length">10</property>     	
+	  </properties>
+	</expression>		
+    <expression name="PRODUCTCODETokenized" class="org.pentaho.reporting.engine.classic.core.function.strings.TokenizeStringExpression">
+	  <properties>
+    	<property name="field">PRODUCTCODE</property>
+    	<property name="delimeter">_</property>
+     	<property name="replacement"> </property>
+	  </properties>
+	</expression>		
+	<expression name="FROMDATE" class="org.pentaho.reporting.engine.classic.core.function.date.DateExpression">
+ 		<properties>
+		    <property name="month">12</property>
+		    <property name="year">2007</property>
+		    <property name="hour">12</property>
+		    <property name="minute">23</property>
+		    <property name="second">45</property>
+		    <property name="milliSecond">34</property>
+		    <property name="time">2342424242</property>
+		    <property name="epochTime">242424242</property>
+		    <property name="dayOfWeek">3</property>
+		    <property name="dayOfYear">345</property>
+		    <property name="dayOfMonth">3</property>
+		    <property name="dayOfWeekInMonth">3</property>
+		    <property name="timeZone">Eastern</property>
+		    <property name="weekOfYear">52</property>
+		</properties>
+	</expression>
+	<expression name="TODATE" class="org.pentaho.reporting.engine.classic.core.function.date.DateExpression">
+ 		<properties>
+		    <property name="month">12</property>
+		    <property name="year">2007</property>
+		    <property name="hour">18</property>
+		    <property name="minute">45</property>
+		    <property name="second">34</property>
+		    <property name="milliSecond">45</property>
+		    <property name="time">34534</property>
+		    <property name="epochTime">345354</property>
+		    <property name="dayOfWeek">3</property>
+		    <property name="dayOfYear">345</property>
+		    <property name="dayOfMonth">3</property>
+		    <property name="dayOfWeekInMonth">3</property>
+		    <property name="timeZone">Eastern</property>
+		    <property name="weekOfYear">52</property>
+		</properties>
+	</expression>
+	<expression name="DateSpanExpression" class="org.pentaho.reporting.engine.classic.core.function.date.DateSpanExpression">
+ 		<properties>
+		    <property name="startDateField">FROMDATE</property>
+		    <property name="endDateField">TODATE</property>
+		</properties>
+	</expression>	
+	<expression name="PRODUCTLINECountDistinctExpression" class="org.pentaho.reporting.engine.classic.core.function.CountDistinctFunction">
+ 		<properties>
+	      <property name="field">PRODUCTLINE</property>  
+         <property name="group">PRODUCTLINE</property> 
+		</properties>
+	</expression>	
+	<expression name="VariableDateExpression" class="org.pentaho.reporting.engine.classic.core.function.date.VariableDateExpression">
+ 		<properties>
+		    <property name="monthField">12</property>
+		    <property name="yearField">2007</property>
+		    <property name="hourField">18</property>
+		    <property name="minuteField">45</property>
+		    <property name="secondField">34</property>
+		    <property name="milliSecondField">45</property>
+		    <property name="timeField">34534</property>
+		    <property name="epochTimeField">345354</property>
+		    <property name="dayOfWeekField">3</property>
+		    <property name="dayOfYearField">345</property>
+		    <property name="dayOfMonthField">3</property>
+		    <property name="dayOfWeekInMonthField">3</property>
+		    <property name="timeZoneField">Eastern</property>
+		    <property name="weekOfYearField">52</property>
+		</properties>
+	</expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction" name="ItemCountExpression">
+      <properties> 
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.TotalItemCountFunction" name="TotalItemCountExpression">
+      <properties> 
+        <property name="group">PRODUCTLINE</property> 
+      </properties> 
+    </expression>	
+  </functions>
+</report>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report 
+	xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+	name="Report Prueba" orientation="portrait" pageformat="A4" topmargin="30" leftmargin="20" bottommargin="10" rightmargin="20">
+
+	<configuration>
+		<property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">ISO-8859-1</property>
+		<property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Me</property>
+	</configuration>
+	<groups>
+		<group name="albaran">
+			<fields>
+				<field>cac_num</field>
+			</fields>
+			<groupheader fontname="Sanserif" fontsize="10" repeat="true">
+				<label x="0" y="150" width="100%" height="10" >Group Header núm.</label>
+				<string-field x="100" y="150" width="100%"  height="12" fieldname="cac_num"/>
+				<line x1="0" y1="162" x2="550" y2="162" width="100%" height="5" />
+			</groupheader>
+			<groupfooter fixed-position="650">
+				<label x="0" y="0" width="100%"  height="10" fontsize="10">Group Footer núm.:</label>
+				<string-field x="100" y="0" width="100%"  height="12" fieldname="cac_num"/>
+				<line x1="0" y1="12" x2="550" y2="12" width="100%" height="5" />
+			</groupfooter>
+		</group>
+	</groups>
+	<items fontname="Sanserif" fontsize="10">
+		<string-field x="165" y="10" width="100%" height="10" fieldname="dac_des1"/>
+ 		<string-field name="desamp" x="165" y="30" width="210" dynamic="true" fieldname="dac_desamp"/>
+	</items>
+</report>

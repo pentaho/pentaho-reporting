@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="5">
+    <cols>
+      <column width="555"/>
+    </cols>
+    <row height="150">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="albaran"/>
+      </empty-cell>
+    </row>
+    <row height="12">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Group Header núm."/>
+        <line type="ParagraphPoolBox" x="0.0" y="150.0" width="88.33" height="10.0" color="black" font-face="Sanserif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="150.0" width="27.78" height="10.0">Group</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="30.55" y="150.0" width="32.79" height="10.0">Header</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="66.11" y="150.0" width="22.22" height="10.0">núm.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="5">
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+    </row>
+    <row height="12">
+      <cell background-color="yellow" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Group Footer núm.:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="167.0" width="87.19" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="167.0" width="27.78" height="10.0">Group</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="30.55" y="167.0" width="28.88" height="10.0">Footer</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="62.2" y="167.0" width="24.99" height="10.0">núm.:</text>
+        </line>
+      </cell>
+    </row>
+    <row height="5">
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" background-color="yellow">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+    </row>
+  </table>
+</layout-output>

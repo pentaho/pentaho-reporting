@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="7">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="30">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Text Elements Gallery"/>
+        <line type="ParagraphPoolBox" x="135.71" y="0.0" width="196.58" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="135.71" y="0.0" width="38.86" height="20.0">Text</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="180.11" y="0.0" width="83.32" height="20.0">Elements</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="268.97" y="0.0" width="63.32" height="20.0">Gallery</text>
+        </line>
+      </cell>
+    </row>
+    <row height="12">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="This report chains several subreports together to demonstrate all textelements that are available in the reporting engine.&#x000a;&#x000a;Please refer to the report-header in the subreports to see how these elements are defined."/>
+      </empty-cell>
+    </row>
+    <row height="30">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="209.54" y="42.0" width="48.92" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="209.54" y="42.0" width="48.92" height="20.0">Label</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A label represents static text. Labels do not change during the report processing."/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A simple Lable"/>
+        <line type="ParagraphPoolBox" x="0.0" y="92.0" width="78.66" height="12.0" color="black" font-face="Serif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="92.0" width="7.992" height="12.0">A</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="11.316" y="92.0" width="34.668" height="12.0">simple</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="49.308" y="92.0" width="29.352" height="12.0">Lable</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Like all text fields, labels can have their own font."/>
+        <line type="ParagraphPoolBox" x="0.0" y="112.0" width="259.92" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="112.0" width="22.008" height="12.0">Like</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="25.332" y="112.0" width="12.0" height="12.0">all</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="40.656" y="112.0" width="19.32" height="12.0">text</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="63.3" y="112.0" width="31.32" height="12.0">fields,</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="97.944" y="112.0" width="31.344" height="12.0">labels</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="132.612" y="112.0" width="19.344" height="12.0">can</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="155.28" y="112.0" width="26.016" height="12.0">have</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="184.62" y="112.0" width="23.328" height="12.0">their</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="211.272" y="112.0" width="22.008" height="12.0">own</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="236.604" y="112.0" width="23.316" height="12.0">font.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="15">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=".. and/or font style."/>
+        <line type="ParagraphPoolBox" x="0.0" y="132.0" width="98.604" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="132.0" width="6.648" height="12.0">..</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="9.972" y="132.0" width="34.008" height="12.0">and/or</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="47.304" y="132.0" width="19.992" height="12.0">font</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="70.62" y="132.0" width="27.984" height="12.0">style.</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

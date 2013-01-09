@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="Sparkline demos"
+        leftmargin="72" rightmargin="72" topmargin="72" pageformat="A4">
+
+  <reportheader fontsize="10" fontname="SansSerif" height="120">
+    <band layout="inline" x="0" y="0" width="100%" height="0">
+      <label width="300" height="10" fsbold="true">Sparkline bar as inline graphics using formula:</label>
+      <drawable-field fieldname="sparkline" width="40" height="10"/>
+      <label width="300" height="10">Sales Volume</label>
+    </band>
+
+    <line x1="0" x2="100%" y1="25" y2="25"/>
+
+    <label x="0" y="30" width="300" fsbold="true" height="10">Sparkline bar as positioned field using formula:</label>
+    <drawable-field fieldname="sparkline" x="300" y="30" width="40" height="10"/>
+
+    <line x1="0" x2="100%" y1="45" y2="45"/>
+
+    <label x="0" y="50" width="300" fsbold="true" height="10">Sparkline line as positioned field using formula:</label>
+    <drawable-field fieldname="sparkline2" x="300" y="50" width="40" height="10"/>
+
+    <line x1="0" x2="100%" y1="65" y2="65"/>
+
+    <label x="0" y="70" width="300" fsbold="true" height="10">Sparkline bar changing styles:</label>
+    <drawable-field fieldname="sparkline3" x="300" y="70" width="40" height="10"/>
+  </reportheader>
+
+  <items height="20">
+    <line x1="0" x2="100%" y1="0" y2="0"/>
+
+    <label x="0" y="5" width="300" fsbold="true" height="10">Sales evolution over the year using the datasource:</label>
+    <drawable-field fieldname="sparkline4" x="300" y="5" width="100" height="10"/>
+  </items>
+
+  <functions>
+    <!-- first sparkline definition using a static formula array-->
+    <expression name="sparkline-data" formula="={1|9|3|7|1|5|6|3|2|10}"/>
+    <expression name="sparkline" class="org.jfree.report.ext.modules.sparklines.SparklineExpression">
+      <properties>
+        <property name="rawDataField">sparkline-data</property>
+        <property name="type">bar</property>
+      </properties>
+    </expression>
+
+    <!-- second sparkline definition using a static formula array-->
+    <expression name="sparkline2" class="org.jfree.report.ext.modules.sparklines.SparklineExpression">
+      <properties>
+        <property name="rawDataField">sparkline-data</property>
+        <property name="type">line</property>
+      </properties>
+    </expression>
+
+    <!-- thrid sparkline definition using a static formula array-->
+    <expression name="sparkline3" class="org.jfree.report.ext.modules.sparklines.SparklineExpression">
+      <properties>
+        <property name="rawDataField">sparkline-data</property>
+        <property name="type">bar</property>
+        <!-- the color of the last bar for Sparkline bar graphs -->
+        <property name="lastColor">GREEN</property>
+        <!-- the bar color above the average of datapoints -->
+        <property name="highColor">RED</property>
+        <!-- the default color-->
+        <property name="color">BLUE</property>
+      </properties>
+    </expression>
+
+    <!-- forth sparkline definition using the fields from the datasource-->
+    <expression name="sparkline4" class="org.jfree.report.ext.modules.sparklines.SparklineExpression">
+      <properties>
+        <property name="field[0]">January</property>
+        <property name="field[1]">February</property>
+        <property name="field[2]">March</property>
+        <property name="field[3]">April</property>
+        <property name="field[4]">May</property>
+        <property name="field[5]">June</property>
+        <property name="field[6]">July</property>
+        <property name="field[7]">August</property>
+        <property name="field[8]">September</property>
+        <property name="field[9]">October</property>
+        <property name="field[10]">November</property>
+        <property name="field[11]">December</property>
+        <property name="type">bar</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

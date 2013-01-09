@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Percentage Demo</title>
+</head>
+<body>
+<h3>Percentage Demo</h3>
+
+<p>
+  In this demo, the TableModel contains two columns A and B. The generated
+  report displays the values in these columns, plus a third value (A/B)
+  formatted as a percentage.
+</p>
+
+<p>
+  Its only purpose is to provide a simple demonstration on how to
+  add and use functions in a report.
+</p>
+
+<p>
+  In JFreeReport, it makes no difference, where data actually comes
+  from. No matter whether data is aquired from a function, from the
+  tablemodel or a report property, it is all referenced and queried
+  by its name. Functions may use the result of other functions for
+  their computations. Printing these results is also straightforward,
+  just reference the function's name in the report element and
+  the function's value will be printed.
+</p>
+
+<h3>Data Model</h3>
+
+<p>
+  The report uses a very minimalistic table model, so keep everything
+  simple and easy to understand. The table consists of two columns,
+  named 'A' and 'B'. The resulting percentage is computed using a
+  provided standard expression of JFreeReport, which follows the simple
+  formula of (result = A / B).
+</p>
+</body>
+</html>

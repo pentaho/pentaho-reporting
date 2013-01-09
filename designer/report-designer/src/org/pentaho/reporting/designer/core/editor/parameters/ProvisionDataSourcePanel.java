@@ -1,0 +1,465 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2006 - 2012 Pentaho Corporation..  All rights reserved.
+ */
+
+package org.pentaho.reporting.designer.core.editor.parameters;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.beans.BeanInfo;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+
+import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
+import org.pentaho.reporting.designer.core.util.IconLoader;
+import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
+import org.pentaho.reporting.engine.classic.core.designtime.DefaultDataFactoryChangeRecorder;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
+import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
+import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
+
+public class ProvisionDataSourcePanel extends JPanel
+{
+  private class RemoveDataSourceAction extends AbstractAction implements TreeSelectionListener
+  {
+    public RemoveDataSourceAction()
+    {
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getRemoveIcon());
+      putValue(Action.SHORT_DESCRIPTION, Messages.getString("ParameterDialog.DeleteDataSourceAction"));
+      setEnabled(false);
+    }
+
+    public void valueChanged(final TreeSelectionEvent e)
+    {
+      setEnabled(getSelectedDataSource() != null);
+    }
+
+    public void actionPerformed(final ActionEvent e)
+    {
+      final int result = JOptionPane.showConfirmDialog(ProvisionDataSourcePanel.this,
+                                                              Messages.getString("ParameterDialog.DeleteDataSourceWarningMessage"),
+                                                              Messages.getString("ParameterDialog.DeleteDataSourceWarningTitle"), JOptionPane.YES_NO_OPTION);
+      if (result == JOptionPane.YES_OPTION)
+      {
+        final DataFactory theSelectedDataFactory = getSelectedDataSource();
+        availableDataSourcesModel.remove(theSelectedDataFactory);
+      }
+    }
+  }
+
+
+  private class ParameterEditDataSourceAction extends AbstractAction implements TreeSelectionListener
+  {
+    private ParameterEditDataSourceAction()
+    {
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getEditIcon());
+      putValue(Action.SHORT_DESCRIPTION, Messages.getString("ParameterDialog.EditDataSourceAction"));
+      setEnabled(false);
+    }
+
+    public void valueChanged(final TreeSelectionEvent e)
+    {
+      if (getSelectedDataSource() == null)
+      {
+        setEnabled(false);
+        return;
+      }
+      setEnabled(true);
+    }
+
+    public void actionPerformed(final ActionEvent e)
+    {
+      final DataFactory dataFactory = getSelectedDataSource();
+      if (dataFactory == null)
+      {
+        return;
+      }
+      if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
+      {
+        return;
+      }
+
+      final DataFactoryMetaData metadata =
+              DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+      if (metadata.isEditable() == false)
+      {
+        return;
+      }
+
+      final int idx = availableDataSourcesModel.indexOf(dataFactory);
+      if (idx == -1)
+      {
+        throw new IllegalStateException("DataSource Model is out of sync with the GUI");
+      }
+
+      final DataSourcePlugin dataSourcePlugin = metadata.createEditor();
+      if (dataSourcePlugin.canHandle(dataFactory))
+      {
+        final DefaultDataFactoryChangeRecorder recorder = new DefaultDataFactoryChangeRecorder();
+        final ReportDesignerDesignTimeContext designTimeContext = new ReportDesignerDesignTimeContext(getReportDesignerContext());
+        final DataFactory editedDataFactory = dataSourcePlugin.performEdit(designTimeContext, dataFactory, null, recorder);
+        if (editedDataFactory == null)
+        {
+          return;
+        }
+
+        availableDataSourcesModel.edit(idx, editedDataFactory);
+      }
+    }
+  }
+
+  private final class ShowAddDataSourcePopupAction extends AbstractAction
+  {
+    public ShowAddDataSourcePopupAction()
+    {
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getAddIcon());
+    }
+
+    public void actionPerformed(final ActionEvent e)
+    {
+      final JPopupMenu menu = new JPopupMenu();
+      createDataSourceMenu(menu);
+
+      final Object source = e.getSource();
+      if (source instanceof Component)
+      {
+        final Component c = (Component) source;
+        menu.show(c, 0, c.getHeight());
+      }
+      else
+      {
+        menu.show(parentDialog, 0, 0);
+      }
+    }
+  }
+
+  public DataFactory getSelectedDataSource()
+  {
+    final TreePath selectionPath = availableDataSources.getSelectionPath();
+    if (selectionPath == null)
+    {
+      return null;
+    }
+
+    final int size = selectionPath.getPathCount();
+    if (size >= 2)
+    {
+      final DataFactoryWrapper dataFactoryWrapper =
+              (DataFactoryWrapper) selectionPath.getPathComponent(1);
+      return dataFactoryWrapper.getEditedDataFactory();
+    }
+    return null;
+  }
+
+  private void createDataSourceMenu(final JComponent insertDataSourcesMenu)
+  {
+    final DataFactoryMetaData[] datas = DataFactoryRegistry.getInstance().getAll();
+    final Map<String, Boolean> groupMap = new HashMap<String, Boolean>();
+    for (int i = 0; i < datas.length; i++)
+    {
+      final DataFactoryMetaData data = datas[i];
+      if (data.isHidden())
+      {
+        continue;
+      }
+      if (data.isEditorAvailable() == false)
+      {
+        continue;
+      }
+      final String currentGrouping = data.getGrouping(Locale.getDefault());
+      groupMap.put(currentGrouping, groupMap.containsKey(currentGrouping));
+    }
+
+    Arrays.sort(datas, new GroupedMetaDataComparator());
+    Object grouping = null;
+    JMenu subMenu = null;
+    boolean firstElement = true;
+    for (int i = 0; i < datas.length; i++)
+    {
+      final DataFactoryMetaData data = datas[i];
+      if (data.isHidden())
+      {
+        continue;
+      }
+      if (data.isEditorAvailable() == false)
+      {
+        continue;
+      }
+
+      final String currentGrouping = data.getGrouping(Locale.getDefault());
+      final Boolean isMultiGrouping = groupMap.get(currentGrouping);
+      if (firstElement == false)
+      {
+        if (ObjectUtilities.equal(currentGrouping, grouping) == false)
+        {
+          grouping = currentGrouping;
+          if (isMultiGrouping)
+          {
+            subMenu = new JMenu(currentGrouping);
+            insertDataSourcesMenu.add(subMenu);
+          }
+        }
+      }
+      else
+      {
+        firstElement = false;
+        grouping = currentGrouping;
+        if (isMultiGrouping)
+        {
+          subMenu = new JMenu(currentGrouping);
+          insertDataSourcesMenu.add(subMenu);
+        }
+      }
+      final AddDataSourceAction action = new AddDataSourceAction(data);
+      if (isMultiGrouping)
+      {
+        //noinspection ConstantConditions
+        subMenu.add(new JMenuItem(action));
+      }
+      else
+      {
+        insertDataSourcesMenu.add(new JMenuItem(action));
+      }
+    }
+  }
+
+  private class AddDataSourceAction extends AbstractAction
+  {
+    private DataFactoryMetaData dataSourcePlugin;
+
+    private AddDataSourceAction(final DataFactoryMetaData dataSourcePlugin)
+    {
+      this.dataSourcePlugin = dataSourcePlugin;
+      putValue(Action.NAME, dataSourcePlugin.getDisplayName(Locale.getDefault()));
+      putValue(Action.SHORT_DESCRIPTION, dataSourcePlugin.getDescription(Locale.getDefault()));
+      final Image image = dataSourcePlugin.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
+      if (image != null)
+      {
+        putValue(Action.SMALL_ICON, new ImageIcon(image));
+      }
+    }
+
+
+    public void actionPerformed(final ActionEvent e)
+    {
+      final DataSourcePlugin editor = dataSourcePlugin.createEditor();
+      if (editor == null)
+      {
+        return;
+      }
+
+      final DataFactory dataFactory = editor.performEdit(new ParameterEditorDesignTimeContext(), null, null, null);
+
+      if (dataFactory == null)
+      {
+        return;
+      }
+
+      availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
+    }
+  }
+
+
+  private class ParameterEditorDesignTimeContext implements DesignTimeContext
+  {
+    public ParameterEditorDesignTimeContext()
+    {
+    }
+
+    /**
+     * The currently active report (or subreport).
+     *
+     * @return the active report.
+     */
+    public AbstractReportDefinition getReport()
+    {
+      return reportDesignerContext.getActiveContext().getMasterReportElement();
+    }
+
+    /**
+     * The parent window in the GUI for showing modal dialogs.
+     *
+     * @return the window or null, if there is no parent.
+     */
+    public Window getParentWindow()
+    {
+      return LibSwingUtil.getWindowAncestor(parentDialog);
+    }
+
+    public DataSchemaModel getDataSchemaModel()
+    {
+      // todo: Filter so that only env- and parameter are visible here.
+      return reportDesignerContext.getActiveContext().getReportDataSchemaModel();
+    }
+
+    public void error(final Exception e)
+    {
+      UncaughtExceptionsModel.getInstance().addException(e);
+    }
+
+    public void userError(final Exception e)
+    {
+      UncaughtExceptionsModel.getInstance().addException(e);
+    }
+
+    public LocaleSettings getLocaleSettings()
+    {
+      return WorkspaceSettings.getInstance();
+    }
+
+    public boolean isShowExpertItems()
+    {
+      return WorkspaceSettings.getInstance().isShowExpertItems();
+    }
+
+    public boolean isShowDeprecatedItems()
+    {
+      return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+    }
+  }
+
+
+  private JTree availableDataSources;
+  private DataFactoryTreeModel availableDataSourcesModel;
+  private ReportDesignerContext reportDesignerContext;
+  private Component parentDialog;
+
+  public ProvisionDataSourcePanel(Component parent)
+  {
+    this.parentDialog = parent;
+
+    availableDataSourcesModel = new DataFactoryTreeModel();
+
+    availableDataSources = new JTree(availableDataSourcesModel);
+    availableDataSources.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    availableDataSources.setCellRenderer(new DataFactoryTreeCellRenderer());
+    availableDataSources.setRootVisible(false);
+  }
+
+
+
+  public ReportDesignerContext getReportDesignerContext()
+  {
+    return reportDesignerContext;
+  }
+
+  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
+  {
+    this.reportDesignerContext = reportDesignerContext;
+  }
+
+  public void importDataSourcesFromMaster(final CompoundDataFactory cdf)
+  {
+    availableDataSourcesModel.importFromReport(cdf);
+  }
+
+  public DataFactoryTreeModel getDataFactoryTreeModel()
+  {
+    return availableDataSourcesModel;
+  }
+
+  public JTree getDataSourcesTree()
+  {
+    return availableDataSources;
+  }
+
+  public String getSelectedQueryName()
+  {
+    final Object node = availableDataSources.getLastSelectedPathComponent();
+    if (node != null)
+    {
+      return node.toString();
+    }
+
+    return "";
+  }
+
+  public void expandAllNodes()
+  {
+    for (int i = 0; i < availableDataSources.getRowCount(); i++)
+    {
+      availableDataSources.expandRow(i);
+    }
+  }
+
+  public JPanel createDataSourcePanel()
+  {
+    final RemoveDataSourceAction removeAction = new RemoveDataSourceAction();
+    final ParameterEditDataSourceAction editDataSourceAction = new ParameterEditDataSourceAction();
+    final ShowAddDataSourcePopupAction showAddDataSourcePopupAction = new ShowAddDataSourcePopupAction();
+
+    availableDataSources.addTreeSelectionListener(editDataSourceAction);
+    availableDataSources.addTreeSelectionListener(removeAction);
+
+    final JScrollPane theScrollPanel = new JScrollPane(availableDataSources);
+    theScrollPanel.setAutoscrolls(true);
+
+    final JPanel theDataSetsButtonPanel = new JPanel();
+    theDataSetsButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+    theDataSetsButtonPanel.add(new BorderlessButton(showAddDataSourcePopupAction));
+    theDataSetsButtonPanel.add(new BorderlessButton(editDataSourceAction));
+    theDataSetsButtonPanel.add(new BorderlessButton(removeAction));
+
+    final JPanel theControlsPanel = new JPanel(new BorderLayout());
+    theControlsPanel.add(new JLabel(Messages.getString("ParameterDialog.DataSources")), BorderLayout.WEST);
+    theControlsPanel.add(theDataSetsButtonPanel, BorderLayout.EAST);
+
+    final JPanel dataSetsPanel = new JPanel(new BorderLayout());
+    dataSetsPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+    dataSetsPanel.add(theScrollPanel, BorderLayout.CENTER);
+    dataSetsPanel.add(theControlsPanel, BorderLayout.NORTH);
+
+    final JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+    mainPanel.add(dataSetsPanel);
+    return mainPanel;
+  }
+}

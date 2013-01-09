@@ -1,0 +1,3 @@
+Implementation-Title: libformula-ui
+Implementation-Vendor: Pentaho Corporation
+Implementation-ProductID: libformula-ui

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="12">
+    <cols>
+      <column width="100"/>
+      <column width="351"/>
+    </cols>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="bar-sparkline"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sparkline-data"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="588">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

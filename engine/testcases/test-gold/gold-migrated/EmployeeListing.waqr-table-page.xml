@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="7">
+    <cols>
+      <column width="386"/>
+      <column width="386"/>
+    </cols>
+    <row height="18">
+      <empty-cell border-top-color="#fdde85" border-top-width="1.0" border-top-style="solid" border-left-color="#fdde85" border-left-width="1.0" border-left-style="solid" border-bottom-color="#fdde85" border-bottom-width="1.0" border-bottom-style="solid" border-top-left-x="6.0" border-top-left-y="6.0" border-bottom-left-x="6.0" border-bottom-left-y="6.0" background-color="#fdde85">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+      </empty-cell>
+      <cell border-top-color="#fdde85" border-top-width="1.0" border-top-style="solid" border-bottom-color="#fdde85" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#fdde85" border-right-width="1.0" border-right-style="solid" border-top-right-x="6.0" border-top-right-y="6.0" border-bottom-right-x="6.0" border-bottom-right-y="6.0" background-color="#fdde85" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(report.date, date, MMMM dd, yyyy @ hh:mm )"/>
+        <line type="ParagraphPoolBox" x="687.896" y="5.0" width="84.104" height="8.0" color="#2f2c35" font-face="Arial" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="687.896" y="5.0" width="15.992" height="8.0">April</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="706.104" y="5.0" width="11.112" height="8.0">07,</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="719.432" y="5.0" width="17.792" height="8.0">2011</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="739.44" y="5.0" width="8.12" height="8.0">@</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="749.776" y="5.0" width="20.008" height="8.0">03:00</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+    </row>
+    <row height="3">
+      <empty-cell border-top-color="#1a7439" border-top-width="3.0" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+      <empty-cell border-top-color="#1a7439" border-top-width="3.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="24">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="EmployeeListing.waqr.xreportspec"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="noDataLabelElement"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="No Data Available"/>
+        <line type="ParagraphPoolBox" x="0.0" y="45.0" width="95.988" height="12.0" color="#1a7439" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="45.0" width="15.336" height="12.0">No</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="18.66" y="45.0" width="25.332" height="12.0">Data</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="47.316" y="45.0" width="48.672" height="12.0">Available</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="517">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="3">
+      <empty-cell border-top-color="#1a7439" border-top-width="3.0" border-top-style="solid" border-left-color="#fdde85" border-left-width="1.0" border-left-style="solid" border-top-left-x="6.0" border-top-left-y="6.0" background-color="#fdde85">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+      </empty-cell>
+      <cell border-top-color="#1a7439" border-top-width="3.0" border-top-style="solid" border-bottom-color="#fdde85" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#fdde85" border-right-width="1.0" border-right-style="solid" border-top-right-x="6.0" border-top-right-y="6.0" border-bottom-right-x="6.0" border-bottom-right-y="6.0" background-color="#fdde85" row-span="2" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Page $(PageofPages)"/>
+        <line type="ParagraphPoolBox" x="735.568" y="574.0" width="36.432" height="8.0" color="#2f2c35" font-face="Arial" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="735.568" y="574.0" width="18.672" height="8.0">Page</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="756.456" y="574.0" width="4.448" height="8.0">1</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="763.12" y="574.0" width="2.216" height="8.0">/</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="767.552" y="574.0" width="4.448" height="8.0">1</text>
+        </line>
+      </cell>
+    </row>
+    <row height="15">
+      <empty-cell border-left-color="#fdde85" border-left-width="1.0" border-left-style="solid" border-bottom-color="#fdde85" border-bottom-width="1.0" border-bottom-style="solid" border-bottom-left-x="6.0" border-bottom-left-y="6.0" background-color="#fdde85">
+      </empty-cell>
+      <spanned-cell/>
+    </row>
+  </table>
+</layout-output>

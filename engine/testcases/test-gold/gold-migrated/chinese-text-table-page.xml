@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="2">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="E-gold被称为网络时代的货币，完全基于internet的网上支付平台，创建于95年底。它那完全匿名，快捷，方便，彻底粉碎地域概念的种种特点与优势，使之在短短8年的时间里，得到了迅猛的发展,国际上越来越多的公司和网络商店开始接受E-gold支付方式。它已经成为人们进行电子商务强有力的工具。包括象雅虎，亚马逊等很多网络公司都开通了E-GOLD支付交易方式，你只需花三分钟就可以免费申请一个E-GOLD账号，账号之间互相转账只需10秒钟，你也可以将现金通过银行直接转到你的E-GOLD账号，也可以把账号里的收入转到全球任何一家银行你的私人账户里，而不论你身居何地、身处何方！它以黄金作为等价基础，完全脱离任何国家内部财政的影响。&#x000a;    "/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="236.61" height="10.0" color="black" font-face="mhya9gjp" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="236.61" height="10.0">E-gold被称为网络时代的货币，完全基于internet的网上支付平台，创建于95年底。它那完全匿名，快捷，方便，彻底粉碎地域概念的种种特点与优势，使之在短短8年的时间里，得到了迅猛的发展,国际上越来越多的公司和网络商店开始接受E-gold支付方式。它已经成为人们进行电子商务强有力的工具。包括象雅虎，亚马逊等很多网络公司都开通了E-GOLD支付交易方式，你只需花三分钟就可以免费申请一个E-GOLD账号，账号之间互相转账只需10秒钟，你也可以将现金通过银行直接转到你的E-GOLD账号，也可以把账号里的收入转到全球任何一家银行你的私人账户里，而不论你身居何地、身处何方！它以黄金作为等价基础，完全脱离任何国家内部财政的影响。</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="10.0" width="0.0" height="10.0" color="black" font-face="mhya9gjp" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </line>
+      </cell>
+    </row>
+    <row height="628">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

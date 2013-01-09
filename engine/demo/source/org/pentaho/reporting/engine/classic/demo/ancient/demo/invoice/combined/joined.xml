@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Joined Invoice" pageformat="A4"
+    topmargin="72" leftmargin="70" bottommargin="70" rightmargin="70">
+
+  <configuration>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
+  </configuration>
+
+  <groups>
+    <group name="Tables">
+      <fields>
+        <field>TablePrefix</field>
+      </fields>
+      <groupheader pagebreak-before-print="true">
+      </groupheader>
+    </group>
+  </groups>
+
+  <include src="invoice.xml"/>
+  <include src="advertising.xml"/>
+</report>

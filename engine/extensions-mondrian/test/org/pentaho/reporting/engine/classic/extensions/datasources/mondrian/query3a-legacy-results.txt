@@ -1,0 +1,12 @@
+Tablemodel contains 0 rows.
+Column: 0 Name=2003/Time; DataType=class java.lang.Object
+Column: 1 Name=2004/Time; DataType=class java.lang.Object
+Column: 2 Name=2005/Time; DataType=class java.lang.Object
+Checking the data inside
+Tablemodel contains 0 rows.
+Checking the attributes inside
+Tablemodel contains 0 rows.
+Column: 0 Name=2003/Time; DataType=class java.lang.Object
+Column: 1 Name=2004/Time; DataType=class java.lang.Object
+Column: 2 Name=2005/Time; DataType=class java.lang.Object
+Checking the data inside

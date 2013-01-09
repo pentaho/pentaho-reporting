@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/bsf-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/bsh-1.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-api.jar"/>
+	<classpathentry kind="lib" path="lib/gnujaxp.jar"/>
+	<classpathentry kind="lib" path="lib/itext-1.5.2.jar"/>
+	<classpathentry kind="lib" path="lib/libbase-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libdocbundle-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libfonts-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libformat-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libformula-0.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/libloader-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/librepository-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libserializer-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/libxml-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.core.commands_3.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jface_3.3.2.jar"/>
+	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-0.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-demo-0.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-ext-0.8.11.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.0.1-jdk122-final-20071014.jar"/>
+	<classpathentry kind="lib" path="lib/swt.jar"/>
+	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="lib/SWTSwing.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

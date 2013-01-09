@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+
+  <groups>
+    <!-- This grouping allows to print multiple invoices in one report ... -->
+    <group name="Invoice">
+      <fields>
+        <field>TablePrefix</field>
+        <field>invoice.invoice</field>
+      </fields>
+
+      <groupheader layout-cachable="false" >
+        <band name="invoice" fontname="SansSerif" fontstyle="plain" fontsize="11">
+          <!-- Who we are ... -->
+          <label name="ShopAddress1" x="0" y="12" width="200" height="12" alignment="left">Sparky's Computer Store</label>
+          <label name="ShopAddress2" x="0" y="24" width="200" height="12" alignment="left">332 Umbrella Drive</label>
+          <label name="ShopAddress3" x="0" y="48" width="200" height="12" alignment="left">12345 AnyTown</label>
+          <!--
+          Put your logo here, if wanted. Uses WMF, JPG, GIF or PNG files as source
+          Create a usefull logo before 0.8.5 is fully released ...
+          <imageref x="200" y="48" width="100" height="90" src="anim0002.wmf" name="logo" dynamic="false" scale="true" keepAspectRatio="false"/>
+          -->
+          <string-field name="customer.nameExpression" fieldname="customer.nameExpression"
+            x="0" y="84" width="200" height="12" alignment="left"/>
+          <string-field name="customer.street" fieldname="invoice.customer.street"
+            x="0" y="96" width="200" height="12" alignment="left"/>
+          <string-field name="customer.townExpression" fieldname="customer.townExpression"
+            x="0" y="120" width="200" height="12" alignment="left"/>
+
+          <string-field name="invoice.subjectExpression" fieldname="invoice.subjectExpression"
+            x="0" y="224" width="75%" height="12" alignment="left" fontstyle="bold"/>
+          <date-field x="75%" y="224" width="25%" height="12" fieldname="report.date"
+            alignment="right"  format="yyyy-MM-dd" />
+
+          <string-field name="customer.salutationExpression" fieldname="customer.salutationExpression"
+            x="0" y="290" width="450" height="12" alignment="left" fontstyle="plain" fontsize="11"/>
+
+          <label name="Received" x="0" y="314" width="450" height="12" alignment="left"
+            >We received your order and will deliver the following articles to your postal address:</label>
+        </band>
+      </groupheader>
+
+      <groupfooter layout-cachable="false" >
+        <band name="invoice" fontname="SansSerif" fontstyle="plain" fontsize="11">
+
+          <line x1="0" y1="10" x2="100%" y2="10" weight="0.5"/>
+          <label x="200" y="20" width="200" height="12" alignment="left">Total Sum of</label>
+          <number-field x="400" y="20" width="70" height="12" alignment="left" format="'$' #,##0.00" fieldname="invoice.totalSum"/>
+          <line x1="200" y1="34" x2="450" y2="34" weight="0.5"/>
+          <line x1="200" y1="37" x2="450" y2="37" weight="0.5"/>
+          <label x="0" y="84" width="100%" height="0" alignment="left" dynamic="true" vertical-alignment="top"
+            >We thank you for your order and hope to see you soon again. Please pay your invoice within the next 10 days.
+
+Yours sincerely,
+
+John W. Doe, Salesman</label>
+        </band>
+      </groupfooter>
+    </group>
+
+    <group name="Invoice-Articles" >
+      <fields>
+        <field>TablePrefix</field>
+        <field>invoice.invoice</field>
+        <field>dummy-field</field>
+      </fields>
+
+      <groupheader repeat="true" layout-cachable="false" >
+        <band name="invoice" height="30" fontname="SansSerif" fontstyle="bold" fontsize="12" >
+          <!-- The table header for the invoice ... -->
+          <label name="article.number" x="0" y="10" width="80" height="12" alignment="left">ID</label>
+          <label name="article.name" x="100" y="10" width="200" height="12" alignment="left">Product</label>
+          <label name="article.count" x="300" y="10" width="50" height="12" alignment="left">Count</label>
+          <label name="article.price" x="350" y="10" width="50" height="12" alignment="left">Price</label>
+          <label name="article.total" x="400" y="10" width="50" height="12" alignment="left">Total</label>
+          <line name="line.end" x1="0" y1="25" x2="0" y2="25" weight="0.5"/>
+        </band>
+      </groupheader>
+    </group>
+
+  </groups>
+
+
+
+  <items layout-cachable="false" >
+    <band name="invoice">
+      <string-field x="0" y="0" width="50" height="12" alignment="left" fieldname="invoice.article.number"/>
+      <string-field x="70" y="0" width="230" height="12" alignment="left" fieldname="invoice.article.name"/>
+      <number-field x="300" y="0" width="50" height="12" alignment="left" format="#,##0" fieldname="invoice.article.count"/>
+      <number-field x="350" y="0" width="50" height="12" alignment="left" format="'$' #,##0.00" fieldname="invoice.article.price"/>
+      <number-field x="400" y="0" width="70" height="12" alignment="left" format="'$' #,##0.00" fieldname="article.totalPrice"/>
+      <!-- the name will be referenced in the hide function to lookup this element -->
+      <string-field name="invoice.details" x="70" y="12" fsitalic="true" width="230" height="0" alignment="left" dynamic="true" fieldname="invoice.article.details">
+        <style-expression style-key="visible" formula="=NOT(ISEMPTY([invoice.article.details]))"/>
+      </string-field>
+    </band>
+  </items>
+
+  <functions>
+    <expression name="customer.nameExpression"
+      class="org.jfree.report.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">{0} {1}</property>
+        <property name="field[0]">invoice.customer.firstName</property>
+        <property name="field[1]">invoice.customer.lastName</property>
+      </properties>
+    </expression>
+    <expression name="customer.townExpression"
+      class="org.jfree.report.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">{0} {1}</property>
+        <property name="field[0]">invoice.customer.postalCode</property>
+        <property name="field[1]">invoice.customer.country</property>
+      </properties>
+    </expression>
+    <expression name="customer.salutationExpression"
+      class="org.jfree.report.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Dear {0} {1},</property>
+        <property name="field[0]">invoice.customer.salutation</property>
+        <property name="field[1]">invoice.customer.lastName</property>
+      </properties>
+    </expression>
+    <expression name="invoice.subjectExpression" class="org.jfree.report.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Invoice #{0} for your order from {1, date,EEE, MMM d, yyyy}</property>
+        <property name="field[0]">invoice.invoice.number</property>
+        <property name="field[1]">invoice.invoice.date</property>
+      </properties>
+    </expression>
+    <function name="invoice.totalSum" class="org.jfree.report.function.ItemSumFunction">
+      <properties>
+        <property name="field">article.totalPrice</property>
+        <property name="group">Invoice</property>
+      </properties>
+    </function>
+    <property-ref name="report.date"/>
+    <expression name="article.totalPrice" class="org.jfree.report.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+          // This declaration is important. The script-method getValue is called by the
+          // BSHExpression to evaluate the expression. We override the default implementation
+          // and perform own calculations here ...
+          Object getValue()
+          {
+            if (dataRow == null)
+            {
+              return null;
+            }
+
+            Number articleCount = (Number) dataRow.get ("invoice.article.count");
+            Number articlePrice = (Number) dataRow.get ("invoice.article.price");
+            if (articleCount == null || articlePrice == null)
+            {
+              return null;
+            }
+
+            float totalPrice = articleCount.floatValue() * articlePrice.floatValue();
+            return new Float (totalPrice);
+          }
+        </property>
+      </properties>
+    </expression>
+
+    <function class="org.jfree.report.function.HideElementByNameFunction" name="hideInvoice">
+      <properties>
+        <property name="element">invoice</property>
+        <property name="field">TablePrefix</property>
+      </properties>
+    </function>
+
+    <!-- Surpress warnings -->
+    <property-ref name="dummy-field"/>
+  </functions>
+</report>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+
+<report name="Anrede" orientation="portrait" pageformat="A4" topmargin="25" leftmargin="50" bottommargin="25" rightmargin="25">
+
+  <reportheader height="50" fontname="Arial" fontstyle="bold" fontsize="18">
+    <label name="lblHeader" x="0" y="20" width="100%" height="20" fsunderline="true" alignment="center">Anreden</label>
+  </reportheader>
+
+  <reportfooter height="50" fontname="Arial" fontstyle="bold" fontsize="10">
+    <label name="lblFooter" x="0" y="20" width="100%" height="24" vertical-alignment="middle" alignment="center">*** Berichtsende ***</label>
+  </reportfooter>
+
+  <pagefooter height="22" fontname="Arial" fontstyle="plain" fontsize="10">
+    <line name="PF2" x1="0" y1="0" x2="100%" y2="0" color="#CFCFCF" weight="2.0"/>
+    <date-field name="reportDate" x="0" y="4" width="100" height="18"
+      vertical-alignment="middle" alignment="left" format="dd.MM.yyyy" fieldname="report.date"/>
+    <string-field fieldname="pageXofY" x="0" y="4" width="100%" height="18" alignment="right"/>
+    <message-field x="0" y="0" width="100%" height="100%">
+    </message-field>
+  </pagefooter>
+
+  <groups>
+    <group name="anrede_group">
+      <groupheader height="18" fontname="Monospaced" fontstyle="bold" fontsize="12" vertical-alignment="middle">
+        <label name="" x="0" y="1" width="95" height="14" alignment="left">Anrede</label>
+        <label name="" x="100" y="1" width="300" height="14" alignment="left">Briefanrede</label>
+        <label name="" x="405" y="1" width="50" height="14" alignment="left">Fix?</label>
+        <line name="GroupH1" x1="0" y1="14" x2="100%" y2="14" weight="1"/>
+      </groupheader>
+      <fields>
+        <field>id</field>
+      </fields>
+    </group>
+  </groups>
+
+  <items height="14" fontname="Monospaced" fontstyle="plain" fontsize="10" vertical-alignment="middle">
+    <string-field name="anrede" x="0" y="0" width="95" height="14" alignment="left" fieldname="key"/>
+    <string-field name="briefanrede" x="100" y="0" width="300" height="14" alignment="left" dynamic="true" fieldname="briefanrede"/>
+    <string-field name="fix" x="405" y="0" width="50" height="14" alignment="left" fieldname="fixeBriefanrede"/>
+  </items>
+
+  <functions>
+    <property-ref name="report.date"/>
+
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction" deplevel="1">
+    </function>
+
+    <function name="PageTotal" class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction" deplevel="1">
+    </function>
+
+    <expression name="pageXofY" class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Seite {0} von {1}</property>
+        <property name="field[0]">PageNumber</property>
+        <property name="field[1]">PageTotal</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

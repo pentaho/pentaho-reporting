@@ -1,0 +1,3 @@
+This is a placeholder project. Starting next year, we'll add a JSP tag-library 
+and servlet support for JFreeReport. Depending on the community input, we may
+or may not add Struts actions as well.

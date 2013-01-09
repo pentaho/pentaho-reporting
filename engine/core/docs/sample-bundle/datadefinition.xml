@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-definition xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/data/1.0">
+  <!--
+   The data-definition section contains the connection to the data-sources as well as the functions
+   and parameters used by this report.
+
+   If this report is a master-report, then all parameters from the global "parameter.xml" file will be
+   available as data-sources here.
+
+   If this report is a subreport, then all parameters that can be accepted by this report must be listed
+   here. For subreports, the parameter-validator will only be used internally. Subreport parameters will
+   never be used to generate parameter-input pages for end-users. If any of these parameters should be
+   queried from an user-frontend, then the parent-reports have to pass this parameter through.
+   -->
+
+  <!-- Todo: Define a way to validate parameters. -->
+  <parameter-definition>
+    <!--
+      Like in the platform, all parameters contribute to a commom pool. We define a similiar set of
+      capabilities as the existing secure-parameter component, to ease the transition between the two of them.
+
+      However, this version here is well-defined. :) (Once it is defined, of course)
+
+      All possible inputs have to be declared here. During the resolve process, each parameter's
+      underlying implementation is queried to check whether the parameter-context already contains
+      all required information to process the report.
+
+      We have at least two parameter types:
+
+      (1) Plain Value: Input fields.
+      (2) List Selection
+          (2a) Single-Value Selection
+          (2b) Multi-Value Selection
+
+      Lists are always fed from a query; the query-implementation can be a list of hard-coded values.
+      List-Data has two columns: Key and Presentation value. Simple lists can be created from a single
+      column which simply maps key and presentation value to the same column in the dataset.
+
+      On subreports, parameter definitions will be ignored.
+    -->
+    <plain-parameter name="a-plain-value"
+                     mandatory="true"
+                     type="java.lang.Number"
+                     default-value="10">
+      <attribute namespace="http://reporting.pentaho.org/namespaces/attributes/parameters"
+                 name="selection-type">text</attribute>
+    </plain-parameter>
+
+    <!-- The single-selection returns the key value. -->
+    <list-parameter name="a-list-selection"
+                    type="java.lang.Number"
+                    query="Customers"
+                    key-column="ID"
+                    value-column="Customer Name"
+                    allow-multi-selection="false"
+                    strict-values="true"/>
+
+  </parameter-definition>
+
+  <data-source report-query="default" limit="50" timeout="50" ref="data/other.sqlds"/>
+
+  <expression/>
+</data-definition>

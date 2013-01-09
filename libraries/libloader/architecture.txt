@@ -1,0 +1,58 @@
+The resource loading framework is a caching and more general replacement for
+Java's own URL implementation.
+
+The framework decouples the process of identifying dependent resources from the
+ugly task of having to map these identifiers to their respective loader
+implementations. A user of the framework only has to know, what he wants to
+load and how the location of the resource is identified (vulgo: from where to
+load the content).
+
+If multiple alternatives for the raw-data format exist, as it is common for
+loading images (or for parsing abstract structures like report definitions), the
+it is the framework's responsiblity to find the correct loader and to load the
+content.
+
+As the framework is the central resource loading point, caching should be applied
+transparently in this layer.
+
+--------------------------------------------------------------------------------
+
+General architecture:
+
+Each resource is identified by an unique resource key. A resource loader is
+responsible for loading the specified raw-data from the location given inside
+the key. The raw data is now interpreted by a suitable resource factory
+implementation (ie. parsed) and passed over to the client.
+
+If the resource factory produces an immutable object (or is able to create a
+separated copy of the generated content afterwards), the resource is stored
+in the cache.
+
+
++--------+       +--------+       +--------+       +--------+
+|Resource|  -->  |Resource|  -->  |Resource|  -->  |Resource|
+|  Key   |       | loader |       |Factory |       |        |
++--------+       +--------+       +--------+       +--------+
+
+
+The lookup, caching and overall management of the loaders and factories
+available is handled by the ResourceManager.
+
+--------------------------------------------------------------------------------
+
+Usage:
+
+Loading an image from an resource located on the classpath:
+
+// if caching should have any effect, the manager must be reused.
+// Now: Create a manager and load all known factories ...
+ResourceManager manager = new ResourceManager();
+manager.registerDefaults();
+
+
+String resource = "res://org/pentaho/reporting/engine/classic/core/images/lion.jpg";
+ResourceKey key = manager.createKey (resource);
+Resource res = manager.create (key, java.awt.Image.class);
+java.awt.Image image = (java.awt.Image) res.getResource();
+
+

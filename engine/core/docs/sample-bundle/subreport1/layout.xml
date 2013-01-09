@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The layout-file describes the report-layout.
+
+  The pageformat and page-margins are defined in the global style file. Although a pageformat defines hard
+  boundaries for the layout (in terms of available space), this file here only holds element definitions.
+
+  Each xml-element in the file is a pluggable element definition. 
+ -->
+
+<layout xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0"
+        xmlns:core="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+        xmlns:style="http://reporting.pentaho.org/namespaces/engine/classic/bundle/style/1.0">
+  <preprocessor class="org.pentaho.reporting.engine.classic.core.AutoGeneratorPreProcessor">
+    <property name="wizard.config">Blah</property>
+  </preprocessor>
+
+  <layout-processors>
+    <expression/>
+  </layout-processors>
+
+  <page-header>
+    <style:element-style/>
+    <!--
+     The element type.
+
+     The default implementations of the elements uses inline attributes on the element-tag for all primitive values.
+     For complex attributes, it is optinally possible to use child-elements. it is undefined how Attributes, that are
+     not defined in the meta-data will not be parsed. Implementations *should* preserve the content found here by
+     storing the attribute as string-value (if it is a simple attribute) or as mini-DOM node.
+
+     Of course, all above is just pure theory, as the actually accepted attributes and sub-elements are implementation
+     dependent.
+
+     -->
+    <label core:content="inline-attribute">
+      <style:element-style/>
+
+      <core:null-value>-</core:null-value>
+    </label>
+  </page-header>
+
+  <watermark>
+    <style:element-style/>
+  </watermark>
+
+  <report-header>
+    <style:element-style/>
+  </report-header>
+
+  <group name="myGroup">
+    <fields>
+      <field>myField1</field>
+    </fields>
+
+    <group-header>
+      <style:element-style/>
+    </group-header>
+
+    <group-body>
+      <group name="mySubGroup">
+        <fields>
+          <field>myField2</field>
+        </fields>
+
+        <group-header>
+          <style:element-style/>
+        </group-header>
+
+        <data-body>
+          <details>
+            <style:element-style/>
+          </details>
+
+          <no-data>
+            <style:element-style/>
+          </no-data>
+        </data-body>
+        
+        <group-footer>
+          <style:element-style/>
+        </group-footer>
+      </group>
+    </group-body>
+
+    <group-footer>
+      <style:element-style/>
+    </group-footer>
+  </group>
+
+  <report-footer>
+    <style:element-style/>
+  </report-footer>
+
+  <page-footer>
+    <style:element-style/>
+  </page-footer>
+
+  
+</layout>

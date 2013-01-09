@@ -1,0 +1,29 @@
+<module>
+	<!-- org.pentaho.reporting.libraries.base.util package -->
+    <source path="util" >
+    	<exclude name="**/PngEncoder*" />
+    	<exclude name="**/PasswordObscurification*" />
+    	<exclude name="**/*Exception*" />
+    	<exclude name="**/IOUtils*" />
+    	<exclude name="**/*ObjectTable*" />
+    	<exclude name="**/ObjectUtilities*" />
+    	<exclude name="**/FastStack*" />
+    	<exclude name="**/*Password*" />
+    	<exclude name="**/*password*" />
+    	<exclude name="**/Memory*" />
+    	<exclude name="**/*Map*" />
+    	<exclude name="**/*Writer*" />
+    	<exclude name="**/Memory*" />
+    	<exclude name="**/CSVQuoter*" />
+    	<exclude name="**/StringUtils*" />
+    	<exclude name="**/WaitingImageObserver*" />
+    	<exclude name="**/Messages*" />
+    	<exclude name="**/FloatDimension*" />
+    	<exclude name="**/ResourceBundleSupport*" />
+    	<exclude name="**/FilesystemFilter*" />
+    	<exclude name="**/ClassQueryTool*" />
+    	<exclude name="**/DebugLog*" />
+    </source>
+    
+</module>
+

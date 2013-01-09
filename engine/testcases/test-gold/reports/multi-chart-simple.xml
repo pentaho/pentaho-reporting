@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="ReportProperty Demo" pageformat="A4">
+
+  <reportheader>
+    <label x="0" y="0" width="100%" height="0" dynamic="true" trim-text-content="true"
+            >Printing muliple charts in a single report</label>
+  </reportheader>
+
+  <!-- ITEM BAND -->
+  <!-- This band appears for all rows in the tablemodel. -->
+  <items>
+
+    <drawable-field x="0" y="0" width="450" height="250"
+      fieldname="Chart"/>
+
+  </items>
+
+  <functions>
+    <!-- This will mark the property to be included in the datarow -->
+    <property-ref name="Chart"/>
+  </functions>
+</report>

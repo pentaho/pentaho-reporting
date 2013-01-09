@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report
+	xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+	name="Report Prueba" orientation="portrait" pageformat="A4" topmargin="30" leftmargin="20" bottommargin="10" rightmargin="20">
+
+	<configuration>
+		<property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">ISO-8859-1</property>
+		<property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Me</property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.PrintPageContents">true</property>
+  </configuration>
+<!--
+  <reportheader layout="block">
+    <band name="header" layout="row" width="0" background-color="#DFDF00">
+      <band name="rowHeader" layout="row" width="0" background-color="#A0A0FF">
+        <band name="slot1" layout="block" width="0">
+          <label width="100" height="12">RH1</label>
+        </band>
+        <band name="slot2" layout="block" width="0">
+          <label width="100" height="12">RH2</label>
+        </band>
+        <band name="slot3" layout="block" width="0">
+          <label width="100" height="12">RH3</label>
+        </band>
+      </band>
+      <band name="columnHeaderArea" layout="block">
+        <band name="columnHeaderTitle" layout="row"/>
+        <band name="columnHeader" layout="row">
+          <band name="slot1" layout="block">
+            <label width="100" height="12">CH1</label>
+          </band>
+          <band name="slot2" layout="block">
+            <label width="100" height="12">CH2</label>
+          </band>
+          <band name="slot3" layout="block">
+            <label width="100" height="12">CH3</label>
+          </band>
+        </band>
+      </band>
+      <band name="rowFooter" layout="row"/>
+    </band>
+  </reportheader>
+-->
+  <reportfooter name="report-footer">
+    <band name="band" height="100" width="0" layout="row" background-color="yellow" vertical-alignment="bottom">
+      <label width="100" height="12" name="dummy" background-color="red" vertical-alignment="top">CHX3</label>
+      <label width="100" height="42" name="dummy" background-color="green" vertical-alignment="top">CHY3</label>
+    </band>
+  </reportfooter>
+
+</report>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="4">
+    <cols>
+      <column width="300"/>
+      <column width="168"/>
+      <column width="32"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Expense"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="54.46" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="54.46" height="14.0">Expense</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total Expense"/>
+        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="89.432" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="20.0" width="31.094" height="14.0">Total</text>
+          <spacer width="3.878" height="0.0" preserve="true"/>
+          <text x="34.972" y="20.0" width="54.46" height="14.0">Expense</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sum"/>
+        <line type="ParagraphPoolBox" x="300.0" y="20.0" width="7.784" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="20.0" width="7.784" height="14.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="40">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Netto Profit/Loss"/>
+        <line type="ParagraphPoolBox" x="0.0" y="40.0" width="103.39" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="true" font-style-strikethrough="false">
+          <text x="0.0" y="40.0" width="33.432" height="14.0">Netto</text>
+          <spacer width="3.878" height="0.0" preserve="true"/>
+          <text x="37.31" y="40.0" width="66.08" height="14.0">Profit/Loss</text>
+        </line>
+      </cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="200">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Yes, this report looks very ugly :)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="80.0" width="115.952" height="8.0" color="black" font-face="SansSerif" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="true" font-style-strikethrough="false">
+          <text x="0.0" y="80.0" width="15.992" height="8.0">Yes,</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="18.208" y="80.0" width="12.44" height="8.0">this</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="32.864" y="80.0" width="20.888" height="8.0">report</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="55.968" y="80.0" width="18.672" height="8.0">looks</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="76.856" y="80.0" width="15.112" height="8.0">very</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="94.184" y="80.0" width="14.672" height="8.0">ugly</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="111.072" y="80.0" width="4.88" height="8.0">:)</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

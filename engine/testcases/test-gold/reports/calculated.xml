@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5" "http://jfreereport.sourceforge.net/report-085.dtd">
+
+<report name="JFreeReport-WizardReport" orientation="landscape" pageformat="LETTER" leftmargin="10" rightmargin="10" topmargin="10" bottommargin="10">
+  <parser-config/>
+  <groups>
+    <group name="dummy">
+      <groupheader name="dummyGroupHeader" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold" repeat="false">
+        <label name="noDataLabelElement" height="11" vertical-alignment="middle" alignment="left" width="100%" x="0%" y="0" visible="false">No Data Available</label>
+      </groupheader>
+      <groupfooter name="dummyGroupFooter" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
+        <rectangle color="#e0d0c0" draw="false" fill="true" height="16" width="100%" y="1" x="0%"/>
+        <number-field fieldname="Summary_ACTUALExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="18.181818181818183%" y="2"/>
+        <number-field fieldname="Summary_BUDGETExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="27.272727272727273%" y="2"/>
+        <number-field fieldname="Summary_DifferenceExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="36.36363636363637%" y="2"/>
+        <number-field fieldname="Summary_Absolute DifferenceExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="45.45454545454546%" y="2"/>
+        <message-field height="15" x="0%" width="18.181818181818183%" y="2" alignment="left" vertical-alignment="middle">Grand Total</message-field>
+      </groupfooter>
+    </group>
+    <group name="REGION">
+      <fields>
+        <field>REGION</field>
+      </fields>
+      <groupheader name="REGIONGroupHeader" repeat="false" pagebreak-before-print="false" pagebreak-after-print="false" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold" height="38">
+        <rectangle color="#FFFFFF" draw="false" fill="false" height="16" width="100%" x="0%" y="0"/>
+        <message-field name="RegionHeaderField" height="16" vertical-alignment="middle" alignment="left" width="100%" x="0%" y="0" nullstring="-">Region: $(REGION)</message-field>
+        <rectangle color="#C0C0C0" draw="false" fill="true" height="18" width="100%" x="0%" y="18"/>
+        <rectangle draw="false" fill="false" height="2" width="100%" x="0%" y="16"/>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="center" width="9.090909090909092%" x="0.0%" y="18">Department</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="center" width="9.090909090909092%" x="9.090909090909092%" y="18">Position</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="18.181818181818183%" y="18">Actual</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="27.272727272727273%" y="18">Budget</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="36.36363636363637%" y="18">Difference</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="45.45454545454546%" y="18">Absolute Difference</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="54.545454545454554%" y="18">Sum</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="63.63636363636365%" y="18">Min</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="72.72727272727273%" y="18">Max</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="81.81818181818183%" y="18">Average</label>
+        <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="right" width="9.09090909090908%" x="90.90909090909092%" y="18">MultiplyVal</label>
+      </groupheader>
+      <groupfooter name="REGIONGroupFooter" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold" pagebreak-before-print="false" pagebreak-after-print="false">
+        <rectangle color="#c0d0e0" draw="false" fill="true" height="16" width="100%" y="1" x="0%"/>
+        <number-field fieldname="REGIONACTUALExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="18.181818181818183%" y="2"/>
+        <number-field fieldname="REGIONBUDGETExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="27.272727272727273%" y="2"/>
+        <number-field fieldname="REGIONDifferenceExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="36.36363636363637%" y="2"/>
+        <number-field fieldname="REGIONAbsolute DifferenceExpression" height="15" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="45.45454545454546%" y="2"/>
+        <message-field height="15" x="0%" width="18.181818181818183%" y="2" alignment="left" vertical-alignment="middle">Total</message-field>
+      </groupfooter>
+    </group>
+  </groups>
+  <items color="#000000" fontname="SansSerif" fontsize="9" fontstyle="bold">
+    <rectangle name="rowBandingElement" color="#E0E0E0" draw="false" fill="true" height="11" x="0%" width="100%" y="0"/>
+    <string-field name="DEPARTMENTElement" nullstring="-" fieldname="DEPARTMENT" vertical-alignment="middle" alignment="center" width="9.090909090909092%" x="0.0%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <string-field name="POSITIONTITLEElement" nullstring="-" fieldname="POSITIONTITLE" vertical-alignment="middle" alignment="center" width="9.090909090909092%" x="9.090909090909092%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="ACTUALElement" nullstring="-" fieldname="ACTUAL" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="18.181818181818183%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="BUDGETElement" nullstring="-" fieldname="BUDGET" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="27.272727272727273%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="DifferenceElement" nullstring="-" fieldname="Difference_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="36.36363636363637%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="Absolute DifferenceElement" nullstring="-" fieldname="Absolute Difference_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="45.45454545454546%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="SumElement" nullstring="-" fieldname="Sum_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="54.545454545454554%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="MinElement" nullstring="-" fieldname="Min_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="63.63636363636365%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="MaxElement" nullstring="-" fieldname="Max_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="72.72727272727273%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="AverageElement" nullstring="-" fieldname="Average_calc_column_expression" vertical-alignment="middle" alignment="right" width="9.090909090909092%" x="81.81818181818183%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+    <number-field name="MultiplyElement" nullstring="-" fieldname="Multiply_calc_column_expression" format="#,###.##" vertical-alignment="middle" alignment="right" width="9.09090909090908%" x="90.90909090909092%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+  </items>
+  <reportfooter>
+    <message-field fontname="Ariel" fontsize="14" fontstyle="bold" height="15" width="100%" x="0" y="0" visible="false">Total Number of Customers=> </message-field>
+  </reportfooter>
+  
+  <functions>
+    <function name="backgroundTrigger" class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">rowBandingElement</property>
+        <property name="numberOfElements">1</property>
+        <property name="initialState">true</property>
+      </properties>
+    </function>
+    <function name="headerEVSF_DEPARTMENT" class="org.pentaho.reporting.engine.classic.core.function.ItemHideFunction">
+      <properties>
+        <property name="element">DEPARTMENTElement</property>
+        <property name="field">DEPARTMENT</property>
+        <property name="ignoreGroupBreaks">true</property>
+        <property name="ignorePageBreaks">true</property>
+      </properties>
+    </function>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Difference_calc_column_expression">
+      <properties>
+        <property name="expression">
+          Object getValue()
+          {
+            String[] names = {"ACTUAL", "BUDGET"};
+            double calc = ((Number)dataRow.get(names[0])).doubleValue();
+            try
+            {
+              for (int x=1;x&lt; names.length; x++)
+              {
+                Object value = dataRow.get(names[x]);
+                if (value instanceof Number)
+                {
+                  calc -= ((Number)value).doubleValue();
+                }
+              }
+              return new Double(calc);
+            }
+            catch (Exception e)
+            {
+              e.printStackTrace();
+            }
+          }</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Absolute Difference_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};double calc = ((Number)dataRow.get(names[0])).doubleValue(); try { for (int x=1;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { calc -= ((Number)value).doubleValue(); } } return new Double(Math.abs(calc));} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Sum_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};double calc = 0; try { for (int x=0;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { calc += ((Number)value).doubleValue(); } } return new Double(calc);} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Min_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};double min = Double.MAX_VALUE;try { for (int x=0;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { min = Math.min(min, ((Number)value).doubleValue()); } } return new Double(min);} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Max_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};double max = Double.MIN_VALUE;try { for (int x=0;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { max = Math.max(max, ((Number)value).doubleValue()); } } return new Double(max);} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Average_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};int numSum = 0;double calc = 0; try { for (int x=0;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { numSum++;calc += ((Number)value).doubleValue(); } } return new Double(calc / numSum);} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="Multiply_calc_column_expression">
+      <properties>
+        <property name="expression">Object getValue() { String[] names = {"ACTUAL", "BUDGET"};double calc = ((Number)dataRow.get(names[0])).doubleValue(); try { for (int x=1;x&lt; names.length; x++) { Object value = dataRow.get(names[x]); if (value instanceof Number) { calc *= ((Number)value).doubleValue(); } } return new Double(calc);} catch (Exception e) { e.printStackTrace();}}</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.HideElementIfDataAvailableExpression" name="noDataLabelElementHideIfNullTrigger">
+      <properties>
+        <property name="element">noDataLabelElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="dummyGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">dummyGroupFooter</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_ACTUALExpression">
+      <properties>
+        <property name="field">ACTUAL</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_BUDGETExpression">
+      <properties>
+        <property name="field">BUDGET</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_DifferenceExpression">
+      <properties>
+        <property name="field">Difference_calc_column_expression</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="Summary_Absolute DifferenceExpression">
+      <properties>
+        <property name="field">Absolute Difference_calc_column_expression</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="REGIONGroupHeaderHideIfNullTrigger">
+      <properties>
+        <property name="element">REGIONGroupHeader</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="REGIONGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">REGIONGroupFooter</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="REGIONACTUALExpression">
+      <properties>
+        <property name="field">ACTUAL</property>
+        <property name="group">REGION</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="REGIONBUDGETExpression">
+      <properties>
+        <property name="field">BUDGET</property>
+        <property name="group">REGION</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="REGIONDifferenceExpression">
+      <properties>
+        <property name="field">Difference_calc_column_expression</property>
+        <property name="group">REGION</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="REGIONAbsolute DifferenceExpression">
+      <properties>
+        <property name="field">Absolute Difference_calc_column_expression</property>
+        <property name="group">REGION</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

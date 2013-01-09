@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="8">
+    <cols>
+      <column width="225.5"/>
+      <column width="135.3"/>
+      <column width="90.2"/>
+    </cols>
+    <row height="12">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="18">
+      <cell row-span="2" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PAGE HEADER"/>
+        <line type="ParagraphPoolBox" x="189.42" y="12.0" width="72.16" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="189.42" y="12.0" width="27.75" height="10.0">PAGE</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="219.94" y="12.0" width="41.64" height="10.0">HEADER</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="2">
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="12">
+      <cell background-color="#7fff7f" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="The report header"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="80.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="17.22" height="10.0">The</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="19.99" y="0.0" width="26.11" height="10.0">report</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="48.87" y="0.0" width="31.13" height="10.0">header</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="48">
+      <empty-cell background-color="#efefef">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell background-color="#efefef">
+      </empty-cell>
+      <empty-cell background-color="#efefef">
+      </empty-cell>
+    </row>
+    <row height="12">
+      <cell border-top-color="#7f7fff" border-top-width="1.0" border-top-style="solid" border-left-color="#7f7fff" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Number of items displayed: "/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="123.86" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="35.56" height="10.0">Number</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="38.33" y="0.0" width="8.33" height="10.0">of</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="49.43" y="0.0" width="23.88" height="10.0">items</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="76.08" y="0.0" width="45.01" height="10.0">displayed:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell border-top-color="#7f7fff" border-top-width="1.0" border-top-style="solid" border-right-color="#7f7fff" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="itemcount"/>
+        <line type="ParagraphPoolBox" x="360.8" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="360.8" y="0.0" width="5.56" height="10.0">0</text>
+        </line>
+      </cell>
+    </row>
+    <row height="40">
+      <cell border-left-color="#7f7fff" border-left-width="1.0" border-left-style="solid" border-bottom-color="#7f7fff" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#7f7fff" border-right-width="1.0" border-right-style="solid" row-span="2" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="&#x000a;The grey area is the real report footer (make it white to be invisible, but do not remove it).&#x000a;The blue-bordered area is the page footer, which gets misused as a report footer.&#x000a;      "/>
+        <line type="ParagraphPoolBox" x="0.0" y="12.0" width="0.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="12.0" width="0.0" height="10.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="22.0" width="393.19" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="22.0" width="17.22" height="10.0">The</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="19.99" y="22.0" width="19.45" height="10.0">grey</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="42.21" y="22.0" width="20.01" height="10.0">area</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="64.99" y="22.0" width="7.22" height="10.0">is</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="74.98" y="22.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="91.64" y="22.0" width="16.67" height="10.0">real</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="111.08" y="22.0" width="26.11" height="10.0">report</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="139.96" y="22.0" width="25.55" height="10.0">footer</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="168.28" y="22.0" width="27.78" height="10.0">(make</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="198.83" y="22.0" width="4.99" height="10.0">it</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="206.59" y="22.0" width="23.33" height="10.0">white</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="232.69" y="22.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="243.79" y="22.0" width="11.12" height="10.0">be</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="257.68" y="22.0" width="38.33" height="10.0">invisible,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="298.78" y="22.0" width="13.89" height="10.0">but</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="315.44" y="22.0" width="11.12" height="10.0">do</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="329.33" y="22.0" width="13.89" height="10.0">not</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="345.99" y="22.0" width="33.34" height="10.0">remove</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="382.1" y="22.0" width="11.09" height="10.0">it).</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="32.0" width="359.39" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="32.0" width="17.22" height="10.0">The</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="19.99" y="32.0" width="62.25" height="10.0">blue-bordered</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="85.01" y="32.0" width="20.01" height="10.0">area</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="107.79" y="32.0" width="7.22" height="10.0">is</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="117.78" y="32.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="134.44" y="32.0" width="22.24" height="10.0">page</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="159.45" y="32.0" width="28.32" height="10.0">footer,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="190.54" y="32.0" width="25.56" height="10.0">which</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="218.87" y="32.0" width="18.89" height="10.0">gets</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="240.53" y="32.0" width="37.23" height="10.0">misused</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="280.53" y="32.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="293.86" y="32.0" width="5.56" height="10.0">a</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="302.19" y="32.0" width="26.11" height="10.0">report</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="331.07" y="32.0" width="28.32" height="10.0">footer.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="42.0" width="0.0" height="10.0" color="black" font-face="SansSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+  </table>
+</layout-output>

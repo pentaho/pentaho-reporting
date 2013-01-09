@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="9">
+    <cols>
+      <column width="220"/>
+      <column width="372"/>
+    </cols>
+    <row height="18">
+      <cell border-bottom-color="#cfcfcf" border-bottom-width="2.0" border-bottom-style="solid" background-color="#afafaf" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="d-MMM-yyyy"/>
+        <line type="ParagraphPoolBox" x="541.99" y="0.0" width="50.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="541.99" y="0.0" width="50.01" height="10.0">7-Apr-2011</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="18">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="LIST OF COUNTRIES BY CONTINENT"/>
+        <line type="ParagraphPoolBox" x="137.168" y="0.0" width="317.664" height="18.0" color="black" font-face="Arial Unicode MS" font-size="18" font-style-bold="true" font-style-italics="false" font-style-underline="true" font-style-strikethrough="false">
+          <text x="137.168" y="0.0" width="37.962" height="18.0">LIST</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="180.116" y="0.0" width="24.966" height="18.0">OF</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="210.068" y="0.0" width="105.912" height="18.0">COUNTRIES</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="320.966" y="0.0" width="23.976" height="18.0">BY</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="349.928" y="0.0" width="104.904" height="18.0">CONTINENT</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="72">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sample Thai chars: เพิ่ม, ลูกค้า"/>
+        <line type="ParagraphPoolBox" x="176.462" y="30.0" width="239.076" height="18.0" color="black" font-face="Arial Unicode MS" font-size="18" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="176.462" y="30.0" width="61.002" height="18.0">Sample</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="242.45" y="30.0" width="34.992" height="18.0">Thai</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="282.428" y="30.0" width="48.996" height="18.0">chars:</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="336.41" y="30.0" width="33.354" height="18.0">เพิ่ม,</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="374.75" y="30.0" width="40.788" height="18.0">ลูกค้า</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="1">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Continent Group"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="9">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="CONTINENT:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="91.0" width="54.945" height="9.0" color="black" font-face="Monospaced" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="91.0" width="54.945" height="9.0">CONTINENT:</text>
+        </line>
+      </cell>
+      <empty-cell>
+      </empty-cell>
+    </row>
+    <row height="8">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="18">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Population:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="108.0" width="45.0" height="9.0" color="black" font-face="Monospaced" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="108.0" width="45.0" height="9.0">Population:</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0"/>
+        <line type="ParagraphPoolBox" x="330.996" y="108.0" width="5.004" height="9.0" color="black" font-face="Monospaced" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="330.996" y="108.0" width="5.004" height="9.0">0</text>
+        </line>
+      </cell>
+    </row>
+    <row height="48">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="*** &gt; END OF REPORT &lt; ***"/>
+        <line type="ParagraphPoolBox" x="193.424" y="126.0" width="205.152" height="16.0" color="black" font-face="Serif" font-size="16" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="193.424" y="126.0" width="18.672" height="16.0">***</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="216.528" y="126.0" width="9.328" height="16.0">&gt;</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="230.288" y="126.0" width="33.76" height="16.0">END</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="268.48" y="126.0" width="22.192" height="16.0">OF</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="295.104" y="126.0" width="66.608" height="16.0">REPORT</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="366.144" y="126.0" width="9.328" height="16.0">&lt;</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="379.904" y="126.0" width="18.672" height="16.0">***</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="18">
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+    </row>
+  </table>
+</layout-output>

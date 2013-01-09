@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="6">
+    <cols>
+      <column width="595"/>
+    </cols>
+    <row height="1">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="label report"/>
+      </empty-cell>
+    </row>
+    <row height="2">
+      <empty-cell border-top-color="green" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="6">
+      <empty-cell border-top-color="red" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="47">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Test"/>
+        <line type="ParagraphPoolBox" x="571.684" y="10.0" width="23.316" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="571.684" y="10.0" width="23.316" height="12.0">Test</text>
+        </line>
+      </cell>
+    </row>
+    <row height="2">
+      <empty-cell border-top-color="blue" border-top-width="0.5" border-top-style="solid" border-bottom-color="yellow" border-bottom-width="2.0" border-bottom-style="solid">
+      </empty-cell>
+    </row>
+    <row height="784">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

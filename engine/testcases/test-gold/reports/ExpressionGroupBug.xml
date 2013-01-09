@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report name="Layered Value" orientation="landscape" pageformat="A4" leftmargin="50" rightmargin="50">
+
+  <!-- REPORT HEADER -->
+  <reportheader height="60" fontname="Monospaced" fontstyle="bold" fontsize="18">
+    <!--<imageref x="0" y="0" width="75" height="13" src="../../images/Logo.jpg" name="logo"/> -->
+    <label name="label Title"    x="0" y="20" width="100%" height="20" alignment="center">LAYERED VALUES</label>
+    <line name="line1" x1="0" y1="60" x2="0" y2="60" weight="1"></line>
+  </reportheader>
+
+  <!-- REPORT FOOTER -->
+  <reportfooter height="50" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <label name="label Footer" x="0" y="0"  width="100%" height="20" alignment="center" fontstyle="bold" fontsize="10">END OF REPORT</label>
+    <label name="label File"   x="0" y="30" width="100%" height="20" alignment="left">Number of reserves:</label>
+    <number-field name="coverNumber" fieldname="NumberOfReserve" format="#,##0;-#,##0" x="100" y="30" width="100%" height="20" alignment="left"/>
+    <label name="label File"   x="0" y="40" width="100%" height="20" alignment="left">File: /Reports/production/ProductionReportMainCompanyReserveLayeredByUY.xml</label>
+  </reportfooter>
+ 
+  <!-- PAGE HEADER -->
+  <pageheader height="8.5" fontname="Monospaced" fontstyle="bold" fontsize="6" alignment="left" onfirstpage="false">
+    <line name="line1" x1="0" y1="0" x2="0" y2="0" weight="0.5"></line>
+   
+    <label name="lbl_nbrReserve"     x="140" y="1" width="50"  height="6" alignment="right">NBR</label>
+    <label name="lbl_reserveL"      x="195" y="1" width="50"  height="6" alignment="right">RESERVE EUR</label>
+
+    <line name="line2" x1="0" y1="8" x2="0" y2="8" weight="0.5"></line>
+  </pageheader>
+
+  <!-- PAGE FOOTER -->
+  <pagefooter height="15" fontname="Monospaced" fontsize="6">
+    <line name="line4" x1="0" y1="4" x2="0" y2="4" weight="0.5"/>
+    <label name="label printed"      x="0"  y="5"  width="100%" height="8" alignment="left">Printed: </label>
+    <date-field name="date1"         x="30" y="5"  width="100%" height="8" alignment="left" format="dd/MM/yyyy" fieldname="report_date"/>
+    <number-field name="pagenum1" fieldname="PageNumber" format="Page 0" x="0" y="5" width="100%" height="8" alignment="center"/>
+    <label name="label copyright"    x="0"  y="5"  width="100%" height="8" alignment="right">© Insurance Data S.A.</label>
+    <label name="label internetSite" x="0"  y="10" width="100%" height="8" alignment="right">www.InsuranceData.com</label>
+  </pagefooter>
+
+  <!-- GROUPS -->
+  <groups>
+    <group name="Header Group">
+      <groupheader height="8.5" fontname="Monospaced" fontstyle="bold" fontsize="6" alignment="left">
+        <line name="line1" x1="0" y1="0" x2="0" y2="0" weight="0.5"></line>
+   
+        <label name="lbl_nbrReserve"  x="140" y="1" width="50"  height="6" alignment="right">NBR</label>
+        <label name="lbl_reserveL"    x="195" y="1" width="50"  height="6" alignment="right">RESERVE EUR</label>
+
+        <line name="line2" x1="0" y1="8" x2="0" y2="8" weight="0.5"></line>
+      </groupheader>
+      <groupfooter height="31" fontname="Monospaced" fontstyle="bold" fontsize="5" vertical-alignment="middle">
+        <line name="line1" x1="0"   y1="11" x2="0" y2="11" weight="1"></line>
+        <line name="line1" x1="0"   y1="13" x2="0" y2="13" weight="1"></line>
+        <number-field name="total" fieldname="SumRESERVEL" format="#,##0;-#,##0" x="195" y="16" width="50" height="8" alignment="right"/>
+        <line name="line3" x1="0"   y1="28" x2="0" y2="28" weight="1"></line>
+        <line name="line4" x1="0"   y1="30" x2="0" y2="30" weight="1"></line>
+      </groupfooter>
+      <fields>
+      </fields>
+    </group>
+    <group name="Layer Group">
+      <groupheader  height="0.0" fontname="Monospaced" fontstyle="bold" fontsize="6" alignment="left">
+      </groupheader>
+      <groupfooter height="10" fontname="Monospaced" fontstyle="plain" fontsize="5" vertical-alignment="middle">
+        <string-field name="ele_layer"      x="0"  y="0" width="140"  height="8" fieldname="expDoLayer"/>
+        <number-field name="subRESERVE"   fieldname="SubSumRESERVEL" format="#,##0;-#,##0" x="195" y="0" width="50" height="8" alignment="right"/>
+      </groupfooter>
+      <fields>
+        <field>expDoLayer</field>
+      </fields>
+    </group>
+  </groups>
+
+  <!-- FUNCTIONS -->
+  <functions>
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction"/>
+    <function name="NumberOfReserve" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+      <properties>
+        <property name="group">Header Group</property>
+      </properties>
+    </function>
+    <function name="SumRESERVEL" class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction">
+      <properties>
+        <property name="field">LBL_QUERY_RESE_reserveL</property>
+        <property name="group">Header Group</property>
+      </properties>
+    </function>
+    <function name="SubSumRESERVEL" class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction">
+      <properties>
+        <property name="field">LBL_QUERY_RESE_reserveL</property>
+        <property name="group">Layer Group</property>
+      </properties>
+    </function>
+   
+<!--
+  *****************************************************************************************
+    EXPRESSIONS
+  *****************************************************************************************
+-->
+    <expression name="expDoLayer" class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+          <![CDATA[
+            Object getValue () {
+              if(dataRow == null) return null;
+              Number val = dataRow.get ("LBL_QUERY_RESE_reserveL");
+              if (val == null) return null;
+
+              double value = val.doubleValue();
+              if (value > 0)          return ("Over than 0");
+              if (value == 0)         return ("Equal to 0");
+              if (value > - 25000)    return ("From           0 to     -25 000");
+              if (value > - 50000)    return ("From     -25 000 to     -50 000");
+              if (value > - 100000)   return ("From     -50 000 to    -100 000");
+              if (value > - 200000)   return ("From    -100 000 to    -200 000");
+              if (value > - 300000)   return ("From    -200 000 to    -300 000");
+              if (value > - 400000)   return ("From    -300 000 to    -400 000");
+              if (value > - 500000)   return ("From    -400 000 to    -500 000");
+              if (value > - 750000)   return ("From    -500 000 to    -750 000");
+              if (value > - 1000000)  return ("From    -750 000 to  -1 000 000");
+              if (value > - 1250000)  return ("From  -1 000 000 to  -1 250 000");
+              if (value > - 1500000)  return ("From  -1 250 000 to  -1 500 000");
+              if (value > - 1750000)  return ("From  -1 500 000 to  -1 750 000");
+              if (value > - 2000000)  return ("From  -1 750 000 to  -2 000 000");
+              if (value > - 2500000)  return ("From  -2 000 000 to  -2 500 000");
+              if (value > - 3000000)  return ("From  -2 500 000 to  -3 000 000");
+              if (value > - 3500000)  return ("From  -3 000 000 to  -3 500 000");
+              if (value > - 4000000)  return ("From  -3 500 000 to  -4 000 000");
+              if (value > - 4500000)  return ("From  -4 000 000 to  -4 500 000");
+              if (value > - 5000000)  return ("From  -4 500 000 to  -5 000 000");
+              if (value > - 6000000)  return ("From  -5 000 000 to  -6 000 000");
+              if (value > - 7000000)  return ("From  -6 000 000 to  -7 000 000");
+              if (value > - 8000000)  return ("From  -7 000 000 to  -8 000 000");
+              if (value > - 9000000)  return ("From  -8 000 000 to  -9 000 000");
+              if (value > - 10000000) return ("From  -9 000 000 to -10 000 000");
+              if (value > - 15000000) return ("From -10 000 000 to -15 000 000");
+              if (value > - 20000000) return ("From -15 000 000 to -20 000 000");
+              if (value <= - 20000000)return ("Less than - 20 000 000");
+             
+              return ("NULL");
+            }
+          ]]>
+        </property>
+      </properties>
+    </expression>
+  </functions>
+</report>

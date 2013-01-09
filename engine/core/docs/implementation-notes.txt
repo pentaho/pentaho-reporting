@@ -1,0 +1,23 @@
+Page orientation:
+
+LANDSCAPE:
+Landscape is defined to be a rotation of the print-stream page to be imaged
+by +90 degrees with respect to the medium (i.e. anti-clockwise) from the portrait
+orientation. Note: The +90 direction was chosen because simple finishing on the
+long edge is the same edge whether portrait or landscape.
+
+REVERSE_LANDSCAPE:
+The content will be imaged across the long edge of the medium, but in the opposite
+manner from landscape. Reverse-landscape is defined to be a rotation of the print-stream
+page to be imaged by -90 degrees with respect to the medium (i.e. clockwise) from the
+portrait orientation. Note: The REVERSE_LANDSCAPE value was added because some applications
+rotate landscape -90 degrees from portrait, rather than +90 degrees.
+
+
+Translation Schema:
+
+Portrait:  T L B R =>
+Landscape: R B L T
+RevLand:   L T R B
+
+A Paper object always receives borders in portrait mode.

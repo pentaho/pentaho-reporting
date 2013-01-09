@@ -1,0 +1,754 @@
+This document describes the important API changes for the JFreeReport
+releases. It contains hints on how to upgrade to a new version and how
+to cope with the possible changes of the report behaviour.
+
+Changes from 0.8.8 to 0.8.9
+
+* The Preview-Components and the GUI system have changed:
+
+  * The ReportPane class is now gone. If you need an Pageable implementation
+    for printing the report, use the class
+    'org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor' instead.
+
+    To render a single page into a Graphics2D context, use the PrintReportProcessor
+    to get the PageDrawable for the page to be rendered and then call 'draw(..)'
+    on that Drawable using the Graphics2D object as first parameter.
+
+  * All Preview-Components are safely reusable now. A new report can be assigned
+    using the 'setReportJob(..)' method.
+
+  * The misspelled 'ReportControler' interface is now correctly spelled and called
+    'ReportController'
+
+  * The ReportController interface has changed slightly, as there is no PreviewProxyPane
+    anymore. A ReportController implementation will no longer be enabled or disabled from
+    the ReportPreview-Component. Register the ReportController as PropertyChangeListener
+    to synchronize the ReportController's state with the PreviewPane.
+
+  * The Export-Plugin system has changed. Export-Dialogs are now called from within
+    ExportActionPlugins, which do no longer have direct access to the Preview-Component.
+
+    The ExportActionPlugins can use the GuiContext information for their initialization.
+    All Export-Dialogs can now be used independently from their respective
+    ExportActionPlugin implementation. All settings made in the dialog are stored in
+    the report's local configuration and are used by the export tasks later.
+
+  * Now all GUI-Actions are implemented as Action-Plugin and can be configured
+    (or replaced) separately. The configuration system to enable or disable parts of
+    the GUI has changed.
+
+  * The PreviewPane is gone. To print reports directly, the PrintReportProcessor class
+    provides a java.awt.print.Pageable implementation.
+
+* The PDFSaveDialog is now called PdfExportDialog so that this naming is
+  consistent with the other export dialogs.
+
+* PDFUtils.concatReports has been deprecated; the same functionality can be
+  achieved using SubReports.
+
+* The AppendingExcelProcessor has been deprecated; the same functionality can
+  be achieved using SubReports.
+
+* To configure the print-job name, use the configuration property
+  'org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.print.JobName'.
+  The configuration property 'org.pentaho.reporting.engine.classic.core.modules.gui.print.JobName'
+  is no longer used. If no explicit name is given, the report's name will be
+  used as Job-Name instead.
+
+* The HTML-Output no longer generates HTML4. Every browser that accepts HTML4
+  also accepts XHTML, as both formats are fairly equal and the only difference
+  in the old generator was the additional closing tag-marker for XHTML.
+
+* The config-storage system for local configuration settings has changed to use
+  org.jfree.util.Configuration instead of java.util.Properties.
+
+* Semantic changed: Setting 'dynamic-height' flag to 'true' does no longer expand
+  the width of drawable or image-elements. This way, the name of that flag matches
+  the behavior it creates in the report.
+
+* The system does no longer generate PageCancelled-Events. PageEvents are not fired
+  until the page actually generated content.
+
+* The layouting is now fully decoupled from the data-processing. As a side-effect,
+  no function is able to read the final layouted size. The StyleKey 'bounds' is no
+  longer maintained by the system.
+
+  The PaintComponentFunction, which depended on the computed bounds is no longer
+  functional and has been removed. Use the Component-Element to achive the same
+  effect.
+
+* The Output-Target implementations are gone and have been replaced by several
+  OutputProcessor implementations, which can be combined with the new ReportProcessor
+  implementations.
+
+  The Pageable-OutputTargets can only be used with PageableReportProcessors. Trying
+  to use them with the Streaming or Flow-ReportProcessor will produce funny, but
+  nonetheless invalid results.
+
+  The Table-OutputTargets can be used with all report processors. If used with the
+  Pageable-ReportProcessor, a new sheet/table is created on each physical pagebreak.
+  The Flow-ReportProcessor generates a new sheet/table for each manual pagebreak
+  encountered in the report. The Streaming-report processor ignores all pagebreaks
+  and produces exactly one table that contains the whole report.
+
+* The awfull servlet-code in JFreeReport-Ext is gone and will be replaced with a
+  simple and straightforward implementation.
+
+* The demos have been moved into their own project.
+
+* The BandLayoutManager implementations are gone now. The remaining classes are
+  non-functional dummys so that existing reports dont break. The 'layoutmanager'
+  stylekey is now deprecated; use the 'layout' stylekey instead. The 'layout'
+  stylekey accepts either 'canvas', 'block' or 'inline' as value.
+
+  The 'canvas' layout-mode is the same as the old StaticLayoutManager; while the
+  'block' layout-mode behaves like the 'StackedLayoutManager'.
+
+* The 'org.pentaho.reporting.engine.classic.core.content' package is gone. As this was an internal package
+  anyway, no one else should have used it anyway.
+
+* The serialize-helper classes in org.pentaho.reporting.engine.classic.core.util are gone now. Use the
+  JCommon-serializer library instead.  
+
+* The ElementTrafficLighFunction implementation changed. Invalid definitions,
+  that declared not the same number of colors as the same number of limits.
+  This may now lead to different behaviour.
+
+* The system does no longer generate LayoutEvents and the LayoutListener interface
+  is now fully dysfunctional.
+
+* The methods pageCancelled() and pageRolledBack have been removed from the
+  PageEventListener interface. The system no longer generate these events.
+
+  The page-event order changed. Now the first page-started event is thrown after
+  the report-initialized event was thrown. The page-finished event is thrown
+  when the layouter detects that the current page is filled. The page-started
+  event is deferred until there is content to be printed. Therefore it is not
+  guaranteed that the page-finished event is immediately followed by a page-started
+  event.
+  
+  Functions that relied on the old page event order are likely to be broken now.
+
+* Due to the introduction of caching and the new layouting strategies, functions
+  which do not properly implement clone() and getInstance() will be broken and
+  will show very strange sideeffects. The only fix for this is to fix the functions.
+
+* The function system changed. The report-definition object no longer carries any
+  data with it. Function now MUST use the expression runtime or the event object
+  to access the data-row.
+
+* All Expressions are treated as "active" now. Therefore all expressions are
+  queried on every state change.
+
+  The automatic call to "getValue()" from one function to an other function has
+  been decoupled now. Functions can only read the values that are stored in the
+  "GlobalDataRow". Functions referencing other functions must either properly
+  define the dependency level or must make sure that they do not depend on
+  functions added after themself.
+---------------------------------------------------------------------------
+Changes from 0.8.7 to 0.8.8
+
+* The 'JFreeReport.setData(..)' method is now deprecated, as the single-datasource
+  approach does not work with SubReports. To set a datasource to the report, use a
+  DataFactory.
+
+  The following code does the same as the now deprecated 'setData' method:
+
+      report.setDataFactory(new TableDataFactory ("default", yourTableModel));
+      report.setQuery ("default");
+
+* The long time deprecated 'JFreeReport.addFunction(..)' method is now finally gone.
+  Use the 'addExpression' method instead, which does exactly the same.
+
+* The ReportConnectable interface is gone. All DataSources get
+  a ExpressionRuntime when being queried for values. Calling 'getValue(..)'
+  from outside the reporting process may not produce correct results.
+
+* The LayoutEvent-IDs have changed. Recompile if you reference these
+  IDs directly in one of your custom function implementations.
+
+* All ReportProperties are added to the data-row now (and behave as if they are
+  now always 'marked').
+
+* The OutputFunction is no longer part of the ordinary data-row and cannot be
+  accessed by its magical name. Doing this was always evil behavior.
+
+* The XML-Parsers are namespace-aware now. The old DTDs should no longer be used.
+
+  For the extended-XML format, use the namespace:
+  'http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext'
+
+  For the Simple-XML format use
+  'http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple'
+
+---------------------------------------------------------------------------
+Changes from 0.8.6 to 0.8.7
+
+* The functions API changed a bit. Custom function implementation which do
+  not use the 'AbstractExpression' as baseclass need to be changed to fit the
+  new API.
+
+* The line height computation of previous JFreeReport versions was too
+  simplicistic. The layouter assumed that the declared font height is equal to
+  the effective size of the rendered text. This assumption fails for uppercase
+  roman letters with accents, rings or other pronouncation modifiers (as it is
+  common in most nordic languages).
+
+  Bluntly changing the line height requirements will cause trouble, as all
+  reports would have to be adjusted. Therefore a soft migration path is available.
+
+  By default, the old line height algorithm is used, but clipping is disabled
+  globally. This way, text will be rendered correctly most of the time, but may
+  appear a bit displaced if it contains such problematic letters.
+
+  In such cases, the stricter new line height computation can be enabled by
+  setting the report configuration property
+
+       'org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds'
+
+  to true. All element heights must now be adjusted to fit the effective line
+  height, which is approximatly 10% larger than the font's declared size.
+
+  Clipping can be reenabled by setting the configuration property
+
+      'org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ClipText'
+
+  to true again.
+
+* The new font mapping engine now uses the font's declared family names
+  to build the system's font map. This change only affects PDF exports, where
+  fonts were not mapped correctly. Specifying the full font name
+  (for example 'Arial Bold') does no longer work, the font's family name must
+  be specified instead (here: 'Arial') and the font style properties must be
+  adjusted.
+
+  If there is both an oblique and an italic font version available, the italic
+  font is preferred.
+
+Changes from 0.8.5 to 0.8.6
+
+* The report system does no longer boot automaticly when accessing the
+  report properties. The report engine *must* be initialized manually
+  by calling 'JFreeReportBoot.getInstance().start()' prior to using it.
+
+* The ReportConfiguration class can not be used to access the global
+  configuration anymore. The global configuration is now accessible using
+  'JFreeReportBoot.getInstance().getConfiguration()' or one of the
+  various alias methods like 'getEditableConfiguration()'.
+
+* The ItemColumnQuotientExpression has been deprecated. The same functionality
+  is now provided by the 'PercentageExpression'.
+
+Changes from 0.8.4-* to 0.8.5-4
+
+* Functions and expressions are no longer handled specially during the
+  report definition phase. The "addFunction" method of JFreeReport has
+  been removed and "addExpression" should be used instead.
+
+* The old Property-configuration of the Functions and Expressions API
+  has been replaced by an reflection-driven JavaBeans API. Expression
+  properties are defined by creating suitable getter/setter methods for
+  the property following the JavaBeans specification.
+
+* The "DefaultPageFormat" of the JFreeReport object is no longer there.
+  A PageDefinition object should be given instead. So, instead of writing
+  "report.setDefaultPageFormat(fmt)" one would now write "
+  "report.setPageDefinition (new SimplePageDefinition (fmt))". Reports
+  defined by XML are not affected.
+
+  From now on the only valid source for querying the page format is the
+  report definition itself. The PageFormats constructor parameters in the
+  OutputTarget implementations have been removed with no replacement.
+
+* ResourceBundles are no longer bound to the report using the report
+  properties. A resource bundle factory is used to query the resource
+  bundles used during the report processing.
+
+* Horizontal Lines should no longer be defined using the x1==x2 && y1==y2
+  syntax (ie: Line2D.Float (0, 10, 0, 10)). Now lines use the relative
+  coordinates like all other elements (width="100%") Special factory
+  methods have been added to the StaticShapeElementFactory so that
+  vertical and horizontal lines can be generated more easily.
+
+* The LayoutManager's caching is more aggressive now. As a result elements,
+  which have their contents modified by an function must set their
+  'layout-cachable' flag to false. If an function triggers the visibility
+  of an element, the element's parent band must define the non-cachable flag.
+
+  Without this hint the layout manager will happily use the cached (and
+  possibly invalid) bounds for the element and it's parents. Elements
+  which are marked as dynamic are automaticly recognized as non-cachable.
+
+* The style inheritance changed in version 0.8.5. The explicit 'default-style'
+  of the Band class has been removed. Bands inherit their primary style to
+  all its direct and indirect childs.
+
+  Global stylesheets must now be created using
+  "JFreeReport.getStyleSheetCollection().createStyleSheet(..)". Stylesheets
+  cannot be exchanged with other reports, all global stylesheets of a certain
+  report must be created using the same StyleSheetCollection instance.
+
+* The Public and System Identifiers for the XML definitions changed in
+  JFreeReport 0.8.5.
+
+  For the extended report definition use
+
+  <!DOCTYPE report-definition
+    PUBLIC "-//JFreeReport//DTD report definition//EN//extended/version 0.8.5"
+           "http://jfreereport.sourceforge.net/extreport-085.dtd">
+
+  and for the simple report definition use
+
+  <!DOCTYPE report
+    PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+           "http://jfreereport.sourceforge.net/report-085.dtd">
+
+* For the extended report definitions the <default-style> tag has been removed
+  and the contents of this stylesheet should be merged with the primary style
+  definition of the element.
+
+  The <default-pageformat> tag has been removed. The page format should now be
+  defined using
+
+    <report-config>
+      <page-definition>
+        <page orientation="portrait" pageformat="LETTER" topmargin="72" bottommargin="72" leftmargin="72" rightmargin="72"/>
+      </page-definition>
+      ..
+    </report-config>
+
+* For the simple report definitions, the 'ownpage' attribute of the ReportHeader
+  and footer tags have been deprecated and should be replaced by 'pagebreak-after'
+  attributes.
+
+  The 'pagebreak' attribute of the GroupHeader and GroupFooter should also be
+  replaced by 'pagebreak-before' or 'pagebreak-after' attributes.
+
+* Using 'Boot.start()' to initialize JFreeReport has been deprecated in favor
+  of the 'JFreeReportBoot' implementation. This class uses the modularization
+  framework from JCommon instead of using a completly static implementation.
+
+* Some of the internal classes, like AbstractActionButton, WaitingImageObserver
+  or the module management have been moved into JCommon.
+
+
+
+Changes from 0.8.4_4 to 0.8.4_5
+
+The PreviewBase does now handle all actions using an action map
+implementation. The old get/set method for the actions now modify
+the action maps. After actions were redefined, an manual call to
+reinitialize() must be done to rebuild the menus and the toolbar.
+
+Changes from 0.8.4_2 to 0.8.4_4
+
+The SimplePageLayouterWorker interface changed slightly.
+
+Changes from 0.8.4 to 0.8.4-2
+
+The export plugin API changed to resolve several multithreading issues.
+
+A new output support module was created for the common code of all
+page layouters. The pageable-base and table-export-base modules now
+both depend on the module "output-support-pageable".
+
+Changes from 0.8.3g to 0.8.4
+
+Function releated changes
+-------------------------
+The ReportProperty function was finally removed from the code. Use the
+  property-ref tag to get the same results. If you are using the API to
+  define your reports, simply "mark" the properties using
+    JFreeReport.setPropertyMarked(String, boolean)
+
+User functions don't receive page events (PageStarted, PageFinished,
+  PageCanceled) by default anymore. If they need those events, they have
+  to implement the PageEventListener interface. The PageEventListener
+  will be informed when a page started, ended or was discarded because
+  it was empty.
+
+The BeanShell expression moved into the module
+  org.pentaho.reporting.engine.classic.core.modules.misc.beanshell. If this module is not used,
+  the BeanShell jar file is not required to be present on the classpath.
+
+The deprecated ItemColumnQuotientFunction was removed and got replaced
+  by the ItemColumnQuotientExpression for performance reasons. Expressions
+  won't get cloned during the report processing.
+
+The REPORT_PAGECOUNT_PROPERTY constant was removed and the
+  JFreeReportConstants interface was merged with the JFreeReport class.
+  Interfaces should define a type and should not be used to solely define
+  constants. The functionality of the page count property is provided
+  by the page count function.
+
+Functions do no longer try to parse string values into numeric values.
+  Calculation function now depend on the correct data type, or the
+  computation will fail.
+
+Booting
+-------
+All non-base code is now organized in modules. When assembling your
+  application make sure that all required modules are included. The package
+  manager will load all modules and tries to resolve all dependencies. If
+  a required module was not found, then the loading will fail for the
+  requested module.
+
+The JFreeReport package should be initialized by calling Boot.start().
+  This will load and initialize the modules in a controlled way. Booting
+  will be done automaticly if JFreeReport is used, but the order and
+  correctness of the bootprocess can not be guaranteed in that case.
+
+The Swing default dialogs (like the JFileChooser) can be translated into
+  the current default language by setting the configuration key
+  "org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingDialogTranslation" to true.
+
+  This feature is disabled by default to minimize the number of unexpected
+  changes to the java defaults.
+
+Other changes
+-------------
+All deprecated methods and classes were finally removed.
+
+The simple parser does no longer recognize *-function elements. These
+  elements were deprecated for a long time and should be replaced by their
+  *-element counterparts.
+
+The ItemFactory class was removed and got replaced by the package
+  org.pentaho.reporting.engine.classic.core.elementfactories. This package contains factory classes
+  to easily build report elements. The factory implementations also provide
+  the old static methods, but be aware that these functions create ugly
+  report definitions.
+
+  Remember, that shape coordinates are relative to the elements origin.
+  That means that if you want to place a rectangle on position x,y within
+  a band, you have to set the absolute position of the ELEMENT to x,y and
+  the rectangle should have an origin of (0,0).
+
+The dynamic height stylekey moved from the class StaticLayoutManager into
+  the more general class ElementStyleSheet. The dynamic height feature is
+  available in all band layout managers.
+
+The AbsPos stylekey does no longer define a default value in the default
+  stylesheets. Queries to that key may now result in a null-value unless a
+  default object is supplied in the getProperty method.
+
+The pagination event classes are now contained in the global event package.
+
+All UI relateted classes moved into the GUI-base module.
+
+The report configuration class does no longer provide default values for
+  the most keys. It also does no longer provide simplified access methods or
+  key definitions to set the configuration properties. Module specific
+  configuration settings are defined by the module and the module
+  implementation is responsible to provide suitable default values.
+
+  The global "/jfreereport.properties" file and the report local configuration
+  can always be used to override module specific settings. Settings in the file
+  "/org/pentaho/reporting/engine/classic/core/jfreereport.properties" will be replaced by the module
+  supplied values.
+
+  The global report configuration can be edited using the configuration editor
+  module.
+
+The iText base font factory tries to cache the read fonts in the configuration
+  store. The fonts will be synchronized during the first startup and new fonts
+  will be registered if necessary.
+
+  The complete reregistration can be forced by using the configuration dir.
+  By default the fonts get stored in the directory .jfreereport within
+  the users home directory.
+
+The report converter can be used to migrate extended report definitions from
+  0.8.3 to the new 0.8.4 namespace an to automaticly adjust the referenced
+  classnames. The conversion will fail, if the report uses the removed
+  ReportPropertyFunction. You will have to replace that function before
+  converting.
+
+The layout manager uses a more aggressive caching. If your functions alter
+  the size of an element, the element should be marked as non-cacheable by
+  setting the style property "layout-cacheable" to false.
+
+The simple parser now support sub-bands. Band default values will only be
+  directly inherited to the child elements.
+
+The preview components should be closed using the "close()" method, to
+  properly shutdown the worker threads.
+
+The toolbar of the preview components can now be configured by using the
+  report properties. The key "org.pentaho.reporting.engine.classic.core.modules.gui.base.ToolbarFloatable"
+  defines, whether the toolbar will be floatable, while the key
+  "org.pentaho.reporting.engine.classic.core.modules.gui.base.LargeIcons" defines, whether the
+  toolbar will contain larger versions of the icons.
+
+---------------------------------------------------------------------------
+Changes from 0.8.3c to 0.8.3d
+
+OutputTarget properties are all strings now. The PDF target uses "true" and
+  "false" to express boolean values.
+
+---------------------------------------------------------------------------
+Changes from 0.8.3b to 0.8.3c
+
+Lines and other non-area shapes are no longer clipped. Depending on your
+  report and the used shapes, your report ma look weird until the shapes
+  are clipped manually. The AWT does not support easy clipping of shapes
+  (except when drawing them), and the Area class is not able to handle
+  non-areal shapes. That means: Unless the clippping is implemented
+  manually, there will be no full support for it.
+
+Report components, which have an StyleSheetCollection assigned cannot be
+  added to other report components, which were assigned to a different
+  StyleSheetCollection. Every attempt to do this will result in an Exception.
+
+  All StyleSheets used within an Report can be queried from the StyleSheet
+  collection, once a element is added to the JFreeReport object, it gets
+  the StyleSheetCollection of the report assigned.
+
+  Cloning Elements or StyleSheets removed the stylesheet collection from
+  the clone, as the clone is not connected to the original report anymore.
+
+  All elements of a report share the same stylesheet collection. The
+  collection can contain more than one element with the same name, but it
+  is wise to give all stylesheets an unique name.
+
+---------------------------------------------------------------------------
+Changes from 0.8.3a to 0.8.3b
+
+Functions which depend on page events (pageStarted or pageFinished) should
+  now implement the PageListener interface. This interface provides an additional
+  method to inform all functions of canceled pages.
+
+  Pages get canceled by the PageableReportProcessor, if they are generated
+  empty.
+
+Stylesheets can be accessed by their name by using the StyleSheet collection.
+  This collection is maintained by the ReportDefinition object and was
+  populated when the reporting started.
+
+  From now on all Stylesheets get cloned during the report processing. Your
+  functions should not hold references to StyleSheets or the StyleSheet
+  collection. The currently valid instance of the stylesheet collection can
+  be queried by using the ReportEvent object.
+
+---------------------------------------------------------------------------
+Changes from 0.8.2 to 0.8.3
+
+Functions, which need to initialized themself on the start of the report
+  processing, should no longer use the reportStarted() event, as this event
+  is no longer the first event in the report processing.
+
+  The defined event order is now as follows:
+
+  - ReportInitialized event
+
+  - prepareEvent (ReportStarted)
+    + pageStarted event
+  - ReportStarted event
+
+  - prepareEvent (GroupStarted)
+  - GroupStarted event
+
+  - prepareEvent (ItemsStarted)
+  - ItemsStarted event
+
+  - prepareEvent (ItemsAdvanced)
+  - ItemsAdvanced event
+
+  - prepareEvent (ItemsFinished)
+  - ItemsFinished event
+
+  - prepareEvent (GroupFinished)
+  - GroupFinished event
+
+  - prepareEvent (ReportFinished)
+  - ReportFinished event
+
+  - prepareEvent (ReportDone)
+    +PageFinished event
+  - ReportDone event
+
+  The prepare events are used to inform the listeners, that the next state is
+  about to be processed. When this event is thrown, no change was done by the
+  state yet. The main purpose of these events is to help the function to clean
+  up its internal states before the new state is beeing processed. The
+  PageLayouter functions start a new page and print their spooled bands after
+  a pagebreak was done, when this event is received.
+
+The ItemColumnQuotientFunction is now deprecated and has been replaced by the
+  ItemColumnQuotientExpression.
+
+----------------------------------------------------------------------------------
+Changes from 0.8.1 to 0.8.2
+
+Shapes:
+  The shape content handling was buggy. Shape bounds are specified relative
+  to the element bounds.
+
+  In previous versions, both the shape bounds and the element bounds were
+  defined equal. So a line starting on y=10 within the band had the shape
+  element bounds with y=10 and contained a line2D shape with y1=10 and y2=10.
+  The shape was later transformed to y=0 before painting. This way all shapes
+  were translated to x=0,y=0, regardless of their real bounds. That invalid
+  behaviour is fixed now, but all shape definitions have changed.
+
+  This bug only affects the ext-definition styles, as the simple parser
+  profile adjusts the shapes within the predefined shape elements automaticly.
+  To fix your extended-definition, either adjust your shape definition to
+  start at position 0,0 or adjust your element to start at 0,0 and extend
+  its dimension to (old_x + old_width, old_y + old_height).
+
+LineElements:
+  Shape coordinates for the ItemFactory.createLineShapeElement() method must
+  not contain negative values. If you want to create scaling lines, you will
+  have to use one of the createShapeElement methods, which are able to
+  separate bounds from shapes.
+
+JFreeReport object replaced by ReportDefinition object:
+  Within the functions and the whole report processing process, the
+  JFreeReport object was replaced by an read only ReportDefinition object.
+  This object uses the same method names as the JFreeReport object, but has
+  no means to access the report functions or to change or replace the
+  report bands.
+
+  When upgrading you will have to change your functions to use the
+  ReportDefinition instead of the JFreeReport object. It is sufficient to
+  change the object type and to recompile the function.
+
+Groups are no longer editiable during the report processing. Any attemp to
+  add a new group to the list will result in an exception.
+
+The group fields are now enforced to have a subgroup relationship. This
+  means, that the child group must contain all fields of the direct parent
+  group. For a particualar child group, the evaluation of
+
+        "group.getFields().containsAll (parent.getFields())"
+
+  must return true for all parent groups.
+
+  The order of the groups does not matter.
+
+  Examples:
+    Valid:
+        GROUP 0 = {}  // empty fields are allowed, this means the group is
+                      // the parent of all other groups
+        Group 1 = {FIELD_A}
+        Group 2 = {FIELD_A, FIELD_B}
+
+    Invalid:
+        GROUP 0 = {}
+        Group 1 = {FIELD_A, FIELD_D}
+        Group 2 = {FIELD_A, FIELD_B}
+                      // There is no way to form a subgroup relationship
+                      // between Group 1 and Group 2. Group 1 does not
+                      // contain all fields of Group 2 and neither does
+                      // Group2 contain all fields from Group 1.
+
+All element coordinates must be smaller than the available page width, or
+  the repagination process will fail. So specifying x="110%" will be a
+  killer as well as specifying x="1000" when the page width is smaller than
+  or equal to 1000.
+
+----------------------------------------------------------------------------------
+Changes from 0.8.0 to 0.8.1
+
+  The PDFFontFactory is now relocated to an own package. All classes can now
+  be found in com.jrefinery.report.targets.support.PDFFontFactory.
+
+  The band layout management has moved to com.jrefinery.report.targets.base.**.
+
+  The "first" demo has been renamed to "swing-icons-demo" to better fit is
+  purpose in the documentation, as it is no longer the simplest demo available.
+
+  The layouting now handles the element font defintion correctly. If an
+  element's height is smaller than the defined font size, then no line will
+  be printed. So if your elements disappear after upgrading, then check your
+  element definitions.
+
+  Some methods of the PreviewFrame (f.i. setLargeIconsEnabled(boolean)) moved
+  into the common backend class PreviewProxyBase.
+
+-------------------------------------------------------------------------
+Migrating from version 0.7.6 to 0.8.0
+
+If you are using the XML-Definition and the predefined PreviewDialogs
+only, you can skip the code changes, your reporting process has not changed.
+
+XML-Definition and changes in the reporting behaviour
+
+- Bands now contain all elements defined for band, the bands height
+  is altered to fit the elements. The predefined height set via setHeight()
+  is now a minimumHeight
+
+- Proportional values are evaluated by calculating the band size used by
+  static (non-proportional elements). Then the dimensions of all elements
+  are calculated, and the final band dimension defined.
+
+  This dimension is finally applied to the proportional values a second time,
+  and the elements are drawn.
+
+  It can cause problems if you ignore the 100% size of those relative
+  elements, so f.i. an element at position 90% and a height of > %10 could
+  cause trouble. Trouble means, that your layout looks a little bit weird
+  within that band, and that that invalid element is not printed properly.
+
+- All text elements have now vertical alignment (as implemented in the last
+  cvs version), bands can define default values for ElementAlignments.
+
+- GroupHeader can be repeated after an pagebreak. The last groupheader that
+  is marked as repeatable is repeated. If the groupheader + pageheader +
+  pagefooter does not fit on the current page, you get
+  State-did-not-proceed errors.
+
+- The pagefooter can now contain dynamic elements.
+
+- and Finally: The Dynamic Elements work now! Real and tested!
+
+Code Changes
+
+- all deprecated elements have been removed. Now there are only
+  3 elements left: ImageElement, ShapeElement, TextElement
+
+- as usual: elements should be created with the ItemFactory.
+
+- Elements store their attributes in StyleSheets.
+
+  The StyleSheet is accessible via Element.getStyle()
+  and can be queried via Element.getStyle().getStlyeProperty(StyleKey);
+
+  StyleKeys are defined in the class ElementStyleSheet for Elements and Bands
+  and BandStyleSheet for Bands only.
+
+- Element bounds have now a different meaning. Bounds are defined
+  by setting the StyleKey ABS_DIMENSION and ABS_POSITION.
+  ABS_DIMENSION is of type Dimension2D. To specify a float dimension
+  you could use org.jfree.ui.FloatDimension
+  ABS_POSITION is of type Point2D.
+
+- StyleKey BOUNDS is used internaly during the layouting, this key should never
+  be modified by an function or set within a report definition.
+
+- the class JFreeReport is no longer used to repaginate the report or to
+  start processing of an report, use the PageableReportProcessor instead.
+
+  Instead of calling JFreeReport.processReport() you should now use this code:
+
+   // report created elsewhere
+   // the outputtarget must be opened
+
+      PageableReportProcessor proc = new PageableReportProcessor(report);
+      proc.setOutputTarget(target);
+      proc.processReport();
+
+   // don't forget to close the outputtarget ..
+
+- The PreviewFrame was modified. All functionality moved into a separate
+  delegate object, so that implementing other kinds of dialogs get easier.
+
+  At the moment, a PreviewFrame (JFrame), a PreviewDialog (JDialog) and a
+  PreviewInternalFrame (JInternalFrame) are implemented.
+
+  All old preview methods can be reached via:
+
+    PreviewFrame.getBase()
+
+  Please see the JavaDoc for details on the available methods.

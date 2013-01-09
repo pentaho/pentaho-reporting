@@ -1,0 +1,21 @@
+<html>
+<body>
+A plain CSV output. This output dumps the datarow
+(all values from Table and functions).
+<p>
+  The first column is the group index, the second column
+  is the report event which created this line. All other columns
+  contain the contents of the datarow.
+
+<pre>
+-1, report-header, column1 , column2, ...
+0, group-header, column1 , column2, ...
+0, itemband, column1 , column2, ...
+..
+..
+..
+0, group-footer, column1 , column2, ...
+-1, report-footer, column1 , column2, ...
+</pre>
+</body>
+</html>

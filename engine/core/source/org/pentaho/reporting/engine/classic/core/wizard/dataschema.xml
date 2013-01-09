@@ -1,0 +1,102 @@
+<data-schema xmlns="http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0"
+             xmlns:style="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style">
+
+  <global-mapping>
+    <data-attributes style:horizontal-alignment="left"/>
+  </global-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core"
+           name="data-format"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="format"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core"
+                            source-name="data-format"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core"
+           name="label"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="label"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core"
+                            source-name="label"/>
+  </indirect-mapping>
+  <!--
+  This data-schema maps the properties found in the "DefaultPropertyID" class into valid
+  reporting meta-data.
+  -->
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Number"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Byte"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Short"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Long"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Integer"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Double"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.lang.Float"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.math.BigDecimal"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+           name="value-type"
+           type="java.lang.Class"
+           value="java.math.BigInteger"/>
+    <data-attributes style:horizontal-alignment="right"/>
+  </indirect-mapping>
+
+</data-schema>

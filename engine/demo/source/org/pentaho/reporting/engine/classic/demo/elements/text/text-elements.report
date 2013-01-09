@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report name="Sample Report 1"
+        xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        query="default">
+
+  <reportheader>
+    <label x="0" y="0" width="100%" height="24" fontsize="20" alignment="center"
+        >Text Elements Gallery</label>
+    <label x="0" y="30" width="100%" height="12" fontsize="20" alignment="center"
+        >This report chains several subreports together to demonstrate all textelements that are available in the reporting engine.
+
+Please refer to the report-header in the subreports to see how these elements are defined.</label>
+    <sub-report href="label.report"/>
+  </reportheader>
+
+  <reportfooter>
+
+  </reportfooter>
+</report>

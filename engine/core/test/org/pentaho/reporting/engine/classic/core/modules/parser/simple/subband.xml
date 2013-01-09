@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+    "http://jfreereport.sourceforge.net/report-085.dtd">
+
+<report name="Percentage Demo" pageformat="A4">
+
+  <!-- REPORT HEADER -->
+  <!-- This band appears once at the beginning of the report. -->
+
+  <!--
+  Be carefull when using relative values in subbands, as the results may be
+  surprising, as the bounds here are only minimum sizes, not preferred or max
+  sizes. So every element has the right to grow even larger ...
+  -->
+  <reportheader height="35" fontname="SansSerif" fontstyle="plain" fontsize="10">
+
+    <band name="RH0" x="0" y="0" width="100" height="100">
+      <band name="RH0-0" x="0" y="0" width="50" height="50">
+        <rectangle name="Rect0-0" x="0" y="0" width="50" height="50" color="blue" weight="0"/>
+      </band>
+      <band name="RH0-1" x="50" y="50" width="50" height="50">
+        <rectangle name="Rect0-1" x="0" y="0" width="50" height="50" color="red" weight="0"/>
+      </band>
+    </band>
+
+    <!-- Width and height here are both minimum sizes, they do not define maximums -->
+    <band name="RH1" x="100" y="0" width="100" height="100">
+      <band name="RH1-0" x="0" y="0" width="50%" height="50%">
+        <rectangle name="Rect1-0" x="0" y="0" width="50%" height="50%" color="red" weight="0"/>
+        <band name="RH1-0-0" x="0" y="0" width="50%" height="50%">
+          <rectangle name="Rect1-1" x="0" y="0" width="50%" height="50%" color="green" weight="0"/>
+        </band>
+      </band>
+      <band name="RH1-1" x="50" y="50" width="50" height="50">
+        <rectangle x="0" y="0" width="50" height="50" color="yellow" weight="0"/>
+      </band>
+    </band>
+  </reportheader>
+
+  <reportfooter>
+    <band name="RH0" x="0" y="0">
+      <band name="RH0-0" x="0" y="0" width="0" height="0">
+        <rectangle name="Rect0-1" x="0" y="0" width="50" height="100%" color="red" weight="0"/>
+        <label name="A Label" x="0" y="0" width="50" height="0" dynamic="true" color="blue">A funny text</label>
+      </band>
+    </band>
+  </reportfooter>
+
+</report>

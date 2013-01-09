@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0"
+           xmlns:data="http://reporting.pentaho.org/namespaces/engine/classic/bundle/data/1.0"
+           targetNamespace="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <xs:complexType name="mail-definitionType">
+    <xs:sequence>
+      <xs:element type="headersType" name="header" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="sessionType" name="session" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:string" name="burst-query" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="xs:string" name="recipients-query" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="data:parameter-definitionType" name="parameter-definition" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="data:data-sourceType" name="data-source" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="reportType" name="body-report" minOccurs="0" maxOccurs="1"/>
+      <xs:element type="reportType" name="attachment-report" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="mail-definition" type="mail-definitionType">
+    <xs:annotation>
+      <xs:documentation>
+        The meta-data element is the root-element for all meta-data definition documents.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="headersType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element type="static-headerType" name="static-header"/>
+      <xs:element type="formula-headerType" name="formula-header"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="static-headerType">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="value" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="formula-headerType">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="formula" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="sessionType">
+    <xs:sequence>
+      <xs:element type="sessionPropertyType" name="property" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sessionPropertyType">
+    <xs:attribute type="xs:string" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="value" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="reportType">
+    <xs:attribute type="xs:string" name="content-type" use="required"/>
+    <xs:attribute type="xs:string" name="href" use="required"/>
+  </xs:complexType>
+</xs:schema>

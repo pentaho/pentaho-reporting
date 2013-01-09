@@ -1,0 +1,130 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2009 Pentaho Corporation..  All rights reserved.
+ */
+
+package org.pentaho.reporting.engine.classic.core.bugs;
+
+import java.io.IOException;
+import java.net.URL;
+
+import junit.framework.Assert;
+import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlOutputProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.SingleRepositoryURLRewriter;
+import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.repository.ContentLocation;
+import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
+import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
+import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+public class Pre492Test extends TestCase
+{
+  private static class DebugFlowOutputProcessor extends FlowHtmlOutputProcessor
+  {
+    private DebugFlowOutputProcessor()
+    {
+    }
+
+    protected TableContentProducer createTableContentProducer(final SheetLayout layout)
+    {
+      return new TestTableContentProducer(layout, getMetaData());
+    }
+  }
+
+  private static class TestTableContentProducer extends TableContentProducer
+  {
+    private TestTableContentProducer(final SheetLayout sheetLayout, final OutputProcessorMetaData metaData)
+    {
+      super(sheetLayout, metaData);
+    }
+
+    protected void handleContentConflict(final RenderBox box)
+    {
+      Assert.fail();
+    }
+  }
+
+  public Pre492Test()
+  {
+  }
+
+  public Pre492Test(final String s)
+  {
+    super(s);
+  }
+
+  protected void setUp() throws Exception
+  {
+    ClassicEngineBoot.getInstance().start();
+  }
+
+  public void testRun() throws Exception
+  {
+    final URL url = getClass().getResource("Pre-492.prpt");
+    assertNotNull(url);
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+
+
+    try
+    {
+      final ZipRepository zipRepository = new ZipRepository(new NullOutputStream());
+      final ContentLocation root = zipRepository.getRoot();
+      final ContentLocation data = RepositoryUtilities.createLocation
+          (zipRepository, RepositoryUtilities.splitPath("data", "/"));
+
+      final DebugFlowOutputProcessor outputProcessor = new DebugFlowOutputProcessor();
+
+      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
+      printer.setContentWriter(root, new DefaultNameGenerator(root, "report"));
+      printer.setDataWriter(data, new DefaultNameGenerator(data, "content"));
+      printer.setUrlRewriter(new SingleRepositoryURLRewriter());
+      outputProcessor.setPrinter(printer);
+
+      final FlowReportProcessor sp = new FlowReportProcessor(report, outputProcessor);
+      sp.processReport();
+      sp.close();
+      zipRepository.close();
+    }
+    catch (IOException ioe)
+    {
+      throw ioe;
+    }
+    catch (ReportProcessingException re)
+    {
+      throw re;
+    }
+    catch (Exception re)
+    {
+      throw new ReportProcessingException("Failed to process the report", re);
+    }
+  }
+
+}

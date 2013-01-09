@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report-definition xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext" name="SubReport" query="default">
+  <parser-config>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.URLClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ArrayClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ExtraShapesClassFactory"/>
+    <element-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+  <report-config>
+    <data-factory type="org.pentaho.reporting.engine.classic.core.TableDataFactory"/>
+    <simple-page-definition width="1" height="1">
+      <page orientation="portrait" topmargin="72" leftmargin="72" bottommargin="72" rightmargin="72" pageformat="LETTER"/>
+    </simple-page-definition>
+  </report-config>
+  <report-description>
+    <report-header>
+      <style>
+        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+          <basic-object name="height">0.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <compound-key name="absolute_pos">
+          <basic-object name="x">0.0</basic-object>
+          <basic-object name="y">0.0</basic-object>
+        </compound-key>
+        <compound-key name="layoutmanager">
+          <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+        </compound-key>
+      </style>
+      <sub-report query="fruit">
+        <report-config>
+        </report-config>
+        <report-description>
+          <groups>
+            <group name="default">
+              <fields/>
+            </group>
+            <group name="A Group">
+              <fields>
+                <field>Cat</field>
+              </fields>
+              <group-header>
+                <style>
+                  <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                    <basic-object name="height">0.0</basic-object>
+                    <basic-object name="width">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="absolute_pos">
+                    <basic-object name="x">0.0</basic-object>
+                    <basic-object name="y">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="layoutmanager">
+                    <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                  </compound-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">-100.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#98fff4</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">false</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Category</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">200.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="string-field">
+                    <basic-object name="field">Cat</basic-object>
+                    <basic-object name="formula">field:Cat</basic-object>
+                  </template>
+                </element>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">0.0</basic-object>
+                      <basic-object name="width">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">black</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">15.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">false</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Line2D$Float">
+                      <basic-object name="x1">0.0</basic-object>
+                      <basic-object name="x2">100.0</basic-object>
+                      <basic-object name="y1">0.0</basic-object>
+                      <basic-object name="y2">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+              </group-header>
+              <group-footer>
+                <style>
+                  <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                    <basic-object name="height">0.0</basic-object>
+                    <basic-object name="width">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="absolute_pos">
+                    <basic-object name="x">0.0</basic-object>
+                    <basic-object name="y">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="layoutmanager">
+                    <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                  </compound-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">-100.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#98fff4</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">false</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">0.0</basic-object>
+                      <basic-object name="width">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">black</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">false</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Line2D$Float">
+                      <basic-object name="x1">0.0</basic-object>
+                      <basic-object name="x2">100.0</basic-object>
+                      <basic-object name="y1">0.0</basic-object>
+                      <basic-object name="y2">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">3.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Number of Elements</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">200.0</basic-object>
+                      <basic-object name="y">3.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <datasource type="NumberFormatFilter">
+                    <datasource type="DataRowDataSource">
+                      <basic-object name="dataSourceColumnName">CountFruits</basic-object>
+                      <basic-object name="formula">field:CountFruits</basic-object>
+                    </datasource>
+                    <compound-object name="formatter" class="java.text.DecimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">$</basic-object>
+                        <basic-object name="decimalSeparator">.</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">,</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">USD</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">.</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="localizedPattern">#,##0.###</basic-object>
+                      <basic-object name="maximumFractionDigits">3</basic-object>
+                      <basic-object name="maximumIntegerDigits">2147483647</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">#,##0.###</basic-object>
+                      <basic-object name="positivePrefix"></basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                    <basic-object name="groupingUsed">true</basic-object>
+                    <basic-object name="maximumFractionDigits">3</basic-object>
+                    <basic-object name="maximumIntegerDigits">3</basic-object>
+                    <basic-object name="minimumFractionDigits">3</basic-object>
+                    <basic-object name="minimumIntegerDigits">3</basic-object>
+                    <compound-object name="numberFormat" class="java.text.DecimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">$</basic-object>
+                        <basic-object name="decimalSeparator">.</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">,</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">USD</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">.</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="localizedPattern">#,##0.###</basic-object>
+                      <basic-object name="maximumFractionDigits">3</basic-object>
+                      <basic-object name="maximumIntegerDigits">2147483647</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">#,##0.###</basic-object>
+                      <basic-object name="positivePrefix"></basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+              </group-footer>
+            </group>
+          </groups>
+          <itemband>
+            <style>
+              <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                <basic-object name="height">0.0</basic-object>
+                <basic-object name="width">0.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+              <compound-key name="layoutmanager">
+                <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+              </compound-key>
+            </style>
+            <element type="shape/generic">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">-100.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+                </compound-key>
+                <basic-key name="paint">#dafffb</basic-key>
+                <compound-key name="stroke" class="java.awt.BasicStroke">
+                  <basic-object name="value">1.0</basic-object>
+                </compound-key>
+                <basic-key name="scale">true</basic-key>
+                <basic-key name="keepAspectRatio">false</basic-key>
+                <basic-key name="dynamic_height">false</basic-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+                <basic-key name="fill-shape">true</basic-key>
+                <basic-key name="draw-shape">false</basic-key>
+              </style>
+              <datasource type="StaticDataSource">
+                <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                  <basic-object name="height">100.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-object>
+              </datasource>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">150.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Id Number</basic-object>
+                <basic-object name="formula">field:Id Number</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">150.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Cat</basic-object>
+                <basic-object name="formula">field:Cat</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">200.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">250.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Fruit</basic-object>
+                <basic-object name="formula">field:Fruit</basic-object>
+              </template>
+            </element>
+          </itemband>
+        </report-description>
+        <functions>
+          <expression name="CountFruits" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+            <properties>
+              <property name="group">A Group</property>
+            </properties>
+          </expression>
+        </functions>
+      </sub-report>
+      <sub-report query="color">
+        <report-config>
+        </report-config>
+        <report-description>
+          <groups>
+            <group name="default">
+              <fields/>
+            </group>
+            <group name="A Group">
+              <fields>
+                <field>Group</field>
+              </fields>
+              <group-header>
+                <style>
+                  <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                    <basic-object name="height">0.0</basic-object>
+                    <basic-object name="width">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="absolute_pos">
+                    <basic-object name="x">0.0</basic-object>
+                    <basic-object name="y">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="layoutmanager">
+                    <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                  </compound-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">-100.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#98fff4</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">false</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Category</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">200.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="string-field">
+                    <basic-object name="field">Group</basic-object>
+                    <basic-object name="formula">field:Group</basic-object>
+                  </template>
+                </element>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">0.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">black</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">15.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">false</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Line2D$Float">
+                      <basic-object name="x1">0.0</basic-object>
+                      <basic-object name="x2">100.0</basic-object>
+                      <basic-object name="y1">0.0</basic-object>
+                      <basic-object name="y2">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+              </group-header>
+              <group-footer>
+                <style>
+                  <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                    <basic-object name="height">0.0</basic-object>
+                    <basic-object name="width">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="absolute_pos">
+                    <basic-object name="x">0.0</basic-object>
+                    <basic-object name="y">0.0</basic-object>
+                  </compound-key>
+                  <compound-key name="layoutmanager">
+                    <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                  </compound-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">-100.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#98fff4</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">false</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="shape/generic">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">0.0</basic-object>
+                      <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">black</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">false</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Line2D$Float">
+                      <basic-object name="x1">0.0</basic-object>
+                      <basic-object name="x2">100.0</basic-object>
+                      <basic-object name="y1">0.0</basic-object>
+                      <basic-object name="y2">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">3.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Number of Elements</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                      <basic-object name="height">15.0</basic-object>
+                      <basic-object name="width">200.0</basic-object>
+                    </compound-key>
+                    <compound-key name="absolute_pos">
+                      <basic-object name="x">200.0</basic-object>
+                      <basic-object name="y">3.0</basic-object>
+                    </compound-key>
+                  </style>
+                  <datasource type="NumberFormatFilter">
+                    <datasource type="DataRowDataSource">
+                      <basic-object name="dataSourceColumnName">SumColorKeys</basic-object>
+                      <basic-object name="formula">field:SumColorKeys</basic-object>
+                    </datasource>
+                    <compound-object name="formatter" class="java.text.DecimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">$</basic-object>
+                        <basic-object name="decimalSeparator">.</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">,</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">USD</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">.</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="localizedPattern">#,##0.###</basic-object>
+                      <basic-object name="maximumFractionDigits">3</basic-object>
+                      <basic-object name="maximumIntegerDigits">2147483647</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">#,##0.###</basic-object>
+                      <basic-object name="positivePrefix"></basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                    <basic-object name="groupingUsed">true</basic-object>
+                    <basic-object name="maximumFractionDigits">3</basic-object>
+                    <basic-object name="maximumIntegerDigits">3</basic-object>
+                    <basic-object name="minimumFractionDigits">3</basic-object>
+                    <basic-object name="minimumIntegerDigits">3</basic-object>
+                    <compound-object name="numberFormat" class="java.text.DecimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">$</basic-object>
+                        <basic-object name="decimalSeparator">.</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">,</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">USD</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">.</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="localizedPattern">#,##0.###</basic-object>
+                      <basic-object name="maximumFractionDigits">3</basic-object>
+                      <basic-object name="maximumIntegerDigits">2147483647</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">#,##0.###</basic-object>
+                      <basic-object name="positivePrefix"></basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+              </group-footer>
+            </group>
+          </groups>
+          <itemband>
+            <style>
+              <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                <basic-object name="height">0.0</basic-object>
+                <basic-object name="width">0.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+              <compound-key name="layoutmanager">
+                <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+              </compound-key>
+            </style>
+            <element type="shape/generic">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">-100.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+                </compound-key>
+                <basic-key name="paint">#dafffb</basic-key>
+                <compound-key name="stroke" class="java.awt.BasicStroke">
+                  <basic-object name="value">1.0</basic-object>
+                </compound-key>
+                <basic-key name="scale">true</basic-key>
+                <basic-key name="keepAspectRatio">false</basic-key>
+                <basic-key name="dynamic_height">false</basic-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+                <basic-key name="fill-shape">true</basic-key>
+                <basic-key name="draw-shape">false</basic-key>
+              </style>
+              <datasource type="StaticDataSource">
+                <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                  <basic-object name="height">100.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-object>
+              </datasource>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">150.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Number</basic-object>
+                <basic-object name="formula">field:Number</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">150.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Group</basic-object>
+                <basic-object name="formula">field:Group</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                  <basic-object name="height">15.0</basic-object>
+                  <basic-object name="width">200.0</basic-object>
+                </compound-key>
+                <compound-key name="absolute_pos">
+                  <basic-object name="x">250.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">Color</basic-object>
+                <basic-object name="formula">field:Color</basic-object>
+              </template>
+            </element>
+          </itemband>
+        </report-description>
+        <functions>
+          <expression name="SumColorKeys" class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction">
+            <properties>
+              <property name="field">Number</property>
+              <property name="group">A Group</property>
+            </properties>
+          </expression>
+        </functions>
+      </sub-report>
+    </report-header>
+    <report-footer>
+      <style>
+        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+          <basic-object name="height">0.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <compound-key name="absolute_pos">
+          <basic-object name="x">0.0</basic-object>
+          <basic-object name="y">0.0</basic-object>
+        </compound-key>
+        <compound-key name="layoutmanager">
+          <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+        </compound-key>
+      </style>
+      <element name="PH2" type="shape/generic">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">0.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#cfcfcf</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">2.0</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">18.0</basic-object>
+          </compound-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Line2D$Float">
+            <basic-object name="x1">0.0</basic-object>
+            <basic-object name="x2">100.0</basic-object>
+            <basic-object name="y1">0.0</basic-object>
+            <basic-object name="y2">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+    </report-footer>
+    <page-header>
+      <style>
+        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+          <basic-object name="height">24.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-size">10</basic-key>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <compound-key name="absolute_pos">
+          <basic-object name="x">0.0</basic-object>
+          <basic-object name="y">0.0</basic-object>
+        </compound-key>
+        <compound-key name="layoutmanager">
+          <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+        </compound-key>
+      </style>
+      <element name="PH0" type="shape/generic">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">-100.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#afafaf</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">0.0</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="fill-shape">true</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+            <basic-object name="height">100.0</basic-object>
+            <basic-object name="width">100.0</basic-object>
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element name="PH2" type="shape/generic">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">0.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#cfcfcf</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">2.0</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">18.0</basic-object>
+          </compound-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Line2D$Float">
+            <basic-object name="x1">0.0</basic-object>
+            <basic-object name="x2">100.0</basic-object>
+            <basic-object name="y1">0.0</basic-object>
+            <basic-object name="y2">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">-100.0</basic-object>
+            <basic-object name="width">-50.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">middle</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-50.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="date-field">
+          <compound-object name="dateFormat">
+            <compound-object name="2DigitYearStart">
+              <basic-object name="day">25</basic-object>
+              <basic-object name="month">0</basic-object>
+              <basic-object name="year">1927</basic-object>
+            </compound-object>
+            <compound-object name="calendar">
+              <basic-object name="class">java.util.GregorianCalendar</basic-object>
+            </compound-object>
+            <compound-object name="dateFormatSymbols">
+              <basic-object name="class">java.text.DateFormatSymbols</basic-object>
+            </compound-object>
+            <basic-object name="lenient">true</basic-object>
+            <basic-object name="localizedPattern">d-MMM-yyyy</basic-object>
+            <compound-object name="numberFormat" class="java.text.DecimalFormat">
+              <compound-object name="decimalFormatSymbols">
+                <basic-object name="currencySymbol">$</basic-object>
+                <basic-object name="decimalSeparator">.</basic-object>
+                <basic-object name="digit">#</basic-object>
+                <basic-object name="groupingSeparator">,</basic-object>
+                <basic-object name="infinity">?</basic-object>
+                <basic-object name="internationalCurrencySymbol">USD</basic-object>
+                <basic-object name="minusSign">-</basic-object>
+                <basic-object name="monetaryDecimalSeparator">.</basic-object>
+                <basic-object name="naN">?</basic-object>
+                <basic-object name="patternSeparator">;</basic-object>
+                <basic-object name="perMill">?</basic-object>
+                <basic-object name="percent">%</basic-object>
+                <basic-object name="zeroDigit">0</basic-object>
+              </compound-object>
+              <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+              <basic-object name="groupingSize">3</basic-object>
+              <basic-object name="groupingUsed">false</basic-object>
+              <basic-object name="localizedPattern">###0</basic-object>
+              <basic-object name="maximumFractionDigits">0</basic-object>
+              <basic-object name="maximumIntegerDigits">2147483647</basic-object>
+              <basic-object name="minimumFractionDigits">0</basic-object>
+              <basic-object name="minimumIntegerDigits">1</basic-object>
+              <basic-object name="multiplier">1</basic-object>
+              <basic-object name="negativePrefix">-</basic-object>
+              <basic-object name="negativeSuffix"></basic-object>
+              <basic-object name="parseIntegerOnly">true</basic-object>
+              <basic-object name="pattern">###0</basic-object>
+              <basic-object name="positivePrefix"></basic-object>
+              <basic-object name="positiveSuffix"></basic-object>
+            </compound-object>
+            <basic-object name="pattern">d-MMM-yyyy</basic-object>
+          </compound-object>
+          <basic-object name="field">report.date</basic-object>
+          <basic-object name="format">d-MMM-yyyy</basic-object>
+          <basic-object name="formula">field:report.date</basic-object>
+        </template>
+      </element>
+    </page-header>
+    <page-footer>
+      <style>
+        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+          <basic-object name="height">24.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <compound-key name="absolute_pos">
+          <basic-object name="x">0.0</basic-object>
+          <basic-object name="y">0.0</basic-object>
+        </compound-key>
+        <compound-key name="layoutmanager">
+          <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+        </compound-key>
+      </style>
+      <element name="PF0" type="shape/generic">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">-100.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#afafaf</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">0.0</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="fill-shape">true</basic-key>
+          <basic-key name="draw-shape">false</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+            <basic-object name="height">100.0</basic-object>
+            <basic-object name="width">100.0</basic-object>
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="shape/generic">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">0.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">0.5</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Line2D$Float">
+            <basic-object name="x1">0.0</basic-object>
+            <basic-object name="x2">100.0</basic-object>
+            <basic-object name="y1">0.0</basic-object>
+            <basic-object name="y2">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+            <basic-object name="height">-100.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">middle</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">4.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">pageXofY</basic-object>
+          <basic-object name="formula">field:pageXofY</basic-object>
+        </template>
+      </element>
+    </page-footer>
+    <groups>
+      <group name="default">
+        <fields/>
+      </group>
+    </groups>
+  </report-description>
+  <functions>
+    <property-ref name="report.name" class="java.lang.String">SubReport</property-ref>
+    <expression name="pageXofY" class="org.pentaho.reporting.engine.classic.core.function.PageOfPagesFunction">
+      <properties>
+        <property name="format">Page {0} of {1}</property>
+        <property name="ignorePageCancelEvents" class="java.lang.Boolean">false</property>
+        <property name="pageIncrement" class="java.lang.Integer">1</property>
+        <property name="startPage" class="java.lang.Integer">1</property>
+      </properties>
+    </expression>
+  </functions>
+</report-definition>

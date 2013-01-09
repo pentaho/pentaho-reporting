@@ -1,0 +1,37 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <expression class="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <!-- input -->
+    <property name="rawDataField" mandatory="false" preferred="false" value-role="Field" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="true" value-role="Field" expert="false" hidden="false"/>
+    <!-- type property selects the graph style bar, line, pie -->
+    <property name="type" mandatory="true" preferred="true" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.SparklineTypePropertyEditor"/>
+
+    <!-- common properties-->
+    <property name="color" mandatory="false" preferred="true" value-role="Value" expert="false" hidden="false"/>
+    <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <!-- bar graph properties -->
+    <property name="highColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lastColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <!-- spacing property is shared with line graphs -->
+    <property name="spacing" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <!-- pie graph properties -->
+    <!-- highColor property is also used in pie graph (shared with bar graph properties) -->
+    <property name="mediumColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lowColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="highSlice" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="mediumSlice" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lowSlice" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="counterClockWise" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="startAngle" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+  </expression>
+
+</meta-data>

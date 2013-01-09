@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE report-definition 
+PUBLIC "-//JFreeReport//DTD report definition//EN//extended/version 0.8.5" 
+"http://jfreereport.sourceforge.net/extreport-085.dtd">
+<report-definition name="Container Inventory">
+   <parser-config>
+      <object-factory class="org.jfree.xml.factory.objects.URLClassFactory"/>
+      <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+      <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+      <object-factory class="org.jfree.xml.factory.objects.ArrayClassFactory"/>
+      <element-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+      <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+      <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+      <template-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+      <datasource-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+   </parser-config>
+   <report-config>
+      <page-definition>
+         <page bottommargin="72" leftmargin="72" orientation="landscape" pageformat="LETTER" rightmargin="72" topmargin="72"/>
+      </page-definition>
+      <configuration/>
+   </report-config>
+   <report-description>
+      <report-header>
+         <style>
+            <basic-key name="font-size">16</basic-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="font">SansSerif</basic-key>
+            <compound-key name="layoutmanager">
+               <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+            </compound-key>
+            <compound-key name="min-size">
+               <basic-object name="height">88.0</basic-object>
+               <basic-object name="width">0.0</basic-object>
+            </compound-key>
+         </style>
+         <element name="address" type="text/plain">
+            <style>
+               <basic-key name="valignment">top</basic-key>
+               <basic-key name="alignment">left</basic-key>
+               <basic-key name="font-size">10</basic-key>
+               <basic-key name="font-bold">false</basic-key>
+               <basic-key name="dynamic_height">true</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">48.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">address</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="valignment">top</basic-key>
+               <basic-key name="alignment">center</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">48.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="label">
+               <basic-object name="content">Container Inventory Report</basic-object>
+            </template>
+         </element>
+         <element name="batch" type="text/plain">
+            <style>
+               <basic-key name="alignment">center</basic-key>
+               <basic-key name="font-bold">false</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">30.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">48.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">batch</basic-object>
+            </template>
+         </element>
+
+<element name="DateField@31823664" type="text/plain">
+<style>
+<compound-key name="min-size">
+<basic-object name="height">16.0</basic-object>
+<basic-object name="width">163.0</basic-object>
+</compound-key>
+<basic-key name="paint">black</basic-key>
+<basic-key name="font">dialog</basic-key>
+<basic-key name="font-size">12</basic-key>
+<basic-key name="line-height">0.0</basic-key>
+<basic-key name="font-bold">false</basic-key>
+<basic-key name="font-italic">false</basic-key>
+<basic-key name="font-underline">false</basic-key>
+<basic-key name="font-strikethrough">false</basic-key>
+<basic-key name="font-embedded">false</basic-key>
+<basic-key name="font-encoding"></basic-key>
+<basic-key name="alignment">left</basic-key>
+<basic-key name="valignment">top</basic-key>
+<basic-key name="dynamic_height">false</basic-key>
+<basic-key name="reserved-literal">..</basic-key>
+<basic-key name="trim-text-content">true</basic-key>
+<basic-key name="Excel.WrapText">false</basic-key>
+<basic-key name="Excel.CellDataFormat"></basic-key>
+<compound-key name="absolute_pos">
+<basic-object name="x">5.0</basic-object>
+<basic-object name="y">8.0</basic-object>
+</compound-key>
+</style>
+<template references="date-field">
+<compound-object name="dateFormat">
+<compound-object name="2DigitYearStart">
+<basic-object name="day">6</basic-object>
+<basic-object name="month">6</basic-object>
+<basic-object name="year">1927</basic-object>
+</compound-object>
+<compound-object name="calendar">
+<basic-object name="class">java.util.GregorianCalendar</basic-object>
+</compound-object>
+<compound-object name="dateFormatSymbols">
+<basic-object name="class">java.text.DateFormatSymbols</basic-object>
+</compound-object>
+<basic-object name="lenient">true</basic-object>
+<basic-object name="localizedPattern">MMMMM dd, yyyy</basic-object>
+<compound-object name="numberFormat" class="java.text.DecimalFormat">
+<compound-object name="decimalFormatSymbols">
+<basic-object name="currencySymbol">$</basic-object>
+<basic-object name="decimalSeparator">.</basic-object>
+<basic-object name="digit">#</basic-object>
+<basic-object name="groupingSeparator">,</basic-object>
+<basic-object name="infinity">?</basic-object>
+<basic-object name="internationalCurrencySymbol">USD</basic-object>
+<basic-object name="minusSign">-</basic-object>
+<basic-object name="monetaryDecimalSeparator">.</basic-object>
+<basic-object name="naN">?</basic-object>
+<basic-object name="patternSeparator">;</basic-object>
+<basic-object name="perMill">?</basic-object>
+<basic-object name="percent">%</basic-object>
+<basic-object name="zeroDigit">0</basic-object>
+</compound-object>
+<basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+<basic-object name="groupingSize">3</basic-object>
+<basic-object name="groupingUsed">false</basic-object>
+<basic-object name="localizedPattern">###0</basic-object>
+<basic-object name="maximumFractionDigits">0</basic-object>
+<basic-object name="maximumIntegerDigits">2147483647</basic-object>
+<basic-object name="minimumFractionDigits">0</basic-object>
+<basic-object name="minimumIntegerDigits">1</basic-object>
+<basic-object name="multiplier">1</basic-object>
+<basic-object name="negativePrefix">-</basic-object>
+<basic-object name="negativeSuffix"></basic-object>
+<basic-object name="parseIntegerOnly">true</basic-object>
+<basic-object name="pattern">###0</basic-object>
+<basic-object name="positivePrefix"></basic-object>
+<basic-object name="positiveSuffix"></basic-object>
+</compound-object>
+<basic-object name="pattern">MMMMM dd, yyyy</basic-object>
+</compound-object>
+<basic-object name="field">report.date</basic-object>
+<basic-object name="format">MMMMM dd, yyyy</basic-object>
+<basic-object name="formula">field:report.date</basic-object>
+<basic-object name="nullValue"></basic-object>
+</template>
+</element>        
+      </report-header>
+      <report-footer>
+         <style>
+            <basic-key name="font-size">10</basic-key>
+            <basic-key name="font-bold">false</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="font">SansSerif</basic-key>
+            <compound-key name="layoutmanager">
+               <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+            </compound-key>
+            <compound-key name="min-size">
+               <basic-object name="height">48.0</basic-object>
+               <basic-object name="width">0.0</basic-object>
+            </compound-key>
+         </style>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">center</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">10.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">48.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="label">
+               <basic-object name="content">*** END OF REPORT ***</basic-object>
+            </template>
+         </element>
+      </report-footer>
+      <page-footer>
+         <style>
+            <basic-key name="font-size">9</basic-key>
+            <basic-key name="font-bold">false</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="font">SansSerif</basic-key>
+            <basic-key name="display-on-firstpage">true</basic-key>
+            <basic-key name="display-on-lastpage">true</basic-key>
+            <compound-key name="layoutmanager">
+               <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+            </compound-key>
+            <compound-key name="min-size">
+               <basic-object name="height">24.0</basic-object>
+               <basic-object name="width">0.0</basic-object>
+            </compound-key>
+         </style>
+         <element name="@anonymous1" type="shape/generic">
+            <style>
+               <basic-key name="draw-shape">true</basic-key>
+               <basic-key name="keepAspectRatio">false</basic-key>
+               <basic-key name="fill-shape">false</basic-key>
+               <basic-key class="java.awt.BasicStroke" name="stroke">2.0</basic-key>
+               <basic-key name="scale">true</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">4.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">0.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+               <basic-key name="paint">black</basic-key>
+            </style>
+            <datasource type="StaticDataSource">
+               <compound-object class="java.awt.geom.Line2D$Float" name="value">
+                  <basic-object name="x1">0.0</basic-object>
+                  <basic-object name="x2">100.0</basic-object>
+                  <basic-object name="y1">0.0</basic-object>
+                  <basic-object name="y2">0.0</basic-object>
+               </compound-object>
+            </datasource>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">8.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="date-field">
+               <basic-object name="field">report.date</basic-object>
+               <basic-object name="format">MMM dd, yyyy</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">right</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">8.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">pageXofY</basic-object>
+            </template>
+         </element>
+      </page-footer>
+      <groups>
+         <group name="group1">
+            <fields/>
+            <group-header>
+               <style>
+                  <basic-key name="font-size">10</basic-key>
+                  <basic-key name="font-bold">true</basic-key>
+                  <basic-key name="font-italic">false</basic-key>
+                  <basic-key name="font">SansSerif</basic-key>
+                  <basic-key name="pagebreak-before">false</basic-key>
+                  <basic-key name="repeat-header">true</basic-key>
+                  <compound-key name="layoutmanager">
+                     <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                  </compound-key>
+                  <compound-key name="min-size">
+                     <basic-object name="height">10.0</basic-object>
+                     <basic-object name="width">0.0</basic-object>
+                  </compound-key>
+               </style>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">left</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Container</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">left</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">100.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">80.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Date</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">left</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">180.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">80.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Type</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">left</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">260.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Location</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">left</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">360.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Group</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">right</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">460.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Capacity</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <basic-key name="alignment">right</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">560.0</basic-object>
+                        <basic-object name="y">25.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">16.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Cost</basic-object>
+                  </template>
+               </element>
+               <element name="@anonymous2" type="shape/generic">
+                  <style>
+                     <basic-key name="draw-shape">true</basic-key>
+                     <basic-key name="keepAspectRatio">false</basic-key>
+                     <basic-key name="fill-shape">false</basic-key>
+                     <basic-key class="java.awt.BasicStroke" name="stroke">1.0</basic-key>
+                     <basic-key name="scale">true</basic-key>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">40.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">5.0</basic-object>
+                        <basic-object name="width">-100.0</basic-object>
+                     </compound-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                     <compound-object class="java.awt.geom.Line2D$Float" name="value">
+                        <basic-object name="x1">0.0</basic-object>
+                        <basic-object name="x2">100.0</basic-object>
+                        <basic-object name="y1">0.0</basic-object>
+                        <basic-object name="y2">0.0</basic-object>
+                     </compound-object>
+                  </datasource>
+               </element>
+            </group-header>
+            <group-footer>
+               <element type="text/plain">
+                  <style>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">5.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">11.0</basic-object>
+                        <basic-object name="width">75.0</basic-object>
+                     </compound-key>
+                     <basic-key name="font-size">9</basic-key>
+                     <basic-key name="alignment">left</basic-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Total Cost:</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">75</basic-object>
+                        <basic-object name="y">5.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">11.0</basic-object>
+                        <basic-object name="width">-25</basic-object>
+                     </compound-key>
+                     <basic-key name="font-size">9</basic-key>
+                     <basic-key name="alignment">left</basic-key>
+                  </style>
+                  <template references="number-field">
+                     <basic-object name="nullValue">-</basic-object>
+                     <basic-object name="format">#,##0.00</basic-object>
+                     <basic-object name="field">GroupSum</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">15.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">11.0</basic-object>
+                        <basic-object name="width">75.0</basic-object>
+                     </compound-key>
+                     <basic-key name="font-size">9</basic-key>
+                     <basic-key name="alignment">left</basic-key>
+                  </style>
+                  <template references="label">
+                     <basic-object name="content">Total Capacity:</basic-object>
+                  </template>
+               </element>
+               <element type="text/plain">
+                  <style>
+                     <compound-key name="absolute_pos">
+                        <basic-object name="x">75</basic-object>
+                        <basic-object name="y">15.0</basic-object>
+                     </compound-key>
+                     <compound-key name="min-size">
+                        <basic-object name="height">11.0</basic-object>
+                        <basic-object name="width">-25</basic-object>
+                     </compound-key>
+                     <basic-key name="font-size">9</basic-key>
+                     <basic-key name="alignment">left</basic-key>
+                  </style>
+                  <template references="number-field">
+                     <basic-object name="nullValue">-</basic-object>
+                     <basic-object name="format">#,##0.00</basic-object>
+                     <basic-object name="field">GroupSum2</basic-object>
+                  </template>
+               </element>
+            </group-footer>
+         </group>
+      </groups>
+      <itemband>
+         <style>
+            <basic-key name="font-size">10</basic-key>
+            <basic-key name="font-bold">false</basic-key>
+            <basic-key name="valignment">middle</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="font">SansSerif</basic-key>
+            <compound-key name="layoutmanager">
+               <basic-object name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+            </compound-key>
+            <compound-key name="min-size">
+               <basic-object name="height">18.0</basic-object>
+               <basic-object name="width">0.0</basic-object>
+            </compound-key>
+         </style>
+         <element name="background" type="shape/generic">
+            <style>
+               <basic-key name="draw-shape">false</basic-key>
+               <basic-key name="keepAspectRatio">false</basic-key>
+               <basic-key name="fill-shape">true</basic-key>
+               <basic-key class="java.awt.BasicStroke" name="stroke">0.0</basic-key>
+               <basic-key name="scale">true</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">-100.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+               <basic-key name="paint">#FFFFFF</basic-key>
+            </style>
+            <datasource type="StaticDataSource">
+               <compound-object class="java.awt.geom.Rectangle2D$Float" name="value">
+                  <basic-object name="height">100.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-object>
+            </datasource>
+         </element>
+         <element name="@anonymous2" type="shape/generic">
+            <style>
+               <basic-key name="draw-shape">true</basic-key>
+               <basic-key name="keepAspectRatio">false</basic-key>
+               <basic-key name="fill-shape">false</basic-key>
+               <basic-key class="java.awt.BasicStroke" name="stroke">1.0</basic-key>
+               <basic-key name="scale">true</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">0.0</basic-object>
+                  <basic-object name="width">-100.0</basic-object>
+               </compound-key>
+               <basic-key name="paint">#CCCCCC</basic-key>
+            </style>
+            <datasource type="StaticDataSource">
+               <compound-object class="java.awt.geom.Line2D$Float" name="value">
+                  <basic-object name="x1">0.0</basic-object>
+                  <basic-object name="x2">100.0</basic-object>
+                  <basic-object name="y1">0.0</basic-object>
+                  <basic-object name="y2">0.0</basic-object>
+               </compound-object>
+            </datasource>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">Container</basic-object>
+            </template>
+         </element>
+         <element name="date" type="text/plain">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">100.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">80</basic-object>
+               </compound-key>
+            </style>
+            <template references="date-field">
+               <basic-object name="field">Date Acquired</basic-object>
+               <basic-object name="format">MMM dd, yyyy</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">180.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">80</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">Type</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">260.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">Location</basic-object>
+            </template>
+         </element>
+         <element type="text/plain" name="Invalid">
+            <style>
+               <basic-key name="alignment">left</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">360.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="string-field">
+               <basic-object name="field">Group</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">right</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">460.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="number-field">
+               <basic-object name="field">Capacity</basic-object>
+               <basic-object name="format">#,##0.00</basic-object>
+            </template>
+         </element>
+         <element type="text/plain">
+            <style>
+               <basic-key name="alignment">right</basic-key>
+               <compound-key name="absolute_pos">
+                  <basic-object name="x">560.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+               </compound-key>
+               <compound-key name="min-size">
+                  <basic-object name="height">18.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+               </compound-key>
+               <basic-key name="dynamic_height">true</basic-key>
+            </style>
+            <template references="number-field">
+               <basic-object name="field">Cost</basic-object>
+               <basic-object name="format">#,##0.00</basic-object>
+            </template>
+         </element>
+      </itemband>
+   </report-description>
+   <functions>
+      <property-ref name="report.date"/>
+      <expression class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression" name="pageXofY">
+         <properties>
+            <property name="field[0]">PageNumber</property>
+            <property name="field[1]">PageTotal</property>
+            <property name="pattern">Page {0} of {1}</property>
+         </properties>
+      </expression>
+      <function class="org.pentaho.reporting.engine.classic.core.function.PageFunction" name="PageNumber"/>
+      <function class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction" name="PageTotal"/>
+      <function class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="GroupSum">
+         <properties>
+            <property name="field">Cost</property>
+            <property name="group">group1</property>
+         </properties>
+      </function>
+      <function class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="GroupSum2">
+         <properties>
+            <property name="field">Capacity</property>
+            <property name="group">group1</property>
+         </properties>
+      </function>
+   </functions>
+</report-definition>

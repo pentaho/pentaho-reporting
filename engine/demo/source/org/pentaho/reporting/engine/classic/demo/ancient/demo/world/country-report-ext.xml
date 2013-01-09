@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report-definition name="Sample Report 1"
+                   xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext"
+                   query="default">
+  <parser-config>
+    <object-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <object-factory class="org.jfree.xml.factory.objects.ArrayClassFactory"/>
+    <element-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+
+  <report-config>
+    <simple-page-definition width="2">
+      <page orientation="portrait" pageformat="LETTER" topmargin="72" bottommargin="72" leftmargin="72"
+            rightmargin="72"/>
+    </simple-page-definition>
+    <configuration>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Darkwing Duck</property>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">iso-8859-15</property>
+    </configuration>
+  </report-config>
+
+  <styles>
+    <style name="background_rectangle">
+      <compound-key name="min-size">
+        <basic-object name="width">-100.0</basic-object>
+        <basic-object name="height">-100.0</basic-object>
+      </compound-key>
+      <basic-key name="scale">true</basic-key>
+      <basic-key name="stroke" class="java.awt.BasicStroke">0.0</basic-key>
+      <compound-key name="absolute_pos">
+        <basic-object name="x">0.0</basic-object>
+        <basic-object name="y">0.0</basic-object>
+      </compound-key>
+      <basic-key name="paint">#afafaf</basic-key>
+      <basic-key name="fill-shape">true</basic-key>
+      <basic-key name="keepAspectRatio">false</basic-key>
+      <basic-key name="draw-shape">false</basic-key>
+    </style>
+
+    <style name="horizontal_line">
+      <compound-key name="min-size">
+        <basic-object name="width">-100.0</basic-object>
+        <basic-object name="height">0.0</basic-object>
+      </compound-key>
+      <basic-key name="draw-shape">true</basic-key>
+      <basic-key name="fill-shape">false</basic-key>
+      <basic-key name="keepAspectRatio">false</basic-key>
+      <basic-key name="scale">true</basic-key>
+    </style>
+
+    <style name="thin_horizontal_line">
+      <extends name="horizontal_line"/>
+      <compound-key name="stroke" class="java.awt.BasicStroke">
+        <basic-object name="width">1.0</basic-object>
+        <compound-object name="dashes">
+          <basic-object name="0">2</basic-object>
+          <basic-object name="1">2</basic-object>
+          <basic-object name="2">2</basic-object>
+          <basic-object name="3">6</basic-object>
+        </compound-object>
+      </compound-key>
+    </style>
+
+    <style name="thick_horizontal_line">
+      <extends name="horizontal_line"/>
+      <compound-key name="stroke" class="java.awt.BasicStroke">
+        <basic-object name="width">1.0</basic-object>
+        <compound-object name="dashes">
+          <basic-object name="0">2</basic-object>
+          <basic-object name="1">2</basic-object>
+          <basic-object name="2">2</basic-object>
+          <basic-object name="3">2</basic-object>
+          <basic-object name="4">6</basic-object>
+          <basic-object name="5">2</basic-object>
+        </compound-object>
+      </compound-key>
+    </style>
+  </styles>
+
+  <!--
+    When defining new templates, you have to extend an existing template and
+    supply a name for the new template. If the name is not set, the parser
+    will throw an exception.
+    -->
+  <templates>
+    <template references="number-field" name="population-number-field">
+      <basic-object name="nullValue">-</basic-object>
+      <basic-object name="format">#,##0</basic-object>
+    </template>
+  </templates>
+
+  <report-description>
+    <!--
+     Defines the report header. As every band and element, the report header
+     contains a element style sheet, which defines the elements visual behaviour
+
+     The style sheet is inherited to all child elements, anything defined
+     here, will also be available to the childs, but they are able to define their
+     own values, which override the values of the parent's style sheet.
+     -->
+    <report-header>
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="width">0.0</basic-object>
+          <basic-object name="height">50.0</basic-object>
+        </compound-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">18</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-underline">true</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+        <basic-key name="alignment">center</basic-key>
+      </style>
+      <!--
+        Elements are defined and selected by their content type. To create
+        a text element, the required content type is "text/plain". ShapeElements
+        are created when specifying the content type of "shape/generic".
+
+        Be carefull when defining a relative width and height, unless the parent
+        band defines a maximum size, the element will try to consume as much space
+        as possible.
+        -->
+      <element type="text/plain">
+        <style>
+          <basic-key name="valignment">top</basic-key>
+          <compound-key name="min-size">
+            <basic-object name="width">-100.0</basic-object>
+            <basic-object name="height">20.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <!--
+          How data is fed into an element is defined by assigning templates
+          to the elements. Templates are predefined DataSources, which make
+          defining the common element use-cases a little bit easier.
+
+          An alternative way of assigning a DataSource would be the manual
+          way. This is done by stacking datasource elements into each other,
+          until the result is produced.
+
+          A label use-case would consist of a StaticDataSource contained in
+          a StringFilter.
+         -->
+        <template references="label">
+          <basic-object name="nullValue">null</basic-object>
+          <basic-object name="content">LIST OF COUNTRIES BY CONTINENT</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <basic-key name="valignment">bottom</basic-key>
+          <compound-key name="min-size">
+            <basic-object name="width">-100.0</basic-object>
+            <basic-object name="height">30.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">20.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="label">
+          <basic-object name="nullValue">null</basic-object>
+          <basic-object name="content">This text is valign=&quot;bottom&quot;</basic-object>
+        </template>
+      </element>
+    </report-header>
+    <report-footer>
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="width">0.0</basic-object>
+          <basic-object name="height">48.0</basic-object>
+        </compound-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">16</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+        <basic-key name="paint">black</basic-key>
+        <basic-key name="alignment">center</basic-key>
+        <basic-key name="dynamic_height">false</basic-key>
+      </style>
+
+      <element type="text/plain">
+        <style>
+          <basic-key name="valignment">bottom</basic-key>
+          <compound-key name="min-size">
+            <basic-object name="width">-100.0</basic-object>
+            <basic-object name="height">24.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="label">
+          <basic-object name="nullValue">null</basic-object>
+          <basic-object name="content">*** END OF REPORT ***</basic-object>
+        </template>
+      </element>
+    </report-footer>
+
+    <page-header>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <compound-key name="min-size">
+          <basic-object name="width">0.0</basic-object>
+          <basic-object name="height">18.0</basic-object>
+        </compound-key>
+        <basic-key name="display-on-lastpage">true</basic-key>
+        <basic-key name="font-bold">false</basic-key>
+        <basic-key name="font-size">10</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+
+      <element type="shape/generic">
+        <style>
+          <extends name="background_rectangle"/>
+        </style>
+        <template references="rectangle"/>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <basic-key name="valignment">bottom</basic-key>
+          <compound-key name="min-size">
+            <basic-object name="width">-100.0</basic-object>
+            <basic-object name="height">14.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+        </style>
+        <template references="date-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="format">d-MMM-yyyy</basic-object>
+          <basic-object name="field">report.date</basic-object>
+        </template>
+      </element>
+
+      <element type="shape/generic">
+        <style>
+          <extends name="thick_horizontal_line"/>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">18.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#cfcfcf</basic-key>
+        </style>
+        <template references="horizontal-line"/>
+      </element>
+    </page-header>
+
+    <page-footer>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <compound-key name="min-size">
+          <basic-object name="width">0.0</basic-object>
+          <basic-object name="height">18.0</basic-object>
+        </compound-key>
+        <basic-key name="display-on-lastpage">true</basic-key>
+      </style>
+
+      <element type="shape/generic">
+        <style>
+          <extends name="background_rectangle"/>
+        </style>
+        <template references="rectangle"/>
+      </element>
+    </page-footer>
+
+    <groups>
+      <group name="Continent Group">
+        <fields>
+          <field>Continent</field>
+        </fields>
+
+        <group-header>
+          <style>
+            <compound-key name="min-size">
+              <basic-object name="width">0.0</basic-object>
+              <basic-object name="height">18.0</basic-object>
+            </compound-key>
+            <basic-key name="pagebreak-before">false</basic-key>
+            <basic-key name="repeat-header">false</basic-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-size">9</basic-key>
+            <basic-key name="font">Monospaced</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="paint">black</basic-key>
+            <basic-key name="alignment">left</basic-key>
+            <basic-key name="dynamic_height">false</basic-key>
+            <basic-key name="valignment">bottom</basic-key>
+          </style>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="width">100.0</basic-object>
+                <basic-object name="height">9.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">1.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="label">
+              <basic-object name="nullValue">null</basic-object>
+              <basic-object name="content">CONTINENT:</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">9.0</basic-object>
+                <basic-object name="width">250.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">100.0</basic-object>
+                <basic-object name="y">1.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="string-field">
+              <basic-object name="nullValue">-</basic-object>
+              <basic-object name="field">Continent</basic-object>
+            </template>
+          </element>
+
+          <element type="shape/generic">
+            <style>
+              <extends name="thin_horizontal_line"/>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">10.0</basic-object>
+              </compound-key>
+              <basic-key name="paint">black</basic-key>
+            </style>
+            <template references="horizontal-line"/>
+          </element>
+        </group-header>
+
+        <group-footer>
+          <style>
+            <compound-key name="min-size">
+              <basic-object name="height">18.0</basic-object>
+              <basic-object name="width">0.0</basic-object>
+            </compound-key>
+            <basic-key name="pagebreak-before">false</basic-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-size">9</basic-key>
+            <basic-key name="font">Monospaced</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="paint">black</basic-key>
+            <basic-key name="alignment">left</basic-key>
+            <basic-key name="dynamic_height">false</basic-key>
+            <basic-key name="valignment">bottom</basic-key>
+          </style>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="width">220.0</basic-object>
+                <basic-object name="height">12.0</basic-object>
+              </compound-key>
+
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="label">
+              <basic-object name="nullValue">null</basic-object>
+              <basic-object name="content">Population:</basic-object>
+            </template>
+          </element>
+
+          <element name="@anonymousc" type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="width">116.0</basic-object>
+                <basic-object name="height">12.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">220.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+              <basic-key name="alignment">right</basic-key>
+            </style>
+            <template references="population-number-field">
+              <basic-object name="field">sum</basic-object>
+            </template>
+          </element>
+        </group-footer>
+      </group>
+    </groups>
+
+    <itemband>
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="width">0.0</basic-object>
+          <basic-object name="height">10.0</basic-object>
+        </compound-key>
+        <basic-key name="valignment">bottom</basic-key>
+        <basic-key name="paint">black</basic-key>
+        <basic-key name="alignment">left</basic-key>
+        <basic-key name="dynamic_height">false</basic-key>
+        <basic-key name="font-bold">false</basic-key>
+        <basic-key name="font-size">8</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+      <element name="background" type="shape/generic">
+        <style>
+          <extends name="background_rectangle"/>
+          <basic-key name="paint">#dfdfdf</basic-key>
+        </style>
+        <template references="rectangle"/>
+      </element>
+
+      <element type="shape/generic">
+        <style>
+          <extends name="thin_horizontal_line"/>
+          <basic-key name="stroke" class="java.awt.BasicStroke">0.1</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#ff0fff</basic-key>
+        </style>
+        <template references="horizontal-line"/>
+      </element>
+
+      <element type="shape/generic">
+        <style>
+          <extends name="thin_horizontal_line"/>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">10.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#0fdfdf</basic-key>
+        </style>
+        <template references="horizontal-line"/>
+      </element>
+
+      <element name="first" type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">10.0</basic-object>
+            <basic-object name="width">-25.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">Country</basic-object>
+        </template>
+      </element>
+
+      <element name="sF" type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">10.0</basic-object>
+            <basic-object name="width">-5.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-25.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">ISO Code</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">10.0</basic-object>
+            <basic-object name="width">-20.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-30.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+        </style>
+        <template references="population-number-field">
+          <basic-object name="field">Population</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">10.0</basic-object>
+            <basic-object name="width">-25.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-50.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">expression</basic-object>
+        </template>
+      </element>
+
+      <element name="numF" type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">10.0</basic-object>
+            <basic-object name="width">-25.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-75.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="alignment">right</basic-key>
+        </style>
+        <template references="number-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="format">#,##0.00' %'</basic-object>
+          <basic-object name="field">percent</basic-object>
+        </template>
+      </element>
+    </itemband>
+-->
+    
+  </report-description>
+
+  <functions>
+    <property-ref name="report.date"/>
+    <expression name="expression"
+                class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression">
+      <properties>
+        <property name="expression">
+
+          // This declaration is important. The script-method getValue is called by the
+          // BSHExpression to evaluate the expression. We override the default implementation
+          // and perform own calculations here ...
+          Object getValue()
+          {
+          // dataRow is null before the function is initialized
+          if (dataRow == null)
+          {
+            return null;
+          }
+
+          Number population = (Number) dataRow.get (&quot;Population&quot;);
+          if (population == null)
+          {
+            return null;
+          }
+          long popK = (long)(population.longValue() / 1000);
+
+          // return a string with the number of people in 1000'er
+          return (&quot;&quot; + popK + &quot; thousand people&quot;);
+          }
+        </property>
+      </properties>
+    </expression>
+    <function name="percent" class="org.pentaho.reporting.engine.classic.core.function.ItemPercentageFunction">
+      <properties>
+        <property name="group">Continent Group</property>
+        <property name="field">Population</property>
+      </properties>
+    </function>
+    <function name="sum" class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction">
+      <properties>
+        <property name="group">Continent Group</property>
+        <property name="field">Population</property>
+      </properties>
+    </function>
+    <function name="backgroundTrigger"
+              class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">background</property>
+      </properties>
+    </function>
+  </functions>
+</report-definition>

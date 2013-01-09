@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report name="PRE83_Report"
+        xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        orientation="landscape" pageformat="LETTER" leftmargin="10" rightmargin="10" topmargin="10" bottommargin="10">
+  <reportheader background-color="yellow">
+    <imageurl-field name="BuggyField" dynamic="true" x="0" y="0" fieldname="chart_url"/>
+  </reportheader>
+  <groups>
+    <group name="dummy">
+      <groupheader repeat="true" height="20" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
+        <band name="DummyGroupNoDataBandElement">
+          <label height="11" vertical-alignment="middle" alignment="left" width="100%" x="0%" y="0">No Data Available</label>
+        </band>
+        <band name="DummyGroupDataBandElement" y="2" height="20">
+          <rectangle color="#C0C0C0" draw="false" fill="true" height="18" width="100%" x="0%" y="0"/>
+          <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18" vertical-alignment="middle" alignment="left" width="100.0%" x="0.0%" y="0">REGION</label>
+        </band>
+      </groupheader>
+      <groupfooter name="dummyGroupFooter" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold"/>
+    </group>
+  </groups>
+  <items color="#000000" fontname="SansSerif" fontsize="9" fontstyle="bold">
+    <rectangle name="rowBandingElement" color="#E0E0E0" draw="false" fill="true" height="11" x="0%" width="100%" y="0"/>
+    <string-field name="REGIONElement" nullstring="-" fieldname="REGION" vertical-alignment="middle" alignment="left" width="100.0%" x="0.0%" y="0" height="11" color="#000000" fontname="SansSerif" fontsize="9"/>
+  </items>
+  <functions>
+    <function name="backgroundTrigger" class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">rowBandingElement</property>
+        <property name="numberOfElements">1</property>
+        <property name="initialState">true</property>
+      </properties>
+    </function>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="chart_url">
+      <properties>
+        <property name="expression">
+          Object getValue()
+          {
+            return null;
+          }
+        </property>
+      </properties>
+    </expression>
+	<expression class="org.pentaho.reporting.engine.classic.core.function.HideElementIfDataAvailableExpression" name="DummyGroupNoDataBandElementHideIfNullTrigger">
+      <properties>
+        <property name="element">DummyGroupNoDataBandElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="DummyGroupDataBandElementHideIfNullTrigger">
+      <properties>
+        <property name="element">DummyGroupDataBandElement</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression" name="dummyGroupFooterHideIfNullTrigger">
+      <properties>
+        <property name="element">dummyGroupFooter</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

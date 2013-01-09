@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.configstore.filesystem.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.configstore.filesystem.SystemTargetDir" global="true" hidden="false">
+    <description>Defines the directory, where the system settings will be stored. If the directory starts with an &apos;~/&apos;, the given directory will be considered relative to the users home directory.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.configstore.filesystem.UserTargetDir" global="true" hidden="false">
+    <description>Defines the directory, where the user settings will be stored. If the directory starts with an &apos;~/&apos;, the given directory will be considered relative to the users home directory.</description>
+    <text/>
+  </key>
+
+</config-description>

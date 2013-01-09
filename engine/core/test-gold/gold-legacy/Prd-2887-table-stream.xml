@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="2">
+    <cols>
+      <column width="91"/>
+      <column width="360"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Standard Report: кириллица (this means &quot;cyrillic&quot;)"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="206.68" height="10.0" color="black" font-face="Times New Roman" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="35.52" height="10.0">Standard</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="38.02" y="0.0" width="29.96" height="10.0">Report:</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="70.48" y="0.0" width="45.66" height="10.0">кириллица</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="118.64" y="0.0" width="17.76" height="10.0">(this</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="138.9" y="0.0" width="25.52" height="10.0">means</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="166.92" y="0.0" width="39.76" height="10.0">&quot;cyrillic&quot;)</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sub-Report: кириллица (this means &quot;cyrillic&quot;)"/>
+        <line type="ParagraphPoolBox" x="91.0" y="20.0" width="187.55" height="10.0" color="black" font-face="Times New Roman" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="91.0" y="20.0" width="48.85" height="10.0">Sub-Report:</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="142.35" y="20.0" width="45.66" height="10.0">кириллица</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="190.51" y="20.0" width="17.76" height="10.0">(this</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="210.77" y="20.0" width="25.52" height="10.0">means</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="238.79" y="20.0" width="39.76" height="10.0">&quot;cyrillic&quot;)</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

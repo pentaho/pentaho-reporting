@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="4" row-count="6">
+    <cols>
+      <column width="11"/>
+      <column width="429"/>
+      <column width="11"/>
+      <column width="11"/>
+    </cols>
+    <row height="11">
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-left-color="green" border-left-width="1.0" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="font-to-pdf"/>
+      </empty-cell>
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="70">
+      <empty-cell border-left-color="green" border-left-width="1.0" border-left-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="black">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell border-left-color="green" border-left-width="1.0" border-left-style="solid" border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-left-color="green" border-left-width="1.0" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="green" border-top-width="1.0" border-top-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="70">
+      <empty-cell border-left-color="green" border-left-width="1.0" border-left-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" background-color="black">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid" background-color="black">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell border-left-color="green" border-left-width="1.0" border-left-style="solid" border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="green" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="green" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

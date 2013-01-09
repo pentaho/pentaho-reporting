@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="32"
+   id="svg1306"
+   sodipodi:version="0.32"
+   inkscape:version="0.43"
+   inkscape:export-filename="C:\Daten\07_Projekte\Report\ch.gridvision.crm.report\src\res\icons\TemplateStructuredIcon.png"
+   inkscape:export-xdpi="360"
+   inkscape:export-ydpi="360"
+   sodipodi:docbase="C:\Daten\07_Projekte\Report\ch.gridvision.crm.report\src\res\icons"
+   sodipodi:docname="TemplateStructuredIcon.svg"
+   version="1.0">
+  <defs
+     id="defs1308">
+    <linearGradient
+       id="linearGradient2263">
+      <stop
+         style="stop-color:#dfdeee;stop-opacity:1;"
+         offset="0"
+         id="stop2265" />
+      <stop
+         id="stop2271"
+         offset="1"
+         style="stop-color:#817dbc;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2770">
+      <stop
+         style="stop-color:#b1b1b1;stop-opacity:1.0000000;"
+         offset="0.00000000"
+         id="stop2772" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop2774" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313708"
+     inkscape:cx="31.019412"
+     inkscape:cy="14.934043"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="929"
+     inkscape:window-height="943"
+     inkscape:window-x="423"
+     inkscape:window-y="44" />
+  <metadata
+     id="metadata1311">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="opacity:1;fill:#6a64ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:100;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1330"
+       width="64"
+       height="7"
+       x="0"
+       y="9.4400654" />
+    <text
+       xml:space="preserve"
+       style="font-size:3.62037706px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="0.79670733"
+       y="14.246933"
+       id="text1336"><tspan
+         sodipodi:role="line"
+         id="tspan1338"
+         x="0.79670733"
+         y="14.246933">Group</tspan><tspan
+         sodipodi:role="line"
+         x="0.79670733"
+         y="18.772404"
+         id="tspan1503" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.25684071px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="1.6111038"
+       y="7.5134983"
+       id="text1340"><tspan
+         sodipodi:role="line"
+         id="tspan1342"
+         x="1.6111038"
+         y="7.5134983">Title</tspan></text>
+    <rect
+       style="opacity:1;fill:#cfcdff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:100;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1344"
+       width="64"
+       height="4"
+       x="0"
+       y="20.940065" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.41348362px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="1.2533644"
+       y="23.40589"
+       id="text2219"><tspan
+         sodipodi:role="line"
+         id="tspan2221"
+         x="1.2533644"
+         y="23.40589">Item</tspan></text>
+    <rect
+       style="opacity:1;fill:#aeacff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:100;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect2223"
+       width="64"
+       height="4.499999"
+       x="0"
+       y="16.440065" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.95520449px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="1.2624887"
+       y="19.685328"
+       id="text2225"><tspan
+         sodipodi:role="line"
+         id="tspan2227"
+         x="1.2624887"
+         y="19.685328">Col1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.95520449px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="24.834059"
+       y="19.958155"
+       id="text2229"><tspan
+         sodipodi:role="line"
+         id="tspan2231"
+         x="24.834059"
+         y="19.958155">Col2</tspan><tspan
+         sodipodi:role="line"
+         x="24.834059"
+         y="23.65216"
+         id="tspan2233" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.41348362px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="25.238005"
+       y="23.759439"
+       id="text2241"><tspan
+         sodipodi:role="line"
+         id="tspan2243"
+         x="25.238005"
+         y="23.759439">Item</tspan></text>
+    <rect
+       style="opacity:1;fill:#cfcdff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:100;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect2245"
+       width="20.4375"
+       height="4"
+       x="43.5625"
+       y="24.469669" />
+    <text
+       xml:space="preserve"
+       style="font-size:2.45916843px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="47.691414"
+       y="27.383223"
+       id="text2247"><tspan
+         sodipodi:role="line"
+         id="tspan2249"
+         x="47.691414"
+         y="27.383223">Sum</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.95520449px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="46.723076"
+       y="19.958155"
+       id="text1345"><tspan
+         sodipodi:role="line"
+         id="tspan1347"
+         x="46.723076"
+         y="19.958155">Col2</tspan><tspan
+         sodipodi:role="line"
+         x="46.723076"
+         y="23.65216"
+         id="tspan1349" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.41348362px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+       x="47.253784"
+       y="23.759439"
+       id="text1351"><tspan
+         sodipodi:role="line"
+         id="tspan1353"
+         x="47.253784"
+         y="23.759439">Item</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+Tablemodel contains 3 rows.
+Column: 0 Name=Time; DataType=class java.lang.String
+Column: 1 Name=Time{1}; DataType=class java.lang.String
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.lang.String
+ValueAt (0, 1) is in a typed column and is of type class java.lang.String
+ValueAt (1, 0) is in a typed column and is of type class java.lang.String
+ValueAt (1, 1) is in a typed column and is of type class java.lang.String
+ValueAt (2, 0) is in a typed column and is of type class java.lang.String
+ValueAt (2, 1) is in a typed column and is of type class java.lang.String
+Tablemodel contains 3 rows.
+Checking the attributes inside
+Tablemodel contains 3 rows.
+Column: 0 Name=Time; DataType=class java.lang.String
+Column: 1 Name=Time{1}; DataType=class java.lang.String
+Checking the data inside
+ValueAt (0, 0) is '2003'
+ValueAt (0, 1) is 'Time'
+ValueAt (1, 0) is '2004'
+ValueAt (1, 1) is 'Time'
+ValueAt (2, 0) is '2005'
+ValueAt (2, 1) is 'Time'

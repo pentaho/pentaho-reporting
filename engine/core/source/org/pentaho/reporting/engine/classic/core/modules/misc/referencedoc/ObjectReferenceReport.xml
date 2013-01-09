@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<report-definition name="Object Reference Report"
+                   xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext">
+  <parser-config>
+    <object-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <element-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+
+  <report-config>
+    <page-definition>
+      <page orientation="portrait" pageformat="LETTER" topmargin="72" bottommargin="72" leftmargin="72"
+            rightmargin="72"/>
+    </page-definition>
+    <configuration>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">Darkwing Duck</property>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">iso-8859-15</property>
+    </configuration>
+  </report-config>
+
+  <report-description>
+    <report-header>
+
+      <!-- The report header style -->
+      <style>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">14</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-underline">false</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+        <basic-key name="paint">#BEDBAC</basic-key>
+      </style>
+
+      <!-- A text element, contains the report header -->
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">14.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">2.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Extended Parser: Class Factory Reference</basic-object>
+        </template>
+      </element>
+
+      <!-- A text element, contains the report header -->
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">14.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">22.0</basic-object>
+          </compound-key>
+          <basic-key name="font-size">10</basic-key>
+          <basic-key name="dynamic_height">true</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Note: An object which only defined a single property called 'value' is considered a primitive or basic value.
+When defining or using such objects, you can use the 'basic-key' or 'basic-object' tag in the Extended-XML.
+</basic-object>
+        </template>
+      </element>
+
+    </report-header>
+
+    <groups>
+      <group name="object-factory">
+        <fields>
+          <field>object-factory</field>
+        </fields>
+        <group-header>
+          <style>
+            <compound-key name="min-size">
+              <basic-object name="height">18.0</basic-object>
+              <basic-object name="width">0.0</basic-object>
+            </compound-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-size">14</basic-key>
+            <basic-key name="font">Serif</basic-key>
+            <basic-key name="font-underline">false</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="valignment">middle</basic-key>
+          </style>
+
+          <!-- group header -->
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">-100.0</basic-object>
+                <basic-object name="width">100.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Class Factory</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">-100.0</basic-object>
+                <basic-object name="width">-100.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">100.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+              <basic-key name="font-size">10</basic-key>
+            </style>
+            <template references="string-field">
+              <basic-object name="nullValue">-</basic-object>
+              <basic-object name="field">object-factory</basic-object>
+            </template>
+          </element>
+
+        </group-header>
+      </group>
+
+      <group name="object-class">
+        <fields>
+          <field>object-factory</field>
+          <field>object-class</field>
+        </fields>
+        <group-header>
+          <style>
+            <compound-key name="min-size">
+              <basic-object name="height">12.0</basic-object>
+              <basic-object name="width">0.0</basic-object>
+            </compound-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-size">12</basic-key>
+            <basic-key name="font">Serif</basic-key>
+            <basic-key name="font-underline">false</basic-key>
+            <basic-key name="font-italic">true</basic-key>
+            <basic-key name="paint">#cfcfcf</basic-key>
+          </style>
+
+          <!-- group header -->
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">12.0</basic-object>
+                <basic-object name="width">-100.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">0.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="string-field">
+              <basic-object name="nullValue">-</basic-object>
+              <basic-object name="field">object-class</basic-object>
+            </template>
+          </element>
+        </group-header>
+      </group>
+    </groups>
+
+    <itemband>
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="height">12.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">10</basic-key>
+        <basic-key name="font">SansSerif</basic-key>
+        <basic-key name="font-underline">false</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+
+      <element type="text/plain" name="object-class">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">160.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">parameter-name</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">170.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">parameter-class</basic-object>
+        </template>
+      </element>
+
+    </itemband>
+
+  </report-description>
+</report-definition>

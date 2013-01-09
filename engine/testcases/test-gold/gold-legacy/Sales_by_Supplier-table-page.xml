@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="6" row-count="19">
+    <cols>
+      <column width="81"/>
+      <column width="135"/>
+      <column width="54"/>
+      <column width="108"/>
+      <column width="81"/>
+      <column width="81"/>
+    </cols>
+    <row height="3">
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="6">
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="5">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="2" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Steel Wheels, Inc."/>
+        <line type="ParagraphPoolBox" x="475.592" y="12.0" width="64.408" height="8.0" color="black" font-face="SanSerif" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="475.592" y="12.0" width="18.216" height="8.0">Steel</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="496.024" y="12.0" width="28.88" height="8.0">Wheels,</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="527.12" y="12.0" width="12.88" height="8.0">Inc.</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="9">
+      <cell row-span="3" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="${serverBaseURL}/sw-style/active/sw_logo.jpg"/>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="14">
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Summary of Sales by Supplier"/>
+        <line type="ParagraphPoolBox" x="432.472" y="26.0" width="107.528" height="8.0" color="black" font-face="SanSerif" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="432.472" y="26.0" width="34.216" height="8.0">Summary</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="468.904" y="26.0" width="6.664" height="8.0">of</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="477.784" y="26.0" width="20.0" height="8.0">Sales</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="500.0" y="26.0" width="8.448" height="8.0">by</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="510.664" y="26.0" width="29.336" height="8.0">Supplier</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="17">
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="From $(time_start) through $(time_stop)"/>
+        <line type="ParagraphPoolBox" x="444.024" y="40.0" width="95.976" height="8.0" color="black" font-face="SanSerif" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="444.024" y="40.0" width="18.656" height="8.0">From</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="464.896" y="40.0" width="21.776" height="8.0">&lt;null&gt;</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="488.888" y="40.0" width="27.12" height="8.0">through</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="518.224" y="40.0" width="21.776" height="8.0">&lt;null&gt;</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="3">
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+    </row>
+    <row height="3">
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="1">
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="#5c7485" border-top-width="2.0" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="9">
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-left-color="white" border-left-width="1.0" border-left-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="white" border-right-width="1.0" border-right-style="solid">
+      </empty-cell>
+    </row>
+    <row height="15">
+      <empty-cell background-color="#5c7485">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="dummy group"/>
+      </empty-cell>
+      <cell background-color="#5c7485" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Supplier"/>
+        <line type="ParagraphPoolBox" x="81.0" y="72.5" width="36.67" height="10.0" color="white" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="81.0" y="72.5" width="36.67" height="10.0">Supplier</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell background-color="#5c7485" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sales ($)"/>
+        <line type="ParagraphPoolBox" x="419.01" y="72.5" width="39.99" height="10.0" color="white" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="419.01" y="72.5" width="25.0" height="10.0">Sales</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="446.78" y="72.5" width="12.22" height="10.0">($)</text>
+        </line>
+      </cell>
+      <empty-cell background-color="#5c7485">
+      </empty-cell>
+    </row>
+    <row height="6">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.75" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <empty-cell background-color="#ffc607">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <cell background-color="#ffc607" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total "/>
+        <line type="ParagraphPoolBox" x="81.0" y="94.5" width="24.98" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="81.0" y="94.5" width="22.21" height="10.0">Total</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell background-color="#ffc607" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="totalsales"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$ #,###"/>
+        <line type="ParagraphPoolBox" x="445.11" y="94.5" width="13.89" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="445.11" y="94.5" width="5.56" height="10.0">$</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="453.44" y="94.5" width="5.56" height="10.0">0</text>
+        </line>
+      </cell>
+      <empty-cell background-color="#ffc607">
+      </empty-cell>
+    </row>
+    <row height="1">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="586">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Confidential Material"/>
+        <line type="ParagraphPoolBox" x="0.0" y="695.0" width="72.88" height="8.0" color="black" font-face="Arial" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="695.0" width="42.224" height="8.0">Confidential</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="44.44" y="695.0" width="28.44" height="8.0">Material</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(PageofPages)"/>
+        <line type="ParagraphPoolBox" x="262.228" y="695.0" width="15.544" height="8.0" color="black" font-face="Arial" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="262.228" y="695.0" width="4.448" height="8.0">1</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="268.892" y="695.0" width="2.216" height="8.0">/</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="273.324" y="695.0" width="4.448" height="8.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Report Run: "/>
+        <line type="ParagraphPoolBox" x="0.0" y="710.0" width="56.65" height="10.0" color="black" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="710.0" width="30.0" height="10.0">Report</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="32.77" y="710.0" width="21.11" height="10.0">Run:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3" href="http://www.pentaho.org">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Pentaho Sample Report"/>
+        <line type="ParagraphPoolBox" x="433.34" y="710.0" width="106.66" height="10.0" color="black" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="433.34" y="710.0" width="37.23" height="10.0">Pentaho</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="473.34" y="710.0" width="33.89" height="10.0">Sample</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="510.0" y="710.0" width="30.0" height="10.0">Report</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+  </table>
+</layout-output>

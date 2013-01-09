@@ -1,0 +1,933 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report-definition xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext" name="Quadrant For Region" query="default">
+  <parser-config>
+    <object-factory class="org.jfree.report.modules.parser.ext.factory.base.URLClassFactory"/>
+    <object-factory class="org.jfree.report.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <object-factory class="org.jfree.report.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+    <object-factory class="org.jfree.report.modules.parser.ext.factory.base.ArrayClassFactory"/>
+    <element-factory class="org.jfree.report.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory class="org.jfree.report.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory class="org.jfree.report.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory class="org.jfree.report.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory class="org.jfree.report.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+  <report-config>
+    <data:sql-datasource xmlns:data="http://jfreereport.sourceforge.net/namespaces/datasources/sql">
+      <data:config label-mapping="true"/>
+      <data:connection>
+        <data:driver>org.hsqldb.jdbcDriver</data:driver>
+        <data:url>jdbc:hsqldb:./sql/sampledata</data:url>
+        <data:properties>
+          <data:property name="user">sa</data:property>
+          <data:property name="pass"></data:property>
+        </data:properties>
+      </data:connection>
+      <data:query name="actuals-by-region">
+      SELECT
+           QUADRANT_ACTUALS.REGION,
+           QUADRANT_ACTUALS.DEPARTMENT,
+           QUADRANT_ACTUALS.POSITIONTITLE,
+           QUADRANT_ACTUALS.ACTUAL,
+           QUADRANT_ACTUALS.BUDGET,
+           QUADRANT_ACTUALS.VARIANCE
+      FROM
+           QUADRANT_ACTUALS
+      WHERE
+          REGION = ${REGION}
+      ORDER BY
+          REGION, DEPARTMENT, POSITIONTITLE
+  </data:query>
+      <data:query name="default">
+      SELECT DISTINCT
+           QUADRANT_ACTUALS.REGION
+      FROM
+           QUADRANT_ACTUALS
+      ORDER BY
+          REGION
+  </data:query>
+    </data:sql-datasource>
+    <simple-page-definition width="1" height="1">
+      <page orientation="portrait" topmargin="36" leftmargin="36" bottommargin="36" rightmargin="36" pageformat="LETTER"/>
+    </simple-page-definition>
+  </report-config>
+  <report-description>
+    <report-header>
+      <element type="shape/generic">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">0.0</basic-key>
+          <basic-key name="min-width">-100.0</basic-key>
+          <basic-key name="min-height">50.0</basic-key>
+          <basic-key name="paint">#0000cc</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">1.0</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="fill-shape">true</basic-key>
+          <basic-key name="draw-shape">false</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+            <basic-object name="height">100.0</basic-object>
+            <basic-object name="width">100.0</basic-object>
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="text/plain">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">0.0</basic-key>
+          <basic-key name="min-width">-100.0</basic-key>
+          <basic-key name="min-height">50.0</basic-key>
+          <basic-key name="paint">white</basic-key>
+          <basic-key name="alignment">center</basic-key>
+          <basic-key name="valignment">middle</basic-key>
+          <basic-key name="font">Arial</basic-key>
+          <basic-key name="font-size">18</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Exciting Quadrant Data</basic-object>
+        </template>
+      </element>
+    </report-header>
+    <page-header>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <basic-key name="sticky">true</basic-key>
+        <basic-key name="min-height">32.0</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-size">10</basic-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+      <element type="shape/generic">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">30.0</basic-key>
+          <basic-key name="min-width">-100.0</basic-key>
+          <basic-key name="min-height">0.0</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">0.5</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Line2D$Float">
+            <basic-object name="x1">0.0</basic-object>
+            <basic-object name="x2">100.0</basic-object>
+            <basic-object name="y1">0.0</basic-object>
+            <basic-object name="y2">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="text/plain">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">0.0</basic-key>
+          <basic-key name="min-width">-100.0</basic-key>
+          <basic-key name="min-height">20.0</basic-key>
+          <basic-key name="alignment">center</basic-key>
+        </style>
+        <template references="message-field">
+          <basic-object name="format">Region: $(REGION)</basic-object>
+        </template>
+      </element>
+    </page-header>
+    <page-footer>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <basic-key name="display-on-lastpage">true</basic-key>
+        <basic-key name="sticky">true</basic-key>
+        <basic-key name="min-height">24.0</basic-key>
+        <basic-key name="font">Serif</basic-key>
+        <basic-key name="font-size">9</basic-key>
+        <basic-key name="font-bold">false</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+      <element type="shape/generic">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">0.0</basic-key>
+          <basic-key name="min-width">-100.0</basic-key>
+          <basic-key name="min-height">0.0</basic-key>
+          <compound-key name="stroke" class="java.awt.BasicStroke">
+            <basic-object name="value">0.5</basic-object>
+          </compound-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <datasource type="StaticDataSource">
+          <compound-object name="value" class="java.awt.geom.Line2D$Float">
+            <basic-object name="x1">0.0</basic-object>
+            <basic-object name="x2">100.0</basic-object>
+            <basic-object name="y1">0.0</basic-object>
+            <basic-object name="y2">0.0</basic-object>
+          </compound-object>
+        </datasource>
+      </element>
+      <element type="text/plain">
+        <style>
+          <basic-key name="x">0.0</basic-key>
+          <basic-key name="y">4.0</basic-key>
+          <basic-key name="min-width">-25.0</basic-key>
+          <basic-key name="min-height">18.0</basic-key>
+          <basic-key name="alignment">left</basic-key>
+        </style>
+        <template references="date-field">
+          <compound-object name="dateFormat">
+            <compound-object name="2DigitYearStart">
+              <basic-object name="day">23</basic-object>
+              <basic-object name="month">7</basic-object>
+              <basic-object name="year">1927</basic-object>
+            </compound-object>
+            <compound-object name="calendar">
+              <basic-object name="class">java.util.GregorianCalendar</basic-object>
+            </compound-object>
+            <compound-object name="dateFormatSymbols">
+              <basic-object name="class">java.text.DateFormatSymbols</basic-object>
+            </compound-object>
+            <basic-object name="lenient">true</basic-object>
+            <compound-object name="numberFormat" class="java.text.DecimalFormat">
+              <compound-object name="decimalFormatSymbols">
+                <basic-object name="currencySymbol">?</basic-object>
+                <basic-object name="decimalSeparator">,</basic-object>
+                <basic-object name="digit">#</basic-object>
+                <basic-object name="groupingSeparator">.</basic-object>
+                <basic-object name="infinity">?</basic-object>
+                <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                <basic-object name="minusSign">-</basic-object>
+                <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                <basic-object name="naN">?</basic-object>
+                <basic-object name="patternSeparator">;</basic-object>
+                <basic-object name="perMill">?</basic-object>
+                <basic-object name="percent">%</basic-object>
+                <basic-object name="zeroDigit">0</basic-object>
+              </compound-object>
+              <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+              <basic-object name="groupingSize">3</basic-object>
+              <basic-object name="groupingUsed">false</basic-object>
+              <basic-object name="maximumFractionDigits">0</basic-object>
+              <basic-object name="maximumIntegerDigits">309</basic-object>
+              <basic-object name="minimumFractionDigits">0</basic-object>
+              <basic-object name="minimumIntegerDigits">1</basic-object>
+              <basic-object name="multiplier">1</basic-object>
+              <basic-object name="negativePrefix">-</basic-object>
+              <basic-object name="negativeSuffix"></basic-object>
+              <basic-object name="parseIntegerOnly">true</basic-object>
+              <basic-object name="pattern">###0</basic-object>
+              <basic-object name="positivePrefix"></basic-object>
+              <basic-object name="positiveSuffix"></basic-object>
+            </compound-object>
+            <basic-object name="pattern">d-MMM-yyyy</basic-object>
+          </compound-object>
+          <basic-object name="field">report.date</basic-object>
+          <basic-object name="format">d-MMM-yyyy</basic-object>
+        </template>
+      </element>
+      <element type="text/plain">
+        <style>
+          <basic-key name="x">-75.0</basic-key>
+          <basic-key name="y">4.0</basic-key>
+          <basic-key name="min-width">-25.0</basic-key>
+          <basic-key name="min-height">18.0</basic-key>
+          <basic-key name="alignment">right</basic-key>
+        </style>
+        <template references="message-field">
+          <basic-object name="format">$(page) / $(pages)</basic-object>
+        </template>
+      </element>
+    </page-footer>
+    <groups>
+      <group name="default">
+        <fields/>
+      </group>
+    </groups>
+    <itemband>
+      <sub-report query="actuals-by-region">
+        <import-parameter name="REGION"/>
+        <report-config>
+        </report-config>
+        <report-description>
+          <report-header>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">0.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">310.0</basic-key>
+                <basic-key name="min-height">23.0</basic-key>
+                <basic-key name="paint">#009999</basic-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">REGION</basic-object>
+              </template>
+            </element>
+          </report-header>
+          <report-footer>
+            <style>
+              <basic-key name="pagebreak-after">true</basic-key>
+            </style>
+            <element type="shape/generic">
+              <style>
+                <basic-key name="x">0.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">-100.0</basic-key>
+                <basic-key name="min-height">-100.0</basic-key>
+                <basic-key name="paint">#009999</basic-key>
+                <compound-key name="stroke" class="java.awt.BasicStroke">
+                  <basic-object name="value">1.0</basic-object>
+                </compound-key>
+                <basic-key name="scale">true</basic-key>
+                <basic-key name="keepAspectRatio">false</basic-key>
+                <basic-key name="dynamic_height">false</basic-key>
+                <basic-key name="fill-shape">true</basic-key>
+                <basic-key name="draw-shape">false</basic-key>
+              </style>
+              <datasource type="StaticDataSource">
+                <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                  <basic-object name="height">100.0</basic-object>
+                  <basic-object name="width">100.0</basic-object>
+                  <basic-object name="x">0.0</basic-object>
+                  <basic-object name="y">0.0</basic-object>
+                </compound-object>
+              </datasource>
+            </element>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">0.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">246.0</basic-key>
+                <basic-key name="min-height">15.0</basic-key>
+                <basic-key name="paint">white</basic-key>
+              </style>
+              <template references="message-field">
+                <basic-object name="format">$(REGION) Total</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">246.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">15.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">RegionActual</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">344.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">15.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">RegionBudget</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+            <element name="Variance Region Field" type="text/plain">
+              <style>
+                <basic-key name="x">442.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">15.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <style-expression style-key="paint" formula="report:IF([RegionVariance] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">RegionVariance</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+          </report-footer>
+          <groups>
+            <group name="default">
+              <fields/>
+            </group>
+            <group name="DepartmentGroup">
+              <fields>
+                <field>DEPARTMENT</field>
+              </fields>
+              <group-header>
+                <style>
+                  <basic-key name="font">Arial</basic-key>
+                  <basic-key name="font-size">11</basic-key>
+                  <basic-key name="font-bold">true</basic-key>
+                  <basic-key name="font-italic">false</basic-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <basic-key name="x">0.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">-100.0</basic-key>
+                    <basic-key name="min-height">-100.0</basic-key>
+                    <basic-key name="paint">#ff6600</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">false</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">0.0</basic-key>
+                    <basic-key name="y">4.0</basic-key>
+                    <basic-key name="min-width">-100.0</basic-key>
+                    <basic-key name="min-height">18.0</basic-key>
+                    <basic-key name="paint">white</basic-key>
+                    <basic-key name="font-size">12</basic-key>
+                  </style>
+                  <template references="message-field">
+                    <basic-object name="format">Department: $(DEPARTMENT)</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">19.0</basic-key>
+                    <basic-key name="y">25.0</basic-key>
+                    <basic-key name="min-width">227.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Position</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">246.0</basic-key>
+                    <basic-key name="y">25.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Actual</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">344.0</basic-key>
+                    <basic-key name="y">25.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Budget</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">442.0</basic-key>
+                    <basic-key name="y">25.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Variance</basic-object>
+                  </template>
+                </element>
+              </group-header>
+              <group-footer>
+                <style>
+                  <basic-key name="min-height">24.0</basic-key>
+                  <basic-key name="font">Arial</basic-key>
+                  <basic-key name="font-size">11</basic-key>
+                  <basic-key name="font-bold">true</basic-key>
+                  <basic-key name="font-italic">false</basic-key>
+                </style>
+                <element type="shape/generic">
+                  <style>
+                    <basic-key name="x">19.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">-100.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                    <basic-key name="paint">#66ff66</basic-key>
+                    <compound-key name="stroke" class="java.awt.BasicStroke">
+                      <basic-object name="value">1.0</basic-object>
+                    </compound-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                  </style>
+                  <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                      <basic-object name="height">100.0</basic-object>
+                      <basic-object name="width">100.0</basic-object>
+                      <basic-object name="x">0.0</basic-object>
+                      <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                  </datasource>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">19.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">227.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                  </style>
+                  <template references="label">
+                    <basic-object name="content">Total</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">246.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                    <basic-key name="alignment">right</basic-key>
+                  </style>
+                  <template references="number-field">
+                    <compound-object name="decimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">?</basic-object>
+                        <basic-object name="decimalSeparator">,</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">.</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="maximumFractionDigits">0</basic-object>
+                      <basic-object name="maximumIntegerDigits">309</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-$</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">$#,##0</basic-object>
+                      <basic-object name="positivePrefix">$</basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                    <basic-object name="field">DepartmentActual</basic-object>
+                    <basic-object name="format">$#,##0</basic-object>
+                  </template>
+                </element>
+                <element type="text/plain">
+                  <style>
+                    <basic-key name="x">344.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                    <basic-key name="alignment">right</basic-key>
+                  </style>
+                  <template references="number-field">
+                    <compound-object name="decimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">?</basic-object>
+                        <basic-object name="decimalSeparator">,</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">.</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="maximumFractionDigits">0</basic-object>
+                      <basic-object name="maximumIntegerDigits">309</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-$</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">$#,##0</basic-object>
+                      <basic-object name="positivePrefix">$</basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                    <basic-object name="field">DepartmentBudget</basic-object>
+                    <basic-object name="format">$#,##0</basic-object>
+                  </template>
+                </element>
+                <element name="Variance Department Field" type="text/plain">
+                  <style>
+                    <basic-key name="x">442.0</basic-key>
+                    <basic-key name="y">0.0</basic-key>
+                    <basic-key name="min-width">98.0</basic-key>
+                    <basic-key name="min-height">14.0</basic-key>
+                    <basic-key name="alignment">right</basic-key>
+                  </style>
+                  <style-expression style-key="paint" formula="report:IF([DepartmentVariance] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+                  <template references="number-field">
+                    <compound-object name="decimalFormat">
+                      <compound-object name="decimalFormatSymbols">
+                        <basic-object name="currencySymbol">?</basic-object>
+                        <basic-object name="decimalSeparator">,</basic-object>
+                        <basic-object name="digit">#</basic-object>
+                        <basic-object name="groupingSeparator">.</basic-object>
+                        <basic-object name="infinity">?</basic-object>
+                        <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                        <basic-object name="minusSign">-</basic-object>
+                        <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                        <basic-object name="naN">?</basic-object>
+                        <basic-object name="patternSeparator">;</basic-object>
+                        <basic-object name="perMill">?</basic-object>
+                        <basic-object name="percent">%</basic-object>
+                        <basic-object name="zeroDigit">0</basic-object>
+                      </compound-object>
+                      <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                      <basic-object name="groupingSize">3</basic-object>
+                      <basic-object name="groupingUsed">true</basic-object>
+                      <basic-object name="maximumFractionDigits">0</basic-object>
+                      <basic-object name="maximumIntegerDigits">309</basic-object>
+                      <basic-object name="minimumFractionDigits">0</basic-object>
+                      <basic-object name="minimumIntegerDigits">1</basic-object>
+                      <basic-object name="multiplier">1</basic-object>
+                      <basic-object name="negativePrefix">-$</basic-object>
+                      <basic-object name="negativeSuffix"></basic-object>
+                      <basic-object name="parseIntegerOnly">false</basic-object>
+                      <basic-object name="pattern">$#,##0</basic-object>
+                      <basic-object name="positivePrefix">$</basic-object>
+                      <basic-object name="positiveSuffix"></basic-object>
+                    </compound-object>
+                    <basic-object name="field">DepartmentVariance</basic-object>
+                    <basic-object name="format">$#,##0</basic-object>
+                  </template>
+                </element>
+              </group-footer>
+            </group>
+          </groups>
+          <itemband>
+            <style>
+              <basic-key name="font">Arial</basic-key>
+              <basic-key name="font-size">10</basic-key>
+            </style>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">19.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">227.0</basic-key>
+                <basic-key name="min-height">12.0</basic-key>
+              </style>
+              <template references="string-field">
+                <basic-object name="field">POSITIONTITLE</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">246.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">12.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">ACTUAL</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+            <element type="text/plain">
+              <style>
+                <basic-key name="x">344.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">12.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">BUDGET</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+            <element name="Variance Field" type="text/plain">
+              <style>
+                <basic-key name="x">442.0</basic-key>
+                <basic-key name="y">0.0</basic-key>
+                <basic-key name="min-width">98.0</basic-key>
+                <basic-key name="min-height">12.0</basic-key>
+                <basic-key name="alignment">right</basic-key>
+              </style>
+              <style-expression style-key="paint" formula="report:IF([VARIANCE] &lt; 0; &quot;red&quot;;&quot;black&quot;)"/>
+              <template references="number-field">
+                <compound-object name="decimalFormat">
+                  <compound-object name="decimalFormatSymbols">
+                    <basic-object name="currencySymbol">?</basic-object>
+                    <basic-object name="decimalSeparator">,</basic-object>
+                    <basic-object name="digit">#</basic-object>
+                    <basic-object name="groupingSeparator">.</basic-object>
+                    <basic-object name="infinity">?</basic-object>
+                    <basic-object name="internationalCurrencySymbol">EUR</basic-object>
+                    <basic-object name="minusSign">-</basic-object>
+                    <basic-object name="monetaryDecimalSeparator">,</basic-object>
+                    <basic-object name="naN">?</basic-object>
+                    <basic-object name="patternSeparator">;</basic-object>
+                    <basic-object name="perMill">?</basic-object>
+                    <basic-object name="percent">%</basic-object>
+                    <basic-object name="zeroDigit">0</basic-object>
+                  </compound-object>
+                  <basic-object name="decimalSeparatorAlwaysShown">false</basic-object>
+                  <basic-object name="groupingSize">3</basic-object>
+                  <basic-object name="groupingUsed">true</basic-object>
+                  <basic-object name="maximumFractionDigits">0</basic-object>
+                  <basic-object name="maximumIntegerDigits">309</basic-object>
+                  <basic-object name="minimumFractionDigits">0</basic-object>
+                  <basic-object name="minimumIntegerDigits">1</basic-object>
+                  <basic-object name="multiplier">1</basic-object>
+                  <basic-object name="negativePrefix">-$</basic-object>
+                  <basic-object name="negativeSuffix"></basic-object>
+                  <basic-object name="parseIntegerOnly">false</basic-object>
+                  <basic-object name="pattern">$#,##0</basic-object>
+                  <basic-object name="positivePrefix">$</basic-object>
+                  <basic-object name="positiveSuffix"></basic-object>
+                </compound-object>
+                <basic-object name="field">VARIANCE</basic-object>
+                <basic-object name="format">$#,##0</basic-object>
+              </template>
+            </element>
+          </itemband>
+        </report-description>
+        <functions>
+          <expression name="RegionActual" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">ACTUAL</property>
+            </properties>
+          </expression>
+          <expression name="RegionBudget" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">BUDGET</property>
+            </properties>
+          </expression>
+          <expression name="RegionVariance" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">VARIANCE</property>
+            </properties>
+          </expression>
+          <expression name="DepartmentActual" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">ACTUAL</property>
+              <property name="group">DepartmentGroup</property>
+            </properties>
+          </expression>
+          <expression name="DepartmentBudget" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">BUDGET</property>
+              <property name="group">DepartmentGroup</property>
+            </properties>
+          </expression>
+          <expression name="DepartmentVariance" class="org.jfree.report.function.ItemSumFunction">
+            <properties>
+              <property name="field">VARIANCE</property>
+              <property name="group">DepartmentGroup</property>
+            </properties>
+          </expression>
+        </functions>
+      </sub-report>
+    </itemband>
+  </report-description>
+  <functions>
+    <property-ref name="report.name" class="java.lang.String">Quadrant For Region</property-ref>
+    <expression name="page" class="org.jfree.report.function.PageFunction">
+      <properties>
+        <property name="pageIncrement" class="java.lang.Integer">1</property>
+        <property name="startPage" class="java.lang.Integer">1</property>
+      </properties>
+    </expression>
+    <expression name="pages" class="org.jfree.report.function.PageTotalFunction">
+      <properties>
+        <property name="pageIncrement" class="java.lang.Integer">1</property>
+        <property name="startPage" class="java.lang.Integer">1</property>
+      </properties>
+    </expression>
+  </functions>
+</report-definition>

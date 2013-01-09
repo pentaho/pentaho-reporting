@@ -1,0 +1,17 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <process-task name="pageable/X-AWT-Graphics;image-type=png"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PngReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PngReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.">
+      <alias>png</alias>
+  </process-task>
+
+  <process-task name="pageable/X-AWT-Graphics"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Graphics2DReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Graphics2DReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.">
+      <alias>print</alias>
+  </process-task>
+</meta-data>

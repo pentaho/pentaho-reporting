@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
+  <physical-page page-x="0" page-y="0" page-width="612" page-height="792" margin-top="36" margin-left="54" margin-bottom="36" margin-right="54">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15117733"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Invoice Template"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+      <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="CUSTOMERNAME"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="CUSTOMER GROUP"/>
+        <block name="sub-group-body" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
+          <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="199.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="ORDERNUMBER"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="ORDER NUMBER GROUP"/>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@2180047"/>
+                <canvas type="CanvasRenderBox" x="0.0" y="139.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15074824"/>
+                  <p name="anonymousElement@8491555" type="ParagraphRenderBox" x="100.8" y="139.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8491555"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Product Description"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="139.0" width="77.229" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="139.0" width="30.213" height="9.0">Product</text>
+                      <spacer width="2.808" height="0.0" preserve="true"/>
+                      <text x="133.821" y="139.0" width="44.208" height="9.0">Description</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@10578129" type="ParagraphRenderBox" x="302.4" y="139.0" width="51.021" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@10578129"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Price/Unit"/>
+                    <line type="ParagraphPoolBox" x="314.883" y="139.0" width="38.538" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="314.883" y="139.0" width="38.538" height="9.0">Price/Unit</text>
+                    </line>
+                  </p>
+                </canvas>
+              </canvas>
+            </block>
+            <block name="group-data-body" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="48.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="151.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="153.0" width="76.664" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="153.0" width="17.44" height="8.0">1970</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="153.0" width="29.408" height="8.0">Triumph</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="152.64" y="153.0" width="24.824" height="8.0">Spitfire</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="151.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$129.26</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="163.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="165.0" width="136.696" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="165.0" width="22.688" height="8.0">1950's</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="125.984" y="165.0" width="27.712" height="8.0">Chicago</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="156.192" y="165.0" width="26.424" height="8.0">Surface</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="185.112" y="165.0" width="18.032" height="8.0">Lines</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="205.64" y="165.0" width="31.856" height="8.0">Streetcar</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="163.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$50.95</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="175.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="177.0" width="125.2" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="177.0" width="17.44" height="8.0">1992</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="177.0" width="27.544" height="8.0">Porsche</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="150.776" y="177.0" width="30.304" height="8.0">Cayenne</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="183.576" y="177.0" width="20.752" height="8.0">Turbo</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="206.824" y="177.0" width="19.176" height="8.0">Silver</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="175.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="177.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="177.0" width="28.576" height="8.0">$121.83</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="187.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="189.0" width="72.92" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="189.0" width="17.44" height="8.0">1970</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="189.0" width="22.8" height="8.0">Dodge</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="146.032" y="189.0" width="27.688" height="8.0">Coronet</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="187.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="189.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="189.0" width="24.216" height="8.0">$65.31</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+            </block>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="199.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="199.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@3709544"/>
+              </canvas>
+            </block>
+          </block>
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+  </physical-page>
+  <physical-page page-x="0" page-y="0" page-width="612" page-height="792" margin-top="36" margin-left="54" margin-bottom="36" margin-right="54">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15117733"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-720.0" width="504.0" height="1440.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Invoice Template"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-720.0" width="504.0" height="1440.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="CUSTOMERNAME"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="CUSTOMER GROUP"/>
+        <block name="sub-group-body" type="AutoRenderBox" x="0.0" y="-720.0" width="504.0" height="1440.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
+          <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="211.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="ORDERNUMBER"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="ORDER NUMBER GROUP"/>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@2180047"/>
+                <canvas type="CanvasRenderBox" x="0.0" y="139.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15074824"/>
+                  <p name="anonymousElement@8491555" type="ParagraphRenderBox" x="100.8" y="139.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8491555"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Product Description"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="139.0" width="77.229" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="139.0" width="30.213" height="9.0">Product</text>
+                      <spacer width="2.808" height="0.0" preserve="true"/>
+                      <text x="133.821" y="139.0" width="44.208" height="9.0">Description</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@10578129" type="ParagraphRenderBox" x="302.4" y="139.0" width="51.021" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@10578129"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Price/Unit"/>
+                    <line type="ParagraphPoolBox" x="314.883" y="139.0" width="38.538" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="314.883" y="139.0" width="38.538" height="9.0">Price/Unit</text>
+                    </line>
+                  </p>
+                </canvas>
+              </canvas>
+            </block>
+            <block name="group-data-body" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="151.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="153.0" width="53.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="153.0" width="17.44" height="8.0">1958</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="153.0" width="18.408" height="8.0">Setra</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="141.64" y="153.0" width="12.736" height="8.0">Bus</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="151.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$158.54</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="163.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="165.0" width="84.552" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="165.0" width="17.44" height="8.0">1939</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="165.0" width="26.76" height="8.0">Cadillac</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="149.992" y="165.0" width="35.36" height="8.0">Limousine</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="163.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$44.78</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="175.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="177.0" width="83.176" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="177.0" width="17.44" height="8.0">1940</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="177.0" width="15.8" height="8.0">Ford</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="139.032" y="177.0" width="22.776" height="8.0">Pickup</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="164.304" y="177.0" width="19.672" height="8.0">Truck</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="175.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="177.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="177.0" width="24.216" height="8.0">$93.34</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="187.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="189.0" width="90.656" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="189.0" width="17.44" height="8.0">1952</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="189.0" width="21.52" height="8.0">Alpine</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="144.752" y="189.0" width="26.768" height="8.0">Renault</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="174.016" y="189.0" width="17.44" height="8.0">1300</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="187.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="189.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="189.0" width="28.576" height="8.0">$235.73</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="199.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="199.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="199.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="201.0" width="103.864" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="201.0" width="17.44" height="8.0">1913</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="201.0" width="15.8" height="8.0">Ford</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="139.032" y="201.0" width="20.944" height="8.0">Model</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="162.472" y="201.0" width="4.664" height="8.0">T</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="169.632" y="201.0" width="35.032" height="8.0">Speedster</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="199.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="201.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="201.0" width="28.576" height="8.0">$121.57</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+            </block>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="211.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="211.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@3709544"/>
+              </canvas>
+            </block>
+          </block>
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+  </physical-page>
+  <physical-page page-x="0" page-y="0" page-width="612" page-height="792" margin-top="36" margin-left="54" margin-bottom="36" margin-right="54">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="720.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15117733"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-1440.0" width="504.0" height="2160.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Invoice Template"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-1440.0" width="504.0" height="2160.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="CUSTOMERNAME"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="CUSTOMER GROUP"/>
+        <block name="sub-group-body" type="AutoRenderBox" x="0.0" y="-1440.0" width="504.0" height="1663.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
+          <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="223.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="ORDERNUMBER"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="ORDER NUMBER GROUP"/>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="504.0" height="151.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@2180047"/>
+                <canvas type="CanvasRenderBox" x="0.0" y="139.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15074824"/>
+                  <p name="anonymousElement@8491555" type="ParagraphRenderBox" x="100.8" y="139.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8491555"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Product Description"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="139.0" width="77.229" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="139.0" width="30.213" height="9.0">Product</text>
+                      <spacer width="2.808" height="0.0" preserve="true"/>
+                      <text x="133.821" y="139.0" width="44.208" height="9.0">Description</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@10578129" type="ParagraphRenderBox" x="302.4" y="139.0" width="51.021" height="12.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@10578129"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Price/Unit"/>
+                    <line type="ParagraphPoolBox" x="314.883" y="139.0" width="38.538" height="9.0" color="black" font-face="Tahoma" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="314.883" y="139.0" width="38.538" height="9.0">Price/Unit</text>
+                    </line>
+                  </p>
+                </canvas>
+              </canvas>
+            </block>
+            <block name="group-data-body" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="72.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="151.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="151.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="153.0" width="135.784" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="153.0" width="17.44" height="8.0">2003</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="153.0" width="57.592" height="8.0">Harley-Davidson</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="180.824" y="153.0" width="19.128" height="8.0">Eagle</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="202.448" y="153.0" width="16.912" height="8.0">Drag</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="221.856" y="153.0" width="14.728" height="8.0">Bike</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="151.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="153.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="153.0" width="28.576" height="8.0">$174.29</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="163.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="163.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="165.0" width="56.776" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="165.0" width="24.36" height="8.0">P-51-D</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="127.656" y="165.0" width="29.92" height="8.0">Mustang</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="163.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="165.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="165.0" width="24.216" height="8.0">$69.27</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="175.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="175.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="177.0" width="114.744" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="177.0" width="17.44" height="8.0">1928</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="177.0" width="21.936" height="8.0">British</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="145.168" y="177.0" width="19.296" height="8.0">Royal</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="166.96" y="177.0" width="17.496" height="8.0">Navy</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="186.952" y="177.0" width="28.592" height="8.0">Airplane</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="175.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="177.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="177.0" width="24.216" height="8.0">$94.10</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="187.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="187.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="189.0" width="133.008" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="189.0" width="17.44" height="8.0">1936</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="189.0" width="22.488" height="8.0">Harley</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="145.72" y="189.0" width="32.2" height="8.0">Davidson</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="180.416" y="189.0" width="6.312" height="8.0">El</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="189.224" y="189.0" width="44.584" height="8.0">Knucklehead</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="187.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="328.584" y="189.0" width="24.216" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="328.584" y="189.0" width="24.216" height="8.0">$53.30</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="199.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="199.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="199.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="201.0" width="80.416" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="201.0" width="17.44" height="8.0">1996</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="201.0" width="17.504" height="8.0">Moto</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="140.736" y="201.0" width="18.72" height="8.0">Guzzi</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="161.952" y="201.0" width="19.264" height="8.0">1100i</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="199.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="201.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="201.0" width="28.576" height="8.0">$135.59</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+              <block name="Section-0" type="AutoRenderBox" x="0.0" y="211.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <canvas type="CanvasRenderBox" x="0.0" y="211.0" width="504.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@12638464"/>
+                  <p name="anonymousElement@8781004" type="ParagraphRenderBox" x="100.8" y="211.0" width="201.6" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@8781004"/>
+                    <line type="ParagraphPoolBox" x="100.8" y="213.0" width="72.36" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="100.8" y="213.0" width="17.44" height="8.0">1997</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="120.736" y="213.0" width="18.08" height="8.0">BMW</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="141.312" y="213.0" width="4.96" height="8.0">R</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="148.768" y="213.0" width="17.44" height="8.0">1100</text>
+                      <spacer width="2.496" height="0.0" preserve="true"/>
+                      <text x="168.704" y="213.0" width="4.456" height="8.0">S</text>
+                    </line>
+                  </p>
+                  <p name="anonymousElement@9944592" type="ParagraphRenderBox" x="302.4" y="211.0" width="50.4" height="12.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRICEEACH"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,###.00"/>
+                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousElement@9944592"/>
+                    <line type="ParagraphPoolBox" x="324.224" y="213.0" width="28.576" height="8.0" color="black" font-face="Tahoma" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <text x="324.224" y="213.0" width="28.576" height="8.0">$110.45</text>
+                    </line>
+                  </p>
+                </canvas>
+              </block>
+            </block>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="223.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="223.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@3709544"/>
+              </canvas>
+            </block>
+          </block>
+        </block>
+        <block name="Section-0" type="AutoRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <canvas type="CanvasRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="anonymousBand@15467362"/>
+          </canvas>
+        </block>
+      </block>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="720.0" width="504.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+  </physical-page>
+</layout-output>

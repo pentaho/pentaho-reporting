@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="5" row-count="7">
+    <cols>
+      <column width="60"/>
+      <column width="340"/>
+      <column width="200"/>
+      <column width="128"/>
+      <column width="47"/>
+    </cols>
+    <row height="25">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="logoiwprs200.gif"/>
+      </cell>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="MMM d, yyyy"/>
+        <line type="ParagraphPoolBox" x="492.344" y="4.5" width="82.656" height="16.0" color="black" font-face="Arial Unicode MS" font-size="16" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="492.344" y="4.5" width="24.88" height="16.0">Apr</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="521.656" y="4.5" width="13.328" height="16.0">7,</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="539.416" y="4.5" width="35.584" height="16.0">2011</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="MMM d, yyyy"/>
+        <line type="ParagraphPoolBox" x="685.36" y="4.5" width="89.64" height="16.0" color="black" font-face="Arial Unicode MS" font-size="16" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="685.36" y="4.5" width="24.88" height="16.0">Apr</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="714.672" y="4.5" width="13.328" height="16.0">7,</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="739.416" y="4.5" width="35.584" height="16.0">2011</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="18">
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="42">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="18">
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="4">
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="PF0"/>
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <cell row-span="2" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="pageXofY"/>
+        <line type="ParagraphPoolBox" x="338.45" y="4.0" width="51.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="338.45" y="4.0" width="23.34" height="10.0">Page</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="364.56" y="4.0" width="5.56" height="10.0">1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="372.89" y="4.0" width="8.33" height="10.0">of</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="383.99" y="4.0" width="5.56" height="10.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="4">
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

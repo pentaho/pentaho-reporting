@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<style xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/style/1.0"
+       xmlns:layout="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+  <page-definition horizontal-span="1" vertical-span="1"
+                   pageformat="A4" page-width="500" page-height="400"
+                   margin-top="72" margin-left="72" margin-bottom="72" margin-right="72"/>
+
+  <!--
+   Contains a list of style-sheets keyed by a unique name. Style-Sheets can have an optional parent
+   stylesheet to allow some simple form of inheritance. Global stylesheets defined here always inherit
+   all style-properties.
+
+   Attributes not set here indicate that the parent's value should be used. If the style has
+   no parent, then the default-stylesheet's value will be used instead.
+   -->
+  <style-rule name="styleName" parent="parent">
+    <band-styles computed-sheetname="blah" bookmark="bookmark"
+                 pagebreak-before="true" pagebreak-after="true" layout="block"/>
+    <page-band-styles repeat="true" display-on-first-page="true"
+                      display-on-last-page="false" sticky="false" fixed-position="60"/>
+    <common-styles anchor-name="true" href-target="http://localhost" href-title="Localhost" href-html-window="_BLANK"
+                   box-sizing="true" visible="true" widows="1" orpahans="1"
+                   overflow-x="true" overflow-y="true" avoid-page-break="false" vertical-alignment="1" alignment="1"/>
+    <content-styles draw-shape="true" fill-shape="false" scale="false" keep-aspect-ratio="true"
+                    fill-color="#ff00aa" stroke-weight="1" stroke-style="solid" color="#aa0033"
+                    dynamic-height="true" excel-cell-format="0.00"/>
+    <text-styles bold="true" embedded="true" font-face="Arial" font-smooth="always"
+                 encoding="iso-8895-1" font-size="10" italic="true" line-height="10"
+                 ellipsis=".." strikethrough="true" text-wrap="wrap"
+                 trim-text-content="true" underline="false" vertical-text-alignment="top"
+                 whitespace-collapse="collapse" word-spacing="10" max-letter-spacing="10"
+                 min-letter-spacing="10" optimum-letter-spacing="10"
+                 excel-text-wrapping="true"/>
+    <border-styles background-color="black" padding="10"
+                   padding-top="10" padding-left="10" padding-right="10" padding-bottom="10"
+                   border-color="blue" border-width="1" border-style="none"
+                   border-radius-width="1" border-radius-height="1"
+                   border-top-color="blue" border-left-color="blue"
+                   border-bottom-color="blue" border-right-color="blue" border-break-color="blue"
+                   border-top-style="none" border-left-style="none"
+                   border-bottom-style="none" border-right-style="none" border-break-style="none"
+                   border-top-width="1" border-left-width="1"
+                   border-bottom-width="1" border-right-width="1" border-break-width="1"
+                   border-top-right-radius-width="1" border-top-right-radius-height="1"
+                   border-top-left-radius-width="1" border-top-left-radius-height="1"
+                   border-bottom-right-radius-width="1" border-bottom-right-radius-height="1"
+                   border-bottom-left-radius-width="1" border-bottom-left-radius-height="1"/>
+    <spatial-styles x="1" y="1" width="1" height="1" min-width="1" max-width="1" min-height="1" max-height="1"/>
+  </style-rule>
+  
+  <layout:layout-processors/>
+
+  <layout:page-header/>
+
+  <layout:watermark/>
+
+  <layout:page-footer/>
+
+</style>

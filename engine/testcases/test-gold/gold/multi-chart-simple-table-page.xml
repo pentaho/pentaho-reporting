@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="2">
+    <cols>
+      <column width="451"/>
+    </cols>
+    <row height="10">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Printing muliple charts in a single report"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="174.96" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="33.88" height="10.0">Printing</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="36.65" y="0.0" width="31.67" height="10.0">muliple</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="71.09" y="0.0" width="27.22" height="10.0">charts</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="101.08" y="0.0" width="7.78" height="10.0">in</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="111.63" y="0.0" width="5.56" height="10.0">a</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="119.96" y="0.0" width="26.12" height="10.0">single</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="148.85" y="0.0" width="26.11" height="10.0">report</text>
+        </line>
+      </cell>
+    </row>
+    <row height="688">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

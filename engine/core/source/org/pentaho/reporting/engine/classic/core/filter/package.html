@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<body bgcolor="white">
+Support for the creation of 'filter chains' used to transform data objects into
+other forms for presentation on reports.
+<p>
+
+<h2>Basic flow of data in JFreeReport</h2>
+Three interfaces create the abstract way of the dataflow in JFreeReport.
+<p>
+
+<h3>DataSource</h3>
+By default all data used in the report's elements is read from DataSource
+implementations. DataSource defines a single function called getValue() which
+returns the current value of the datasource.
+DataSources are stateless, and implementations should not maintain a state of the
+process of querying data. It is not guaranteed that DataSources are in a particular
+order.
+If you need to maintain a state or get informed of events, you should implement a function
+instead of using the DataSource interface.
+<p>
+
+<h3>DataTarget</h3>
+A DataTarget is a container for a DataSource. A DataTarget queries the DataSource when
+it needs new data. All elements of the report implement the DataTarget interface and query
+its assigned DataSource whenever they need to print the data.
+DataTargets should not rely on the data type of the data returned by the DataSource. If
+they cannot handle the data returned by the DataSource, DataTargets should perform a controled
+way of errorhandling instead of just throwing exceptions.
+Some DataSources can return NullValues, so DataTargets will have to handle this case correctly.
+<p>
+
+<h3>DataFilter</h3>
+A DataFilter is the conjunction of DataSource and DataTarget. If a DataFilter is queried to
+return a value, the request if forwareded to the assigned DataSource of the filter. The returned
+value is then processed and the result is returned.
+<p>
+<h4>FormatFilter and FormatParser</h4>
+FormatFilter and FormatParsers are special implementations of the filter interface.
+Both of them are using an implementation of <code>java.text.Format</code> to perform parsing
+and formatting.
+Commonly used implementation are the SimpleDateFormat to format and parse java.util.Date
+objects and the DecimalFormat to parse and format Number instances.
+<p>
+  A FormatFilter implementation will try to create a string representation of an object using
+  the <code>parse</code> method of its assigned <code>java.text.Format</code> object. It is
+  guaranteed that a FormatFilter will return a default not null String in case that
+  getValue() returns invalid values. This default string is defined by setNullString (String).
+
+<p>
+  A FormatParser implementation will try to parse a String read from its DataSource into an
+  object. The actual work of parsing is delegated to the <code>java.text.Format</code>s
+  <code>parse</code> method. If the string was null or invalid, and parsing was unable to create
+  an object, a predefined value can be returned instead of <code>null</code>.
+
+<p>
+
+<h2>Common use cases of Filters</h2>
+<ul>
+  <li>label
+    <p><i>
+      The label prints predefined text in the report and is mostly used to name fields and columns
+    </i></p>
+
+    <p>The label uses a <code>StaticDataSource</code> to contain its datavalue. This DataSource is
+      contained in the default StringFilter of <code>org.pentaho.reporting.engine.classic.core.TextElement</code>.
+      The TextElements StringFilter will convert the static value into a string before it gets
+      printed in the report.
+    </p>
+  <li>number-field
+    <p><i>
+      The number field reads its value from the reports datasource and formats the value using a
+      decimal format, before the string representation is printed.
+    </i></p>
+
+    <p>The number-field uses a <code>ReportDataSource</code> to obtain values from the reports
+      datamodel. These values are fed into a NumberFormatFilter, where they get formated using the
+      <code>java.text.DecimalFormat</code>, resulting in a string. The TextElement will check the
+      returned value, as this is a string, nothing is done and the string is printed. <br>
+      In case the NumberFormat failed to format the value read from the source, it would return
+      a <code>null</code> value to the TextElement to be printed. Now the TextElement's StringFilter
+      will check the value, and return the predefined NullValue-String instead of <code>null</code>.
+    </p>
+  <li>date-function
+    <p><i>
+      The date function field queries the results of a function, and formats the function's return
+      value into a string. The contents of this string can be defined using a format pattern as
+      defined in <code>java.text.SimpleDateFormat</code>.
+    </i></p>
+
+    <p>The date-function uses a <code>FunctionDataSource</code> to obtain values from the reports
+      function collection. These values are fed into a SimpleDateFormatFilter, where they get formated
+      using the <code>java.text.SimpleDateFormat</code>, resulting in a string. The TextElement will
+      check the returned value, as this is a string, nothing is done and the string is printed. <br>
+      In case the DateFormat failed to format the value read from the source, it would return
+      a <code>null</code> value to the TextElement to be printed. Now the TextElement's StringFilter
+      will check the value, and return the predefined NullValue-String instead of <code>null</code>.
+    </p>
+</ul>
+<p>
+  These examples should give an idea what can be done with the filters. As filters can contain
+  other filters, you are free to create any combination and put them into the elements.
+</p>
+
+<h2>DataRowConnectable</h2>
+
+<p>
+  Elements are connected to the Report's DataSources using a DataRow as connector. The DataRow unifies
+  the access to functions, expressions and the tablemodel. DataSources that need to access one of these
+  sources should use the DataRowDataSource as primary datasource. The specialized sources for accessing
+  Functions and the Reports TableModel should not be used.
+</p>
+</body>
+</html>

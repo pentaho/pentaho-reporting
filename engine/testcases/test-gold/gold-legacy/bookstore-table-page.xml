@@ -1,0 +1,433 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="7" row-count="17">
+    <cols>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="50"/>
+      <column width="50"/>
+      <column width="55"/>
+      <column width="200"/>
+    </cols>
+    <row height="12">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="GroupHeader"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Line1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Salingers Bookstore"/>
+        <line type="ParagraphPoolBox" x="0.0" y="12.0" width="98.384" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="12.0" width="45.837" height="11.0">Salingers</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="48.884" y="12.0" width="49.5" height="11.0">Bookstore</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="24">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Line2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="19a Hollow Road"/>
+        <line type="ParagraphPoolBox" x="0.0" y="24.0" width="83.732" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="24.0" width="18.348" height="11.0">19a</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="21.395" y="24.0" width="33.0" height="11.0">Hollow</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="57.442" y="24.0" width="26.29" height="11.0">Road</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="90">
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Line3"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="9999 Boston"/>
+        <line type="ParagraphPoolBox" x="0.0" y="48.0" width="61.732" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="48.0" width="24.464" height="11.0">9999</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="27.511" y="48.0" width="34.221" height="11.0">Boston</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="logo"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="butterfly.wmf"/>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="86">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="66">
+      <cell row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Invoice for your order from $(report.date, date,EEE, MMM d, yyyy)"/>
+        <line type="ParagraphPoolBox" x="241.182" y="224.0" width="213.818" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="241.182" y="224.0" width="34.837" height="11.0">Invoice</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="279.066" y="224.0" width="12.826" height="11.0">for</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="294.939" y="224.0" width="21.395" height="11.0">your</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="319.381" y="224.0" width="25.674" height="11.0">order</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="348.102" y="224.0" width="21.989" height="11.0">from</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="373.138" y="224.0" width="21.989" height="11.0">Thu,</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="398.174" y="224.0" width="17.105" height="11.0">Apr</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="418.326" y="224.0" width="9.163" height="11.0">7,</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="430.536" y="224.0" width="24.464" height="11.0">2011</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="24">
+      <cell row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Customer"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Dear customer,"/>
+        <line type="ParagraphPoolBox" x="0.0" y="290.0" width="75.152" height="11.0" color="black" font-face="Arial Unicode MS" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="290.0" width="23.837" height="11.0">Dear</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="26.884" y="290.0" width="48.268" height="11.0">customer,</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="26">
+      <cell row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Received"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="We received your order and will deliver the following articles to your address:"/>
+        <line type="ParagraphPoolBox" x="0.0" y="314.0" width="373.318" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="314.0" width="16.489" height="11.0">We</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="19.536" y="314.0" width="41.569" height="11.0">received</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="64.152" y="314.0" width="21.395" height="11.0">your</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="88.594" y="314.0" width="25.674" height="11.0">order</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="117.315" y="314.0" width="18.348" height="11.0">and</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="138.71" y="314.0" width="15.268" height="11.0">will</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="157.025" y="314.0" width="32.395" height="11.0">deliver</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="192.467" y="314.0" width="15.279" height="11.0">the</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="210.793" y="314.0" width="42.779" height="11.0">following</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="256.619" y="314.0" width="34.826" height="11.0">articles</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="294.492" y="314.0" width="9.163" height="11.0">to</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="306.702" y="314.0" width="21.395" height="11.0">your</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="331.144" y="314.0" width="42.174" height="11.0">address:</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="13">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="LCode"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Code"/>
+        <line type="ParagraphPoolBox" x="0.0" y="340.0" width="26.29" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="340.0" width="26.29" height="11.0">Code</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="LProd"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Product"/>
+        <line type="ParagraphPoolBox" x="100.0" y="340.0" width="37.884" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="340.0" width="37.884" height="11.0">Product</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="LCount"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Count"/>
+        <line type="ParagraphPoolBox" x="300.0" y="340.0" width="29.337" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="340.0" width="29.337" height="11.0">Count</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="LPrice"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Price"/>
+        <line type="ParagraphPoolBox" x="350.0" y="340.0" width="25.047" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="350.0" y="340.0" width="25.047" height="11.0">Price</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="LTotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total"/>
+        <line type="ParagraphPoolBox" x="400.0" y="340.0" width="24.431" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="400.0" y="340.0" width="24.431" height="11.0">Total</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="2">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <empty-cell background-color="#7f7fff">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="FBackground"/>
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <cell background-color="#7f7fff" row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="FLTotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total Sum of"/>
+        <line type="ParagraphPoolBox" x="200.0" y="375.0" width="67.956" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="200.0" y="375.0" width="26.652" height="12.0">Total</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="229.976" y="375.0" width="24.66" height="12.0">Sum</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="257.96" y="375.0" width="9.996" height="12.0">of</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="totalsum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$ #,##0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="FTotal"/>
+        <line type="ParagraphPoolBox" x="400.0" y="375.0" width="33.336" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="400.0" y="375.0" width="6.672" height="12.0">$</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="409.996" y="375.0" width="23.34" height="12.0">0.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+    </row>
+    <row height="3">
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="47">
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="#7f7fff">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="96">
+      <cell background-color="#7f7fff" row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="FLThanks"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="We thank you for your order and hope to see you soon again. Please pay your invoice within the next 10 days.&#x000a;&#x000a;Yours sincerely,&#x000a;&#x000a;&#x000a;&#x000a;John W. Who, Salesman"/>
+        <line type="ParagraphPoolBox" x="0.0" y="439.0" width="455.0" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="439.0" width="17.988" height="12.0">We</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="21.312" y="439.0" width="29.34" height="12.0">thank</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="53.976" y="439.0" width="19.344" height="12.0">you</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="76.644" y="439.0" width="13.992" height="12.0">for</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="93.96" y="439.0" width="23.34" height="12.0">your</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="120.624" y="439.0" width="28.008" height="12.0">order</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="151.956" y="439.0" width="20.016" height="12.0">and</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="175.296" y="439.0" width="26.688" height="12.0">hope</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="205.308" y="439.0" width="9.996" height="12.0">to</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="218.628" y="439.0" width="19.344" height="12.0">see</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="241.296" y="439.0" width="19.344" height="12.0">you</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="263.964" y="439.0" width="26.016" height="12.0">soon</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="293.304" y="439.0" width="32.676" height="12.0">again.</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="329.304" y="439.0" width="36.672" height="12.0">Please</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="369.3" y="439.0" width="19.344" height="12.0">pay</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="391.968" y="439.0" width="23.34" height="12.0">your</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="451.0" width="165.972" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="451.0" width="37.344" height="12.0">invoice</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="40.668" y="451.0" width="30.66" height="12.0">within</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="74.652" y="451.0" width="16.668" height="12.0">the</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="94.644" y="451.0" width="22.668" height="12.0">next</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="120.636" y="451.0" width="13.344" height="12.0">10</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="137.304" y="451.0" width="28.668" height="12.0">days.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="463.0" width="0.0" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="463.0" width="0.0" height="12.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="475.0" width="85.32" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="475.0" width="31.332" height="12.0">Yours</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="34.656" y="475.0" width="50.664" height="12.0">sincerely,</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="487.0" width="0.0" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="487.0" width="0.0" height="12.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="499.0" width="0.0" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="499.0" width="0.0" height="12.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="511.0" width="0.0" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="511.0" width="0.0" height="12.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="523.0" width="131.952" height="12.0" color="black" font-face="Arial Unicode MS" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="523.0" width="26.016" height="12.0">John</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="29.34" y="523.0" width="14.64" height="12.0">W.</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="47.304" y="523.0" width="27.984" height="12.0">Who,</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="78.612" y="523.0" width="53.34" height="12.0">Salesman</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="167">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

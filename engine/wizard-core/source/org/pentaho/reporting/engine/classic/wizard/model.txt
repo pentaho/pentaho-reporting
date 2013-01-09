@@ -1,0 +1,41 @@
+The wizard-definitions is a extra object-structure, described via
+an own API.
+
+The wizard is executed as a report-customizer and runs on every
+start of a pagination-run before the report is executed.
+
+The data for the wizard and the reporting run is defined on
+the report itself using the standard data-factory interface.
+
+The wizard only modifies empty bands or bands marked as
+modifiable by the wizard. The content on these bands will
+be replaced during the processing.
+
+Groups are generated in relation to any existing grouping.
+Groups are keyed by name, so any wizard-group tries to reuse
+existing groups.
+
+Groups are evaluated in the order they are declared in the
+wizard. A group is matched only against subgroups.
+
+Reports are either relational or crosstab. The wizard definition
+overrides the report-template definition.
+
+If a crosstab template is used for relational reports, the
+crosstab on the template is removed.
+
+Groups can have personalities:
+* Relational
+* Row-Axis
+* Column-Axis
+
+In the wizard, Grouping always happens on a single field.
+
+The wizard does not try to reuse field-computations. It always
+creates own expressions and functions.
+
+The wizard reuses the Row-Banding definition, if the report defines
+one.
+
+
+ 

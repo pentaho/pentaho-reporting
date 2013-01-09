@@ -1,0 +1,81 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Sports-Council Demo</title>
+</head>
+
+<body>
+<h2>
+  Sportscouncil demo: Printing complex data structures
+</h2>
+
+<p>
+  This report prints an annual report about the sport activities of an
+  University.
+</p>
+
+<h3>
+  The Data Model
+</h3>
+
+<p>
+  The University in question has a sports council, whose members are the
+  various organizations built around the sport activities of the university.
+</p>
+
+<p>
+  Each of these organization has one or more su-organizations to perform their
+  tasks. This report provides an overview about the events organized by each
+  (sub)organization and their member structure.
+</p>
+
+<p>
+  Each organization also has a designated leader, who is responsible for the
+  activities of the organization.
+</p>
+
+<p>
+  As a report usually contains more than one organization, the sport
+  organizations have a unique key, which can be queried through the 'orgID'
+  column.
+</p>
+
+<p>
+  It was a requirement for the particular report, that for each organization
+  the organization's leaders are printed in a separate section, followed by the
+  organization's event and member statistics.
+</p>
+
+<p>
+  The data model follows this requirement and therefore contains two separate
+  lists for the leader records and the organization records. Each row in the
+  tablemodel carries the record type in the 'recordID' column.
+</p>
+
+<h3>General structure of the report</h3>
+
+<p>
+  The report consists of two group levels and specialized itembands for each
+  record type.
+</p>
+
+<p>
+  The first grouping level splits the report data source into separate
+  organizations. The 'organization' group's header prints the standard
+  information about the organizations, like the address, who's in charge etc.
+</p>
+
+<p>
+  The second group level splits the organization rows into leader-records and
+  organization records. An HideElementByNameFunction is used to control the
+  visibility of the bands and to show only bands with a name equal to the
+  record type. Note that the table model automaticly keeps the various record
+  types together, so that exactly one group is instantiated for each record
+  type.
+</p>
+
+</body>
+</html>

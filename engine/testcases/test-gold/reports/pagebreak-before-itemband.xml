@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report name="labels" width="242" height="335"
+        orientation="portrait"
+        topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+
+ <items pagebreak-before-print="true">
+   <label x="0" y="0" width="100%" height="12">E-gold</label>
+  </items>
+</report>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<!-- Incomplete, create a real demo for that topic -->
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="i18n Demo" pageformat="A4">
+
+  <configuration>
+    <!--
+    This defines the default resource bundle to be used in the report. Fields are
+    free to override this with their own bundle specification, if needed.
+    -->
+    <property name="org.pentaho.reporting.engine.classic.core.ResourceBundle">org.pentaho.reporting.engine.classic.demo.ancient.demo.internationalisation.i18ndemo</property>
+  </configuration>
+
+  <!-- REPORT HEADER -->
+  <!-- This band appears once at the beginning of the report. -->
+  <reportheader height="35"
+                fontname="SansSerif" fontstyle="plain" fontsize="10">
+
+    <rectangle x="0" y="0" width="100%" height="30"
+               color="#CCFFCC" weight="0"/>
+
+    <rectangle x="0" y="0" width="100%" height="30"
+               color="#CCCCCC" weight="0" draw="true" fill="false"/>
+
+    <resource-label fontstyle="bold" fontsize="18"
+                    x="0" y="7" width="100%" height="18"
+                    alignment="center"
+        >report.title</resource-label>
+
+    <label name="RH1" x="0" y="30" width="100%" height="30"
+           fontname="Arial Unicode MS" dynamic="true"
+           vertical-alignment="bottom" alignment="center"
+        >JFreeReport fully supports Unicode, as long as the used font provides the glyphs.
+Sample Thai text: &#3648;&#3614;&#3636;&#3656;&#3617;, &#3621;&#3641;&#3585;&#3588;&#3657;&#3634;</label>
+
+  </reportheader>
+
+  <pageheader>
+    <date-field x="0" y="0" width="100%" height="18"
+                vertical-alignment="middle" alignment="right" format="EEE, d-MMM-yyyy" fieldname="report.date"/>
+  </pageheader>
+
+  <!-- THE ITEM BAND -->
+  <!-- This band is printed once for each row of data in the TableModel. -->
+  <items height="0"
+         fontname="SansSerif" fontstyle="plain" fontsize="9">
+
+    <resource-field x="0" y="7" width="25%" height="10" alignment="left" fieldname="Data"/>
+
+    <number-field x="25%" y="2" width="15%" height="10" alignment="center"
+                  fieldname="A" format="0.0"/>
+
+    <number-field x="40%" y="2" width="15%" height="10" alignment="center"
+                  fieldname="B" format="0.0"/>
+
+    <number-field x="55%" y="2" width="15%" height="10" alignment="center"
+                  fieldname="Percentage" format="0.000%"/>
+
+    <message-field x="70%" y="2" width="30%" height="10" alignment="left"
+        >$(C,choice,-10000#{0,number,'0.###E0'}|-10000&lt;{0,number,'0.####'}|10000#{0,number,'0.###E0'})</message-field>
+
+  </items>
+
+  <reportfooter>
+    <resource-message x="0" y="0" width="100%" height="18" vertical-alignment="middle"
+                      alignment="center" nullstring="">data.messagefield.format</resource-message>
+  </reportfooter>
+
+  <!-- FUNCTIONS -->
+  <!-- Declares the functions used in this report. -->
+  <functions>
+
+    <expression name="Percentage"
+                class="org.pentaho.reporting.engine.classic.core.function.PercentageExpression">
+      <properties>
+        <property name="dividend">A</property>
+        <property name="divisor">B</property>
+      </properties>
+    </expression>
+
+    <property-ref name="report.date"/>
+    <property-ref name="report.name"/>
+  </functions>
+
+
+</report>

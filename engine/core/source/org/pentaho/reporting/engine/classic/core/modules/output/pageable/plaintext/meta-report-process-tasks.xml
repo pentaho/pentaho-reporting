@@ -1,0 +1,10 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <process-task
+      name="pageable/text"
+      class="org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextReportProcessTask"
+      bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextReportProcessTaskBundle"
+      expert="false" hidden="true" preferred="false"
+      configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.">
+    <alias>txt</alias>
+  </process-task>
+</meta-data>

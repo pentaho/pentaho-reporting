@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="3">
+    <cols>
+      <column width="158"/>
+      <column width="540"/>
+    </cols>
+    <row height="18">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="AP Letter"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="test"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="22">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="label1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Limited Partnerships 0 - 5 years Options 0 - 5 years Futures 0 - 5 years Certificates of Deposit 0 - 5 years Partnership 0 - 5 years Mutual Funds 0 - 5 years Bonds 0 - 5 years Stocks 0 - 5 years"/>
+        <line type="ParagraphPoolBox" x="158.0" y="30.0" width="540.0" height="11.0" color="black" font-face="Serif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="158.0" y="30.0" width="35.442" height="11.0">Limited</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="196.489" y="30.0" width="61.721" height="11.0">Partnerships</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="261.257" y="30.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="270.42" y="30.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="277.13" y="30.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="286.293" y="30.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="316.235" y="30.0" width="37.884" height="11.0">Options</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="357.166" y="30.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="366.329" y="30.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="373.039" y="30.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="382.202" y="30.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="412.144" y="30.0" width="37.268" height="11.0">Futures</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="452.459" y="30.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="461.622" y="30.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="468.332" y="30.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="477.495" y="30.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="543.047" y="30.0" width="54.978" height="11.0">Certificates</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="601.072" y="30.0" width="9.163" height="11.0">of</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="613.282" y="30.0" width="37.279" height="11.0">Deposit</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="653.608" y="30.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="662.771" y="30.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="669.481" y="30.0" width="6.116" height="11.0">5</text>
+        </line>
+        <line type="ParagraphPoolBox" x="158.0" y="41.0" width="473.014" height="11.0" color="black" font-face="Serif" font-size="11" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="158.0" y="41.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="187.942" y="41.0" width="56.221" height="11.0">Partnership</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="247.21" y="41.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="256.373" y="41.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="263.083" y="41.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="272.246" y="41.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="302.188" y="41.0" width="33.0" height="11.0">Mutual</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="338.235" y="41.0" width="30.558" height="11.0">Funds</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="371.84" y="41.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="381.003" y="41.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="387.713" y="41.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="396.876" y="41.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="426.818" y="41.0" width="31.174" height="11.0">Bonds</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="461.039" y="41.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="470.202" y="41.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="476.912" y="41.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="486.075" y="41.0" width="26.895" height="11.0">years</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="543.047" y="41.0" width="32.989" height="11.0">Stocks</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="579.083" y="41.0" width="6.116" height="11.0">0</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="588.246" y="41.0" width="3.663" height="11.0">-</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="594.956" y="41.0" width="6.116" height="11.0">5</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="604.119" y="41.0" width="26.895" height="11.0">years</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

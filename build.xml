@@ -1,0 +1,87 @@
+<project name="pentaho-reporting-dev-support" default="all" basedir=".">
+
+  <description>
+    This build file is used to create the API project
+    and works with the build-res/subfloor.xml file.
+  </description>
+
+  <property file="override.properties"
+            description="Properties customized for your development environment belong in this file.  This file will never be checked into the SCM." />
+  <!-- Define the default location of the common build file -->
+  <property name="common.build.file" value="./build-res/subfloor.xml"
+            description="This is the location of the standardized build-res/subfloor.xml file"/>
+
+  <property name="project.dir" value="."/>
+  <property name="project.revision" value="ignore"/>
+  <property name="ivy.artifact.group" value="ignore"/>
+  <property name="ivy.artifact.id" value="ignore"/>
+  <property name="impl.title" value="ignore"/>
+  <property name="impl.productID" value="ignore"/>
+
+  <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
+  <import file="${common.build.file}"/>
+
+
+
+  <target name="project-resolve" description="Run a global 'ANT RESOLVE' on all project modules.">
+    <ant dir="${project.dir}/libraries/libbase" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libpixie" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libloader" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libxml" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/librepository" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libdocbundle" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libfonts" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libformula" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libformat" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libpensol" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libswing" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libsparkline" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libformula-ui" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/libserializer" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/libraries/configuration-editor" antfile="build.xml" target="resolve" inheritAll="false"/>
+
+    <ant dir="${project.dir}/engine/core" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-cda" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-charting" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-docsupport" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-drilldown" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-hibernate" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-kettle" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-mondrian" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-olap4j" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-pentaho-metadata" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-xpath" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-xquery" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-toc" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-scripting" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-sampledata" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/legacy-charts" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/legacy-functions" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/extensions-reportdesigner-parser" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/samples" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/wizard-core" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/demo" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/engine/testcases" antfile="build.xml" target="resolve" inheritAll="false"/>
+
+    <ant dir="${project.dir}/designer/wizard-xul" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-cda" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-external" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-hibernate" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-jdbc" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-kettle" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-mondrian" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-olap4j" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-pmd" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-reflection" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-scriptable" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-table" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/datasource-editor-xpath" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer-extension-legacy-charts" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer-extension-pentaho" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer-extension-toc" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer-extension-wizard" antfile="build.xml" target="resolve" inheritAll="false"/>
+    <ant dir="${project.dir}/designer/report-designer-assembly" antfile="build.xml" target="resolve" inheritAll="false"/>
+  </target>
+</project>

@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="3" row-count="5">
+    <cols>
+      <column width="373.5"/>
+      <column width="747"/>
+      <column width="373.5"/>
+    </cols>
+    <row height="60">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Multipage report"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="18">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="This is printed onnnnnn both pages."/>
+        <line type="ParagraphPoolBox" x="682.03" y="60.0" width="158.89" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="682.03" y="60.0" width="18.88" height="10.0">This</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="703.68" y="60.0" width="7.22" height="10.0">is</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="713.67" y="60.0" width="30.56" height="10.0">printed</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="747.0" y="60.0" width="38.92" height="10.0">onnnnnn</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="788.69" y="60.0" width="19.45" height="10.0">both</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="810.91" y="60.0" width="30.01" height="10.0">pages.</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <empty-cell background-color="blue">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="PH0"/>
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="yellow">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="PH0"/>
+      </empty-cell>
+    </row>
+    <row height="200">
+      <empty-cell background-color="blue">
+      </empty-cell>
+      <cell background-color="#afafaf" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="earth.png"/>
+      </cell>
+      <empty-cell background-color="yellow">
+      </empty-cell>
+    </row>
+    <row height="252">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+  <table col-count="1" row-count="1">
+    <cols>
+      <column width="1494"/>
+    </cols>
+    <row height="545">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="To protect your rights, we need to make restrictions that forbid distributors to deny you these rights or to ask you to surrender these rights.  These restrictions translate to certain responsibilities for you if you distribute copies of the library or if you modify it."/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="1121.86" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="11.66" height="10.0">To</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="14.43" y="0.0" width="30.55" height="10.0">protect</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="47.75" y="0.0" width="19.45" height="10.0">your</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="69.97" y="0.0" width="27.21" height="10.0">rights,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="99.95" y="0.0" width="12.78" height="10.0">we</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="115.5" y="0.0" width="22.24" height="10.0">need</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="140.51" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="151.61" y="0.0" width="24.45" height="10.0">make</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="178.83" y="0.0" width="48.32" height="10.0">restrictions</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="229.92" y="0.0" width="16.66" height="10.0">that</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="249.35" y="0.0" width="25.0" height="10.0">forbid</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="277.12" y="0.0" width="48.88" height="10.0">distributors</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="328.77" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="339.87" y="0.0" width="21.68" height="10.0">deny</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="364.32" y="0.0" width="16.12" height="10.0">you</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="383.21" y="0.0" width="24.45" height="10.0">these</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="410.43" y="0.0" width="24.44" height="10.0">rights</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="437.64" y="0.0" width="8.89" height="10.0">or</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="449.3" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="460.4" y="0.0" width="15.56" height="10.0">ask</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="478.73" y="0.0" width="16.12" height="10.0">you</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="497.62" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="508.72" y="0.0" width="42.79" height="10.0">surrender</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="554.28" y="0.0" width="24.45" height="10.0">these</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="581.5" y="0.0" width="27.21" height="10.0">rights.</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="614.25" y="0.0" width="27.78" height="10.0">These</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="644.8" y="0.0" width="48.32" height="10.0">restrictions</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="695.89" y="0.0" width="38.33" height="10.0">translate</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="736.99" y="0.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="749.77" y="0.0" width="30.0" height="10.0">certain</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="782.54" y="0.0" width="65.56" height="10.0">responsibilities</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="850.87" y="0.0" width="11.66" height="10.0">for</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="865.3" y="0.0" width="16.12" height="10.0">you</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="884.19" y="0.0" width="4.99" height="10.0">if</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="891.95" y="0.0" width="16.12" height="10.0">you</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="910.84" y="0.0" width="40.55" height="10.0">distribute</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="954.16" y="0.0" width="28.9" height="10.0">copies</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="985.83" y="0.0" width="8.33" height="10.0">of</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="996.93" y="0.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1013.59" y="0.0" width="27.22" height="10.0">library</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1043.58" y="0.0" width="8.89" height="10.0">or</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1055.24" y="0.0" width="4.99" height="10.0">if</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1063.0" y="0.0" width="16.12" height="10.0">you</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1081.89" y="0.0" width="29.44" height="10.0">modify</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="1114.1" y="0.0" width="7.76" height="10.0">it.</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

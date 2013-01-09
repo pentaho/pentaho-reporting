@@ -1,0 +1,245 @@
+/**
+ * This file contains the inital stylesheet properties as defined
+ * by the CSS3 standard. The style-rules here do not get matched,
+ * so no matter what selector you put in, they always get matched
+ * as *ANY_NODE* selector.
+ */
+
+/** BOX- module */
+* {
+  border-top-width: medium;
+  border-bottom-width: medium;
+  border-left-width: medium;
+  border-right-width: medium; /* new in CSS3 */
+  box-sizing: content-box;
+  box-width: auto;
+  box-height: auto;
+
+  clear: none;
+  clear-after: none;
+
+  crop: auto;
+  display: inline;
+  display-model: inline-inside;
+  display-role: inline;
+  fit: fill;
+  fit-position: 0% 0%;
+  float: none;
+  float-displace: line;
+  indent-edge-reset: none;
+
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  margin-right: 0;
+/*
+  marquee-direction: auto;
+  marquee-repetition: infinite;
+  marquee-speed: normal;
+  marquee-style: alternate;
+*/
+  max-width: auto;
+  max-height: auto;
+  min-width: 0;
+  min-height: 0;
+
+  overflow: visible;
+  overflow-clip: auto;
+  overflow-x: visible;
+  overflow-y: visible;
+
+  padding-top: 0;
+  padding-left: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+
+  width: auto;
+  height: auto;
+
+
+/** Color Module */
+
+  color: black;
+  opacity: 1;
+  rendering-intent: auto;
+
+
+/** Background Module */
+
+  background-attachment: scroll;
+  background-break: continuous;
+  background-clip: border;
+  background-color: transparent;
+  background-image: none;
+  background-origin: padding;
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+
+  background-size: auto;
+  border-break: none;
+  border-image: none;
+  border-top-color: currentColor;
+  border-left-color: currentColor;
+  border-bottom-color: currentColor;
+  border-right-color: currentColor;
+
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+
+  border-top-style: none;
+  border-left-style: none;
+  border-bottom-style: none;
+  border-right-style: none;
+
+  border-top-width: medium;
+  border-left-width: medium;
+  border-bottom-width: medium;
+  border-right-width: medium;
+
+  box-shadow: none;
+
+
+/** Line-Box Module */
+
+/* this has some meaning in the table-module, so it must be defined. */
+  vertical-align: baseline;
+
+  alignment-adjust: auto;
+  alignment-baseline: baseline;
+  baseline-shift: baseline;
+  dominant-baseline: auto;
+  drop-initial-after-adjust: text-after-edge;
+  drop-initial-after-align: baseline;
+  drop-initial-before-adjust: text-before-edge;
+  drop-initial-before-align: caps-height;
+  drop-initial-size: auto;
+  drop-initial-value: initial;
+  inline-box-align: last;
+  line-height: normal;
+  line-stacking-ruby: exclude-ruby;
+  line-stacking-shift: consider-shifts;
+  line-stacking-strategy: inline-line-height;
+  text-height: auto;
+
+
+/** text Module */
+/** The following properties are defined in the 2003-CR */
+  block-progression: tb;
+  direction: ltr;
+  glyph-orientation-horizontal: auto;
+  glyph-orientation-vertical: auto;
+  hanging-punctuation: none;
+  kerning-mode: none;
+  kerning-pair-threshold: auto;
+  letter-spacing: normal;
+  line-grid-mode: none;
+  line-grid-progression: line-height;
+  punctuation-trim: none;
+  text-autospace: none;
+  text-blink: none;
+  text-combine: none;
+  text-indent: 0;
+  text-justify: auto;
+  text-justify-trim: punctuation;
+  text-kashida-space: 0%;
+  text-line-through-color: auto;
+  text-line-through-mode: continuous;
+  text-line-through-style: none;
+  text-line-through-width: auto;
+  text-overflow-ellipsis: "...";
+  text-overflow-mode: clip;
+  text-overline-color: auto;
+  text-overline-mode: continuous;
+  text-overline-style: none;
+  text-overline-width: auto;
+  text-script: auto; /* text-shadow: none; is not yet implemented nor defined. */
+  text-transform: none;
+  text-underline-color: auto;
+  text-underline-mode: continuous;
+  text-underline-style: none;
+  text-underline-width: auto;
+  unicode-bidi: normal;
+  white-space: normal;
+  word-spacing: normal; /** These properties are defined in the 2005-WD */
+  white-space-collapse: collapse;
+  word-break: normal;
+  hyphenate: auto;
+  text-wrap: normal;
+  word-wrap: normal;
+  text-align: start;
+  text-align-last: start;
+  text-justify: auto;
+  word-spacing: normal;
+  letter-spacing: normal;
+
+/** Fonts-Module */
+  font-effect: none;
+  font-emphasize-position: before;
+  font-emphasize-style: none;
+  font-family: serif;
+  font-size: medium;
+  font-size-adjust: none;
+  font-smooth: auto;
+  font-stretch: normal;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+
+  max-font-size: auto;
+  min-font-size: auto;
+
+
+/** Content-Module */
+  content: normal;
+  counter-increment: none;
+  counter-reset: none;
+  move-to: normal;
+  quotes: none;
+
+
+/** List-Module */
+  list-style-type: disc;
+  list-style-image: none;
+  list-style-position: outside;
+
+
+/** Page Module */
+
+  size: auto;
+  page-break-before: auto;
+  page-break-after: auto;
+  page-break-inside: auto;
+  page: auto;
+  page-policy: start;
+  orphans: 2;
+  widows: 2;
+  image-orientation: auto;
+
+
+/** UI Module is not included */
+/** Table Module is not included */
+
+/** Column Module */
+  column-width-policy: flexible;
+  column-space-distribution: end;
+  column-count: auto;
+  column-width: auto;
+  column-gap: 0;
+  column-rule-color: auto;
+  column-rule-style: none;
+  column-rule-width: medium;
+  column-span: none;
+
+
+/** HyperLink Module */
+
+  target-name: current;
+  target-new: window;
+  target-position: above;
+}
+
+@page {
+
+}

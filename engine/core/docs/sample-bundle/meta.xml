@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document-meta
+    xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:meta="urn:oasis:names:tc:opendocument:xmlns:meta:1.0"
+    office:version="1.0">
+ <office:meta>
+  <meta:generator>Pentaho Report Designer 1.6.0b1234</meta:generator>
+  <meta:creation-date>2007-04-10T17:05:18</meta:creation-date>
+  <dc:date>2007-04-10T17:10:21</dc:date>
+  <dc:language>de-DE</dc:language>
+  <meta:editing-cycles>3</meta:editing-cycles>
+  <meta:editing-duration>PT5M3S</meta:editing-duration>
+  <meta:user-defined meta:name="Info 1"/>
+  <meta:user-defined meta:name="Info 2"/>
+  <meta:user-defined meta:name="Info 3"/>
+  <meta:user-defined meta:name="Info 4"/>
+  <meta:document-statistic meta:table-count="0" meta:image-count="0" meta:object-count="0" meta:page-count="2"
+                           meta:paragraph-count="4" meta:word-count="0" meta:character-count="12"/>
+ </office:meta>
+</office:document-meta>

@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            xmlns="http://reporting.pentaho.org/namespaces/datasources/olap4j"
+            targetNamespace="http://reporting.pentaho.org/namespaces/datasources/olap4j">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of named Kettle-Datasource definitions in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.10 and 1.9 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+
+  <xsd:element name="legacy-banded-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a banded MDX query. The MDX result will be normalized
+        into a plain table so that banded reports can work on it. However, the normalizing process
+        only works for two-dimensional queries and behaves strange on ragged hierachies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="denormalized-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a crosstabbed MDX query. The MDX result will be converted into
+        a denormalized data stream over the fact table, which makes this result highly unsuitable for banded
+        reports but perfect for crosstabbed reports.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="banded-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a banded MDX query. The MDX result will be normalized
+        into a plain table so that banded reports can work on it.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+
+  <xsd:element name="simple-legacy-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a banded MDX query. The MDX result will be normalized
+        into a plain table so that banded reports can work on it. However, the normalizing process
+        only works for two-dimensional queries and behaves strange on ragged hierachies.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="simple-denormalized-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a crosstabbed MDX query. The MDX result will be converted into
+        a denormalized data stream over the fact table, which makes this result highly unsuitable for banded
+        reports but perfect for crosstabbed reports.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="simple-banded-mdx-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        Contains the datasource definition for a banded MDX query. The MDX result will be normalized
+        into a plain table so that banded reports can work on it.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:choice>
+              <xsd:element name="connection" type="driverConnectionType" minOccurs="1" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiConnectionType" minOccurs="1" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="role-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-user-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="jdbc-password-field" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="jndiConnectionType">
+    <xsd:sequence>
+      <xsd:element name="path" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="driverConnectionType">
+    <xsd:sequence>
+      <xsd:element name="driver" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="properties" type="propertiesType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="propertiesType">
+    <xsd:sequence>
+      <xsd:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="propertyType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="queryType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

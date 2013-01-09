@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The layout-file describes the report-layout.
+
+  The pageformat and page-margins are defined in the global style file. Although a pageformat defines hard
+  boundaries for the layout (in terms of available space), this file here only holds element definitions.
+
+  Each xml-element in the file is a pluggable element definition. 
+ -->
+
+<layout xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0"
+        xmlns:core="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+        xmlns:style="http://reporting.pentaho.org/namespaces/engine/classic/bundle/style/1.0">
+
+  <preprocessor class="org.pentaho.reporting.engine.classic.core.AutoGeneratorPreProcessor">
+    <property name="wizard.config">Blah</property>
+  </preprocessor>
+
+  <layout-processors>
+    <expression/>
+  </layout-processors>
+
+  <report-header>
+    <root-level-content>
+      <style:element-style/>
+    </root-level-content>
+    <sub-report href="subreport1/content.xml">
+      <input-parameter master-fieldname="name" detail-fieldname="name"/> 
+      <output-parameter master-fieldname="sum" detail-fieldname="sum"/> 
+    </sub-report>
+  </report-header>
+
+  <group name="myGroup">
+    <fields>
+      <field>myField1</field>
+    </fields>
+
+    <group-header>
+      <style:element-style/>
+    </group-header>
+
+    <group-body>
+      <group name="mySubGroup">
+        <fields>
+          <field>myField2</field>
+        </fields>
+
+        <group-header>
+          <style:element-style/>
+        </group-header>
+
+        <data-body>
+          <details>
+            <style:element-style/>
+          </details>
+
+          <no-data>
+            <style:element-style/>
+          </no-data>
+        </data-body>
+        
+        <group-footer>
+          <style:element-style/>
+        </group-footer>
+      </group>
+    </group-body>
+
+    <group-footer>
+      <style:element-style/>
+    </group-footer>
+  </group>
+
+  <report-footer>
+    <style:element-style/>
+  </report-footer>
+
+</layout>

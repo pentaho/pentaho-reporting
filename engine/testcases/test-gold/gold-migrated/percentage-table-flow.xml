@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="3">
+    <cols>
+      <column width="451"/>
+    </cols>
+    <row height="7">
+      <empty-cell background-color="#ccffcc">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Percentage Demo"/>
+      </empty-cell>
+    </row>
+    <row height="23">
+      <cell background-color="#ccffcc" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Percentage Demo"/>
+        <line type="ParagraphPoolBox" x="152.996" y="7.0" width="145.008" height="18.0" color="black" font-face="SansSerif" font-size="18" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="152.996" y="7.0" width="92.016" height="18.0">Percentage</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="249.998" y="7.0" width="48.006" height="18.0">Demo</text>
+        </line>
+      </cell>
+    </row>
+    <row height="5">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

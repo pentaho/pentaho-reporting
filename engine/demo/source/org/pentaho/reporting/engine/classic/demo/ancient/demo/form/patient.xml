@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Patient Form Demo" orientation="portrait"
+    pageformat="A4" topmargin="10" leftmargin="10" bottommargin="10" rightmargin="10">
+
+  <!--
+    The configuration tag can be used to define initial values for the report configuration.
+    The report configuration defines several keys, which are read during the report
+    processing.
+    -->
+  <configuration>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Theme Hospital</property>
+  </configuration>
+
+  <!--
+    The watermark is a special section. It always consumes the complete space on a page.
+    Output targets can choose whether to support this section, at the moment only the
+    PDF and Graphics2D output support watermarks, HTML will follow in the near future.
+
+    The water mark band accepts all element types, and is printed together with the
+    page header.
+  -->
+  <watermark>
+    <rectangle x="0" y="0" width="575" height="100%" color="#efefef" fill="true"/>
+    <rectangle x="0" y="0" width="575" height="100%" color="black" draw="true" fill="false"/>
+
+    <rectangle x="115" y="30" width="210" height="18" color="white" fill="true"/>
+    <rectangle x="115" y="30" width="210" height="18" color="black" draw="true" fill="false"/>
+
+    <rectangle x="115" y="50" width="210" height="18" color="white" fill="true"/>
+    <rectangle x="115" y="50" width="210" height="18" color="black" draw="true" fill="false"/>
+
+    <rectangle x="115" y="70" width="210" height="18" color="white" fill="true"/>
+    <rectangle x="115" y="70" width="210" height="18" color="black" draw="true" fill="false"/>
+
+    <rectangle x="115" y="90" width="210" height="18" color="white" fill="true"/>
+    <rectangle x="115" y="90" width="210" height="18" color="black" draw="true" fill="false"/>
+
+    <rectangle x="115" y="110" width="210" height="18" color="white" fill="true"/>
+    <rectangle x="115" y="110" width="210" height="18" color="black" draw="true" fill="false"/>
+
+    <rectangle x="5" y="170" width="565" height="100" color="white" fill="true"/>
+    <rectangle x="5" y="170" width="565" height="100" color="black" draw="true" fill="false"/>
+
+    <rectangle x="5" y="310" width="565" height="20" color="#afafaf" fill="true"/>
+    <rectangle x="5" y="310" width="565" height="20" color="black" draw="true" fill="false"/>
+
+    <rectangle x="5" y="330" width="565" height="200" color="white" fill="true"/>
+    <line y1="350" y2="350" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="370" y2="370" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="390" y2="390" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="410" y2="410" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="430" y2="430" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="450" y2="450" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="470" y2="470" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="490" y2="490" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <line y1="510" y2="510" x1="5" x2="570" color="#efefef" weight="0.2"/>
+    <rectangle x="5" y="330" width="565" height="200" color="black" draw="true" fill="false"/>
+
+    <rectangle x="5" y="570" width="565" height="75" color="white" fill="true"/>
+    <rectangle x="5" y="570" width="565" height="75" color="black" draw="true" fill="false"/>
+
+    <rectangle x="5" y="670" width="565" height="20" color="white" fill="true"/>
+    <rectangle x="5" y="670" width="565" height="20" color="black" draw="true" fill="false"/>
+  </watermark>
+
+  <groups>
+    <group name="Patient-Group">
+      <groupheader height="330" fontsize="9" vertical-alignment="bottom" pagebreak-before-print="true">
+        <label name="Patient" x="10" y="10" width="100" height="20" fsbold="true" fontname="SansSerif" fontsize="14"
+               alignment="left">Patient:</label>
+        <label x="10" y="30" width="100" height="16" fsbold="true" fontname="SansSerif" alignment="left">Name</label>
+        <string-field x="120" y="30" width="200" height="16" fontname="MonoSpaced" fieldname="patient.name"/>
+        <label x="10" y="50" width="100" height="16" fsbold="true" fontname="SansSerif" alignment="left">Address</label>
+        <string-field x="120" y="50" width="200" height="16" fontname="MonoSpaced" fieldname="patient.address"/>
+        <label x="10" y="70" width="100" height="16" fsbold="true" fontname="SansSerif" alignment="left">Town</label>
+        <string-field x="120" y="70" width="200" height="16" fontname="MonoSpaced" fieldname="patient.town"/>
+        <label x="10" y="90" width="100" height="16" fsbold="true" fontname="SansSerif" alignment="left">SSN</label>
+        <string-field x="120" y="90" width="200" height="16" fontname="MonoSpaced" fieldname="patient.ssn"/>
+        <label x="10" y="110" width="100" height="16" fsbold="true" fontname="SansSerif"
+               alignment="left">Insurance</label>
+        <string-field x="120" y="110" width="200" height="16" fontname="MonoSpaced" fieldname="patient.insurance"/>
+        <label x="10" y="150" width="100" height="16" fsbold="true" fontname="SansSerif" alignment="left">Cause / Symptoms</label>
+        <string-field x="10" y="170" width="555" height="100" fontname="MonoSpaced" vertical-alignment="top"
+                      fieldname="patient.symptoms"/>
+        <label x="10" y="290" width="100" height="9" fsbold="true" fontname="SansSerif"
+               alignment="left">Treatment</label>
+        <label x="10" y="310" width="60" height="16" fsbold="true" fontname="SansSerif" alignment="left">Date</label>
+        <label x="75" y="310" width="200" height="16" fsbold="true" fontname="SansSerif"
+               alignment="left">Treatment</label>
+        <label x="280" y="310" width="200" height="16" fsbold="true" fontname="SansSerif"
+               alignment="left">Medication</label>
+        <label x="485" y="310" width="75" height="16" fsbold="true" fontname="SansSerif"
+               alignment="left">Success</label>
+      </groupheader>
+      <groupfooter name="footer" height="18" fontsize="9" fixed-position="550">
+        <label x="10" y="0" width="200" height="20" fsbold="true" fontname="SansSerif">Allergy Notes</label>
+        <string-field x="10" y="20" width="565" height="70" fontname="MonoSpaced" fieldname="patient.allergy"/>
+        <label x="10" y="100" width="100" height="20" fsbold="true" fontname="SansSerif">Health Level</label>
+        <string-field x="10" y="120" width="565" height="20" fontname="MonoSpaced" fieldname="patient.level"/>
+      </groupfooter>
+      <fields>
+        <field>patient</field>
+      </fields>
+    </group>
+  </groups>
+
+  <!-- Form has a max of 10 Itembands every item has a height of 20 points -->
+  <items height="20" fontname="MonoSpaced" fontsize="8" vertical-alignment="middle">
+    <date-field x="10" y="0" width="60" height="16" fieldname="treatment.date" format="dd-MM-yyyy"/>
+    <string-field x="75" y="0" width="200" height="16" fieldname="treatment.description"/>
+    <string-field x="280" y="0" width="200" height="16" fieldname="treatment.medication"/>
+    <string-field x="485" y="0" width="75" height="16" fieldname="treatment.success"/>
+  </items>
+
+</report>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report pageformat="A4" name="A bug, squash it ..." >
+<!--
+  <reportfooter>
+    <rectangle x="0" y="0" width="100%" height="100%" draw="true" fill="true" color="green" />
+    <rectangle name="Background" x="100" y="12" width="300" height="12" draw="false" fill="true" color="red" />
+    <rectangle name="Blue" x="100" y="12" width="300" height="12" draw="true" fill="false" color="blue" />
+    <label x="0" y="0" width="100%" height="12">Some large text (spanning the complete width)</label>
+    <label x="0" y="24" width="100" height="12">small Chunk</label>
+    <label x="100" y="24" width="100" height="12">small Chunk</label>
+    <label x="200" y="24" width="100" height="12">small Chunk</label>
+    <label x="300" y="24" width="100" height="12">small Chunk</label>
+    <label x="400" y="24" width="100" height="12">small Chunk</label>
+  </reportfooter>
+-->
+
+  <reportheader>
+    <rectangle x="0" y="0" width="100%" height="100%" draw="true" fill="false" color="green" />
+    <rectangle x="100" y="12" width="300" height="12" draw="true" fill="false" color="blue" />
+    <label x="0" y="0" width="100%" height="12">Some large text (spanning the complete width)</label>
+    <label x="0" y="24" width="100" height="12">small Chunk</label>
+    <label x="100" y="24" width="100" height="12">small Chunk</label>
+    <string-field x="200" y="24" width="100" height="12" fieldname="test"/>
+    <label x="300" y="24" width="100" height="12">small Chunk</label>
+    <label x="400" y="24" width="100" height="12">small Chunk</label>
+  </reportheader>
+
+  <pageheader>
+    <rectangle x="0" y="0" width="100%" height="100%" draw="true" fill="false" color="yellow" />
+    <label x="0" y="0" width="100%" height="12">Some large text (spanning the complete width)</label>
+    <label x="300" y="24" width="100" height="12">small Chunk</label>
+  </pageheader>
+
+  <groups>
+    <group name="default">
+      <fields>
+      </fields>
+
+      <groupfooter>
+        <band name="one" x="0" y="0" fsbold="true">
+          <rectangle  x="0" y="0" height="100" width="100%" fill="false" color="black" weight="0.5"/>
+          <label x="0" y="20" width="100%" alignment="center" height="10">After Fzg typ</label>
+        </band>
+      </groupfooter>
+
+    </group>
+  </groups>
+
+  <functions>
+    <expression class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression" name="test">
+      <properties>
+        <property name="expression">
+          Object getValue() {
+            // get the row directly as a Float
+            Object o = dataRow.get(&quot;Total_Value&quot;);
+            // check if that thing is a float
+            if (o instanceof Float) {
+            return o;
+            }
+
+            // get a string and convert
+            try {
+            Float f = new Float(String.valueOf(dataRow.get("Total_Value")));
+            } catch (NumberFormatException nfe) {
+            return new Float(0);
+            }
+            if (f == null) {
+            return new Float(0);
+            }
+            return f;
+            }
+        </property>
+      </properties>
+    </expression>
+  </functions>
+</report>

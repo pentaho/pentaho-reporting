@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="4" row-count="5">
+    <cols>
+      <column width="28"/>
+      <column width="100"/>
+      <column width="68"/>
+      <column width="272"/>
+    </cols>
+    <row height="35">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid" background-color="blue" row-span="1" col-span="1" href="http://www.google.com">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </cell>
+      <empty-cell/>
+      <cell row-span="1" col-span="1" href="http://www.google.com">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Test"/>
+        <line type="ParagraphPoolBox" x="196.0" y="35.0" width="19.43" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="196.0" y="35.0" width="19.43" height="10.0">Test</text>
+        </line>
+      </cell>
+    </row>
+    <row height="29">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="35">
+      <empty-cell/>
+      <cell row-span="1" col-span="1" href="http://www.google.com">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="ellipse"/>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="529">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

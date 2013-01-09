@@ -1,0 +1,21 @@
+<html>
+<body>
+<b>DEPRECATED</b> The XML output generates a xml representation of the generated output. This example
+is a small educational outputtarget, to show the global concepts of the OutputProcess.
+It is kept small and simple.
+<p>
+  The target consists of 2 parts. The <strong>XMLProcessor</strong> is used to prepare the report and
+  to initialize the <strong>XMLWriter</strong>.
+
+<p>
+
+<h3>The XMLProcessor</h3>
+The XMLProcessor instantiates the XMLWriter. The Processor is also used to repaginate
+the report; this is the report preparation process which calculates function values and
+resolves function dependencies. Finally, the last report processing run activates the
+XMLWriter, which writes the generated output to a java.io.Writer.
+<h3>The XMLWriter</h3>
+The XMLWriter is a report function. For every received event, the to be printed band is
+simply written as XML-Stream.
+</body>
+</html>

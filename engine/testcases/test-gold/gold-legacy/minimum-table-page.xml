@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="3">
+    <cols>
+      <column width="595"/>
+    </cols>
+    <row height="10">
+      <empty-cell background-color="blue">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="label report"/>
+      </empty-cell>
+    </row>
+    <row height="10">
+      <empty-cell background-color="green">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+    </row>
+    <row height="822">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

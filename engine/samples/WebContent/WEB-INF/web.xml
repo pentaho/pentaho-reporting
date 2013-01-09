@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="PentahoSampleServlet" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+	<display-name>PentahoSampleServlet</display-name>
+	<servlet>
+		<description>Sample servlet which generates a HTML report</description>
+		<display-name>Sample4</display-name>
+		<servlet-name>Sample4</servlet-name>
+		<servlet-class>org.pentaho.reporting.engine.classic.samples.Sample4</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Sample4</servlet-name>
+		<url-pattern>/Sample4</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>Sample4</welcome-file>
+	</welcome-file-list>
+</web-app>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        name="Barcodes demos"
+        leftmargin="72" rightmargin="72" topmargin="72" pageformat="A4">
+
+  <reportheader fontsize="10" fontname="SansSerif" height="120">
+
+
+    <label x="0" y="30" width="250" fsbold="true" height="10">Barcode using a formula to emulate a field:</label>
+    <drawable-field fieldname="code39" x="250" y="30" width="200" height="90"/>
+
+  </reportheader>
+
+  <items height="56">
+    <line x1="0" x2="100%" y1="0" y2="0"/>
+
+    <message-field x="0" y="5" width="250" fsbold="true" height="10">Barcode type=$(type), value=$(value)</message-field>
+    <drawable-field fieldname="barcodeitem" x="250" y="5" width="200" height="50"/>
+    <rectangle x="250" y="5" width="200" height="50" color="RED" fill="false" draw="true"/>
+  </items>
+
+  <functions>
+    <!-- This is just used as a static datasource for the 'code39' defined just below -->
+    <expression name="barcode1" formula="=&quot;TEST1&quot;"/>
+
+    <expression name="code39" class="org.jfree.report.ext.modules.sbarcodes.SimpleBarcodesExpression">
+      <properties>
+        <property name="rawDataField">barcode1</property>
+
+        <property name="type">code39</property> <!-- static type -->
+      </properties>
+    </expression>
+
+    <!-- this element use the field 'value' as datasource and use the field 'type' for retrieving the barcode type
+    dynamicatly from the datasource -->
+    <expression name="barcodeitem" class="org.jfree.report.ext.modules.sbarcodes.SimpleBarcodesExpression">
+      <properties>
+        <property name="rawDataField">value</property>
+        <property name="rawTypeField">type</property>
+
+        <property name="barHeight">20</property>
+        <property name="barWidth">1</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

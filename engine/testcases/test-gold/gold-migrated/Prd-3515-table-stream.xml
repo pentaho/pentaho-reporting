@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="1">
+    <cols>
+      <column width="451.191"/>
+    </cols>
+    <row height="190">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-chart"/>
+      </cell>
+    </row>
+  </table>
+</layout-output>

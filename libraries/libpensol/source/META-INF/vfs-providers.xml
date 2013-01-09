@@ -1,0 +1,7 @@
+<providers>
+  <provider class-name="org.pentaho.reporting.libraries.pensol.PentahoSolutionFileProvider">
+    <scheme name="web-solution-ssl"/>
+    <scheme name="web-solution"/>
+    <scheme name="jcr-solution"/>
+  </provider>
+</providers>

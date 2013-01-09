@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report-definition xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext" name="FATURA">
+  <parser-config>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.URLClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+    <object-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ArrayClassFactory"/>
+    <element-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+  <report-config>
+    <simple-page-definition width="1" height="1">
+      <page orientation="portrait" topmargin="20" leftmargin="20" bottommargin="20" rightmargin="20" pageformat="A4"/>
+    </simple-page-definition>
+    <configuration>
+      <property name="org.pentaho.reporting.engine.classic.core.NoPrinterAvailable">true</property>
+    </configuration>
+  </report-config>
+  <report-description>
+    <report-header>
+      <style>
+        <basic-key name="pagebreak-before">false</basic-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+      </style>
+    </report-header>
+    <report-footer>
+      <style>
+        <basic-key name="pagebreak-before">false</basic-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+      </style>
+    </report-footer>
+    <page-header>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <basic-key name="display-on-lastpage">true</basic-key>
+      </style>
+      <element name="TextField@14895676" type="text/plain">
+        <style>
+          <basic-key name="x">329.0</basic-key>
+          <basic-key name="y">48.0</basic-key>
+          <basic-key name="min-width">219.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">FATNO</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="TextField@27347936" type="text/plain">
+        <style>
+          <basic-key name="x">330.0</basic-key>
+          <basic-key name="y">30.0</basic-key>
+          <basic-key name="min-width">219.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">FATTAR</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="Element@16072388" type="image/generic">
+        <style>
+          <basic-key name="x">4.0</basic-key>
+          <basic-key name="y">5.0</basic-key>
+          <basic-key name="min-width">161.0</basic-key>
+          <basic-key name="min-height">55.0</basic-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">true</basic-key>
+        </style>
+        <template references="image-url-element">
+          <basic-object name="content"></basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">222.0</basic-key>
+          <basic-key name="y">30.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Fatura Tarihi :</basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">205.0</basic-key>
+          <basic-key name="y">49.0</basic-key>
+          <basic-key name="min-width">117.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Fatura No :</basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">222.0</basic-key>
+          <basic-key name="y">10.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Firma :</basic-object>
+        </template>
+      </element>
+      <element name="TextField@6224370" type="text/plain">
+        <style>
+          <basic-key name="x">329.0</basic-key>
+          <basic-key name="y">11.0</basic-key>
+          <basic-key name="min-width">219.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">UNVAN</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+    </page-header>
+    <page-footer>
+      <style>
+        <basic-key name="display-on-firstpage">true</basic-key>
+        <basic-key name="display-on-lastpage">true</basic-key>
+      </style>
+      <element name="TextField@9577931" type="text/plain">
+        <style>
+          <basic-key name="x">438.0</basic-key>
+          <basic-key name="y">6.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">TUTARTOPLAM</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">313.0</basic-key>
+          <basic-key name="y">5.0</basic-key>
+          <basic-key name="min-width">117.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Toplam :</basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">313.0</basic-key>
+          <basic-key name="y">23.0</basic-key>
+          <basic-key name="min-width">117.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">KDV :</basic-object>
+        </template>
+      </element>
+      <element name="TextField@24609724" type="text/plain">
+        <style>
+          <basic-key name="x">439.0</basic-key>
+          <basic-key name="y">22.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">KDVTUTARI</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="Element@30826339" type="text/plain">
+        <style>
+          <basic-key name="x">314.0</basic-key>
+          <basic-key name="y">42.0</basic-key>
+          <basic-key name="min-width">117.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">right</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">Dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">true</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">Genel Toplam :</basic-object>
+        </template>
+      </element>
+      <element name="TextField@27948215" type="text/plain">
+        <style>
+          <basic-key name="x">439.0</basic-key>
+          <basic-key name="y">41.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">GENELTOPLAM</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+    </page-footer>
+    <watermark>
+      <style>
+        <basic-key name="pagebreak-before">false</basic-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+        <basic-key name="height">-100.0</basic-key>
+      </style>
+    </watermark>
+    <groups>
+      <group name="default">
+        <fields/>
+      </group>
+      <group name="FATURAPERPAGE">
+        <fields>
+          <field>FATNO</field>
+          <field>FATTAR</field>
+        </fields>
+        <group-header>
+          <style>
+            <basic-key name="pagebreak-before">false</basic-key>
+            <basic-key name="pagebreak-after">false</basic-key>
+            <basic-key name="repeat-header">false</basic-key>
+          </style>
+          <element name="Element@26068240" type="text/plain">
+            <style>
+              <basic-key name="x">3.0</basic-key>
+              <basic-key name="y">49.0</basic-key>
+              <basic-key name="min-width">100.0</basic-key>
+              <basic-key name="min-height">16.0</basic-key>
+              <basic-key name="paint">black</basic-key>
+              <basic-key name="alignment">left</basic-key>
+              <basic-key name="valignment">top</basic-key>
+              <basic-key name="dynamic_height">false</basic-key>
+              <basic-key name="Excel.WrapText">false</basic-key>
+              <basic-key name="font">Dialog</basic-key>
+              <basic-key name="font-size">12</basic-key>
+              <basic-key name="line-height">0.0</basic-key>
+              <basic-key name="font-bold">true</basic-key>
+              <basic-key name="font-italic">false</basic-key>
+              <basic-key name="font-underline">false</basic-key>
+              <basic-key name="font-strikethrough">false</basic-key>
+              <basic-key name="font-embedded">false</basic-key>
+              <basic-key name="reserved-literal">..</basic-key>
+              <basic-key name="trim-text-content">true</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Sira No</basic-object>
+            </template>
+          </element>
+          <element name="Element@9026447" type="text/plain">
+            <style>
+              <basic-key name="x">227.0</basic-key>
+              <basic-key name="y">50.0</basic-key>
+              <basic-key name="min-width">100.0</basic-key>
+              <basic-key name="min-height">16.0</basic-key>
+              <basic-key name="paint">black</basic-key>
+              <basic-key name="alignment">left</basic-key>
+              <basic-key name="valignment">top</basic-key>
+              <basic-key name="dynamic_height">false</basic-key>
+              <basic-key name="Excel.WrapText">false</basic-key>
+              <basic-key name="font">Dialog</basic-key>
+              <basic-key name="font-size">12</basic-key>
+              <basic-key name="line-height">0.0</basic-key>
+              <basic-key name="font-bold">true</basic-key>
+              <basic-key name="font-italic">false</basic-key>
+              <basic-key name="font-underline">false</basic-key>
+              <basic-key name="font-strikethrough">false</basic-key>
+              <basic-key name="font-embedded">false</basic-key>
+              <basic-key name="reserved-literal">..</basic-key>
+              <basic-key name="trim-text-content">true</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Miktar</basic-object>
+            </template>
+          </element>
+          <element name="Element@9026447" type="text/plain">
+            <style>
+              <basic-key name="x">455.0</basic-key>
+              <basic-key name="y">54.0</basic-key>
+              <basic-key name="min-width">100.0</basic-key>
+              <basic-key name="min-height">16.0</basic-key>
+              <basic-key name="paint">black</basic-key>
+              <basic-key name="alignment">left</basic-key>
+              <basic-key name="valignment">top</basic-key>
+              <basic-key name="dynamic_height">false</basic-key>
+              <basic-key name="Excel.WrapText">false</basic-key>
+              <basic-key name="font">Dialog</basic-key>
+              <basic-key name="font-size">12</basic-key>
+              <basic-key name="line-height">0.0</basic-key>
+              <basic-key name="font-bold">true</basic-key>
+              <basic-key name="font-italic">false</basic-key>
+              <basic-key name="font-underline">false</basic-key>
+              <basic-key name="font-strikethrough">false</basic-key>
+              <basic-key name="font-embedded">false</basic-key>
+              <basic-key name="reserved-literal">..</basic-key>
+              <basic-key name="trim-text-content">true</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Tutar</basic-object>
+            </template>
+          </element>
+          <element name="Element@9026447" type="text/plain">
+            <style>
+              <basic-key name="x">119.0</basic-key>
+              <basic-key name="y">49.0</basic-key>
+              <basic-key name="min-width">100.0</basic-key>
+              <basic-key name="min-height">16.0</basic-key>
+              <basic-key name="paint">black</basic-key>
+              <basic-key name="alignment">left</basic-key>
+              <basic-key name="valignment">top</basic-key>
+              <basic-key name="dynamic_height">false</basic-key>
+              <basic-key name="Excel.WrapText">false</basic-key>
+              <basic-key name="font">Dialog</basic-key>
+              <basic-key name="font-size">12</basic-key>
+              <basic-key name="line-height">0.0</basic-key>
+              <basic-key name="font-bold">true</basic-key>
+              <basic-key name="font-italic">false</basic-key>
+              <basic-key name="font-underline">false</basic-key>
+              <basic-key name="font-strikethrough">false</basic-key>
+              <basic-key name="font-embedded">false</basic-key>
+              <basic-key name="reserved-literal">..</basic-key>
+              <basic-key name="trim-text-content">true</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Aciklama</basic-object>
+            </template>
+          </element>
+          <element name="Element@9026447" type="text/plain">
+            <style>
+              <basic-key name="x">347.0</basic-key>
+              <basic-key name="y">53.0</basic-key>
+              <basic-key name="min-width">100.0</basic-key>
+              <basic-key name="min-height">16.0</basic-key>
+              <basic-key name="paint">black</basic-key>
+              <basic-key name="alignment">left</basic-key>
+              <basic-key name="valignment">top</basic-key>
+              <basic-key name="dynamic_height">false</basic-key>
+              <basic-key name="Excel.WrapText">false</basic-key>
+              <basic-key name="font">Dialog</basic-key>
+              <basic-key name="font-size">12</basic-key>
+              <basic-key name="line-height">0.0</basic-key>
+              <basic-key name="font-bold">true</basic-key>
+              <basic-key name="font-italic">false</basic-key>
+              <basic-key name="font-underline">false</basic-key>
+              <basic-key name="font-strikethrough">false</basic-key>
+              <basic-key name="font-embedded">false</basic-key>
+              <basic-key name="reserved-literal">..</basic-key>
+              <basic-key name="trim-text-content">true</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Br. Fiyat</basic-object>
+            </template>
+          </element>
+        </group-header>
+        <group-footer>
+          <style>
+            <basic-key name="pagebreak-before">false</basic-key>
+            <basic-key name="pagebreak-after">true</basic-key>
+            <basic-key name="repeat-header">false</basic-key>
+          </style>
+        </group-footer>
+      </group>
+    </groups>
+    <itemband>
+      <style>
+        <basic-key name="pagebreak-before">false</basic-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+      </style>
+      <element name="TextField@1459401" type="text/plain">
+        <style>
+          <basic-key name="x">3.0</basic-key>
+          <basic-key name="y">1.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">SIRANO</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="TextField@10086648" type="text/plain">
+        <style>
+          <basic-key name="x">222.0</basic-key>
+          <basic-key name="y">3.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">MIKTAR</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="TextField@27542048" type="text/plain">
+        <style>
+          <basic-key name="x">455.0</basic-key>
+          <basic-key name="y">6.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">TUTAR</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="TextField@29068880" type="text/plain">
+        <style>
+          <basic-key name="x">121.0</basic-key>
+          <basic-key name="y">3.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">ACKLM</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+      <element name="TextField@26459911" type="text/plain">
+        <style>
+          <basic-key name="x">347.0</basic-key>
+          <basic-key name="y">4.0</basic-key>
+          <basic-key name="min-width">100.0</basic-key>
+          <basic-key name="min-height">16.0</basic-key>
+          <basic-key name="paint">black</basic-key>
+          <basic-key name="alignment">left</basic-key>
+          <basic-key name="valignment">top</basic-key>
+          <basic-key name="dynamic_height">false</basic-key>
+          <basic-key name="Excel.WrapText">false</basic-key>
+          <basic-key name="font">dialog</basic-key>
+          <basic-key name="font-size">12</basic-key>
+          <basic-key name="line-height">0.0</basic-key>
+          <basic-key name="font-bold">false</basic-key>
+          <basic-key name="font-italic">false</basic-key>
+          <basic-key name="font-underline">false</basic-key>
+          <basic-key name="font-strikethrough">false</basic-key>
+          <basic-key name="font-embedded">false</basic-key>
+          <basic-key name="reserved-literal">..</basic-key>
+          <basic-key name="trim-text-content">true</basic-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="field">BRFIYAT</basic-object>
+          <basic-object name="nullValue"></basic-object>
+        </template>
+      </element>
+    </itemband>
+    <no-data-band>
+      <style>
+        <basic-key name="pagebreak-before">false</basic-key>
+        <basic-key name="pagebreak-after">false</basic-key>
+      </style>
+    </no-data-band>
+  </report-description>
+  <functions>
+    <property-ref name="report.name" class="java.lang.String">FATURA</property-ref>
+    <expression name="TUTARTOPLAM" class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction">
+      <properties>
+        <property name="field">TUTAR</property>
+        <property name="group">FATURAPERPAGE</property>
+      </properties>
+    </expression>
+    <expression name="KDVTUTARI" class="org.pentaho.reporting.engine.classic.core.function.ColumnMultiplyExpression">
+      <properties>
+        <property name="field[0]" class="java.lang.String">KDV</property>
+        <property name="field[1]" class="java.lang.String">TUTARTOPLAM</property>
+      </properties>
+    </expression>
+    <expression name="GENELTOPLAM" class="org.pentaho.reporting.engine.classic.core.function.ColumnSumExpression">
+      <properties>
+        <property name="field[0]" class="java.lang.String">TUTARTOPLAM</property>
+        <property name="field[1]" class="java.lang.String">KDVTUTARI</property>
+      </properties>
+    </expression>
+  </functions>
+</report-definition>

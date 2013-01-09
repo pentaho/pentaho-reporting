@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="World Demo using StyleSheets" orientation="portrait"
+    pageformat="A4" leftmargin="10" rightmargin="10">
+
+  <parser-config>
+    <property name="outer-header-color">#94B2DB</property>
+    <property name="inner-header-color">#DDE3EE</property>
+
+    <property name="header-height">14</property>
+
+    <property name="country-col-start">0</property>
+    <property name="country-col-width">200</property>
+
+    <property name="iso-code-col-start">300</property>
+    <property name="iso-code-col-width">100</property>
+
+    <property name="population-col-start">400</property>
+    <property name="population-col-width">150</property>
+  </parser-config>
+
+  <include src="stylesheet-definition.xml"/>
+
+  <groups>
+    <group name="Continent Group">
+      <groupheader layout="org.jfree.report.layout.StackedLayoutManager">
+        <band>
+          <rectangle styleClass="background-rectangle" color="${outer-header-color}"/>
+          <anchor-field fieldname="Continent"/>
+          <label x="0" y="0" width="100" height="14">CONTINENT:</label>
+          <string-field x="100" y="0" width="250" height="14" fieldname="Continent"/>
+          <number-field x="460" y="0" width="76"  height="14" fieldname="count" format="#0" />
+          <line styleClass="thin_horizontal_line" color="#617A9C" x1="0" y1="14" x2="100%" y2="14"/>
+        </band>
+        <band height="4">
+          <!-- An empty band to create some space between the headers -->
+        </band>
+      </groupheader>
+
+      <groupfooter name="continent-footer" layout="org.jfree.report.layout.StackedLayoutManager">
+        <band name="continent-footer-inner-1">
+          <rectangle styleClass="background-rectangle" color="${outer-header-color}"/>
+          <label x="0" y="0" width="220" height="14" styleClass="summary-element">Population:</label>
+          <number-field x="220" y="0" width="116" height="16"
+                        styleClass="footer-number-element" format="#,##0" fieldname="sum"/>
+        </band>
+        <band height="10"  name="continent-footer-inner-2">
+          <!-- An empty band to create some space between the bands -->
+        </band>
+      </groupfooter>
+
+      <fields>
+        <field>Continent</field>
+      </fields>
+    </group>
+
+    <group name="Continent Table Header Group">
+
+      <groupheader styleClass="my-style">
+        <rectangle styleClass="background-rectangle" color="${inner-header-color}"/>
+        <label x="${country-col-start}" y="0"
+               width="${country-col-width}" height="${header-height}">Country</label>
+        <label x="${iso-code-col-start}" y="0"
+               width="${iso-code-col-width}" height="${header-height}">ISO Code</label>
+        <label x="${population-col-start}" y="0"
+               width="${population-col-width}" height="${header-height}">Population</label>
+      </groupheader>
+
+      <fields>
+        <field>Continent</field>
+        <field>Dummy Field</field>
+      </fields>
+    </group>
+  </groups>
+
+  <!-- The style will be inherited to all childs -->
+  <items styleClass="data-element">
+    <line name="IB-0" x1="0" y1="14" x2="100%" y2="14" color="#D2DEEE" weight="0.1"/>
+    <string-field x="${country-col-start}" y="0"
+                  width="${country-col-width}" height="${header-height}" fieldname="Country"/>
+    <string-field x="${iso-code-col-start}" y="0"
+                  width="${iso-code-col-width}" height="${header-height}" fieldname="ISO Code"/>
+    <number-field x="${population-col-start}" y="0"
+               width="${population-col-width}" height="${header-height}" alignment="right"
+               format="#,##0" fieldname="Population"/>
+  </items>
+
+  <functions>
+    <property-ref name="Dummy Field">A constant value to insert an additional group to print the repeatable table header.</property-ref>
+
+    <function name="count" class="org.jfree.report.function.TotalItemCountFunction">
+      <properties>
+        <property name="group">Continent Group</property>
+      </properties>
+    </function>
+
+    <function name="sum" class="org.jfree.report.function.TotalGroupSumFunction">
+      <properties>
+        <property name="field">Population</property>
+        <property name="group">Continent Group</property>
+      </properties>
+    </function>
+  </functions>
+
+</report>

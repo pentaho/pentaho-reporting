@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE report PUBLIC "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5"
+                        "http://jfreereport.sourceforge.net/report-085.dtd">
+<report name="" orientation="landscape" pageformat="LETTER" topmargin="32" leftmargin="32" bottommargin="32" rightmargin="32">
+
+  <!--
+    The configuration tag can be used to define initial values for the report configuration.
+    The report configuration defines several keys, which are read during the report
+    processing.
+    -->
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Gtco Calcomp</property>
+  </configuration>
+
+
+  <!-- Page Header -->
+  <pageheader height="30" onfirstpage="true" vertical-alignment="middle">
+    <band name="landscape" x="0" y="0" fontname="Arial Unicode MS" fontstyle="bold" fontsize="18">
+      <imageref x="0" y="0" width="60" height="25" src="logoiwprs200.gif" keepAspectRatio="true" scale="true"/>
+      <string-field x="200" y="0" width="325" height="25" alignment="center" fieldname="ReportTitle"/>
+      <date-field x="600" y="0" width="175" height="25" alignment="right" fieldname="report.date" fontsize="16" format="MMM d, yyyy"/>
+      <rectangle x="0" y="25" width="100%" height="18" color="#AFAFAF" weight="0"/>
+
+      <string-field x="0" y="45" width="75" height="20" fontsize="14" alignment="left" fieldname="strClass"/>
+      <string-field x="80" y="45" width="500" height="20" fontsize="14" alignment="left" fieldname="ClassNameTabReport"/>
+
+      <string-field x="0" y="65" width="75" height="20" fontsize="14" alignment="left" fieldname="strRoster"/>
+      <string-field x="80" y="65" width="700" height="20" fontsize="14" alignment="left" fieldname="RosterNameTabReport"/>
+
+      <rectangle x="0" y="85" width="100%" height="18" color="#AFAFAF" weight="0"/>
+
+      <string-field x="0" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strLineNumber"/>
+      <string-field x="75" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strTransmitterID"/>
+      <string-field x="175" y="89" width="95" height="20" fontsize="10" alignment="left" fieldname="strLastName"/>
+      <string-field x="275" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strFirstName"/>
+      <string-field x="350" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strMiddleInitial"/>
+      <string-field x="450" y="89" width="95" height="20" fontsize="10" alignment="left" fieldname="strStudentID"/>
+      <string-field x="550" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strNickname"/>
+      <string-field x="625" y="89" width="50" height="20" fontsize="10" alignment="left" fieldname="strNetID"/>
+      <string-field x="675" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strGroupID"/>
+    </band>
+
+    <band name="portrait" x="0" y="0" fontname="Arial Unicode MS" fontstyle="bold" fontsize="18">
+      <imageref x="0" y="0" width="60" height="25" src="logoiwprs200.gif" keepAspectRatio="true" scale="true"/>
+      <string-field x="100" y="0" width="325" height="25" alignment="center" fieldname="ReportTitle"/>
+      <date-field x="400" y="0" width="175" height="25" alignment="right" fieldname="report.date" fontsize="16" format="MMM d, yyyy"/>
+      <rectangle x="0" y="25" width="100%" height="18" color="#AFAFAF" weight="0"/>
+
+      <string-field x="0" y="45" width="75" height="20" fontsize="14" alignment="left" fieldname="strClass"/>
+      <string-field x="80" y="45" width="500" height="20" fontsize="14" alignment="left" fieldname="ClassNameTabReport"/>
+
+      <string-field x="0" y="65" width="75" height="20" fontsize="14" alignment="left" fieldname="strRoster"/>
+      <string-field x="80" y="65" width="500" height="20" fontsize="14" alignment="left" fieldname="RosterNameTabReport"/>
+
+      <rectangle x="0" y="85" width="100%" height="18" color="#AFAFAF" weight="0"/>
+
+      <string-field x="0" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strLineNumber"/>
+      <string-field x="75" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strTransmitterID"/>
+      <string-field x="175" y="89" width="95" height="20" fontsize="10" alignment="left" fieldname="strLastName"/>
+      <string-field x="275" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strFirstName"/>
+      <string-field x="350" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strMiddleInitial"/>
+      <string-field x="450" y="89" width="95" height="20" fontsize="10" alignment="left" fieldname="strStudentID"/>
+      <string-field x="550" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strNickname"/>
+      <string-field x="625" y="89" width="50" height="20" fontsize="10" alignment="left" fieldname="strNetID"/>
+      <string-field x="675" y="89" width="75" height="20" fontsize="10" alignment="left" fieldname="strGroupID"/>
+    </band>
+  </pageheader>
+
+  <pagefooter height="18">
+    <rectangle name="PF0" x="0" y="0" width="100%" height="18" color="#AFAFAF" weight="0" draw="false" fill="true"/>
+    <string-field fieldname="pageXofY" x="0" y="4" width="100%" height="18" alignment="center"/>
+  </pagefooter>
+
+  <items height="10" vertical-alignment="middle" fontname="Monospaced" fontstyle="plain" fontsize="12">
+    <rectangle name="background" x="0" y="0" width="100%" height="100%" color="#DFDFDF" weight="0"/>
+    <string-field x="0" y="0" width="75" height="16" alignment="left" fieldname="LineNumber"/>
+    <string-field x="75" y="0" width="100" height="16" alignment="left" fieldname="TransmitterID"/>
+    <string-field x="175" y="0" width="100" height="16" alignment="left" fieldname="LastName"/>
+    <string-field x="275" y="0" width="75" height="16" alignment="left" fieldname="FirstName"/>
+    <string-field x="350" y="0" width="100" height="16" alignment="left" fieldname="MiddleInitial"/>
+    <string-field x="450" y="0" width="100" height="16" alignment="left" fieldname="StudentID"/>
+    <string-field x="550" y="0" width="75" height="16" alignment="left" fieldname="Nickname"/>
+    <string-field x="625" y="0" width="50" height="16" alignment="left" fieldname="NetID"/>
+    <string-field x="675" y="0" width="75" height="16" alignment="left" fieldname="GroupID"/>
+  </items>
+
+
+  <functions>
+    <property-ref name="SourceNameTabReport"/>
+    <property-ref name="report.date"/>
+    <property-ref name="ClassNameTabReport"/>
+
+    <function name="backgroundTrigger" class="org.pentaho.reporting.engine.classic.core.function.ElementVisibilitySwitchFunction">
+      <properties>
+        <property name="element">background</property>
+      </properties>
+    </function>
+
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction">
+      <!--
+        Activating this property counts the pages needed for the given group.
+        Only usefull with manual pagebreaks
+
+        <properties>
+            <property name="group">Letter Group</property>
+        </properties>
+        -->
+    </function>
+    <function name="PageTotal" class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction">
+      <!--
+        Activating this property counts the pages needed for the given group.
+        Only usefull with manual pagebreaks
+
+        <properties>
+            <property name="group">Letter Group</property>
+        </properties>
+       -->
+    </function>
+    <expression name="pageXofY" class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Page {0} of {1}</property>
+        <property name="field[0]">PageNumber</property>
+        <property name="field[1]">PageTotal</property>
+      </properties>
+    </expression>
+
+  </functions>
+</report>

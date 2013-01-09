@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="5">
+    <cols>
+      <column width="451"/>
+    </cols>
+    <row height="18">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="EEE, d-MMM-yyyy"/>
+        <line type="ParagraphPoolBox" x="378.23" y="4.0" width="72.77" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="378.23" y="4.0" width="19.99" height="10.0">Thu,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="400.99" y="4.0" width="50.01" height="10.0">7-Apr-2011</text>
+        </line>
+      </cell>
+    </row>
+    <row height="7">
+      <empty-cell background-color="#ccffcc">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="i18n Demo"/>
+      </empty-cell>
+    </row>
+    <row height="23">
+      <cell background-color="#ccffcc" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="resource-label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="report.title"/>
+        <line type="ParagraphPoolBox" x="100.517" y="7.0" width="249.966" height="18.0" color="black" font-face="SansSerif" font-size="18" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.517" y="7.0" width="92.016" height="18.0">Percentage</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="197.519" y="7.0" width="48.006" height="18.0">Demo</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="250.511" y="7.0" width="64.008" height="18.0">(Locale:</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="319.505" y="7.0" width="30.978" height="18.0">EN)</text>
+        </line>
+      </cell>
+    </row>
+    <row height="30">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="RH1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="JFreeReport fully supports Unicode, as long as the used font provides the glyphs.&#x000a;Sample Thai text: เพิ่ม, ลูกค้า"/>
+        <line type="ParagraphPoolBox" x="45.525" y="40.0" width="359.95" height="10.0" color="black" font-face="Arial Unicode MS" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="45.525" y="40.0" width="55.55" height="10.0">JFreeReport</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="103.845" y="40.0" width="17.77" height="10.0">fully</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="124.385" y="40.0" width="38.34" height="10.0">supports</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="165.495" y="40.0" width="39.45" height="10.0">Unicode,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="207.715" y="40.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="221.045" y="40.0" width="18.9" height="10.0">long</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="242.715" y="40.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="256.045" y="40.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="272.705" y="40.0" width="21.68" height="10.0">used</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="297.155" y="40.0" width="16.66" height="10.0">font</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="316.585" y="40.0" width="37.79" height="10.0">provides</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="357.145" y="40.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="373.805" y="40.0" width="31.67" height="10.0">glyphs.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="163.265" y="50.0" width="124.47" height="10.0" color="black" font-face="Arial Unicode MS" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="163.265" y="50.0" width="33.89" height="10.0">Sample</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="199.925" y="50.0" width="19.44" height="10.0">Thai</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="222.135" y="50.0" width="18.87" height="10.0">text:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="243.775" y="50.0" width="18.53" height="10.0">เพิ่ม,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="265.075" y="50.0" width="22.66" height="10.0">ลูกค้า</text>
+        </line>
+      </cell>
+    </row>
+    <row height="18">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="resource-message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="data.messagefield.format"/>
+      </empty-cell>
+    </row>
+  </table>
+</layout-output>

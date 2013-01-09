@@ -1,0 +1,4 @@
+<static-datasource xmlns="http://jfreereport.sourceforge.net/namespaces/datasources/static">
+  <query name="default">org.jfree.report.demo.features.datasource.StaticDataSourceDemo#createMainQuery</query>
+  <query name="sub-report">org.jfree.report.demo.features.datasource.StaticDataSourceDemo#createSubReportQuery(parameter)</query>
+</static-datasource>

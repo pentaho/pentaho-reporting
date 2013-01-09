@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/content/1.0">
+  <!-- Parsing order: -->
+  <!--
+  The bundle:content file contains the script that controls which files get parsed to compose the report.
+
+  For subreports, the global meta-data and global-settings are not parsed.
+
+  A report consists of several parts:
+  (0) This file: Orchestrates the parsing process.
+
+  (3) Parameters: Defines the external parameters for a report and how these parameters should be queried.
+      Right now, this only describes the parameters, later this may contain additional data to actually
+      support the advanced generation of parameter-query pages.
+
+      If parsing the styles section fails with a "resource-not-found" exception, we assume that the global
+      style does not exist and optionally fall back to the local cache.
+
+      In addition to the referenced parameter file here, we also parse the local parameter file "/parameters.xml"
+      from the current bundle.
+   -->
+  <data-definition ref="pentaho-bundle:global:/datadefinition.xml" local-copy="../cache/datadefinition.xml"/>
+  <!--
+
+  (4) Styles: Defines global stylesheets. Optionally contains watermark and page-header and -footer
+      sections.
+
+      If parsing the styles section fails with a "resource-not-found" exception, we assume that the global
+      style does not exist and optionally fall back to the local cache.
+
+      In addition to the referenced styles file here, we also parse the local styles file "/styles.xml"
+      from the current bundle.
+   -->
+  <styles ref="pentaho-bundle:global:/samples/green/styles.xml" local-copy="../cache/styles.xml"/>
+  <!--
+  (5) Layout: The report-definition. This contains at least the group-structure. This can contain either
+      a static report definition and can contain a wizard-definition as well.
+
+      The data for each of the sections is stored in a well-known location inside the report-bundle. For some
+      of the sections, settings and styles, an alternative global location can be specified. The global and the
+      local file will be merged, where the local settings take precedence over the global settings.
+  -->
+  <layout ref="pentaho-bundle:global:/samples/layout.xml" local-copy="../cache/layout.xml"/>
+
+</content>

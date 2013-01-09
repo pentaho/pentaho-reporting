@@ -1,0 +1,22 @@
+<data-schema xmlns="http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0">
+  <!-- Contains a dump from the meta-data repository along with user-defined meta-data overrides. -->
+  <!-- The data-schema is read by the auto-generator preprocessor. -->
+  <!--
+    Defines direct report- and query-specific definitions from the user.
+    -->
+  <direct-mapping fieldname="REGION">
+    <data-attributes/>
+  </direct-mapping>
+
+  <global-mapping>
+    <data-attributes/>
+  </global-mapping>
+
+
+  <indirect-mapping>
+    <match domain="jdbc" name="table" value="CUSTOMERS"/>
+    <data-attributes/>
+    <data-attribute-mapping target-domain="format" target-name="pattern"
+                            source-domain="pmd" source-name="format-string"/>
+  </indirect-mapping>
+</data-schema>
