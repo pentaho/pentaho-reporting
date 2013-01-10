@@ -15,7 +15,7 @@
   <property name ="impl.title" value="multimodule-build" />  
 
   <!-- import a subfloor file to use as a base -->
-  <import file="subfloor.xml" />
+  <import file="build-res/subfloor.xml" />
 
   <!-- These are the modules this script should build in the proper order-->
   <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-hibernate,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->  
