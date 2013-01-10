@@ -1,8 +1,9 @@
 <!--===========================================================================
-  This is the build file for the collection of Shims modules to provide support
+  Build mutliple sub projects by providing a list of relative path directories 
+  in the 'modules' property that contain a build.xml
   ============================================================================-->
   
-<project name="multimodule-build" basedir="./../../" >
+<project name="multimodule-build" basedir="." >
 
   <description>
     This builds all modules within this directory (specifically as declared by
@@ -20,10 +21,8 @@
   <!-- These are the modules this script should build in the proper order-->
   <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-hibernate,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->  
   <property name="modules" value="BUILD_MODULES" />
-  
  
-  <target name="init" depends="install-antcontrib" />
-  
+  <target name="init" depends="install-antcontrib" />  
  
   <!-- Runs "clean-all" on the modules defined in the property "modules" -->
   <target name="clean-all" depends="init">
@@ -47,13 +46,43 @@
   <target name="jar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false">
-          <target name="jar" />
-        </ant>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="jar" />
       </sequential>
     </for>
   </target>
-	
+
+  <target name="source.jar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.jar" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="source.zip" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.zip" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="source.targz" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.tar.gz" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="dist-source" depends="source.zip">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist-source" />
+      </sequential>
+    </for>
+  </target>
+
   <!-- All following targets are wrappers for all modules -->
   <target name="resolve" depends="init">
     <for list="${modules}" param="module" trim="true">
@@ -133,7 +162,7 @@
       </sequential>
     </for>
   </target>
-  <target name="dist-javadoc" depends="javadoc.zip, javadoc.targz">
+  <target name="dist-javadoc" depends="javadoc.zip">
     <for list="${modules}" param="module" trim="true">
       <sequential>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc" />
@@ -154,6 +183,4 @@
       </sequential>
     </for>
   </target>
-  
-
 </project>  
