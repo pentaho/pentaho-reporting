@@ -34,7 +34,7 @@
 	<target name="dist" depends="dist-full"/>
 
      <!-- Need src.dir to exist even though this project only has testsrc -->
-     <target name="init">
+     <target name="init" depends="subfloor.init" >
        <mkdir dir="${src.dir}" />
      </target>
 
