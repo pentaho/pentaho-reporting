@@ -262,6 +262,8 @@
       -->
     <target name="dist-source" />
     <target name="dist-javadoc" />
+    <target name="source.zip" />
+    <target name="source.targz" />
     
         
 </project>
