@@ -28,7 +28,7 @@
   <target name="clean-all" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean-all" />
       </sequential>
     </for>
@@ -38,7 +38,7 @@
   <target name="clean" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean" />
       </sequential>
     </for>
@@ -48,7 +48,7 @@
   <target name="jar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="jar" />
       </sequential>
     </for>
@@ -57,7 +57,7 @@
   <target name="source.jar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.jar" />
       </sequential>
     </for>
@@ -66,7 +66,7 @@
   <target name="source.zip" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.zip" />
       </sequential>
     </for>
@@ -75,7 +75,7 @@
   <target name="source.targz" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.tar.gz" />
       </sequential>
     </for>
@@ -84,7 +84,7 @@
   <target name="dist-source" depends="source.zip">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist-source" />
       </sequential>
     </for>
@@ -94,7 +94,7 @@
   <target name="resolve" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="resolve" />
       </sequential>
     </for>
@@ -103,7 +103,7 @@
   <target name="test" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="test" />
       </sequential>
     </for>
@@ -112,7 +112,7 @@
   <target name="cobertura" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="cobertura" />
       </sequential>
     </for>
@@ -121,7 +121,7 @@
   <target name="publish-local" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish-local" />
       </sequential>
     </for>
@@ -130,7 +130,7 @@
   <target name="publish" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish" />
       </sequential>
     </for>
@@ -139,7 +139,7 @@
   <target name="dist" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist" />
       </sequential>
     </for>
@@ -148,7 +148,7 @@
   <target name="continuous" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous" />
       </sequential>
     </for>
@@ -157,7 +157,7 @@
   <target name="continuous-testless" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous-testless" />
       </sequential>
     </for>
@@ -166,7 +166,7 @@
   <target name="compile" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="compile" />
       </sequential>
     </for>
@@ -174,7 +174,7 @@
   <target name="javadoc" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc" />
       </sequential>
     </for>
@@ -182,7 +182,7 @@
   <target name="dist-javadoc" depends="javadoc.zip">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc" />
       </sequential>
     </for>
@@ -190,7 +190,7 @@
   <target name="javadoc.zip" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc.zip" />
       </sequential>
     </for>
@@ -198,7 +198,7 @@
   <target name="javadoc.targz" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <echo>"@{module}"</echo>
+        <echo>@{module}</echo>
         <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc.targz" />
       </sequential>
     </for>
