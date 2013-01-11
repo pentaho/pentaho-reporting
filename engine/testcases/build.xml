@@ -33,4 +33,9 @@
 	<!-- Override default dist target to do a dist-full instead -->
 	<target name="dist" depends="dist-full"/>
 
+     <!-- Need src.dir to exist even though this project only has testsrc -->
+     <target name="init">
+       <mkdir dir="${src.dir}" />
+     </target>
+
 </project>
