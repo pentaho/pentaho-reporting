@@ -1,3 +1,8 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+.classpath text
+.project   text
+*.java     text
+*.iml	   text
+*.xml	   text
 

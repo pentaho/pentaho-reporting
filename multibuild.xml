@@ -1,0 +1,206 @@
+<!--===========================================================================
+  Build mutliple sub projects by providing a list of relative path directories 
+  in the 'modules' property that contain a build.xml
+  ============================================================================-->
+  
+<project name="multimodule-build" basedir="." >
+
+  <description>
+    This builds all modules within this directory (specifically as declared by
+    ${modules}).
+  </description>
+  
+  
+  <!-- Required properties for subfloor to work, overridden in the idividual modules so these have no other impact -->
+  <property name ="project.revision" value="SNAPSHOT"/>
+  <property name ="impl.title" value="multimodule-build" />  
+
+  <!-- import a subfloor file to use as a base -->
+  <import file="build-res/subfloor.xml" />
+
+  <!-- These are the modules this script should build in the proper order-->
+  <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-hibernate,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->  
+  <property name="modules" value="BUILD_MODULES" />
+ 
+  <target name="init" depends="install-antcontrib" />  
+ 
+  <!-- Runs "clean-all" on the modules defined in the property "modules" -->
+  <target name="clean-all" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean-all" />
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Clean all the modules defined in the property "modules" -->
+  <target name="clean" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean" />
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Clean all the modules defined in the property "modules" -->
+  <target name="jar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="jar" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="source.jar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.jar" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="source.zip" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.zip" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="source.targz" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="source.tar.gz" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="dist-source" depends="source.zip">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist-source" />
+      </sequential>
+    </for>
+  </target>
+
+  <!-- All following targets are wrappers for all modules -->
+  <target name="resolve" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="resolve" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="test" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="test" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="cobertura" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="cobertura" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="publish-local" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish-local" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="publish" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="dist" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="continuous" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="continuous-testless" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous-testless" />
+      </sequential>
+    </for>
+  </target>
+  
+  <target name="compile" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="compile" />
+      </sequential>
+    </for>
+  </target>
+  <target name="javadoc" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc" />
+      </sequential>
+    </for>
+  </target>
+  <target name="dist-javadoc" depends="javadoc.zip">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc" />
+      </sequential>
+    </for>
+  </target>
+  <target name="javadoc.zip" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc.zip" />
+      </sequential>
+    </for>
+  </target>
+  <target name="javadoc.targz" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <echo>@{module}</echo>
+        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="javadoc.targz" />
+      </sequential>
+    </for>
+  </target>
+</project>  
