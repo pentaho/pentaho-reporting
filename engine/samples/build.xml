@@ -39,7 +39,7 @@
 	    ====================================================================-->
 	  <target name="clean">
 	  	<ant antfile="${common.build.file}" target="clean" />
-	    <delete>
+	    <delete quiet="true">
 	    	<fileset dir="${basedir}/WebContent/WEB-INF/lib">
 	    		<include name="*.jar"/>
 	    	</fileset>
