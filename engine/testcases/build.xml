@@ -38,4 +38,15 @@
        <mkdir dir="${src.dir}" />
      </target>
 
+    <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
+         These do nothing in an testcase build, so don't call out to subfloor
+      -->
+    <target name="dist-source" depends="dist" />
+    <target name="dist-javadoc" depends="dist" />
+    <target name="source.zip" />
+    <target name="source.targz" />
+    <target name="javadoc" />
+    <target name="javadoc.zip" />
+    <target name="javadoc.targz" />
+
 </project>
