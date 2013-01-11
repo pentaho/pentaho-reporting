@@ -1,3 +1,14 @@
 # Auto detect text files and perform LF normalization
-* text=auto
+* 		text=auto
+.classpath 	text
+.project   	text
+*.java     	text
+*.iml	   	text
+*.xml	   	text
+
+*.png		binary
+*.jpg		binary
+*.prpt		binary
+*.prpti		binary
+
 
