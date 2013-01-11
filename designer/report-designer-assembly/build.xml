@@ -255,4 +255,13 @@
     <!-- The dist target is where everything is assembled -->
     <target name="dist" depends="clean-all, init, resolve, stage-plugins, dist-winlinux, dist-mac"
             description="Creates the distributables for the Report Designer"/>
+            
+            
+    <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
+         These do nothing in an assembly build, so don't call out to subfloor
+      -->
+    <target name="dist-source" />
+    <target name="dist-javadoc" />
+    
+        
 </project>
