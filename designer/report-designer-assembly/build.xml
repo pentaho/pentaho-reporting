@@ -267,6 +267,7 @@
     <target name="javadoc" />
     <target name="javadoc.zip" />
     <target name="javadoc.targz" />
+    <target name="maven-publish-sources" />
     
         
 </project>
