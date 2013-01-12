@@ -21,3 +21,5 @@ build-res/module-scripts/
 *.ear
 
 engine/prd-3159-load-save-1.prpt
+
+.idea/workspace.xml
