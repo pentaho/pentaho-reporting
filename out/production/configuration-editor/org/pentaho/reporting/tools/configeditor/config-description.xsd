@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/config-description"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of config-editor definition file. This file contains a description
+      of all config-entries available along with their accepted syntax.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="config-description">
+    <xsd:annotation>
+      <xsd:documentation>
+        The root-element. A list of key-elements.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="key" minOccurs="0" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="key">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="description" minOccurs="0" maxOccurs="1"/>
+        <xsd:choice minOccurs="1" maxOccurs="1">
+          <xsd:element ref="class"/>
+          <xsd:element ref="enum"/>
+          <xsd:element ref="text"/>
+        </xsd:choice>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" use="required"/>
+      <xsd:attribute name="global" type="xsd:boolean" use="optional"/>
+      <xsd:attribute name="hidden" type="xsd:boolean" use="optional"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="text" type="xsd:string"/>
+
+  <xsd:element name="class">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:restriction base="xsd:element">
+          <xsd:attribute name="instanceof" type="xsd:string"/>
+        </xsd:restriction>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="enum">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="text" minOccurs="1" maxOccurs="unbounded"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="description">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="lang" type="xsd:string"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

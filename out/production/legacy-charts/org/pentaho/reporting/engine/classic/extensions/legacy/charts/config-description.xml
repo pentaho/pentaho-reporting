@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.metadata.namespaces.legacy-charts" global="true" hidden="true">
+    <description>A internal XML parser property. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.legacy-chart-element.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.legacy-charts.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.auto-report-preprocessors.Legacy-Chart-Processor" global="true" hidden="true">
+    <description>Internal Configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+
+</config-description>

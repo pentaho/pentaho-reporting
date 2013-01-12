@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AlphaChannel" global="false" hidden="false">
+    <description>Defines, whether the alpha channel should be enabled for the image encoding in the process-task.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.DeviceResolution" global="false" hidden="false">
+    <description>Defines in which resolution the generated images should be printed. If the image is not available in a suitable size for the given layouted output size, the image will be scaled to fit the specified device resolution.
+
+For the sake of backward compatitibility, we define the device resolution to be 72 DPI. This way, a pixel equals a point in the rendering.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.EncoderMime" global="false" hidden="false">
+    <description>Defines the encoder to use when exporting images in the process-task.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.Quality" global="false" hidden="false">
+    <description>Defines the encoding quality when encoding JPEGs in the process-task.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.UseNativeScaling" global="false" hidden="false">
+    <description>Defines, whether scaling should use the device&apos;s native scaling, which may or may not produce sensible results, or whether the images should be prescaled using a internal image scaling algorithm.
+
+This defaults to &quot;false&quot; so that we can guarantee the same output quality in all cases.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.WatermarkPrinted" global="false" hidden="false">
+    <description>Defines, whether the Watermarks-Section will be evaluated by the Graphics2D output processor. This defaults to true.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.OutlineMode" global="true" hidden="true">
+    <description>Defines that the Graphics2D and PDF output will ignore the regular border and background definitions. The output target will draw debugging borders instead, which can be used to visualize the internal structure of the output. Unless you want to debug the report layouter, there is no need to enable this property.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.PrintPageContents" global="true" hidden="true">
+    <description>Defines, that the output target will dump the currently processed page to the log system. This is expensive and creates huge amounts of data. It only makes sense to activate this property, if you are debugging the report layout system. For everyone else, activating this property will result in a enormous slow-down.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+
+</config-description>

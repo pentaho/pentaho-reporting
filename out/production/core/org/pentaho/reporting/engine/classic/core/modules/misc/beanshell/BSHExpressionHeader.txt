@@ -1,0 +1,19 @@
+/**
+ * $Id$
+ */
+import org.pentaho.reporting.engine.classic.core.*;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import java.util.Properties;
+
+/**
+ * The datarow is set before evaluation is started, use this as source for all evaluations.
+ */
+DataRow dataRow;
+ExpressionRuntime runtime;
+
+Object getValue ()
+{
+  DebugLog.log ("Warning: No user defined function!");
+  return null;
+}

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Sample Report 2" pageformat="A4"
+    topmargin="70" leftmargin="70" bottommargin="70" rightmargin="70">
+
+  <configuration>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.InlineStyles">true</property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceBufferedWriting">false
+    </property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers">false
+    </property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts">false
+    </property>
+    <property
+        name="org.pentaho.reporting.engine.classic.core.modules.output.table.base.DebugReportLayout">false
+    </property>
+    <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">false</property>
+    <property name="org.pentaho.reporting.engine.classic.core.YieldRate">0</property>
+    <property name="org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks">false</property>
+  </configuration>
+  <!-- REPORT HEADER -->
+  <reportheader height="50" fontname="SansSerif" fontstyle="bold" fontsize="18">
+    <label x="0" y="0" width="100%" height="20" alignment="center">Sample Report Two</label>
+    <label x="0" y="24" width="100%" height="10" fontsize="10" alignment="center">Generated using JFreeReport.</label>
+  </reportheader>
+
+  <!-- REPORT FOOTER -->
+  <reportfooter height="24" fontname="SansSerif" fontstyle="bold" fontsize="10" pagebreak-before-print="true">
+    <label x="0" y="0" width="100%" height="20" alignment="center">END OF REPORT</label>
+  </reportfooter>
+
+  <!-- PAGE HEADER -->
+  <pageheader height="32" onfirstpage="true" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <label x="0" y="12" width="100%" height="20" alignment="center">PAGE HEADER</label>
+  </pageheader>
+
+  <!-- PAGE FOOTER -->
+  <pagefooter height="24" onfirstpage="true" onlastpage="true" fontname="Serif" fontstyle="plain" fontsize="9">
+    <line x1="0" y1="4" x2="100%" y2="4" weight="0.5"/>
+    <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="4" width="100" height="18" alignment="left"/>
+    <string-field fieldname="pageXofY" x="100" y="4" width="100%" height="18" alignment="right"/>
+  </pagefooter>
+
+  <!-- GROUPS -->
+  <groups>
+
+    <!-- FIRST GROUP -->
+    <group name="Letter Group">
+
+      <!-- GROUP HEADER -->
+      <groupheader height="20" fontname="Monospaced" fontstyle="bold" fontsize="9" pagebreak-before-print="true"
+                   repeat="true">
+        <label x="0" y="1" width="120" height="9" alignment="left">LETTER GROUP:</label>
+        <string-field x="120" y="1" width="76" height="9" alignment="left" fieldname="Letter"/>
+        <line x1="0" y1="12" x2="100%" y2="12" weight="0.25"/>
+        <line x1="0" y1="14" x2="100%" y2="14" weight="0.25"/>
+      </groupheader>
+
+      <!-- GROUP FOOTER -->
+      <groupfooter height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="2" width="270" height="12" alignment="left">Total for letter:</label>
+        <number-field fieldname="Sum2" format="#,##0.00" x="270" y="2" width="106" height="12" alignment="right"/>
+      </groupfooter>
+
+      <!-- GROUP FIELDS -->
+      <fields>
+        <field>Letter</field>
+      </fields>
+
+    </group>
+
+    <!-- SECOND GROUP -->
+    <group name="Color Group">
+
+      <!-- GROUP HEADER -->
+      <groupheader height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <label x="0" y="1" width="210" height="9" alignment="left">Color Group:</label>
+        <string-field x="210" y="1" width="100" height="9" alignment="left" fieldname="Color"/>
+        <line x1="0" y1="12" x2="100%" y2="12" weight="0.25"/>
+      </groupheader>
+
+      <!-- GROUP FOOTER -->
+      <groupfooter height="18" fontname="Monospaced" fontstyle="bold" fontsize="9">
+        <line x1="0" y1="1" x2="100%" y2="1" weight="0.25"/>
+        <label x="0" y="3" width="270" height="12" alignment="left">Subtotal for color:</label>
+        <number-field fieldname="Sum1" format="#,##0.00" x="270" y="3" width="106" height="12" alignment="right"/>
+      </groupfooter>
+
+      <!-- GROUP FIELDS -->
+      <fields>
+        <field>Letter</field>
+        <field>Color</field>
+      </fields>
+
+    </group>
+
+  </groups>
+  <!-- ITEMS -->
+  <items height="10" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <!-- width reduced to 110 (former value 140) -->
+    <string-field x="0" y="0" width="110" height="8" alignment="left" fieldname="Name"/>
+    <number-field x="110" y="0" width="40" height="8" alignment="right" format="0" fieldname="Count1"/>
+    <string-field x="210" y="0" width="60" height="8" alignment="left" fieldname="Letter"/>
+    <string-field x="270" y="0" width="40" height="8" alignment="left" fieldname="Color"/>
+    <number-field x="310" y="0" width="66" height="8" alignment="right" format="#,##0" fieldname="Integer"/>
+    <number-field x="376" y="0" width="76" height="8" alignment="right" format="#,##0.00" fieldname="Double"/>
+  </items>
+  <!-- FUNCTIONS -->
+  <functions>
+    <!--
+     <function class="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction" name="monitor"/>
+     -->
+    <property-ref name="report.date"/>
+    <function name="Count1" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+      <properties>
+        <property name="group">Color Group</property>
+      </properties>
+    </function>
+
+    <function name="Count2" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+      <properties>
+        <property name="group">Letter Group</property>
+      </properties>
+    </function>
+    <function name="Sum1" class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction">
+      <properties>
+        <property name="field">Double</property>
+        <property name="group">Color Group</property>
+      </properties>
+    </function>
+    <function name="Sum2" class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction">
+      <properties>
+        <property name="field">Double</property>
+        <property name="group">Letter Group</property>
+      </properties>
+    </function>
+
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction" deplevel="1">
+      <!--
+        Activating this property counts the pages needed for the given group.
+        Only usefull with manual pagebreaks
+
+        <properties>
+            <property name="group">Letter Group</property>
+        </properties>
+        -->
+
+    </function>
+    <function name="PageTotal" class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction"
+              deplevel="1">
+
+      <!--
+        Activating this property counts the pages needed for the given group.
+        Only usefull with manual pagebreaks
+
+        <properties>
+            <property name="group">Letter Group</property>
+        </properties>
+       -->
+    </function>
+    <expression name="pageXofY" class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Page {0} of {1}</property>
+        <property name="field[0]">PageNumber</property>
+        <property name="field[1]">PageTotal</property>
+      </properties>
+    </expression>
+  </functions>
+
+</report>

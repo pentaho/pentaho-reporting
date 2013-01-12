@@ -1,0 +1,77 @@
+// This is a template to demonstrate the existing functions
+// you can use in a data-source query script. All functions and
+// global variables you define here will only be available for the
+// current query.
+//
+// Feel free to delete any function you don't use.
+//
+// you can process scripts via
+// scriptHelper.eval("println \"Hello World\";", "groovy");
+//
+// or your can load your own ECMA/JavaScript files and execute them via
+// scriptHelper.evalFile ("/your/file/here.groovy", "groovy");
+//
+// both inline scripts and files will be executed in the current context -
+// any function or variable defined there will be available for repeated
+// calls of the same query, but not to any other query.
+//
+// The following global variables exist by default:
+//    resourceManager : The ResourceManager can be used to load files
+//    contextKey      : ResourceKey the context key points to the prpt-bundle
+//    dataFactory     : The current datafactory instance
+//    configuration   : The current report configuration
+//    resourceBundleFactory : Access to translations and locale information
+//    scriptHelper    : Allows to load and evaluate other scripts
+
+def initQuery()
+{
+  // place all initialization logic here. This is the right space to prepare
+  // complex lookup tables or to fill global variables for this script.
+
+  // this method is called once during initialization. This function will
+  // only be called when the associated query is used.
+}
+
+def shutdownQuery()
+{
+  // place all shutdown logic here. If you use any persistent resources
+  // like files or connections make sure you close them here.
+
+  // this method is called once during the data-source shut-down. It
+  // will only be called if the associated query has been fired.
+}
+
+
+def computeQuery (query, queryName, dataRow)
+{
+  // computes the query string that is used to query the data-source.
+  // query contains the statically defined query (MQL-text)
+  // queryName is the logical name for this query given at design-time
+  // dataRow contains all parameters that will be used to execute the query
+
+  return query;
+}
+
+def computeQueryFields (query, queryName)
+{
+  // return any additional fields that may affect caching. If you rewrite
+  // the query dynamically in the 'computeQuery' function, include all fields
+  // that may take part of the query or query computation.
+  //
+  // if you do not want any caching, return <null>.
+  return new String[0];
+}
+
+def postProcessResult(query, queryName, dataRow, tableModel)
+{
+  // optionally post-process the query result. Usually you would not
+  // manipulate the given table-model directly, but you can either copy
+  // data into a new model or you can wrap it with a custom table-model
+  // implementation of your own making.
+
+  // if you discard the original tablemodel in the process, make sure
+  // you close it properly or you may leak resources.
+  return tableModel;
+}
+
+

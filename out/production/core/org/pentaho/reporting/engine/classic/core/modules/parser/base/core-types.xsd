@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/engine/coretypes">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema declares core data-types for interchangeable report definition in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.8 and 0.9 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:complexType name="datasource-type" abstract="true"/>
+  <xsd:complexType name="subreport-type" abstract="true"/>
+
+</xsd:schema>

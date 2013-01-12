@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/datasources/sql"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/datasources/sql">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of SQL-Datasource definitions in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.10 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:import namespace="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+              schemaLocation="file:/../../base/core-types.xsd"/>
+
+  <xsd:element name="direct-sql-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        An datasource consists of an (optional) connection info block and a
+        sequence of named queries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:element name="config" type="configType" minOccurs="0" maxOccurs="1"/>
+            <xsd:choice>
+              <xsd:element name="connection" type="connectionType" minOccurs="0" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiType" minOccurs="0" maxOccurs="1"/>
+            </xsd:choice>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="sql-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        An datasource consists of an (optional) connection info block and a
+        sequence of named queries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:element name="config" type="configType" minOccurs="0" maxOccurs="1"/>
+            <xsd:choice>
+              <xsd:element name="connection" type="connectionType" minOccurs="0" maxOccurs="1"/>
+              <xsd:element name="jndi" type="jndiType" minOccurs="0" maxOccurs="1"/>
+            </xsd:choice>
+            <xsd:element name="query" type="queryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="connectionType">
+    <xsd:sequence>
+      <xsd:element name="driver" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="url" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="properties" type="propertiesType" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="propertiesType">
+    <xsd:sequence>
+      <xsd:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="propertyType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="configType">
+    <xsd:attribute name="label-mapping" type="xsd:boolean"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="queryType">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:string">
+        <xsd:attribute name="name" type="xsd:string"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="jndiType">
+    <xsd:sequence>
+      <xsd:element name="path" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="username" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright (c) 2008, Your Corporation. All Rights Reserved.
+  -->
+
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+<!--
+  <expression class="org.jfree.report.extensions.modules.sparklines.SparklineExpression" bundle-name="org.jfree.report.metadata.messages" result="java.lang.Object" expert="false" hidden="false" preferred="false">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="type" mandatory="true" preferred="true" value-role="Value" expert="false" hidden="false"/>
+    <property name="color" mandatory="false" preferred="true" value-role="Value" expert="false" hidden="false"/>
+    <property name="backgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="highColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="lastColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="spacing" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="rawDataField" mandatory="false" preferred="false" value-role="Field" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="true" value-role="Field" expert="false" hidden="false"/>
+  </expression>
+-->
+</meta-data>

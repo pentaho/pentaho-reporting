@@ -1,0 +1,12 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <expression class="org.pentaho.reporting.engine.classic.wizard.WizardOverrideFormattingFunction"
+              bundle-name="org.pentaho.reporting.engine.classic.wizard.WizardOverrideFormattingFunctionBundle"
+              layout-processor-mode="global"
+              result="java.lang.Object" expert="true" hidden="false" preferred="false">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="element" mandatory="false" preferred="false" value-role="ElementName" expert="false"
+              hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+</meta-data>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.EncodingsAvailable" global="true" hidden="false">
+    <description>The property that defines which encodings are available in the export dialogs. This property defaults to &quot;all&quot; and can be set to  either &quot;all&quot;, &quot;none&quot; or &quot;file&quot;.
+
+If the property is set to &quot;file&quot;, then the list of available properties is read from the file defined in the property &quot;org.pentaho.reporting.engine.classic.core.encodings.file&quot;.</description>
+    <enum>
+      <text>all</text>
+      <text>file</text>
+      <text>none</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.EncodingsFile" global="true" hidden="false">
+    <description>Defines the name of the properties file used to define the available encodings.
+
+The property points to a resources in the classpath, not to a real file!</description>
+    <text/>
+  </key>
+
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.StoreExportDialogInputs" global="false" hidden="false">
+    <description>Defines, whether the export dialogs will store the users input (except any passwords) into the local configuration base. Set this to false, if you are concerned about any privacy leaks.
+
+This setting is a master switch, which can be used to disable all user-input storages. For each export plugin, the storage method can be configured individually in the module specific configuration.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingDialogTranslation" global="true" hidden="false">
+    <description>Defines, whether we should translate the standard swing dialogs.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.base.UseReportLocale" global="true" hidden="true">
+    <description>Defines, whether the GUI should use the report&apos;s locale to display itself. (This property is not used yet.)</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+
+</config-description>

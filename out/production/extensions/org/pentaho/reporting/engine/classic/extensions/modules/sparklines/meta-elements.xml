@@ -1,0 +1,118 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
+  
+  <element name="bar-sparkline" expert="false" hidden="false" preferred="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-computed-value"/>
+    <attribute-group-ref ref="replaced-content-attributes"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="spacing"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+
+    <style name="-x-pentaho-sparklines-highcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+    <style name="-x-pentaho-sparklines-lastcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+  </element>
+
+  <element name="line-sparkline" expert="false" hidden="false" preferred="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.LineSparklineType">
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-computed-value"/>
+    <attribute-group-ref ref="replaced-content-attributes"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="spacing"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+    <style name="-x-pentaho-sparklines-lastcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+  </element>
+
+  <element name="pie-sparkline" expert="false" hidden="false" preferred="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.PieSparklineType">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-computed-value"/>
+    <attribute-group-ref ref="replaced-content-attributes"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="start-angle"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="counter-clockwise"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="low-slice"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Double"
+               value-role="Value"/>
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="medium-slice"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Double"
+               value-role="Value"/>
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
+               name="high-slice"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Double"
+               value-role="Value"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+
+    <style name="-x-pentaho-sparklines-highcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+    <style name="-x-pentaho-sparklines-mediumcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+    <style name="-x-pentaho-sparklines-lowcolor" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.styles"/>
+  </element>
+
+</meta-data>

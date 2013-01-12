@@ -1,0 +1,200 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head><title>Groups</title></head>
+<body>
+<h2>2.&nbsp;Report groups</h2>
+
+<p>Reports used in the real-world-business are more than simple list of
+  rows and columns. To gain information from the presented data, the
+  report data is sorted and condensed into separate sections, which
+  corespond to the logical structure of the report. Therefore report
+  engines introduced the concept of groups to support the structuring of
+  report data.</p>
+
+<p>With groups, a set of rows, the report data set, is subdivided into an
+  ordered collection of smaller subsets of rows. All rows of a group
+  instance share a common attribute. In the domain of relational
+  databases, the attribute is defined by the name of one or more columns.
+  Within the group instance, all those columns have the same value. That
+  set of attributes, which identifies a group, is called the group
+  key.</p>
+
+<p>Groups in the reporting usually can be mapped to 'is-part-of' relations
+  in the real world. Employees could be grouped by the department, where
+  they work in, or by the first letter of their last name.</p>
+
+<h3>2.1.&nbsp;The Control-Break-Algorithm</h3>
+
+<p>Reporting can be a very resource intenstive process. Data has to be
+  queried from databases and other sources, the data must be processed,
+  sorted and intermediate results must be computed and finally the
+  report output must be generated. Even with today's powerfull
+  computers, performance is a key to customer satisfaction. To fullfill
+  these performance requirements, it is unacceptable to waste time
+  building a global view on the report data unless absolutly
+  necessary.</p>
+
+<p>For performance reasons, group memberships are computed at runtime
+  with an algorithm called the 'control-break algorithm'. Understanding
+  this algorithm is the key to successful reporting, as this algorithm
+  heavily influences how the report engine behaves and how groups are
+  built up. The control-break-algorithm does not build a global view
+  over all group instances. To detect the end or start of a group, it
+  compares the current row with the previously read row of data. If the
+  data of one of the group's key columns is different, the current group
+  must be finished. If the report processing has not reached the last
+  row, a new group instance is opened immediatly. This new group will
+  remain active until either the end of the report data has been reached
+  or the group key values changed.</p>
+
+<p><em>Definition:</em></p>
+
+<p>A <em>group</em> is a contigiuous set of rows,
+  where all rows of the group share the same group key.</p>
+
+<p>A <em>group instance</em> is identified by a <em>group key</em>.
+  The key consists of one or
+  more attributes, where all entites in that group have the same values
+  stored in the specified attributes. When using databases, entity sets
+  are usually represented by tables and attributes are represented by
+  the table's columns.</p>
+
+<p>A <em>sub group</em> is a group, which has a key
+  that contains all attributes of its parent and has at least one more
+  attribute. Therefore, a sub group contains a subset of it's parent's
+  rows.</p>
+
+<p>A group with a group key without attributes defined is called the
+  <em>default group</em>. This group has a single
+  instance which always spans the complete report data set.</p>
+
+<p>The single level Control-Break-Algorithm as pseudo code:</p>
+  <pre>OPEN data-set.
+    READ record.
+
+    PRINT report-header.
+
+    WHILE NOT END-OF-FILE
+    DO
+    VAR groupKey := GET-CURRENT-GROUP-KEY.
+    PRINT group-header.
+
+    WHILE (NOT END-OF-FILE AND
+    groupKey IS-EQUAL-TO GET-CURRENT-GROUP-KEY)
+    DO
+    PRINT item-band.
+    READ
+    DONE.
+
+    PRINT group-footer.
+
+    DONE
+
+    PRINT report-footer.
+    CLOSE data-set.</pre>
+
+<p>and in Java (the complete code for this listing can be found is in
+  CVS):</p>
+  <pre> public static void main (final
+    String[] args)
+    {
+    final Object[][] data = initData();
+
+    // cursor at the first row ...
+    // in this example modifying the 'position' is equal to a 'read'
+    operation
+    int position = 0;
+
+    printReportHeader(data, position);
+    while (isEndOfFile (data, position) == false)
+    {
+    // initialize the group key with the data from the first row
+    // remember the current group key
+    // if the group key changes, we have to do a control break ...
+    final Object groupKey = data[position][CONTINENT_COL];
+    printGroupHeader(data, position);
+
+    while ((isEndOfFile (data, position) == false) &amp;&amp;
+    (data[position][CONTINENT_COL].equals(groupKey)))
+    {
+    // store the last value of the group key (so that we can detect changes)
+
+    // print the items ...
+    printItems (data, position);
+
+    // now 'read' the next row of data ...
+    position += 1;
+    }
+    printGroupFooter(data, position - 1);
+    }
+
+    printReportFooter(data, position - 1);
+    }</pre>
+
+<p>From this algorithm, we can derive some basic principles about groups
+  as they are used in JFreeReport.</p>
+
+<ol type="1">
+  <li><p>Data used in group keys
+    must be sorted according to the group hierarchy definition.</p>
+
+    <p>As only neighbouring rows are compared against each other, this
+      algorithm will consider rows to be part of the currrent group if and
+      only if all rows of a particular group key instance are kept
+      together as direct neigbours in the report dataset.</p>
+
+  </li>
+  <li><p>A group with no attributes defined will have a single instance, which
+    spans the complete report data set.</p>
+  </li>
+
+  <li><p>As long as there is
+    data available, a new group instance will be opened immediatly after
+    the previous instance has been closed down. It is not possible to
+    print the item band without having an open group.</p></li>
+
+  <li><p>The
+    order of the attribute specification within a group definition is not
+    important. For the algorithm it is important, that one attribute value
+    have changed, it is not important, which one changed.</p></li>
+</ol>
+
+<p>By considering the group data to be a new data set, we can stack
+  multiple control-break runs into each other. These multi-level control
+  breaks add some new behavioural constraints to the engine.</p>
+
+<ol type="1">
+  <li><p>A sub group can only be
+    opened, after its parent group has been opened.</p>
+
+    <p>Subgroup processing starts as soon as the group header of the
+      parent group has been printed. Immediatly after the processing
+      finishes, the parent group's footer gets printed. The processing
+      flow cannot reach the subgroup without passing through the parent
+      group.</p></li>
+
+  <li><p>A sub group must cease control as soon as one
+    the parent's group attributes changes.</p>
+
+    <p>A control break in one of the parent groups will close all
+      subgroups. As soon as the parent group generated a new group
+      instance, new instances of the sub groups will be opened as
+      well.</p>
+
+    <p>Therefore sub groups must be aware of the group attributes of it's
+      parents.</p></li>
+
+  <li><p>Adding an attribute, which has a constant
+    value, to the group definition will not alter the number or order of
+    the generated group instances.</p></li>
+
+  <li><p>A group can only have
+    one directly attached sub group.</p></li>
+</ol>
+
+
+</body>
+</html>

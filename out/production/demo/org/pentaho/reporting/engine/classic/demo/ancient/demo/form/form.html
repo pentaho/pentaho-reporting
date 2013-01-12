@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Patient Form Demo</title>
+</head>
+
+<body>
+<h2>
+  Patient Form demo: Using the watermark band to print predefined form elements.
+</h2>
+
+<p>
+  This report creates a patient form (including all treatments applied to the
+  patient). A watermark band is used to generate the form preprinted structure.
+</p>
+
+<h3>
+  The Data Model
+</h3>
+
+<p>
+  The table model in question consists of a list of patients, each with some
+  general data like name, address, social security number. For each patient
+  exists a list of treatments, the patient had to go through.
+</p>
+
+<h3>General structure of the report</h3>
+
+<p>
+  This very simple report has a single level group definition. The report
+  is grouped by the patient's ID and a pagebreak is enforced before a patient
+  is printed.
+</p>
+
+<p>
+  The pre-printed form elements are kept in the watermark band. The watermark
+  is printed after a new page has been opened but before the page header gets
+  printed. It is the first band to be printed on each page. A watermarks always
+  spans the complete page and cannot trigger a pagebreak.
+</p>
+
+<p>
+  Please note, that Watermark definitions are ignored for Table-Exports, like
+  HTML or Excel.
+</p>
+</body>
+</html>

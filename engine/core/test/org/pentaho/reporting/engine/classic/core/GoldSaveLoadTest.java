@@ -19,7 +19,6 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import static junit.framework.Assert.assertTrue;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
@@ -48,6 +47,11 @@ public class GoldSaveLoadTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     runAllGoldReports();
   }
 }

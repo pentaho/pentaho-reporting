@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://jfreereport.sourceforge.net/namespaces/datasources/cda"
+            targetNamespace="http://jfreereport.sourceforge.net/namespaces/datasources/cda">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of named cda-Datasource definitions in
+      Pentaho Reporting.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="cda-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+        A cda datasource consists of a configuration (declaring the connection properties) and the
+        actual queries.
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+        <xsd:sequence>
+          <xsd:element ref="config" minOccurs="1" maxOccurs="1"/>
+          <xsd:element ref="query" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="config">
+    <xsd:complexType>
+      <xsd:attribute name="base-url" type="xsd:string"/>
+      <xsd:attribute name="base-url-field" type="xsd:string"/>
+      <xsd:attribute name="file" type="xsd:string"/>
+      <xsd:attribute name="path" type="xsd:string"/>
+      <xsd:attribute name="solution" type="xsd:string"/>
+      <xsd:attribute name="username" type="xsd:string"/>
+      <xsd:attribute name="password" type="xsd:string"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="query">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string">
+          <xsd:attribute name="name" type="xsd:string"/>
+        </xsd:extension>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

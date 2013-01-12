@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report-definition
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext"
+    name="ReportProperty Demo (Using the stacked layout)">
+
+    <parser-config>
+        <object-factory class="org.jfree.xml.factory.objects.URLClassFactory"/>
+        <object-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+        <object-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+        <object-factory class="org.jfree.xml.factory.objects.ArrayClassFactory"/>
+        <element-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+        <stylekey-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+        <stylekey-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+        <template-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+        <datasource-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+    </parser-config>
+
+    <report-config>
+        <simple-page-definition width="1" height="1">
+            <page orientation="portrait" topmargin="72" leftmargin="72" bottommargin="72" rightmargin="72"
+                  pageformat="A4"/>
+        </simple-page-definition>
+    </report-config>
+
+    <report-description>
+        <report-header>
+            <style>
+                <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                    <basic-object name="height">35.0</basic-object>
+                    <basic-object name="width">0.0</basic-object>
+                </compound-key>
+                <basic-key name="font">SansSerif</basic-key>
+                <basic-key name="font-size">10</basic-key>
+                <basic-key name="font-bold">false</basic-key>
+                <basic-key name="font-italic">false</basic-key>
+                <compound-key name="absolute_pos">
+                    <basic-object name="x">0.0</basic-object>
+                    <basic-object name="y">0.0</basic-object>
+                </compound-key>
+                <compound-key name="layoutmanager">
+                    <basic-object
+                        name="class">org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager</basic-object>
+                </compound-key>
+            </style>
+            <element type="shape/generic">
+                <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                        <basic-object name="height">-100.0</basic-object>
+                        <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#ffcccc</basic-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">true</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                </style>
+                <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                        <basic-object name="height">100.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                </datasource>
+            </element>
+            <element type="shape/generic">
+                <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                        <basic-object name="height">-100.0</basic-object>
+                        <basic-object name="width">-100.0</basic-object>
+                    </compound-key>
+                    <basic-key name="paint">#cccccc</basic-key>
+                    <basic-key name="scale">true</basic-key>
+                    <basic-key name="keepAspectRatio">false</basic-key>
+                    <basic-key name="dynamic_height">false</basic-key>
+                    <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="fill-shape">false</basic-key>
+                    <basic-key name="draw-shape">true</basic-key>
+                </style>
+                <datasource type="StaticDataSource">
+                    <compound-object name="value" class="java.awt.geom.Rectangle2D$Float">
+                        <basic-object name="height">100.0</basic-object>
+                        <basic-object name="width">100.0</basic-object>
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-object>
+                </datasource>
+            </element>
+            <band>
+                <style>
+                    <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                        <basic-object name="height">0.0</basic-object>
+                        <basic-object name="width">0.0</basic-object>
+                    </compound-key>
+                    <basic-key name="layout-cacheable">false</basic-key>
+                    <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <compound-key name="layoutmanager">
+                        <basic-object
+                            name="class">org.pentaho.reporting.engine.classic.core.layout.StackedLayoutManager</basic-object>
+                    </compound-key>
+                </style>
+                <element type="text/plain">
+                    <style>
+                        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                            <basic-object name="height">18.0</basic-object>
+                            <basic-object name="width">-100.0</basic-object>
+                        </compound-key>
+                        <basic-key name="font-size">18</basic-key>
+                        <basic-key name="font-bold">true</basic-key>
+                        <basic-key name="font-italic">false</basic-key>
+                        <basic-key name="alignment">left</basic-key>
+                        <basic-key name="dynamic_height">true</basic-key>
+                    </style>
+                    <template references="string-field">
+                        <basic-object name="field">Message1</basic-object>
+                    </template>
+                </element>
+                <element type="text/plain">
+                    <style>
+                        <compound-key name="min-size" class="org.jfree.ui.FloatDimension">
+                            <basic-object name="height">18.0</basic-object>
+                            <basic-object name="width">-100.0</basic-object>
+                        </compound-key>
+                        <basic-key name="font-size">18</basic-key>
+                        <basic-key name="font-bold">true</basic-key>
+                        <basic-key name="font-italic">false</basic-key>
+                        <basic-key name="alignment">left</basic-key>
+                        <basic-key name="dynamic_height">true</basic-key>
+                    </style>
+                    <template references="string-field">
+                        <basic-object name="field">Message2</basic-object>
+                    </template>
+                </element>
+            </band>
+        </report-header>
+        <groups>
+        </groups>
+    </report-description>
+    <functions>
+        <property-ref name="Message1"/>
+        <property-ref name="Message2"/>
+    </functions>
+</report-definition>

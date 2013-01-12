@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright (c) 2008, Your Corporation. All Rights Reserved.
+  -->
+
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
+
+  <element name="community-chart" expert="false" hidden="false" preferred="true"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.charting.messages"
+           implementation="org.pentaho.reporting.engine.classic.extensions.charting.ChartElementType">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-computed-value"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+  </element>
+</meta-data>

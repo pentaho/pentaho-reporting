@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.connection-factories.namespace.hibernate" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.connection-factories.tag.hibernate.connection" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.data-factories.namespace.hibernate" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.data-factories.tag.hibernate.hibernate-datasource" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.session-factory-prefix.built-in.default" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.writer.session-provider.org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.DefaultSessionProvider" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.hibernate" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.hibernate" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.hibernate-datafactory.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.hibernate.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+
+</config-description>

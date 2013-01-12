@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+<report orientation="landscape" pageformat="A4" leftmargin="10" rightmargin="10">
+
+  <pageheader onfirstpage="false">
+    <label x="5" y="11" width="50" height="25">Some page header stuff</label>
+  </pageheader>
+
+  <groups>
+    <group>
+      <fields>
+      </fields>
+      <groupheader height="45" fontname="Monospaced" fontstyle="bold" fontsize="8" vertical-alignment="middle">
+        <rectangle x="0" y="0" width="100%" height="100%" draw="true" fill="true" color="#DAFAC5"/>
+
+        <rectangle x="5" y="0" width="50" height="11" draw="true" fill="false"/>
+        <label x="5" y="0" width="50" height="11">Number</label>
+
+        <rectangle x="5" y="11" width="50" height="25" draw="true" fill="false"/>
+        <label x="5" y="11" width="50" height="25">Data Present</label>
+
+        <rectangle x="55" y="0" width="540" height="11" draw="true" fill="false"/>
+        <label x="55" y="0" width="524" height="11">Activity</label>
+
+        <rectangle x="55" y="0" width="56" height="36" draw="true" fill="false"/>
+        <label x="55" y="11" width="56" height="36">Type of Manut.ne</label>
+
+        <rectangle x="111" y="11" width="64" height="25" draw="true" fill="false"/>
+        <label x="111" y="11" width="64" height="25">Importance</label>
+
+        <rectangle x="175" y="0" width="56" height="11" draw="true" fill="false"/>
+        <label x="175" y="0" width="56" height="11">State</label>
+
+        <rectangle x="175" y="11" width="56" height="25" draw="true" fill="false"/>
+        <label x="175" y="11" width="56" height="25">Data disc.ne</label>
+
+        <rectangle x="231" y="0" width="104" height="11" draw="true" fill="false"/>
+        <label x="231" y="0" width="104" height="11">Note</label>
+
+        <rectangle x="335" y="0" width="175" height="33" draw="true" fill="false"/>
+        <label x="335" y="0" width="175" height="33">Actions suggested from the steereing committee</label>
+
+        <rectangle x="510" y="0" width="85" height="11" draw="true" fill="false"/>
+        <label x="510" y="0" width="85" height="11">Owner:</label>
+
+        <rectangle x="510" y="11" width="85" height="22" draw="true" fill="false"/>
+        <label x="510" y="11" width="85" height="22">Team:</label>
+
+        <rectangle x="595" y="0" width="114" height="33" draw="true" fill="true" color="#878787"/>
+        <label x="595" y="0" width="114" height="33">State of advancement</label>
+
+        <rectangle x="709" y="0" width="70" height="33" draw="true" fill="false"/>
+        <label x="711" y="11" width="70" height="17" vertical-alignment="middle">State2</label>
+      </groupheader>
+
+    </group>
+  </groups>
+
+  <pagefooter height="15" fontname="Monospaced" fontsize="6">
+    <line name="line4" x1="0" y1="0" x2="100%" y2="0" weight="1" color="#c0c0c0"/>
+    <date-field name="date1" x="0" y="5" width="100%" height="8" alignment="left" color="#000080"
+                format="EEEE d MMMM yyyy" fieldname="report.date"/>
+    <number-field name="pagenum1" fieldname="PageNumber" format="Pagina 0" x="0" y="5" width="100%" height="8"
+                  alignment="right" color="#000080"/>
+  </pagefooter>
+
+  <!-- GROUPS -->
+  <groups>
+  </groups>
+
+  <!-- Data -->
+  <!--
+    progress   - numeric
+    date1      - date
+    activity   - string
+    type       - type
+    importance - number
+    state      - string
+    dateDisc   - date
+    note       - string
+    action     - string
+    owner      - string
+    team       - string
+    SAL        - string
+    -->
+  <!-- ITEMS -->
+  <items height="104" fontstyle="plain" fontsize="8" alignment="left" fontname="SansSerif">
+
+    <rectangle x="5" y="0" width="50" height="28" draw="true" fill="false"/>
+    <number-field x="5" y="0" width="50" height="28" fontname="Monospaced" fontstyle="bold" fontsize="14" format="0"
+                  fieldname="Progress"/>
+
+    <rectangle x="5" y="28" width="50" height="28" draw="true" fill="false"/>
+    <date-field x="5" y="28" width="50" height="28" fontname="Monospaced" format="dd-MMM-yyyy" fieldname="date1"/>
+
+    <rectangle x="55" y="0" width="653" height="28" draw="true" fill="false"/>
+    <string-field x="55" y="0" width="653" height="28" fieldname="Activity" fontname="Monospaced" fontstyle="bold"
+                  fontsize="10"/>
+
+    <rectangle x="55" y="28" width="56" height="56" draw="true" fill="false"/>
+    <string-field x="55" y="28" width="56" height="56" alignment="left" fieldname="Type"/>
+
+    <rectangle x="111" y="28" width="64" height="56" draw="true" fill="false"/>
+    <number-field x="111" y="28" width="64" height="56" alignment="left" format="0" fieldname="Importance"/>
+
+    <rectangle x="175" y="28" width="56" height="37" draw="true" fill="false"/>
+    <string-field x="175" y="28" width="56" height="37" alignment="left" fieldname="State"/>
+
+    <rectangle x="175" y="65" width="56" height="19" draw="true" fill="false"/>
+    <date-field x="175" y="65" width="56" height="19" format="dd-MMM-yyyy" fieldname="DateDisc"/>
+
+    <rectangle x="231" y="28" width="104" height="70" draw="true" fill="false"/>
+    <string-field x="231" y="28" width="104" height="70" fieldname="Note1"/>
+
+    <rectangle x="335" y="28" width="175" height="70" draw="true" fill="false"/>
+    <string-field x="335" y="28" width="175" height="70" fieldname="Azioni"/>
+
+    <rectangle x="510" y="28" width="85" height="28" draw="true" fill="false"/>
+    <string-field x="510" y="28" width="85" height="28" fieldname="Owner"/>
+
+    <rectangle x="510" y="56" width="85" height="42" draw="true" fill="false"/>
+    <string-field x="510" y="56" width="85" height="42" fieldname="Team"/>
+
+    <rectangle x="595" y="28" width="113" height="70" draw="true" fill="false"/>
+    <string-field x="595" y="28" width="113" height="70" fieldname="SAL"/>
+
+
+    <rectangle x="708" y="0" width="70" height="68" draw="true" fill="false"/>
+
+    <label x="708" y="0" width="70" height="14" alignment="center">Authorisation</label>
+
+    <rectangle x="708" y="68" width="70" height="30" draw="true" fill="false"/>
+  </items>
+
+  <!-- FUNCTION -->
+  <functions>
+    <property-ref name="report.date"/>
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction"/>
+  </functions>
+</report>

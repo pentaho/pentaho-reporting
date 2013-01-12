@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg1306"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   inkscape:export-filename="C:\Daten\07_Projekte\PentahoReportDesignerBranch\src\res\icons\reportelements\ChartReportElement.png"
+   inkscape:export-xdpi="45.000000"
+   inkscape:export-ydpi="45.000000"
+   sodipodi:docbase="C:\Daten\07_Projekte\PentahoReportDesignerBranch\src\res\icons\reportelements"
+   sodipodi:docname="ChartReportElement.svg">
+  <defs
+     id="defs1308">
+    <linearGradient
+       id="linearGradient2770">
+      <stop
+         style="stop-color:#b1b1b1;stop-opacity:1.0000000;"
+         offset="0.00000000"
+         id="stop2772" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop2774" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.836083"
+     inkscape:cx="18.245132"
+     inkscape:cy="14.355061"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="977"
+     inkscape:window-height="682"
+     inkscape:window-x="430"
+     inkscape:window-y="299" />
+  <metadata
+     id="metadata1311">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <path
+       style="fill:#e3e3e3;fill-opacity:1.0000000;fill-rule:nonzero;stroke:#6d6d6d;stroke-width:2.0000014;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4.0000000;stroke-dasharray:none;stroke-dashoffset:5.4000000;stroke-opacity:1.0000000"
+       d="M 1.0345666,5.1873305 L 30.930912,5.1873305 C 30.930912,5.1873305 30.930912,5.1873305 30.930912,5.1873305 L 30.930912,27.058007 C 30.930912,27.058007 30.930912,27.058007 30.930912,27.058007 L 1.0345666,27.058007 C 1.0345666,27.058007 1.0345666,27.058007 1.0345666,27.058007 L 1.0345666,5.1873305 C 1.0345666,5.1873305 1.0345666,5.1873305 1.0345666,5.1873305 z "
+       id="rect1314" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ff7f7f;fill-opacity:1;stroke:#7e0000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path3314"
+       sodipodi:cx="17.112818"
+       sodipodi:cy="17.381487"
+       sodipodi:rx="7.19875"
+       sodipodi:ry="6.9777355"
+       d="M 24.205644,18.574086 A 7.19875,6.9777355 0 1 1 19.489063,10.794861 L 17.112818,17.381487 z"
+       sodipodi:start="0.17175817"
+       sodipodi:end="5.0487894"
+       transform="translate(-1.914068,-1.359222)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#7fff81;fill-opacity:1;stroke:#057e00;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path3318"
+       sodipodi:cx="17.112818"
+       sodipodi:cy="17.381487"
+       sodipodi:rx="7.19875"
+       sodipodi:ry="6.9777355"
+       d="M 19.465105,10.786786 A 7.19875,6.9777355 0 0 1 24.167566,18.770168 L 17.112818,17.381487 z"
+       sodipodi:start="5.0452658"
+       sodipodi:end="6.4835391"
+       transform="translate(-2.112818,-1.266803)" />
+  </g>
+</svg>

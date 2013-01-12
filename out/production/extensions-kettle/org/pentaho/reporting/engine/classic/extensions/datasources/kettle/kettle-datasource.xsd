@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Copyright (c) 2008, Your Corporation. All Rights Reserved.
+  -->
+
+<xsd:schema version="0.9"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:core="http://jfreereport.sourceforge.net/namespaces/engine/coretypes"
+            xmlns="http://reporting.pentaho.org/namespaces/datasources/kettle"
+            targetNamespace="http://reporting.pentaho.org/namespaces/datasources/kettle">
+  <xsd:annotation>
+    <xsd:documentation>
+      This schema describes the format of named Kettle-Datasource definitions in
+      JFreeReport. This document is aimed for the JFreeReport 0.8.10 and 1.9 release.
+    </xsd:documentation>
+  </xsd:annotation>
+
+  <xsd:element name="kettle-datasource">
+    <xsd:annotation>
+      <xsd:documentation>
+      </xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="core:datasource-type">
+          <xsd:sequence>
+            <xsd:element name="query-file" type="queryFileType" minOccurs="1" maxOccurs="unbounded"/>
+            <xsd:element name="query-repository" type="queryRepositoryType" minOccurs="1" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:complexType name="argumentType">
+    <xsd:complexContent>
+      <xsd:extension base="xsd:element">
+        <xsd:attribute name="datarow-name" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="variableType">
+    <xsd:complexContent>
+      <xsd:extension base="xsd:element">
+        <xsd:attribute name="datarow-name" use="required"/>
+        <xsd:attribute name="variable-name" use="optional"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="queryFileType">
+    <xsd:complexContent>
+      <xsd:extension base="xsd:element">
+        <xsd:sequence>
+          <xsd:element name="argument" type="argumentType" minOccurs="1" maxOccurs="unbounded"/>
+          <xsd:element name="variable" type="variableType" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="repository" type="xsd:string" use="required"/>
+        <xsd:attribute name="filename" type="xsd:string" use="required"/>
+        <xsd:attribute name="username" type="xsd:string" use="required"/>
+        <xsd:attribute name="password" type="xsd:string" use="required"/>
+        <xsd:attribute name="step" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="queryRepositoryType">
+    <xsd:complexContent>
+      <xsd:extension base="xsd:element">
+        <xsd:sequence>
+          <xsd:element name="argument" type="argumentType" minOccurs="1" maxOccurs="unbounded"/>
+          <xsd:element name="variable" type="variableType" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="repository" type="xsd:string" use="required"/>
+        <xsd:attribute name="directory" type="xsd:string" use="required"/>
+        <xsd:attribute name="transformation" type="xsd:string" use="required"/>
+        <xsd:attribute name="username" type="xsd:string" use="required"/>
+        <xsd:attribute name="password" type="xsd:string" use="required"/>
+        <xsd:attribute name="step" type="xsd:string" use="required"/>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+</xsd:schema>

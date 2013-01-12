@@ -1,0 +1,42 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
+
+  <element name="legacy-chart" expert="false" hidden="false" preferred="true"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.legacy.charts.metadata"
+           implementation="org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-computed-value"/>
+    <attribute-group-ref ref="replaced-content-attributes"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/legacy/charting/1.0"
+               name="primary-dataset-expression"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               prefer-bulk="true"
+               design-time-value="true"
+               value-type="org.pentaho.reporting.engine.classic.core.function.Expression"
+               value-role="Expression"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/legacy/charting/1.0"
+               name="secondary-dataset-expression"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               prefer-bulk="true"
+               design-time-value="true"
+               value-type="org.pentaho.reporting.engine.classic.core.function.Expression"
+               value-role="Expression"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+
+  </element>
+
+</meta-data>

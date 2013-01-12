@@ -1,0 +1,88 @@
+<html>
+<head>
+  <title>Interactive HTML Demo</title>
+</head>
+<body>
+<h1>Whats going on</h1>
+
+<p>
+  This demo generates a HTML file that contains a demonstration of the Report-Engine's
+  HTML generator extensions for interactive reports.
+</p>
+
+<p>
+  When being loaded in the browser, the report-level Java-Script fragment pops up. The
+  code for this fragment is found in the "layout.xml" file inside the report-bundle file
+  in the "layout" element.
+</p>
+
+<p>
+  A second pop-up demonstrates the report-element level code injection capabilities. The
+  code for this fragment is found in the label-element inside the report-header element in
+  the "layout.xml" file inside the report-bundle file in the "layout" element.
+</p>
+
+<p>
+  Clicking on the "Exciting Quadrant Data" element demonstrates the ability to inject
+  code into the HTML-event-handlers.
+</p>
+
+<p>
+  Hovering over the "Variance" group-footer field triggers the tooltip.
+</p>
+
+<h1>Technical background</h1>
+
+<p>
+  For the HTML code injection, we use the reporting engine's new attribute-system.
+</p>
+<ul>
+  <li>onkeyup, onkeydown, onkeypressed, onclick, ondblclick, onmousedown, onmouseup, onmousemove, onmouseover
+    <p>
+      The attribute's content is directly converted into the HTML event handlers of the resulting HTML file.
+      The attribute values will not be processed by the reporting engine in any way, but will be encoded using
+      character-entity encoding for the special XML characters.
+    </p>
+  </li>
+  <li>name
+    <p>
+      This translates into the HTML-name attribute. It may be used to mark elements for java-script handlers.
+    </p>
+  </li>
+  <li>xml-id
+    <p>
+      This translates into the "id" attribute. The attribute is defined to be unique within the output document,
+      but it is up to the attribute's user to enforce or ensure this uniqueness.
+    </p>
+  </li>
+  <li>class
+    <p>
+      The contents of this attribute are appended to any generated "class" attribute and
+      can be used to apply additional styles to an element.
+    </p>
+  </li>
+  <li>title
+    <p>
+      The contents of this attribute are copied into the "title" attribute, which is displayed as
+      tooltop when hovering over the element. However, the title attribute is used in the
+      accessible-HTML context, so it may be a good idea to be careful when using this attribute.
+    </p>
+  </li>
+  <li>extra-raw-content
+    <p>
+      The extra-raw content allows to inject non-interpreted content into the resulting report. The
+      content can contain java-script. This is a "shoot-yourself-in-the-foot" property that allows
+      to introduce security problems with ease.
+    </p>
+  </li>
+  <li>extra-raw-header-content
+    <p>
+      The extra-raw-header-content allows to inject non-interpreted content into the &lt;head&gt; element. The
+      content can contain java-script. This is a "shoot-yourself-in-the-foot" property that allows
+      to introduce security problems with ease.
+    </p>
+  </li>
+</ul>
+
+</body>
+</html>

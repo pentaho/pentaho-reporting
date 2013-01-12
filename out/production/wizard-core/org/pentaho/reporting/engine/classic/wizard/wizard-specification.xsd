@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://reporting.pentaho.org/namespaces/engine/classic/bundle/wizard-specification/1.0"
+           targetNamespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/wizard-specification/1.0">
+
+  <xs:complexType name="watermarkDefinitionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="source" use="optional"/>
+        <xs:attribute type="xs:string" name="x" use="optional"/>
+        <xs:attribute type="xs:string" name="y" use="optional"/>
+        <xs:attribute type="xs:string" name="width" use="optional"/>
+        <xs:attribute type="xs:string" name="height" use="optional"/>
+        <xs:attribute type="xs:boolean" name="visible" use="optional"/>
+        <xs:attribute type="xs:boolean" name="scale" use="optional"/>
+        <xs:attribute type="xs:boolean" name="keep-aspect-ratio" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="groupDefinitionType">
+    <xs:sequence>
+      <xs:element type="rootBandDefinitionType" name="footer" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="rootBandDefinitionType" name="header" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="group-name" use="optional"/>
+    <xs:attribute type="xs:string" name="group-type" use="optional"/>
+    <xs:attribute type="xs:string" name="group-totals-label" use="optional"/>
+
+    <xs:attribute type="xs:string" name="data-format" use="optional"/>
+    <xs:attribute type="xs:string" name="totals-align" use="optional"/>
+    <xs:attribute type="xs:string" name="null-string" use="optional"/>
+    <xs:attribute type="xs:string" name="display-name" use="optional"/>
+    <xs:attribute type="xs:string" name="field" use="optional"/>
+    <xs:attribute type="xs:string" name="aggregation-function" use="optional"/>
+
+    <xs:attribute type="xs:string" name="vertical-align" use="optional"/>
+    <xs:attribute type="xs:string" name="horizontal-align" use="optional"/>
+
+    <xs:attribute type="xs:string" name="font-name" use="optional"/>
+    <xs:attribute type="xs:boolean" name="bold" use="optional"/>
+    <xs:attribute type="xs:boolean" name="italic" use="optional"/>
+    <xs:attribute type="xs:boolean" name="underline" use="optional"/>
+    <xs:attribute type="xs:boolean" name="strikethrough" use="optional"/>
+    <xs:attribute type="xs:unsignedInt" name="size" use="optional"/>
+    <xs:attribute type="xs:string" name="font-color" use="optional"/>
+    <xs:attribute type="xs:string" name="background-color" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="groupDefinitionsType">
+    <xs:sequence>
+      <xs:element type="groupDefinitionType" name="group-definition" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="detailsFieldType">
+    <xs:attribute type="xs:string" name="only-show-distinct" use="optional"/>
+    <xs:attribute type="xs:string" name="width" use="optional"/>
+
+    <xs:attribute type="xs:string" name="data-format" use="optional"/>
+    <xs:attribute type="xs:string" name="null-string" use="optional"/>
+    <xs:attribute type="xs:string" name="display-name" use="optional"/>
+    <xs:attribute type="xs:string" name="field" use="optional"/>
+    <xs:attribute type="xs:string" name="aggregation-function" use="optional"/>
+
+    <xs:attribute type="xs:string" name="vertical-align" use="optional"/>
+    <xs:attribute type="xs:string" name="horizontal-align" use="optional"/>
+
+    <xs:attribute type="xs:string" name="font-name" use="optional"/>
+    <xs:attribute type="xs:boolean" name="bold" use="optional"/>
+    <xs:attribute type="xs:boolean" name="italic" use="optional"/>
+    <xs:attribute type="xs:boolean" name="underline" use="optional"/>
+    <xs:attribute type="xs:boolean" name="strikethrough" use="optional"/>
+    <xs:attribute type="xs:unsignedInt" name="size" use="optional"/>
+    <xs:attribute type="xs:string" name="font-color" use="optional"/>
+    <xs:attribute type="xs:string" name="background-color" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="detailsFieldDefinitionsType">
+    <xs:sequence>
+      <xs:element type="detailsFieldType" name="detail-field" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rootBandDefinitionType">
+    <xs:attribute type="xs:boolean" name="repeat" use="optional"/>
+    <xs:attribute type="xs:boolean" name="visible" use="optional"/>
+
+    <xs:attribute type="xs:string" name="vertical-align" use="optional"/>
+    <xs:attribute type="xs:string" name="horizontal-align" use="optional"/>
+    
+    <xs:attribute type="xs:string" name="font-name" use="optional"/>
+    <xs:attribute type="xs:boolean" name="bold" use="optional"/>
+    <xs:attribute type="xs:boolean" name="italic" use="optional"/>
+    <xs:attribute type="xs:boolean" name="underline" use="optional"/>
+    <xs:attribute type="xs:boolean" name="strikethrough" use="optional"/>
+    <xs:attribute type="xs:unsignedInt" name="size" use="optional"/>
+    <xs:attribute type="xs:string" name="font-color" use="optional"/>
+    <xs:attribute type="xs:string" name="background-color" use="optional"/>
+  </xs:complexType>
+
+  <xs:element name="wizard-specification" type="wizard-specificationType">
+    <xs:annotation>
+      <xs:documentation>
+        The wizard-specification element is the root-element for all wizard documents.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="wizard-specificationType">
+    <xs:sequence>
+      <xs:element type="rootBandDefinitionType" name="column-footer" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="rootBandDefinitionType" name="column-header" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="detailsFieldDefinitionsType" name="detail-fields" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="groupDefinitionsType" name="group-definitions" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="watermarkDefinitionType" name="watermark-specification" maxOccurs="1" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>

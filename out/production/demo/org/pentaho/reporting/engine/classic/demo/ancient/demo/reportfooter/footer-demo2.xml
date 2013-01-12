@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="PageFooter Demo" pageformat="A4">
+  <reportheader>
+    <rectangle x="0" y="0" width="100%" height="100%" color="#7fff7f" fill="true" draw="false"/>
+    <label x="0" y="0" width="100%" height="12">The report header</label>
+  </reportheader>
+
+  <!-- PAGE HEADER -->
+  <pageheader height="32" onfirstpage="true" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <label x="0" y="12" width="100%" height="20" alignment="center">PAGE HEADER</label>
+  </pageheader>
+
+  <!-- ITEMS -->
+  <items height="10" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <string-field x="0" y="0" width="110" height="8" alignment="left" fieldname="Name"/>
+    <number-field x="110" y="0" width="40" height="8" alignment="right" format="0" fieldname="Count1"/>
+    <string-field x="210" y="0" width="60" height="8" alignment="left" fieldname="Letter"/>
+    <string-field x="270" y="0" width="40" height="8" alignment="left" fieldname="Color"/>
+    <number-field x="310" y="0" width="66" height="8" alignment="right" format="#,##0" fieldname="Integer"/>
+    <number-field x="376" y="0" width="76" height="8" alignment="right" format="#,##0.00" fieldname="Double"/>
+  </items>
+
+  <!--
+    The report footer should contain a white rectangle with a fixed height which is
+    as large as the page footer. This is needed to fool the layouting engine or weird
+    effects will happen. Even with that, that trick is nothing more than a cheap hack
+    and no guarantees can be given.
+
+    The height of this band must be the height of the report footer content minus
+    the height of the normal page footer.
+
+    JFreeReport already takes the normal page footers height into account when
+    performing the layout - it does not know that we will replace the page footer
+    later.
+
+      Last page footer height:   72
+    - Normal page footer height: 24
+    ===============================
+    = Report footer height:      48
+    -->
+  <reportfooter layout-cachable="false">
+    <rectangle x="0" y="0" width="100%" height="48" color="#efefef" fill="true" draw="false"/>
+  </reportfooter>
+
+  <pagefooter layout-cachable="false">
+    <band x="0" y="0" height="72" name="fake-report-footer">
+      <rectangle x="0" y="0" width="100%" height="72" color="#7f7fff" fill="false" draw="true"/>
+      <label x="0" y="0" width="80%" height="12">Number of items displayed: </label>
+      <number-field x="80%" y="0" width="20%" height="12" fieldname="itemcount"/>
+      <label x="0" y="12" width="100%" height="60" fontname="SansSerif">
+The grey area is the real report footer (make it white to be invisible, but do not remove it).
+The blue-bordered area is the page footer, which gets misused as a report footer.
+      </label>
+
+      <line x1="0" y1="52" x2="100%" y2="52" weight="0.5"/>
+      <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="52" width="100" height="18" alignment="left"/>
+      <string-field fieldname="pageXofY" x="50%" y="52" width="50%" height="18" alignment="right"/>
+    </band>
+
+    <band x="0" y="0" height="24" name="page-footer-content">
+      <line x1="0" y1="4" x2="100%" y2="4" weight="0.5"/>
+      <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="4" width="100" height="18" alignment="left"/>
+      <string-field fieldname="pageXofY" x="50%" y="4" width="50%" height="18" alignment="right"/>
+    </band>
+  </pagefooter>
+
+  <functions>
+    <property-ref name="report.date"/>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction" name="itemcount"/>
+    <function
+        class="org.pentaho.reporting.engine.classic.demo.ancient.demo.reportfooter.TriggerComplexPageFooterFunction"
+        name="trigger"/>
+
+    <function name="Count1" class="org.pentaho.reporting.engine.classic.core.function.ItemCountFunction">
+      <properties>
+        <property name="group">Color Group</property>
+      </properties>
+    </function>
+
+
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction"/>
+    <function name="PageTotal" class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction"/>
+    <expression name="pageXofY" class="org.pentaho.reporting.engine.classic.core.function.TextFormatExpression">
+      <properties>
+        <property name="pattern">Page {0} of {1}</property>
+        <property name="field[0]">PageNumber</property>
+        <property name="field[1]">PageTotal</property>
+      </properties>
+    </expression>
+
+  </functions>
+</report>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.ProgressDialogEnabled" global="true" hidden="false">
+    <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.StoreDialogContents" global="false" hidden="false">
+    <description>Defines, whether the CSV-Export dialogs will store the user-input for each report. Set this property to false, if you are concerned about any privacy leaks.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.data.AdvancedSettingsAvailable" global="true" hidden="false">
+    <description>Defines, whether the Advanced-Export-Settings tab will be available in the CSV-Data export dialog.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.data.Dialog" global="true" hidden="true">
+    <description>The export dialog implementation to use. This is a implementation configuration.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.data.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.export.table.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.table.AdvancedSettingsAvailable" global="true" hidden="false">
+    <description>Defines, whether the advanced settings will be shown in the export dialog.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.csv.table.Dialog" global="true" hidden="true">
+    <description>The export dialog implementation to use. This is a implementation configuration.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.csv.data" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.csv.table" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.csv.enabled" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.csv.position" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.csv.resource-base" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.csv.resource-prefix" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+</config-description>

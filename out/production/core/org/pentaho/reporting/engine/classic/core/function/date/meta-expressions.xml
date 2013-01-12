@@ -1,0 +1,100 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <expression class="org.pentaho.reporting.engine.classic.core.function.date.DateSpanExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.core.function.date.DateSpanExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="endDateField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="startDateField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+  </expression>
+
+  <expression class="org.pentaho.reporting.engine.classic.core.function.date.CompareDateExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.core.function.date.CompareDateExpressionBundle"
+              result="java.lang.Boolean" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="compareMethod" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="date" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+
+  <expression class="org.pentaho.reporting.engine.classic.core.function.date.DateExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.core.function.date.DateExpressionBundle"
+              result="java.util.Date" expert="false" hidden="false" preferred="false">
+    <property name="day" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfMonth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfWeek" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfWeekInMonth" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="dayOfYear" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="epochTime" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="hour" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="milliSecond" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="minute" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="month" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="second" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="time" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="timeZone" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="weekOfYear" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="weekOfMonth" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="year" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+  </expression>
+
+  <expression class="org.pentaho.reporting.engine.classic.core.function.date.VariableDateExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.core.function.date.VariableDateExpressionBundle"
+              result="java.util.Date" expert="false" hidden="false" preferred="false">
+    <property name="day" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfMonth" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfMonthField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dayOfWeek" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfWeekField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dayOfWeekInMonth" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
+    <property name="dayOfWeekInMonthField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dayOfYear" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="dayOfYearField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="epochTime" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="epochTimeField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="hour" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="hourField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="milliSecond" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="milliSecondField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="minute" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="minuteField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="month" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="monthField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="second" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="secondField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="time" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="timeField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="timeZone" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="timeZoneField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="weekOfMonth" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+    <property name="weekOfMonthField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="weekOfYear" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="weekOfYearField" mandatory="false" preferred="false" value-role="Field" expert="false"
+              hidden="false"/>
+    <property name="year" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="yearField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+  </expression>
+
+</meta-data>

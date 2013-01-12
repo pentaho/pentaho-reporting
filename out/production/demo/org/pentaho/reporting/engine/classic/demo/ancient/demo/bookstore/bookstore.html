@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Bookstore Demo - A simple invoice</title>
+</head>
+<body>
+<h2>Bookstore Demo - Simple Invoice Printing</h2>
+
+<h3>Data Structure</h3>
+
+<p>
+  The used tablemodel contains several customers, identified by their name and
+  address. Each customer buys one or more books, identified by the book's ID-code.
+</p>
+
+<p>
+  The report grouping follows that structure and introduces a single group called
+  'Customer'. The group's fields are mapped against the customer data in the
+  tablemodel ('name', 'address', 'town').
+</p>
+
+<h3>Layout Structure</h3>
+
+<p>
+  The general contract declares, that a group header is always printed before
+  any itemband can be printed. A group contains all successional rows, which share
+  a common set of properties (identified by the group fields). If one of the
+  columns changes, the group is considered finished and the group footer is
+  printed. If there is at least one more row, a new group instance will be opened
+  immediatly.
+</p>
+
+<p>
+  We use that behaviour to print the invoice header in the group header band.
+  Following the contract above, we can be sure that the invoice header is printed
+  for each customer before the items get processed. The group footer contains
+  the summary section of the invoice.
+</p>
+
+<p>
+  To keep the report definition simple, we did not add any pagebreak handling
+  functionality. Therefore the report will start to look funny if there are
+  more items per customer than would fit on a single page. A complexer invoice
+  demo, that handles such cases, can be found in the 'Invoice' demo package.
+</p>
+
+<h3>Functions</h3>
+
+<p>
+  The invoice total is computed using a 'ItemSumFunction'. That function computes
+  a running total. When used in the GroupFooter of the function's group, the
+  running total will be equal to the grand total for that group instance.
+  As an alternative function, the 'TotalItemSumFunction' could be used. This
+  function precomputes the grand total and will always return the total sum,
+  no matter where the function's value is used.
+</p>
+
+<h3>Noteworthy features</h3>
+
+<p>
+  The butterfly image is a WMF image. WMF, like SVG is a vector graphics format
+  and produces the best results for high-resolution printing. If you have the
+  choice between vector and raster image, choose the vector images.
+</p>
+
+<p>
+  The 'sheetNameExpression' defined in the report definition is not referenced
+  by any report element. The name of the function has been assigned to the
+  configuration key 'org.pentaho.reporting.engine.classic.core.targets.table.TableWriter.SheetNameFunction'.
+  The table exporter targets will now use this expression to set the sheet name
+  (HTML title or Excel Workbook sheet name).
+</p>
+</body>
+</html>

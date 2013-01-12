@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report-definition
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext"
+    name="StyleSheets">
+  <parser-config>
+    <object-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <element-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+
+  <styles>
+    <style name="background-rectangle">
+      <compound-key name="min-size">
+        <basic-object name="width">-100.0</basic-object>
+        <basic-object name="height">-100.0</basic-object>
+      </compound-key>
+      <basic-key name="scale">true</basic-key>
+      <basic-key name="stroke" class="java.awt.BasicStroke">0.0</basic-key>
+      <compound-key name="absolute_pos">
+        <basic-object name="x">0.0</basic-object>
+        <basic-object name="y">0.0</basic-object>
+      </compound-key>
+      <basic-key name="fill-shape">true</basic-key>
+      <basic-key name="keepAspectRatio">false</basic-key>
+      <basic-key name="draw-shape">false</basic-key>
+    </style>
+
+    <style name="horizontal_line">
+      <compound-key name="min-size">
+        <basic-object name="width">-100.0</basic-object>
+        <basic-object name="height">0.0</basic-object>
+      </compound-key>
+      <basic-key name="draw-shape">true</basic-key>
+      <basic-key name="fill-shape">false</basic-key>
+      <basic-key name="keepAspectRatio">false</basic-key>
+      <basic-key name="scale">true</basic-key>
+    </style>
+
+    <style name="thin_horizontal_line">
+      <extends name="horizontal_line"/>
+      <basic-key name="stroke" class="java.awt.BasicStroke">0.5</basic-key>
+    </style>
+
+    <style name="thick_horizontal_line">
+      <extends name="horizontal_line"/>
+      <basic-key name="stroke" class="java.awt.BasicStroke">2.0</basic-key>
+    </style>
+
+    <style name="common-text">
+      <basic-key name="font">SansSerif</basic-key>
+      <basic-key name="font-italic">false</basic-key>
+      <basic-key name="font-bold">false</basic-key>
+      <basic-key name="font-underline">false</basic-key>
+    </style>
+
+    <style name="header-element">
+      <extends name="common-text"/>
+      <basic-key name="font-bold">true</basic-key>
+      <basic-key name="font-size">14</basic-key>
+    </style>
+
+    <style name="data-element">
+      <extends name="common-text"/>
+      <basic-key name="font-size">12</basic-key>
+      <basic-key name="font">Monospaced</basic-key>
+      <basic-key name="valignment">middle</basic-key>
+    </style>
+
+    <style name="footer-element">
+      <extends name="common-text"/>
+      <basic-key name="font-italic">true</basic-key>
+      <basic-key name="font-size">14</basic-key>
+    </style>
+
+    <style name="summary-element">
+      <extends name="footer-element"/>
+      <basic-key name="font-underline">true</basic-key>
+    </style>
+
+    <style name="footer-number-element">
+      <extends name="footer-element"/>
+      <basic-key name="font">Monospaced</basic-key>
+    </style>
+  </styles>
+
+</report-definition>

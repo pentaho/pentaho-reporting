@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/
+there.is.only.xul">
+  <hbox id="controller_panel">
+    <spacer flex="1" />
+    <!-- 
+    <button id="preview_btn" label="${PREVIEW}" onclick="wizard_controller.preview()" />
+    -->
+	<button id="back_btn" label="${BACK}" onclick="wizard_controller.back()" />
+	<button id="next_btn" label="${NEXT}" onclick="wizard_controller.next()" />
+    <spacer width="75"/>
+  	<button id="finish_btn" label="${FINISH}" onclick="wizard_controller.finish()" />
+  	<button id="cancel_btn" label="${CANCEL}" onclick="wizard_controller.cancel()" />
+  </hbox>
+</overlay>

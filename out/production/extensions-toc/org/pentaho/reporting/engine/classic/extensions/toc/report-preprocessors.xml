@@ -1,0 +1,6 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <pre-processor class="org.pentaho.reporting.engine.classic.extensions.toc.TocReportPreProcessor"
+                 bundle-name="org.pentaho.reporting.engine.classic.extensions.toc.TocReportPreProcessorBundle"
+                 expert="true" hidden="true" preferred="false" auto-process="true">
+  </pre-processor>
+</meta-data>

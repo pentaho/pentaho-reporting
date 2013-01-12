@@ -1,0 +1,37 @@
+<repository path="/full/file/path">
+  <file localized-name="text" visible="true" description="text" name="text" isDirectory="true" lastModifiedDate="long">
+    <file visible="true"
+       // if name ends with URL ...
+       (any special properties we may find in the *.url file
+       url_name="a name"
+
+
+       // else
+       title="text"
+
+       // common
+       url="url" (if *.url then the URL attribute there, else the RUN attribute of the plugin)
+       description="description"
+       name="name"
+       localized-name="name"
+       isDirectory="true or false"
+       lastModifiedDate="long"
+       param-service-url="url"/>
+  </file>
+</repository>
+
+http://localhost:8080/pentaho/SolutionRepositoryService?component=getSolutionRepositoryDoc&filter={0}
+
+
+to access the file use:
+
+web-solution:http://localhost/pentaho!/steelwheels/report.prpt
+
+or for https:
+
+web-solution:https://localhost/pentaho!/steelwheels/report.prpt
+
+
+This is designed so that the url can be constructed via 
+"web-solution:" + serverUrl.toString() + "!" + "/path/on/solution-repository"
+

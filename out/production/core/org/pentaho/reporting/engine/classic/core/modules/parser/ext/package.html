@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<body bgcolor="white">
+The base package for the JFreeReport "extended" parser.
+<p>
+  An extensible report definition parser. The parser uses a generic
+  report definition syntax to fully describe the report. The parser
+  heavily relies on factories to create elements and objects.
+
+<p>
+  The used generic approach leads to a complex and very complex and
+  technically detailed report definition, which can be confusing and
+  difficult to use for human authors.
+
+<p>
+  The DTD for the reportdefinition files can be found at
+  <a href="http://jfreereport.sourceforge.net/extreport.dtd">http://jfreereport.sourceforge.net/extreport.dtd</a>
+  or in the distribution package.
+
+<p>
+  The document type declaration for this definition type is
+<pre>
+&lt;!DOCTYPE report-definition
+  PUBLIC "-//JFreeReport//DTD report definition//EN//extended"
+         "http://jfreereport.sourceforge.net/extreport.dtd"&gt;
+</pre>
+<p>
+  The template inheritance is implemented using various instances of the
+  same template class with variing parameter fill level.
+
+<p>
+
+<h3>ParserHints used by this parser:</h3>
+
+<p>
+<table>
+  <tr>
+    <th>Bound to</th>
+    <th>HintName</th>
+    <th>HintType</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.parser-config.objectfactories</td>
+    <td>java.util.List</td>
+    <td>A list containing the class names of all used object factories.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.parser-config.stylekeyfactories</td>
+    <td>java.util.List</td>
+    <td>A list containing the class names of all used stylekey factories.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.parser-config.templatefactories</td>
+    <td>java.util.List</td>
+    <td>A list containing the class names of all used template factories.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.parser-config.datasourcefactories</td>
+    <td>java.util.List</td>
+    <td>A list containing the class names of all used datasource factories.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.parser-config.elementfactories</td>
+    <td>java.util.List</td>
+    <td>A list containing the class names of all used element factories.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.template-definition</td>
+    <td>java.util.List</td>
+    <td>A list containing all predefined templates.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>parser.type</td>
+    <td>java.lang.String</td>
+    <td>A string marking the type of the parser that was used to create the report.
+      The ext-parser uses "org.pentaho.reporting.engine.classic.core.modules.parser.ext" and the simple parser
+      uses "org.pentaho.reporting.engine.classic.core.modules.parser.simple".
+    </td>
+  </tr>
+  <tr>
+    <td>Element, TemplateDescription</td>
+    <td>ext.parser.template-reference</td>
+    <td>java.lang.String</td>
+    <td>Contains the name of the referenced template.</td>
+  </tr>
+  <tr>
+    <td>JFreeReport-object</td>
+    <td>ext.parser.template-definition</td>
+    <td>java.util.List</td>
+    <td>Contains the defined template descriptions.</td>
+  </tr>
+</table>
+</body>
+</html>
+

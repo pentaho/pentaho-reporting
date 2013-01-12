@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<report-definition name="StyleKey Reference Report"
+                   xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext">
+  <parser-config>
+    <object-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+    <element-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+    <stylekey-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+    <template-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+    <datasource-factory
+        class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+  </parser-config>
+
+  <report-config>
+    <page-definition>
+      <page orientation="portrait" pageformat="A4" topmargin="24" bottommargin="24" leftmargin="24" rightmargin="24"/>
+    </page-definition>
+    <configuration>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">JFreeReport - http://www.jfree.org/jfreereport</property>
+      <property
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">iso-8859-15</property>
+    </configuration>
+  </report-config>
+
+  <report-description>
+    <report-header>
+
+      <!-- The report header style -->
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="height">18.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <basic-key name="background-color">#DCDB64</basic-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">14</basic-key>
+        <basic-key name="font">SansSerif</basic-key>
+        <basic-key name="font-underline">false</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+      </style>
+
+      <!-- A text element, contains the report header -->
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">-100.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+          <basic-key name="valignment">middle</basic-key>
+        </style>
+        <template references="label">
+          <basic-object name="content">StyleKey Reference</basic-object>
+        </template>
+      </element>
+
+    </report-header>
+
+    <groups>
+      <group name="object-factory">
+        <fields>
+          <field>stylekey-factory</field>
+        </fields>
+        <group-header>
+          <style>
+            <compound-key name="min-size">
+              <basic-object name="height">18.0</basic-object>
+              <basic-object name="width">0.0</basic-object>
+            </compound-key>
+            <basic-key name="font-bold">true</basic-key>
+            <basic-key name="font-size">14</basic-key>
+            <basic-key name="font">SansSerif</basic-key>
+            <basic-key name="font-underline">false</basic-key>
+            <basic-key name="font-italic">false</basic-key>
+            <basic-key name="valignment">middle</basic-key>
+            <basic-key name="background-color">#EAEAAB</basic-key>
+          </style>
+
+          <!-- group header -->
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">14</basic-object>
+                <basic-object name="width">120.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">2.0</basic-object>
+              </compound-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">StyleKey Factory</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">12.0</basic-object>
+                <basic-object name="width">-100.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">18.0</basic-object>
+              </compound-key>
+              <basic-key name="font-size">10</basic-key>
+              <basic-key name="font">Monospaced</basic-key>
+            </style>
+            <template references="string-field">
+              <basic-object name="nullValue">-</basic-object>
+              <basic-object name="field">stylekey-factory</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">14.0</basic-object>
+                <basic-object name="width">-25.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">0.0</basic-object>
+                <basic-object name="y">32.0</basic-object>
+              </compound-key>
+              <basic-key name="font-size">12</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Name</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">14.0</basic-object>
+                <basic-object name="width">-50.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">-25.0</basic-object>
+                <basic-object name="y">32.0</basic-object>
+              </compound-key>
+              <basic-key name="font-size">12</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Type</basic-object>
+            </template>
+          </element>
+
+          <element type="text/plain">
+            <style>
+              <compound-key name="min-size">
+                <basic-object name="height">14.0</basic-object>
+                <basic-object name="width">-25.0</basic-object>
+              </compound-key>
+              <compound-key name="absolute_pos">
+                <basic-object name="x">-75.0</basic-object>
+                <basic-object name="y">32.0</basic-object>
+              </compound-key>
+              <basic-key name="font-size">12</basic-key>
+            </style>
+            <template references="label">
+              <basic-object name="content">Inherited/Transient</basic-object>
+            </template>
+          </element>
+
+        </group-header>
+      </group>
+    </groups>
+
+    <itemband>
+      <style>
+        <compound-key name="min-size">
+          <basic-object name="height">12.0</basic-object>
+          <basic-object name="width">0.0</basic-object>
+        </compound-key>
+        <basic-key name="font-bold">true</basic-key>
+        <basic-key name="font-size">10</basic-key>
+        <basic-key name="font">Monospaced</basic-key>
+        <basic-key name="font-underline">false</basic-key>
+        <basic-key name="font-italic">false</basic-key>
+        <basic-key name="valignment">middle</basic-key>
+      </style>
+
+      <element type="text/plain" name="object-class">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">-25</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">key-name</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">-50.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-25.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">key-class</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">-10.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-80.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">inherit</basic-object>
+        </template>
+      </element>
+
+      <element type="text/plain">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">12.0</basic-object>
+            <basic-object name="width">-10.0</basic-object>
+          </compound-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">-90.0</basic-object>
+            <basic-object name="y">0.0</basic-object>
+          </compound-key>
+        </style>
+        <template references="string-field">
+          <basic-object name="nullValue">-</basic-object>
+          <basic-object name="field">transient</basic-object>
+        </template>
+      </element>
+
+      <element type="shape/generic">
+        <style>
+          <compound-key name="min-size">
+            <basic-object name="height">0.0</basic-object>
+            <basic-object name="width">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="stroke" class="java.awt.BasicStroke">0.1</basic-key>
+          <compound-key name="absolute_pos">
+            <basic-object name="x">0.0</basic-object>
+            <basic-object name="y">-100.0</basic-object>
+          </compound-key>
+          <basic-key name="paint">#EEEEC0</basic-key>
+          <basic-key name="fill-shape">false</basic-key>
+          <basic-key name="scale">true</basic-key>
+          <basic-key name="keepAspectRatio">false</basic-key>
+          <basic-key name="draw-shape">true</basic-key>
+        </style>
+        <template references="horizontal-line"/>
+      </element>
+
+    </itemband>
+
+  </report-description>
+</report-definition>

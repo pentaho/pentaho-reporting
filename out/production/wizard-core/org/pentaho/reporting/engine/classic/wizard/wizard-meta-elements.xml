@@ -1,0 +1,70 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <attribute-group name="common-attributes">
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="CachedWizardFormatData"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               computed="true"
+               value-type="java.lang.Object"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="CachedWizardFieldData"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               computed="true"
+               value-type="java.lang.Object"
+               value-role="Value"/>
+
+  </attribute-group>
+
+  <attribute-group name="report-attributes">
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="enable"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="spec"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               computed="true"
+               value-type="java.lang.Object"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="source"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               computed="true"
+               value-type="java.lang.String"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
+               bundle-name="org.pentaho.reporting.engine.classic.wizard.metadata"
+               name="template"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Value"/>
+
+  </attribute-group>
+</meta-data>

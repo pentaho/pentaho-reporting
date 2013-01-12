@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://inkscape.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32px"
+   height="32px"
+   id="svg1306"
+   sodipodi:version="0.32"
+   inkscape:version="0.43"
+   inkscape:export-filename="C:\Daten\07_Projekte\Report\ch.gridvision.crm.report\src\res\icons\ReportFrameIcon.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docbase="C:\Daten\07_Projekte\Report\ch.gridvision.crm.report\src\res\icons"
+   sodipodi:docname="ReportFrameIcon.svg">
+  <defs
+     id="defs1308">
+    <linearGradient
+       id="linearGradient2411">
+      <stop
+         style="stop-color:#4f4fff;stop-opacity:1;"
+         offset="0"
+         id="stop2413" />
+      <stop
+         style="stop-color:#d3d3ff;stop-opacity:0;"
+         offset="1"
+         id="stop2415" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2770">
+      <stop
+         style="stop-color:#b1b1b1;stop-opacity:1.0000000;"
+         offset="0.00000000"
+         id="stop2772" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1.0000000;"
+         offset="1.0000000"
+         id="stop2774" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2411"
+       id="linearGradient2417"
+       x1="23.358637"
+       y1="16.066698"
+       x2="2.1418221"
+       y2="-8.3711643"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="15.836083"
+     inkscape:cx="11.617736"
+     inkscape:cy="16.819038"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:grid-bbox="true"
+     inkscape:document-units="px"
+     inkscape:window-width="970"
+     inkscape:window-height="785"
+     inkscape:window-x="411"
+     inkscape:window-y="99" />
+  <metadata
+     id="metadata1311">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#bcbcbc;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect2419"
+       width="38"
+       height="37.031055"
+       x="-3"
+       y="-2.4523795"
+       ry="1.9575548" />
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#bcbcbc;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1516"
+       width="30"
+       height="30"
+       x="1"
+       y="1"
+       ry="1.9575548" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:url(#linearGradient2417);fill-opacity:1;fill-rule:evenodd;stroke:#6854fe;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path2409"
+       sodipodi:sides="5"
+       sodipodi:cx="15.281557"
+       sodipodi:cy="6.236053"
+       sodipodi:r1="16.115834"
+       sodipodi:r2="5.9512649"
+       sodipodi:arg1="-0.3105986"
+       sodipodi:arg2="0.31771993"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 30.62626,1.3105926 L 20.934962,8.0952366 L 24.707722,19.307682 L 15.260367,12.18728 L 5.7625442,19.240224 L 9.6150555,8.05493 L -0.027681703,1.2014438 L 11.800657,1.4089537 L 15.33894,-9.8796781 L 18.796744,1.4338645 L 30.62626,1.3105926 z "
+       transform="translate(0.723894,11.2366)" />
+  </g>
+</svg>

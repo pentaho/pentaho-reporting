@@ -32,7 +32,6 @@
         ====================================================================-->
     <target name="continuous-local" depends="build,publish-local"/>
 
-
     <!--=======================================================================
         continuous-testless
 
@@ -49,4 +48,15 @@
     <!-- Override default dist target to do a dist-full instead -->
     <target name="dist" depends="dist-full"/>
 
+    <target name="longrun-test">
+        <antcall target="test">
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+        </antcall>
+    </target>
+
+    <target name="longrun-cobertura">
+        <antcall target="cobertura">
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+        </antcall>
+    </target>
 </project>

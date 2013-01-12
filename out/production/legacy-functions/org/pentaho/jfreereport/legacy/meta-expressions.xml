@@ -1,0 +1,76 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <expression class="org.pentaho.jfreereport.legacy.XYDataSetCollectorFunction"
+              bundle-name="org.pentaho.jfreereport.legacy.XYDataSetCollectorFunctionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="domainColumn" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="resetGroup" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="seriesName" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.ColumnDivisionExpression"
+              bundle-name="org.pentaho.jfreereport.legacy.ColumnDivisionExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.ColumnSumExpression"
+              bundle-name="org.pentaho.jfreereport.legacy.ColumnSumExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.ColumnAverageExpression"
+              bundle-name="org.pentaho.jfreereport.legacy.ColumnAverageExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="onlyValidFields" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.GetCurrentDateFunction"
+              bundle-name="org.pentaho.jfreereport.legacy.GetCurrentDateFunctionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.TimeDiffFunction"
+              bundle-name="org.pentaho.jfreereport.legacy.TimeDiffFunctionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field1" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="field2" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.TimeDiffAndFormatFunction"
+              bundle-name="org.pentaho.jfreereport.legacy.TimeDiffAndFormatFunctionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field1" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="field2" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.ColumnDifferenceExpression"
+              bundle-name="org.pentaho.jfreereport.legacy.ColumnDifferenceExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.TimeDiffFormatFunction"
+              bundle-name="org.pentaho.jfreereport.legacy.TimeDiffFormatFunctionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+  <expression class="org.pentaho.jfreereport.legacy.ColumnMultiplyExpression"
+              bundle-name="org.pentaho.jfreereport.legacy.ColumnMultiplyExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="field" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+  </expression>
+</meta-data>

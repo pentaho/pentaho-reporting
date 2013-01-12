@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Font selection demo</title>
+</head>
+<body>
+<h2>Font Selection</h2>
+
+<p>
+  This simple demo prints sample text using all fonts available to the Java
+  Virtual Maschine. The fonts are grouped by their font family. This demo
+  is useful when trying to determine a font's unicode or PDF embedding
+  capabilities.
+</p>
+
+<h3>Data Structure</h3>
+
+<p>
+  The table model is very simple. The two columns in the model represent the
+  font name and the font family. The fonts itself are aquired using <code>
+  GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+</code>. The contents are sorted by the font familiy to enable grouping.
+</p>
+
+<h3>Report Structure</h3>
+
+<p>
+  The report itself consists of a single group for the 'font family' printing
+  the family name in the header and counting the number of fonts in that family
+  in the footer of the group.
+</p>
+
+<p>
+  The itemband prints the font name and a sample text. The SampleText field's
+  font property gets modified by a function to match the current font.
+</p>
+
+<h3>Functions</h3>
+
+<p>
+  The only noteworthy function here is the 'FontChangeFunction'. The function
+  itself does not compute anything. Every registered function is called on
+  every report event and is granted access to the report definition. We use
+  that feature to lookup and modifiy the sample element's font properties.
+</p>
+</body>
+</html>

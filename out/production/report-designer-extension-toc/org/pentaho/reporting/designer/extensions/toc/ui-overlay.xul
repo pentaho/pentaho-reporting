@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<overlay
+    xmlns:pen="http://www.pentaho.org/2008/xul"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <menupopup id="format-popup">
+    <menuseparator/>
+    <menuitem id="format.toc.editor"
+              pen:action="org.pentaho.reporting.designer.extensions.toc.EditTocAction"/>
+    <menuitem id="format.index.editor"
+              pen:action="org.pentaho.reporting.designer.extensions.toc.EditIndexAction"/>
+  </menupopup>
+
+  <hbox id="global-popup-container">
+
+    <popup id="popup-toc">
+      <menuitem id="popup-toc.edit"
+                pen:action="org.pentaho.reporting.designer.extensions.toc.EditTocAction"/>
+      <menuseparator/>
+
+      <menuitem id="popup-toc.layer-up"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
+      <menuitem id="popup-toc.layer-down"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
+      <menuseparator/>
+      <menuitem id="popup-toc.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-toc.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-toc.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-toc.paste-format"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
+      <menuitem id="popup-toc.delete"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
+      <menuseparator/>
+      <menuitem id="popup-toc.bold"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.BoldAction"/>
+      <menuitem id="popup-toc.italics"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ItalicsAction"/>
+      <menuitem id="popup-toc.underline"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.UnderlineAction"/>
+      <menuitem id="popup-toc.strikethrough"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.StrikethroughAction"/>
+      <menuseparator/>
+      <menuitem id="popup-toc.align-left"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentLeftAction"/>
+      <menuitem id="popup-toc.align-center"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentCenterAction"/>
+      <menuitem id="popup-toc.align-right"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentRightAction"/>
+    </popup>
+
+
+    <popup id="popup-index">
+      <menuitem id="popup-index.edit"
+                pen:action="org.pentaho.reporting.designer.extensions.toc.EditIndexAction"/>
+      <menuseparator/>
+
+      <menuitem id="popup-index.layer-up"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
+      <menuitem id="popup-index.layer-down"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
+      <menuseparator/>
+      <menuitem id="popup-index.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-index.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-index.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-index.paste-format"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
+      <menuitem id="popup-index.delete"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
+      <menuseparator/>
+      <menuitem id="popup-index.bold"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.BoldAction"/>
+      <menuitem id="popup-index.italics"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ItalicsAction"/>
+      <menuitem id="popup-index.underline"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.UnderlineAction"/>
+      <menuitem id="popup-index.strikethrough"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.StrikethroughAction"/>
+      <menuseparator/>
+      <menuitem id="popup-index.align-left"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentLeftAction"/>
+      <menuitem id="popup-index.align-center"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentCenterAction"/>
+      <menuitem id="popup-index.align-right"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentRightAction"/>
+    </popup>
+  </hbox>
+
+</overlay>

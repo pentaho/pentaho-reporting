@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.data-factories.namespace.simple" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.data-factories.tag.simple.data-factory" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.namespace.simple" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.anchor-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.band" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.component-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.date-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.drawable-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.drawable-url-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.drawableref" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.ellipse" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.image-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.imageref" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.imageurl-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.label" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.line" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.message-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.number-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.rectangle" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.resource-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.resource-label" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.resource-message" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.round-rectangle" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.shape-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.element-factories.tag.simple.string-field" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.sub-report-factories.namespace.simple" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.simple.sub-report-factories.tag.simple.sub-report" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.SubReport.simple" global="true" hidden="true">
+    <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.MasterReport.simple" global="true" hidden="true">
+    <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.report-element-factory-prefix.built-in.simple" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.sub-report-factory-prefix.built-in.simple" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.simple-ref" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+
+</config-description>

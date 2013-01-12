@@ -1,0 +1,19 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <expression class="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesExpression"
+              bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesExpressionBundle"
+              result="java.lang.Object" expert="false" hidden="false" preferred="false">
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
+    <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
+    <property name="type" mandatory="true" preferred="true" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.BarcodeTypePropertyEditor"/>
+    <property name="showText" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="checksum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="barWidth" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="barHeight" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="rawDataField" mandatory="false" preferred="false" value-role="Field" expert="true" hidden="false"/>
+    <property name="rawTypeField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
+  </expression>
+
+</meta-data>

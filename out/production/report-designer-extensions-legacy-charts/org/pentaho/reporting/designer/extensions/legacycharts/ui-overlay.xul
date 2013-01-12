@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<overlay
+    xmlns:pen="http://www.pentaho.org/2008/xul"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <menupopup id="format-popup">
+    <menuseparator/>
+    <menuitem id="format.chart.editor"
+              pen:action="org.pentaho.reporting.designer.extensions.legacycharts.EditLegacyChartAction"/>
+  </menupopup>
+
+  <hbox id="global-popup-container">
+
+    <popup id="popup-legacy-chart">
+      <menuitem id="popup-Element.edit"
+                pen:action="org.pentaho.reporting.designer.extensions.legacycharts.EditLegacyChartAction"/>
+      <menuseparator/>
+      <menuitem id="popup-legacy-chart.layer-up"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
+      <menuitem id="popup-legacy-chart.layer-down"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
+      <menuseparator/>
+      <menuitem id="popup-legacy-chart.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
+      <menuitem id="popup-legacy-chart.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-legacy-chart.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-legacy-chart.paste-format"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
+      <menuitem id="popup-legacy-chart.delete"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
+      <menuseparator/>
+      <menuitem id="popup-legacy-chart.bold"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.BoldAction"/>
+      <menuitem id="popup-legacy-chart.italics"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.ItalicsAction"/>
+      <menuitem id="popup-legacy-chart.underline"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.UnderlineAction"/>
+      <menuitem id="popup-legacy-chart.strikethrough"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.StrikethroughAction"/>
+      <menuseparator/>
+      <menuitem id="popup-legacy-chart.align-left"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentLeftAction"/>
+      <menuitem id="popup-legacy-chart.align-center"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentCenterAction"/>
+      <menuitem id="popup-legacy-chart.align-right"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentRightAction"/>
+    </popup>
+  </hbox>
+
+</overlay>

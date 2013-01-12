@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Nested Rows" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
+  <watermark>
+    <rectangle width="100%" height="100%" draw="true"/>
+  </watermark>
+</report>

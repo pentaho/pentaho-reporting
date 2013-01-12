@@ -84,4 +84,16 @@
     <target name="javadoc.zip" />
     <target name="javadoc.targz" />
 
+
+    <target name="longrun-test">
+        <antcall target="test">
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+        </antcall>
+    </target>
+
+    <target name="longrun-cobertura">
+        <antcall target="cobertura">
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+        </antcall>
+    </target>
 </project>

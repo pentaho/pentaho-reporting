@@ -1,0 +1,13 @@
+Tablemodel contains 0 rows.
+Column: 0 Name=[Time].[All Years].[2003]; DataType=class java.lang.Object
+Column: 1 Name=[Time].[All Years].[2004]; DataType=class java.lang.Object
+Column: 2 Name=[Time].[All Years].[2005]; DataType=class java.lang.Object
+Checking the data inside
+TableAttribute [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:crosstab-mode]=normalized
+Tablemodel contains 0 rows.
+Checking the attributes inside
+Tablemodel contains 0 rows.
+Column: 0 Name=[Time].[All Years].[2003]; DataType=class java.lang.Object
+Column: 1 Name=[Time].[All Years].[2004]; DataType=class java.lang.Object
+Column: 2 Name=[Time].[All Years].[2005]; DataType=class java.lang.Object
+Checking the data inside

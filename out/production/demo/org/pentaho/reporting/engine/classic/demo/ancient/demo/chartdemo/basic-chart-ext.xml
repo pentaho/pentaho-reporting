@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<report-definition
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext"
+    name="ReportProperty Demo">
+
+    <parser-config>
+        <object-factory class="org.jfree.xml.factory.objects.URLClassFactory"/>
+        <object-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory"/>
+        <object-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.BandLayoutClassFactory"/>
+        <object-factory class="org.jfree.xml.factory.objects.ArrayClassFactory"/>
+        <element-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements.DefaultElementFactory"/>
+        <stylekey-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.DefaultStyleKeyFactory"/>
+        <stylekey-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.PageableLayoutStyleKeyFactory"/>
+        <template-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.DefaultTemplateCollection"/>
+        <datasource-factory
+            class="org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DefaultDataSourceFactory"/>
+    </parser-config>
+
+    <report-config>
+      <page-definition>
+        <page pageformat="A4_SMALL" orientation="portrait" topmargin="72" bottommargin="72" leftmargin="72"
+              rightmargin="72"/>
+      </page-definition>
+    </report-config>
+
+    <report-description>
+        <report-header>
+            <element type="drawable/generic">
+                <style>
+                    <compound-key name="absolute_pos">
+                        <basic-object name="x">0.0</basic-object>
+                        <basic-object name="y">0.0</basic-object>
+                    </compound-key>
+                    <compound-key name="min-size">
+                        <basic-object name="height">250.0</basic-object>
+                        <basic-object name="width">450.0</basic-object>
+                    </compound-key>
+                </style>
+                <template references="drawable-field">
+                    <basic-object name="field">Chart</basic-object>
+                </template>
+            </element>
+        </report-header>
+    </report-description>
+
+    <functions>
+        <property-ref name="Chart"/>
+    </functions>
+</report-definition>

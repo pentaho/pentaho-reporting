@@ -1,0 +1,119 @@
+<data-schema xmlns="http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0">
+
+  <!--
+  This data-schema maps the properties found in the "DefaultPropertyID" class into valid
+  reporting meta-data.
+  -->
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="name"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="label"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="name"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.LocalizedStringConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="mask"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="format"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="mask"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.StringConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="column_width"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="display-size"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="column_width"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.ColumnWidthConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="fieldtype"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+                            target-name="role"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="fieldtype"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.FieldTypeConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="datatype"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core"
+                            target-name="type"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="datatype"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.DataTypeConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="foreground_color"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="color"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="foreground_color"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.ColorConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="background_color"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="background-color"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="background_color"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.ColorConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="font"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="font-family"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="font"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.FontNameConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="font-size"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="font"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.FontSizeConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="bold"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="font"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.FontBoldConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="italic"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="font"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.FontItalicConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+           name="alignment"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="horizontal-alignment"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data"
+                            source-name="alignment"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.pmd.types.AlignmentConceptMapper"/>
+  </indirect-mapping>
+
+
+
+
+</data-schema>

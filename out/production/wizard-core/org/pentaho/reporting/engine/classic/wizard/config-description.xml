@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.wizard.tag-def.default.wizard-spec" global="true" hidden="true">
+    <description>An internal property for the XML support. Do not edit this.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.wizard.tag-def.namespace.wizard-spec" global="true" hidden="true">
+    <description>An internal property for the XML support. Do not edit this.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition" global="true" hidden="true">
+    <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.wizard.model.WizardSpecification.default" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.wizard" global="true" hidden="true">
+    <description>Internal Configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.wizard-core.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+
+</config-description>

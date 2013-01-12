@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<overlay
+    xmlns:pen="http://www.pentaho.org/2008/xul"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <menupopup id="file-popup">
+    <menuitem id="file.publish.solution" insertafter="file.save-as"
+              pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.PublishToServerAction"/>
+    <menuitem id="file.open.solution" insertafter="file.open"
+              pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.LoadReportFromRepositoryAction"/>
+  </menupopup>
+
+  <hbox id="main-toolbar">
+    <button id="toolbar.publish" insertafter="toolbar.save"
+            pen:action="org.pentaho.reporting.designer.extensions.pentaho.repository.actions.PublishToServerAction"/>
+
+  </hbox>
+
+</overlay>

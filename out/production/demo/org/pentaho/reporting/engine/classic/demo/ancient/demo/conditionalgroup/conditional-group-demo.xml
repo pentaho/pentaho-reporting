@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Conditional Group Demo" orientation="portrait"
+    pageformat="LETTER" topmargin="72" leftmargin="72" bottommargin="72" rightmargin="72">
+
+  <reportfooter fontname="SansSerif" fsbold="true" fsunderline="true" fontsize="14">
+    <line x1="0" y1="0" x2="100%" y2="0" color="black" weight="1"/>
+    <label x="0" y="0" width="200" height="20">Netto Profit/Loss</label>
+    <number-field x="300" y="0" width="200" height="20" fieldname="nettoProfit"/>
+    <label x="0" y="40" width="200" height="200" fontsize="8">Yes, this report looks very ugly :)</label>
+  </reportfooter>
+
+  <groups>
+    <group name="type-group">
+      <fields>
+        <field>type</field>
+      </fields>
+      <groupheader layout-cachable="false">
+        <!-- Triggered visible if the income group is displayed .. -->
+        <band name="income-band" x="0" y="0" width="100%"
+              fontname="SansSerif" fsbold="true" fontsize="14">
+          <label x="0" y="0" width="200" height="20">Income</label>
+        </band>
+
+        <!-- Triggered visible if the expense group is displayed .. -->
+        <band name="expense-band" x="0" y="0" width="100%"
+              fontname="SansSerif" fsbold="true" fontsize="14">
+          <label x="0" y="0" width="200" height="20">Expense</label>
+        </band>
+      </groupheader>
+
+      <groupfooter layout-cachable="false">
+        <!-- Triggered visible if the income group is displayed .. -->
+        <band name="income-band" x="0" y="0" width="100%"
+              fontname="SansSerif" fsbold="true" fontsize="14">
+          <line x1="0" y1="0" x2="100%" y2="0" color="black" weight="1"/>
+          <label x="0" y="0" width="200" height="20">Total Income</label>
+          <number-field x="300" y="0" width="200" height="20" fieldname="sum"/>
+        </band>
+
+        <!-- Triggered visible if the expense group is displayed .. -->
+        <band name="expense-band" x="0" y="0" width="100%"
+              fontname="SansSerif" fsbold="true" fontsize="14">
+          <line x1="0" y1="0" x2="100%" y2="0" color="black" weight="1"/>
+          <label x="0" y="0" width="200" height="20">Total Expense</label>
+          <number-field x="300" y="0" width="200" height="20" fsbold="false" fieldname="sum"/>
+        </band>
+
+      </groupfooter>
+    </group>
+
+    <!--
+    The headers of this group are only printed, if this is
+    a nested group. Else, they are invisible.
+
+    Netsted Groups have a non-null content in the field "level-two-account".
+    -->
+    <group name="conditional-level-group">
+      <fields>
+        <field>type</field>
+        <field>level-one-account</field>
+      </fields>
+      <groupheader fontname="SansSerif" fsitalic="true" fontsize="12">
+        <label x="0" y="0" width="100" height="20">Account:</label>
+        <string-field x="100" y="0" width="100" height="20" fieldname="level-one-account"/>
+      </groupheader>
+
+      <groupfooter fontname="SansSerif" fsitalic="true" fontsize="12">
+        <line x1="0" y1="0" x2="100%" y2="0" color="black" weight="0.5"/>
+        <label x="0" y="0" width="100" height="20">Total Account:</label>
+        <string-field x="100" y="0" width="100" height="20" fieldname="level-one-account"/>
+        <number-field x="300" y="0" width="200" height="20" fieldname="sub-sum"/>
+
+      </groupfooter>
+    </group>
+
+  </groups>
+
+  <items layout-cachable="false">
+    <!-- Triggered visible if this is an normal group .. -->
+    <band name="FirstLevel" x="0" y="0" width="100%">
+      <string-field x="0" y="0" width="200" height="12" fieldname="level-one-account"/>
+      <number-field x="300" y="0" width="200" height="12" fieldname="balance"/>
+    </band>
+
+    <!-- Triggered visible if this is a nested group (field "level-two-account" is not null).. -->
+    <band name="SecondLevel" x="0" y="0" width="100%">
+      <label x="0" y="0" width="40" height="12">+</label>
+      <string-field x="40" y="0" width="200" height="12" fieldname="level-two-account"/>
+      <number-field x="300" y="0" width="200" height="12" fieldname="balance"/>
+    </band>
+  </items>
+
+  <functions>
+    <!--
+    This function is used by the NettoProfit function, therefore we have
+    to set the dependency level to 1 (=dependencyLevel of "NettoProfitFunction" + 1)
+    -->
+    <function class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="sum" deplevel="1">
+      <properties>
+        <property name="field">balance</property>
+        <property name="group">type-group</property>
+      </properties>
+    </function>
+
+    <function class="org.pentaho.reporting.engine.classic.demo.ancient.demo.conditionalgroup.NettoProfitFunction"
+              name="nettoProfit" deplevel="0"/>
+
+    <function class="org.pentaho.reporting.engine.classic.core.function.ItemSumFunction" name="sub-sum">
+      <properties>
+        <property name="field">balance</property>
+        <property name="group">conditional-level-group</property>
+      </properties>
+    </function>
+
+    <function class="org.pentaho.reporting.engine.classic.demo.ancient.demo.conditionalgroup.TriggerTypeFunction"
+              name="triggerTypeVisiblity"/>
+    <function class="org.pentaho.reporting.engine.classic.demo.ancient.demo.conditionalgroup.TriggerNestedGroupFunction"
+              name="triggerNestedGroupVisiblity"/>
+
+  </functions>
+</report>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="ReportProperty Demo" pageformat="A4">
+
+  <!-- ITEM BAND -->
+  <!-- This band appears for all rows in the tablemodel. -->
+  <reportheader>
+
+    <drawable-field x="0" y="0" width="450" height="250"
+                    fieldname="Chart"/>
+
+  </reportheader>
+
+  <functions>
+    <!-- This will mark the property to be included in the datarow -->
+    <property-ref name="Chart"/>
+  </functions>
+</report>

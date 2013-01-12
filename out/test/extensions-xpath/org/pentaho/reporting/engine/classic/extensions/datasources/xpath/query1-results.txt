@@ -1,0 +1,498 @@
+Tablemodel contains 122 rows.
+Column: 0 Name=CUSTOMERS_CUSTOMERNUMBER; DataType=class java.lang.Integer
+Column: 1 Name=CUSTOMERS_CUSTOMERNAME; DataType=class java.lang.String
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (0, 1) is in a typed column and is of type class java.lang.String
+ValueAt (1, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (1, 1) is in a typed column and is of type class java.lang.String
+ValueAt (2, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (2, 1) is in a typed column and is of type class java.lang.String
+ValueAt (3, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (3, 1) is in a typed column and is of type class java.lang.String
+ValueAt (4, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (4, 1) is in a typed column and is of type class java.lang.String
+ValueAt (5, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (5, 1) is in a typed column and is of type class java.lang.String
+ValueAt (6, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (6, 1) is in a typed column and is of type class java.lang.String
+ValueAt (7, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (7, 1) is in a typed column and is of type class java.lang.String
+ValueAt (8, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (8, 1) is in a typed column and is of type class java.lang.String
+ValueAt (9, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (9, 1) is in a typed column and is of type class java.lang.String
+ValueAt (10, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (10, 1) is in a typed column and is of type class java.lang.String
+ValueAt (11, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (11, 1) is in a typed column and is of type class java.lang.String
+ValueAt (12, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (12, 1) is in a typed column and is of type class java.lang.String
+ValueAt (13, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (13, 1) is in a typed column and is of type class java.lang.String
+ValueAt (14, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (14, 1) is in a typed column and is of type class java.lang.String
+ValueAt (15, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (15, 1) is in a typed column and is of type class java.lang.String
+ValueAt (16, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (16, 1) is in a typed column and is of type class java.lang.String
+ValueAt (17, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (17, 1) is in a typed column and is of type class java.lang.String
+ValueAt (18, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (18, 1) is in a typed column and is of type class java.lang.String
+ValueAt (19, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (19, 1) is in a typed column and is of type class java.lang.String
+ValueAt (20, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (20, 1) is in a typed column and is of type class java.lang.String
+ValueAt (21, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (21, 1) is in a typed column and is of type class java.lang.String
+ValueAt (22, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (22, 1) is in a typed column and is of type class java.lang.String
+ValueAt (23, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (23, 1) is in a typed column and is of type class java.lang.String
+ValueAt (24, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (24, 1) is in a typed column and is of type class java.lang.String
+ValueAt (25, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (25, 1) is in a typed column and is of type class java.lang.String
+ValueAt (26, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (26, 1) is in a typed column and is of type class java.lang.String
+ValueAt (27, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (27, 1) is in a typed column and is of type class java.lang.String
+ValueAt (28, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (28, 1) is in a typed column and is of type class java.lang.String
+ValueAt (29, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (29, 1) is in a typed column and is of type class java.lang.String
+ValueAt (30, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (30, 1) is in a typed column and is of type class java.lang.String
+ValueAt (31, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (31, 1) is in a typed column and is of type class java.lang.String
+ValueAt (32, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (32, 1) is in a typed column and is of type class java.lang.String
+ValueAt (33, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (33, 1) is in a typed column and is of type class java.lang.String
+ValueAt (34, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (34, 1) is in a typed column and is of type class java.lang.String
+ValueAt (35, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (35, 1) is in a typed column and is of type class java.lang.String
+ValueAt (36, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (36, 1) is in a typed column and is of type class java.lang.String
+ValueAt (37, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (37, 1) is in a typed column and is of type class java.lang.String
+ValueAt (38, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (38, 1) is in a typed column and is of type class java.lang.String
+ValueAt (39, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (39, 1) is in a typed column and is of type class java.lang.String
+ValueAt (40, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (40, 1) is in a typed column and is of type class java.lang.String
+ValueAt (41, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (41, 1) is in a typed column and is of type class java.lang.String
+ValueAt (42, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (42, 1) is in a typed column and is of type class java.lang.String
+ValueAt (43, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (43, 1) is in a typed column and is of type class java.lang.String
+ValueAt (44, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (44, 1) is in a typed column and is of type class java.lang.String
+ValueAt (45, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (45, 1) is in a typed column and is of type class java.lang.String
+ValueAt (46, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (46, 1) is in a typed column and is of type class java.lang.String
+ValueAt (47, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (47, 1) is in a typed column and is of type class java.lang.String
+ValueAt (48, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (48, 1) is in a typed column and is of type class java.lang.String
+ValueAt (49, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (49, 1) is in a typed column and is of type class java.lang.String
+ValueAt (50, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (50, 1) is in a typed column and is of type class java.lang.String
+ValueAt (51, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (51, 1) is in a typed column and is of type class java.lang.String
+ValueAt (52, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (52, 1) is in a typed column and is of type class java.lang.String
+ValueAt (53, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (53, 1) is in a typed column and is of type class java.lang.String
+ValueAt (54, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (54, 1) is in a typed column and is of type class java.lang.String
+ValueAt (55, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (55, 1) is in a typed column and is of type class java.lang.String
+ValueAt (56, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (56, 1) is in a typed column and is of type class java.lang.String
+ValueAt (57, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (57, 1) is in a typed column and is of type class java.lang.String
+ValueAt (58, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (58, 1) is in a typed column and is of type class java.lang.String
+ValueAt (59, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (59, 1) is in a typed column and is of type class java.lang.String
+ValueAt (60, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (60, 1) is in a typed column and is of type class java.lang.String
+ValueAt (61, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (61, 1) is in a typed column and is of type class java.lang.String
+ValueAt (62, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (62, 1) is in a typed column and is of type class java.lang.String
+ValueAt (63, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (63, 1) is in a typed column and is of type class java.lang.String
+ValueAt (64, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (64, 1) is in a typed column and is of type class java.lang.String
+ValueAt (65, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (65, 1) is in a typed column and is of type class java.lang.String
+ValueAt (66, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (66, 1) is in a typed column and is of type class java.lang.String
+ValueAt (67, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (67, 1) is in a typed column and is of type class java.lang.String
+ValueAt (68, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (68, 1) is in a typed column and is of type class java.lang.String
+ValueAt (69, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (69, 1) is in a typed column and is of type class java.lang.String
+ValueAt (70, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (70, 1) is in a typed column and is of type class java.lang.String
+ValueAt (71, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (71, 1) is in a typed column and is of type class java.lang.String
+ValueAt (72, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (72, 1) is in a typed column and is of type class java.lang.String
+ValueAt (73, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (73, 1) is in a typed column and is of type class java.lang.String
+ValueAt (74, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (74, 1) is in a typed column and is of type class java.lang.String
+ValueAt (75, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (75, 1) is in a typed column and is of type class java.lang.String
+ValueAt (76, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (76, 1) is in a typed column and is of type class java.lang.String
+ValueAt (77, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (77, 1) is in a typed column and is of type class java.lang.String
+ValueAt (78, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (78, 1) is in a typed column and is of type class java.lang.String
+ValueAt (79, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (79, 1) is in a typed column and is of type class java.lang.String
+ValueAt (80, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (80, 1) is in a typed column and is of type class java.lang.String
+ValueAt (81, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (81, 1) is in a typed column and is of type class java.lang.String
+ValueAt (82, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (82, 1) is in a typed column and is of type class java.lang.String
+ValueAt (83, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (83, 1) is in a typed column and is of type class java.lang.String
+ValueAt (84, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (84, 1) is in a typed column and is of type class java.lang.String
+ValueAt (85, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (85, 1) is in a typed column and is of type class java.lang.String
+ValueAt (86, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (86, 1) is in a typed column and is of type class java.lang.String
+ValueAt (87, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (87, 1) is in a typed column and is of type class java.lang.String
+ValueAt (88, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (88, 1) is in a typed column and is of type class java.lang.String
+ValueAt (89, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (89, 1) is in a typed column and is of type class java.lang.String
+ValueAt (90, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (90, 1) is in a typed column and is of type class java.lang.String
+ValueAt (91, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (91, 1) is in a typed column and is of type class java.lang.String
+ValueAt (92, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (92, 1) is in a typed column and is of type class java.lang.String
+ValueAt (93, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (93, 1) is in a typed column and is of type class java.lang.String
+ValueAt (94, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (94, 1) is in a typed column and is of type class java.lang.String
+ValueAt (95, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (95, 1) is in a typed column and is of type class java.lang.String
+ValueAt (96, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (96, 1) is in a typed column and is of type class java.lang.String
+ValueAt (97, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (97, 1) is in a typed column and is of type class java.lang.String
+ValueAt (98, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (98, 1) is in a typed column and is of type class java.lang.String
+ValueAt (99, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (99, 1) is in a typed column and is of type class java.lang.String
+ValueAt (100, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (100, 1) is in a typed column and is of type class java.lang.String
+ValueAt (101, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (101, 1) is in a typed column and is of type class java.lang.String
+ValueAt (102, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (102, 1) is in a typed column and is of type class java.lang.String
+ValueAt (103, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (103, 1) is in a typed column and is of type class java.lang.String
+ValueAt (104, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (104, 1) is in a typed column and is of type class java.lang.String
+ValueAt (105, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (105, 1) is in a typed column and is of type class java.lang.String
+ValueAt (106, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (106, 1) is in a typed column and is of type class java.lang.String
+ValueAt (107, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (107, 1) is in a typed column and is of type class java.lang.String
+ValueAt (108, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (108, 1) is in a typed column and is of type class java.lang.String
+ValueAt (109, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (109, 1) is in a typed column and is of type class java.lang.String
+ValueAt (110, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (110, 1) is in a typed column and is of type class java.lang.String
+ValueAt (111, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (111, 1) is in a typed column and is of type class java.lang.String
+ValueAt (112, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (112, 1) is in a typed column and is of type class java.lang.String
+ValueAt (113, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (113, 1) is in a typed column and is of type class java.lang.String
+ValueAt (114, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (114, 1) is in a typed column and is of type class java.lang.String
+ValueAt (115, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (115, 1) is in a typed column and is of type class java.lang.String
+ValueAt (116, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (116, 1) is in a typed column and is of type class java.lang.String
+ValueAt (117, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (117, 1) is in a typed column and is of type class java.lang.String
+ValueAt (118, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (118, 1) is in a typed column and is of type class java.lang.String
+ValueAt (119, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (119, 1) is in a typed column and is of type class java.lang.String
+ValueAt (120, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (120, 1) is in a typed column and is of type class java.lang.String
+ValueAt (121, 0) is in a typed column and is of type class java.lang.Integer
+ValueAt (121, 1) is in a typed column and is of type class java.lang.String
+TableModel has no meta-data.
+TableModel has no meta-data.
+Tablemodel contains 122 rows.
+Column: 0 Name=CUSTOMERS_CUSTOMERNUMBER; DataType=class java.lang.Integer
+Column: 1 Name=CUSTOMERS_CUSTOMERNAME; DataType=class java.lang.String
+Checking the data inside
+ValueAt (0, 0) is '103'
+ValueAt (0, 1) is 'Atelier graphique'
+ValueAt (1, 0) is '112'
+ValueAt (1, 1) is 'Signal Gift Stores'
+ValueAt (2, 0) is '114'
+ValueAt (2, 1) is 'Australian Collectors, Co.'
+ValueAt (3, 0) is '119'
+ValueAt (3, 1) is 'La Rochelle Gifts'
+ValueAt (4, 0) is '121'
+ValueAt (4, 1) is 'Baane Mini Imports'
+ValueAt (5, 0) is '124'
+ValueAt (5, 1) is 'Mini Gifts Distributors Ltd.'
+ValueAt (6, 0) is '125'
+ValueAt (6, 1) is 'Havel & Zbyszek Co'
+ValueAt (7, 0) is '128'
+ValueAt (7, 1) is 'Blauer See Auto, Co.'
+ValueAt (8, 0) is '129'
+ValueAt (8, 1) is 'Mini Wheels Co.'
+ValueAt (9, 0) is '131'
+ValueAt (9, 1) is 'Land of Toys Inc.'
+ValueAt (10, 0) is '141'
+ValueAt (10, 1) is 'Euro+ Shopping Channel'
+ValueAt (11, 0) is '144'
+ValueAt (11, 1) is 'Volvo Model Replicas, Co'
+ValueAt (12, 0) is '145'
+ValueAt (12, 1) is 'Danish Wholesale Imports'
+ValueAt (13, 0) is '146'
+ValueAt (13, 1) is 'Saveley & Henriot, Co.'
+ValueAt (14, 0) is '148'
+ValueAt (14, 1) is 'Dragon Souveniers, Ltd.'
+ValueAt (15, 0) is '151'
+ValueAt (15, 1) is 'Muscle Machine Inc'
+ValueAt (16, 0) is '157'
+ValueAt (16, 1) is 'Diecast Classics Inc.'
+ValueAt (17, 0) is '161'
+ValueAt (17, 1) is 'Technics Stores Inc.'
+ValueAt (18, 0) is '166'
+ValueAt (18, 1) is 'Handji Gifts& Co'
+ValueAt (19, 0) is '167'
+ValueAt (19, 1) is 'Herkku Gifts'
+ValueAt (20, 0) is '168'
+ValueAt (20, 1) is 'American Souvenirs Inc'
+ValueAt (21, 0) is '169'
+ValueAt (21, 1) is 'Porto Imports Co.'
+ValueAt (22, 0) is '171'
+ValueAt (22, 1) is 'Daedalus Designs Imports'
+ValueAt (23, 0) is '172'
+ValueAt (23, 1) is 'La Corne D'abondance, Co.'
+ValueAt (24, 0) is '173'
+ValueAt (24, 1) is 'Cambridge Collectables Co.'
+ValueAt (25, 0) is '175'
+ValueAt (25, 1) is 'Gift Depot Inc.'
+ValueAt (26, 0) is '177'
+ValueAt (26, 1) is 'Osaka Souveniers Co.'
+ValueAt (27, 0) is '181'
+ValueAt (27, 1) is 'Vitachrome Inc.'
+ValueAt (28, 0) is '186'
+ValueAt (28, 1) is 'Toys of Finland, Co.'
+ValueAt (29, 0) is '187'
+ValueAt (29, 1) is 'AV Stores, Co.'
+ValueAt (30, 0) is '189'
+ValueAt (30, 1) is 'Clover Collections, Co.'
+ValueAt (31, 0) is '198'
+ValueAt (31, 1) is 'Auto-Moto Classics Inc.'
+ValueAt (32, 0) is '201'
+ValueAt (32, 1) is 'UK Collectables, Ltd.'
+ValueAt (33, 0) is '202'
+ValueAt (33, 1) is 'Canadian Gift Exchange Network'
+ValueAt (34, 0) is '204'
+ValueAt (34, 1) is 'Online Mini Collectables'
+ValueAt (35, 0) is '205'
+ValueAt (35, 1) is 'Toys4GrownUps.com'
+ValueAt (36, 0) is '206'
+ValueAt (36, 1) is 'Asian Shopping Network, Co'
+ValueAt (37, 0) is '209'
+ValueAt (37, 1) is 'Mini Caravy'
+ValueAt (38, 0) is '211'
+ValueAt (38, 1) is 'King Kong Collectables, Co.'
+ValueAt (39, 0) is '216'
+ValueAt (39, 1) is 'Enaco Distributors'
+ValueAt (40, 0) is '219'
+ValueAt (40, 1) is 'Boards & Toys Co.'
+ValueAt (41, 0) is '223'
+ValueAt (41, 1) is 'NatU+fc;rlich Autos'
+ValueAt (42, 0) is '227'
+ValueAt (42, 1) is 'Heintze Collectables'
+ValueAt (43, 0) is '233'
+ValueAt (43, 1) is 'QuU+e9;bec Home Shopping Network'
+ValueAt (44, 0) is '237'
+ValueAt (44, 1) is 'ANG Resellers'
+ValueAt (45, 0) is '239'
+ValueAt (45, 1) is 'Collectable Mini Designs Co.'
+ValueAt (46, 0) is '240'
+ValueAt (46, 1) is 'giftsbymail.co.uk'
+ValueAt (47, 0) is '242'
+ValueAt (47, 1) is 'Alpha Cognac'
+ValueAt (48, 0) is '247'
+ValueAt (48, 1) is 'Messner Shopping Network'
+ValueAt (49, 0) is '249'
+ValueAt (49, 1) is 'Amica Models & Co.'
+ValueAt (50, 0) is '250'
+ValueAt (50, 1) is 'Lyon Souveniers'
+ValueAt (51, 0) is '256'
+ValueAt (51, 1) is 'Auto AssociU+e9;s & Cie.'
+ValueAt (52, 0) is '259'
+ValueAt (52, 1) is 'Toms SpezialitU+e4;ten, Ltd'
+ValueAt (53, 0) is '260'
+ValueAt (53, 1) is 'Royal Canadian Collectables, Ltd.'
+ValueAt (54, 0) is '273'
+ValueAt (54, 1) is 'Franken Gifts, Co'
+ValueAt (55, 0) is '276'
+ValueAt (55, 1) is 'Anna's Decorations, Ltd'
+ValueAt (56, 0) is '278'
+ValueAt (56, 1) is 'Rovelli Gifts'
+ValueAt (57, 0) is '282'
+ValueAt (57, 1) is 'Souveniers And Things Co.'
+ValueAt (58, 0) is '286'
+ValueAt (58, 1) is 'Marta's Replicas Co.'
+ValueAt (59, 0) is '293'
+ValueAt (59, 1) is 'BG&E Collectables'
+ValueAt (60, 0) is '298'
+ValueAt (60, 1) is 'Vida Sport, Ltd'
+ValueAt (61, 0) is '299'
+ValueAt (61, 1) is 'Norway Gifts By Mail, Co.'
+ValueAt (62, 0) is '303'
+ValueAt (62, 1) is 'Schuyler Imports'
+ValueAt (63, 0) is '307'
+ValueAt (63, 1) is 'Der Hund Imports'
+ValueAt (64, 0) is '311'
+ValueAt (64, 1) is 'Oulu Toy Supplies, Inc.'
+ValueAt (65, 0) is '314'
+ValueAt (65, 1) is 'Petit Auto'
+ValueAt (66, 0) is '319'
+ValueAt (66, 1) is 'Mini Classics'
+ValueAt (67, 0) is '320'
+ValueAt (67, 1) is 'Mini Creations Ltd.'
+ValueAt (68, 0) is '321'
+ValueAt (68, 1) is 'Corporate Gift Ideas Co.'
+ValueAt (69, 0) is '323'
+ValueAt (69, 1) is 'Down Under Souveniers, Inc'
+ValueAt (70, 0) is '324'
+ValueAt (70, 1) is 'Stylish Desk Decors, Co.'
+ValueAt (71, 0) is '328'
+ValueAt (71, 1) is 'Tekni Collectables Inc.'
+ValueAt (72, 0) is '333'
+ValueAt (72, 1) is 'Australian Gift Network, Co'
+ValueAt (73, 0) is '334'
+ValueAt (73, 1) is 'Suominen Souveniers'
+ValueAt (74, 0) is '335'
+ValueAt (74, 1) is 'Cramer SpezialitU+e4;ten, Ltd'
+ValueAt (75, 0) is '339'
+ValueAt (75, 1) is 'Classic Gift Ideas, Inc'
+ValueAt (76, 0) is '344'
+ValueAt (76, 1) is 'CAF Imports'
+ValueAt (77, 0) is '347'
+ValueAt (77, 1) is 'Men 'R' US Retailers, Ltd.'
+ValueAt (78, 0) is '348'
+ValueAt (78, 1) is 'Asian Treasures, Inc.'
+ValueAt (79, 0) is '350'
+ValueAt (79, 1) is 'Marseille Mini Autos'
+ValueAt (80, 0) is '353'
+ValueAt (80, 1) is 'Reims Collectables'
+ValueAt (81, 0) is '356'
+ValueAt (81, 1) is 'SAR Distributors, Co'
+ValueAt (82, 0) is '357'
+ValueAt (82, 1) is 'GiftsForHim.com'
+ValueAt (83, 0) is '361'
+ValueAt (83, 1) is 'Kommission Auto'
+ValueAt (84, 0) is '362'
+ValueAt (84, 1) is 'Gifts4AllAges.com'
+ValueAt (85, 0) is '363'
+ValueAt (85, 1) is 'Online Diecast Creations Co.'
+ValueAt (86, 0) is '369'
+ValueAt (86, 1) is 'Lisboa Souveniers, Inc'
+ValueAt (87, 0) is '376'
+ValueAt (87, 1) is 'Precious Collectables'
+ValueAt (88, 0) is '379'
+ValueAt (88, 1) is 'Collectables For Less Inc.'
+ValueAt (89, 0) is '381'
+ValueAt (89, 1) is 'Royale Belge'
+ValueAt (90, 0) is '382'
+ValueAt (90, 1) is 'Salzburg Collectables'
+ValueAt (91, 0) is '385'
+ValueAt (91, 1) is 'Cruz & Sons Co.'
+ValueAt (92, 0) is '386'
+ValueAt (92, 1) is 'L'ordine Souveniers'
+ValueAt (93, 0) is '398'
+ValueAt (93, 1) is 'Tokyo Collectables, Ltd'
+ValueAt (94, 0) is '406'
+ValueAt (94, 1) is 'Auto Canal+ Petit'
+ValueAt (95, 0) is '409'
+ValueAt (95, 1) is 'Stuttgart Collectable Exchange'
+ValueAt (96, 0) is '412'
+ValueAt (96, 1) is 'Extreme Desk Decorations, Ltd'
+ValueAt (97, 0) is '415'
+ValueAt (97, 1) is 'Bavarian Collectables Imports, Co.'
+ValueAt (98, 0) is '424'
+ValueAt (98, 1) is 'Classic Legends Inc.'
+ValueAt (99, 0) is '443'
+ValueAt (99, 1) is 'Feuer Online Stores, Inc'
+ValueAt (100, 0) is '447'
+ValueAt (100, 1) is 'Gift Ideas Corp.'
+ValueAt (101, 0) is '448'
+ValueAt (101, 1) is 'Scandinavian Gift Ideas'
+ValueAt (102, 0) is '450'
+ValueAt (102, 1) is 'The Sharp Gifts Warehouse'
+ValueAt (103, 0) is '452'
+ValueAt (103, 1) is 'Mini Auto Werke'
+ValueAt (104, 0) is '455'
+ValueAt (104, 1) is 'Super Scale Inc.'
+ValueAt (105, 0) is '456'
+ValueAt (105, 1) is 'Microscale Inc.'
+ValueAt (106, 0) is '458'
+ValueAt (106, 1) is 'Corrida Auto Replicas, Ltd'
+ValueAt (107, 0) is '459'
+ValueAt (107, 1) is 'Warburg Exchange'
+ValueAt (108, 0) is '462'
+ValueAt (108, 1) is 'FunGiftIdeas.com'
+ValueAt (109, 0) is '465'
+ValueAt (109, 1) is 'Anton Designs, Ltd.'
+ValueAt (110, 0) is '471'
+ValueAt (110, 1) is 'Australian Collectables, Ltd'
+ValueAt (111, 0) is '473'
+ValueAt (111, 1) is 'Frau da Collezione'
+ValueAt (112, 0) is '475'
+ValueAt (112, 1) is 'West Coast Collectables Co.'
+ValueAt (113, 0) is '477'
+ValueAt (113, 1) is 'Mit VergnU+FC;gen & Co.'
+ValueAt (114, 0) is '480'
+ValueAt (114, 1) is 'Kremlin Collectables, Co.'
+ValueAt (115, 0) is '481'
+ValueAt (115, 1) is 'Raanan Stores, Inc'
+ValueAt (116, 0) is '484'
+ValueAt (116, 1) is 'Iberia Gift Imports, Corp.'
+ValueAt (117, 0) is '486'
+ValueAt (117, 1) is 'Motor Mint Distributors Inc.'
+ValueAt (118, 0) is '487'
+ValueAt (118, 1) is 'Signal Collectibles Ltd.'
+ValueAt (119, 0) is '489'
+ValueAt (119, 1) is 'Double Decker Gift Stores, Ltd'
+ValueAt (120, 0) is '495'
+ValueAt (120, 1) is 'Diecast Collectables'
+ValueAt (121, 0) is '496'
+ValueAt (121, 1) is 'Kelly's Gift Shop'

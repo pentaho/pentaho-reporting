@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.generic" global="true" hidden="true">
+    <description>Internal XML configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.jboss" global="true" hidden="true">
+    <description>Internal XML configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.tomcat" global="true" hidden="true">
+    <description>Internal XML configuration setting. Do not modify.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.CheckAutoCloseQuery" global="false" hidden="false">
+    <description>Defines the test query that is used to determine whether the database supports to hold multiple
+      resultsets created by the same statement open at the same time.</description>
+    <text/>
+  </key>
+
+</config-description>

@@ -1,0 +1,14 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<body bgcolor="white">
+Banded layout management. BandLayoutManagers perform the layouting task for
+within a band for all Elements and Bands contained in the Band. The concept is
+shamelessly stolen from AWT, as it seems to produce better (and more flexible)
+results than trying to hardcode an algorithm.
+<p>
+  BandLayoutManager should be defined for bands by using the StyleKey
+  <code>BandStyleSheet.LAYOUTMANAGER</code>. The defined Layoutmanager are only
+  usefull for PageableReportProcessors or similiar targets, where bands are mapped
+  into a static coordinate space.
+</body>
+</html>

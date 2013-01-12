@@ -1,0 +1,87 @@
+<data-schema xmlns="http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0">
+
+  <!--
+  This data-schema maps the properties found in the "DefaultPropertyID" class into valid
+  reporting meta-data.
+  -->
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="FORE_COLOR"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="color"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FORE_COLOR"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.ColorConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="BACK_COLOR"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="background-color"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="BACK_COLOR"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.ColorConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="FONT_NAME"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="font-family"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_NAME"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="FONT_SIZE"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="font-family"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_SIZE"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.FontSizeConceptMapper"/>
+  </indirect-mapping>
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="FONT_FLAGS"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="bold"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_FLAGS"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.FontBoldConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="italic"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_FLAGS"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.FontItalicConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="underline"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_FLAGS"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.FontUnderlineConceptMapper"/>
+
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/style"
+                            target-name="strikethrough"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="FONT_FLAGS"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.FontStrikethroughConceptMapper"/>
+  </indirect-mapping>
+
+
+  <indirect-mapping>
+    <match domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+           name="MDX::CAPTION"/>
+    <data-attribute-mapping target-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting"
+                            target-name="label"
+                            source-domain="http://reporting.pentaho.org/namespaces/engine/meta-attributes/olap4j"
+                            source-name="MDX::CAPTION"
+                            concept-mapper="org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.types.LocalizedStringConceptMapper"/>
+  </indirect-mapping>
+  
+</data-schema>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Percentage Demo" pageformat="A4">
+
+  <!-- REPORT HEADER -->
+  <!-- This band appears once at the beginning of the report. -->
+  <reportheader height="35"
+                fontname="SansSerif" fontstyle="plain" fontsize="10">
+
+    <rectangle x="0" y="0" width="100%" height="30"
+               color="#CCFFCC" weight="0"/>
+
+    <rectangle x="0" y="0" width="100%" height="30"
+               color="#CCCCCC" weight="0" draw="true" fill="false"/>
+
+    <label fontstyle="bold" fontsize="18"
+           x="0" y="7" width="100%" height="18"
+           alignment="center"
+        >Percentage Demo</label>
+
+  </reportheader>
+
+  <!-- THE ITEM BAND -->
+  <!-- This band is printed once for each row of data in the TableModel. -->
+  <items height="0"
+         fontname="SansSerif" fontstyle="plain" fontsize="9">
+
+    <number-field x="0" y="2" width="33%" height="10" alignment="center"
+                  fieldname="A" format="0.0"/>
+
+    <number-field x="33%" y="2" width="33%" height="10" alignment="center"
+                  fieldname="B" format="0.0"/>
+
+    <number-field x="66%" y="2" width="33%" height="10" alignment="center"
+                  fieldname="Percentage" format="0.000%"/>
+
+  </items>
+
+  <!-- FUNCTIONS -->
+  <!-- Declares the functions used in this report. -->
+  <functions>
+
+    <expression name="Percentage"
+                class="org.pentaho.reporting.engine.classic.core.function.PercentageExpression">
+      <properties>
+        <property name="dividend">A</property>
+        <property name="divisor">B</property>
+      </properties>
+    </expression>
+
+  </functions>
+
+
+</report>

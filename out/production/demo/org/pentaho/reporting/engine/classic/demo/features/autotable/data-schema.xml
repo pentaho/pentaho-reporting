@@ -1,0 +1,12 @@
+<data-schema xmlns="http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0"
+             xmlns:meta-core="http://reporting.pentaho.org/namespaces/engine/meta-attributes/core">
+  <!-- Contains a dump from the meta-data repository along with user-defined meta-data overrides. -->
+  <!-- The data-schema is read by the auto-generator preprocessor. -->
+  <!--
+    Defines direct report- and query-specific definitions from the user.
+    -->
+  <direct-mapping fieldname="REGION">
+    <data-attributes meta-core:role="dimension"/>
+  </direct-mapping>
+
+</data-schema>

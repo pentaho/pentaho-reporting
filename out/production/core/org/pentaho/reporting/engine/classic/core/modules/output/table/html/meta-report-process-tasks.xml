@@ -1,0 +1,34 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <process-task name="table/html;page-mode=stream"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.html.StreamHtmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.StreamHtmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
+      <alias>html</alias>
+      <alias>html+stream</alias>
+  </process-task>
+
+  <process-task name="table/html;page-mode=flow"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
+      <alias>html+flow</alias>
+  </process-task>
+
+  <process-task name="table/html;page-mode=page"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.html.PageableHtmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.PageableHtmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
+      <alias>html+page</alias>
+  </process-task>
+
+  <process-task name="application/zip;content=table/html;page-mode=flow"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ZipHtmlReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ZipHtmlReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
+      <alias>html+zip</alias>
+  </process-task>
+</meta-data>

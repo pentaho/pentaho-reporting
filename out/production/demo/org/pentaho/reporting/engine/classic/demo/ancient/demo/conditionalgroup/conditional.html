@@ -1,0 +1,131 @@
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<html>
+<head>
+  <title>Conditional Groups</title>
+</head>
+<body>
+<h2>Conditional groups</h2>
+
+<p>
+  This demo shows how to define conditional groups. The report for
+  this demo creates a Profit and Loss Statement report for the Open
+  Source accounting package jGnash. The expected output looks like:
+</p>
+  <pre>
+  Income
+    Account 1                                      9999.99
+    Account 2                                      9999.99
+  Total Income                                    99999.99
+
+  Expense
+    Account A
+      Account Z                                      99.99
+      Account Y                                     999.99
+    Total Account A                                9999.99
+
+    Account B                                      9999.99
+
+  Total Expense                                   99999.99
+
+  Net Profit/Loss                                 99999.99
+  </pre>
+<p>
+  As you can see, account 'A' has sub accounts, which should be printed,
+  while account 'B' has no sub accounts. According to the control-break-algorithm,
+  either each group must have sub groups, or no group must have sub
+  groups.
+</p>
+
+<p>
+  We can solve the conflict rather easily by hiding the second level
+  group header and footer when the account has no sub groups. We will
+  discuss the used function later.
+</p>
+
+<h3>Data Structure</h3>
+
+<p>
+  The data is formatted as follows:
+</p>
+<table border="1">
+  <tr>
+    <th>type</th>
+    <th>level-one-account</th>
+    <th>level-two-account</th>
+    <th>balance</th>
+  </tr>
+  <tr>
+    <td>Income</td>
+    <td>Account 1</td>
+    <td>-</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Income</td>
+    <td>Account 2</td>
+    <td>-</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account A</td>
+    <td>Account Z</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account A</td>
+    <td>Account Y</td>
+    <td>9999.99</td>
+  </tr>
+  <tr>
+    <td>Expense</td>
+    <td>Account B</td>
+    <td>-</td>
+    <td>9999.99</td>
+  </tr>
+</table>
+<p>
+  As you can see here, the table contains the necessary structures to
+  support two levels of accounts. If an account has no sub accounts,
+  the 'level-two-account' column is null for these rows. We will use
+  that null-value as indicator whether the second level group header
+  should be hidden.
+</p>
+
+<h3>The report structure</h3>
+
+<p>
+  The magical work is done by two functions, TriggerNestedGroupFunction
+  and TriggerTypeFunction.
+</p>
+
+<p>
+  The TriggerTypeFunction processes the top group and shows and hides
+  the income and expense headers depending on the content of the
+  "type" column of the assigned tablemodel.
+</p>
+
+<p>
+  The TriggerNestedGroupFunction checks, whether the current group
+  is a nested group. A nested group is recognized by its non-null
+  content in the column "level-two-account". Depending on whether a nested
+  group is found, either the itemband for the nested group and the
+  group header and footer for that group are made visible or the
+  normal, non-nested itemband is made visible.
+</p>
+
+<p>
+  A third custom function collects the totals from the income and expense
+  group and computes the netto profit. As this function reuses the results
+  from other function, we have to make sure, that the used functions are
+  executed before the netto-profit function tries to query the sums.
+  This is done by declaring a dependency level for the used functions,
+  which is higher than the dependency level for the netto-profit function
+  (which defaults to '0').
+</p>
+</body>
+</html>

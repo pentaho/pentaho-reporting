@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+        pageformat="A4" pagespan="2" name="Multipage report" orientation="landscape"
+        topmargin="25" leftmargin="25" bottommargin="25" rightmargin="70">
+
+  <reportheader>
+    <!--
+    <label x="0" y="0" width="100%" height="12">To protect your rights, we need to make restrictions that forbid distributors to deny you these rights or to ask you to surrender these rights.  These restrictions translate to certain responsibilities for you if you distribute copies of the library or if you modify it.</label>
+    <label x="0" y="40" width="50%" height="12">This is printed on the first page.</label>
+    <label x="50%" y="40" width="50%" height="12" alignment="left">This is printed on the second page.</label>
+    -->
+    <label x="25%" y="60" width="50%" height="18" alignment="center">This is printed onnnnnn both pages.</label>
+
+  </reportheader>
+
+  <reportfooter pagebreak-before-print="true">
+    <label x="0" y="0" width="100%" height="18">To protect your rights, we need to make restrictions that forbid distributors to deny you these rights or to ask you to surrender these rights.  These restrictions translate to certain responsibilities for you if you distribute copies of the library or if you modify it.</label>
+  </reportfooter>
+
+  <groups>
+    <group>
+      <groupheader>
+        <rectangle name="PH0" x="0" y="0" width="100%" height="100%" color="#AFAFAF" weight="0"/>
+        <rectangle name="PH0" x="0" y="0" width="25%" height="100%" color="blue" weight="0"/>
+        <rectangle name="PH0" x="75%" y="0" width="25%" height="100%" color="yellow" weight="0"/>
+        <imageref x="25%" y="15" width="50%" height="200" src="earth.png" keepAspectRatio="false" scale="true"/>
+      </groupheader>
+    </group>
+  </groups>
+  <!--
+    <pageheader>
+      <message-field x="0" y="0" width="50%" height="12">$(page0) / $(pagetotal)</message-field>
+      <message-field x="50%" y="0" width="50%" height="12">$(page1) / $(pagetotal)</message-field>
+    </pageheader>
+  -->
+  <functions>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.PageFunction" name="page0">
+      <properties>
+        <property name="pageIncrement">2</property>
+        <property name="startPage">1</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.PageFunction" name="page1">
+      <properties>
+        <property name="pageIncrement">2</property>
+        <property name="startPage">2</property>
+      </properties>
+    </expression>
+    <expression class="org.pentaho.reporting.engine.classic.core.function.PageTotalFunction" name="pagetotal">
+      <properties>
+        <property name="pageIncrement">2</property>
+        <property name="startPage">2</property>
+      </properties>
+    </expression>
+  </functions>
+</report>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.xls" global="true" hidden="true">
+    <description>A system level property that defines the menu-structure.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.Dialog" global="true" hidden="true">
+    <description>The export dialog implementation to use. This is a implementation configuration.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.ProgressDialogEnabled" global="true" hidden="false">
+    <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.StoreDialogContents" global="false" hidden="false">
+    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to false, if you are concerned about any privacy leaks.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.add-to-menu" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.add-to-toolbar" global="true" hidden="false">
+    <description>Defines, whether this Action will be added to the toolbar.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.menu-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.role" global="true" hidden="false">
+    <description>Defines the action-role for this Action.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.role-preference" global="true" hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.separated" global="true" hidden="false">
+    <description>Defines, whether this Action will be separated from other action in the same menu.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.toolbar-order" global="true" hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+    <text/>
+  </key>
+</config-description>

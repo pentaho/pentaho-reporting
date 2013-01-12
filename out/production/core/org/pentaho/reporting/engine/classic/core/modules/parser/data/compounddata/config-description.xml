@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.CompoundDataFactory" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.Module" global="true" hidden="true">
+    <description>A module definition. Please do not edit this entry.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.data-factories.namespace.compound" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.data-factories.tag.compound.compound-datasource" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.data-factories.tag.compound.data-factory" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.tag-def.default.data" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.tag-def.namespace.data" global="true" hidden="true">
+    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
+    <text/>
+  </key>
+
+</config-description>

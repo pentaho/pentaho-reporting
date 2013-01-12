@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple">
+  <groups>
+    <group name="record-group">
+      <!--
+      No fields defined .. this has been done in the joined-report.xml
+      -->
+      <groupheader>
+        <!--
+        The layout-cachable="false" makes sure, that the layout manager does
+        not try to cache the layout of the band. The caching is very aggressive
+        and always assumes, that the band does not change or gets hidden -
+        if it does an invalid layout might be computed.
+        -->
+        <band name="lunch" fsbold="true" fontsize="12" layout-cachable="false" fontname="SansSerif">
+          <label x="0" y="0" width="200" height="15">Preferred Lunch Meals</label>
+          <label x="200" y="0" width="100%" height="15">Rating</label>
+          <line x1="0" y1="15" x2="100%" y2="15" color="black" width="1"/>
+        </band>
+      </groupheader>
+    </group>
+  </groups>
+
+  <items>
+    <!-- The name is important later - we use it to hide/show the band -->
+    <band name="lunch" fsbold="false" fontsize="10" layout-cachable="false" fontname="SansSerif">
+      <string-field x="0" y="0" width="200" height="15" fieldname="lunch.Meal"/>
+      <string-field x="200" y="0" width="100%" height="15" dynamic="true" fieldname="lunch.Rating"/>
+    </band>
+  </items>
+
+  <functions>
+    <function class="org.pentaho.reporting.engine.classic.core.function.HideElementByNameFunction" name="hideLunch">
+      <properties>
+        <property name="element">lunch</property>
+        <property name="field">recordType</property>
+      </properties>
+    </function>
+  </functions>
+</report>

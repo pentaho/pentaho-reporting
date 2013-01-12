@@ -1,0 +1,18 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+  <process-task name="table/csv;page-mode=stream"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StreamCSVReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StreamCSVReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.">
+      <alias>csv</alias>
+      <alias>csv+stream</alias>
+  </process-task>
+
+  <process-task name="table/csv;page-mode=flow"
+                class="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.FlowCSVReportProcessTask"
+                bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.FlowCSVReportProcessTaskBundle"
+                expert="false" hidden="true" preferred="false"
+                configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.">
+      <alias>csv+flow</alias>
+  </process-task>
+</meta-data>

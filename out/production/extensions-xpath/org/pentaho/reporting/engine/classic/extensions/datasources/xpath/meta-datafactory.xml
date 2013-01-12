@@ -1,0 +1,6 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory"
+                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactoryBundle"/>
+
+</meta-data>

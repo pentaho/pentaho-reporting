@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog id="main_wizard_window" width="640" height="470" title="${WIZARD_TITLE}"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" 
+  xmlns:pen="http://www.pentaho.org/2008/xul"
+  onload="wizard_controller.onLoad()"
+  resizable="false"
+  padding="0"
+  spacing="0"
+  buttons=""
+  >
+  <pen:include src="dialog.xul" />
+  <hbox id="main_box" padding="0" spacing="0">
+	  <vbox background="images/rdw_bg.jpg" width="200" height="400" padding="0" spacing="0">
+	  	<hbox flex="1" padding="0">
+  		  <spacer width="2"/>
+  		  <vbox flex="1" padding="0">
+		  	<spacer height="10"/>
+		    <grid id="step_grid" flex="1" >
+		      <columns>
+		        <column flex="0" />
+		        <column flex="1" />
+		      </columns>
+		      <rows id="step_rows" />
+		    </grid>
+		  </vbox>
+		</hbox>
+	  </vbox>
+   	<deck id="content_deck" flex="1" />
+  </hbox>
+  <spacer flex="1"/>
+  <hbox id="controller_panel" bgcolor="#ffffff" padding="4"/>
+</dialog>

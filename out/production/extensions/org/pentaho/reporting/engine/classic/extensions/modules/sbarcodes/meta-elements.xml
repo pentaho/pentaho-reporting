@@ -1,0 +1,74 @@
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
+
+  <element name="simple-barcodes" expert="false" hidden="false" preferred="false"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.metadata"
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesType">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="field-value"/>
+    <attribute-group-ref ref="static-text-value"/>
+    <attribute-group-ref ref="replaced-content-attributes"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
+               name="type"
+               mandatory="true"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               value-type="java.lang.String"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.BarcodeTypePropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
+               name="checksum"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
+               name="bar-width"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
+               name="bar-height"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
+               name="show-text"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="replaced-content"/>
+    <style-group-ref ref="layout"/>
+
+    <style name="font-size" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles"/>
+    <style name="font-italic" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles"/>
+    <style name="font-bold" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles"/>
+    <style name="font" expert="false" hidden="false" mandatory="false"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles"/>
+
+  </element>
+
+
+</meta-data>

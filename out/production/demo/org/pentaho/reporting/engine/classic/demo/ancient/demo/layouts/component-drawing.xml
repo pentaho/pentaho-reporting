@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  ~ Copyright (c) 2007, Your Corporation. All Rights Reserved.
+  -->
+
+<report
+    xmlns="http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple"
+    name="Component Drawing Report" pageformat="A4" topmargin="70" leftmargin="70" bottommargin="70" rightmargin="70">
+
+  <!-- REPORT HEADER -->
+  <reportheader height="144" fontname="SansSerif" fontstyle="bold" fontsize="18">
+    <label x="0" y="0" width="100%" height="20" alignment="center">Component Drawing Demo</label>
+    <label x="0" y="24" width="100%" height="10" fontsize="10" alignment="center">Demonstrate a function that renders a picture out of a Swing Component</label>
+  </reportheader>
+
+  <!-- REPORT FOOTER -->
+  <reportfooter height="24" fontname="SansSerif" fontstyle="bold" fontsize="10">
+    <label x="0" y="0" width="100%" height="20" alignment="center">END OF REPORT</label>
+  </reportfooter>
+
+  <!-- PAGE HEADER -->
+  <pageheader height="85" onfirstpage="false" fontname="Serif" fontstyle="bold" fontsize="10">
+    <line x1="0" y1="30" x2="100%" y2="30" weight="0.5"/>
+    <label x="0" y="0" width="100%" height="20" alignment="center">PAGE HEADER</label>
+  </pageheader>
+
+  <!-- PAGE FOOTER -->
+  <pagefooter height="24" onfirstpage="true" onlastpage="true" fontname="Serif" fontstyle="italic" fontsize="9">
+    <line x1="0" y1="4" x2="100%" y2="4" weight="0.5"></line>
+    <date-field fieldname="report.date" format="d-MMM-yyyy" x="0" y="4" width="100" height="18" alignment="left"/>
+    <number-field fieldname="PageNumber" format="Page 0" x="50%" y="4" width="50%" height="18" alignment="right"/>
+  </pagefooter>
+
+  <!-- ITEMS -->
+  <items height="20" fontname="Monospaced" fontstyle="plain" fontsize="8">
+    <string-field x="0" y="0" width="100%" height="8" alignment="right" fieldname="Class"/>
+    <component-field name="RenderedResultField" x="0" y="10" width="100%" height="0" dynamic="true"
+                     fieldname="Component"/>
+  </items>
+
+  <!-- FUNCTIONS -->
+  <functions>
+    <property-ref name="report.date"/>
+    <function name="PageNumber" class="org.pentaho.reporting.engine.classic.core.function.PageFunction"/>
+  </functions>
+
+</report>
