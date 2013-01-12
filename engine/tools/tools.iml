@@ -13,6 +13,16 @@
     <orderEntry type="module" module-name="legacy-functions" exported="" />
     <orderEntry type="module" module-name="extensions-pentaho-metadata" exported="" />
     <orderEntry type="module" module-name="report-designer-assembly" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/external" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
   <component name="copyright">
     <Base>
