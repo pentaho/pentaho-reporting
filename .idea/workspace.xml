@@ -2,15 +2,38 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/engine/extensions-charting/ant/build-lib.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/engine/sdk/assembly.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/engine/sdk/common_build.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/multibuild.properties" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/testcases/build.xml" afterPath="$PROJECT_DIR$/engine/testcases/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/configuration-editor/build.xml" afterPath="$PROJECT_DIR$/libraries/configuration-editor/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/flute/build.xml" afterPath="$PROJECT_DIR$/libraries/flute/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/libbase/build.xml" afterPath="$PROJECT_DIR$/libraries/libbase/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/libdocbundle/build.xml" afterPath="$PROJECT_DIR$/libraries/libdocbundle/build.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/libfonts/build.xml" afterPath="$PROJECT_DIR$/libraries/libfonts/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/sdk/build.properties" afterPath="$PROJECT_DIR$/engine/sdk/build.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/testcases/build.properties" afterPath="$PROJECT_DIR$/engine/testcases/build.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/demo/build.xml" afterPath="$PROJECT_DIR$/engine/demo/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions/build.xml" afterPath="$PROJECT_DIR$/engine/extensions/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-cda/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-cda/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-charting/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-charting/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-docsupport/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-docsupport/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-drilldown/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-drilldown/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-hibernate/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-hibernate/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-kettle/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-kettle/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-mondrian/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-mondrian/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-olap4j/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-olap4j/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-openerp/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-openerp/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-pentaho-metadata/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-pentaho-metadata/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-sampledata/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-sampledata/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-scripting/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-scripting/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-toc/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-toc/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-xpath/build.xml" afterPath="$PROJECT_DIR$/engine/extensions-xpath/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/legacy-charts/build.xml" afterPath="$PROJECT_DIR$/engine/legacy-charts/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/wizard-core/build.xml" afterPath="$PROJECT_DIR$/engine/wizard-core/build.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/sdk/ivy.xml" afterPath="$PROJECT_DIR$/engine/sdk/ivy.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/sdk/ivysettings.xml" afterPath="$PROJECT_DIR$/engine/sdk/ivysettings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/multibuild.xml" afterPath="$PROJECT_DIR$/multibuild.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/tools/tools.iml" afterPath="$PROJECT_DIR$/engine/tools/tools.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine/extensions-docsupport/build-res/subfloor.xml" afterPath="$PROJECT_DIR$/engine/extensions-docsupport/build-res/subfloor.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pentaho-reporting.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,7 +75,9 @@
     <file path="$PROJECT_DIR$/designer/datasource-editor-jdbc/lib/external/kettle-engine-TRUNK-SNAPSHOT.jar!/org/pentaho/di/trans/steps/csvinput/step-attributes.xml" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1357999469735" ignored="false" />
     <file path="$PROJECT_DIR$/designer/datasource-editor-jdbc/lib/external/kettle-engine-TRUNK-SNAPSHOT.jar!/kettle-repositories.xml" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1357999469735" ignored="false" />
     <file path="$PROJECT_DIR$/designer/datasource-editor-jdbc/lib/external/kettle-engine-TRUNK-SNAPSHOT.jar!/org/pentaho/di/trans/steps/selectvalues/step-attributes.xml" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1357999469735" ignored="false" />
-    <file path="/build.xml" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1358000858171" ignored="false" />
+    <file path="/build.xml" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1358003013226" ignored="false" />
+    <file path="/DriverXQConnectionProviderExtendedTest.java" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1358004229535" ignored="false" />
+    <file path="/opt/data/source/pentaho-reporting/engine/sdk/build.properties" changelist="e0ceef9c-2b77-4a44-ad7b-29c040eb089f" time="1358004675903" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,143 +136,7 @@
     <favorites_list name="pentaho-reporting" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/configuration-editor/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="1199" selection-end="1612" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libformat/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="77" selection-start="667" selection-end="724" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libformula/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1237" selection-end="1986" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libformula-ui/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libloader/build.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libloader/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libpensol/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1924" selection-end="1924" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libraries/libpixie/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.7027864">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/librepository/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libserializer/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="0" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libsparkline/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1927" selection-end="1927" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libswing/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1923" selection-end="1923" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libxml/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1919" selection-end="1919" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/libformula/build.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="482" selection-end="482" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/flute/build.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="0" selection-start="1171" selection-end="2332" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -266,22 +155,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/libraries/libdocbundle/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libfonts/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/flute/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/configuration-editor/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libformat/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libformula/build.properties" />
-        <option value="$PROJECT_DIR$/libraries/libformula/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libformula-ui/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libloader/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libpensol/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libsparkline/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libswing/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libxml/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libserializer/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/librepository/build.xml" />
-        <option value="$PROJECT_DIR$/libraries/libpixie/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-extension-pentaho/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-extension-toc/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-extension-wizard/build.xml" />
+        <option value="$PROJECT_DIR$/designer/wizard-xul/build.xml" />
+        <option value="$PROJECT_DIR$/engine/extensions-xpath/ivy.xml" />
+        <option value="$PROJECT_DIR$/engine/legacy-charts/ivy.xml" />
+        <option value="$PROJECT_DIR$/engine/legacy-functions/build.xml" />
+        <option value="$PROJECT_DIR$/engine/samples/build.xml" />
+        <option value="$PROJECT_DIR$/engine/tools/ivy.xml" />
+        <option value="$PROJECT_DIR$/engine/tools/build.xml" />
+        <option value="$PROJECT_DIR$/engine/testcases/build.xml" />
+        <option value="$PROJECT_DIR$/engine/core/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/build.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/ivy.xml" />
+        <option value="$PROJECT_DIR$/designer/report-designer-assembly/build.xml" />
       </list>
     </option>
   </component>
@@ -332,248 +221,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libxml" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libswing" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libsparkline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libserializer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="librepository" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libpixie" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libpensol" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libloader" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libformula-ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libformula" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libformat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libfonts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libdocbundle" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libbase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="flute" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="configuration-editor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="configuration-editor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="build-res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
             </PATH_ELEMENT>
@@ -585,16 +232,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="designer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pentaho-reporting" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="datasource-editors" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -610,7 +247,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.lastSelected" value="vcs.Git" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/designer/wizard-xul/wizard-xul.iml" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/engine/extensions-xquery/test-lib" />
     <property name="project.structure.side.proportion" value="0.189011" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -627,6 +264,11 @@
     <option name="myDjangoConsoleState">
       <PyConsoleSettings />
     </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/engine/sdk" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -725,7 +367,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="10" y="22" width="1900" height="1160" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.495685" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -740,7 +382,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973032" sideWeight="0.6701923" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24973032" sideWeight="0.6701923" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -810,114 +452,114 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libraries/libformula/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/samples/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1237" selection-end="1986" vertical-scroll-proportion="0.0">
+        <state line="35" column="0" selection-start="1644" selection-end="1644" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libformula-ui/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/legacy-functions/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.0">
+        <state line="33" column="0" selection-start="1211" selection-end="1622" vertical-scroll-proportion="0.7892377">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libloader/build.properties">
+    <entry file="file://$PROJECT_DIR$/engine/extensions-xpath/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="28" column="0" selection-start="1223" selection-end="1321" vertical-scroll-proportion="0.6696562">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libloader/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/legacy-charts/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1909" selection-end="1909" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.4349776">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libpensol/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1924" selection-end="1924" vertical-scroll-proportion="0.0">
+        <state line="25" column="0" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libbase/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/core/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1921" selection-end="1921" vertical-scroll-proportion="0.0">
+        <state line="71" column="0" selection-start="4039" selection-end="4135" vertical-scroll-proportion="0.6651719">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libdocbundle/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1922" selection-end="1922" vertical-scroll-proportion="0.0">
+        <state line="24" column="0" selection-start="1188" selection-end="1188" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libsparkline/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-extension-pentaho/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1927" selection-end="1927" vertical-scroll-proportion="0.0">
+        <state line="50" column="0" selection-start="2432" selection-end="2432" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libfonts/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-extension-toc/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="0" selection-start="1914" selection-end="1914" vertical-scroll-proportion="0.0">
+        <state line="50" column="0" selection-start="2402" selection-end="2402" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libswing/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-extension-wizard/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1923" selection-end="1923" vertical-scroll-proportion="0.0">
+        <state line="50" column="0" selection-start="2402" selection-end="2402" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/engine/testcases/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/wizard-xul/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="9" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.0">
+        <state line="50" column="0" selection-start="2389" selection-end="2389" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libxml/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1919" selection-end="1919" vertical-scroll-proportion="0.0">
+        <state line="42" column="0" selection-start="1245" selection-end="1990" vertical-scroll-proportion="0.593423">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/configuration-editor/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/sdk/ivy.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1199" selection-end="1612" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.032885">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libserializer/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/sdk/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0">
+        <state line="67" column="0" selection-start="1389" selection-end="2791" vertical-scroll-proportion="0.6218236">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/librepository/build.xml">
+    <entry file="file://$PROJECT_DIR$/designer/report-designer-assembly/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0">
+        <state line="294" column="0" selection-start="12672" selection-end="12672" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/libpixie/build.xml">
+    <entry file="file://$PROJECT_DIR$/engine/core/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="0" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.7027864">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.26307923">
           <folding />
         </state>
       </provider>
@@ -975,7 +617,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>wizard-xul|designer</last-edited>
+          <last-edited>extensions-xpath|engine</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

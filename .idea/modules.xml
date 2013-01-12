@@ -34,7 +34,6 @@
       <module fileurl="file://$PROJECT_DIR$/engine/extensions-scripting/extensions-scripting.iml" filepath="$PROJECT_DIR$/engine/extensions-scripting/extensions-scripting.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/extensions-toc/extensions-toc.iml" filepath="$PROJECT_DIR$/engine/extensions-toc/extensions-toc.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/extensions-xpath/extensions-xpath.iml" filepath="$PROJECT_DIR$/engine/extensions-xpath/extensions-xpath.iml" group="engine" />
-      <module fileurl="file://$PROJECT_DIR$/engine/extensions-xquery/extensions-xquery.iml" filepath="$PROJECT_DIR$/engine/extensions-xquery/extensions-xquery.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/libraries/flute/flute.iml" filepath="$PROJECT_DIR$/libraries/flute/flute.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/engine/legacy-charts/legacy-charts.iml" filepath="$PROJECT_DIR$/engine/legacy-charts/legacy-charts.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/legacy-functions/legacy-functions.iml" filepath="$PROJECT_DIR$/engine/legacy-functions/legacy-functions.iml" group="engine" />

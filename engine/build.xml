@@ -96,7 +96,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="clean-all" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean-all"/>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="clean-all"/>
       </sequential>
     </for>
   </target>
@@ -105,7 +105,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="clean" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="clean" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="clean" />
       </sequential>
     </for>
   </target>
@@ -114,7 +114,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="jar" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false">
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false">
           <target name="jar" />
         </ant>
       </sequential>
@@ -125,7 +125,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="resolve" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="resolve" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="resolve" />
       </sequential>
     </for>
   </target>
@@ -133,7 +133,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="test" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="test" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="test" />
       </sequential>
     </for>
   </target>
@@ -141,7 +141,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="cobertura" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="cobertura" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="cobertura" />
       </sequential>
     </for>
   </target>
@@ -149,7 +149,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="publish-local" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish-local" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="publish-local" />
       </sequential>
     </for>
   </target>
@@ -157,7 +157,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="publish" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="publish" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="publish" />
       </sequential>
     </for>
   </target>
@@ -165,7 +165,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="dist" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="dist" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="dist" />
       </sequential>
     </for>
   </target>
@@ -173,7 +173,7 @@ This is the build file for the collection of Shims modules to provide support
   <target name="continuous" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous" />
       </sequential>
     </for>
   </target>
@@ -181,10 +181,25 @@ This is the build file for the collection of Shims modules to provide support
   <target name="continuous-testless" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
-        <ant antfile="build.xml" dir="@{module}" inheritall="false" target="continuous-testless" />
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-testless" />
       </sequential>
     </for>
   </target>
   
+  <target name="continuous-local" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-local" />
+      </sequential>
+    </for>
+  </target>
+
+  <target name="continuous-local-testless" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-local-testless" />
+      </sequential>
+    </for>
+  </target>
 
 </project> 
