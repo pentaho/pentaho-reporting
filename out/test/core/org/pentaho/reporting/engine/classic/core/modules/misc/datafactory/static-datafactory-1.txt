@@ -1,6 +1,0 @@
-Tablemodel contains 0 rows.
-Checking the data inside
-TableModel has no meta-data.
-TableModel has no meta-data.
-Tablemodel contains 0 rows.
-Checking the data inside

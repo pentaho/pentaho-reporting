@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
-  <key name="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.Module" global="true" hidden="true">
-    <description>A module definition. Please do not edit this entry.</description>
-    <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
-  </key>
-
-</config-description>

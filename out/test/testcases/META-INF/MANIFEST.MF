@@ -1,3 +1,0 @@
-Implementation-Title: pentaho-reporting-engine-classic-testcases
-Implementation-Vendor: Pentaho Corporation
-Implementation-ProductID: pentaho-reporting-engine-classic-testcases

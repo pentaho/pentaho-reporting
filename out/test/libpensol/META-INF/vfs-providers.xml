@@ -1,5 +1,0 @@
-<providers>
-  <provider class-name="org.pentaho.reporting.libraries.pensol.TestWebSolutionFileProvider">
-    <scheme name="test-solution"/>
-  </provider>
-</providers>
