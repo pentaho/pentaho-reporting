@@ -202,4 +202,24 @@ This is the build file for the collection of Shims modules to provide support
     </for>
   </target>
 
+  <target name="longrun-cobertura" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="longrun-cobertura">
+          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExeuteLongRunningTest" value="true"/>
+        </ant>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="longrun-test" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="longrun-test">
+          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExeuteLongRunningTest" value="true"/>
+        </ant>
+      </sequential>
+    </for>
+  </target>
+
 </project> 
