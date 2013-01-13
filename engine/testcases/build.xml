@@ -85,15 +85,15 @@
     <target name="javadoc.targz" />
 
 
-    <target name="longrun-test">
+    <target name="longrun-test" depends="clean-all,resolve">
         <antcall target="test">
-            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
         </antcall>
     </target>
 
-    <target name="longrun-cobertura">
+    <target name="longrun-cobertura" depends="clean-all,resolve">
         <antcall target="cobertura">
-            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="false"/>
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
         </antcall>
     </target>
 </project>
