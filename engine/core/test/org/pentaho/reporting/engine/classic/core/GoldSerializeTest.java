@@ -63,6 +63,11 @@ public class GoldSerializeTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
 //    runSingleGoldReports();
     runAllGoldReports();
   }

@@ -38,13 +38,8 @@ public class Prd3319Test extends TestCase
   public void setUp()
   {
     ClassicEngineBoot.getInstance().start();
+    new File("bin/test-tmp").mkdirs();
   }
-
-  public void testSaveImage()
-  {
-
-  }
-
 
   public void testLoadSaveFromDisk() throws Exception
   {
@@ -57,18 +52,18 @@ public class Prd3319Test extends TestCase
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement(element);
 
-    saveReport(report, new File("prd-3319-load-save-disk-1.prpt"));
+    saveReport(report, new File("bin/test-tmp/prd-3319-load-save-disk-1.prpt"));
 
     // load it to establish the context in all resource-keys ..
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource resource = mgr.createDirectly(new File("prd-3159-load-save-disk-1.prpt"), MasterReport.class);
+    final Resource resource = mgr.createDirectly(new File("bin/test-tmp/prd-3319-load-save-disk-1.prpt"), MasterReport.class);
 
     // save it once, that changes the bundle ...
     final MasterReport report2 = (MasterReport) resource.getResource();
-    saveReport(report2, new File("prd-3319-load-save-disk-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3319-load-save-disk-2.prpt"));
     // save it twice, that triggers the crash...
-    saveReport(report2, new File("prd-3319-load-save-disk-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3319-load-save-disk-2.prpt"));
 
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime(new DefaultTableModel(), 0, processingContext);

@@ -44,6 +44,7 @@ public class Prd3159Test extends TestCase
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
+    new File("bin/test-tmp").mkdirs();
   }
 
   public void testLoadSave() throws Exception
@@ -58,18 +59,18 @@ public class Prd3159Test extends TestCase
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement(element);
     // .. save it.
-    saveReport(report, new File("prd-3159-load-save-1.prpt"));
+    saveReport(report, new File("bin/test-tmp/prd-3159-load-save-1.prpt"));
 
     // load it to establish the context in all resource-keys ..
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource resource = mgr.createDirectly(new File("prd-3159-load-save-1.prpt"), MasterReport.class);
+    final Resource resource = mgr.createDirectly(new File("bin/test-tmp/prd-3159-load-save-1.prpt"), MasterReport.class);
 
     // save it once, that changes the bundle ...
     final MasterReport report2 = (MasterReport) resource.getResource();
-    saveReport(report2, new File("prd-3159-load-save-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3159-load-save-2.prpt"));
     // save it twice, that triggers the crash...
-    saveReport(report2, new File("prd-3159-load-save-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3159-load-save-2.prpt"));
 
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime(new DefaultTableModel(), 0, processingContext);
@@ -89,16 +90,16 @@ public class Prd3159Test extends TestCase
     final Resource orgRes = mgr.createDirectly(Prd3159Test.class.getResource("Prd-3159.prpt"), MasterReport.class);
     // .. save it.
     final MasterReport report = (MasterReport) orgRes.getResource();
-    saveReport(report, new File("prd-3159-load-save-disk-1.prpt"));
+    saveReport(report, new File("bin/test-tmp/prd-3159-load-save-disk-1.prpt"));
 
     // load it to establish the context in all resource-keys ..
-    final Resource resource = mgr.createDirectly(new File("prd-3159-load-save-disk-1.prpt"), MasterReport.class);
+    final Resource resource = mgr.createDirectly(new File("bin/test-tmp/prd-3159-load-save-disk-1.prpt"), MasterReport.class);
 
     // save it once, that changes the bundle ...
     final MasterReport report2 = (MasterReport) resource.getResource();
-    saveReport(report2, new File("prd-3159-load-save-disk-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3159-load-save-disk-2.prpt"));
     // save it twice, that triggers the crash...
-    saveReport(report2, new File("prd-3159-load-save-disk-2.prpt"));
+    saveReport(report2, new File("bin/test-tmp/prd-3159-load-save-disk-2.prpt"));
 
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime(new DefaultTableModel(), 0, processingContext);

@@ -131,7 +131,7 @@ TYPICAL TARGET SEQUENCE
        =================================================================================-->
 
   <!-- Project meta properties -->
-  <property name="impl.vendor" value="Your Company Here" description="Jar file metadata describing the jar's vendor" />
+  <property name="impl.vendor" value="Pentaho Corporation" description="Jar file metadata describing the jar's vendor" />
   <property name="impl.productID"
             value=""
             description="Jar file metadata indicating the product ID (this is not the revision)" />
@@ -177,7 +177,7 @@ TYPICAL TARGET SEQUENCE
             value="true"
             description="Prefer SVNKit binding over the command line client for native svn support (defaults to true)" />
   <property name="ivy.url"
-            value="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.1.0/ivy-2.1.0.jar"
+            value="http://repo2.maven.org/maven2/org/apache/ivy/ivy/2.2.0/ivy-2.2.0.jar"
             description="The URL to the current release of Apache IVY" />
 
   <!-- Test properties -->
@@ -243,7 +243,8 @@ TYPICAL TARGET SEQUENCE
             description="Directory that holds resources not included in the source tree" />
   <property name="source.zip.filename" value="${ivy.artifact.id}-${project.revision}-sources.zip" />
   <property name="source.tar.filename" value="${ivy.artifact.id}-${project.revision}-sources.tar.gz" />
-
+  <property name="source.publish" value="true" />
+  
   <!-- Ivy properties -->
   <property name="ivy.settingsurl"
             value="file:${basedir}/ivysettings.xml"
@@ -267,6 +268,27 @@ TYPICAL TARGET SEQUENCE
             value="${bin.dir}/reports/ivy"
             description="Base directory that holds all IVY dependency report files" />
   <property name="ivy.configs" value="*" description="Set of configs used for IVY reporting and checking operations" />
+  <property name="ivy.use.symlinks" value="true" description="Flag indicating if Ivy should create symlinks when retrieving artifacts."/>
+
+  <!-- Tattletale properties -->
+  <property name="tattletale.url"
+            value="http://repo.pentaho.org/artifactory/repo/jboss/tattletale/1.1.2.Final/tattletale-1.1.2.Final.zip"
+            description="The URL from which to download tattletale" />
+  <property name="tattletale.classname"
+            value="org.jboss.tattletale.ant.ReportTask"
+            description="The name of the class which will run the tattletale reports" />
+  <property name="tattletale.reports.dir"
+            value="${bin.dir}/reports/tattletale"
+            description="Base directory that holds the output of the tattletale reports" />
+  <property name="tattletale.configfile"
+            value=""
+            description="The configuration file for the tattletale report" />
+
+  <!-- Sonar properties -->
+  <property name="sonar.url"
+            value="http://repo1.maven.org/maven2/org/codehaus/sonar-plugins/sonar-ant-task/1.2/sonar-ant-task-1.2.jar"/>
+  <property name="sonar.classname"
+          value="org.sonar.ant.SonarTask"/>
 
   <!-- Load the manifest file (if any) as a properties file -->
   <property name="dist.manifest.file"
@@ -302,6 +324,14 @@ TYPICAL TARGET SEQUENCE
 
   <!-- Build Mode properties -->
   <property name="release" value="false" description="Set this to true if you want to generate a release artifact" />
+
+  <!-- Ivy should only use symlinks if we're not in release mode -->
+  <condition property="ivy.use.symlinks.internal">
+    <and>
+      <isfalse value="${release}"/>
+      <istrue value="${ivy.use.symlinks}"/>
+    </and>
+  </condition>
 
   <!-- Set the os property -->
   <condition property="isLinux">
@@ -346,16 +376,51 @@ TYPICAL TARGET SEQUENCE
     <fileset dir="${testlib.dir}">
       <include name="**/*.jar" />
     </fileset>
-    <dirset dir="${testclasses.dir}" />
-    <dirset dir="${classes.dir}" />
+    <pathelement path="${testclasses.dir}" />
+    <pathelement path="${classes.dir}" />
   </path>
+
 
   <!--=======================================================================
       default
       
       The target that is run if no target is given
       ====================================================================-->
-  <target name="default" depends="clean-all,resolve,dist" />
+  <target name="default" depends="build" />
+
+
+  <!--=======================================================================
+      build
+      
+      Runs a typical build process to create the project locally
+      ====================================================================-->
+  <target name="build" depends="clean-all,resolve,cobertura,dist-source,dist" />
+
+
+  <!--=======================================================================
+      build-testless
+      
+      Runs a typical build process to create the project locally (no testing)
+      ====================================================================-->
+  <target name="build-testless" depends="clean-all,resolve,dist-source,dist" />
+
+
+  <!--=======================================================================
+      continuous
+      
+      Runs a typical continuous integration build including project dist,
+      test, and coverage artifacts
+      ====================================================================-->
+  <target name="continuous" depends="build,publish" />
+
+
+  <!--=======================================================================
+      continuous-testless
+      
+      Runs a typical continuous integration build including project dist,
+      and coverage artifacts
+      ====================================================================-->
+  <target name="continuous-testless" depends="build-testless,publish" />
 
 
   <!--=======================================================================
@@ -611,29 +676,29 @@ TYPICAL TARGET SEQUENCE
     <for list="${ivy.default.sub-configs}" param="conf">
       <sequential>
         <ivy:resolve file="${ivyfile}" conf="default_@{conf}" />
-        <ivy:retrieve conf="default_@{conf}" pattern="${lib.dir}/@{conf}/[module]-[revision](-[classifier]).[ext]" />
+        <ivy:retrieve conf="default_@{conf}" pattern="${lib.dir}/@{conf}/[module]-[revision](-[classifier]).[ext]" symlink="${ivy.use.symlinks.internal}" />
       </sequential>
     </for>
   </target>
 
   <target name="resolve-default.default" depends="resolve-init" unless="ivy.default.sub-configs">
     <ivy:resolve file="${ivyfile}" conf="default" />
-    <ivy:retrieve conf="default" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" />
+    <ivy:retrieve conf="default" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" symlink="${ivy.use.symlinks.internal}" />
   </target>
 
   <target name="resolve-test" depends="resolve-init">
     <ivy:resolve file="${ivyfile}" conf="test" />
-    <ivy:retrieve conf="test" pattern="${testlib.dir}/[module]-[revision](-[classifier]).[ext]" />
+    <ivy:retrieve conf="test" pattern="${testlib.dir}/[module]-[revision](-[classifier]).[ext]" symlink="${ivy.use.symlinks.internal}" />
   </target>
 
   <target name="resolve-codegen" depends="resolve-init">
     <ivy:resolve file="${ivyfile}" conf="codegen" />
-    <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" />
+    <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" symlink="${ivy.use.symlinks.internal}" />
   </target>
 
   <target name="resolve-runtime" depends="resolve-init">
     <ivy:resolve file="${ivyfile}" conf="runtime" />
-    <ivy:retrieve conf="runtime" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" />
+    <ivy:retrieve conf="runtime" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" symlink="${ivy.use.symlinks.internal}" />
   </target>
 
 
@@ -711,13 +776,31 @@ TYPICAL TARGET SEQUENCE
       for download by other projects currently being executed on the user's
       system.
       ====================================================================-->
-  <target name="publish-local-nojar" depends="install-ivy">
+  <target name="publish-local-nojar" depends="install-ivy,publish-local-nojar.internal">
+    <if>
+      <equals arg1="${tests.publish}" arg2="true" />
+      <then>
+        <antcall target="publish-local-nojar.internal">
+          <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
+        </antcall>
+      </then>
+    </if>
+    <antcall target="publish-local-nojar.post"/>
+  </target>
+
+  <!--=======================================================================
+      publish-local-nojar.post this target is invoked after the normal set of publish-local-nojar
+      is completed, override this to perform additional publishing in extensions of subfloor, etc
+      ====================================================================-->
+  <target name="publish-local-nojar.post">
+  </target>
+  
+  <target name="publish-local-nojar.internal" depends="install-ivy">
     <ivy:resolve file="${ivy.artifact.ivyfilename}" />
-    <ivy:publish resolver="local" pubrevision="${project.revision}" overwrite="true" forcedeliver="true">
+    <ivy:publish resolver="local" pubrevision="${project.revision}" overwrite="true" forcedeliver="true" warnonmissing="yes" haltonmissing="no">
       <artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]" />
     </ivy:publish>
   </target>
-
 
   <!--=======================================================================
       publish-local
@@ -746,7 +829,18 @@ TYPICAL TARGET SEQUENCE
       
       Publishes the jar file for this project to a Maven2 repository.
       ====================================================================-->
-  <target name="publish-nojar" depends="install-antcontrib,create-pom,ivy.deliver">
+  <target name="publish-nojar" depends="install-antcontrib,create-pom,ivy.deliver,publish-nojar.internal">
+    <if>
+      <equals arg1="${tests.publish}" arg2="true" />
+      <then>
+        <antcall target="publish-nojar.internal">
+          <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
+        </antcall>
+      </then>
+    </if>
+  </target>
+
+  <target name="publish-nojar.internal" depends="install-antcontrib,create-pom,ivy.deliver">
     <antcall target="maven-publish-dependencies">
       <param name="publish.groupId" value="${ivy.artifact.group}" />
       <param name="publish.artifactId" value="${ivy.artifact.id}" />
@@ -754,20 +848,31 @@ TYPICAL TARGET SEQUENCE
       <param name="publish.file" value="${ivy.artifact.ivypathname}" />
     </antcall>
 
-    <antcall target="maven-publish-sources">
-      <param name="publish.groupId" value="${ivy.artifact.group}" />
-      <param name="publish.artifactId" value="${ivy.artifact.id}" />
-      <param name="publish.version" value="${project.revision}" />
-      <param name="publish.file" value="${dist.dir}/${ivy.artifact.id}-${project.revision}-sources.jar" />
-    </antcall>
+    <if>
+      <equals arg1="${source.publish}" arg2="true" />
+        <then>
+          <antcall target="maven-publish-sources">
+            <param name="publish.groupId" value="${ivy.artifact.group}" />
+            <param name="publish.artifactId" value="${ivy.artifact.id}" />
+            <param name="publish.version" value="${project.revision}" />
+            <param name="publish.file" value="${dist.dir}/${ivy.artifact.id}-${project.revision}-sources.jar" />
+          </antcall>
+        </then>
+    </if>
 
     <antcall target="maven-publish-artifact">
       <param name="publish.pomFile" value="${ivy.artifact.pomfile}" />
       <param name="publish.file" value="${dist.dir}/${ivy.artifact.id}-${project.revision}.jar" />
     </antcall>
+
+    <antcall target="maven-publish.post"/>
+    
   </target>
 
-
+  <!-- Override this if anything is needed to be done after the standard parts of publish are completed -->
+  <!-- Such as:  publishing non-standard/extended artifacts, etc -->
+  <target name="maven-publish.post"/>
+  
   <!--=======================================================================
         ivy.deliver
     
@@ -783,7 +888,7 @@ TYPICAL TARGET SEQUENCE
       
       A function that deploys an ivy.xml file to a maven repository
       ====================================================================-->
-  <target name="maven-publish-dependencies">
+  <target name="maven-publish-dependencies" depends="install-antcontrib">
     <sequential>
       <fail message="No file found at: ${publish.file}">
         <condition>
@@ -832,7 +937,7 @@ TYPICAL TARGET SEQUENCE
       
       A function that deploys an artifact to a maven repository
       ====================================================================-->
-  <target name="maven-publish-artifact">
+  <target name="maven-publish-artifact" depends="install-antcontrib">
     <sequential>
       <fail message="No file found at: ${publish.file}">
         <condition>
@@ -874,7 +979,7 @@ TYPICAL TARGET SEQUENCE
       
       A function that deploys a java-sources artifact to a maven repository
       ====================================================================-->
-  <target name="maven-publish-sources">
+  <target name="maven-publish-sources" depends="install-antcontrib">
     <sequential>
       <fail message="No file found at: ${publish.file}">
         <condition>
@@ -896,7 +1001,7 @@ TYPICAL TARGET SEQUENCE
             <arg value="-DgroupId=${publish.groupId}" />
             <arg value="-DartifactId=${publish.artifactId}" />
             <arg value="-Dversion=${publish.version}" />
-            <arg value="-DgeneratePom=false" />
+            <arg value="-DgeneratePom=true" />
             <arg value="-Dpackaging=java-source" />
             <arg value="-Dfile=${publish.file}" />
           </exec>
@@ -951,7 +1056,7 @@ TYPICAL TARGET SEQUENCE
       ====================================================================-->
   <target name="clean"
           description="Cleans all the files generated from a build with the exception of IVY-downloaded jars (see clean-all)"
-          depends="clean-tests, clean-cobertura, clean-javadoc, clean-dist">
+          depends="clean-tests, clean-cobertura, clean-sonar, clean-javadoc, clean-dist">
     <delete dir="${classes.dir}" />
     <delete dir="${bin.dir}" />
   </target>
@@ -1127,13 +1232,27 @@ TYPICAL TARGET SEQUENCE
       Creates a jar file from the bin directory
       ====================================================================-->
   <target name="jar"
-          depends="compile,set-build.id,generate.manifest"
+          depends="jar.main,jar.test"
           description="Jars up the bin directory after a compile">
+  </target>
+
+  <!-- jar the tests ONLY IF tests.publish it true -->
+  <!-- if the compile-tests target is in the dependency list for this target, -->
+  <!-- it will get executed no matter what the value of tests.publish is      -->
+  <target name="jar.test"
+          if="tests.publish">
+    <antcall target="compile-tests" />
+    <jar destfile="${dist.dir}/${ivy.artifact.id}-test-${project.revision}.jar" manifest="${dist.manifest.file}">
+      <fileset dir="${testclasses.dir}"/>
+    </jar>
+  </target>
+
+  <target name="jar.main"
+          depends="compile,set-build.id,generate.manifest">
     <jar destfile="${dist.dir}/${ivy.artifact.id}-${project.revision}.jar" manifest="${dist.manifest.file}">
       <fileset dir="${classes.dir}" />
     </jar>
   </target>
-
 
   <!--=======================================================================
       generate.manifest
@@ -1168,15 +1287,21 @@ TYPICAL TARGET SEQUENCE
       
       Creates a jar of the project source for distribution
       ====================================================================-->
-  <target name="source.jar" depends="init">
+  <target name="source.jar" depends="init,install-antcontrib">
     <jar jarfile="${dist.dir}/${ivy.artifact.id}-${project.revision}-sources.jar" basedir="${src.dir}" />
+    <if>
+      <equals arg1="${tests.publish}" arg2="true" />
+      <then>
+        <jar jarfile="${dist.dir}/${ivy.artifact.id}-test-${project.revision}-sources.jar" basedir="${src.dir}" />
+      </then>
+    </if>
   </target>
 
   <!--=======================================================================
-	    source.zip
-	    
-	    Creates a zip of the project source for distribution
-	    ====================================================================-->
+      source.zip
+      
+      Creates a zip of the project source for distribution
+      ====================================================================-->
   <target name="source.zip" depends="init">
     <jar jarfile="${dist.dir}/${source.zip.filename}" basedir="${src.dir}" />
   </target>
@@ -1244,12 +1369,18 @@ TYPICAL TARGET SEQUENCE
       Compiles and runs all the tests for the project
       ====================================================================-->
   <target name="test" depends="compile,compile-tests, init-test-reports" description="Compiles and runs unit tests">
-    <junit maxmemory="${junit.maxmemory}"
+    <junit maxmemory="${junit.maxmemory}" dir="${basedir}"
            fork="yes"
            failureProperty="test.failed"
            haltonfailure="${junit.haltonfailure}"
            printsummary="yes">
       <sysproperty key="java.awt.headless" value="${headless.unittest}" />
+      
+      <syspropertyset>
+        <propertyref prefix="junit.sysprop." />
+        <mapper type="glob" from="junit.sysprop.*" to="*"/>
+      </syspropertyset>
+      
       <classpath refid="test.classpath" />
       <formatter type="xml" />
       <test name="${testcase}" todir="${testreports.xml.dir}" if="testcase" />
@@ -1316,24 +1447,6 @@ TYPICAL TARGET SEQUENCE
       <zipfileset dir="${dist.dir}" includes="**/*.jar"/>
     </zip>
   </target>
-
-
-  <!--=======================================================================
-      continuous
-      
-      Runs a typical continuous integration build including project dist, javadoc, test, 
-      and coverage artifacts
-      ====================================================================-->
-  <target name="continuous" depends="clean-all,resolve,cobertura,dist-source,dist" />
-
-
-  <!--=======================================================================
-      continuous-testless
-      
-      Runs a typical continuous integration build including project dist, javadoc, test, 
-      and coverage artifacts
-      ====================================================================-->
-  <target name="continuous-testless" depends="clean-all,resolve,dist-source,dist" />
 
 
   <!--=======================================================================
@@ -1426,6 +1539,7 @@ TYPICAL TARGET SEQUENCE
       Runs tests in an instrumented environment and produces Cobertura test coverage reports
       ====================================================================-->
   <target name="cobertura"
+          description="Runs tests in an instrumented environment and produces Cobertura test coverage reports"
           depends="clean-cobertura,install-cobertura,compile,compile-tests,cobertura.instrument-classes,cobertura.test-instrumented,cobertura.xml-report,cobertura.html-report" />
 
 
@@ -1457,7 +1571,7 @@ TYPICAL TARGET SEQUENCE
       Downloads and installs Cobertura ant tasks
       ====================================================================-->
   <target name="install-cobertura" depends="install-ivy">
-    <taskdef-with-ivy organisation="net.sourceforge.cobertura" module="cobertura" revision="1.9" resource="tasks.properties" classname="net.sourceforge.cobertura.ant.InstrumentTask"/>
+    <taskdef-with-ivy organisation="net.sourceforge.cobertura" module="cobertura" revision="1.9.4.1" resource="tasks.properties" classname="net.sourceforge.cobertura.ant.InstrumentTask"/>
   </target>
 
 
@@ -1468,6 +1582,15 @@ TYPICAL TARGET SEQUENCE
       ====================================================================-->
   <target name="clean-cobertura" depends="cobertura.clean-instrumented-classes,cobertura.clean-coverage-reports">
     <delete dir="${cobertura.data.dir}" />
+  </target>
+
+  <!--=======================================================================
+      clean-sonar
+      
+      Removes the temporary file location for sonar files
+      ====================================================================-->
+  <target name="clean-sonar">
+    <delete dir="${basedir}/.sonar" />
   </target>
 
 
@@ -1506,7 +1629,7 @@ TYPICAL TARGET SEQUENCE
         <include name="*.jar" />
       </fileset>
     </path>
-    <junit fork="yes"
+    <junit fork="yes" dir="${basedir}"
            maxmemory="${junit.maxmemory}"
            failureProperty="test.failed"
            haltonfailure="${junit.haltonfailure}">
@@ -1515,6 +1638,11 @@ TYPICAL TARGET SEQUENCE
       <!-- Specify the name of the coverage data file to use. -->
       <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.data.dir}/cobertura.ser" />
 
+      <syspropertyset>
+        <propertyref prefix="junit.sysprop." />
+        <mapper type="glob" from="junit.sysprop.*" to="*"/>
+      </syspropertyset>
+      
       <!--
         Note the classpath order: instrumented classes are before the
         original (uninstrumented) classes.  This is important.
@@ -1608,18 +1736,18 @@ TYPICAL TARGET SEQUENCE
   <!--=======================================================================
         MACRO: taskdef-with-ivy
         Downloads (using IVY) and defines new Ant tasks
-	    
-	    NOTE: any task using this macro must depend on "install-antcontrib"
-	    
-	    parameters:
-			task-name    - Name to give the new Ant task (only used if resource is not set)
-			organisation - Artifact organization (for artifact resolution with IVY)
-			module       - Artifact module (for artifact resolution with IVY)
-			revision     - Artifact revision (for artifact resolution with IVY)
-			classname    - Classname for the Ant task.  Used during taskdef and to check 
-			               if we already have the libraries
-			resource     - (optional) Resource defining the Ant task.  Used during taskdef
-	    ====================================================================-->
+      
+      NOTE: any task using this macro must depend on "install-antcontrib"
+      
+      parameters:
+      task-name    - Name to give the new Ant task (only used if resource is not set)
+      organisation - Artifact organization (for artifact resolution with IVY)
+      module       - Artifact module (for artifact resolution with IVY)
+      revision     - Artifact revision (for artifact resolution with IVY)
+      classname    - Classname for the Ant task.  Used during taskdef and to check 
+                     if we already have the libraries
+      resource     - (optional) Resource defining the Ant task.  Used during taskdef
+      ====================================================================-->
   <macrodef name="taskdef-with-ivy">
     <attribute name="task-name"
                description="Name to give the new Ant task (only used if resource is not set)"
@@ -1633,15 +1761,15 @@ TYPICAL TARGET SEQUENCE
                description="(optional) Resource defining the Ant task.  Used during taskdef"
                default="unset" />
     <sequential>
-      <mkdir dir="${subfloor.resources.dir}/@{module}/" />
+      <mkdir dir="${subfloor.resources.dir}/@{module}-@{revision}/" />
       <!-- if the library does not exist, we must download it -->
       <if>
         <not>
           <and>
-            <available file="${subfloor.resources.dir}/@{module}" />
+            <available file="${subfloor.resources.dir}/@{module}-@{revision}" />
             <available classname="@{classname}">
               <classpath>
-                <fileset dir="${subfloor.resources.dir}/@{module}">
+                <fileset dir="${subfloor.resources.dir}/@{module}-@{revision}">
                   <include name="*.jar" />
                 </fileset>
               </classpath>
@@ -1650,21 +1778,22 @@ TYPICAL TARGET SEQUENCE
         </not>
         <then>
           <ivy:retrieve inline="true"
-		  				conf="default"
+              conf="default"
                         organisation="@{organisation}"
                         module="@{module}"
                         revision="@{revision}"
-                        pattern="${subfloor.resources.dir}/@{module}/[module]-__-[revision](-[classifier]).[ext]" />
+                        pattern="${subfloor.resources.dir}/@{module}-@{revision}/[module]-__-[revision](-[classifier]).[ext]" />
           <!-- in case the artifact pulls in an ant jar, remove it. they cause runtime conflicts -->
           <delete>
-            <fileset dir="${subfloor.resources.dir}/@{module}">
+            <fileset dir="${subfloor.resources.dir}/@{module}-@{revision}">
               <include name="ant-__-*.jar" />
+              <include name="ant-launcher-__-*.jar" />
             </fileset>
           </delete>
         </then>
       </if>
       <path id="taskdef.classpath">
-        <fileset dir="${subfloor.resources.dir}/@{module}">
+        <fileset dir="${subfloor.resources.dir}/@{module}-@{revision}">
           <include name="*.jar" />
         </fileset>
       </path>
@@ -1682,20 +1811,20 @@ TYPICAL TARGET SEQUENCE
 
 
   <!--=======================================================================
-	    Macro which will download the specified library. 
-	    
-	    NOTE: any task using this macro must depend on "install-antcontrib"
-	    
-	    parameters:
-			name      - The name of the library (the filename w/o extension)
-			url       - The URL from which the library will be downloaded
-			resource  - The name of the resource which should be loaded
-			            as a task definition 
-			classname - A class file name which can be used to detect if the
-			            property library exists
-			extension - The extension of the library being downloaded 
-			            (defaults to zip)
-	    ====================================================================-->
+      Macro which will download the specified library. 
+      
+      NOTE: any task using this macro must depend on "install-antcontrib"
+      
+      parameters:
+      name      - The name of the library (the filename w/o extension)
+      url       - The URL from which the library will be downloaded
+      resource  - The name of the resource which should be loaded
+                  as a task definition 
+      classname - A class file name which can be used to detect if the
+                  property library exists
+      extension - The extension of the library being downloaded 
+                  (defaults to zip)
+      ====================================================================-->
   <macrodef name="download-antlib">
     <attribute name="name" />
     <attribute name="url" />
@@ -1739,4 +1868,96 @@ TYPICAL TARGET SEQUENCE
     </sequential>
   </macrodef>
 
+  <!--=======================================================================
+    install-tattletale
+    
+    (Fetches and) installs TATTLETALE for use by this ant script
+    ====================================================================-->
+  <target name="install-tattletale" depends="install-antcontrib">
+    <if>
+      <istrue value="${tattletale.isinstalled}" />
+      <then>
+        <echo message="Skipping TATTLETALE install.  TATTLETALE has already been configured by the build" />
+      </then>
+      <else>
+        <download-antlib name="tattletale"
+                         url="${tattletale.url}"
+                         classname="${tattletale.classname}" 
+                         extension="zip"/>
+                          
+        <taskdef name="tattletale.report" classname="${tattletale.classname}">
+          <classpath>
+            <fileset dir="${subfloor.resources.dir}/tattletale">
+              <include name="*.jar" />
+            </fileset>
+          </classpath>
+        </taskdef>
+
+        <property name="tattletale.isinstalled" value="true" />
+      </else>
+    </if>
+  </target>
+  
+  <!--=======================================================================
+    tattletale-report
+    
+    Generates a tattletale report for this project
+    ====================================================================-->
+  <target name="tattletale-report" depends="install-tattletale,jar">
+    <tattletale.report source="${basedir}" destination="${tattletale.reports.dir}"/>
+  </target>
+  
+<!--=======================================================================
+    install-sonar
+    
+    (Fetches and) installs SONAR ant plugin for use by this ant script
+    ====================================================================-->
+  <target name="install-sonar" depends="install-antcontrib">
+    <if>
+      <istrue value="${sonar.isinstalled}" />
+      <then>
+        <echo message="Skipping SONAR install.  SONAR has already been configured by the build" />
+      </then>
+      <else>
+        <download-antlib name="sonar"
+                         url="${sonar.url}"
+                         classname="${sonar.classname}" 
+                         extension="jar"/>
+                          
+        <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+            <classpath>
+              <fileset dir="${subfloor.resources.dir}/sonar">
+                  <include name="*.jar" />
+              </fileset>
+            </classpath> 
+        </taskdef>
+
+        <property name="sonar.isinstalled" value="true" />
+      </else>
+    </if>
+  </target>
+
+  <!--=======================================================================
+    sonar
+      
+    Execute the sonar analysis and publish to a sonar server specified by:
+    sonar.jdbc.url
+    sonar.jdbc.driverClassName
+    sonar.jdbc.username
+    sonar.jdbc.password
+    sonar.host.url
+    ====================================================================-->
+  <target name="sonar" depends="install-sonar, compile, test, cobertura">
+    <property name="sonar.sources" value="${src.dir}" />
+    <property name="sonar.binaries" value="${classes.dir}" />
+    <property name="sonar.tests" value="${testsrc.dir}" />
+    <property name="sonar.libraries" value="${lib.dir}" />
+
+    <property name="sonar.dynamicAnalysis" value="reuseReports" />
+    <property name="sonar.cobertura.reportPath" value="${coberturareports.xml.dir}/coverage.xml" />
+    <property name="sonar.surefire.reportsPath" value="${testreports.xml.dir}" />
+    
+    <sonar:sonar key="${ivy.artifact.group}:${ivy.artifact.id}" version="${project.revision}" xmlns:sonar="antlib:org.sonar.ant"/>
+  </target>
+  
 </project>

@@ -15,7 +15,7 @@
     </description>
 
     <property file="${user.home}/.pentaho-reporting-build-settings.properties"
-                description="Per user override settings-file for all pentaho-reporting projects." />
+              description="Per user override settings-file for all pentaho-reporting projects."/>
 
     <!-- Define the default location of the common build file -->
     <property name="common.build.file" value="./build-res/subfloor.xml"
@@ -25,8 +25,8 @@
     <property name="runtime-lib.dir" value="${basedir}/runtime-lib"/>
     <property name="driver-lib.dir" value="${lib.dir}/jdbc"/>
     <property name="resource.dir" value="${basedir}/resource"/>
-	<property name="kettle-plugins.dir" value="plugins" />
-	<property name="doc.dir" value="${resource.dir}/docs" />
+    <property name="kettle-plugins.dir" value="plugins"/>
+    <property name="doc.dir" value="${resource.dir}/docs"/>
     <property name="dist.base-name" value="prd"/>
     <property name="dist.type" value="ce"/>
     <property name="dist.name" value="${dist.base-name}-${dist.type}"/>
@@ -37,12 +37,12 @@
 
     <property name="stage.dir.winlinux" value="${basedir}/stage-winlinux"/>
     <property name="report-designer.dir.winlinux" value="${stage.dir.winlinux}/report-designer"/>
-	
+
     <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
     <import file="${common.build.file}"/>
-	<import file="./build-res/subfloor-pkg.xml"/>
+    <import file="./build-res/subfloor-pkg.xml"/>
 
-	<property name="pdi-plugins.stage.dir" value="${stage.dir}/plugins" />
+    <property name="pdi-plugins.stage.dir" value="${stage.dir}/plugins"/>
 
     <!--
       AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
@@ -51,7 +51,8 @@
     -->
 
     <!-- Add the runtime lib directory to the list that gets cleaned up with the jars -->
-    <target name="clean-jars" description="Cleans the libraries that have been downloaded" depends="subfloor.clean-jars">
+    <target name="clean-jars" description="Cleans the libraries that have been downloaded"
+            depends="subfloor.clean-jars">
         <delete dir="${runtime-lib.dir}"/>
     </target>
 
@@ -59,7 +60,7 @@
     <target name="clean" description="Cleans all the work files" depends="subfloor.clean">
         <delete dir="${stage.dir.mac}"/>
         <delete dir="${stage.dir.winlinux}"/>
-        <delete dir="${kettle-plugins.dir}" />
+        <delete dir="${kettle-plugins.dir}"/>
     </target>
 
     <!-- There is nothing to compile or jar -->
@@ -83,29 +84,29 @@
     </target>
 
     <target name="resolve-default" depends="resolve-init">
-      <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="default" />
-      <ivy:retrieve conf="default" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" />
+        <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="default"/>
+        <ivy:retrieve conf="default" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
     </target>
 
     <target name="resolve-test" depends="resolve-init">
-      <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="test" />
-      <ivy:retrieve conf="test" pattern="${testlib.dir}/[module]-[revision](-[classifier]).[ext]" />
+        <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="test"/>
+        <ivy:retrieve conf="test" pattern="${testlib.dir}/[module]-[revision](-[classifier]).[ext]"/>
     </target>
 
     <target name="resolve-codegen" depends="resolve-init">
-      <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="codegen" />
-      <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]" />
+        <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="codegen"/>
+        <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
     </target>
-	
-	<!-- - - - - - - - - - - - - - - - - - 
+
+    <!-- - - - - - - - - - - - - - - - - -
         target: resolve-plugins                      
        - - - - - - - - - - - - - - - - - -->
     <target name="resolve-plugins" depends="resolve-init">
-        <ivy:resolve file="${ivyfile}" conf="plugin" />
-        <ivy:retrieve conf="plugin" pattern="${pdi-plugins.stage.dir}/[module]-[revision](-[classifier]).[ext]" />
-    </target> 
+        <ivy:resolve file="${ivyfile}" conf="plugin"/>
+        <ivy:retrieve conf="plugin" pattern="${pdi-plugins.stage.dir}/[module]-[revision](-[classifier]).[ext]"/>
+    </target>
 
-   	<!-- Makes sure the directories exist which will be used -->
+    <!-- Makes sure the directories exist which will be used -->
     <target name="init" description="Initializes the build process">
         <mkdir dir="${lib.dir}"/>
         <mkdir dir="${runtime-lib.dir}"/>
@@ -117,35 +118,35 @@
 
     </target>
 
-	<target name="extract-plugins" depends="resolve-plugins">
-		<!-- extract plugins -->
-		<unzip dest="${pdi-plugins.stage.dir}">
-			<fileset dir="${pdi-plugins.stage.dir}">
-		        <include name="**/*.zip"/>
-		    </fileset>
-		</unzip>
-		
-		<!-- cleanup zip files -->
-		<delete>
-			<fileset dir="${pdi-plugins.stage.dir}" includes="**/*.zip"/>
-		</delete>
-	</target>
-	
-	<target name="stage-plugins" depends="extract-plugins">
-		<copy todir="${report-designer.dir.mac}/${kettle-plugins.dir}">
-			<fileset dir="${pdi-plugins.stage.dir}"/>
-		</copy>
-		
-		<copy todir="${report-designer.dir.winlinux}/${kettle-plugins.dir}">
-			<fileset dir="${pdi-plugins.stage.dir}"/>
-		</copy>
-		
-	</target>
-	
+    <target name="extract-plugins" depends="resolve-plugins">
+        <!-- extract plugins -->
+        <unzip dest="${pdi-plugins.stage.dir}">
+            <fileset dir="${pdi-plugins.stage.dir}">
+                <include name="**/*.zip"/>
+            </fileset>
+        </unzip>
+
+        <!-- cleanup zip files -->
+        <delete>
+            <fileset dir="${pdi-plugins.stage.dir}" includes="**/*.zip"/>
+        </delete>
+    </target>
+
+    <target name="stage-plugins" depends="extract-plugins">
+        <copy todir="${report-designer.dir.mac}/${kettle-plugins.dir}">
+            <fileset dir="${pdi-plugins.stage.dir}"/>
+        </copy>
+
+        <copy todir="${report-designer.dir.winlinux}/${kettle-plugins.dir}">
+            <fileset dir="${pdi-plugins.stage.dir}"/>
+        </copy>
+
+    </target>
+
     <target name="stage-mac">
         <copy todir="${report-designer.dir.mac}" overwrite="true">
             <fileset dir="${resource.dir}">
-            	<exclude name="docs/*" />
+                <exclude name="docs/*"/>
             </fileset>
             <fileset dir="${resource-mac.dir}"/>
             <fileset dir="${runtime-lib.dir}">
@@ -153,10 +154,10 @@
             </fileset>
         </copy>
 
-		<copy todir="${report-designer.dir.mac}/docs" overwrite="true">
-        	<fileset dir="${doc.dir}">
-        		<include name="**/*"/>
-        	</fileset>
+        <copy todir="${report-designer.dir.mac}/docs" overwrite="true">
+            <fileset dir="${doc.dir}">
+                <include name="**/*"/>
+            </fileset>
         </copy>
 
         <move file="${report-designer.dir.mac}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
@@ -167,7 +168,7 @@
         </copy>
 
     </target>
-    	
+
     <target name="dist-mac" depends="stage-mac">
         <zip destfile="${dist.dir}/${dist.name}-mac-${project.revision}.zip">
             <zipfileset dir="${stage.dir.mac}" filemode="755">
@@ -196,22 +197,22 @@
         </tar>
     </target>
 
-	<!-- Stages the distribution files for the windows and linux platforms -->
-	<target name="stage-winlinux">
+    <!-- Stages the distribution files for the windows and linux platforms -->
+    <target name="stage-winlinux">
         <mkdir dir="${report-designer.dir.winlinux}"/>
         <copy todir="${report-designer.dir.winlinux}" overwrite="true">
             <fileset dir="${resource.dir}">
-            	<exclude name="docs/*" />
+                <exclude name="docs/*"/>
             </fileset>
             <fileset dir="${runtime-lib.dir}">
                 <include name="**/*.jar"/>
             </fileset>
         </copy>
 
-		<copy todir="${report-designer.dir.winlinux}/docs" overwrite="true">
-        	<fileset dir="${doc.dir}">
-        		<include name="**/*"/>
-        	</fileset>
+        <copy todir="${report-designer.dir.winlinux}/docs" overwrite="true">
+            <fileset dir="${doc.dir}">
+                <include name="**/*"/>
+            </fileset>
         </copy>
 
         <move file="${report-designer.dir.winlinux}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
@@ -221,7 +222,7 @@
             <fileset dir="${lib.dir}"/>
         </copy>
 
-	</target>
+    </target>
 
     <!-- Creates a distribution for the windows and linux platforms -->
     <target name="dist-winlinux" depends="stage-winlinux">
@@ -255,18 +256,53 @@
     <!-- The dist target is where everything is assembled -->
     <target name="dist" depends="clean-all, init, resolve, stage-plugins, dist-winlinux, dist-mac"
             description="Creates the distributables for the Report Designer"/>
-            
-            
+
+
+    <!--=======================================================================
+        continuous
+
+        Runs a typical continuous integration build including project dist,
+        test, and coverage artifacts
+        ====================================================================-->
+    <target name="continuous" depends="dist"/>
+
+
+    <!--=======================================================================
+        continuous-testless
+
+        Runs a typical continuous integration build including project dist,
+        and coverage artifacts
+        ====================================================================-->
+    <target name="continuous-testless" depends="dist"/>
+
+    <!--=======================================================================
+        continuous
+
+        Runs a typical continuous integration build including project dist,
+        test, and coverage artifacts
+        ====================================================================-->
+    <target name="continuous-local" depends="dist"/>
+
+
+    <!--=======================================================================
+        continuous-testless
+
+        Runs a typical continuous integration build including project dist,
+        and coverage artifacts
+        ====================================================================-->
+    <target name="continuous-local-testless" depends="dist"/>
+
     <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
          These do nothing in an assembly build, so don't call out to subfloor
       -->
-    <target name="dist-source" depends="dist" />
-    <target name="dist-javadoc" depends="dist" />
-    <target name="source.zip" />
-    <target name="source.targz" />
-    <target name="javadoc" />
-    <target name="javadoc.zip" />
-    <target name="javadoc.targz" />
-    
-        
+    <target name="dist-source" depends="dist"/>
+    <target name="dist-javadoc" depends="dist"/>
+    <target name="source.zip"/>
+    <target name="source.targz"/>
+    <target name="javadoc"/>
+    <target name="javadoc.zip"/>
+    <target name="javadoc.targz"/>
+    <target name="maven-publish-sources"/>
+
+
 </project>

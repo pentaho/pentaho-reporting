@@ -21,5 +21,6 @@
 
 		<!-- reporting engine dependencies -->
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-legacy-charts" rev="${project.revision}" transitive="true" changing="true" />
+        <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
 	</dependencies>
 </ivy-module>
