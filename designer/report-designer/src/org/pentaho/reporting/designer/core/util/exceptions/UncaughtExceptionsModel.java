@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.util.UtilMessages;
 import org.pentaho.reporting.libraries.designtime.swing.WeakEventListenerList;
 

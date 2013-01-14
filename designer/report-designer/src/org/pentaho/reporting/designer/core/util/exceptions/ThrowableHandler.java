@@ -39,7 +39,7 @@ public class ThrowableHandler implements Thread.UncaughtExceptionHandler
       {
         handle(e);
       }
-      catch (Exception e)
+      catch (Throwable e)
       {
         e.printStackTrace();
       }
@@ -69,7 +69,14 @@ public class ThrowableHandler implements Thread.UncaughtExceptionHandler
   {
     if (!EventQueue.isDispatchThread())
     {
-      EventQueue.invokeLater(new HandleExceptionTask(e));
+      try
+      {
+        EventQueue.invokeLater(new HandleExceptionTask(e));
+      }
+      catch (Throwable ex)
+      {
+        ex.printStackTrace();
+      }
     }
     else
     {
