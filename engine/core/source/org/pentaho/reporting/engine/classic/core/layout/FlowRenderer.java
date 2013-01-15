@@ -36,7 +36,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillFlowPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FlowPaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
  * A flow renderer is a light-weight paginating renderer. It does not care about the page-size but searches for manual
@@ -208,15 +207,7 @@ public class FlowRenderer extends AbstractRenderer
         countBoxesStep.process(pageBox);
         cleanFlowBoxesStep.compute(pageBox);
 
-        final long l = cleanPaginatedBoxesStep.compute(pageBox);
-        if (l > 0)
-        {
-//          Log.debug ("Apply shift afterwards " + l);
-          final InstanceID shiftNode = cleanPaginatedBoxesStep.getShiftNode();
-          applyPageShiftValuesStep.compute(pageBox, l, shiftNode);
-          debugPrint(pageBox);
-        }
-
+        cleanPaginatedBoxesStep.compute(pageBox);
         pageBox.setPageOffset(nextOffset);
         if (pageBreak.isNextPageContainsContent())
         {

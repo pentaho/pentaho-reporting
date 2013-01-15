@@ -251,7 +251,8 @@ public class TableRowHeightCalculation
     final long shift = position - oldPosition;
     if (shift < 0)
     {
-      throw new IllegalStateException("Shift-back is not allowed: " + shift + ": " + oldPosition + " -> " + position);
+      throw new IllegalStateException
+          (String.format("Shift-back is not allowed: %d: %d -> %d (%s)", shift, oldPosition, position, rowBox));
     }
 
     CacheBoxShifter.shiftBox(rowBox, shift);

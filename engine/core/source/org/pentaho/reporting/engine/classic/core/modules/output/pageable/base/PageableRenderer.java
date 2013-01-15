@@ -33,12 +33,11 @@ import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
-
   private PaginationStep paginationStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
@@ -58,7 +57,6 @@ public class PageableRenderer extends AbstractRenderer
     initialize();
   }
 
-
   public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
   {
     super.startReport(report, processingContext);
@@ -67,6 +65,12 @@ public class PageableRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
+    if (pageCount == 2)
+    {
+      DebugLog.logEnter();
+//      ModelPrinter.print(pageBox);
+      DebugLog.logExit();
+    }
   }
 
   protected boolean isPageFinished()
@@ -144,14 +148,7 @@ public class PageableRenderer extends AbstractRenderer
       {
         pageBox.setPageOffset(nextOffset);
         countBoxesStep.process(pageBox);
-        final long shift = cleanPaginatedBoxesStep.compute(pageBox);
-        if (shift > 0)
-        {
-          final InstanceID shiftNode = cleanPaginatedBoxesStep.getShiftNode();
-          applyPageShiftValuesStep.compute(pageBox, shift, shiftNode);
-        }
-
-//        ModelPrinter.print(pageBox);
+        cleanPaginatedBoxesStep.compute(pageBox);
 
         if (pageBreak.isNextPageContainsContent())
         {
@@ -210,7 +207,6 @@ public class PageableRenderer extends AbstractRenderer
     final boolean nextPageContainsContent = (logicalPageBox.getHeight() > masterBreak);
     return nextPageContainsContent == false;
   }
-
 
   public boolean isPageStartPending()
   {

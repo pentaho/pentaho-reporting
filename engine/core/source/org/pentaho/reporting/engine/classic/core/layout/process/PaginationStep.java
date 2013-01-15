@@ -39,13 +39,13 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 public final class PaginationStep extends IterateVisualProcessStep
 {
   private static final Log logger = LogFactory.getLog(PaginationStep.class);
-
   private boolean breakPending;
   private FindOldestProcessKeyStep findOldestProcessKeyStep;
   private PageBreakPositionList breakUtility;
   private ReportStateKey visualState;
   private BreakMarkerRenderBox breakIndicatorEncountered;
   private PaginationState paginationState;
+  private long pageOffset;
 
   public PaginationStep()
   {
@@ -60,6 +60,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long pageHeight = pageBox.getPageHeight();
     this.breakIndicatorEncountered = null;
     this.visualState = null;
+    this.pageOffset = pageBox.getPageOffset();
 
     try
     {
@@ -278,13 +279,42 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-
+      final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
       paginationState = new PaginationState(paginationState, false, !sectionRenderBox.isBody());
 
-      if (sectionRenderBox.isBody() == false)
+      switch (sectionRenderBox.getDisplayRole())
       {
-        // never paginate inside a table-header or table-footer.
-        return false;
+        case HEADER:
+        {
+          // shift the header downwards,
+          // 1. Check that this table actually breaks across the current page. Header position must be
+          //    before the pagebox-offset. If not, return false, after the normal shifting.
+          final long delta = pageOffset - (sectionRenderBox.getX() + context.getShift());
+          if (delta <= 0)
+          {
+            BoxShifter.shiftBox(box, context.getShift());
+            return false;
+          }
+
+          // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
+          //    return false afterwards.
+
+          BoxShifter.shiftBox(box, delta);
+          updateStateKeyDeep(box);
+          context.setShift(context.getShift() + box.getHeight());
+          BoxShifter.extendHeight(box.getParent(), box.getHeight());
+          return false;
+        }
+        case FOOTER:
+        {
+          // shift the box and all children downwards. Suspend pagebreaks.
+          BoxShifter.shiftBox(box, context.getShift());
+          return false;
+        }
+        case BODY:
+          return startBlockLevelBox(box);
+        default:
+          throw new IllegalArgumentException();
       }
     }
     else
@@ -292,8 +322,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       paginationState = new PaginationState(paginationState, false, true);
       return true;
     }
-
-    return startBlockLevelBox(box);
   }
 
   protected void finishTableLevelBox(final RenderBox box)
@@ -306,6 +334,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       if (sectionRenderBox.isBody() == false)
       {
         // never paginate inside a table-header or table-footer.
+        final PageableBreakContext parentContext = PaginationStepLib.getBreakContext(box.getParent(), false, false);
+        parentContext.commitShift();
         return;
       }
       finishBlockLevelBox(box);
@@ -355,7 +385,6 @@ public final class PaginationStep extends IterateVisualProcessStep
   {
     finishBlockLevelBox(box);
   }
-
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
@@ -439,7 +468,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
     node.setY(node.getY() + context.getShift());
   }
-
 
   private void updateStateKey(final RenderBox box)
   {

@@ -24,7 +24,7 @@ public abstract class AbstractRowModel implements TableRowModel
 
   public AbstractRowModel()
   {
-    this.rows = new BulkArrayList<TableRow>(10);
+    this.rows = new BulkArrayList<TableRow>(1000);
   }
 
   public void addRow()

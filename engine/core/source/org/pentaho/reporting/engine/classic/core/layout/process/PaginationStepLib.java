@@ -134,6 +134,12 @@ public class PaginationStepLib
 
   public static void assertBlockPosition(final RenderBox box, final long shift)
   {
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      // no point in testing table-sections, as the header will be an out-of-order band.
+      return;
+    }
+
     final boolean error;
     final long expectedYPos;
     if (box.getPrev() != null)
