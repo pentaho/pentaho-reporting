@@ -29,7 +29,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHa
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.process.ApplyAutoCommitPageHeaderStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.ApplyPageShiftValuesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanFlowBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
@@ -54,7 +53,6 @@ public class FlowRenderer extends AbstractRenderer
   private FillFlowPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
   private CleanFlowBoxesStep cleanFlowBoxesStep;
-  private ApplyPageShiftValuesStep applyPageShiftValuesStep;
   private ApplyAutoCommitPageHeaderStep applyAutoCommitPageHeaderStep;
   private int flowCount;
   private boolean pageStartPending;
@@ -68,7 +66,6 @@ public class FlowRenderer extends AbstractRenderer
     this.fillPhysicalPagesStep = new FillFlowPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
     this.cleanFlowBoxesStep = new CleanFlowBoxesStep();
-    this.applyPageShiftValuesStep = new ApplyPageShiftValuesStep();
     this.applyAutoCommitPageHeaderStep = new ApplyAutoCommitPageHeaderStep();
     this.countBoxesStep = new CountBoxesStep();
 

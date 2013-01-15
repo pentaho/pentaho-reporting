@@ -27,7 +27,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
-import org.pentaho.reporting.engine.classic.core.layout.process.ApplyPageShiftValuesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
@@ -41,7 +40,6 @@ public class PageableRenderer extends AbstractRenderer
   private PaginationStep paginationStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
-  private ApplyPageShiftValuesStep applyPageShiftValuesStep;
   private int pageCount;
   private boolean pageStartPending;
   private CountBoxesStep countBoxesStep;
@@ -52,7 +50,6 @@ public class PageableRenderer extends AbstractRenderer
     this.paginationStep = new PaginationStep();
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
-    this.applyPageShiftValuesStep = new ApplyPageShiftValuesStep();
     this.countBoxesStep = new CountBoxesStep();
     initialize();
   }

@@ -26,12 +26,10 @@ import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHa
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.process.ApplyAutoCommitPageHeaderStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.ApplyPageShiftValuesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillFlowPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FlowPaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
  * This class exists only for driving the table-validation testcases. It is not a valid renderer and exhibits major
@@ -45,7 +43,6 @@ public class TableDebugRenderer extends AbstractRenderer
   private FlowPaginationStep paginationStep;
   private FillFlowPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
-  private ApplyPageShiftValuesStep applyPageShiftValuesStep;
   private ApplyAutoCommitPageHeaderStep applyAutoCommitPageHeaderStep;
   private int flowCount;
   private boolean pageStartPending;
@@ -56,7 +53,6 @@ public class TableDebugRenderer extends AbstractRenderer
     this.paginationStep = new FlowPaginationStep();
     this.fillPhysicalPagesStep = new FillFlowPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
-    this.applyPageShiftValuesStep = new ApplyPageShiftValuesStep();
     this.applyAutoCommitPageHeaderStep = new ApplyAutoCommitPageHeaderStep();
 
     initialize();
@@ -161,13 +157,7 @@ public class TableDebugRenderer extends AbstractRenderer
         // First clean all boxes that have been marked as finished. This reduces the overall complexity of the
         // pagebox and improves performance on huge reports.
 
-        final long l = cleanPaginatedBoxesStep.compute(pageBox);
-        if (l > 0)
-        {
-          final InstanceID shiftNode = cleanPaginatedBoxesStep.getShiftNode();
-          applyPageShiftValuesStep.compute(pageBox, l, shiftNode);
-          debugPrint(pageBox);
-        }
+        cleanPaginatedBoxesStep.compute(pageBox);
 
         pageBox.setPageOffset(nextOffset);
         if (pageBreak.isNextPageContainsContent())
