@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.DndElementOverlay;
@@ -327,6 +328,11 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       {
         subReport.setDataFactory(dataFactory);
         subReport.setQuery(queryName);
+
+        // Invoke Crosstab dialog
+        InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
+        crosstabAction.setReportDesignerContext(designerContext);
+        crosstabAction.actionPerformed(null);
       }
 
       dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});
