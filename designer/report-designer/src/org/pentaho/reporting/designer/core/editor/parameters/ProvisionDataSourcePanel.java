@@ -305,6 +305,8 @@ public class ProvisionDataSourcePanel extends JPanel
       }
 
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
+
+      expandAllNodes();
     }
   }
 
