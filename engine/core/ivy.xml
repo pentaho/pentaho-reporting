@@ -38,7 +38,7 @@
 
       <!--  external dependencies -->
 
-      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.6" transitive="true" conf="default_external->default">
+      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.8" transitive="true" conf="default_external->default">
         <exclude org="log4j" module="log4j"/>
         <exclude org="commons-logging" module="commons-logging"/>
         <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
