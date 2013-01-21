@@ -831,10 +831,19 @@ public final class PageBreakPositionList
     return backend.masterBreaks[masterSize - 1];
   }
 
+  public int getMasterBreakSize()
+  {
+    return masterSize;
+  }
+
+  public long getMasterBreak(final int index)
+  {
+    return backend.masterBreaks[index];
+  }
 
   public String toString()
   {
-    final StringBuffer retval = new StringBuffer(100);
+    final StringBuilder retval = new StringBuilder(100);
     retval.append("PageBreakPositionList{breakSize=");
     retval.append(breakSize);
     retval.append(", masterSize=");

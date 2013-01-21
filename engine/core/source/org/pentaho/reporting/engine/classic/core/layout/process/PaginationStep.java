@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBre
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public final class PaginationStep extends IterateVisualProcessStep
 {
@@ -279,9 +280,9 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-      final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
+      final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, false);
       paginationState = new PaginationState(paginationState, false, !sectionRenderBox.isBody());
-
+      final long contextShift = context.getShift();
       switch (sectionRenderBox.getDisplayRole())
       {
         case HEADER:
@@ -289,26 +290,50 @@ public final class PaginationStep extends IterateVisualProcessStep
           // shift the header downwards,
           // 1. Check that this table actually breaks across the current page. Header position must be
           //    before the pagebox-offset. If not, return false, after the normal shifting.
-          final long delta = pageOffset - (sectionRenderBox.getX() + context.getShift());
+          final long delta = pageOffset - (sectionRenderBox.getY() + contextShift);
           if (delta <= 0)
           {
-            BoxShifter.shiftBox(box, context.getShift());
+            BoxShifter.shiftBox(box, contextShift);
+            DebugLog.log ("HEADER NOT SHIFTED; DELTA = " + delta + " -> " + context);
             return false;
           }
 
           // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
           //    return false afterwards.
 
+          DebugLog.log ("HEADER SHIFTED; DELTA = " + delta + " -> " + context);
+          long headerShift = sectionRenderBox.getHeaderShift(pageOffset);
+          if (headerShift == 0)
+          {
+            final int masterBreakSize = breakUtility.getMasterBreakSize();
+            long previousPageOffset = 0;
+            for (int i = masterBreakSize - 1; i > 0; i -= 1)
+            {
+              if (breakUtility.getMasterBreak(i) == pageOffset)
+              {
+                previousPageOffset = breakUtility.getMasterBreak(i - 1);
+                break;
+              }
+            }
+
+            headerShift = sectionRenderBox.getHeaderShift(previousPageOffset) + box.getHeight();
+            DebugLog.log("HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset);
+            sectionRenderBox.setHeaderShift(pageOffset, headerShift);
+          }
+          else
+          {
+            DebugLog.log("Existing HeaderShift: " + headerShift + " <=> " + pageOffset);
+          }
+
           BoxShifter.shiftBox(box, delta);
           updateStateKeyDeep(box);
-          context.setShift(context.getShift() + box.getHeight());
-          BoxShifter.extendHeight(box.getParent(), box.getHeight());
+          BoxShifter.extendHeight(box.getParent(), headerShift);
           return false;
         }
         case FOOTER:
         {
           // shift the box and all children downwards. Suspend pagebreaks.
-          BoxShifter.shiftBox(box, context.getShift());
+          BoxShifter.shiftBox(box, contextShift);
           return false;
         }
         case BODY:
