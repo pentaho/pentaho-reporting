@@ -400,6 +400,7 @@ public class ModelPrinter
     b.append("- nodeLayoutProperties=");
     b.append(node.getNodeLayoutProperties());
     logger.debug(b.toString());
+    logger.debug("");
   }
 
   private static void printText(final RenderableText text, final int level)
