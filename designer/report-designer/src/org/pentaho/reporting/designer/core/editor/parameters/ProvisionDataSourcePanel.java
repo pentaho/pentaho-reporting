@@ -48,6 +48,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
@@ -55,6 +56,7 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.designtime.DefaultDataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
@@ -85,7 +87,7 @@ public class ProvisionDataSourcePanel extends JPanel
 
     public void actionPerformed(final ActionEvent e)
     {
-      final int result = JOptionPane.showConfirmDialog(ProvisionDataSourcePanel.this,
+       final int result = JOptionPane.showConfirmDialog(ProvisionDataSourcePanel.this,
                                                               Messages.getString("ParameterDialog.DeleteDataSourceWarningMessage"),
                                                               Messages.getString("ParameterDialog.DeleteDataSourceWarningTitle"), JOptionPane.YES_NO_OPTION);
       if (result == JOptionPane.YES_OPTION)
@@ -303,6 +305,10 @@ public class ProvisionDataSourcePanel extends JPanel
       {
         return;
       }
+
+      // Add data-source factory into Structure panel.
+      // This happens after user adds a new data source from the Edit DataSource dialog
+      AddDataFactoryAction.addDataFactory(reportDesignerContext.getActiveContext(), dataFactory, new DataFactoryChange[0]);
 
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
 
