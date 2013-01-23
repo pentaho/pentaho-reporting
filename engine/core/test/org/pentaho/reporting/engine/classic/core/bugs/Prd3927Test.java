@@ -62,10 +62,12 @@ public class Prd3927Test extends TestCase
     //ModelPrinter.print(logicalPageBox);
 
     final RenderNode elementByName2 = MatchFactory.findElementByName(logicalPageBox, "Push me too!");
-    assertEquals(StrictGeomUtility.toInternalValue(75), elementByName2.getHeight());
+    assertEquals("Expected failure, this bug is still unresolved.",
+        StrictGeomUtility.toInternalValue(75), elementByName2.getHeight());
 
     final RenderNode elementByName = MatchFactory.findElementByName(logicalPageBox, "shift me!");
-    assertEquals(StrictGeomUtility.toInternalValue(75), elementByName.getHeight());
+    assertEquals("Expected failure, this bug is still unresolved.",
+        StrictGeomUtility.toInternalValue(75), elementByName.getHeight());
 
   }
 }
