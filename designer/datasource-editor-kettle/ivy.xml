@@ -19,14 +19,9 @@
 		<!-- reporting engine dependencies -->
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-kettle" rev="${project.revision}" transitive="true"
                 changing="true"/>
-                
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-datasource-editor-jdbc" rev="${project.revision}" transitive="true"
-                changing="true"/>
-                
-	<dependency org="${library.group}" name="libswing" rev="${dependency.reporting-library.revision}" transitive="true" changing="true" />                
 
+	<dependency org="${library.group}" name="libswing" rev="${dependency.reporting-library.revision}" transitive="true" changing="true" />
 		<!--  external dependencies -->
 	    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false" conf="default_external->default"/>
-
 	</dependencies>
 </ivy-module>

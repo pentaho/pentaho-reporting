@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
 /**
- * This dialog appears when user adds the Crosstab element onto the canvas
+ * This dialog appears when user adds the Crosstab/Subreport element onto the canvas
  *
  * @author Sulaiman Karmali
  */

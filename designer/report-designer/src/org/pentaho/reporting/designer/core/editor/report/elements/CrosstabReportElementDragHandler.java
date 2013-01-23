@@ -25,6 +25,7 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
+import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Locale;
 import javax.swing.JFrame;
@@ -33,6 +34,7 @@ import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.DndElementOverlay;
@@ -53,6 +55,7 @@ import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.PageFooter;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Watermark;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
@@ -225,7 +228,7 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       styleSheet.setStyleProperty(ElementStyleKeys.POS_X, new Float(Math.max(0, point.getX() - getParentX(band))));
       styleSheet.setStyleProperty(ElementStyleKeys.POS_Y, new Float(Math.max(0, point.getY() - getParentY(band))));
 
-      SwingUtilities.invokeLater(new SubreportConfigureHandler(visualElement, band, dragContext, rootBand == band));
+      SwingUtilities.invokeLater(new CrosstabConfigureHandler(visualElement, band, dragContext, rootBand == band));
 
       representation.setVisible(false);
       dragContext.getRepresentationContainer().removeAll();
@@ -251,17 +254,17 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
     return StrictGeomUtility.toExternalValue(data.getY());
   }
 
-  private static class SubreportConfigureHandler implements Runnable
+  private static class CrosstabConfigureHandler implements Runnable
   {
     private CrosstabElement subReport;
     private Band parent;
     private ReportElementEditorContext dragContext;
     private boolean rootband;
 
-    private SubreportConfigureHandler(final CrosstabElement subReport,
-                                      final Band parent,
-                                      final ReportElementEditorContext dragContext,
-                                      final boolean rootband)
+    private CrosstabConfigureHandler(final CrosstabElement subReport,
+                                     final Band parent,
+                                     final ReportElementEditorContext dragContext,
+                                     final boolean rootband)
     {
       this.subReport = subReport;
       this.parent = parent;
@@ -271,6 +274,7 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
 
     public void run()
     {
+      final ReportRenderContext context = dragContext.getRenderContext();
       if (rootband)
       {
         final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),
@@ -288,7 +292,6 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
 
         if (result == 0)
         {
-          final ReportRenderContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
                          new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
@@ -297,8 +300,6 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
         else
         {
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
-
-          final ReportRenderContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
                          new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
@@ -307,7 +308,6 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       }
       else
       {
-        final ReportRenderContext context = dragContext.getRenderContext();
         final UndoManager undo = context.getUndo();
         undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
                        new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
@@ -322,11 +322,29 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       final SubReportDataSourceDialog crosstabDataSourceDialog;
       crosstabDataSourceDialog = new SubReportDataSourceDialog((JFrame)window);
       final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
+
+      // User has selected a query in the data source dialog
       final DataFactory dataFactory = crosstabDataSourceDialog.getSubReportDataFactory();
       if ((dataFactory != null) && (queryName != null))
       {
         subReport.setDataFactory(dataFactory);
         subReport.setQuery(queryName);
+
+        try
+        {
+          // Create the new subreport tab - this is where the contents of the Crosstab
+          // dialog will go.
+          designerContext.addSubReport(designerContext.getActiveContext(), subReport);
+
+          // Invoke Crosstab dialog
+          InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
+          crosstabAction.setReportDesignerContext(designerContext);
+          crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+        }
+        catch (ReportDataFactoryException e)
+        {
+          UncaughtExceptionsModel.getInstance().addException(e);
+        }
       }
 
       dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});
