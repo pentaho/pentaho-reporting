@@ -82,6 +82,7 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   {
     if (cacheDeepDirty)
     {
+      node.markCacheDirty();
       return false;
     }
     final RenderNode.CacheState cacheState = node.getCacheState();

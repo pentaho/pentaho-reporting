@@ -132,6 +132,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
   {
     if (cacheDeepDirty)
     {
+      node.markCacheDirty();
       return false;
     }
     final RenderNode.CacheState cacheState = node.getCacheState();

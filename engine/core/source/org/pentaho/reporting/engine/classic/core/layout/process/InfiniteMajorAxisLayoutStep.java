@@ -116,6 +116,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
   {
     if (cacheDeepDirty)
     {
+      node.markCacheDirty();
       return false;
     }
     final RenderNode.CacheState cacheState = node.getCacheState();

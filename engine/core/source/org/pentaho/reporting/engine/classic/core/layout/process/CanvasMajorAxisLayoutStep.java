@@ -81,6 +81,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
   {
     if (cacheDeepDirty)
     {
+      node.markCacheDirty();
       return false;
     }
     final RenderNode.CacheState cacheState = node.getCacheState();

@@ -278,6 +278,11 @@ public abstract class RenderNode implements Cloneable
     }
   }
 
+  public final void markCacheDirty()
+  {
+    updateCacheState(CacheState.DIRTY);
+  }
+
   public final long getWidth()
   {
     return width;
