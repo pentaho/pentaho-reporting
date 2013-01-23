@@ -336,7 +336,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     if ("true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.debug.PrintPageContents")))
     {
-      ModelPrinter.print(rootBox);
+      ModelPrinter.INSTANCE.print(rootBox);
     }
 
     this.unalignedPageBands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);

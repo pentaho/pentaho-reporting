@@ -102,6 +102,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
   private PageGrid pageGrid;
   private OutputProcessorMetaData metaData;
   private VerticalAlignmentProcessor verticalAlignmentProcessor;
+  private boolean cacheDeepDirty;
 
   public RevalidateAllAxisLayoutStep()
   {
@@ -115,6 +116,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
 
   public void compute(final LogicalPageBox pageBox)
   {
+    this.cacheDeepDirty = false;
     this.pageGrid = pageBox.getPageGrid();
     try
     {
@@ -126,9 +128,27 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
+  protected boolean checkCacheValid(final RenderNode node)
+  {
+    if (cacheDeepDirty)
+    {
+      return false;
+    }
+    final RenderNode.CacheState cacheState = node.getCacheState();
+    if (cacheState == RenderNode.CacheState.CLEAN)
+    {
+      return true;
+    }
+    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      cacheDeepDirty = true;
+    }
+    return false;
+  }
+
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -137,7 +157,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -147,7 +167,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }

@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportHeaderType;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -46,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.valign.ReplacedC
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.TextElementAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.VerticalAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -64,6 +66,8 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
   private TableRowHeightCalculation tableRowHeightStep;
+  private LogicalPageBox pageBox;
+  private boolean cacheDeepDirty;
 
   public InfiniteMajorAxisLayoutStep()
   {
@@ -74,8 +78,10 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   public void compute(final LogicalPageBox pageBox)
   {
+    this.pageBox = pageBox;
     this.breakState.deinit();
     this.tableRowHeightStep.reset();
+    this.cacheDeepDirty = false;
     try
     {
       startProcessing(pageBox);
@@ -83,6 +89,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     finally
     {
       this.breakState.deinit();
+      this.pageBox = null;
     }
   }
 
@@ -99,14 +106,41 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       throw new IllegalStateException("Box must be layouted a bit ..");
     }
 
+    this.cacheDeepDirty = false;
     this.breakState.deinit();
     startProcessing(box);
     this.breakState.deinit();
   }
 
+  protected boolean checkCacheValid(final RenderNode node)
+  {
+    if (cacheDeepDirty)
+    {
+      return false;
+    }
+    final RenderNode.CacheState cacheState = node.getCacheState();
+    if (cacheState == RenderNode.CacheState.CLEAN)
+    {
+      return true;
+    }
+    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      cacheDeepDirty = true;
+    }
+    return false;
+  }
+
+
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (box.getElementType() instanceof ReportHeaderType)
+    {
+      if (pageBox.getPageOffset() == 64800000)
+      {
+        DebugLog.logHere();
+      }
+    }
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -176,7 +210,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -524,7 +558,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -613,7 +647,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -677,7 +711,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -751,7 +785,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
    */
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -929,7 +963,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -999,7 +1033,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -1085,7 +1119,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -1105,7 +1139,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -1124,11 +1158,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return false;
-    }
-
     box.setCachedY(computeVerticalBlockPosition(box));
 
     if (box instanceof TableSectionRenderBox)
@@ -1145,11 +1174,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return;
-    }
-
     box.setCachedHeight(computeTableHeightAndAlign(box));
 
     if (box instanceof TableSectionRenderBox)
@@ -1160,7 +1184,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -1181,7 +1205,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }

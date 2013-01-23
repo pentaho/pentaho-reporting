@@ -86,7 +86,7 @@ public class TableToHtmlExportTest extends TestCase
     report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(4, 0, 0));
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.print(pageBox);
+    ModelPrinter.INSTANCE.print(pageBox);
   }
 
   public void testHtmlExport () throws ReportProcessingException, IOException, ResourceException

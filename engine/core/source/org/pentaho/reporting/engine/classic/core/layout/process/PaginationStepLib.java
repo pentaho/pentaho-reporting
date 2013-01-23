@@ -79,7 +79,7 @@ public class PaginationStepLib
       {
         //ModelPrinter.print(pageBox);
         throw new IllegalStateException
-            ("Assertation failed: Block layouting did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
+            ("Assertation failed: Pagination did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
       }
     }
   }
@@ -106,10 +106,11 @@ public class PaginationStepLib
 
     final long footerHeight = footerArea.getHeight();
     final long repeatFooterHeight = repeatFooterArea.getHeight();
-    // Assertation: Make sure that we do not run into a infinite loop..
+    // Assertion: Make sure that we do not run into a infinite loop..
     return headerHeight + repeatFooterHeight + footerHeight;
   }
 
+  @Deprecated
   public static PageableBreakContext getBreakContext(final RenderBox box,
                                                final boolean createBoxIfNeeded,
                                                final boolean useInitialShift)
@@ -174,7 +175,8 @@ public class PaginationStepLib
       final long realShift = shift + additionalShift;
       if (error)
       {
-        ModelPrinter.print(box);
+        ModelPrinter.INSTANCE.print(box);
+        ModelPrinter.INSTANCE.print(ModelPrinter.getRoot(box));
         throw new InvalidReportStateException("Assert: Shift is not as expected: realY=" + realY +
             " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
             "; RealShift=" + realShift);

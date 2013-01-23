@@ -130,7 +130,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
       return false;
     }
@@ -153,6 +153,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return true;
   }
 
+  protected void finishCanvasBox(final CanvasRenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
+  }
+
   protected boolean validateBlockOrAutoBox(final RenderBox box)
   {
     if (result == false)
@@ -160,7 +165,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
       return false;
     }
@@ -212,6 +217,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateBlockOrAutoBox(box);
   }
 
+  protected void finishBlockBox(final BlockRenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
+  }
+
   protected boolean startAutoBox(final RenderBox box)
   {
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
@@ -228,6 +238,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishAutoBox(final RenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
+  }
+
   private boolean validateInlineRowOrTableCellBox(final RenderBox box)
   {
     if (result == false)
@@ -235,7 +250,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
       return false;
     }
@@ -261,14 +276,29 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishTableCellBox(final TableCellRenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
+  }
+
   protected boolean startInlineBox(final InlineRenderBox box)
   {
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishInlineBox(final InlineRenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
+  }
+
   protected boolean startRowBox(final RenderBox box)
   {
     return validateInlineRowOrTableCellBox(box);
+  }
+
+  protected void finishRowBox(final RenderBox box)
+  {
+    box.setValidateModelAge(box.getChangeTracker());
   }
 
   protected boolean startTableBox(final TableRenderBox table)
@@ -280,7 +310,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (table.isCacheValid())
+    if (table.isValidateModelCacheValid())
     {
       return true;
     }
@@ -334,10 +364,12 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   {
     try
     {
-      if (table.isCacheValid())
+      if (table.isValidateModelCacheValid())
       {
         return;
       }
+
+      table.setValidateModelAge(table.getChangeTracker());
 
       if (validationInfo.isNeedCheck() == false)
       {

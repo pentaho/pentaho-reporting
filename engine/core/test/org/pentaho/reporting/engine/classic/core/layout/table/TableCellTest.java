@@ -113,7 +113,7 @@ public class TableCellTest extends TestCase
     report.getReportHeader().addElement(table);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(ParagraphRenderBox.class));
     assertEquals(StrictGeomUtility.toInternalValue(20), all[0].getHeight());
   }

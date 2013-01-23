@@ -28,21 +28,24 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 
-/**
- * Creation-Date: Jan 9, 2007, 2:22:59 PM
- *
- * @author Thomas Morgner
- */
+@SuppressWarnings("HardCodedStringLiteral")
 public class ModelPrinter
 {
+  public static final ModelPrinter INSTANCE = new ModelPrinter();
+
   private static final Log logger = LogFactory.getLog(ModelPrinter.class);
   private static final boolean PRINT_LINEBOX_CONTENTS = false;
 
-  private ModelPrinter()
+  public ModelPrinter()
   {
   }
 
-  public static void printParents(RenderNode box)
+  protected void print (final String s)
+  {
+    logger.debug(s);
+  }
+
+  public void printParents(RenderNode box)
   {
     while (box != null)
     {
@@ -78,17 +81,17 @@ public class ModelPrinter
       b.append(", cached-height=");
       b.append(box.getCachedHeight());
       b.append('}');
-      logger.debug(b);
+      print(b.toString());
       box = box.getParent();
     }
   }
 
-  public static void print(final RenderBox box)
+  public void print(final RenderBox box)
   {
     printBox(box, 0);
   }
 
-  public static void printBox(final RenderBox box, final int level)
+  public void printBox(final RenderBox box, final int level)
   {
     StringBuffer b = new StringBuffer();
     for (int i = 0; i < level; i++)
@@ -107,14 +110,14 @@ public class ModelPrinter
     b.append(", pinned=");
     b.append(box.getPinned());
     b.append('}');
-    logger.debug(b.toString());
+    print(b.toString());
 
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
     }
-    b.append("-layout x=");
+    b.append("- layout x=");
     b.append(box.getX());
     b.append(", y=");
     b.append(box.getY());
@@ -124,16 +127,16 @@ public class ModelPrinter
     b.append(box.getHeight());
     b.append(", min-chunk-width=");
     b.append(box.getMinimumChunkWidth());
-    b.append(", computed-width=");
-    b.append(box.getComputedWidth());
-    logger.debug(b.toString());
+    b.append(", y2=");
+    b.append(box.getY() + box.getHeight());
+    print(b.toString());
 
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
     }
-    b.append("-cached-layout cached-x=");
+    b.append("- cached-layout cached-x=");
     b.append(box.getCachedX());
     b.append(", cached-y=");
     b.append(box.getCachedY());
@@ -162,7 +165,7 @@ public class ModelPrinter
     }
     b.append("- nodeLayoutProperties=");
     b.append(box.getNodeLayoutProperties());
-    logger.debug(b.toString());
+    print(b.toString());
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
@@ -170,7 +173,7 @@ public class ModelPrinter
     }
     b.append("- staticBoxLayoutProperties=");
     b.append(box.getStaticBoxLayoutProperties());
-    logger.debug(b.toString());
+    print(b.toString());
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
@@ -178,7 +181,7 @@ public class ModelPrinter
     }
     b.append("- breakContext=");
     b.append(box.getBreakContext());
-    logger.debug(b.toString());
+    print(b.toString());
 
     if (box instanceof LogicalPageBox)
     {
@@ -197,7 +200,7 @@ public class ModelPrinter
       b.append(", PageWidth=");
       b.append(pageBox.getPageWidth());
       b.append('}');
-      logger.debug(b.toString());
+      print(b.toString());
 
       b = new StringBuffer();
       for (int i = 0; i < level; i++)
@@ -207,7 +210,7 @@ public class ModelPrinter
       b.append("- PageBreaks={");
       b.append(pageBox.getAllVerticalBreaks());
       b.append('}');
-      logger.debug(b.toString());
+      print(b.toString());
     }
 
     if (box instanceof TableSectionRenderBox)
@@ -220,7 +223,7 @@ public class ModelPrinter
       }
       b.append("- Role: ");
       b.append(pageBox.getDisplayRole());
-      logger.debug(b.toString());
+      print(b.toString());
     }
 
     if (box instanceof TableCellRenderBox)
@@ -237,7 +240,7 @@ public class ModelPrinter
       b.append(pageBox.getColSpan());
       b.append(", RowSpan=");
       b.append(pageBox.getRowSpan());
-      logger.debug(b.toString());
+      print(b.toString());
     }
 
     if (box.isOpen())
@@ -248,7 +251,7 @@ public class ModelPrinter
         b.append("   ");
       }
       b.append("- WARNING: THIS BOX IS STILL OPEN");
-      logger.debug(b.toString());
+      print(b.toString());
     }
 
     if (box.isFinishedTable() || box.isFinishedPaginate())
@@ -267,7 +270,7 @@ public class ModelPrinter
       {
         b.append("- PAGE ");
       }
-      logger.debug(b.toString());
+      print(b.toString());
     }
     if (box.isCommited())
     {
@@ -277,7 +280,7 @@ public class ModelPrinter
         b.append("   ");
       }
       b.append("- INFO: THIS BOX IS COMMITED");
-      logger.debug(b.toString());
+      print(b.toString());
     }
 
     b = new StringBuffer();
@@ -285,22 +288,22 @@ public class ModelPrinter
     {
       b.append("   ");
     }
-    logger.debug(b.toString());
+    print(b.toString());
 
     if (box instanceof ParagraphRenderBox)
     {
       if (PRINT_LINEBOX_CONTENTS)
       {
         final ParagraphRenderBox paraBox = (ParagraphRenderBox) box;
-        logger.debug("----------------  START PARAGRAPH POOL CONTAINER -------------------------------------");
+        print("----------------  START PARAGRAPH POOL CONTAINER -------------------------------------");
         printBox(paraBox.getPool(), level + 1);
-        logger.debug("---------------- FINISH PARAGRAPH POOL CONTAINER -------------------------------------");
+        print("---------------- FINISH PARAGRAPH POOL CONTAINER -------------------------------------");
 
         if (paraBox.isComplexParagraph())
         {
-          logger.debug("----------------  START PARAGRAPH LINEBOX CONTAINER -------------------------------------");
+          print("----------------  START PARAGRAPH LINEBOX CONTAINER -------------------------------------");
           printBox(paraBox.getLineboxContainer(), level + 1);
-          logger.debug("---------------- FINISH PARAGRAPH LINEBOX CONTAINER -------------------------------------");
+          print("---------------- FINISH PARAGRAPH LINEBOX CONTAINER -------------------------------------");
         }
       }
     }
@@ -320,7 +323,7 @@ public class ModelPrinter
     }
   }
 
-  private static void printChilds(final RenderBox box, final int level)
+  private void printChilds(final RenderBox box, final int level)
   {
     RenderNode childs = box.getFirstChild();
     while (childs != null)
@@ -328,10 +331,6 @@ public class ModelPrinter
       if (childs instanceof RenderBox)
       {
         printBox((RenderBox) childs, level + 1);
-      }
-      else if (childs instanceof RenderableText)
-      {
-        printText((RenderableText) childs, level + 1);
       }
       else
       {
@@ -341,7 +340,7 @@ public class ModelPrinter
     }
   }
 
-  private static void printNode(final RenderNode node, final int level)
+  private void printNode(final RenderNode node, final int level)
   {
     StringBuffer b = new StringBuffer();
     for (int i = 0; i < level; i++)
@@ -352,7 +351,14 @@ public class ModelPrinter
     b.append('[');
     //b.append(Integer.toHexString(System.identityHashCode(node)));
     b.append(']');
-    b.append("={x=");
+    print(b.toString());
+
+    b = new StringBuffer();
+    for (int i = 0; i < level; i++)
+    {
+      b.append("   ");
+    }
+    b.append("- layout x=");
     b.append(node.getX());
     b.append(", y=");
     b.append(node.getY());
@@ -362,8 +368,23 @@ public class ModelPrinter
     b.append(node.getHeight());
     b.append(", min-chunk-width=");
     b.append(node.getMinimumChunkWidth());
-    b.append(", computed-width=");
-    b.append(node.getComputedWidth());
+    b.append(", y2=");
+    b.append(node.getY() + node.getHeight());
+    print(b.toString());
+
+    b = new StringBuffer();
+    for (int i = 0; i < level; i++)
+    {
+      b.append("   ");
+    }
+    b.append("- cached-layout cached-x=");
+    b.append(node.getCachedX());
+    b.append(", cached-y=");
+    b.append(node.getCachedY());
+    b.append(", cached-width=");
+    b.append(node.getCachedWidth());
+    b.append(", cached-height=");
+    b.append(node.getCachedHeight());
 
     if (node instanceof FinishedRenderNode)
     {
@@ -374,23 +395,21 @@ public class ModelPrinter
       b.append(fn.getLayoutedHeight());
     }
     b.append('}');
-    logger.debug(b.toString());
+    print(b.toString());
 
-    b = new StringBuffer();
-    for (int i = 0; i < level; i++)
+    if (node instanceof RenderableText)
     {
-      b.append("   ");
+      final RenderableText text = (RenderableText) node;
+      b = new StringBuffer();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- text='");
+      b.append(text.getRawText());
+      b.append("'");
+      print(b.toString());
     }
-    b.append("- cacheSize={x=");
-    b.append(node.getCachedX());
-    b.append(", y=");
-    b.append(node.getCachedY());
-    b.append(", width=");
-    b.append(node.getCachedWidth());
-    b.append(", height=");
-    b.append(node.getCachedHeight());
-    b.append('}');
-    logger.debug(b.toString());
 
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
@@ -399,62 +418,19 @@ public class ModelPrinter
     }
     b.append("- nodeLayoutProperties=");
     b.append(node.getNodeLayoutProperties());
-    logger.debug(b.toString());
-    logger.debug("");
+    print(b.toString());
+    print(" ");
   }
 
-  private static void printText(final RenderableText text, final int level)
+  public static RenderBox getRoot (RenderNode node)
   {
-    StringBuffer b = new StringBuffer();
-    for (int i = 0; i < level; i++)
+    RenderBox parent = node.getParent();
+    RenderBox retval = node.getParent();
+    while (parent != null)
     {
-      b.append("   ");
+      retval = parent;
+      parent = parent.getParent();
     }
-    b.append("Text");
-    b.append('[');
-    //b.append(Integer.toHexString(System.identityHashCode(text)));
-    b.append(']');
-    b.append("={x=");
-    b.append(text.getX());
-    b.append(", y=");
-    b.append(text.getY());
-    b.append(", width=");
-    b.append(text.getWidth());
-    b.append(", height=");
-    b.append(text.getHeight());
-    b.append(", min-chunk-width=");
-    b.append(text.getMinimumChunkWidth());
-    b.append(", computed-width=");
-    b.append(text.getComputedWidth());
-    b.append(", text='");
-    b.append(text.getRawText());
-    b.append("'}");
-    logger.debug(b.toString());
-
-    b = new StringBuffer();
-    for (int i = 0; i < level; i++)
-    {
-      b.append("   ");
-    }
-    b.append("- cacheSize={x=");
-    b.append(text.getCachedX());
-    b.append(", y=");
-    b.append(text.getCachedY());
-    b.append(", width=");
-    b.append(text.getCachedWidth());
-    b.append(", height=");
-    b.append(text.getCachedHeight());
-    b.append('}');
-    logger.debug(b.toString());
-
-    b = new StringBuffer();
-    for (int i = 0; i < level; i++)
-    {
-      b.append("   ");
-    }
-    b.append("- nodeLayoutProperties=");
-    b.append(text.getNodeLayoutProperties());
-    logger.debug(b.toString());
+    return retval;
   }
-
 }

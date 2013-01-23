@@ -72,7 +72,7 @@ public class TableDebugOutputProcessor extends AbstractTableOutputProcessor
     }
     catch (AssertionFailedError afe)
     {
-      ModelPrinter.print(logicalPage);
+      ModelPrinter.INSTANCE.print(logicalPage);
       SheetLayoutPrinter.print(logicalPage, layout, contentProducer);
       throw afe;
     }

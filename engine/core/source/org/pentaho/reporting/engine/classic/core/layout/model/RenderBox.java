@@ -1238,7 +1238,8 @@ public abstract class RenderBox extends RenderNode
 
   public void resetCacheState(final boolean deepDirty)
   {
-    setCachedAge(-1);
+    setValidateModelAge(-1);
+    setLinebreakAge(-1);
     if (deepDirty)
     {
       updateCacheState(CACHE_DEEP_DIRTY);
@@ -1409,6 +1410,7 @@ public abstract class RenderBox extends RenderNode
     breakContext.setHeightExtension(breakContext.getHeightExtension() + amount);
     setHeight(getHeight() + amount);
     setOverflowAreaHeight(getOverflowAreaHeight() + amount);
+    updateCacheState(CACHE_DEEP_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)
@@ -1428,6 +1430,7 @@ public abstract class RenderBox extends RenderNode
     breakContext.setHeightExtension(breakContext.getHeightExtension() + realAmount);
     setHeight(getHeight() + realAmount);
     setOverflowAreaHeight(getOverflowAreaHeight() + realAmount);
+    updateCacheState(CACHE_DEEP_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)

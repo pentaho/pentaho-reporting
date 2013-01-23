@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
@@ -50,6 +51,7 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   private TextAlignmentProcessor leftProcessor;
   private TextAlignmentProcessor justifyProcessor;
   private MinorAxisTableContext tableContext;
+  private boolean cacheDeepDirty;
 
   protected AbstractMinorAxisLayoutStep()
   {
@@ -76,10 +78,29 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
     return pageGrid;
   }
 
+  protected boolean checkCacheValid(final RenderNode node)
+  {
+    if (cacheDeepDirty)
+    {
+      return false;
+    }
+    final RenderNode.CacheState cacheState = node.getCacheState();
+    if (cacheState == RenderNode.CacheState.CLEAN)
+    {
+      return true;
+    }
+    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      cacheDeepDirty = true;
+    }
+    return false;
+  }
+
   public void compute(final LogicalPageBox root)
   {
     try
     {
+      cacheDeepDirty = false;
       pageGrid = root.getPageGrid();
       startProcessing(root);
     }

@@ -106,13 +106,14 @@ public class PageableRenderer extends AbstractRenderer
 
     pageCount += 1;
     logger.info ("Printing a page: " + pageCount);
-    if (pageCount > 1)
+    if (pageCount < -5)
     {
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
-      ModelPrinter.print(clone);
+      ModelPrinter.INSTANCE.print(clone);
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
-      ModelPrinter.print(pageBox);
+      ModelPrinter.INSTANCE.print(pageBox);
     }
+
 //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
     debugPrint(pageBox);
 //      DebugLog.log("PaginationResult: " + pageBreak);

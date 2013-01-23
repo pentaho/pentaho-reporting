@@ -71,7 +71,7 @@ public class LargeContentInLogicalPageTest extends TestCase
     report.getNoDataBand().addElement(createLabel());
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
     assertEquals(StrictGeomUtility.toInternalValue(4000), logicalPageBox.getWidth());
   }
 }

@@ -91,7 +91,7 @@ public class WeavingTableTest extends TestCase
     band.addElement(table);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);

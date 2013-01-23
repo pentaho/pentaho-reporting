@@ -31,6 +31,11 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 
 public abstract class RenderNode implements Cloneable
 {
+  public enum CacheState
+  {
+    CLEAN, DIRTY, DEEP_DIRTY
+  }
+
   private static final boolean paranoidModelChecks;
 
   static
@@ -55,9 +60,9 @@ public abstract class RenderNode implements Cloneable
   public static final int HORIZONTAL_AXIS = 0;
   public static final int VERTICAL_AXIS = 1;
 
-  public static final int CACHE_CLEAN = 0;
-  public static final int CACHE_DIRTY = 1;
-  public static final int CACHE_DEEP_DIRTY = 2;
+  public static final CacheState CACHE_CLEAN = CacheState.CLEAN;
+  public static final CacheState CACHE_DIRTY = CacheState.DIRTY;
+  public static final CacheState CACHE_DEEP_DIRTY = CacheState.DEEP_DIRTY;
 
   private static final int FLAG_FROZEN = 0x01;
   private static final int FLAG_FINISHED_PAGINATE = 0x02;
@@ -66,7 +71,7 @@ public abstract class RenderNode implements Cloneable
   private static final int FLAG_RESERVED = 0xFFF0;
 
   private int flags;
-  private int cacheState;
+  private CacheState cacheState;
 
   private RenderBox parentNode;
   private RenderNode nextNode;
@@ -77,8 +82,8 @@ public abstract class RenderNode implements Cloneable
   private long changeTracker;
   private long minimumChunkWidth;
   private long maximumBoxWidth;
-  private long cachedAge;
-  private long cachedParentWidth; // used in validation
+  private long validateModelAge;
+  private long linebreakAge;
 
   private long cachedX;
   private long cachedY;
@@ -130,8 +135,8 @@ public abstract class RenderNode implements Cloneable
       throw new NullPointerException();
     }
     this.flags = 0;
-    this.changeTracker = 0;
-    this.cachedAge = 0;
+    this.changeTracker = -1;
+    this.validateModelAge = 0;
     this.cachedX = 0;
     this.cachedY = 0;
     this.cachedWidth = 0;
@@ -140,7 +145,6 @@ public abstract class RenderNode implements Cloneable
     this.y = 0;
     this.width = 0;
     this.height = 0;
-    this.cachedParentWidth = 0;
     this.minimumChunkWidth = 0;
     this.maximumBoxWidth = 0;
 
@@ -239,14 +243,14 @@ public abstract class RenderNode implements Cloneable
     this.updateCacheState(RenderNode.CACHE_DEEP_DIRTY);
   }
 
-  protected final void updateCacheState(final int state)
+  protected final void updateCacheState(final CacheState state)
   {
     switch (state)
     {
 //      case CACHE_CLEAN:
 //        this.cacheState = CACHE_CLEAN;
 //        break;
-      case RenderNode.CACHE_DIRTY:
+      case DIRTY:
         if (cacheState == RenderNode.CACHE_CLEAN)
         {
           this.cacheState = RenderNode.CACHE_DIRTY;
@@ -258,7 +262,7 @@ public abstract class RenderNode implements Cloneable
         }
         // if cache-state either dirty or deep-dirty, no need to update.
         break;
-      case RenderNode.CACHE_DEEP_DIRTY:
+      case DEEP_DIRTY:
         if (cacheState == RenderNode.CACHE_CLEAN)
         {
           this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
@@ -490,7 +494,7 @@ public abstract class RenderNode implements Cloneable
     node.prevNode = null;
     if (deep)
     {
-      node.cachedAge = -1;
+      node.validateModelAge = -1;
       node.cacheState = CACHE_DEEP_DIRTY;
     }
     return node;
@@ -616,14 +620,24 @@ public abstract class RenderNode implements Cloneable
     return false;
   }
 
-  public final long getCachedAge()
+  public long getValidateModelAge()
   {
-    return cachedAge;
+    return validateModelAge;
   }
 
-  public final void setCachedAge(final long cachedAge)
+  public void setValidateModelAge(final long validateModelAge)
   {
-    this.cachedAge = cachedAge;
+    this.validateModelAge = validateModelAge;
+  }
+
+  public long getLinebreakAge()
+  {
+    return linebreakAge;
+  }
+
+  public void setLinebreakAge(final long linebreakAge)
+  {
+    this.linebreakAge = linebreakAge;
   }
 
   /**
@@ -739,41 +753,28 @@ public abstract class RenderNode implements Cloneable
     this.y = this.cachedY;
     this.width = this.cachedWidth;
     this.height = this.cachedHeight;
-    this.cachedAge = this.changeTracker;
     this.cacheState = RenderNode.CACHE_CLEAN;
     final RenderBox parent = getParent();
-    if (parent == null)
+    if (parent != null)
     {
-      this.cachedParentWidth = 0;
-    }
-    else
-    {
-      this.cachedParentWidth = parent.getWidth();
       parent.addOverflowArea(x + width - parent.getX(), y + height - parent.getY());
     }
   }
 
-  public final boolean isCacheValid()
+  public final boolean isLinebreakCacheValid()
   {
-    if (cachedAge != changeTracker)
+    if (linebreakAge != changeTracker)
     {
       return false;
     }
+    return true;
+  }
 
-    final RenderBox parent = getParent();
-    if (parent == null)
+  public final boolean isValidateModelCacheValid()
+  {
+    if (validateModelAge != changeTracker)
     {
-      if (this.cachedParentWidth != 0)
-      {
-        return false;
-      }
-    }
-    else
-    {
-      if (this.cachedParentWidth != parent.getWidth())
-      {
-        return false;
-      }
+      return false;
     }
     return true;
   }
@@ -812,7 +813,7 @@ public abstract class RenderNode implements Cloneable
     setFlag(FLAG_FINISHED_TABLE, finished);
   }
 
-  public int getCacheState()
+  public CacheState getCacheState()
   {
     return cacheState;
   }

@@ -690,7 +690,7 @@ public abstract class AbstractRenderer implements Renderer
 
   public void print()
   {
-    ModelPrinter.print(renderModelBuilder.getPageBox());
+    ModelPrinter.INSTANCE.print(renderModelBuilder.getPageBox());
   }
 
   public void newPageStarted()

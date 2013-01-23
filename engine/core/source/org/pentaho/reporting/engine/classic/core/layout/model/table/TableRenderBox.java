@@ -32,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A table render box contains table header, table footer and the table body.
@@ -132,6 +133,15 @@ public class TableRenderBox extends BlockRenderBox
   public boolean useMinimumChunkWidth()
   {
     return true;
+  }
+
+  public void setCachedHeight(final long cachedHeight)
+  {
+    if (cachedHeight == 204800000)
+    {
+      DebugLog.logHere();
+    }
+    super.setCachedHeight(cachedHeight);
   }
 
   public Object clone()

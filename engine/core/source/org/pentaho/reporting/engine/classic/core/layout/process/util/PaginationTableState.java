@@ -17,21 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-public class PaginationState
+public class PaginationTableState
 {
-  private PaginationState parent;
+  private PaginationTableState parent;
   private boolean rowOpen;
   private boolean suspended;
   private long pageHeight;
   private long pageEnd;
 
-  public PaginationState(final long pageHeight, final long pageEnd)
+  public PaginationTableState(final long pageHeight, final long pageEnd)
   {
     this.pageHeight = pageHeight;
     this.pageEnd = pageEnd;
   }
 
-  public PaginationState(final PaginationState parent)
+  public PaginationTableState(final PaginationTableState parent)
   {
     this.parent = parent;
     this.suspended = parent.isVisualStateCollectionSuspended();
@@ -39,7 +39,7 @@ public class PaginationState
     this.pageEnd = parent.pageEnd;
   }
 
-  public PaginationState(final PaginationState parent, final boolean rowOpen, final boolean suspended)
+  public PaginationTableState(final PaginationTableState parent, final boolean rowOpen, final boolean suspended)
   {
     this(parent);
     this.rowOpen = rowOpen;
@@ -71,7 +71,7 @@ public class PaginationState
     return false;
   }
 
-  public PaginationState pop()
+  public PaginationTableState pop()
   {
     return parent;
   }

@@ -61,6 +61,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
   private static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
   private boolean paranoidChecks = true;
   private TableRowHeightCalculation tableRowHeightStep;
+  private boolean cacheDeepDirty;
 
   public CanvasMajorAxisLayoutStep()
   {
@@ -71,8 +72,27 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   public void compute(final LogicalPageBox pageBox)
   {
+    cacheDeepDirty = false;
     tableRowHeightStep.reset();
     startProcessing(pageBox);
+  }
+
+  protected boolean checkCacheValid(final RenderNode node)
+  {
+    if (cacheDeepDirty)
+    {
+      return false;
+    }
+    final RenderNode.CacheState cacheState = node.getCacheState();
+    if (cacheState == RenderNode.CacheState.CLEAN)
+    {
+      return true;
+    }
+    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      cacheDeepDirty = true;
+    }
+    return false;
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -95,7 +115,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -203,7 +223,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -377,7 +397,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -450,7 +470,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
    */
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -647,7 +667,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -712,7 +732,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -783,7 +803,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -806,7 +826,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -825,16 +845,6 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return false;
-    }
-
-    if (box.isCacheValid())
-    {
-      return false;
-    }
-
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalBlockPosition(box);
     CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
@@ -856,11 +866,6 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return;
-    }
-
     if (box instanceof TableSectionRenderBox)
     {
       tableRowHeightStep.finishTableSection((TableSectionRenderBox) box);
@@ -874,7 +879,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -900,7 +905,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }

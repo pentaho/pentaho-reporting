@@ -8,16 +8,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public class PagebreakTest
 {
@@ -35,27 +38,104 @@ public class PagebreakTest
     report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
     report.setQuery("query");
 
-    final Band table = TableTestUtil.createTable(1, 1, 10, true);
+    final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");
     report.getReportHeader().addElement(table);
     report.getReportHeader().setLayout("block");
 
-    PdfReportUtil.createPDF(report, "test-output/output.pdf");
-/*
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output.pdf");
+
     assertPageValid(report, 0);
     assertPageValid(report, 1);
     assertPageValid(report, 2);
-    assertPageValid(report, 3);
-    assertPageValid(report, 4);
-*/
+  }
+
+
+  @Test
+  public void testBlockWithPrePostPad() throws Exception
+  {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
+    report.setQuery("query");
+
+    final Band table = TableTestUtil.createTable(1, 1, 6, true);
+    table.setName("table");
+    report.getReportHeader().addElement(TableTestUtil.createDataItem("Pre-Padding", 100, 10));
+    report.getReportHeader().addElement(table);
+    report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
+    report.getReportHeader().setLayout("block");
+
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-block.pdf");
+
+    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
+    assertPageValid(report, 1);
+    assertPageValid(report, 2);
+//    assertPageValid(report, 3);
+//    assertPageValid(report, 4);
+  }
+
+  @Test
+  public void testRowWithPrePostPad() throws Exception
+  {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
+    report.setQuery("query");
+
+    final Band table = TableTestUtil.createTable(1, 1, 6, true);
+    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    table.setName("table");
+    report.getReportHeader().addElement(TableTestUtil.createDataItem("Pre-Padding", 100, 10));
+    report.getReportHeader().addElement(table);
+    report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
+    report.getReportHeader().setLayout("row");
+
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-row.pdf");
+
+    assertPageValid(report, 0);
+    assertPageValid(report, 1);
+    assertPageValid(report, 2);
+//    assertPageValid(report, 3);
+//    assertPageValid(report, 4);
+  }
+
+  @Test
+  public void testCanvasWithPrePostPad() throws Exception
+  {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
+    report.setQuery("query");
+
+    final Band table = TableTestUtil.createTable(1, 1, 6, true);
+    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    table.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
+    table.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 10f);
+    table.setName("table");
+    report.getReportHeader().addElement(TableTestUtil.createDataItem("Pre-Padding", 100, 10));
+    report.getReportHeader().addElement(table);
+
+    Element postPaddingItem = TableTestUtil.createDataItem("Post-Padding", 100, 10);
+    postPaddingItem.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 300f);
+    report.getReportHeader().addElement(postPaddingItem);
+    report.getReportHeader().setLayout("canvas");
+
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-canvas.pdf");
+
+    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(20));
+    assertPageValid(report, 1);
+    assertPageValid(report, 2);
   }
 
   private void assertPageValid(final MasterReport report, final int page) throws Exception
   {
+    assertPageValid(report, page, 0);
+  }
+
+  private void assertPageValid(final MasterReport report, final int page, final long offset) throws Exception
+  {
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, page);
     final long pageOffset = pageBox.getPageOffset();
 
-    ModelPrinter.print(pageBox);
+   // ModelPrinter.print(pageBox);
 
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_SECTION);
     Assert.assertEquals(2, elementsByNodeType.length);
@@ -66,7 +146,14 @@ public class PagebreakTest
     final RenderNode[] rows = MatchFactory.findElementsByNodeType(body, LayoutNodeTypes.TYPE_BOX_TABLE_ROW);
     Assert.assertTrue("Have rows on page " + page, rows.length > 0);
 
-    Assert.assertEquals("Header starts at top of page " + page, pageOffset, header.getY());
+    Assert.assertEquals("Header starts at top of page " + page, pageOffset + offset, header.getY());
     Assert.assertEquals("Row starts after the header on page " + page, header.getY() + header.getHeight(), rows[0].getY());
+
+    final RenderNode[] table = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
+    Assert.assertEquals(1, table.length);
+    final RenderBox box = (RenderBox) table[0];
+    final RenderNode lastChild = box.getLastChild();
+    Assert.assertEquals("Table height extends correctly on page " + page,
+        box.getY() + box.getHeight(), lastChild.getY() + lastChild.getHeight());
   }
 }

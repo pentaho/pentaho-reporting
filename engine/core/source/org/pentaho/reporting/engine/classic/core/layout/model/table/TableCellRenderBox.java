@@ -121,7 +121,7 @@ public class TableCellRenderBox extends BlockRenderBox
   {
     this.rowSpan = Math.max (1, rowSpan);
     this.colSpan = Math.max (1, colSpan);
-    this.resetCacheState(false);
+    this.resetCacheState(true);
   }
 
   /**

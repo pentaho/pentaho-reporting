@@ -88,7 +88,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");
@@ -149,7 +149,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");
