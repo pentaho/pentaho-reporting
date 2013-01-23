@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
@@ -68,12 +67,12 @@ public class Prd3319Test extends TestCase
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime(new DefaultTableModel(), 0, processingContext);
 
-    final Element reportElement = (Element) report2.getPageHeader().getElement(4);
-    final Object designValue = reportElement.getElementType().getDesignValue(runtime, reportElement);
-    final DefaultImageReference image = (DefaultImageReference) designValue;
-    assertEquals(456, image.getImageWidth());
-    assertEquals(69, image.getImageHeight());
+    final Element reportElement = report2.getReportHeader().getElement(0);
+    Object attribute = reportElement.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
 
+    assertTrue(attribute instanceof ResourceKey);
+    ResourceKey atKey = (ResourceKey) attribute;
+    assertEquals("http://127.0.0.1:65535/image.jpg", atKey.getIdentifierAsString());
   }
 
   /**
