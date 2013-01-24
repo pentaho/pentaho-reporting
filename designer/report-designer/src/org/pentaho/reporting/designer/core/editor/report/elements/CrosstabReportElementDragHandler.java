@@ -292,7 +292,7 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
         if (result == 0)
         {
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
+          undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
                          new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
           parent.addElement(subReport);
         }
@@ -300,7 +300,7 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
         {
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
+          undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
                          new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
           arb.addSubReport(subReport);
         }
@@ -308,7 +308,7 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       else
       {
         final UndoManager undo = context.getUndo();
-        undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
+        undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
                        new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
         parent.addElement(subReport);
       }
@@ -347,6 +347,11 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
         crosstabAction.setReportDesignerContext(designerContext);
         crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
       }
+      else
+      {
+        // User did not select a query.  We need to undo the sub-report
+      }
+
 
       dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});
     }
