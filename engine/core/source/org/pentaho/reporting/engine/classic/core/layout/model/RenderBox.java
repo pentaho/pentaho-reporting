@@ -110,6 +110,7 @@ public abstract class RenderBox extends RenderNode
     }
 
     this.pinned = -1;
+    this.tableValidationAge = -1;
     this.boxDefinition = boxDefinition;
     this.setOpen(true);
     this.staticBoxLayoutProperties = new StaticBoxLayoutProperties();
@@ -148,6 +149,7 @@ public abstract class RenderBox extends RenderNode
     b.setContentRefHolder(false);
     b.breakContext = new PageableBreakContext();
     b.descendantCount = 1;
+    b.tableValidationAge = -1;
     return b;
   }
 
