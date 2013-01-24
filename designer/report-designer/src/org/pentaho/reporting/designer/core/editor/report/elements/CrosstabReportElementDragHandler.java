@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.Window;
@@ -46,6 +45,7 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
@@ -315,8 +315,23 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       }
 
       final ReportDesignerContext designerContext = dragContext.getDesignerContext();
-      final Component theParent = designerContext.getParent();
-      final Window window = LibSwingUtil.getWindowAncestor(theParent);
+      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+      final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
+
+      try
+      {
+        // Create the new subreport tab - this is where the contents of the Crosstab
+        // dialog will go.
+        subReport.setDataFactory(reportDefinition.getDataFactory());
+
+        final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
+        designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
+      }
+      catch (ReportDataFactoryException e)
+      {
+        UncaughtExceptionsModel.getInstance().addException(e);
+      }
+
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog crosstabDataSourceDialog;
@@ -327,24 +342,12 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       final DataFactory dataFactory = crosstabDataSourceDialog.getSubReportDataFactory();
       if ((dataFactory != null) && (queryName != null))
       {
-        subReport.setDataFactory(dataFactory);
         subReport.setQuery(queryName);
 
-        try
-        {
-          // Create the new subreport tab - this is where the contents of the Crosstab
-          // dialog will go.
-          designerContext.addSubReport(designerContext.getActiveContext(), subReport);
-
-          // Invoke Crosstab dialog
-          InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
-          crosstabAction.setReportDesignerContext(designerContext);
-          crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
-        }
-        catch (ReportDataFactoryException e)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e);
-        }
+        // Invoke Crosstab dialog
+        InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
+        crosstabAction.setReportDesignerContext(designerContext);
+        crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
       }
 
       dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});

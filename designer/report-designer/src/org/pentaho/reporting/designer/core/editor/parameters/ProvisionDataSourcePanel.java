@@ -48,6 +48,7 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -93,6 +94,15 @@ public class ProvisionDataSourcePanel extends JPanel
       if (result == JOptionPane.YES_OPTION)
       {
         final DataFactory theSelectedDataFactory = getSelectedDataSource();
+
+        // Delete data-source from structure panel
+        reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[] {theSelectedDataFactory});
+
+        DeleteAction deleteAction = new DeleteAction();
+        deleteAction.setReportDesignerContext(reportDesignerContext);
+        deleteAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+
+        // Delete data-source from the Select data-source dialog
         availableDataSourcesModel.remove(theSelectedDataFactory);
       }
     }
