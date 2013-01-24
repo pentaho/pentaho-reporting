@@ -169,7 +169,7 @@ public class Prd3688Test extends TestCase
     assertEquals(StrictGeomUtility.toInternalValue(0), e3Box.getX());
     assertEquals(StrictGeomUtility.toInternalValue(12.5), e3Box.getY());
     assertEquals(StrictGeomUtility.toInternalValue(1464f), e3Box.getWidth());
-    assertEquals(StrictGeomUtility.toInternalValue(8), e3Box.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(3.5f), e3Box.getHeight());
 
     assertEquals(StrictGeomUtility.toInternalValue(0), rhBox.getX());
     assertEquals(StrictGeomUtility.toInternalValue(0), rhBox.getY());

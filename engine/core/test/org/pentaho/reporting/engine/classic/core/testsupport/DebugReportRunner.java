@@ -30,6 +30,7 @@ import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.EmptyReportException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -69,6 +70,8 @@ import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResol
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
@@ -476,7 +479,7 @@ public class DebugReportRunner
     resolveStyle(report);
     resolveStyle(reportHeader);
 
-    metaData.initialize(report.getConfiguration());
+    metaData.initialize(wrapForCompatibility(report));
     
     final ProcessingContext processingContext = new DefaultProcessingContext(report, metaData);
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime
@@ -499,6 +502,27 @@ public class DebugReportRunner
       debugLayoutSystem.validatePages();
     }
     return debugLayoutSystem.getPageBox();
+  }
+
+  private static Configuration wrapForCompatibility(final MasterReport processingContext)
+  {
+    final int compatibilityLevel = processingContext.getCompatibilityLevel();
+    if (compatibilityLevel < 0)
+    {
+      return processingContext.getConfiguration();
+    }
+
+    if (compatibilityLevel < ClassicEngineBoot.computeVersionId(3, 999, 999))
+    {
+      // enable strict compatibility mode for reports older than 4.0.
+      final HierarchicalConfiguration config = new HierarchicalConfiguration(processingContext.getConfiguration());
+      config.setConfigProperty("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection", "true");
+      config.setConfigProperty("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", "true");
+      return config;
+    }
+
+    // this is a trunk or 4.0 or newer report.
+    return processingContext.getConfiguration();
   }
 
   public static void resolveStyle(final Section band)
