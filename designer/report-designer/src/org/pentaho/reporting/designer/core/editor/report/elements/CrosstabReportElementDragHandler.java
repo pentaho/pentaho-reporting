@@ -49,7 +49,6 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -336,11 +335,10 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog crosstabDataSourceDialog;
       crosstabDataSourceDialog = new SubReportDataSourceDialog((JFrame)window);
-      final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
 
-      // User has selected a query in the data source dialog
-      final DataFactory dataFactory = crosstabDataSourceDialog.getSubReportDataFactory();
-      if ((dataFactory != null) && (queryName != null))
+      // User has prompted to select a data-source.  Get the selected query
+      final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
+      if (queryName != null)
       {
         subReport.setQuery(queryName);
 
