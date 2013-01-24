@@ -51,8 +51,7 @@ public class MinChunkWidthTest extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
-
-  public void testMinChunkWidth() throws Exception
+  public void testMinChunkWidthLegacyMode() throws Exception
   {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
@@ -72,6 +71,25 @@ public class MinChunkWidthTest extends TestCase
     new ValidateRunner().startValidation(logicalPageBox);
   }
 
+  public void testMinChunkWidth() throws Exception
+  {
+    final MasterReport basereport = new MasterReport();
+    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setCompatibilityLevel(null);
+
+    final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
+    final ResourceManager rm = new ResourceManager();
+    rm.registerDefaults();
+    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
+        (basereport, report.getReportHeader(), true, false);
+    // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
+    // and that only two lines exist for each
+    //ModelPrinter.print(logicalPageBox);
+    new ValidateRunner().startValidation(logicalPageBox);
+  }
 
   private static class ValidateRunner extends IterateStructuralProcessStep
   {

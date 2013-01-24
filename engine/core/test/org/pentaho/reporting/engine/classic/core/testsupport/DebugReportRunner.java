@@ -506,8 +506,8 @@ public class DebugReportRunner
 
   private static Configuration wrapForCompatibility(final MasterReport processingContext)
   {
-    final int compatibilityLevel = processingContext.getCompatibilityLevel();
-    if (compatibilityLevel < 0)
+    final Integer compatibilityLevel = processingContext.getCompatibilityLevel();
+    if (compatibilityLevel == null || compatibilityLevel < 0)
     {
       return processingContext.getConfiguration();
     }
