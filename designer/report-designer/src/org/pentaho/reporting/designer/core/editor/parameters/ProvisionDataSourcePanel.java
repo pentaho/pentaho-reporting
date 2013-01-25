@@ -303,7 +303,7 @@ public class ProvisionDataSourcePanel extends JPanel
         return;
       }
 
-      final DataFactory dataFactory = editor.performEdit(new ParameterEditorDesignTimeContext(), null, null, null);
+      final DataFactory dataFactory = editor.performEdit(new DataSourceDesignTimeContext(), null, null, null);
 
       if (dataFactory == null)
       {
@@ -321,9 +321,9 @@ public class ProvisionDataSourcePanel extends JPanel
   }
 
 
-  private class ParameterEditorDesignTimeContext implements DesignTimeContext
+  private class DataSourceDesignTimeContext implements DesignTimeContext
   {
-    public ParameterEditorDesignTimeContext()
+    public DataSourceDesignTimeContext()
     {
     }
 

@@ -62,6 +62,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
     if (selectionModel1 == null)
     {
       setEnabled(false);
+      editedDataFactory = null;
       return;
     }
 
