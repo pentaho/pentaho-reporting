@@ -50,16 +50,15 @@ import javax.swing.tree.TreeSelectionModel;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
+import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
-import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
-import org.pentaho.reporting.engine.classic.core.designtime.DefaultDataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
@@ -109,9 +108,9 @@ public class ProvisionDataSourcePanel extends JPanel
   }
 
 
-  private class ParameterEditDataSourceAction extends AbstractAction implements TreeSelectionListener
+  private class EditDataSourceAction extends AbstractAction implements TreeSelectionListener
   {
-    private ParameterEditDataSourceAction()
+    private EditDataSourceAction()
     {
       putValue(Action.SMALL_ICON, IconLoader.getInstance().getEditIcon());
       putValue(Action.SHORT_DESCRIPTION, Messages.getString("ParameterDialog.EditDataSourceAction"));
@@ -147,25 +146,20 @@ public class ProvisionDataSourcePanel extends JPanel
         return;
       }
 
+      // Edit data-source from structure panel
+      reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[] {dataFactory});
+
+      EditQueryAction editQueryAction = new EditQueryAction();
+      editQueryAction.setReportDesignerContext(reportDesignerContext);
+      editQueryAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+
       final int idx = availableDataSourcesModel.indexOf(dataFactory);
       if (idx == -1)
       {
         throw new IllegalStateException("DataSource Model is out of sync with the GUI");
       }
 
-      final DataSourcePlugin dataSourcePlugin = metadata.createEditor();
-      if (dataSourcePlugin.canHandle(dataFactory))
-      {
-        final DefaultDataFactoryChangeRecorder recorder = new DefaultDataFactoryChangeRecorder();
-        final ReportDesignerDesignTimeContext designTimeContext = new ReportDesignerDesignTimeContext(getReportDesignerContext());
-        final DataFactory editedDataFactory = dataSourcePlugin.performEdit(designTimeContext, dataFactory, null, recorder);
-        if (editedDataFactory == null)
-        {
-          return;
-        }
-
-        availableDataSourcesModel.edit(idx, editedDataFactory);
-      }
+      availableDataSourcesModel.edit(idx, editQueryAction.getEditedDataFactory());
     }
   }
 
@@ -309,7 +303,7 @@ public class ProvisionDataSourcePanel extends JPanel
         return;
       }
 
-      final DataFactory dataFactory = editor.performEdit(new ParameterEditorDesignTimeContext(), null, null, null);
+      final DataFactory dataFactory = editor.performEdit(new DataSourceDesignTimeContext(), null, null, null);
 
       if (dataFactory == null)
       {
@@ -327,9 +321,9 @@ public class ProvisionDataSourcePanel extends JPanel
   }
 
 
-  private class ParameterEditorDesignTimeContext implements DesignTimeContext
+  private class DataSourceDesignTimeContext implements DesignTimeContext
   {
-    public ParameterEditorDesignTimeContext()
+    public DataSourceDesignTimeContext()
     {
     }
 
@@ -452,7 +446,7 @@ public class ProvisionDataSourcePanel extends JPanel
   public JPanel createDataSourcePanel()
   {
     final RemoveDataSourceAction removeAction = new RemoveDataSourceAction();
-    final ParameterEditDataSourceAction editDataSourceAction = new ParameterEditDataSourceAction();
+    final EditDataSourceAction editDataSourceAction = new EditDataSourceAction();
     final ShowAddDataSourcePopupAction showAddDataSourcePopupAction = new ShowAddDataSourcePopupAction();
 
     availableDataSources.addTreeSelectionListener(editDataSourceAction);
