@@ -38,8 +38,7 @@ public class MinorAxisLayoutStepUtil
   public static long resolveNodeWidthOnStart(final RenderBox box,
                                              final MinorAxisNodeContext nodeContext)
   {
-    final long minChunkWidth = 0; //strictLegacyMode ? 0 : box.getMinimumChunkWidth();
-
+    final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
     final RenderLength minLength = boxDef.getMinimumWidth();
     final RenderLength prefLength = boxDef.getPreferredWidth();
@@ -75,19 +74,13 @@ public class MinorAxisLayoutStepUtil
   public static long resolveNodeWidthOnStartForCanvasLegacy(final RenderBox box,
                                                             final MinorAxisNodeContext nodeContext)
   {
-    final long minChunkWidth = 0; //strictLegacyMode ? 0 : box.getMinimumChunkWidth();
-
+    final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
     final RenderLength definedMinLength = boxDef.getMinimumWidth();
-    final RenderLength minLength;
-    if (definedMinLength.getValue() == 0)
-    {
-      minLength = RenderLength.createFromRaw(-100);
-    }
-    else
-    {
-      minLength = definedMinLength;
-    }
+
+    // PRD-3857 - Auto-correcting min-size to 100% for zero-defined boxes blows up the min-chunk-width test
+    final RenderLength minLength = definedMinLength;
+
     final RenderLength prefLength = boxDef.getPreferredWidth();
     final RenderLength maxLength = boxDef.getMaximumWidth();
 
