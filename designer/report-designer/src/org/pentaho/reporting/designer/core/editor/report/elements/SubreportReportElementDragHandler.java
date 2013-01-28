@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.Window;
@@ -44,14 +43,15 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.PageFooter;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.Watermark;
@@ -298,18 +298,29 @@ public class SubreportReportElementDragHandler implements ReportElementDragHandl
       }
 
       final ReportDesignerContext designerContext = dragContext.getDesignerContext();
-      final Component theParent = designerContext.getParent();
-      final Window window = LibSwingUtil.getWindowAncestor(theParent);
+      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+      final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
+
+      try
+      {
+        // Create the new subreport tab and update the active context to point to new subreport.
+        subReport.setDataFactory(reportDefinition.getDataFactory());
+
+        final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
+        designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
+      }
+      catch (ReportDataFactoryException e)
+      {
+        UncaughtExceptionsModel.getInstance().addException(e);
+      }
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog subreportDataSourceDialog;
       subreportDataSourceDialog = new SubReportDataSourceDialog((JFrame)window);
 
       final String queryName = subreportDataSourceDialog.performSelection(designerContext);
-      final DataFactory dataFactory = subreportDataSourceDialog.getSubReportDataFactory();
-      if ((dataFactory != null) && (queryName != null))
+      if (queryName != null)
       {
-        subReport.setDataFactory(dataFactory);
         subReport.setQuery(queryName);
       }
 

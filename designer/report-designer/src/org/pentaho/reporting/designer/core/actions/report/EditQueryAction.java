@@ -40,12 +40,14 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
- * Todo: Document Me
+ * Handles action to edit data-source
  *
  * @author Thomas Morgner
  */
 public class EditQueryAction extends AbstractElementSelectionAction
 {
+  private DataFactory editedDataFactory = null;
+
   public EditQueryAction()
   {
     putValue(Action.NAME, ActionMessages.getString("EditQueryAction.Text"));
@@ -60,6 +62,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
     if (selectionModel1 == null)
     {
       setEnabled(false);
+      editedDataFactory = null;
       return;
     }
 
@@ -121,6 +124,20 @@ public class EditQueryAction extends AbstractElementSelectionAction
         }
         break;
       }
+      else if (element instanceof DataFactory)
+      {
+        try
+        {
+          final AbstractReportDefinition report = activeContext.getReportDefinition();
+          final DataFactory dataFactory = ((DataFactory)element);
+          performEdit(dataFactory, report.getQuery());
+        }
+        catch (ReportDataFactoryException e1)
+        {
+          UncaughtExceptionsModel.getInstance().addException(e1);
+        }
+        break;
+      }
     }
   }
 
@@ -147,7 +164,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
       final boolean editingActiveQuery = contains(report.getQuery(), dataFactory.getQueryNames());
 
       final ReportDesignerDesignTimeContext designTimeContext = new ReportDesignerDesignTimeContext(getReportDesignerContext());
-      final DataFactory editedDataFactory = dataSourcePlugin.performEdit(designTimeContext, dataFactory, queryName, null);
+      editedDataFactory = dataSourcePlugin.performEdit(designTimeContext, dataFactory, queryName, null);
       if (editedDataFactory == null)
       {
         return;
@@ -204,5 +221,10 @@ public class EditQueryAction extends AbstractElementSelectionAction
       }
     }
     return false;
+  }
+
+  public DataFactory getEditedDataFactory()
+  {
+    return editedDataFactory;
   }
 }
