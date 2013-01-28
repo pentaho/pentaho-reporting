@@ -29,7 +29,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBreakContext;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 /**
@@ -108,29 +107,6 @@ public class PaginationStepLib
     final long repeatFooterHeight = repeatFooterArea.getHeight();
     // Assertion: Make sure that we do not run into a infinite loop..
     return headerHeight + repeatFooterHeight + footerHeight;
-  }
-
-  @Deprecated
-  public static PageableBreakContext getBreakContext(final RenderBox box,
-                                               final boolean createBoxIfNeeded,
-                                               final boolean useInitialShift)
-  {
-    final PageableBreakContext boxContext = box.getBreakContext();
-    final RenderBox parentBox = box.getParent();
-    if (createBoxIfNeeded)
-    {
-      if (parentBox != null)
-      {
-        final PageableBreakContext parentContext = getBreakContext(parentBox, false, false);
-        boxContext.updateFromParent(parentContext, useInitialShift);
-      }
-      else
-      {
-        // reset ...
-        boxContext.reset();
-      }
-    }
-    return boxContext;
   }
 
   public static void assertBlockPosition(final RenderBox box, final long shift)

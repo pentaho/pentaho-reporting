@@ -23,7 +23,6 @@ import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBreakContext;
 import org.pentaho.reporting.engine.classic.core.layout.text.ExtendedBaselineInfo;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -44,28 +43,24 @@ public abstract class RenderBox extends RenderNode
     NO_MANUAL_BREAK, DIRECT_MANUAL_BREAK, INDIRECT_MANUAL_BREAK
   }
 
-  private static final int FLAG_BOX_OPEN =          0x10000;
-  private static final int FLAG_BOX_MARKED_OPEN =   0x20000;
-  private static final int FLAG_BOX_APPLIED_OPEN =  0x40000;
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED =      0x80000;
-  private static final int FLAG_BOX_MARKED_SEEN =  0x100000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED2 = 0x1000000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED3 = 0x2000000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 = 0x4000000;
+  private static final int FLAG_BOX_OPEN = 0x10000;
+  private static final int FLAG_BOX_MARKED_OPEN = 0x20000;
+  private static final int FLAG_BOX_APPLIED_OPEN = 0x40000;
+  private static final int FLAG_BOX_MARKED_SEEN = 0x100000;
   private static final int FLAG_BOX_APPLIED_SEEN = 0x200000;
   private static final int FLAG_BOX_DEEP_FINISHED = 0x400000;
   private static final int FLAG_BOX_CONTENT_REF_HOLDER = 0x800000;
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED2 =         0x1000000;
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED3 =         0x2000000;
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 =         0x4000000;
-
   private int contentRefCount;
   private int tableRefCount;
   private int descendantCount;
-
   private int markedContentRefCount;
   private int appliedContentRefCount;
-
   private BoxDefinition boxDefinition;
   private StaticBoxLayoutProperties staticBoxLayoutProperties;
-
   private RenderNode firstChildNode;
   private RenderNode lastChildNode;
   private Object rawValue;
@@ -76,8 +71,6 @@ public abstract class RenderBox extends RenderNode
   private RenderBox textEllipseBox;
   private Object tableExportState;
   private Boolean contentBox;
-  private PageableBreakContext breakContext;
-
   private long staticBoxPropertiesAge;
   private long tableValidationAge;
   private long pinned;
@@ -86,7 +79,6 @@ public abstract class RenderBox extends RenderNode
   private long contentAreaX1;
   private long contentAreaX2;
   private long contentAge;
-
   private long overflowAreaWidth;
   private long overflowAreaHeight;
 
@@ -117,7 +109,6 @@ public abstract class RenderBox extends RenderNode
     this.staticBoxLayoutProperties.setBreakAfter
         (getStyleSheet().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER));
     this.stateKey = stateKey;
-    this.breakContext = new PageableBreakContext();
     this.descendantCount = 1;
   }
 
@@ -146,7 +137,6 @@ public abstract class RenderBox extends RenderNode
     b.contentAreaX1 = 0;
     b.contentAreaX2 = 0;
     b.setContentRefHolder(false);
-    b.breakContext = new PageableBreakContext();
     b.descendantCount = 1;
     return b;
   }
@@ -161,7 +151,7 @@ public abstract class RenderBox extends RenderNode
     return isFlag(FLAG_BOX_CONTENT_REF_HOLDER);
   }
 
-  private void setContentRefHolder (final boolean flag)
+  private void setContentRefHolder(final boolean flag)
   {
     setFlag(FLAG_BOX_CONTENT_REF_HOLDER, flag);
   }
@@ -606,7 +596,6 @@ public abstract class RenderBox extends RenderNode
     }
   }
 
-
   public void replaceChilds(final RenderNode old,
                             final RenderNode[] replacement)
   {
@@ -1019,14 +1008,14 @@ public abstract class RenderBox extends RenderNode
 
   }
 
-  protected void setOpen (final boolean open)
-  {
-    setFlag(FLAG_BOX_OPEN, open);
-  }
-
   public boolean isOpen()
   {
     return isFlag(FLAG_BOX_OPEN) || contentRefCount > 0;
+  }
+
+  protected void setOpen(final boolean open)
+  {
+    setFlag(FLAG_BOX_OPEN, open);
   }
 
   public void freeze()
@@ -1169,19 +1158,14 @@ public abstract class RenderBox extends RenderNode
     return appliedContentRefCount;
   }
 
-  private void setAppliedOpen(final boolean flag)
-  {
-    setFlag(FLAG_BOX_APPLIED_OPEN, flag);
-  }
-
   public boolean isAppliedOpen()
   {
     return isFlag(FLAG_BOX_APPLIED_OPEN);
   }
 
-  private void setAppliedSeen(final boolean flag)
+  private void setAppliedOpen(final boolean flag)
   {
-    setFlag(FLAG_BOX_APPLIED_SEEN, flag);
+    setFlag(FLAG_BOX_APPLIED_OPEN, flag);
   }
 
   public boolean isAppliedSeen()
@@ -1189,9 +1173,9 @@ public abstract class RenderBox extends RenderNode
     return isFlag(FLAG_BOX_APPLIED_SEEN);
   }
 
-  private void setMarkedOpen(final boolean flag)
+  private void setAppliedSeen(final boolean flag)
   {
-    setFlag(FLAG_BOX_MARKED_OPEN, flag);
+    setFlag(FLAG_BOX_APPLIED_SEEN, flag);
   }
 
   public boolean isMarkedOpen()
@@ -1199,14 +1183,19 @@ public abstract class RenderBox extends RenderNode
     return isFlag(FLAG_BOX_MARKED_OPEN);
   }
 
-  private void setMarkedSeen(final boolean flag)
+  private void setMarkedOpen(final boolean flag)
   {
-    setFlag(FLAG_BOX_MARKED_SEEN, flag);
+    setFlag(FLAG_BOX_MARKED_OPEN, flag);
   }
 
   public boolean isMarkedSeen()
   {
     return isFlag(FLAG_BOX_MARKED_SEEN);
+  }
+
+  private void setMarkedSeen(final boolean flag)
+  {
+    setFlag(FLAG_BOX_MARKED_SEEN, flag);
   }
 
   public void markBoxSeen()
@@ -1261,14 +1250,14 @@ public abstract class RenderBox extends RenderNode
     setFlag(FLAG_BOX_DEEP_FINISHED, deepFinished);
   }
 
-  public void setContentAge(final long contentAge)
-  {
-    this.contentAge = contentAge;
-  }
-
   public long getContentAge()
   {
     return contentAge;
+  }
+
+  public void setContentAge(final long contentAge)
+  {
+    this.contentAge = contentAge;
   }
 
   public Boolean getContentBox()
@@ -1329,11 +1318,6 @@ public abstract class RenderBox extends RenderNode
   public boolean isBoxOverflowY()
   {
     return staticBoxLayoutProperties.isOverflowY();
-  }
-
-  public PageableBreakContext getBreakContext()
-  {
-    return breakContext;
   }
 
   public boolean isEmptyNodesHaveSignificance()
@@ -1400,46 +1384,64 @@ public abstract class RenderBox extends RenderNode
     overflowAreaHeight = getCachedHeight();
   }
 
-  public void extendHeight(final long amount)
+  /**
+   * Notifies a box that one of its childs has extended its height. The child's height property already contains
+   * the new height. The <code>amount</code> given is the offset from the old height to the new height, and is
+   * always a positive number.
+   *
+   * @param child
+   * @param heightOffset
+   */
+  public void extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInBlockMode(amount);
+    extendHeightInBlockMode(child, heightOffset);
   }
 
-  protected void extendHeightInBlockMode(final long amount)
+  protected void extendHeightInBlockMode(final RenderNode child, final long heightOffset)
   {
-    breakContext.setHeightExtension(breakContext.getHeightExtension() + amount);
-    setHeight(getHeight() + amount);
-    setOverflowAreaHeight(getOverflowAreaHeight() + amount);
+    setHeight(getHeight() + heightOffset);
+    setOverflowAreaHeight(getOverflowAreaHeight() + heightOffset);
     updateCacheState(CACHE_DEEP_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)
     {
-      parent.extendHeight(amount);
+      parent.extendHeight(this, heightOffset);
     }
   }
 
-  protected void extendHeightInRowMode(final long amount)
+  /**
+   * Match the y2 of the child with the y2 of the parent. If the box extends over the y2 of the parent, then
+   * extend the parent. If the parent has overflow-y, then we must not extend by more than heightOffset.
+   *
+   * @param child
+   * @param heightOffset
+   */
+  protected void extendHeightInRowMode(final RenderNode child, final long heightOffset)
   {
-    final long realAmount = Math.max(0, amount - breakContext.getHeightExtension());
-    if (realAmount == 0)
-    {
+    final long parentY2 = getY() + getHeight();
+    final long childY2 = child.getY() + child.getHeight();
+    long delta = childY2 - parentY2;
+
+    if (delta <= 0)
       return;
-    }
 
-    breakContext.setHeightExtension(breakContext.getHeightExtension() + realAmount);
-    setHeight(getHeight() + realAmount);
-    setOverflowAreaHeight(getOverflowAreaHeight() + realAmount);
+    if (isBoxOverflowY())
+    {
+      delta = Math.min (delta, heightOffset);
+    }
+    setHeight(getHeight() + delta);
+    setOverflowAreaHeight(getOverflowAreaHeight() + delta);
     updateCacheState(CACHE_DEEP_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)
     {
-      parent.extendHeight(realAmount);
+      parent.extendHeight(this, delta);
     }
   }
 
-  public int getChildCount ()
+  public int getChildCount()
   {
     int count = 0;
     RenderNode next = firstChildNode;

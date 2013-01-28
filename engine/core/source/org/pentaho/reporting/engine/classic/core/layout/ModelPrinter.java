@@ -179,8 +179,6 @@ public class ModelPrinter
     {
       b.append("   ");
     }
-    b.append("- breakContext=");
-    b.append(box.getBreakContext());
     print(b.toString());
 
     if (box instanceof LogicalPageBox)
@@ -308,7 +306,7 @@ public class ModelPrinter
       }
     }
 
-    if (box instanceof LogicalPageBox)
+    if (false && box instanceof LogicalPageBox)
     {
       final LogicalPageBox lbox = (LogicalPageBox) box;
       printBox(lbox.getHeaderArea(), level + 1);

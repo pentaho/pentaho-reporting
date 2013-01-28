@@ -20,7 +20,8 @@ package org.pentaho.reporting.engine.classic.core.layout.process;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -33,7 +34,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.InitialPaginationShiftState;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBreakContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
@@ -105,12 +105,6 @@ public final class PaginationStep extends IterateVisualProcessStep
 
       PaginationStepLib.assertProgress(pageBox);
 
-      final PageableBreakContext context = pageBox.getBreakContext();
-      if (context == null)
-      {
-        throw new IllegalStateException("After pagination, we have no break context. Why?");
-      }
-
       final long masterBreak = breakUtility.getLastMasterBreak();
       final boolean overflow = breakIndicatorEncountered != null || pageBox.getHeight() > masterBreak;
       final boolean nextPageContainsContent = (pageBox.getHeight() > masterBreak);
@@ -179,7 +173,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         // for now, we will only apply the ordinary shift.
         box.setY(fixedPositionInFlow);
         shiftState.setShift(shift + fixedPositionDelta);
-        BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
+        BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
         updateStateKey(box);
         return true;
       }
@@ -191,7 +185,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
         // from here.
         BoxShifter.shiftBox(box, fixedPositionDelta);
-        BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
+        BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
         updateStateKeyDeep(box);
         return false;
       }
@@ -207,7 +201,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
     shiftState.setShift(shift + fixedPositionDelta);
     box.setY(fixedPositionInFlow);
-    BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
+    BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
   }
@@ -229,6 +223,13 @@ public final class PaginationStep extends IterateVisualProcessStep
       breakPending = (true);
     }
 
+    if (box.getElementType() instanceof RelationalGroupType)
+    {
+      if (box.getParent().getElementType() instanceof SubReportType)
+      {
+        DebugLog.logHere();
+      }
+    }
     shiftState = shiftState.pop();
   }
 
@@ -329,7 +330,7 @@ public final class PaginationStep extends IterateVisualProcessStep
           DebugLog.log ("Table-Height before extension: " + box.getParent().getHeight());
           BoxShifter.shiftBox(box, delta);
           updateStateKeyDeep(box);
-          BoxShifter.extendHeight(box.getParent(), headerShift);
+          BoxShifter.extendHeight(box.getParent(), box, headerShift);
           shiftState.increaseShift(headerShift);
           DebugLog.log("Table-Height after extension: " + box.getParent().getHeight());
 
@@ -579,7 +580,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = box.getPinned() - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       return true;
@@ -593,7 +594,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMinorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (shift + box.getY() < nextMinorBreak)
@@ -640,7 +641,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
 
