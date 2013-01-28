@@ -9,10 +9,14 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
 
   public BlockLevelPaginationShiftState(final PaginationShiftState parent)
   {
+    if (parent == null)
+    {
+      throw new NullPointerException();
+    }
     this.parent = parent;
     this.initialShift = parent.getShiftForNextChild();
     this.shift = initialShift;
-    this.breakSuspended = parent.isManualBreakSuspended();
+    this.breakSuspended = parent.isManualBreakSuspendedForChilds();
   }
 
   public void suspendManualBreaks()
@@ -21,6 +25,11 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
   }
 
   public boolean isManualBreakSuspended()
+  {
+    return parent.isManualBreakSuspendedForChilds();
+  }
+
+  public boolean isManualBreakSuspendedForChilds()
   {
     return breakSuspended;
   }

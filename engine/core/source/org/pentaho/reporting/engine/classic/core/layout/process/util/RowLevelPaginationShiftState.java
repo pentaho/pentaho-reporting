@@ -8,6 +8,10 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
 
   public RowLevelPaginationShiftState(final PaginationShiftState parent)
   {
+    if (parent == null)
+    {
+      throw new NullPointerException();
+    }
     this.parent = parent;
     this.shiftForChilds = parent.getShiftForNextChild();
     this.shift = this.shiftForChilds;
@@ -19,12 +23,17 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
 
   public boolean isManualBreakSuspended()
   {
+    return parent.isManualBreakSuspendedForChilds();
+  }
+
+  public boolean isManualBreakSuspendedForChilds()
+  {
     return true;
   }
 
   public void updateShiftFromChild(final long absoluteValue)
   {
-    this.shift = Math.max (shift, absoluteValue);
+    this.shift = Math.max(shift, absoluteValue);
   }
 
   public long getShiftForNextChild()
@@ -40,13 +49,13 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
 
   public void increaseShift(final long value)
   {
-    this.shiftForChilds = Math.max (shiftForChilds, this.shiftForChilds + value);
-    this.shift = Math.max (shift, shiftForChilds);
+    this.shiftForChilds = Math.max(shiftForChilds, this.shiftForChilds + value);
+    this.shift = Math.max(shift, shiftForChilds);
   }
 
   public void setShift(final long value)
   {
-    this.shiftForChilds = Math.max (shiftForChilds, value);
-    this.shift = Math.max (shift, shiftForChilds);
+    this.shiftForChilds = Math.max(shiftForChilds, value);
+    this.shift = Math.max(shift, shiftForChilds);
   }
 }

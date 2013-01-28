@@ -53,6 +53,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationS
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * The LayoutSystem is a simplified version of the LibLayout-rendering system.
@@ -465,7 +466,7 @@ public abstract class AbstractRenderer implements Renderer
     setPagebreaks(0);
     if (validateModelStep.isLayoutable(pageBox) == false)
     {
-//      Log.debug ("Not layoutable");
+      DebugLog.log("Not layoutable");
       return false;
     }
 

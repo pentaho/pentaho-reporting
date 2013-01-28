@@ -117,9 +117,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   {
     validationInfo = null;
     result = true;
-    logger.debug("Validation");
     // do not validate the header or footer or watermark sections..
     processBoxChilds(root);
+    logger.debug("Validation result: " + result);
     return result;
   }
 
@@ -132,6 +132,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -155,7 +156,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishCanvasBox(final CanvasRenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   protected boolean validateBlockOrAutoBox(final RenderBox box)
@@ -167,6 +168,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -219,7 +221,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishBlockBox(final BlockRenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   protected boolean startAutoBox(final RenderBox box)
@@ -240,7 +242,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishAutoBox(final RenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   private boolean validateInlineRowOrTableCellBox(final RenderBox box)
@@ -252,6 +254,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -278,7 +281,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishTableCellBox(final TableCellRenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   protected boolean startInlineBox(final InlineRenderBox box)
@@ -288,7 +291,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishInlineBox(final InlineRenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   protected boolean startRowBox(final RenderBox box)
@@ -298,7 +301,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishRowBox(final RenderBox box)
   {
-    box.setValidateModelAge(box.getChangeTracker());
+    box.setValidateModelResult(result);
   }
 
   protected boolean startTableBox(final TableRenderBox table)
@@ -312,6 +315,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (table.isValidateModelCacheValid())
     {
+      result &= table.isValidateModelResult();
       return true;
     }
 
@@ -369,7 +373,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         return;
       }
 
-      table.setValidateModelAge(table.getChangeTracker());
+      table.setValidateModelResult(result);
 
       if (validationInfo.isNeedCheck() == false)
       {

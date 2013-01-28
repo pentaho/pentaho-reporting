@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportHeaderType;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -47,7 +46,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.valign.ReplacedC
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.TextElementAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.VerticalAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -134,13 +132,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (box.getElementType() instanceof ReportHeaderType)
-    {
-      if (pageBox.getPageOffset() == 64800000)
-      {
-        DebugLog.logHere();
-      }
-    }
     if (checkCacheValid(box))
     {
       return false;

@@ -83,6 +83,7 @@ public abstract class RenderNode implements Cloneable
   private long minimumChunkWidth;
   private long maximumBoxWidth;
   private long validateModelAge;
+  private boolean validateModelResult;
   private long linebreakAge;
 
   private long cachedX;
@@ -630,9 +631,20 @@ public abstract class RenderNode implements Cloneable
     return validateModelAge;
   }
 
-  public void setValidateModelAge(final long validateModelAge)
+  protected void resetValidateModelResult()
   {
-    this.validateModelAge = validateModelAge;
+    this.validateModelAge = -1;
+  }
+
+  public void setValidateModelResult(final boolean result)
+  {
+    this.validateModelAge = changeTracker;
+    this.validateModelResult = result;
+  }
+
+  public boolean isValidateModelResult()
+  {
+    return validateModelResult;
   }
 
   public long getLinebreakAge()

@@ -1017,6 +1017,12 @@ public abstract class RenderBox extends RenderNode
 
   protected void setOpen(final boolean open)
   {
+    if (isOpen() == open)
+    {
+      return;
+    }
+
+    updateChangeTracker();
     setFlag(FLAG_BOX_OPEN, open);
   }
 
@@ -1229,7 +1235,7 @@ public abstract class RenderBox extends RenderNode
 
   public void resetCacheState(final boolean deepDirty)
   {
-    setValidateModelAge(-1);
+    resetValidateModelResult();
     setLinebreakAge(-1);
     if (deepDirty)
     {
@@ -1426,11 +1432,13 @@ public abstract class RenderBox extends RenderNode
     long delta = childY2 - parentY2;
 
     if (delta <= 0)
+    {
       return;
+    }
 
     if (isBoxOverflowY())
     {
-      delta = Math.min (delta, heightOffset);
+      delta = Math.min(delta, heightOffset);
     }
     setHeight(getHeight() + delta);
     setOverflowAreaHeight(getOverflowAreaHeight() + delta);

@@ -18,8 +18,10 @@
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.net.URL;
 
+import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -29,6 +31,8 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
+import org.pentaho.reporting.engine.classic.core.layout.FileModelPrinter;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -46,6 +50,7 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class Prd3930Test extends TestCase
 {
   public Prd3930Test()
@@ -151,13 +156,13 @@ public class Prd3930Test extends TestCase
     final MasterReport report = (MasterReport) directly.getResource();
     final ReportElement crosstab = report.getChildElementByType(CrosstabGroupType.INSTANCE);
     crosstab.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, CrosstabDetailMode.first);
-    
+
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
-    PrintReportProcessor rp = new PrintReportProcessor(report);
+    final PrintReportProcessor rp = new PrintReportProcessor(report);
     for (int page = 0; page < rp.getNumberOfPages(); page += 1)
     {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
-      LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
+      final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
       //ModelPrinter.print(logicalPageBox);
       //if (true) return;
@@ -188,32 +193,48 @@ public class Prd3930Test extends TestCase
     }
   }
 
+  private class Prd3930ElementProducer extends TableTestUtil.DefaultElementProducer
+  {
+    private Prd3930ElementProducer()
+    {
+      super(100, 10);
+    }
+
+    public Band createCell(final int row, final int column)
+    {
+      return TableTestUtil.createCell(100, 10, 1, 1);
+    }
+  }
+
   public void testLargeTableSingleBandBlockWithBreaks() throws Exception
   {
     final MasterReport report = new MasterReport();
-    final Band table = TableTestUtil.createTable(2, 1, 100);
+    final Band table = TableTestUtil.createTable(2, 0, 100, new Prd3930ElementProducer());
     table.setName("table");
-    final Band body = (Band) table.getElement(1);
+    final Band body = (Band) table.getElement(0);
     int numberOfPagebreaks = 0;
-    for (int i = 1; i < body.getElementCount(); i+= 1)
+    for (int i = 1; i < body.getElementCount(); i += 1)
     {
       if (i % 20 == 0)
       {
+        DebugLog.log("Add pagebreak at row " + i);
         numberOfPagebreaks += 1;
         body.getElement(i).getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, true);
       }
     }
 
-    table.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 50f);
     report.getReportHeader().addElement(table);
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
-    PrintReportProcessor rp = new PrintReportProcessor(report);
+    final PrintReportProcessor rp = new PrintReportProcessor(report);
     for (int page = 0; page < rp.getNumberOfPages(); page += 1)
     {
+
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
-      LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
+      final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
+
+      new FileModelPrinter("Prd-3930-page-" + page + "-", new File("test-output")).print(logicalPageBox);
 
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)
@@ -230,13 +251,21 @@ public class Prd3930Test extends TestCase
           }
         }
 
-        assertFalse((node.getY() + node.getHeight()) <= logicalPageBox.getPageOffset());
-        assertFalse(node.getY() >= logicalPageBox.getPageEnd());
-
-        if (node.getY() < logicalPageBox.getPageEnd() &&
-            (node.getY() + node.getHeight()) > logicalPageBox.getPageEnd())
+        try
         {
-          fail(" y=" + node.getY() + " height=" + node.getHeight());
+          assertFalse((node.getY() + node.getHeight()) <= logicalPageBox.getPageOffset());
+          assertFalse(node.getY() >= logicalPageBox.getPageEnd());
+
+          if (node.getY() < logicalPageBox.getPageEnd() &&
+              (node.getY() + node.getHeight()) > logicalPageBox.getPageEnd())
+          {
+            fail(" y=" + node.getY() + " height=" + node.getHeight());
+          }
+        }
+        catch (AssertionFailedError afe)
+        {
+          ModelPrinter.INSTANCE.print(node);
+          throw afe;
         }
       }
     }
@@ -257,7 +286,7 @@ public class Prd3930Test extends TestCase
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlTableReportUtil.createFlowXML(report, bout);
     final String text = bout.toString("UTF-8");
-    for (int i = 0; i < 100; i+= 1)
+    for (int i = 0; i < 100; i += 1)
     {
       assertTrue(text.contains("value=\"Data-" + i + "-0"));
       assertTrue(text.contains("value=\"Data-" + i + "-1"));
@@ -266,13 +295,13 @@ public class Prd3930Test extends TestCase
     }
   }
 
-    public void testLargeTableSingleBandBlockTableExportWithBreaks() throws Exception
+  public void testLargeTableSingleBandBlockTableExportWithBreaks() throws Exception
   {
     final MasterReport report = new MasterReport();
     final Band table = TableTestUtil.createTable(2, 1, 100, true);
     final Band body = (Band) table.getElement(1);
     int numberOfPagebreaks = 0;
-    for (int i = 1; i < body.getElementCount(); i+= 1)
+    for (int i = 1; i < body.getElementCount(); i += 1)
     {
       if (i % 20 == 0)
       {
@@ -289,7 +318,7 @@ public class Prd3930Test extends TestCase
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlTableReportUtil.createFlowXML(report, bout);
     final String text = bout.toString("UTF-8");
-    for (int i = 0; i < 100; i+= 1)
+    for (int i = 0; i < 100; i += 1)
     {
       assertTrue(text.contains("value=\"Data-" + i + "-0"));
       assertTrue(text.contains("value=\"Data-" + i + "-1"));
@@ -312,7 +341,6 @@ public class Prd3930Test extends TestCase
     assertEquals(numberOfPagebreaks + 1, count);
   }
 
-
   public void testPageBreakOnCT2() throws Exception
   {
     final URL url = getClass().getResource("Crashing-crosstab.prpt");
@@ -325,12 +353,12 @@ public class Prd3930Test extends TestCase
 //    crosstabCell.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CROSSTAB_DETAIL_MODE, CrosstabDetailMode.first);
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
-    PrintReportProcessor rp = new PrintReportProcessor(report);
+    final PrintReportProcessor rp = new PrintReportProcessor(report);
     DebugLog.log("Pages: " + rp.getNumberOfPages());
     for (int page = 0; page < rp.getNumberOfPages(); page += 1)
     {
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
-      LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
+      final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
       //ModelPrinter.print(logicalPageBox);
       //if (true) return;

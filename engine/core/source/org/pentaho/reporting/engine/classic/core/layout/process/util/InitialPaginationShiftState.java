@@ -9,12 +9,17 @@ public class InitialPaginationShiftState implements PaginationShiftState
   {
   }
 
+  public boolean isManualBreakSuspended()
+  {
+    return false;
+  }
+
   public void suspendManualBreaks()
   {
     breakSuspended = true;
   }
 
-  public boolean isManualBreakSuspended()
+  public boolean isManualBreakSuspendedForChilds()
   {
     return breakSuspended;
   }

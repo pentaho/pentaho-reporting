@@ -20,8 +20,6 @@ package org.pentaho.reporting.engine.classic.core.layout.process;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -223,13 +221,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       breakPending = (true);
     }
 
-    if (box.getElementType() instanceof RelationalGroupType)
-    {
-      if (box.getParent().getElementType() instanceof SubReportType)
-      {
-        DebugLog.logHere();
-      }
-    }
     shiftState = shiftState.pop();
   }
 
@@ -371,10 +362,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
 
     finishBlockLevelBox(box);
-    if (pageOffset == 129600000)
-    {
-      DebugLog.logHere();
-    }
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
