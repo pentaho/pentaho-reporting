@@ -37,6 +37,25 @@ public class FileModelPrinter extends ModelPrinter
     writer = new BufferedWriter(new FileWriter(file));
   }
 
+  public FileModelPrinter(final String prefix, final File tempDir) throws IOException
+  {
+    final File file = File.createTempFile(prefix, ".txt", tempDir);
+    writer = new BufferedWriter(new FileWriter(file));
+  }
+
+  protected void print(final String s)
+  {
+    try
+    {
+      writer.write(s);
+      writer.write("\n");
+    }
+    catch (IOException e)
+    {
+      throw new IllegalStateException(e);
+    }
+  }
+
   public void close() throws IOException
   {
     writer.close();

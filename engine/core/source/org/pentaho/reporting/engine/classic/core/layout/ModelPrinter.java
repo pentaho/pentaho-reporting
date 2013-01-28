@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSection
 public class ModelPrinter
 {
   public static final ModelPrinter INSTANCE = new ModelPrinter();
-
   private static final Log logger = LogFactory.getLog(ModelPrinter.class);
   private static final boolean PRINT_LINEBOX_CONTENTS = false;
 
@@ -40,7 +39,19 @@ public class ModelPrinter
   {
   }
 
-  protected void print (final String s)
+  public static RenderBox getRoot(RenderNode node)
+  {
+    RenderBox parent = node.getParent();
+    RenderBox retval = node.getParent();
+    while (parent != null)
+    {
+      retval = parent;
+      parent = parent.getParent();
+    }
+    return retval;
+  }
+
+  protected void print(final String s)
   {
     logger.debug(s);
   }
@@ -83,6 +94,18 @@ public class ModelPrinter
       b.append('}');
       print(b.toString());
       box = box.getParent();
+    }
+  }
+
+  public void print(final RenderNode box)
+  {
+    if (box instanceof RenderBox)
+    {
+      printBox((RenderBox) box, 0);
+    }
+    else
+    {
+      printNode(box, 0);
     }
   }
 
@@ -149,7 +172,7 @@ public class ModelPrinter
     b.append(", content-area-x2=");
     b.append(box.getContentAreaX2());
 
-    logger.debug(b.toString());
+    print(b.toString());
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
@@ -157,7 +180,7 @@ public class ModelPrinter
     }
     b.append("- boxDefinition=");
     b.append(box.getBoxDefinition());
-    logger.debug(b.toString());
+    print(b.toString());
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
@@ -174,6 +197,7 @@ public class ModelPrinter
     b.append("- staticBoxLayoutProperties=");
     b.append(box.getStaticBoxLayoutProperties());
     print(b.toString());
+
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
@@ -313,7 +337,7 @@ public class ModelPrinter
       printBox(lbox.getWatermarkArea(), level + 1);
     }
     printChilds(box, level);
-    if (box instanceof LogicalPageBox)
+    if (false && box instanceof LogicalPageBox)
     {
       final LogicalPageBox lbox = (LogicalPageBox) box;
       printBox(lbox.getRepeatFooterArea(), level + 1);
@@ -418,17 +442,5 @@ public class ModelPrinter
     b.append(node.getNodeLayoutProperties());
     print(b.toString());
     print(" ");
-  }
-
-  public static RenderBox getRoot (RenderNode node)
-  {
-    RenderBox parent = node.getParent();
-    RenderBox retval = node.getParent();
-    while (parent != null)
-    {
-      retval = parent;
-      parent = parent.getParent();
-    }
-    return retval;
   }
 }
