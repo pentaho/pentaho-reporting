@@ -71,6 +71,6 @@ public class CrosstabElementWriteHandler extends AbstractElementWriteHandler
       throw new NullPointerException();
     }
 
-    writeSubReport(bundle, state, xmlWriter, (CrosstabElement) element);
+    writeSubReport(bundle, state, xmlWriter, (CrosstabElement)element);
   }
 }

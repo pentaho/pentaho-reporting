@@ -46,6 +46,14 @@ import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWr
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TimeZonePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.VerticalTextAlignmentPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.WhitespaceCollapsePropertyEditor;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.CrosstabXmlResourceFactory;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.LayoutDefinitionXmlFactoryModule;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements.CrosstabElementReadHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.BundleCrosstabXmlFactoryModule;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
@@ -178,5 +186,13 @@ public class ClassicEngineCoreModule extends AbstractModule
     ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/sys/meta-expressions.xml");
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-datafactory.xml");
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-report-preprocessors.xml");
+
+    // Crosstab
+    BundleElementRegistry.getInstance().register("crosstab-report", CrosstabElementWriteHandler.class);
+    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "crosstab-report", CrosstabElementReadHandler.class);
+
+    CrosstabXmlResourceFactory.register(BundleCrosstabXmlFactoryModule.class);
+    CrosstabXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);
+    CrosstabXmlResourceFactory.register(StyleDefinitionXmlFactoryModule.class);
   }
 }
