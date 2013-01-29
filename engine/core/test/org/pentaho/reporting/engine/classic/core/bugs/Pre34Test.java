@@ -22,6 +22,8 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -47,6 +49,23 @@ public class Pre34Test extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
+
+  public void testReportSizePRD4251() throws Exception
+  {
+    final URL url = getClass().getResource("Pre-34.xml");
+    assertNotNull(url);
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final MasterReport resource = (MasterReport) directly.getResource();
+
+    final PageableReportProcessor p = new
+        PageableReportProcessor(resource, new GraphicsOutputProcessor(resource.getConfiguration()));
+    p.paginate();
+
+    // if you return 1, then your datasource is f'd up.
+    assertTrue( p.getPhysicalPageCount() > 10 );
+  }
 
   public void testSubReportDoesNotCrash() throws Exception
   {

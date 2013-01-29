@@ -545,11 +545,11 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
       {
         state = 3;
       }
-      else if (('l' == c || 'L' == c) && state == 4)
+      else if (('l' == c || 'L' == c) && state == 3)
       {
         state = 4;
       }
-      else if (('l' == c || 'L' == c) && state == 5)
+      else if (('l' == c || 'L' == c) && state == 4)
       {
         state = 5;
       }
