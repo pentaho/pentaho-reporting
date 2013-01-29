@@ -345,6 +345,11 @@ public class GoldTestBase
     final FilenameFilter filter = createReportFilter();
     final File[] files = reports.listFiles(filter);
 
+    if (files == null)
+    {
+      throw new IOException("IO-Error while listing files for '" + reports + "'");
+    }
+
     final HashSet<String> fileSet = new HashSet<String>();
     for (final File file : files)
     {
