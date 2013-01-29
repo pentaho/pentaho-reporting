@@ -50,7 +50,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   private static final Object NULL_INDICATOR = new Object();
 
   private DataCache dataCache;
-  private HashMap<String, HashMap<StaticDataRow, Object>> queryCache;
+  private HashMap<DataCacheKey, TableModel> sessionCache;
   private CompoundDataFactory backend;
   private boolean closed;
   private boolean debugDataSources;
@@ -80,8 +80,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     }
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    this.queryCache = new HashMap<String, HashMap<StaticDataRow, Object>>();
-
+    sessionCache = new HashMap<DataCacheKey, TableModel>();
     if (dataCacheEnabled)
     {
       this.dataCache = DataCacheFactory.getCache();
@@ -136,6 +135,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     return backend.isFreeFormQueryExecutable(query, parameter);
   }
 
+  private Object lastKey;
+
   public TableModel queryStatic(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
     if (query == null)
@@ -150,7 +151,11 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     final DataCacheKey key = createCacheKey(query, parameters);
     if (key != null)
     {
-      final TableModel model = dataCache.get(key);
+      TableModel model = sessionCache.get(key);
+      if (model == null)
+      {
+        model = dataCache.get(key);
+      }
       if (model != null)
       {
         if (model instanceof MetaTableModel)
@@ -183,6 +188,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
         final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
         closeableTableModel.close();
       }
+      sessionCache.put(key, newData);
       data = newData;
     }
 
@@ -407,101 +413,39 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     final long startTime = System.currentTimeMillis();
     try
     {
-      final HashMap<StaticDataRow, Object> parameterCache = queryCache.get(query);
-      if (parameterCache == null)
+      final StaticDataRow params = new StaticDataRow(parameters);
+      final TableModel dataFromQuery;
+      switch (queryStyle)
       {
-
-        final StaticDataRow params = new StaticDataRow(parameters);
-        final TableModel dataFromQuery;
-        switch (queryStyle)
+        case FreeForm:
+          dataFromQuery = backend.queryFreeForm(query, params);
+          break;
+        case Static:
+          dataFromQuery = backend.queryStatic(query, params);
+          break;
+        case General:
+          dataFromQuery = backend.queryData(query, params);
+          break;
+        default:
+          throw new IllegalStateException();
+      }
+      if (dataFromQuery == null)
+      {
+        //final DefaultTableModel value = new DefaultTableModel();
+        if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
         {
-          case FreeForm:
-            dataFromQuery = backend.queryFreeForm(query, params);
-            break;
-          case Static:
-            dataFromQuery = backend.queryStatic(query, params);
-            break;
-          case General:
-            dataFromQuery = backend.queryData(query, params);
-            break;
-          default:
-            throw new IllegalStateException();
+          CachingDataFactory.logger.debug("Query failed for query '" + query + '\'');
         }
-        if (dataFromQuery == null)
-        {
-          //final DefaultTableModel value = new DefaultTableModel();
-          if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
-          {
-            CachingDataFactory.logger.debug("Query failed for query '" + query + '\'');
-          }
-          final HashMap<StaticDataRow, Object> paramsForQueryMap = new HashMap<StaticDataRow, Object>();
-          queryCache.put(query, paramsForQueryMap);
-          paramsForQueryMap.put(params, NULL_INDICATOR);
-          return null;
-        }
-        else
-        {
-          if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
-          {
-            CachingDataFactory.printTableModelContents(dataFromQuery);
-          }
-          // totally new query here.
-          final HashMap<StaticDataRow, Object> paramsForQueryMap = new HashMap<StaticDataRow, Object>();
-          queryCache.put(query, paramsForQueryMap);
-          paramsForQueryMap.put(params, dataFromQuery);
-          return dataFromQuery;
-        }
+        return null;
       }
       else
       {
-        // Lookup the parameters ...
-        final StaticDataRow params = new StaticDataRow(parameters);
-        final Object dataObj = parameterCache.get(params);
-        if (dataObj == NULL_INDICATOR)
+        if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
         {
-          // query is known to be null for the given parameters ...
-          return null;
+          CachingDataFactory.printTableModelContents(dataFromQuery);
         }
-
-        final TableModel data = (TableModel) dataObj;
-        if (data != null)
-        {
-          return data;
-        }
-
-        final TableModel newData;
-        switch (queryStyle)
-        {
-          case FreeForm:
-            newData = backend.queryFreeForm(query, params);
-            break;
-          case Static:
-            newData = backend.queryStatic(query, params);
-            break;
-          case General:
-            newData = backend.queryData(query, params);
-            break;
-          default:
-            throw new IllegalStateException();
-        }
-        if (newData == null)
-        {
-          if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
-          {
-            CachingDataFactory.logger.debug("Query failed for query '" + query + '\'');
-          }
-          parameterCache.put(params, NULL_INDICATOR);
-          return null;
-        }
-        else
-        {
-          if (debugDataSources && CachingDataFactory.logger.isDebugEnabled())
-          {
-            CachingDataFactory.printTableModelContents(newData);
-          }
-          parameterCache.put(params, newData);
-          return newData;
-        }
+        // totally new query here.
+        return dataFromQuery;
       }
     }
     finally
@@ -523,20 +467,17 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
 
     if (closed == false)
     {
-      for (final HashMap<StaticDataRow, Object> map : queryCache.values())
+      for (final TableModel map : sessionCache.values())
       {
-        for (final Object o : map.values())
+        if (map instanceof CloseableTableModel == false)
         {
-          if (o instanceof CloseableTableModel == false)
-          {
-            continue;
-          }
-
-          final CloseableTableModel ct = (CloseableTableModel) o;
-          ct.close();
+          continue;
         }
+
+        final CloseableTableModel ct = (CloseableTableModel) map;
+        ct.close();
       }
-      queryCache.clear();
+      sessionCache.clear();
       if (noClose == false)
       {
         backend.close();
@@ -559,7 +500,6 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     // exception in that case ..
     throw new UnsupportedOperationException("The CachingReportDataFactory cannot be derived.");
   }
-
 
   /**
    * Prints a table model to standard output.
@@ -592,7 +532,6 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     }
   }
 
-
   public String[] getQueryNames()
   {
     return EMPTY_NAMES;
@@ -606,7 +545,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   {
     final CachingDataFactory cdf = (CachingDataFactory) super.clone();
     cdf.backend = (CompoundDataFactory) backend.clone();
-    cdf.queryCache = (HashMap<String, HashMap<StaticDataRow, Object>>) queryCache.clone();
+    cdf.sessionCache = (HashMap<DataCacheKey, TableModel>) sessionCache.clone();
     return cdf;
   }
 
