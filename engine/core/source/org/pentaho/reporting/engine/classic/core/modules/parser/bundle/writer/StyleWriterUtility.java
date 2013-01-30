@@ -1,3 +1,4 @@
+
 /*
  * This program is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
@@ -50,8 +51,15 @@ public class StyleWriterUtility
 {
   private static final Log logger = LogFactory.getLog(StyleWriterUtility.class);
 
-  private static final FastDecimalFormat percentageLengthFormat = new FastDecimalFormat("0.###'%'", Locale.US);
-  private static final FastDecimalFormat absoluteLengthFormat = new FastDecimalFormat("0.###", Locale.US);
+  private static FastDecimalFormat getPercentageLengthFormat()
+  {
+    return  new FastDecimalFormat("0.###'%'", Locale.US);
+  }
+
+  private static FastDecimalFormat getAbsoluteLengthFormat()
+  {
+    return new FastDecimalFormat("0.###", Locale.US);
+  }
 
   private StyleWriterUtility()
   {
@@ -117,6 +125,7 @@ public class StyleWriterUtility
           value));
     }
 
+    final FastDecimalFormat absoluteLengthFormat = getAbsoluteLengthFormat();
     if (style.isLocalKey(ElementStyleKeys.PADDING_TOP) &&
         style.isLocalKey(ElementStyleKeys.PADDING_LEFT) &&
         style.isLocalKey(ElementStyleKeys.PADDING_BOTTOM) &&
@@ -331,6 +340,7 @@ public class StyleWriterUtility
     }
 
     if (style.isLocalKey(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH) &&
+
         style.isLocalKey(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH) &&
         style.isLocalKey(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH) &&
         style.isLocalKey(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH))
@@ -386,6 +396,7 @@ public class StyleWriterUtility
     }
 
     if (style.isLocalKey(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT) &&
+
         style.isLocalKey(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT) &&
         style.isLocalKey(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT) &&
         style.isLocalKey(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT))
@@ -701,7 +712,7 @@ public class StyleWriterUtility
       final Stroke s = (Stroke) style.getStyleProperty(ElementStyleKeys.STROKE);
       final float strokeWidth = StrokeUtility.getStrokeWidth(s);
       final BorderStyle strokeType = StrokeUtility.translateStrokeStyle(s);
-      bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "stroke-weight", absoluteLengthFormat.format(strokeWidth));
+      bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "stroke-weight", getAbsoluteLengthFormat().format(strokeWidth));
       bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "stroke-style", strokeType.toString());
     }
     if (bandStyleAtts.isEmpty() == false)
@@ -877,18 +888,18 @@ public class StyleWriterUtility
 
   private static String formatFloat(final double value)
   {
-    return absoluteLengthFormat.format(value);
+    return getAbsoluteLengthFormat().format(value);
   }
 
   private static String formatLength(final double value)
   {
     if (value >= 0)
     {
-      return absoluteLengthFormat.format(value);
+      return getAbsoluteLengthFormat().format(value);
     }
     else
     {
-      return percentageLengthFormat.format(-value);
+      return getPercentageLengthFormat().format(-value);
     }
   }
 
@@ -949,3 +960,4 @@ public class StyleWriterUtility
     }
   }
 }
+
