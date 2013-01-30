@@ -888,14 +888,20 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     if (box instanceof TableRowRenderBox)
     {
       tableRowHeightStep.startTableRow((TableRowRenderBox) box);
+      final long blockHeight = computeRowHeightAndAlign(box, 0, false);
+      box.setCachedHeight(blockHeight);
     }
+    else
+    {
+      // must be an auto-box, so we treat it as a block-element.
 
-    final long oldPosition = box.getCachedY();
-    final long newYPosition = computeVerticalBlockPosition(box);
-    CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
+      final long oldPosition = box.getCachedY();
+      final long newYPosition = computeVerticalBlockPosition(box);
+      CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
 
-    final long blockHeight = computeTableHeightAndAlign(box, false);
-    box.setCachedHeight(blockHeight);
+      final long blockHeight = computeTableHeightAndAlign(box, false);
+      box.setCachedHeight(blockHeight);
+    }
     return true;
   }
 
@@ -911,8 +917,16 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
-    final long blockHeight = computeTableHeightAndAlign(box, true);
-    box.setCachedHeight(blockHeight);
+    if (box instanceof TableRowRenderBox)
+    {
+      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
+      box.setCachedHeight(blockHeight);
+    }
+    else
+    {
+      final long blockHeight = computeTableHeightAndAlign(box, true);
+      box.setCachedHeight(blockHeight);
+    }
   }
 
   private static long computeTableHeightAndAlign(final RenderBox box, final boolean align)

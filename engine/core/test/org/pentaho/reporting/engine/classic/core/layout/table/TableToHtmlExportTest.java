@@ -27,7 +27,6 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
@@ -86,7 +85,7 @@ public class TableToHtmlExportTest extends TestCase
     report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(4, 0, 0));
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(pageBox);
+  //  ModelPrinter.INSTANCE.print(pageBox);
   }
 
   public void testHtmlExport () throws ReportProcessingException, IOException, ResourceException

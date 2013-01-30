@@ -1202,6 +1202,19 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
-    box.setCachedHeight(computeTableHeightAndAlign(box));
+    if (box instanceof TableRowRenderBox)
+    {
+      // rows get their height from the current table-row-model. This model cannot be computed until
+      // the full section is known.
+      // rows will be shifted into place by the finishTableLevelBox function.
+      box.setCachedHeight(0);
+    }
+    else
+    {
+      // auto-boxes behave like normal block elements.
+      // This produces invalid output, as the rows are not shifted yet.
+      final long blockHeight = computeTableHeightAndAlign(box);
+      box.setCachedHeight(blockHeight);
+    }
   }
 }

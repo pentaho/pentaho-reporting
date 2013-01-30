@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.net.URL;
 
 import junit.framework.AssertionFailedError;
@@ -31,7 +30,6 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
-import org.pentaho.reporting.engine.classic.core.layout.FileModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -234,7 +232,7 @@ public class Prd3930Test extends TestCase
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-      new FileModelPrinter("Prd-3930-page-" + page + "-", new File("test-output")).print(logicalPageBox);
+//      new FileModelPrinter("Prd-3930-page-" + page + "-", new File("test-output")).print(logicalPageBox);
 
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)

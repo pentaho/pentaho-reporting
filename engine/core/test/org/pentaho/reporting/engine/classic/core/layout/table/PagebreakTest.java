@@ -11,6 +11,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -43,13 +44,36 @@ public class PagebreakTest
     report.getReportHeader().addElement(table);
     report.getReportHeader().setLayout("block");
 
-    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output.pdf");
-
     assertPageValid(report, 0);
     assertPageValid(report, 1);
     assertPageValid(report, 2);
   }
 
+  @Test
+  public void testRunRowSpanReport() throws Exception
+  {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
+    report.setQuery("query");
+
+    final Band table = TableTestUtil.createTable(1, 1, 6, true);
+    final Band section = (Band) table.getElement(1);
+    final Band row = (Band) section.getElement(0);
+    final Band cell = TableTestUtil.createCell(6, 1);
+    cell.addElement(TableTestUtil.createDataItem("Text", 100, 20));
+    row.addElement(0, cell);
+
+    table.setName("table");
+    report.getReportHeader().addElement(table);
+    report.getReportHeader().setLayout("block");
+
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-rowspan-output.pdf");
+/*
+    assertPageValid(report, 0);
+    assertPageValid(report, 1);
+    assertPageValid(report, 2);
+    */
+  }
 
   @Test
   public void testBlockWithPrePostPad() throws Exception
@@ -135,7 +159,7 @@ public class PagebreakTest
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, page);
     final long pageOffset = pageBox.getPageOffset();
 
-   // ModelPrinter.print(pageBox);
+    ModelPrinter.INSTANCE.print(pageBox);
 
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_SECTION);
     Assert.assertEquals(2, elementsByNodeType.length);
