@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -244,15 +245,15 @@ public class TableRowHeightCalculation
                                            final TableRowModel rows,
                                            final TableRowRenderBox rowBox)
   {
-//    final TableRow row = ;
-    final long validatedRowHeight = rows.getValidateSize(rowBox.getRowIndex());
+    final long validatedRowHeight = rows.getValidatedRowSize(rowBox.getRowIndex());
 
     final long oldPosition = rowBox.getCachedY();
     final long shift = position - oldPosition;
     if (shift < 0)
     {
+      ModelPrinter.INSTANCE.print(ModelPrinter.INSTANCE.getRoot(rowBox));
       throw new IllegalStateException
-          (String.format("Shift-back is not allowed: %d: %d -> %d (%s)", shift, oldPosition, position, rowBox));
+          (String.format("Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)", shift, oldPosition, position, rowBox));
     }
 
     CacheBoxShifter.shiftBox(rowBox, shift);

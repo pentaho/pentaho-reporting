@@ -92,11 +92,6 @@ public abstract class AbstractRowModel implements TableRowModel
     return 0;
   }
 
-  public long getValidateSize(final int rowNumber)
-  {
-    return getRow(rowNumber).getValidateSize();
-  }
-
   public void updateDefinedSize(final int rowNumber, final int rowSpan, final long preferredSize)
   {
     getRow(rowNumber).updateDefinedSize(rowSpan, preferredSize);
@@ -107,6 +102,17 @@ public abstract class AbstractRowModel implements TableRowModel
     getRow(rowNumber).updateValidatedSize(rowSpan, leading, height);
   }
 
+  public long getValidatedRowSpanSize(final int rowNumber)
+  {
+    final int maximumRowSpan = getRow(rowNumber).getMaximumRowSpan();
+    final int endIndex = rowNumber + maximumRowSpan;
+    long retval = 0;
+    for (int i = rowNumber; i < endIndex; i+= 1)
+    {
+      retval += getValidatedRowSize(i);
+    }
+    return retval;
+  }
   public long getValidatedRowSize(final int rowNumber)
   {
     return getRow(rowNumber).getValidateSize();
