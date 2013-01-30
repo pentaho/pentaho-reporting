@@ -17,8 +17,10 @@
  */
 package org.pentaho.reporting.engine.classic.core.testsupport.gold;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -27,7 +29,7 @@ public class GoldenSampleGenerator extends GoldTestBase
 {
   protected void handleXmlContent(final byte[] reportOutput, final File file) throws Exception
   {
-    final FileOutputStream outputStream = new FileOutputStream(file);
+    final OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file));
     try
     {
       outputStream.write(reportOutput);

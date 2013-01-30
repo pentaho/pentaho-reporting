@@ -18,20 +18,32 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport.gold;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.naming.spi.NamingManager;
 
+import static junit.framework.Assert.assertTrue;
 import junit.framework.AssertionFailedError;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLAssert;
@@ -57,14 +69,13 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
+import org.pentaho.reporting.libraries.base.util.StopWatch;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class GoldTestBase
 {
-  private LocalFontRegistry localFontRegistry;
-
   public enum ReportProcessingMode
   {
     current("gold"), legacy("gold-legacy"), migration("gold-migrated");
@@ -80,6 +91,54 @@ public class GoldTestBase
       return target;
     }
   }
+
+  private static class TestThreadFactory implements ThreadFactory
+  {
+    final AtomicInteger threadNumber = new AtomicInteger(1);
+
+    private TestThreadFactory()
+    {
+    }
+
+    public Thread newThread(final Runnable r)
+    {
+      final Thread t = new Thread(r);
+      t.setName("Golden-Sample: " + getClass().getName() + "-" + threadNumber.getAndAdd(1));
+      t.setDaemon(true);
+      t.setPriority(3);
+      return t;
+    }
+  }
+
+  private class ExecuteReportRunner implements Runnable
+  {
+    private String directory;
+    private ReportProcessingMode processingMode;
+    private List<Throwable> errors;
+
+    private ExecuteReportRunner(final String directory,
+                                final ReportProcessingMode processingMode,
+                                final List<Throwable> errors)
+    {
+      this.directory = directory;
+      this.processingMode = processingMode;
+      this.errors = errors;
+    }
+
+    public void run()
+    {
+      try
+      {
+        processReports(directory, processingMode);
+      }
+      catch (Throwable t)
+      {
+        errors.add(t);
+      }
+    }
+  }
+
+  private LocalFontRegistry localFontRegistry;
 
   public GoldTestBase()
   {
@@ -110,11 +169,52 @@ public class GoldTestBase
     throw new IllegalStateException("Cannot find marker, please run from the correct directory");
   }
 
+  public static MasterReport parseReport(final Object file) throws ResourceException
+  {
+    final ResourceManager manager = new ResourceManager();
+    manager.registerDefaults();
+    final Resource resource = manager.createDirectly(file, MasterReport.class);
+    return (MasterReport) resource.getResource();
+  }
+
+  public static File locateGoldenSampleReport(final String name)
+  {
+    final FilesystemFilter filesystemFilter = new FilesystemFilter(name, "Reports");
+    final File marker = findMarker();
+    final File reports = new File(marker, "reports");
+    final File[] files = reports.listFiles(filesystemFilter);
+    final HashSet<String> fileSet = new HashSet<String>();
+    for (final File file : files)
+    {
+      final String s = file.getName().toLowerCase();
+      if (fileSet.add(s) == false)
+      {
+        // the toy systems MacOS X and Windows use case-insensitive file systems and completely
+        // mess up when there are two files with what they consider the same name.
+        throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
+            "filename in the directory. Make sure your files are unique and lowercase.");
+      }
+    }
+
+    for (final File file : files)
+    {
+      if (file.isDirectory())
+      {
+        continue;
+      }
+      return file;
+    }
+
+    return null;
+  }
+
   @Before
   public void setUp() throws Exception
   {
     Locale.setDefault(Locale.US);
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+    // enforce binary compatibility for the xml-files so that comparing them can be faster.
+    System.setProperty("line.separator", "\n");
 
     ClassicEngineBoot.getInstance().start();
     if (NamingManager.hasInitialContextFactoryBuilder() == false)
@@ -187,17 +287,21 @@ public class GoldTestBase
     return originalReport;
   }
 
-  public static MasterReport parseReport(final Object file) throws ResourceException
-  {
-    final ResourceManager manager = new ResourceManager();
-    manager.registerDefaults();
-    final Resource resource = manager.createDirectly(file, MasterReport.class);
-    return (MasterReport) resource.getResource();
-  }
-
   protected void handleXmlContent(final byte[] reportOutput, final File goldSample) throws Exception
   {
-    final Reader reader = new InputStreamReader(new FileInputStream(goldSample), "UTF-8");
+    final byte[] goldData;
+    final InputStream goldInput = new BufferedInputStream(new FileInputStream(goldSample));
+    final MemoryByteArrayOutputStream goldByteStream =
+        new MemoryByteArrayOutputStream(Math.min (1024*1024, (int) goldSample.length()), 1024*1024);
+
+    IOUtils.getInstance().copyStreams(goldInput, goldByteStream);
+    goldData = goldByteStream.toByteArray();
+    if (Arrays.equals(goldData, reportOutput))
+    {
+      return;
+    }
+
+    final Reader reader = new InputStreamReader(new ByteArrayInputStream(goldData), "UTF-8");
     final ByteArrayInputStream inputStream = new ByteArrayInputStream(reportOutput);
     final Reader report = new InputStreamReader(inputStream, "UTF-8");
     try
@@ -326,8 +430,32 @@ public class GoldTestBase
 
   protected void runAllGoldReports() throws Exception
   {
+    final int numThreads = Math.max(1, ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty
+        ("org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads", 3));
+
+    StopWatch w = new StopWatch();
+    w.start();
+    try
+    {
+    if (numThreads == 1)
+    {
+      runAllGoldReportsSerial();
+    }
+    else
+    {
+      runAllGoldReportsInParallel(numThreads);
+    }
+    }
+    finally
+    {
+      System.out.println(w.toString());
+    }
+  }
+
+  protected void runAllGoldReportsSerial() throws Exception
+  {
     initializeTestEnvironment();
-    
+
     processReports("reports", ReportProcessingMode.legacy);
     processReports("reports", ReportProcessingMode.migration);
     processReports("reports", ReportProcessingMode.current);
@@ -337,7 +465,32 @@ public class GoldTestBase
     System.out.println(findMarker());
   }
 
-  private void processReports(final String sourceDirectoryName, ReportProcessingMode mode) throws Exception
+  protected void runAllGoldReportsInParallel(int threads) throws Exception
+  {
+    initializeTestEnvironment();
+
+    final List<Throwable> errors = Collections.synchronizedList(new ArrayList<Throwable>());
+
+    final ExecutorService threadPool = new ThreadPoolExecutor(threads, threads,
+                                  0L, TimeUnit.MILLISECONDS,
+                                  new LinkedBlockingQueue<Runnable>(),
+                                  new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+
+    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.legacy, errors));
+    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.current, errors));
+    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.migration, errors));
+    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.current, errors));
+    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.migration, errors));
+
+    threadPool.shutdown();
+    while (threadPool.isTerminated() == false)
+    {
+      threadPool.awaitTermination(5, TimeUnit.MINUTES);
+    }
+    assertTrue(errors.toString(), errors.isEmpty());
+  }
+
+  private void processReports(final String sourceDirectoryName, final ReportProcessingMode mode) throws Exception
   {
     final File marker = findMarker();
     final File reports = new File(marker, sourceDirectoryName);
@@ -430,36 +583,5 @@ public class GoldTestBase
   protected FilesystemFilter createReportFilter()
   {
     return new FilesystemFilter(".prpt", "Reports");
-  }
-
-  public static File locateGoldenSampleReport(final String name)
-  {
-    final FilesystemFilter filesystemFilter = new FilesystemFilter(name, "Reports");
-    final File marker = findMarker();
-    final File reports = new File(marker, "reports");
-    final File[] files = reports.listFiles(filesystemFilter);
-    final HashSet<String> fileSet = new HashSet<String>();
-    for (final File file : files)
-    {
-      final String s = file.getName().toLowerCase();
-      if (fileSet.add(s) == false)
-      {
-        // the toy systems MacOS X and Windows use case-insensitive file systems and completely
-        // mess up when there are two files with what they consider the same name.
-        throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
-            "filename in the directory. Make sure your files are unique and lowercase.");
-      }
-    }
-
-    for (final File file : files)
-    {
-      if (file.isDirectory())
-      {
-        continue;
-      }
-      return file;
-    }
-
-    return null;
   }
 }
