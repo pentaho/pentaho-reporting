@@ -55,6 +55,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.PageFooter;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Watermark;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
@@ -322,6 +323,9 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
         // Create the new subreport tab - this is where the contents of the Crosstab
         // dialog will go.
         subReport.setDataFactory(reportDefinition.getDataFactory());
+
+        final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
+        subReport.setResourceBundleFactory(rbf);
 
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
         designerContext.setActiveContext(designerContext.getReportRenderContext(idx));

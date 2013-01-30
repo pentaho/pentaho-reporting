@@ -52,6 +52,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.PageFooter;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.Watermark;
@@ -305,6 +306,9 @@ public class SubreportReportElementDragHandler implements ReportElementDragHandl
       {
         // Create the new subreport tab and update the active context to point to new subreport.
         subReport.setDataFactory(reportDefinition.getDataFactory());
+
+        final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
+        subReport.setResourceBundleFactory(rbf);
 
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
         designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
