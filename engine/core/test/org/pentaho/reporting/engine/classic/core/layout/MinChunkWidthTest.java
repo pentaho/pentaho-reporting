@@ -68,7 +68,7 @@ public class MinChunkWidthTest extends TestCase
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.print(logicalPageBox);
-    new ValidateRunner().startValidation(logicalPageBox);
+    new ValidateRunner(true).startValidation(logicalPageBox);
   }
 
   public void testMinChunkWidth() throws Exception
@@ -88,11 +88,19 @@ public class MinChunkWidthTest extends TestCase
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.print(logicalPageBox);
-    new ValidateRunner().startValidation(logicalPageBox);
+    new ValidateRunner(false).startValidation(logicalPageBox);
   }
 
+  @SuppressWarnings("HardCodedStringLiteral")
   private static class ValidateRunner extends IterateStructuralProcessStep
   {
+    private boolean legacyMode;
+
+    private ValidateRunner(final boolean legacyMode)
+    {
+      this.legacyMode = legacyMode;
+    }
+
     protected boolean startCanvasBox(final CanvasRenderBox box)
     {
       return testBox(box);
@@ -116,22 +124,43 @@ public class MinChunkWidthTest extends TestCase
     private boolean testBox(final RenderNode box)
     {
       final String s = box.getName();
-      if (s != null)
+      if (s == null)
       {
-        if ("canvas".equals(s))
+        return true;
+      }
+      final float expectedHeight = (s.endsWith("i") || s.contains("-i")) ? 8 : 10;
+
+      if (s.startsWith("test-"))
+      {
+        assertEquals("Width = 468: " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
+        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+      }
+      else if (s.startsWith("canvas-"))
+      {
+        assertTrue("Width is not zero!: " + s, box.getWidth() != 0);
+        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+      }
+      else if (s.startsWith("label-b"))
+      {
+        // thats (nearly) random ..
+      }
+      else if (s.startsWith("label-cb"))
+      {
+        if (legacyMode)
         {
-          assertEquals("Width = 200", StrictGeomUtility.toInternalValue(200), box.getWidth());
-          assertEquals("Height = 110", StrictGeomUtility.toInternalValue(110), box.getHeight());
+          // assert that the element is 468
+          assertEquals("Width = 468 in legacy mode; " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
         }
-        else if (s.startsWith("label-b"))
-        {
-          // thats (nearly) random ..
-        }
-        else if (s.startsWith("label-") && s.startsWith("label-b") == false)
+        else
         {
           assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
-          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
         }
+        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+      }
+      else if (s.startsWith("label-"))
+      {
+        assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
+        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
       }
       return true;
     }

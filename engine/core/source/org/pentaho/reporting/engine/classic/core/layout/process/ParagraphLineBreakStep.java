@@ -94,11 +94,13 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       final long poolChangeTracker = paragraphBox.getPool().getChangeTracker();
       final boolean unchanged = poolChangeTracker == paragraphBox.getLineBoxAge();
 
-      if (unchanged)
+      if (unchanged || paragraphBox.getPool().getFirstChild() == null)
       {
         // If the paragraph is unchanged (no new elements have been added to the pool) then we can take a
         // shortcut. The childs of this paragraph will also be unchanged (as any structural change would have increased
         // the change-tracker).
+        //
+        // We treat an empty paragraph (pool has no childs) as unchanged at any time.
         paragraphNesting.push(ParagraphLineBreakStep.LEAF_BREAK_STATE);
         breakState = ParagraphLineBreakStep.LEAF_BREAK_STATE;
         return false;

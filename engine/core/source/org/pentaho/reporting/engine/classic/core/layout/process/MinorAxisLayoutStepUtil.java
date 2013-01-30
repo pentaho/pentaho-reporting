@@ -25,6 +25,9 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtil
 
 public class MinorAxisLayoutStepUtil
 {
+
+  public static final RenderLength FULL_WIDTH_LENGTH = RenderLength.createFromRaw(-100);
+
   private MinorAxisLayoutStepUtil()
   {
   }
@@ -78,8 +81,17 @@ public class MinorAxisLayoutStepUtil
     final BoxDefinition boxDef = box.getBoxDefinition();
     final RenderLength definedMinLength = boxDef.getMinimumWidth();
 
-    // PRD-3857 - Auto-correcting min-size to 100% for zero-defined boxes blows up the min-chunk-width test
-    final RenderLength minLength = definedMinLength;
+    final RenderLength minLength;
+    if (definedMinLength.getValue() == 0)
+    {
+      // PRD-3857 - Auto-correcting min-size to 100% for zero-defined boxes that are not canvas
+      // blows up the min-chunk-width test
+      minLength = FULL_WIDTH_LENGTH;
+    }
+    else
+    {
+      minLength = definedMinLength;
+    }
 
     final RenderLength prefLength = boxDef.getPreferredWidth();
     final RenderLength maxLength = boxDef.getMaximumWidth();
@@ -123,16 +135,25 @@ public class MinorAxisLayoutStepUtil
     }
 
     final long minChunkWidth;
+    final RenderLength minLength;
     if (strictLegacyMode == false || box.useMinimumChunkWidth())
     {
       minChunkWidth = nodeContext.getMaxChildX2() - nodeContext.getX1();
+      minLength = boxDef.getMinimumWidth();
     }
     else
     {
       minChunkWidth = nodeContext.getX2() - nodeContext.getX1();
+      if (boxDef.getMinimumWidth().getValue() == 0)
+      {
+        minLength = FULL_WIDTH_LENGTH;
+      }
+      else
+      {
+        minLength = boxDef.getMinimumWidth();
+      }
     }
 
-    final RenderLength minLength = boxDef.getMinimumWidth();
     final RenderLength maxLength = boxDef.getMaximumWidth();
 
     final long bcw = nodeContext.getBlockContextWidth();

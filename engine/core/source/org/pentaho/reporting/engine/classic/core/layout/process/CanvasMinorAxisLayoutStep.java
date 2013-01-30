@@ -145,6 +145,12 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     else
     {
       final ParagraphPoolBox node = box.getPool();
+
+      if (node.getFirstChild() == null)
+      {
+        return;
+      }
+
       // all childs of the linebox container must be inline boxes. They
       // represent the lines in the paragraph. Any other element here is
       // a error that must be reported
