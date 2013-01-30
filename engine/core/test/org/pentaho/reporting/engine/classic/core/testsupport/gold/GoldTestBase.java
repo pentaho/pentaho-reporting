@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.naming.spi.NamingManager;
 
-import static junit.framework.Assert.assertTrue;
+import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLAssert;
@@ -92,11 +92,11 @@ public class GoldTestBase
     }
   }
 
-  private static class TestThreadFactory implements ThreadFactory
+  protected static class TestThreadFactory implements ThreadFactory
   {
     final AtomicInteger threadNumber = new AtomicInteger(1);
 
-    private TestThreadFactory()
+    public TestThreadFactory()
     {
     }
 
@@ -214,7 +214,6 @@ public class GoldTestBase
     Locale.setDefault(Locale.US);
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     // enforce binary compatibility for the xml-files so that comparing them can be faster.
-    System.setProperty("line.separator", "\n");
 
     ClassicEngineBoot.getInstance().start();
     if (NamingManager.hasInitialContextFactoryBuilder() == false)
@@ -294,11 +293,18 @@ public class GoldTestBase
     final MemoryByteArrayOutputStream goldByteStream =
         new MemoryByteArrayOutputStream(Math.min (1024*1024, (int) goldSample.length()), 1024*1024);
 
-    IOUtils.getInstance().copyStreams(goldInput, goldByteStream);
-    goldData = goldByteStream.toByteArray();
-    if (Arrays.equals(goldData, reportOutput))
+    try
     {
-      return;
+      IOUtils.getInstance().copyStreams(goldInput, goldByteStream);
+      goldData = goldByteStream.toByteArray();
+      if (Arrays.equals(goldData, reportOutput))
+      {
+        return;
+      }
+    }
+    finally
+    {
+      goldInput.close();
     }
 
     final Reader reader = new InputStreamReader(new ByteArrayInputStream(goldData), "UTF-8");
@@ -487,7 +493,15 @@ public class GoldTestBase
     {
       threadPool.awaitTermination(5, TimeUnit.MINUTES);
     }
-    assertTrue(errors.toString(), errors.isEmpty());
+    if (errors.isEmpty() == false)
+    {
+      for (int i = 0; i < errors.size(); i++)
+      {
+        final Throwable throwable = errors.get(i);
+        throwable.printStackTrace();
+      }
+      Assert.fail();
+    }
   }
 
   private void processReports(final String sourceDirectoryName, final ReportProcessingMode mode) throws Exception
@@ -572,7 +586,7 @@ public class GoldTestBase
 
     final File reports4 = new File(marker, "reports-4.0");
     final File reportFile4 = new File(reports4, file);
-    if (reportFile.exists())
+    if (reportFile4.exists())
     {
       return reportFile4;
     }
