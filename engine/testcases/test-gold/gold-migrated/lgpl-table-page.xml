@@ -1296,11 +1296,11 @@
     <cols>
       <column width="468"/>
     </cols>
-    <row height="482">
+    <row height="530">
       <spanned-cell/>
     </row>
-    <row height="166">
-      <spanned-cell/>
+    <row height="118">
+      <empty-cell/>
     </row>
   </table>
 </layout-output>
