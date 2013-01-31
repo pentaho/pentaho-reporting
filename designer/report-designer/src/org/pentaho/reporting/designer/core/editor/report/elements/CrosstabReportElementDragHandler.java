@@ -17,13 +17,9 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Container;
-import java.awt.Point;
 import java.awt.Window;
 import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Locale;
@@ -36,11 +32,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
-import org.pentaho.reporting.designer.core.editor.report.DndElementOverlay;
-import org.pentaho.reporting.designer.core.editor.report.ReportElementDragHandler;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
-import org.pentaho.reporting.designer.core.model.CachedLayoutData;
-import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
@@ -55,13 +47,11 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.PageFooter;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Watermark;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -70,85 +60,16 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabReportElementDragHandler implements ReportElementDragHandler
+public class CrosstabReportElementDragHandler extends BaseReportElementDragHandler
 {
-  protected static final Float DEFAULT_WIDTH = new Float(100);
-  protected static final Float DEFAULT_HEIGHT = new Float(20);
-
-  private DndElementOverlay representation;
 
   public CrosstabReportElementDragHandler()
   {
-    representation = new DndElementOverlay();
+    super();
   }
 
-  public int dragStarted(final DropTargetDragEvent event,
-                         final ReportElementEditorContext dragContext,
-                         final ElementMetaData elementMetaData,
-                         final String fieldName)
-  {
-    final Container representationContainer = dragContext.getRepresentationContainer();
-    final ReportRenderContext renderContext = dragContext.getRenderContext();
-    final Point pos = event.getLocation();
-    final Point2D point = dragContext.normalize(pos);
-    if (point.getX() < 0 || point.getY() < 0)
-    {
-      representationContainer.removeAll();
-      return DnDConstants.ACTION_NONE;
-    }
 
-    final Element rootBand = findRootBand(dragContext, point);
-    if (rootBand instanceof PageHeader ||
-        rootBand instanceof PageFooter ||
-        rootBand instanceof DetailsHeader ||
-        rootBand instanceof DetailsFooter ||
-        rootBand instanceof Watermark)
-    {
-      representationContainer.removeAll();
-      return DnDConstants.ACTION_NONE;
-    }
 
-    representation.setZoom(renderContext.getZoomModel().getZoomAsPercentage());
-    representation.setVisible(true);
-    representation.setText(elementMetaData.getDisplayName(Locale.getDefault()));
-    representation.setLocation(pos.x, pos.y);
-    representation.setSize(representation.getMinimumSize());
-    representationContainer.removeAll();
-    representationContainer.add(representation);
-    return DnDConstants.ACTION_COPY;
-  }
-
-  private Element findRootBand(final ReportElementEditorContext dragContext,
-                               final Point2D point)
-  {
-    Element element = dragContext.getElementForLocation(point, false);
-    while (element != null && ((element instanceof RootLevelBand) == false))
-    {
-      element = element.getParent();
-    }
-
-    if (element != null)
-    {
-      return element;
-    }
-
-    return dragContext.getDefaultElement();
-  }
-
-  public int dragUpdated(final DropTargetDragEvent event,
-                         final ReportElementEditorContext dragContext,
-                         final ElementMetaData elementMetaData,
-                         final String fieldName)
-  {
-    return dragStarted(event, dragContext, elementMetaData, fieldName);
-  }
-
-  public void dragAborted(final DropTargetEvent event,
-                          final ReportElementEditorContext dragContext)
-  {
-    final Container representationContainer = dragContext.getRepresentationContainer();
-    representationContainer.removeAll();
-  }
 
   public void drop(final DropTargetDropEvent event,
                    final ReportElementEditorContext dragContext,
@@ -241,17 +162,6 @@ public class CrosstabReportElementDragHandler implements ReportElementDragHandle
     }
   }
 
-  private double getParentX(final Band band)
-  {
-    final CachedLayoutData data = ModelUtility.getCachedLayoutData(band);
-    return StrictGeomUtility.toExternalValue(data.getX());
-  }
-
-  private double getParentY(final Band band)
-  {
-    final CachedLayoutData data = ModelUtility.getCachedLayoutData(band);
-    return StrictGeomUtility.toExternalValue(data.getY());
-  }
 
   private static class CrosstabConfigureHandler implements Runnable
   {
