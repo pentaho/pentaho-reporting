@@ -18,10 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
 import java.awt.Window;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.ActionEvent;
-import java.awt.geom.Point2D;
 import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,17 +38,10 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
-import org.pentaho.reporting.engine.classic.core.DetailsFooter;
-import org.pentaho.reporting.engine.classic.core.DetailsHeader;
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.PageFooter;
-import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.Watermark;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -68,36 +58,25 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
     super();
   }
 
-
-
-
-  public void drop(final DropTargetDropEvent event,
-                   final ReportElementEditorContext dragContext,
-                   final ElementMetaData elementMetaData,
-                   final String fieldName)
+  protected void invokeConfigureHandler(final SubReport visualElement,
+                                        final Band band,
+                                        final ReportElementEditorContext dragContext,
+                                        final boolean rootBand)
   {
-    final Point2D point = dragContext.normalize(event.getLocation());
-    final Element rootBand = findRootBand(dragContext, point);
-    if (rootBand instanceof PageHeader ||
-        rootBand instanceof PageFooter ||
-        rootBand instanceof DetailsHeader ||
-        rootBand instanceof DetailsFooter ||
-        rootBand instanceof Watermark)
-    {
-      event.rejectDrop();
-      return;
-    }
+    SwingUtilities.invokeLater(new CrosstabConfigureHandler(visualElement, band, dragContext, rootBand));
+  }
 
+  /**
+   * Crosstab specific handling.  Create the visual element and set appropriate attributes
+   * @param elementMetaData
+   * @return
+   * @throws Exception
+   */
+  protected SubReport setReportStyle(final ElementMetaData elementMetaData) throws Exception
+  {
     try
     {
-      // Prompt for existing or new datasource
-      final ReportRenderContext activeContext = dragContext.getDesignerContext().getActiveContext();
-      if (activeContext == null)
-      {
-        return;
-      }
-
-      // Create a crosstab subreport element
+      // Create a crosstab element
       final ElementType type = elementMetaData.create();
       final CrosstabElement visualElement = new CrosstabElement();
       visualElement.setElementType(type);
@@ -116,51 +95,15 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
 
       type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
-      // Update crosstab styles
-      final ElementStyleSheet styleSheet = visualElement.getStyle();
-      styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
-      styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
-
-      final Element element = dragContext.getElementForLocation(point, false);
-      final Band band;
-      if (element instanceof Band)
-      {
-        band = (Band) element;
-      }
-      else if (element != null)
-      {
-        band = element.getParent();
-      }
-      else
-      {
-        final Element defaultEntry = dragContext.getDefaultElement();
-        if (defaultEntry instanceof Band == false)
-        {
-          event.rejectDrop();
-          dragContext.getRepresentationContainer().removeAll();
-          return;
-        }
-        band = (Band) defaultEntry;
-      }
-
-      event.acceptDrop(DnDConstants.ACTION_COPY);
-
-      styleSheet.setStyleProperty(ElementStyleKeys.POS_X, new Float(Math.max(0, point.getX() - getParentX(band))));
-      styleSheet.setStyleProperty(ElementStyleKeys.POS_Y, new Float(Math.max(0, point.getY() - getParentY(band))));
-
-      SwingUtilities.invokeLater(new CrosstabConfigureHandler(visualElement, band, dragContext, rootBand == band));
-
-      representation.setVisible(false);
-      dragContext.getRepresentationContainer().removeAll();
-      event.dropComplete(true);
+      return visualElement;
     }
-    catch (final Exception e)
+    catch (Exception e)
     {
       UncaughtExceptionsModel.getInstance().addException(e);
-      dragContext.getRepresentationContainer().removeAll();
-      event.dropComplete(false);
+      throw e;
     }
   }
+
 
 
   private static class CrosstabConfigureHandler implements Runnable
@@ -170,12 +113,12 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
     private ReportElementEditorContext dragContext;
     private boolean rootband;
 
-    private CrosstabConfigureHandler(final CrosstabElement subReport,
+    private CrosstabConfigureHandler(final SubReport subReport,
                                      final Band parent,
                                      final ReportElementEditorContext dragContext,
                                      final boolean rootband)
     {
-      this.subReport = subReport;
+      this.subReport = (CrosstabElement)subReport;
       this.parent = parent;
       this.dragContext = dragContext;
       this.rootband = rootband;
