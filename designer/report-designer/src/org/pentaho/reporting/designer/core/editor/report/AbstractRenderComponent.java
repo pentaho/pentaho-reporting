@@ -66,8 +66,8 @@ import org.pentaho.reporting.designer.core.editor.report.drag.ResizeBottomDragOp
 import org.pentaho.reporting.designer.core.editor.report.drag.ResizeLeftDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.drag.ResizeRightDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.drag.ResizeTopDragOperation;
+import org.pentaho.reporting.designer.core.editor.report.layouting.AbstractElementRenderer;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
-import org.pentaho.reporting.designer.core.editor.report.layouting.RootBandRenderer;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
 import org.pentaho.reporting.designer.core.editor.report.snapping.FullSnapModel;
 import org.pentaho.reporting.designer.core.editor.report.snapping.SnapToPositionModel;
@@ -119,7 +119,55 @@ public abstract class AbstractRenderComponent extends JComponent
   {
     public void run()
     {
-      ((RootBandRenderer)(getElementRenderer())).fireChangeEvent();
+      ((AbstractElementRenderer)(getElementRenderer())).fireChangeEvent();
+    }
+  }
+
+  protected class RootBandChangeHandler implements SettingsListener, ReportModelListener
+  {
+    protected RootBandChangeHandler()
+    {
+      updateGridSettings();
+    }
+
+    public void nodeChanged(final ReportModelEvent event)
+    {
+      final Object element = event.getElement();
+      if (element instanceof ReportElement == false)
+      {
+        return;
+      }
+
+      final ReportElement reportElement = (ReportElement) element;
+      final Section band = getRendererRoot().getElement();
+      if (ModelUtility.isDescendant(band, reportElement))
+      {
+        getRendererRoot().resetBounds();
+        AbstractRenderComponent.this.revalidate();
+        AbstractRenderComponent.this.repaint();
+        return;
+      }
+
+      if (reportElement instanceof Section)
+      {
+        final Section section = (Section) reportElement;
+        if (ModelUtility.isDescendant(section, band))
+        {
+          getRendererRoot().resetBounds();
+          AbstractRenderComponent.this.revalidate();
+          AbstractRenderComponent.this.repaint();
+        }
+      }
+    }
+
+    public void settingsChanged()
+    {
+      updateGridSettings();
+
+      // this is cheap, just repaint and we will be happy
+      AbstractRenderComponent.this.revalidate();
+      AbstractRenderComponent.this.repaint();
+
     }
   }
 
@@ -135,11 +183,6 @@ public abstract class AbstractRenderComponent extends JComponent
     protected MouseSelectionHandler()
     {
       newlySelectedElements = new HashSet<Element>();
-    }
-
-    public RootBandRenderer getRendererRoot()
-    {
-      return (RootBandRenderer)getElementRenderer();
     }
 
 
@@ -182,7 +225,7 @@ public abstract class AbstractRenderComponent extends JComponent
       final Point2D normalizedSelectionRectangleTarget = normalize(e.getPoint());
       normalizedSelectionRectangleTarget.setLocation(Math.max(0, normalizedSelectionRectangleTarget.getX()), Math.max(0, normalizedSelectionRectangleTarget
           .getY()));
-      final RootBandRenderer rendererRoot = getRendererRoot();
+      final AbstractElementRenderer rendererRoot = getRendererRoot();
       final ReportRenderContext renderContext = getRenderContext();
 
       if (clearSelectionOnDrag)
@@ -290,7 +333,7 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       final ReportRenderContext renderContext = getRenderContext();
-      final RootBandRenderer rendererRoot = getRendererRoot();
+      final AbstractElementRenderer rendererRoot = getRendererRoot();
 
       final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
       final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
@@ -331,7 +374,7 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       final ReportSelectionModel selectionModel = getRenderContext().getSelectionModel();
-      final RootBandRenderer rendererRoot = getRendererRoot();
+      final AbstractElementRenderer rendererRoot = getRendererRoot();
       final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
       final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
       final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
@@ -383,17 +426,6 @@ public abstract class AbstractRenderComponent extends JComponent
     protected SelectionModelListener()
     {
     }
-
-    public RootBandRenderer getRendererRoot()
-    {
-      return (RootBandRenderer)getElementRenderer();
-    }
-
-    public Band getRootBand()
-    {
-      return (Band)getRendererRoot().getElement();
-    }
-
 
     public void selectionAdded(final ReportSelectionEvent event)
     {
@@ -1040,6 +1072,16 @@ public abstract class AbstractRenderComponent extends JComponent
 
     selectionStateHandler = new SelectionStateHandler();
     designerContext.addPropertyChangeListener(ReportDesignerContext.SELECTION_WAITING_PROPERTY, selectionStateHandler);
+  }
+
+  public AbstractElementRenderer getRendererRoot()
+  {
+    return (AbstractElementRenderer)getElementRenderer();
+  }
+
+  public Band getRootBand()
+  {
+    return (Band)getRendererRoot().getElement();
   }
 
   public boolean isTerminateEditOnFocusLost()

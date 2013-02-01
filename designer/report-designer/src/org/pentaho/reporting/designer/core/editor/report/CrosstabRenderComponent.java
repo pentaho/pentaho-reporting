@@ -38,15 +38,11 @@ import org.pentaho.reporting.designer.core.editor.report.layouting.CrosstabRende
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
-import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
-import org.pentaho.reporting.engine.classic.core.Section;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
 /**
  * Manages the mouse selection inside the crosstab subreport
@@ -55,62 +51,6 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
  */
 public class CrosstabRenderComponent extends AbstractRenderComponent
 {
-  private class RootBandChangeHandler implements SettingsListener, ReportModelListener
-  {
-    private RootBandChangeHandler()
-    {
-      updateGridSettings();
-    }
-
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      final Object element = event.getElement();
-      if (element instanceof ReportElement == false)
-      {
-        return;
-      }
-
-      final ReportElement reportElement = (ReportElement) element;
-      final Section band = getRendererRoot().getElement();
-      if (ModelUtility.isDescendant(band, reportElement))
-      {
-        rendererRoot.resetBounds();
-        CrosstabRenderComponent.this.revalidate();
-        CrosstabRenderComponent.this.repaint();
-        return;
-      }
-
-      if (reportElement instanceof Section)
-      {
-        final Section section = (Section) reportElement;
-        if (ModelUtility.isDescendant(section, band))
-        {
-          rendererRoot.resetBounds();
-          CrosstabRenderComponent.this.revalidate();
-          CrosstabRenderComponent.this.repaint();
-        }
-      }
-    }
-
-    public void settingsChanged()
-    {
-      updateGridSettings();
-
-      // this is cheap, just repaint and we will be happy
-      CrosstabRenderComponent.this.revalidate();
-      CrosstabRenderComponent.this.repaint();
-
-    }
-  }
-
-  private class AsyncChangeNotifier implements Runnable
-  {
-    public void run()
-    {
-      rendererRoot.fireChangeEvent();
-    }
-  }
-
   private class RequestFocusHandler extends MouseAdapter implements PropertyChangeListener
   {
 
