@@ -616,6 +616,6 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
 
   public Band getRootBand()
   {
-    return (Band) getRendererRoot().getElement();
+    return getRendererRoot().getElement().getParent();
   }
 }
