@@ -46,6 +46,11 @@ public class PageableHtmlOutputTest extends TestCase
 
   public void testPagination() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL target = PageableHtmlOutputTest.class.getResource("pageable-html-output-report.xml");
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
