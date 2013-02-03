@@ -46,6 +46,11 @@ public class ColumnSummaryTest extends TestCase
 
   public void testPageBreakOnCT2() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL url = getClass().getResource("empty-ct.prpt");
     assertNotNull(url);
     final ResourceManager resourceManager = new ResourceManager();
