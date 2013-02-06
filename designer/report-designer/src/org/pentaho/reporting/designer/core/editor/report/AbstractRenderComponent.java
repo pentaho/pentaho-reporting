@@ -101,6 +101,8 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
@@ -1035,6 +1037,7 @@ public abstract class AbstractRenderComponent extends JComponent
   }
 
   private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
+
   private CellEditorRemover editorRemover;
   private RepaintHandler repaintHandler;
   private SettingsUpdateHandler settingsUpdateHandler;
@@ -1054,7 +1057,6 @@ public abstract class AbstractRenderComponent extends JComponent
   private LinealModel verticalLinealModel;
   private LinealModel horizontalLinealModel;
   private HorizontalPositionsModel horizontalPositionsModel;
-  private ElementRenderer elementRenderer;
   private boolean focused;
   private SelectionOverlayInformation.InRangeIndicator currentIndicator;
   private SelectionStateHandler selectionStateHandler;
@@ -1063,7 +1065,8 @@ public abstract class AbstractRenderComponent extends JComponent
   private RequestFocusHandler focusHandler;
   private SelectionModelListener selectionModelListener;
   private RootBandChangeHandler changeHandler;
-
+  private SimpleStyleResolver styleResolver;
+  private ResolverStyleSheet resolvedStyle;
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
@@ -1101,8 +1104,10 @@ public abstract class AbstractRenderComponent extends JComponent
     WorkspaceSettings.getInstance().addSettingsListener(settingsUpdateHandler);
 
     new DropTarget(this, new BandDndHandler(this));
+
     renderContext.getZoomModel().addZoomModelListener(repaintHandler);
     renderContext.getReportDefinition().addReportModelListener(new DragAbortReportModelListener());
+
     addMouseListener(new MouseEditorActionHandler());
     addKeyListener(new KeyboardElementMoveHandler());
 
@@ -1126,8 +1131,13 @@ public abstract class AbstractRenderComponent extends JComponent
 
     installMouseOperationHandler();
 
+    styleResolver = new SimpleStyleResolver(true);
+    resolvedStyle = new ResolverStyleSheet();
+
     renderContext.getReportDefinition().addReportModelListener(changeHandler);
   }
+
+  abstract protected ElementRenderer getElementRenderer();
 
   public AbstractElementRenderer getRendererRoot()
   {
@@ -1237,7 +1247,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
   protected Point2D getOffset()
   {
-    final StrictBounds bounds = elementRenderer.getRootElementBounds();
+    final StrictBounds bounds = getElementRenderer().getRootElementBounds();
     return new Point2D.Double(StrictGeomUtility.toExternalValue(bounds.getX()),
         StrictGeomUtility.toExternalValue(bounds.getY()));
   }
@@ -1458,6 +1468,57 @@ public abstract class AbstractRenderComponent extends JComponent
     return gridDivisions;
   }
 
+
+  public Element getElementForLocation(final Point2D point, final boolean onlySelected)
+  {
+    final AbstractElementRenderer rendererRoot = getRendererRoot();
+    final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
+    final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
+    final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
+    for (int i = allNodes.length - 1; i >= 0; i -= 1)
+    {
+      final RenderNode node = allNodes[i];
+      final InstanceID instanceId = node.getInstanceId();
+
+      final Element element = id.get(instanceId);
+      if (element == null)
+      {
+        continue;
+      }
+      if (ModelUtility.isHideInLayoutGui(element) == true)
+      {
+        continue;
+      }
+
+      styleResolver.resolve(element, resolvedStyle);
+      if (resolvedStyle.getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
+      {
+        continue;
+      }
+
+      if (onlySelected == false || getRenderContext().getSelectionModel().isSelected(element))
+      {
+        return element;
+      }
+    }
+    return null;
+  }
+
+  protected RootLevelBand findRootBandForPosition(final Point2D point)
+  {
+    if (getElementRenderer() == null)
+    {
+      return null;
+    }
+
+    final Section section = ((AbstractElementRenderer)getElementRenderer()).getElement();
+    if (section instanceof RootLevelBand)
+    {
+      return (RootLevelBand) section;
+    }
+    return null;
+  }
+
   public void dispose()
   {
     WorkspaceSettings.getInstance().removeSettingsListener(settingsUpdateHandler);
@@ -1470,9 +1531,9 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       this.horizontalLinealModel.removeLinealModelListener(repaintHandler);
     }
-    if (this.elementRenderer != null)
+    if (getElementRenderer() != null)
     {
-      this.elementRenderer.removeChangeListener(repaintHandler);
+      getElementRenderer().removeChangeListener(repaintHandler);
     }
 
     designerContext.removePropertyChangeListener(ReportDesignerContext.SELECTION_WAITING_PROPERTY, selectionStateHandler);
@@ -1801,11 +1862,11 @@ public abstract class AbstractRenderComponent extends JComponent
     return currentIndicator != null && currentIndicator != SelectionOverlayInformation.InRangeIndicator.NOT_IN_RANGE;
   }
 
-  protected void installLineals(final ElementRenderer elementRenderer, final LinealModel horizontalLinealModel,
+  protected void installLineals(final LinealModel horizontalLinealModel,
                                 final HorizontalPositionsModel horizontalPositionsModel)
   {
-    this.elementRenderer = elementRenderer;
     final LinealModel verticalLinealModel;
+    final ElementRenderer elementRenderer = getElementRenderer();
     if (elementRenderer != null)
     {
       verticalLinealModel = elementRenderer.getVerticalLinealModel();
@@ -1837,30 +1898,16 @@ public abstract class AbstractRenderComponent extends JComponent
       this.horizontalLinealModel.addLinealModelListener(repaintHandler);
     }
 
-    if (this.elementRenderer != null)
+    if (elementRenderer != null)
     {
-      this.elementRenderer.removeChangeListener(repaintHandler);
+      elementRenderer.removeChangeListener(repaintHandler);
+      elementRenderer.addChangeListener(repaintHandler);
     }
-    this.elementRenderer = elementRenderer;
-    if (this.elementRenderer != null)
-    {
-      this.elementRenderer.addChangeListener(repaintHandler);
-    }
-  }
-
-  protected RootLevelBand findRootBandForPosition(final Point2D point)
-  {
-    return null;
   }
 
   public Dimension getMinimumSize()
   {
     return getPreferredSize();
-  }
-
-  protected ElementRenderer getElementRenderer()
-  {
-    return elementRenderer;
   }
 
   public Dimension getPreferredSize()

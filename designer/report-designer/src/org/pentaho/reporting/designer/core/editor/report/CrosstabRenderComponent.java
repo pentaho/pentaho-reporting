@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.Dimension;
-import java.awt.geom.Point2D;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.CrosstabRenderer;
+import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -30,16 +28,15 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 
 /**
  * Manages the mouse selection inside the crosstab subreport
  *
- * @author Thomas Morgner
+ * @author Sulaiman Karmali
  */
 public class CrosstabRenderComponent extends AbstractRenderComponent
 {
-  private CrosstabRenderer rendererElementRoot;
+  private CrosstabRenderer elementRenderer;
 
   public CrosstabRenderComponent(final ReportDesignerContext designerContext,
                                  final ReportRenderContext renderContext)
@@ -52,37 +49,21 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
     super.dispose();
   }
 
-
-  public Dimension getPreferredSize()
-  {
-    return super.getPreferredSize();
-  }
-
-  public Element getElementForLocation(final Point2D normalizedPoint, final boolean onlySelected)
-  {
-    return null;
-  }
-
-  protected RootLevelBand findRootBandForPosition(final Point2D point)
-  {
-    return null;
-  }
-
   public void installRenderer(final CrosstabRenderer rendererRoot,
                               final LinealModel horizontalLinealModel,
                               final HorizontalPositionsModel horizontalPositionsModel)
   {
-    this.rendererElementRoot = rendererRoot;
-    super.installLineals(rendererRoot, horizontalLinealModel, horizontalPositionsModel);
+    this.elementRenderer = rendererRoot;
+    super.installLineals(horizontalLinealModel, horizontalPositionsModel);
   }
 
   public Element getDefaultElement()
   {
-    if (rendererElementRoot == null)
+    if (elementRenderer == null)
     {
       return null;
     }
-    return rendererElementRoot.getCrosstabGroup();
+    return elementRenderer.getCrosstabGroup();
   }
 
   public CrosstabRenderer getRendererRoot()
@@ -98,5 +79,10 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
   protected boolean isLocalElement(final ReportElement e)
   {
     return ModelUtility.isDescendant((CrosstabGroup)getDefaultElement(), e);
+  }
+
+  public ElementRenderer getElementRenderer()
+  {
+    return elementRenderer;
   }
 }

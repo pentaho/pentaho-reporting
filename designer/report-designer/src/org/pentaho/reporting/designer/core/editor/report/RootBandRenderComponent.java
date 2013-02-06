@@ -17,40 +17,25 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.geom.Point2D;
-import java.util.HashMap;
-
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
 import org.pentaho.reporting.designer.core.editor.report.layouting.RootBandRenderer;
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.RootLevelBand;
-import org.pentaho.reporting.engine.classic.core.Section;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class RootBandRenderComponent extends AbstractRenderComponent
 {
-  private RootBandRenderer rendererElementRoot;
-
-  private SimpleStyleResolver styleResolver;
-  private ResolverStyleSheet resolvedStyle;
+  private RootBandRenderer elementRenderer;
 
   public RootBandRenderComponent(final ReportDesignerContext designerContext,
                                  final ReportRenderContext renderContext,
                                  final boolean showTopBorder)
   {
     super(designerContext, renderContext);
-
-    styleResolver = new SimpleStyleResolver(true);
-    resolvedStyle = new ResolverStyleSheet();
     setShowTopBorder(showTopBorder);
   }
 
@@ -59,64 +44,14 @@ public class RootBandRenderComponent extends AbstractRenderComponent
     super.dispose();
   }
 
-  public Element getElementForLocation(final Point2D point, final boolean onlySelected)
-  {
-    final RootBandRenderer rendererRoot = getRendererRoot();
-    final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
-    final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
-    final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
-    for (int i = allNodes.length - 1; i >= 0; i -= 1)
-    {
-      final RenderNode node = allNodes[i];
-      final InstanceID instanceId = node.getInstanceId();
-
-      final Element element = id.get(instanceId);
-      if (element == null)
-      {
-        continue;
-      }
-      if (ModelUtility.isHideInLayoutGui(element) == true)
-      {
-        continue;
-      }
-
-      styleResolver.resolve(element, resolvedStyle);
-      if (resolvedStyle.getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
-      {
-        continue;
-      }
-
-      if (onlySelected == false || getRenderContext().getSelectionModel().isSelected(element))
-      {
-        return element;
-      }
-    }
-    return null;
-  }
-
-  protected RootLevelBand findRootBandForPosition(final Point2D point)
-  {
-    if (rendererElementRoot == null)
-    {
-      return null;
-    }
-    final Section section = rendererElementRoot.getElement();
-    if (section instanceof RootLevelBand)
-    {
-      return (RootLevelBand) section;
-    }
-    return null;
-  }
-
   public Element getDefaultElement()
   {
-    if (rendererElementRoot == null)
+    if (elementRenderer == null)
     {
       return null;
     }
-    return rendererElementRoot.getElement();
+    return elementRenderer.getElement();
   }
-
 
   public RootBandRenderer getRendererRoot()
   {
@@ -126,13 +61,17 @@ public class RootBandRenderComponent extends AbstractRenderComponent
   public void installRenderer(final RootBandRenderer rendererRoot, final LinealModel horizontalLinealModel,
                               final HorizontalPositionsModel horizontalPositionsModel)
   {
-    super.installLineals(rendererRoot, horizontalLinealModel, horizontalPositionsModel);
-    this.rendererElementRoot = rendererRoot;
+    this.elementRenderer = rendererRoot;
+    super.installLineals(horizontalLinealModel, horizontalPositionsModel);
   }
-
 
   protected boolean isLocalElement(final ReportElement e)
   {
     return ModelUtility.isDescendant(getRootBand(), e);
+  }
+
+  public ElementRenderer getElementRenderer()
+  {
+    return elementRenderer;
   }
 }
