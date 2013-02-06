@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.engine.classic.core.util.LibLoaderResourceBundleFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
@@ -378,5 +379,27 @@ public class SubReport extends AbstractReportDefinition
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
     return manager;
+  }
+
+  public ResourceBundleFactory getResourceBundleFactory()
+  {
+    Section parent = getParentSection();
+    while (parent != null)
+    {
+      if (parent instanceof MasterReport)
+      {
+        final MasterReport masterReport = (MasterReport)parent;
+        return masterReport.getResourceBundleFactory();
+      }
+      else if (parent instanceof SubReport)
+      {
+        final SubReport subReport = (SubReport)parent;
+        return subReport.getResourceBundleFactory();
+      }
+
+      parent = parent.getParentSection();
+    }
+
+    return new LibLoaderResourceBundleFactory();
   }
 }

@@ -21,3 +21,4 @@ build-res/module-scripts/
 *.war
 *.ear
 .idea/workspace.xml
+.idea/dictionaries/
