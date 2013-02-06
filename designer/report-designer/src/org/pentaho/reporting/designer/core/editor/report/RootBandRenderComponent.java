@@ -19,19 +19,13 @@ package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.dnd.DropTarget;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -40,7 +34,6 @@ import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
-import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -53,42 +46,9 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class RootBandRenderComponent extends AbstractRenderComponent
 {
-  private class RequestFocusHandler extends MouseAdapter implements PropertyChangeListener
-  {
-
-    /**
-     * Invoked when the mouse has been clicked on a component.
-     */
-    public void mouseClicked(final MouseEvent e)
-    {
-      requestFocusInWindow();
-      setFocused(true);
-      SwingUtilities.invokeLater(new AsyncChangeNotifier());
-    }
-
-    /**
-     * This method gets called when a bound property is changed.
-     *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
-     */
-
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      final Component owner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-      final boolean oldFocused = isFocused();
-      final boolean focused = (owner == RootBandRenderComponent.this);
-      if (oldFocused != focused)
-      {
-        setFocused(focused);
-        repaint();
-      }
-      SwingUtilities.invokeLater(new AsyncChangeNotifier());
-    }
-  }
-
   private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
 
-  private RootBandRenderer rendererRoot;
+  private RootBandRenderer rendererElementRoot;
   private RootBandChangeHandler changeHandler;
   private AbstractRenderComponent.SelectionModelListener selectionModelListener;
 
@@ -159,17 +119,6 @@ public class RootBandRenderComponent extends AbstractRenderComponent
     g2.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
   }
 
-  public RootBandRenderer getRendererRoot()
-  {
-    return (RootBandRenderer) getElementRenderer();
-  }
-
-  public void installRenderer(final RootBandRenderer rendererRoot, final LinealModel horizontalLinealModel,
-                              final HorizontalPositionsModel horizontalPositionsModel)
-  {
-    super.installLineals(rendererRoot, horizontalLinealModel, horizontalPositionsModel);
-    this.rendererRoot = rendererRoot;
-  }
 
   public Element getElementForLocation(final Point2D point, final boolean onlySelected)
   {
@@ -206,11 +155,6 @@ public class RootBandRenderComponent extends AbstractRenderComponent
     return null;
   }
 
-  public Band getRootBand()
-  {
-    return (Band) getRendererRoot().getElement();
-  }
-
   protected BreakPositionsList getHorizontalEdgePositions()
   {
     return getRendererRoot().getHorizontalEdgePositions();
@@ -223,11 +167,11 @@ public class RootBandRenderComponent extends AbstractRenderComponent
 
   protected RootLevelBand findRootBandForPosition(final Point2D point)
   {
-    if (rendererRoot == null)
+    if (rendererElementRoot == null)
     {
       return null;
     }
-    final Section section = rendererRoot.getElement();
+    final Section section = rendererElementRoot.getElement();
     if (section instanceof RootLevelBand)
     {
       return (RootLevelBand) section;
@@ -237,12 +181,26 @@ public class RootBandRenderComponent extends AbstractRenderComponent
 
   public Element getDefaultElement()
   {
-    if (rendererRoot == null)
+    if (rendererElementRoot == null)
     {
       return null;
     }
-    return rendererRoot.getElement();
+    return rendererElementRoot.getElement();
   }
+
+
+  public RootBandRenderer getRendererRoot()
+  {
+    return (RootBandRenderer)getElementRenderer();
+  }
+
+  public void installRenderer(final RootBandRenderer rendererRoot, final LinealModel horizontalLinealModel,
+                              final HorizontalPositionsModel horizontalPositionsModel)
+  {
+    super.installLineals(rendererRoot, horizontalLinealModel, horizontalPositionsModel);
+    this.rendererElementRoot = rendererRoot;
+  }
+
 
   protected boolean isLocalElement(final ReportElement e)
   {

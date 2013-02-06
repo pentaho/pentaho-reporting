@@ -19,18 +19,12 @@ package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -39,7 +33,7 @@ import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
-import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -51,50 +45,16 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
  */
 public class CrosstabRenderComponent extends AbstractRenderComponent
 {
-  private class RequestFocusHandler extends MouseAdapter implements PropertyChangeListener
-  {
-
-    /**
-     * Invoked when the mouse has been clicked on a component.
-     */
-    public void mouseClicked(final MouseEvent e)
-    {
-      requestFocusInWindow();
-      setFocused(true);
-      SwingUtilities.invokeLater(new AsyncChangeNotifier());
-    }
-
-    /**
-     * This method gets called when a bound property is changed.
-     *
-     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
-     */
-
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      final Component owner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
-      final boolean oldFocused = isFocused();
-      final boolean focused = (owner == CrosstabRenderComponent.this);
-      if (oldFocused != focused)
-      {
-        setFocused(focused);
-        repaint();
-      }
-      SwingUtilities.invokeLater(new AsyncChangeNotifier());
-    }
-  }
-
   private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
 
   private static final SelectionOverlayInformation[] EMPTY_OVERLAYS = new SelectionOverlayInformation[0];
   private BreakPositionsList horizontalEdgePositions;
   private BreakPositionsList verticalEdgePositions;
-  private CrosstabRenderer rendererRoot;
+  private CrosstabRenderer rendererElementRoot;
   private RequestFocusHandler focusHandler;
   private RootBandChangeHandler changeHandler;
   private MouseSelectionHandler selectionHandler;
   private SelectionModelListener selectionModelListener;
-
 
 
   public CrosstabRenderComponent(final ReportDesignerContext designerContext,
@@ -116,7 +76,6 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
     addMouseListener(focusHandler);
     KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
 
-    // TODO - test implication of these two lines I added
     installMouseOperationHandler();
     renderContext.getReportDefinition().addReportModelListener(changeHandler);
   }
@@ -166,22 +125,27 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
                               final LinealModel horizontalLinealModel,
                               final HorizontalPositionsModel horizontalPositionsModel)
   {
-    this.rendererRoot = rendererRoot;
+    this.rendererElementRoot = rendererRoot;
     super.installLineals(rendererRoot, horizontalLinealModel, horizontalPositionsModel);
   }
 
   public Element getDefaultElement()
   {
-    if (rendererRoot == null)
+    if (rendererElementRoot == null)
     {
       return null;
     }
-    return rendererRoot.getCrosstabGroup();
+    return rendererElementRoot.getCrosstabGroup();
   }
 
   public CrosstabRenderer getRendererRoot()
   {
-    return (CrosstabRenderer) getElementRenderer();
+    return (CrosstabRenderer)getElementRenderer();
+  }
+
+  protected boolean isLocalElement(final ReportElement e)
+  {
+    return ModelUtility.isDescendant((CrosstabGroup)getDefaultElement(), e);
   }
 
   protected void paintSelectionRectangle(final Graphics2D g2)
@@ -203,15 +167,5 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
     final double x2 = Math.max(origin.getX(), target.getX());
 
     g2.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
-  }
-
-  protected boolean isLocalElement(final ReportElement e)
-  {
-    return ModelUtility.isDescendant(rendererRoot.getCrosstabGroup(), e);
-  }
-
-  public Band getRootBand()
-  {
-    return getRendererRoot().getElement().getParent();
   }
 }

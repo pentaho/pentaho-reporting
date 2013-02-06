@@ -108,7 +108,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
 /**
- * Todo: Document Me
+ * Base class to handle rendering & dnd events of elements rendered inside sub-reports
  *
  * @author Thomas Morgner
  */
@@ -120,6 +120,38 @@ public abstract class AbstractRenderComponent extends JComponent
     public void run()
     {
       ((AbstractElementRenderer)(getElementRenderer())).fireChangeEvent();
+    }
+  }
+
+  protected class RequestFocusHandler extends MouseAdapter implements PropertyChangeListener
+  {
+    /**
+     * Invoked when the mouse has been clicked on a component.
+     */
+    public void mouseClicked(final MouseEvent e)
+    {
+      requestFocusInWindow();
+      setFocused(true);
+      SwingUtilities.invokeLater(new AsyncChangeNotifier());
+    }
+
+    /**
+     * This method gets called when a bound property is changed.
+     *
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
+     */
+
+    public void propertyChange(final PropertyChangeEvent evt)
+    {
+      final Component owner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getPermanentFocusOwner();
+      final boolean oldFocused = isFocused();
+      final boolean focused = (owner == AbstractRenderComponent.this);
+      if (oldFocused != focused)
+      {
+        setFocused(focused);
+        repaint();
+      }
+      SwingUtilities.invokeLater(new AsyncChangeNotifier());
     }
   }
 
