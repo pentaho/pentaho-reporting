@@ -17,14 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.KeyboardFocusManager;
-import java.awt.Point;
-import java.awt.dnd.DropTarget;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -33,7 +26,6 @@ import org.pentaho.reporting.designer.core.editor.report.layouting.RootBandRende
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
-import org.pentaho.reporting.designer.core.util.BreakPositionsList;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -46,14 +38,8 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class RootBandRenderComponent extends AbstractRenderComponent
 {
-  private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
-
   private RootBandRenderer rendererElementRoot;
-  private RootBandChangeHandler changeHandler;
-  private AbstractRenderComponent.SelectionModelListener selectionModelListener;
 
-  private MouseSelectionHandler selectionHandler;
-  private RequestFocusHandler focusHandler;
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolvedStyle;
 
@@ -66,59 +52,12 @@ public class RootBandRenderComponent extends AbstractRenderComponent
     styleResolver = new SimpleStyleResolver(true);
     resolvedStyle = new ResolverStyleSheet();
     setShowTopBorder(showTopBorder);
-
-    this.changeHandler = new RootBandChangeHandler();
-    this.selectionModelListener = new SelectionModelListener();
-
-    renderContext.getSelectionModel().addReportSelectionListener(selectionModelListener);
-
-    new DropTarget(this, new BandDndHandler(this));
-
-    selectionHandler = new MouseSelectionHandler();
-    addMouseListener(selectionHandler);
-    addMouseMotionListener(selectionHandler);
-
-    focusHandler = new RequestFocusHandler();
-    addMouseListener(focusHandler);
-    KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
-
-    installMouseOperationHandler();
-
-    renderContext.getReportDefinition().addReportModelListener(changeHandler);
   }
 
   public void dispose()
   {
     super.dispose();
-
-    KeyboardFocusManager.getCurrentKeyboardFocusManager().removePropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
-
-    final ReportRenderContext renderContext = getRenderContext();
-    renderContext.getReportDefinition().removeReportModelListener(changeHandler);
-    renderContext.getSelectionModel().removeReportSelectionListener(selectionModelListener);
   }
-
-  protected void paintSelectionRectangle(final Graphics2D g2)
-  {
-    final Point origin = selectionHandler.getSelectionRectangleOrigin();
-    final Point target = selectionHandler.getSelectionRectangleTarget();
-
-    if (origin == null || target == null)
-    {
-      return;
-    }
-
-    g2.setColor(Color.BLUE);
-    g2.setStroke(SELECTION_STROKE);
-
-    final double y1 = Math.min(origin.getY(), target.getY());
-    final double x1 = Math.min(origin.getX(), target.getX());
-    final double y2 = Math.max(origin.getY(), target.getY());
-    final double x2 = Math.max(origin.getX(), target.getX());
-
-    g2.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
-  }
-
 
   public Element getElementForLocation(final Point2D point, final boolean onlySelected)
   {
@@ -153,16 +92,6 @@ public class RootBandRenderComponent extends AbstractRenderComponent
       }
     }
     return null;
-  }
-
-  protected BreakPositionsList getHorizontalEdgePositions()
-  {
-    return getRendererRoot().getHorizontalEdgePositions();
-  }
-
-  protected BreakPositionsList getVerticalEdgePositions()
-  {
-    return getRendererRoot().getVerticalEdgePositions();
   }
 
   protected RootLevelBand findRootBandForPosition(final Point2D point)

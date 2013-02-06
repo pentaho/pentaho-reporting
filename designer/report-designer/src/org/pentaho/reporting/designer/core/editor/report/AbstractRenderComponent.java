@@ -1034,6 +1034,7 @@ public abstract class AbstractRenderComponent extends JComponent
     }
   }
 
+  private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
   private CellEditorRemover editorRemover;
   private RepaintHandler repaintHandler;
   private SettingsUpdateHandler settingsUpdateHandler;
@@ -1054,12 +1055,15 @@ public abstract class AbstractRenderComponent extends JComponent
   private LinealModel horizontalLinealModel;
   private HorizontalPositionsModel horizontalPositionsModel;
   private ElementRenderer elementRenderer;
-//  private Color primaryGridColor;
-//  private Color secondaryGridColor;
   private boolean focused;
   private SelectionOverlayInformation.InRangeIndicator currentIndicator;
   private SelectionStateHandler selectionStateHandler;
   private ArrayList<Object> oldValues = new ArrayList<Object>();
+  private MouseSelectionHandler selectionHandler;
+  private RequestFocusHandler focusHandler;
+  private SelectionModelListener selectionModelListener;
+  private RootBandChangeHandler changeHandler;
+
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
@@ -1104,6 +1108,25 @@ public abstract class AbstractRenderComponent extends JComponent
 
     selectionStateHandler = new SelectionStateHandler();
     designerContext.addPropertyChangeListener(ReportDesignerContext.SELECTION_WAITING_PROPERTY, selectionStateHandler);
+
+    focusHandler = new RequestFocusHandler();
+    addMouseListener(focusHandler);
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().addPropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
+
+    this.selectionHandler = new MouseSelectionHandler();
+    addMouseListener(selectionHandler);
+    addMouseMotionListener(selectionHandler);
+
+    this.changeHandler = new RootBandChangeHandler();
+    this.selectionModelListener = new SelectionModelListener();
+
+    renderContext.getSelectionModel().addReportSelectionListener(selectionModelListener);
+
+    new DropTarget(this, new BandDndHandler(this));
+
+    installMouseOperationHandler();
+
+    renderContext.getReportDefinition().addReportModelListener(changeHandler);
   }
 
   public AbstractElementRenderer getRendererRoot()
@@ -1300,7 +1323,26 @@ public abstract class AbstractRenderComponent extends JComponent
     }
   }
 
-  protected abstract void paintSelectionRectangle(final Graphics2D g2);
+  protected void paintSelectionRectangle(final Graphics2D g2)
+  {
+    final Point origin = selectionHandler.getSelectionRectangleOrigin();
+    final Point target = selectionHandler.getSelectionRectangleTarget();
+
+    if (origin == null || target == null)
+    {
+      return;
+    }
+
+    g2.setColor(Color.BLUE);
+    g2.setStroke(SELECTION_STROKE);
+
+    final double y1 = Math.min(origin.getY(), target.getY());
+    final double x1 = Math.min(origin.getX(), target.getX());
+    final double y2 = Math.max(origin.getY(), target.getY());
+    final double x2 = Math.max(origin.getX(), target.getX());
+
+    g2.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+  }
 
   protected void paintGrid(final Graphics2D g2d)
   {
@@ -1434,6 +1476,12 @@ public abstract class AbstractRenderComponent extends JComponent
     }
 
     designerContext.removePropertyChangeListener(ReportDesignerContext.SELECTION_WAITING_PROPERTY, selectionStateHandler);
+
+    KeyboardFocusManager.getCurrentKeyboardFocusManager().removePropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
+
+    final ReportRenderContext renderContext = getRenderContext();
+    renderContext.getReportDefinition().removeReportModelListener(changeHandler);
+    renderContext.getSelectionModel().removeReportSelectionListener(selectionModelListener);
   }
 
   protected void removeEditor()
@@ -1588,14 +1636,20 @@ public abstract class AbstractRenderComponent extends JComponent
    *
    * @return the edge positions of all elements.
    */
-  protected abstract BreakPositionsList getHorizontalEdgePositions();
+  protected BreakPositionsList getHorizontalEdgePositions()
+  {
+    return getRendererRoot().getHorizontalEdgePositions();
+  }
 
   /**
    * Returns the break positions for inner-band drag-operations (snap to element).
    *
    * @return the edge positions of all elements.
    */
-  protected abstract BreakPositionsList getVerticalEdgePositions();
+  protected BreakPositionsList getVerticalEdgePositions()
+  {
+    return getRendererRoot().getVerticalEdgePositions();
+  }
 
   protected void initializeDragOperation(final Point2D originPoint,
                                          final SelectionOverlayInformation.InRangeIndicator currentIndicator)
