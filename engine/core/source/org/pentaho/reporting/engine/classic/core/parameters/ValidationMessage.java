@@ -58,7 +58,7 @@ public class ValidationMessage implements Serializable
     }
 
     this.message = message;
-    this.parameters = (Object[]) parameters.clone();
+    this.parameters = parameters.clone();
   }
 
   public String getMessage()
@@ -68,6 +68,6 @@ public class ValidationMessage implements Serializable
 
   public Object[] getParameters()
   {
-    return (Object[]) parameters.clone();
+    return parameters.clone();
   }
 }
