@@ -574,7 +574,7 @@ public class ReportRendererComponent extends JComponent
       final AbstractRenderComponent renderComponent;
       if (allRenderer instanceof RootBandRenderer)
       {
-        final RootBandRenderer rootRenderer = (RootBandRenderer) allRenderer;
+        final RootBandRenderer rootRenderer = (RootBandRenderer)allRenderer;
         final RootBandRenderComponent bandComponent = new RootBandRenderComponent(designerContext, renderContext, false);
         bandComponent.setShowTopBorder(false);
         bandComponent.setShowLeftBorder(false);
@@ -583,7 +583,9 @@ public class ReportRendererComponent extends JComponent
       }
       else if (allRenderer instanceof CrosstabRenderer)
       {
-        final CrosstabRenderer rootRenderer = (CrosstabRenderer) allRenderer;
+        final CrosstabRenderer rootRenderer = (CrosstabRenderer)allRenderer;
+        rootRenderer.setVisualHeight(rootRenderer.getVisualHeight() * 2);
+
         final CrosstabRenderComponent bandComponent = new CrosstabRenderComponent(designerContext, renderContext);
         bandComponent.setShowTopBorder(false);
         bandComponent.setShowLeftBorder(false);
