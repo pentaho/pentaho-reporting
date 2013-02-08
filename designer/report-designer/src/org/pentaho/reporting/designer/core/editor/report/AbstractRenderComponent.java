@@ -247,6 +247,8 @@ public abstract class AbstractRenderComponent extends JComponent
       {
         return;
       }
+
+      // Check to see if this mouse handler should handle this mouse event (Mouse Operation Handler vs the Mouse Selection Handler)
       if (isMouseOperationInProgress())
       {
         return;
@@ -271,6 +273,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       selectionRectangleTarget = e.getPoint();
 
+      // Calculate the bounding box for the selection
       final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
       final double y1 = Math.min(normalizedSelectionRectangleOrigin.getY(), normalizedSelectionRectangleTarget.getY());
       final double x1 = Math.min(normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleTarget.getX());
@@ -280,6 +283,8 @@ public abstract class AbstractRenderComponent extends JComponent
       final RenderNode[] allNodes = pageDrawable.getNodesAt(x1, y1, x2 - x1, y2 - y1, null, null);
       final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
       final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
+
+      // Convert between points to micro-points (1 point X 100K is a micro-point)
       final StrictBounds rect1 = StrictGeomUtility.createBounds(x1, y1, x2 - x1, y2 - y1);
       final StrictBounds rect2 = new StrictBounds();
 
@@ -295,6 +300,8 @@ public abstract class AbstractRenderComponent extends JComponent
         }
         final CachedLayoutData data = ModelUtility.getCachedLayoutData(element);
         rect2.setRect(data.getX(), data.getY(), data.getWidth(), data.getHeight());
+
+        // Checking if the bounding box intersects an element
         if (StrictBounds.intersects(rect1, rect2))
         {
           if (selectionModel.add(element))
@@ -411,12 +418,15 @@ public abstract class AbstractRenderComponent extends JComponent
       final AbstractElementRenderer rendererRoot = getRendererRoot();
       final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
       final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
+
+      // Sorted list of all elements that intersect the point we are seeking
       final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
       for (int i = allNodes.length - 1; i >= 0; i -= 1)
       {
         final RenderNode node = allNodes[i];
         final InstanceID instanceId = node.getInstanceId();
 
+        // Check if element is null due to structural helper node like (SectionRenderBox)
         final Element element = id.get(instanceId);
         if (element == null || element instanceof RootLevelBand)
         {
@@ -675,6 +685,10 @@ public abstract class AbstractRenderComponent extends JComponent
     }
   }
 
+  /**
+   * When you double-click on an element, you can edit it inside
+   * the canvas editor area.
+   */
   protected class MouseEditorActionHandler extends MouseAdapter
   {
     private MouseEditorActionHandler()
@@ -1285,6 +1299,8 @@ public abstract class AbstractRenderComponent extends JComponent
     final Point2D offset = getOffset();
     if (offset.getX() != 0)
     {
+      // The blackout area is for inline sub-reports and is the area where the subreport is not interested in
+      // (so we can clip out).  The blackout area is only visible in the sub-report.
       final Rectangle2D.Double blackoutArea = new Rectangle2D.Double(0, 0, offset.getX() * scaleFactor, getHeight());
       g2.setColor(Color.LIGHT_GRAY);
       g2.fill(blackoutArea);
@@ -1316,15 +1332,17 @@ public abstract class AbstractRenderComponent extends JComponent
     logicalPageAreaG2.dispose();
 
     final OverlayRenderer[] renderers = new OverlayRenderer[4];
-    renderers[0] = new OverlappingElementOverlayRenderer(getDefaultElement());
+    renderers[0] = new OverlappingElementOverlayRenderer(getDefaultElement()); // displays the red border for warning
     renderers[1] = new SelectionOverlayRenderer(getDefaultElement());
     renderers[2] = new GuidelineOverlayRenderer(horizontalLinealModel, verticalLinealModel);
-    renderers[3] = new SelectionRectangleOverlayRenderer();
+    renderers[3] = new SelectionRectangleOverlayRenderer();   // blue box when you shift and drag the region to select multiple elements
 
     for (int i = 0; i < renderers.length; i++)
     {
       final OverlayRenderer renderer = renderers[i];
       final Graphics2D selectionG2 = (Graphics2D) g.create();
+
+      // TODO: Check if this is a no-op due to negative offset
       selectionG2.translate(0, -offset.getY() * scaleFactor);
       
       renderer.validate(getRenderContext(), scaleFactor);
