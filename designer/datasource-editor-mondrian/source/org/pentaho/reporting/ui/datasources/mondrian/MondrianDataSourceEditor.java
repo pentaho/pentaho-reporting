@@ -92,7 +92,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
@@ -261,6 +260,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       final String queryName = dialogModel.generateQueryName();
       dialogModel.addQuery(queryName, "", null, null);
       queryNameList.setSelectedValue(queryName, true);
+      queryNameList.setSelectedIndex(queryNameList.getLastVisibleIndex());
     }
   }
 
