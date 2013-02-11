@@ -1151,7 +1151,17 @@ public abstract class AbstractRenderComponent extends JComponent
     renderContext.getReportDefinition().addReportModelListener(changeHandler);
   }
 
+  /**
+   * Abstract method to retrieve the element renderer
+   * @return ElementRenderer
+   */
   abstract protected ElementRenderer getElementRenderer();
+
+  /**
+   * Abstract method to return the default element
+   * @return Element
+   */
+  abstract public Element getDefaultElement();
 
   public AbstractElementRenderer getRendererRoot()
   {
