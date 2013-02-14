@@ -19,6 +19,10 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -28,7 +32,9 @@ import org.jfree.chart.plot.Plot;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.util.Rotation;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
 public class PieChartExpression extends AbstractChartExpression
 {
@@ -273,7 +279,7 @@ public class PieChartExpression extends AbstractChartExpression
     super.configureChart(chart);
 
     final Plot plot = chart.getPlot();
-    final PiePlot pp = (PiePlot) plot;
+    final PiePlot pp = (PiePlot)plot;
     final PieDataset pieDS = pp.getDataset();
     pp.setDirection(rotationClockwise ? Rotation.CLOCKWISE : Rotation.ANTICLOCKWISE);
     if ((explodeSegment != null) && (explodePct != null))
@@ -297,10 +303,24 @@ public class PieChartExpression extends AbstractChartExpression
     }
     else
     {
-      final StandardPieSectionLabelGenerator labelGen = new StandardPieSectionLabelGenerator(pieLabelFormat);
+      final ExpressionRuntime runtime = getRuntime();
+      final Locale locale = runtime.getResourceBundleFactory().getLocale();
+
+      final FastDecimalFormat fastPercent = new FastDecimalFormat(FastDecimalFormat.TYPE_PERCENT, locale);
+      final FastDecimalFormat fastInteger = new FastDecimalFormat(FastDecimalFormat.TYPE_INTEGER, locale);
+
+      final DecimalFormat numFormat = new DecimalFormat(fastInteger.getPattern(), new DecimalFormatSymbols(locale));
+      numFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+      final DecimalFormat percentFormat = new DecimalFormat(fastPercent.getPattern(), new DecimalFormatSymbols(locale));
+      percentFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+      final StandardPieSectionLabelGenerator labelGen = new StandardPieSectionLabelGenerator(pieLabelFormat,
+                                                                                             numFormat, percentFormat);
       pp.setLabelGenerator(labelGen);
 
-      final StandardPieSectionLabelGenerator legendGen = new StandardPieSectionLabelGenerator(pieLegendLabelFormat);
+      final StandardPieSectionLabelGenerator legendGen = new StandardPieSectionLabelGenerator(pieLegendLabelFormat,
+                                                                                              numFormat, percentFormat);
       pp.setLegendLabelGenerator(legendGen);
     }
 

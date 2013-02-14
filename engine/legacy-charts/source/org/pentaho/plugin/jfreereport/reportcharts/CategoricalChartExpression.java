@@ -18,6 +18,7 @@
 package org.pentaho.plugin.jfreereport.reportcharts;
 
 import java.awt.Font;
+import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -535,9 +536,10 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       final StandardCategoryItemLabelGenerator scilg;
       if (categoricalLabelDecimalFormat != null)
       {
-        scilg = new StandardCategoryItemLabelGenerator(categoricalLabelFormat,
-            new DecimalFormat(categoricalLabelDecimalFormat,
-                new DecimalFormatSymbols(getRuntime().getResourceBundleFactory().getLocale())));
+        final DecimalFormat numFormat = new DecimalFormat(categoricalLabelDecimalFormat,
+                                                          new DecimalFormatSymbols(getRuntime().getResourceBundleFactory().getLocale()));
+        numFormat.setRoundingMode(RoundingMode.HALF_UP);
+        scilg = new StandardCategoryItemLabelGenerator(categoricalLabelFormat, numFormat);
       }
       else if (categoricalLabelDateFormat != null)
       {

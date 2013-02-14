@@ -19,6 +19,10 @@ package org.pentaho.plugin.jfreereport.reportcharts;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -33,7 +37,9 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.util.TableOrder;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
 
 public class MultiPieChartExpression extends AbstractChartExpression
 {
@@ -276,7 +282,19 @@ public class MultiPieChartExpression extends AbstractChartExpression
     }
     else 
     {
-      final StandardPieSectionLabelGenerator labelGen = new StandardPieSectionLabelGenerator(multipieLabelFormat);
+      final ExpressionRuntime runtime = getRuntime();
+      final Locale locale = runtime.getResourceBundleFactory().getLocale();
+
+      final FastDecimalFormat fastPercent = new FastDecimalFormat(FastDecimalFormat.TYPE_PERCENT, locale);
+      final FastDecimalFormat fastInteger = new FastDecimalFormat(FastDecimalFormat.TYPE_INTEGER, locale);
+
+      final DecimalFormat numFormat = new DecimalFormat(fastInteger.getPattern(), new DecimalFormatSymbols(locale));
+      numFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+      final DecimalFormat percentFormat = new DecimalFormat(fastPercent.getPattern(), new DecimalFormatSymbols(locale));
+      percentFormat.setRoundingMode(RoundingMode.HALF_UP);
+
+      final StandardPieSectionLabelGenerator labelGen = new StandardPieSectionLabelGenerator(multipieLabelFormat, numFormat, percentFormat);
       pp.setLabelGenerator(labelGen);
     }
   }
