@@ -34,6 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.prefs.Preferences;
 import javax.script.ScriptEngineFactory;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -251,8 +252,8 @@ public class JdbcDataSourceDialog extends CommonDialog
         final QueryBuilder queryBuilder = new QueryBuilder(conn);
         QueryBuilder.autoAlias = false;
         final JdbcQueryDesignerDialog queryDesigner = new JdbcQueryDesignerDialog(JdbcDataSourceDialog.this, queryBuilder);
-        final String query = queryDesigner.designQuery
-            (designTimeContext, factory.getConnectionProvider(), schema, queryTextArea.getText());
+        final String query = queryDesigner.designQuery(designTimeContext, factory.getConnectionProvider(),
+                                                       schema, queryTextArea.getText());
         if (query != null)
         {
           queryTextArea.setText(query);
@@ -287,35 +288,40 @@ public class JdbcDataSourceDialog extends CommonDialog
       String schema = null;
       try
       {
-        final DatabaseMetaData data = conn.getMetaData();
-        final boolean isHsql = ("HSQL Database Engine".equals(data.getDatabaseProductName()));
-        if (data.supportsSchemasInTableDefinitions())
+        Preferences properties = Preferences.userRoot().node("org.pentaho.reporting.ui.datasources.jdbc.ui/Settings"); // NON-NLS
+        if (properties.getBoolean("ShowSlSchemaDialog", false))
         {
-          final LinkedMap schemas = new LinkedMap();
-          final ResultSet rs = data.getSchemas();
-          while (rs.next())
+          final DatabaseMetaData data = conn.getMetaData();
+          final boolean isHsql = ("HSQL Database Engine".equals(data.getDatabaseProductName()));
+          if (data.supportsSchemasInTableDefinitions())
           {
-            final String schemaName = rs.getString(1).trim();
-            if (isHsql && "INFORMATION_SCHEMA".equals(schemaName))
+            final LinkedMap schemas = new LinkedMap();
+            final ResultSet rs = data.getSchemas();
+            while (rs.next())
             {
-              continue;
+              final String schemaName = rs.getString(1).trim();
+              if (isHsql && "INFORMATION_SCHEMA".equals(schemaName))
+              {
+                continue;
+              }
+
+              schemas.put(schemaName, Boolean.TRUE);
             }
+            rs.close();
 
-            schemas.put(schemaName, Boolean.TRUE);
-          }
-          rs.close();
+            // bring up dialog
 
-          // bring up dialog
-          final String[] schemasArray = (String[]) schemas.keys(new String[schemas.size()]);
-          if (schemas.size() > 1)
-          {
-            final SchemaSelectionDialog schemaSelectionDialog =
-                new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
-            schema = schemaSelectionDialog.getSchema();
-          }
-          else if (schemas.size() == 1)
-          {
-            schema = schemasArray[0];
+            final String[] schemasArray = (String[]) schemas.keys(new String[schemas.size()]);
+            if (schemas.size() > 1)
+            {
+              final SchemaSelectionDialog schemaSelectionDialog =
+                  new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
+              schema = schemaSelectionDialog.getSchema();
+            }
+            else if (schemas.size() == 1)
+            {
+              schema = schemasArray[0];
+            }
           }
         }
       }

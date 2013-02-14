@@ -59,6 +59,7 @@ public class WorkspaceSettings implements LocaleSettings
   private static final String EXPERIMENTAL_FEATURES_KEY = "ExperimentalFeatures";
   private static final String NON_CORE_FEATURES_KEY = "NonCoreFeatures";
   private static final String DEBUG_FEATURES_KEY = "DebugFeatures";
+  private static final String SHOW_SL_SCHEMA_DIALOG = "ShowSlSchemaDialog";
 
   private static final String FIELD_SELECTOR_VISIBLE_KEY = "FieldSelectorVisible";
   private static final String DRAW_SELECTION_TYPE_KEY = "DrawSelectionType";
@@ -472,6 +473,17 @@ public class WorkspaceSettings implements LocaleSettings
   public void setDebugFeaturesVisible(final boolean snapToGrid)
   {
     properties.put(DEBUG_FEATURES_KEY, String.valueOf(snapToGrid));
+    fireSettingsChanged();
+  }
+
+  public boolean isShowSqlLeonardoSchemaDialog()
+  {
+    return properties.getBoolean(SHOW_SL_SCHEMA_DIALOG, false);
+  }
+
+  public void setShowSqlLeonardoSchemaDialog(final boolean displayDialog)
+  {
+    properties.put(SHOW_SL_SCHEMA_DIALOG, String.valueOf(displayDialog));
     fireSettingsChanged();
   }
 
