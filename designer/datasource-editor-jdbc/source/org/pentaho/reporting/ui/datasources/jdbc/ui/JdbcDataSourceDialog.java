@@ -288,40 +288,39 @@ public class JdbcDataSourceDialog extends CommonDialog
       String schema = null;
       try
       {
-        Preferences properties = Preferences.userRoot().node("org.pentaho.reporting.ui.datasources.jdbc.ui/Settings"); // NON-NLS
-        if (properties.getBoolean("ShowSlSchemaDialog", false))
+        final DatabaseMetaData data = conn.getMetaData();
+        final boolean isHsql = ("HSQL Database Engine".equals(data.getDatabaseProductName()));
+        if (data.supportsSchemasInTableDefinitions())
         {
-          final DatabaseMetaData data = conn.getMetaData();
-          final boolean isHsql = ("HSQL Database Engine".equals(data.getDatabaseProductName()));
-          if (data.supportsSchemasInTableDefinitions())
+          final LinkedMap schemas = new LinkedMap();
+          final ResultSet rs = data.getSchemas();
+          while (rs.next())
           {
-            final LinkedMap schemas = new LinkedMap();
-            final ResultSet rs = data.getSchemas();
-            while (rs.next())
+            final String schemaName = rs.getString(1).trim();
+            if (isHsql && "INFORMATION_SCHEMA".equals(schemaName))
             {
-              final String schemaName = rs.getString(1).trim();
-              if (isHsql && "INFORMATION_SCHEMA".equals(schemaName))
-              {
-                continue;
-              }
-
-              schemas.put(schemaName, Boolean.TRUE);
+              continue;
             }
-            rs.close();
 
-            // bring up dialog
+            schemas.put(schemaName, Boolean.TRUE);
+          }
+          rs.close();
 
-            final String[] schemasArray = (String[]) schemas.keys(new String[schemas.size()]);
-            if (schemas.size() > 1)
+          // bring up schema selection dialog only if preferences is set
+          final String[] schemasArray = (String[]) schemas.keys(new String[schemas.size()]);
+          if (schemas.size() > 1)
+          {
+            final Preferences properties = Preferences.userRoot().node("org/pentaho/reporting/ui/datasources/jdbc/Settings"); // NON-NLS
+            if (properties.getBoolean("show-schema-dialog", false))
             {
-              final SchemaSelectionDialog schemaSelectionDialog =
-                  new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
+              final SchemaSelectionDialog schemaSelectionDialog = new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
               schema = schemaSelectionDialog.getSchema();
             }
-            else if (schemas.size() == 1)
-            {
-              schema = schemasArray[0];
-            }
+          }
+          else if (schemas.size() == 1)
+          {
+            // Usually PUBLIC schema
+            schema = schemasArray[0];
           }
         }
       }
