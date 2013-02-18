@@ -55,6 +55,7 @@ import org.pentaho.reporting.designer.core.actions.elements.format.FontColorSele
 import org.pentaho.reporting.designer.core.actions.elements.format.FontFamilySelectorComponent;
 import org.pentaho.reporting.designer.core.actions.elements.format.FontSizeSelectorComponent;
 import org.pentaho.reporting.designer.core.actions.elements.format.ItalicsAction;
+import org.pentaho.reporting.designer.core.actions.elements.SelectCrosstabBandAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentCenterAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentJustifyAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentLeftAction;
@@ -78,6 +79,7 @@ import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.util.ActionToggleButton;
 import org.pentaho.reporting.designer.core.util.CanvasImageLoader;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.designtime.swing.ToolbarButton;
@@ -520,7 +522,16 @@ public class ReportRendererComponent extends JComponent
     toolBar.add(createButton(new TextAlignmentRightAction()));
     toolBar.add(createButton(new TextAlignmentJustifyAction()));
     toolBar.add(new JToolBar.Separator());
-    toolBar.add(new ToolbarButton(hyperlinkAction));
+
+    // Add special crosstab band selection icon
+    if (getRenderContext().getReportDefinition() instanceof CrosstabElement)
+    {
+      final SelectCrosstabBandAction selectCrosstabBandAction = new SelectCrosstabBandAction();
+      selectCrosstabBandAction.setReportDesignerContext(designerContext);
+      toolBar.add(new ToolbarButton(selectCrosstabBandAction));
+      toolBar.add(new JToolBar.Separator());
+    }
+
     return toolBar;
   }
 
