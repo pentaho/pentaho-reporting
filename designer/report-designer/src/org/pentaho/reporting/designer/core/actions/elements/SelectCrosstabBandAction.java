@@ -74,19 +74,16 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 
     public ArrayList<Element> getNextSelectionList()
     {
-      switch (getNextState())
+      selectionBandState = getNextState();
+      switch (selectionBandState)
       {
         case NONE:
-          selectionBandState = NONE;
           return new ArrayList<Element>();
         case ROW:
-          selectionBandState = ROW;
           return rowGroupBodyList;
         case COLUMN:
-          selectionBandState = COLUMN;
           return columnGroupBodyList;
         case CELL:
-          selectionBandState = CELL;
           return cellBodyList;
       }
 
