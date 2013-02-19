@@ -264,6 +264,8 @@ public class IconLoader
   private ImageIcon hyperlinkIcon;
   private ImageIcon emptyIcon;
 
+  private ImageIcon crosstabBandSelectionIcon;
+
   public static IconLoader getInstance()
   {
     return instance;
@@ -531,6 +533,9 @@ public class IconLoader
     "/org/pentaho/reporting/designer/core/icons/pentaho_reporting.png")); // NON-NLS
 
     emptyIcon = new ImageIcon(createTransparentImage(16, 16));
+
+    crosstabBandSelectionIcon = new ImageIcon(IconLoader.class.getResource(
+    "/org/pentaho/reporting/designer/core/icons/SelectAllIcon.png")); // NON-NLS
   }
 
 
@@ -1046,6 +1051,10 @@ public class IconLoader
     return boldCommand;
   }
 
+  public ImageIcon getSelectCrosstabBandCommand()
+  {
+    return crosstabBandSelectionIcon;
+  }
 
   public ImageIcon getItalicCommand()
   {
