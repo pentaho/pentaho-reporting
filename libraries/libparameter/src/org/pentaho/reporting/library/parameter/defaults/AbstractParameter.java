@@ -184,7 +184,7 @@ public abstract class AbstractParameter implements Parameter
     this.defaultValue = defaultValue;
   }
 
-  public Object clone()
+  public Parameter clone()
   {
     try
     {

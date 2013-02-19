@@ -1,7 +1,14 @@
 package org.pentaho.reporting.library.parameter.defaults;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+import org.pentaho.reporting.library.parameter.LibParameterBoot;
+import org.pentaho.reporting.library.parameter.ListParameter;
 import org.pentaho.reporting.library.parameter.Parameter;
 import org.pentaho.reporting.library.parameter.ParameterDefinition;
 import org.pentaho.reporting.library.parameter.ParameterValidator;
@@ -85,4 +92,27 @@ public class DefaultParameterDefinition implements ParameterDefinition
   {
     return parameterValidator;
   }
+
+  public String toXml () throws IOException
+  {
+    final StringWriter bout = new StringWriter();
+    final XmlWriter writer = new XmlWriter(bout);
+    toXml(writer);
+    return bout.toString();
+  }
+
+  public void toXml(final XmlWriter writer) throws IOException
+  {
+    writer.writeTag(LibParameterBoot.NAMESPACE, "parameter-definition", XmlWriter.OPEN);
+
+    final Parameter[] parameterDefinitions = getParameterDefinitions();
+    for (int i = 0; i < parameterDefinitions.length; i++)
+    {
+      final Parameter entry = parameterDefinitions[i];
+      entry.toXml(writer);
+    }
+
+    writer.writeCloseTag();
+  }
+
 }

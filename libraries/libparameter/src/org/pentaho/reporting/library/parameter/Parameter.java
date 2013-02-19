@@ -17,7 +17,10 @@
 
 package org.pentaho.reporting.library.parameter;
 
+import java.io.IOException;
 import java.io.Serializable;
+
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
 /**
  * Contains the definition of a single parameter, along with means to validate the parameter on the server side and
@@ -67,4 +70,6 @@ public interface Parameter extends Serializable, Cloneable
   public Object getDefaultValue(final ParameterContext context) throws ParameterException;
 
   public Parameter clone();
+
+  void toXml(XmlWriter writer) throws IOException;
 }
