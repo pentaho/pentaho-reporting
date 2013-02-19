@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="libformula" exported="" />
-    <orderEntry type="module" module-name="libxml" />
+    <orderEntry type="module" module-name="libxml" exported="" />
   </component>
 </module>
 

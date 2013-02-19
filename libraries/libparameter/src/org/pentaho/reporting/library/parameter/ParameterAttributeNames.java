@@ -101,7 +101,12 @@ public final class ParameterAttributeNames
     public static final String ROLE_SCHEDULE_PARAMETER = "schedule";
     public static final String DEPRECATED = "deprecated";
     public static final String PREFERRED = "preferred";
-    
+
+
+    public static final String STRICT_VALUES = "strict-values";
+    public static final String ALLOW_MULTI_SELECTION = "allow-multi-selection";
+    public static final String ALLOW_RESET_ON_INVALID_VALUE = "allow-reset-on-invalid-value";
+
     /**
      * Either server, client or a fixed timezone text in the standard format "+0800"
      */

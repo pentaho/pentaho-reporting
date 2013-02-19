@@ -66,5 +66,5 @@ public interface Parameter extends Serializable, Cloneable
 
   public Object getDefaultValue(final ParameterContext context) throws ParameterException;
 
-  public Object clone() throws CloneNotSupportedException;
+  public Parameter clone();
 }

@@ -1,4 +1,4 @@
-package org.pentaho.reporting.library.parameter.validation;
+package org.pentaho.reporting.library.parameter;
 
 import java.util.Locale;
 
@@ -25,7 +25,7 @@ public class Messages extends ResourceBundleSupport
    */
   private Messages()
   {
-    super(Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.parameters.messages",
+    super(Locale.getDefault(), "org.pentaho.reporting.library.parameter.messages",
         ObjectUtilities.getClassLoader(Messages.class));
   }
 }

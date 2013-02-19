@@ -35,6 +35,7 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.library.parameter.ListParameter;
+import org.pentaho.reporting.library.parameter.Messages;
 import org.pentaho.reporting.library.parameter.Parameter;
 import org.pentaho.reporting.library.parameter.ParameterContext;
 import org.pentaho.reporting.library.parameter.ParameterData;

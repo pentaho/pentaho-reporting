@@ -24,6 +24,7 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 import org.pentaho.reporting.library.parameter.Parameter;
 import org.pentaho.reporting.library.parameter.ParameterAttributeNames;
 import org.pentaho.reporting.library.parameter.ParameterContext;
+import org.pentaho.reporting.library.parameter.ParameterException;
 import org.pentaho.reporting.library.parameter.validation.FormulaParameterEvaluator;
 
 /**
@@ -40,11 +41,6 @@ public abstract class AbstractParameter implements Parameter
   private boolean mandatory;
   private Class valueType;
   private Object defaultValue;
-
-  protected AbstractParameter(final String name)
-  {
-    this(name, String.class);
-  }
 
   protected AbstractParameter(final String name, final Class valueType)
   {
@@ -172,26 +168,13 @@ public abstract class AbstractParameter implements Parameter
     return defaultValue;
   }
 
-  public Object getDefaultValue(final ParameterContext context)
+  public Object getDefaultValue(final ParameterContext context) throws ParameterException
   {
     final String formula = (String) attributeMap.getAttribute
         (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA);
     if (StringUtils.isEmpty(formula, false) == false)
     {
-      // evaluate
-      try
-      {
-        final Object defaultValue = FormulaParameterEvaluator.computeValue
-            (new ParameterExpressionRuntime(context, context.getParameterData()), formula, null, this, this.defaultValue);
-        if (defaultValue != null)
-        {
-          return defaultValue;
-        }
-      }
-      catch (ReportProcessingException e)
-      {
-        logger.debug("Unable to compute default value for parameter '" + name + '"', e);
-      }
+      return new FormulaParameterEvaluator().computeDefaultValue(context, this, this.defaultValue);
     }
     return defaultValue;
   }
@@ -201,11 +184,18 @@ public abstract class AbstractParameter implements Parameter
     this.defaultValue = defaultValue;
   }
 
-  public Object clone() throws CloneNotSupportedException
+  public Object clone()
   {
-    final AbstractParameter o = (AbstractParameter) super.clone();
-    o.attributeMap = (ReportAttributeMap) attributeMap.clone();
-    return o;
+    try
+    {
+      final AbstractParameter o = (AbstractParameter) super.clone();
+      o.attributeMap = attributeMap.clone();
+      return o;
+    }
+    catch (CloneNotSupportedException e)
+    {
+      throw new IllegalStateException(e);
+    }
   }
 
   public boolean isHidden()

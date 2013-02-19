@@ -10,11 +10,14 @@ import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.parser.ParseException;
+import org.pentaho.reporting.library.parameter.Messages;
 import org.pentaho.reporting.library.parameter.Parameter;
 import org.pentaho.reporting.library.parameter.ParameterAttributeNames;
 import org.pentaho.reporting.library.parameter.ParameterContext;
 import org.pentaho.reporting.library.parameter.ParameterException;
 import org.pentaho.reporting.library.parameter.ParameterValidationResult;
+import org.pentaho.reporting.library.parameter.values.ConverterRegistry;
+import org.pentaho.reporting.library.parameter.values.ValueConverter;
 
 public class FormulaParameterEvaluator
 {
@@ -22,6 +25,36 @@ public class FormulaParameterEvaluator
 
   public FormulaParameterEvaluator()
   {
+  }
+
+  public Object computeDefaultValue(final ParameterContext context,
+                                    final Parameter parameter,
+                                    final Object defaultValue) throws ParameterException
+  {
+    final String formula = parameter.getParameterAttribute
+        (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA, context);
+    if (StringUtils.isEmpty(formula, false) == false)
+    {
+      // evaluate
+      try
+      {
+        final Object value = computeValue(context, formula, null, parameter, defaultValue);
+        if (value == null)
+        {
+          return defaultValue;
+        }
+        return value;
+      }
+      catch (ParseException e)
+      {
+        throw new ParameterException("Unable to compute default value for parameter '" + parameter.getName() + '"', e);
+      }
+      catch (EvaluationException e)
+      {
+        throw new ParameterException("Unable to compute default value for parameter '" + parameter.getName() + '"', e);
+      }
+    }
+    return defaultValue;
   }
 
   public Object computePostProcessingValue(final ParameterValidationResult result,
@@ -161,7 +194,6 @@ public class FormulaParameterEvaluator
                                 final Object defaultValue,
                                 final ParameterValidationResult result)
   {
-    /*
     final ValueConverter valueConverter = ConverterRegistry.getInstance().getValueConverter(entry.getValueType());
     if (valueConverter != null)
     {
@@ -198,7 +230,6 @@ public class FormulaParameterEvaluator
         return null;
       }
     }
-    */
     return defaultValue;
 
   }

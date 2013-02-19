@@ -15,19 +15,30 @@
  * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.library.parameter;
+package org.pentaho.reporting.library.parameter.values;
 
-public interface ListParameter extends Parameter
+/**
+ * A value converter is an object that can transform an object into a string or vice versa.
+ *
+ * @author Thomas Morgner
+ */
+public interface ValueConverter
 {
-  public boolean isStrictValueCheck();
+  /**
+   * Converts an object to an attribute value.
+   *
+   * @param o the object, never null.
+   * @return the attribute value.
+   * @throws ValueConversionException if there was an error during the conversion.
+   */
+  public String toAttributeValue(Object o) throws ValueConversionException;
 
-  public boolean isAllowMultiSelection();
-
-  public boolean isAllowResetOnInvalidValue();
-
-  public ParameterDataTable getValues(final ParameterContext context) throws ParameterException;
-
-  public String getKeyColumn();
-
-  public String getTextColumn();
+  /**
+   * Converts a string to a property value.
+   *
+   * @param s the string, never null.
+   * @return a property value.
+   * @throws ValueConversionException if there was an error during the conversion.
+   */
+  public Object toPropertyValue(String s) throws ValueConversionException;
 }

@@ -6,7 +6,14 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 public class LibParameterBoot extends AbstractBoot
 {
-  public LibParameterBoot()
+  private static final LibParameterBoot instance = new LibParameterBoot();
+
+  public static LibParameterBoot getInstance()
+  {
+    return instance;
+  }
+
+  private LibParameterBoot()
   {
   }
 
@@ -24,6 +31,6 @@ public class LibParameterBoot extends AbstractBoot
 
   protected ProjectInformation getProjectInfo()
   {
-    return null;
+    return LibParameterInfo.getInstance();
   }
 }
