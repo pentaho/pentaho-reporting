@@ -56,8 +56,6 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
- * Todo: Document Me
- *
  * @author Thomas Morgner
  */
 public abstract class AbstractElementRenderer implements ElementRenderer
@@ -147,7 +145,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     }
   }
 
-  protected ReportRenderContext getReportRenderContext()
+  public ReportRenderContext getReportRenderContext()
   {
     return reportRenderContext;
   }
