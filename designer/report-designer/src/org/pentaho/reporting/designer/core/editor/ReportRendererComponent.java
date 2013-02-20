@@ -49,13 +49,13 @@ import javax.swing.event.ChangeListener;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.DesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
+import org.pentaho.reporting.designer.core.actions.elements.SelectCrosstabBandAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.BoldAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.EditHyperlinkAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.FontColorSelectorComponent;
 import org.pentaho.reporting.designer.core.actions.elements.format.FontFamilySelectorComponent;
 import org.pentaho.reporting.designer.core.actions.elements.format.FontSizeSelectorComponent;
 import org.pentaho.reporting.designer.core.actions.elements.format.ItalicsAction;
-import org.pentaho.reporting.designer.core.actions.elements.SelectCrosstabBandAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentCenterAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentJustifyAction;
 import org.pentaho.reporting.designer.core.actions.elements.format.TextAlignmentLeftAction;
@@ -78,8 +78,10 @@ import org.pentaho.reporting.designer.core.editor.report.lineal.HorizontalLineal
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
 import org.pentaho.reporting.designer.core.util.ActionToggleButton;
 import org.pentaho.reporting.designer.core.util.CanvasImageLoader;
+import org.pentaho.reporting.designer.core.util.Unit;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
+import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.designtime.swing.ToolbarButton;
@@ -583,9 +585,19 @@ public class ReportRendererComponent extends JComponent
     {
       final ElementRenderer allRenderer = allRenderers[i];
       final AbstractRenderComponent renderComponent;
+
       if (allRenderer instanceof RootBandRenderer)
       {
         final RootBandRenderer rootRenderer = (RootBandRenderer)allRenderer;
+        final ReportRenderContext context = rootRenderer.getReportRenderContext();
+        final ReportDefinition reportDefinition = context.getReportDefinition();
+
+        // Increase crosstab canvas height during a drag-n-drop operation of a new crosstab
+        if (reportDefinition instanceof CrosstabElement)
+        {
+          rootRenderer.setVisualHeight(Unit.INCH.getDotsPerUnit() * 1.5 * 2);
+        }
+
         final RootBandRenderComponent bandComponent = new RootBandRenderComponent(designerContext, renderContext, false);
         bandComponent.setShowTopBorder(false);
         bandComponent.setShowLeftBorder(false);
@@ -595,7 +607,7 @@ public class ReportRendererComponent extends JComponent
       else if (allRenderer instanceof CrosstabRenderer)
       {
         final CrosstabRenderer rootRenderer = (CrosstabRenderer)allRenderer;
-        rootRenderer.setVisualHeight(rootRenderer.getVisualHeight() * 2);
+        rootRenderer.setVisualHeight(Unit.INCH.getDotsPerUnit() * 1.5 * 2);
 
         final CrosstabRenderComponent bandComponent = new CrosstabRenderComponent(designerContext, renderContext);
         bandComponent.setShowTopBorder(false);

@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -174,8 +175,9 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
       try
       {
         // Create the new subreport tab - this is where the contents of the Crosstab
-        // dialog will go.
+        // dialog will go.  Zoom the crosstab canvas to 150% as crosstab has a lot of elements to display
         subReport.setDataFactory(reportDefinition.getDataFactory());
+        subReport.getReportDefinition().setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f);
 
         final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
         subReport.setResourceBundleFactory(rbf);
