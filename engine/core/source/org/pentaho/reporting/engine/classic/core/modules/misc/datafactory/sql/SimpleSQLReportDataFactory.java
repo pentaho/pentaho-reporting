@@ -63,8 +63,8 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
   public SimpleSQLReportDataFactory()
   {
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    this.labelMapping = "Label".equals(globalConfig.getConfigProperty //$NON-NLS-1$
-        (SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Label")); //$NON-NLS-1$
+    this.labelMapping = "Name".equals(globalConfig.getConfigProperty //$NON-NLS-1$
+        (SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name")); //$NON-NLS-1$
   }
 
   public SimpleSQLReportDataFactory(final Connection connection)
