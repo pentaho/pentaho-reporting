@@ -426,11 +426,15 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ActivateQueryAction"/>
       <menuitem id="popup-Query.edit.query"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.EditQueryAction"/>
+      <menuitem id="popup-Query.convert-datasource"
+                pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
     </popup>
 
     <popup id="popup-Inherited-Query">
       <menuitem id="popup-Inherited-Query.activate.query"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ActivateQueryAction"/>
+      <menuitem id="popup-Inherited-Query.convert-datasource"
+                pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
     </popup>
 
     <popup id="popup-RunAs">
@@ -489,8 +493,6 @@
     <popup id="popup-DataSource">
       <menuitem id="popup-DataSource.edit-datasource"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.EditDataSourceAction"/>
-      <menuitem id="popup-DataSource.convert-datasource"
-                pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
       <menuseparator/>
       <menuitem id="popup-DataSource.layer-up"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
@@ -1112,6 +1114,10 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
       <menuitem id="popup-SubReport.delete"
                 pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
+    </popup>
+
+    <popup id="popup-SubReport">
+
     </popup>
   </hbox>
 
