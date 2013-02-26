@@ -23,10 +23,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.AbstractTableModel;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
+import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * A tableModel which is backed up by a java.sql.ResultSet. Use this to directly feed your database data into
@@ -56,7 +58,7 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Defines the column naming mode.
    */
-  private final boolean labelMapMode;
+  private final boolean columnNameMapping;
   private boolean closeStatement;
   /**
    * The column types as read from the result set.
@@ -69,17 +71,17 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * Constructs the model.
    *
    * @param resultset      the result set.
-   * @param labelMapMode   defines, whether to use column names or column labels to compute the column index.
+   * @param columnNameMapping   defines, whether to use column names or column labels to compute the column index.
    * @param closeStatement a flag indicating whether the statement, that created the resultset should be closed when
    *                       the resultset gets closed.
    * @throws SQLException if there is a problem with the result set.
    */
   public ScrollableResultSetTableModel(final ResultSet resultset,
-                                       final boolean labelMapMode,
+                                       final boolean columnNameMapping,
                                        final boolean closeStatement)
       throws SQLException
   {
-    this.labelMapMode = labelMapMode;
+    this.columnNameMapping = columnNameMapping;
     this.closeStatement = closeStatement;
     this.rowCount = -1;
     if (resultset != null)
@@ -93,16 +95,16 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   }
 
   /**
-   * Returns the column name mode used to map column names into column indices. If true, then the Label is used, else
-   * the Name is used.
+   * Returns the column name mode used to map column names into column indices. If true, then the Name is used, else
+   * the Label is used.
    *
-   * @return true, if the column label is used for the mapping, false otherwise.
+   * @return true, if the column name is used for the mapping, false otherwise.
    * @see ResultSetMetaData#getColumnLabel
    * @see ResultSetMetaData#getColumnName
    */
-  public boolean isLabelMapMode()
+  public boolean isColumnNameMapping()
   {
-    return labelMapMode;
+    return columnNameMapping;
   }
 
   /**
@@ -274,13 +276,37 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
     {
       try
       {
-        if (isLabelMapMode())
+        // In past many database drivers were returning same value for column label and column name.  So it is inconsistent
+        // what the database driver will return for column name vs column label.
+        // We have a legacy configuration for this.  If set, then if column label is null or empty then return column name.
+        // Otherwise return column label.
+        // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name) without
+        // any interpretation or interpolation.
+        final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
+        final boolean useLegacyColumnMapping =  "legacy".equalsIgnoreCase(                                                                     // NON-NLS
+            globalConfig.getConfigProperty("org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ColumnMappingMode", "legacy"));  // NON-NLS
+
+        String columnLabel = dbmd.getColumnLabel(column + 1);
+        if (useLegacyColumnMapping)
         {
-          return dbmd.getColumnLabel(column + 1);
+          if ((columnLabel == null) || (columnLabel.isEmpty()))
+          {
+            // We are in legacy mode and column label is either null or empty, we then use column name instead.
+            columnLabel = dbmd.getColumnName(column + 1);
+          }
+
+          return columnLabel;
         }
         else
         {
-          return dbmd.getColumnName(column + 1);
+          if (isColumnNameMapping())
+          {
+            return dbmd.getColumnName(column + 1);
+          }
+          else
+          {
+            return columnLabel;
+          }
         }
       }
       catch (SQLException e)

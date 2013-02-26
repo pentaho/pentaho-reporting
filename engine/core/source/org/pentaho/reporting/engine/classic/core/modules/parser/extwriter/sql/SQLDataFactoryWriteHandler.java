@@ -82,8 +82,6 @@ public class SQLDataFactoryWriteHandler implements DataFactoryWriteHandler
       rootAttrs.addNamespaceDeclaration("data", SQLDataFactoryModule.NAMESPACE);
     }
     xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "sql-datasource", rootAttrs, XmlWriterSupport.OPEN);
-    xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "config", "label-mapping",
-        String.valueOf(sqlDataFactory.isLabelMapping()), XmlWriterSupport.CLOSE);
 
     writeConnectionInfo(reportWriter, xmlWriter, sqlDataFactory.getConnectionProvider());
 

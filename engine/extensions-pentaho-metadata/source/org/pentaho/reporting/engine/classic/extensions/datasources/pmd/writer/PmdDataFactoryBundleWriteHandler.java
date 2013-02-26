@@ -80,7 +80,6 @@ public class PmdDataFactoryBundleWriteHandler implements BundleDataFactoryWriter
     final PmdDataFactory df = (PmdDataFactory) dataFactory;
 
     final AttributeList configAttrs = new AttributeList();
-    configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "label-mapping", String.valueOf(df.isLabelMapping()));
     configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "domain", String.valueOf(df.getDomainId()));
     configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "xmi-file", String.valueOf(df.getXmiFile()));
     xmlWriter.writeTag(PmdDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);

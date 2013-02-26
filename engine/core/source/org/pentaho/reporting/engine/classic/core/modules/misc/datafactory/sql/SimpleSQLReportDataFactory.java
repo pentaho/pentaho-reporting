@@ -51,9 +51,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
   private ConnectionProvider connectionProvider;
   private static final Log logger = LogFactory.getLog(SimpleSQLReportDataFactory.class);
 
-  private boolean labelMapping;
+  private boolean columnNameMapping;
   private static final String COLUMN_NAME_MAPPING_KEY =
-      "org.pentaho.reporting.engine.classic.core.modules.data.sql.ColumnNameMapping"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnNameMapping"; //$NON-NLS-1$
   private static final String[] EMPTY_NAMES = new String[0];
   private transient Statement currentRunningStatement;
 
@@ -63,7 +63,7 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
   public SimpleSQLReportDataFactory()
   {
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    this.labelMapping = "Name".equals(globalConfig.getConfigProperty //$NON-NLS-1$
+    this.columnNameMapping = "Name".equalsIgnoreCase(globalConfig.getConfigProperty //$NON-NLS-1$
         (SimpleSQLReportDataFactory.COLUMN_NAME_MAPPING_KEY, "Name")); //$NON-NLS-1$
   }
 
@@ -80,18 +80,6 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
       throw new NullPointerException();
     }
     this.connectionProvider = connectionProvider;
-  }
-
-
-
-  public boolean isLabelMapping()
-  {
-    return labelMapping;
-  }
-
-  public void setLabelMapping(final boolean labelMapping)
-  {
-    this.labelMapping = labelMapping;
   }
 
   public String getUserField()
@@ -403,9 +391,9 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
 
     if (simpleMode)
     {
-      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel(res, labelMapping);
+      return ResultSetTableModelFactory.getInstance().generateDefaultTableModel(res, columnNameMapping);
     }
-    return ResultSetTableModelFactory.getInstance().createTableModel(res, labelMapping, true);
+    return ResultSetTableModelFactory.getInstance().createTableModel(res, columnNameMapping, true);
   }
 
   private void parametrize(final DataRow parameters,
