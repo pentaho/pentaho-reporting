@@ -37,14 +37,16 @@ import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabHeader;
+import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
+import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabSummaryHeader;
 import org.pentaho.reporting.engine.classic.core.CrosstabTitleHeader;
-import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
+import org.pentaho.reporting.engine.classic.core.GroupHeader;
 
 /**
  * This class handle the select crosstab action.  This action is invoked from the Crosstab subreport toolbar.
@@ -57,6 +59,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 {
   private ReportSelectionModel selectionModel;
 
+  static private ArrayList<Element> otherGroupBodyList;
   static private ArrayList<Element> rowGroupBodyList;
   static private ArrayList<Element> columnGroupBodyList;
   static private ArrayList<Element> cellBodyList;
@@ -65,7 +68,8 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 
   private enum CrosstabSelectionBandState
   {
-    NONE()    {public CrosstabSelectionBandState getNextState() {return ROW;}},
+    NONE()    {public CrosstabSelectionBandState getNextState() {return OTHER;}},
+    OTHER()   {public CrosstabSelectionBandState getNextState() {return ROW;}},
     ROW()     {public CrosstabSelectionBandState getNextState() {return COLUMN;}},
     COLUMN()  {public CrosstabSelectionBandState getNextState() {return CELL;}},
     CELL()    {public CrosstabSelectionBandState getNextState() {return NONE;}};
@@ -79,6 +83,8 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
       {
         case NONE:
           return new ArrayList<Element>();
+       case OTHER:
+          return otherGroupBodyList;
         case ROW:
           return rowGroupBodyList;
         case COLUMN:
@@ -102,6 +108,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 
     selectionBandState = CrosstabSelectionBandState.NONE;
 
+    otherGroupBodyList = new ArrayList<Element>();
     rowGroupBodyList = new ArrayList<Element>();
     columnGroupBodyList = new ArrayList<Element>();
     cellBodyList = new ArrayList<Element>();
@@ -144,14 +151,24 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
       if (group instanceof CrosstabGroup)
       {
         final CrosstabGroup crosstabGroup = (CrosstabGroup)group;
-        final CrosstabRowGroupBody crosstabRowGroupBody = (CrosstabRowGroupBody)crosstabGroup.getBody();
+        final GroupBody crosstabGroupBody = crosstabGroup.getBody();
 
         // We want to build the row, column and cell lists only once.  These lists
         // contain all the elements for a particular section of the crosstab.
         if (cellBodyList.isEmpty())
         {
-          // Start with the row-group and work our way deeper recursively.
-          buildCrosstabRowGroupBands(crosstabRowGroupBody);
+          // Start with the other group and work our way deeper recursively.
+          // Note: Other Group is optional.
+          if (crosstabGroupBody instanceof CrosstabOtherGroupBody)
+          {
+            final CrosstabOtherGroup crosstabOtherGroup = ((CrosstabOtherGroupBody)crosstabGroupBody).getGroup();
+            buildCrosstabOtherRowGroupBands(crosstabOtherGroup);
+          }
+          else if (crosstabGroupBody instanceof CrosstabRowGroupBody)
+          {
+            final CrosstabRowGroupBody crosstabRowGroupBody = (CrosstabRowGroupBody)crosstabGroup.getBody();
+            buildCrosstabRowGroupBands(crosstabRowGroupBody);
+          }
         }
 
         // Select the next crosstab band
@@ -262,6 +279,37 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     }
   }
 
+  /**
+   * Iterate over the Crosstab's Other Group Body.  This is where the Crosstab's Group Header lives ('crosstab-other-group')
+   * @param crosstabOtherGroup
+   */
+
+  private void buildCrosstabOtherRowGroupBands(final CrosstabOtherGroup crosstabOtherGroup)
+  {
+    if (crosstabOtherGroup == null)
+    {
+      return;
+    }
+
+    final GroupHeader otherGroupHeader = (GroupHeader)crosstabOtherGroup.getElement(0);
+    for (int i = 0; i < otherGroupHeader.getElementCount(); i++)
+    {
+      final Element element = otherGroupHeader.getElement(i);
+      otherGroupBodyList.add(element);
+    }
+
+    // We got a Other Group header.  If we have multiple group headers, we recurse.
+    // Otherwise we can now get the elements from other parts of the crosstab
+    final GroupBody groupBody = crosstabOtherGroup.getBody();
+    if (groupBody instanceof CrosstabOtherGroupBody)
+    {
+      buildCrosstabOtherRowGroupBands(((CrosstabOtherGroupBody)groupBody).getGroup());
+    }
+    else if (groupBody instanceof CrosstabRowGroupBody)
+    {
+      buildCrosstabRowGroupBands((CrosstabRowGroupBody)groupBody);
+    }
+  }
 
   /**
    * Iterate over a Band's elements selecting each element.
