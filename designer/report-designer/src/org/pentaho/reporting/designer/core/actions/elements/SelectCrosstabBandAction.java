@@ -63,18 +63,28 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
   static private ArrayList<Element> rowGroupBodyList;
   static private ArrayList<Element> columnGroupBodyList;
   static private ArrayList<Element> cellBodyList;
+  static private ArrayList<Element> noneList;
+  static private ArrayList<Element> allElementsList;
 
   static private CrosstabSelectionBandState selectionBandState;
 
   private enum CrosstabSelectionBandState
   {
-    NONE()    {public CrosstabSelectionBandState getNextState() {return OTHER;}},
-    OTHER()   {public CrosstabSelectionBandState getNextState() {return ROW;}},
-    ROW()     {public CrosstabSelectionBandState getNextState() {return COLUMN;}},
-    COLUMN()  {public CrosstabSelectionBandState getNextState() {return CELL;}},
-    CELL()    {public CrosstabSelectionBandState getNextState() {return NONE;}};
+    NONE()    {public CrosstabSelectionBandState getNextState() {return OTHER;}
+               public CrosstabSelectionBandState getCurrentState() {return NONE;}},
+    OTHER()   {public CrosstabSelectionBandState getNextState() {return ROW;}
+               public CrosstabSelectionBandState getCurrentState() {return OTHER;}},
+    ROW()     {public CrosstabSelectionBandState getNextState() {return COLUMN;}
+               public CrosstabSelectionBandState getCurrentState() {return ROW;}},
+    COLUMN()  {public CrosstabSelectionBandState getNextState() {return CELL;}
+               public CrosstabSelectionBandState getCurrentState() {return COLUMN;}},
+    CELL()    {public CrosstabSelectionBandState getNextState() {return ALL;}
+               public CrosstabSelectionBandState getCurrentState() {return CELL;}},
+    ALL()     {public CrosstabSelectionBandState getNextState() {return NONE;}
+               public CrosstabSelectionBandState getCurrentState() {return ALL;}};
 
     public abstract CrosstabSelectionBandState getNextState();
+    public abstract CrosstabSelectionBandState getCurrentState();
 
     public ArrayList<Element> getNextSelectionList()
     {
@@ -82,7 +92,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
       switch (selectionBandState)
       {
         case NONE:
-          return new ArrayList<Element>();
+          return noneList;
        case OTHER:
           return otherGroupBodyList;
         case ROW:
@@ -91,9 +101,11 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
           return columnGroupBodyList;
         case CELL:
           return cellBodyList;
+        case ALL:
+          return allElementsList;
       }
 
-      return rowGroupBodyList;
+      return noneList;
     }
   }
 
@@ -112,6 +124,8 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     rowGroupBodyList = new ArrayList<Element>();
     columnGroupBodyList = new ArrayList<Element>();
     cellBodyList = new ArrayList<Element>();
+    noneList = new ArrayList<Element>();    // This will always be empty
+    allElementsList = new ArrayList<Element>();
 
     setEnabled(true);
   }
@@ -155,7 +169,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 
         // We want to build the row, column and cell lists only once.  These lists
         // contain all the elements for a particular section of the crosstab.
-        if (cellBodyList.isEmpty())
+        if (allElementsList.isEmpty())
         {
           // Start with the other group and work our way deeper recursively.
           // Note: Other Group is optional.
@@ -169,6 +183,12 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
             final CrosstabRowGroupBody crosstabRowGroupBody = (CrosstabRowGroupBody)crosstabGroup.getBody();
             buildCrosstabRowGroupBands(crosstabRowGroupBody);
           }
+
+          // Create an array of all elements.
+          allElementsList.addAll(otherGroupBodyList);
+          allElementsList.addAll(rowGroupBodyList);
+          allElementsList.addAll(columnGroupBodyList);
+          allElementsList.addAll(cellBodyList);
         }
 
         // Select the next crosstab band
