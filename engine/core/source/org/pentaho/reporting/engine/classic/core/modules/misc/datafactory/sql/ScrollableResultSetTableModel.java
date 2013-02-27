@@ -15,7 +15,7 @@
  * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
+package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -25,6 +25,9 @@ import javax.swing.table.AbstractTableModel;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.DataTableException;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.DefaultTableMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TypeMapper;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
@@ -283,8 +286,8 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
         // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name) without
         // any interpretation or interpolation.
         final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-        final boolean useLegacyColumnMapping =  "legacy".equalsIgnoreCase(                                                                     // NON-NLS
-            globalConfig.getConfigProperty("org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ColumnMappingMode", "legacy"));  // NON-NLS
+        final boolean useLegacyColumnMapping =  "legacy".equalsIgnoreCase(                                                                          // NON-NLS
+            globalConfig.getConfigProperty("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode", "legacy"));  // NON-NLS
 
         String columnLabel = dbmd.getColumnLabel(column + 1);
         if (useLegacyColumnMapping)

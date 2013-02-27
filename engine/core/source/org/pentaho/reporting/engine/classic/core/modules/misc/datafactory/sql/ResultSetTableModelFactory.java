@@ -15,7 +15,7 @@
  * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
+package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -32,6 +32,8 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.DefaultTableMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TypeMapper;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
@@ -41,7 +43,7 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
 
 /**
  * Creates a <code>TableModel</code> which is backed up by a <code>ResultSet</code>. If the <code>ResultSet</code> is
- * scrollable, a {@link org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ScrollableResultSetTableModel}
+ * scrollable, a {@link ScrollableResultSetTableModel}
  * is created, otherwise all data is copied from the <code>ResultSet</code> into a <code>DefaultTableModel</code>.
  * <p/>
  * The creation of a <code>DefaultTableModel</code> can be forced if the system property
@@ -57,7 +59,7 @@ public final class ResultSetTableModelFactory
    * The configuration key defining how to map column names to column indices.
    */
   public static final String COLUMN_NAME_MAPPING_KEY =
-      "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ColumnNameMapping"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode"; //$NON-NLS-1$
 
   /**
    * The 'ResultSet factory mode'.
@@ -80,7 +82,7 @@ public final class ResultSetTableModelFactory
   /**
    * Creates a table model by using the given <code>ResultSet</code> as the backend. If the <code>ResultSet</code> is
    * scrollable (the type is not <code>TYPE_FORWARD_ONLY</code>), an instance of {@link
-   * org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ScrollableResultSetTableModel} is returned. This
+   * org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ScrollableResultSetTableModel} is returned. This
    * model uses the extended capabilities of scrollable result sets to directly read data from the database without
    * caching or the need of copying the complete <code>ResultSet</code> into the programs memory.
    * <p/>
