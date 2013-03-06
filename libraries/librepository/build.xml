@@ -24,14 +24,6 @@
 	<!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
 	<import file="${common.build.file}"/>
 
-    <!--=======================================================================
-        This project does not support test-cases, so build is same as build-testless
-
-        Runs a typical continuous integration build including project dist,
-        test, and coverage artifacts
-        ====================================================================-->
-    <target name="build" depends="build-testless" />
-
 
     <!--=======================================================================
         continuous

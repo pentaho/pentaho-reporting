@@ -30,7 +30,7 @@ public class PageSequenceNameGenerator implements NameGenerator
   }
 
   public PageSequenceNameGenerator(final ContentLocation location,
-                              final String defaultNameHint)
+                                   final String defaultNameHint)
   {
     if (location == null)
     {
@@ -66,8 +66,8 @@ public class PageSequenceNameGenerator implements NameGenerator
   }
 
   public PageSequenceNameGenerator(final ContentLocation location,
-                              final String defaultNameHint,
-                              final String defaultSuffix)
+                                   final String defaultNameHint,
+                                   final String defaultSuffix)
   {
     if (location == null)
     {
@@ -119,6 +119,7 @@ public class PageSequenceNameGenerator implements NameGenerator
     final String filename = name + '-' + counter + '.' + suffix;
     if (location.exists(filename) == false)
     {
+      counter += 1;
       return filename;
     }
     throw new ContentIOException("Unable to generate page-sequence: A file with the next expected name already exists.");
