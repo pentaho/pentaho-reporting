@@ -77,7 +77,7 @@ public class FilesystemFilter extends FileFilter implements FilenameFilter
   public FilesystemFilter(final String[] fileext, final String descr,
                           final boolean accDirs)
   {
-    this.fileext = (String[]) fileext.clone();
+    this.fileext = fileext.clone();
     this.descr = descr;
     this.accDirs = accDirs;
   }

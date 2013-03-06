@@ -376,6 +376,9 @@
     </inspection_tool>
     <inspection_tool class="OctalLiteral" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="OneButtonGroup" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="OverlyStrongTypeCast" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoreInMatchingInstanceof" value="true" />
+    </inspection_tool>
     <inspection_tool class="PackageVisibleField" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="PackageVisibleInnerClass" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoreEnums" value="false" />
@@ -420,7 +423,6 @@
       <option name="ignoreUncompilable" value="true" />
     </inspection_tool>
     <inspection_tool class="RedundantArrayCreation" enabled="false" level="WARNING" enabled_by_default="false" />
-    <inspection_tool class="RedundantCast" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="RedundantFieldInitialization" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="RedundantImport" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="RedundantScopeBinding" level="WARNING" enabled="false" />
@@ -582,6 +584,7 @@
     <inspection_tool class="WebWarnings" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="WhileCanBeForeach" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="XmlDuplicatedId" enabled="false" level="ERROR" enabled_by_default="false" />
+    <inspection_tool class="XmlHighlighting" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="XmlUnboundNsPrefix" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="XmlWrongRootElement" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="XsltDeclarations" enabled="false" level="ERROR" enabled_by_default="false" />

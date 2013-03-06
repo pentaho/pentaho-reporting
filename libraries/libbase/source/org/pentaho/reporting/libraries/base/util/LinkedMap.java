@@ -723,7 +723,7 @@ public class LinkedMap implements Cloneable, Serializable
   public Object clone() throws CloneNotSupportedException
   {
     final LinkedMap map = (LinkedMap) super.clone();
-    map.backend = (MapEntry[]) backend.clone();
+    map.backend = backend.clone();
     Arrays.fill(map.backend, null);
     map.firstEntry = null;
     map.lastEntry = null;

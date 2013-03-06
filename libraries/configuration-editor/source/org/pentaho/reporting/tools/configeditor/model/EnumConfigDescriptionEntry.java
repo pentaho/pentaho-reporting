@@ -51,7 +51,7 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
    */
   public String[] getOptions()
   {
-    return (String[]) options.clone();
+    return options.clone();
   }
 
   /**
@@ -61,7 +61,7 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
    */
   public void setOptions(final String[] options)
   {
-    this.options = (String[]) options.clone();
+    this.options = options.clone();
   }
 
   public boolean equals(final Object o)
@@ -93,7 +93,7 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
   public int hashCode()
   {
     int result = super.hashCode();
-    result = 31 * result + options.hashCode();
+    result = 31 * result + Arrays.hashCode(options);
     return result;
   }
 }

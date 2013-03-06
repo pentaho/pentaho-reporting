@@ -264,11 +264,11 @@ public final class StringUtils
   {
     if (first.length == 0)
     {
-      return (String[]) second.clone();
+      return second.clone();
     }
     if (second.length == 0)
     {
-      return (String[]) first.clone();
+      return first.clone();
     }
     final HashSet<String> total = new HashSet<String>(first.length + second.length);
     for (int i = 0; i < first.length; i++)
@@ -279,7 +279,7 @@ public final class StringUtils
     {
       total.add(second[i]);
     }
-    return (String[]) total.toArray(new String[total.size()]);
+    return total.toArray(new String[total.size()]);
   }
 
   /**

@@ -241,7 +241,7 @@ public class IOUtils
     // if both urls are identical, then return the plain file name...
     if (baseFile.equals(targetFile))
     {
-      return (String) urlName.get(urlName.size() - 1);
+      return urlName.get(urlName.size() - 1);
     }
 
     int commonIndex = startsWithUntil(urlName, baseName);
@@ -313,7 +313,7 @@ public class IOUtils
       // if both urls are identical, then return the plain file name...
       if (String.valueOf(url).equals(String.valueOf(baseURL)))
       {
-        return (String) urlName.get(urlName.size() - 1);
+        return urlName.get(urlName.size() - 1);
       }
 
       int commonIndex = startsWithUntil(urlName, baseName);
@@ -795,7 +795,7 @@ public class IOUtils
     final List<String> path = new ArrayList<String>(capacity);
     for (int i = 0; i < capacity; i++)
     {
-      final String pathElement = (String) list.get(i);
+      final String pathElement = list.get(i);
       if ((pathElement != null && pathElement.isEmpty()) || pathElement == null)
       {
         continue;

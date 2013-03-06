@@ -143,7 +143,7 @@ public abstract class ProjectInformation extends DependencyInformation
    */
   public DependencyInformation[] getLibraries()
   {
-    return (DependencyInformation[]) this.libraries.toArray
+    return this.libraries.toArray
         (new DependencyInformation[this.libraries.size()]);
   }
 
@@ -173,7 +173,7 @@ public abstract class ProjectInformation extends DependencyInformation
    */
   public DependencyInformation[] getOptionalLibraries()
   {
-    return (DependencyInformation[]) optionalLibraries.toArray(new DependencyInformation[optionalLibraries.size()]);
+    return optionalLibraries.toArray(new DependencyInformation[optionalLibraries.size()]);
   }
 
   /**

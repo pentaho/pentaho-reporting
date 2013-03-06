@@ -76,6 +76,7 @@ public class BasicStrokeSerializer implements SerializeMethod
     final float miterLimit = stream.readFloat();
     final float[] dash = (float[]) stream.readObject();
     final float dashPhase = stream.readFloat();
+    //noinspection MagicConstant
     return new BasicStroke(width, cap, join, miterLimit, dash, dashPhase);
   }
 

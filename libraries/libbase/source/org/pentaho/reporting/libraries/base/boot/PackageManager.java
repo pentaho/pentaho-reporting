@@ -492,7 +492,7 @@ public final class PackageManager
   {
     try
     {
-      final Module module = (Module) ObjectUtilities.loadAndInstantiate
+      final Module module = ObjectUtilities.loadAndInstantiate
           (moduleInfo.getModuleClass(), booter.getClass(), Module.class);
       if (module == null)
       {
@@ -732,7 +732,7 @@ public final class PackageManager
         mods.add(state.getModule());
       }
     }
-    return (Module[]) mods.toArray(new Module[mods.size()]);
+    return mods.toArray(new Module[mods.size()]);
   }
 
   /**
@@ -763,7 +763,7 @@ public final class PackageManager
     p.println("----------------------------------------------------------");
     for (int i = 0; i < activeModules.size(); i++)
     {
-      final Module mod = (Module) activeModules.get(i);
+      final Module mod = activeModules.get(i);
       p.print(new PadMessage(mod.getModuleClass(), 70));
       p.print(" [");
       p.print(mod.getSubSystem());

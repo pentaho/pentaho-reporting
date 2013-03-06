@@ -27,7 +27,8 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class ClassComparator implements Comparator, Serializable
+@SuppressWarnings("unchecked")
+public class ClassComparator implements Comparator<Class>, Serializable
 {
 
     /** For serialization. */
@@ -68,16 +69,14 @@ public class ClassComparator implements Comparator, Serializable
      * this fact.  The recommended language is "Note: this comparator
      * imposes orderings that are inconsistent with equals."
      *
-     * @param o1 the first object to be compared.
-     * @param o2 the second object to be compared.
+     * @param c1 the first object to be compared.
+     * @param c2 the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the
      *         first argument is less than, equal to, or greater than the
      *         second.
      */
-    public int compare(final Object o1, final Object o2) {
-        final Class c1 = (Class) o1;
-        final Class c2 = (Class) o2;
-        if (c1.equals(o2)) {
+    public int compare(final Class c1, final Class c2) {
+        if (c1.equals(c2)) {
             return 0;
         }
         if (c1.isAssignableFrom(c2)) {

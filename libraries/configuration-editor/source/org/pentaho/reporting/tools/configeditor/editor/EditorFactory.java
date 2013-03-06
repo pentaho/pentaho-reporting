@@ -40,7 +40,7 @@ public final class EditorFactory
   /**
    * A collection containing all defined modules and their priorities.
    */
-  private final HashMap priorities;
+  private final HashMap<ModuleEditor, Integer> priorities;
 
   /**
    * Externalized String Access
@@ -53,7 +53,7 @@ public final class EditorFactory
   private EditorFactory()
   {
     messages = Messages.getInstance();
-    priorities = new HashMap();
+    priorities = new HashMap<ModuleEditor, Integer>();
     registerModuleEditor(new DefaultModuleEditor(), -1);
   }
 
@@ -123,7 +123,7 @@ public final class EditorFactory
       final ModuleEditor ed = (ModuleEditor) keys.next();
       if (ed.canHandle(module))
       {
-        final Integer prio = (Integer) priorities.get(ed);
+        final Integer prio = priorities.get(ed);
         if (prio.intValue() > currentEditorPriority)
         {
           currentEditorPriority = prio.intValue();

@@ -50,6 +50,7 @@ public final class Empty {
    * An empty Map. (Collections.EMPTY_MAP is not available until JDK 1.4)
    * @deprecated this is a redeclaration of the Collections.EMPTY_MAP field and should be killed.
    */
+  @SuppressWarnings("PublicStaticCollectionField")
   public static final Map MAP = Collections.EMPTY_MAP;
 
   /**

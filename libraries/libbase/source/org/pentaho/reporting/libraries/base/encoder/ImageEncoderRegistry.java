@@ -74,7 +74,7 @@ public class ImageEncoderRegistry
 
   public String[] getRegisteredEncoders()
   {
-    return (String[]) encoders.keySet().toArray(new String[encoders.size()]);
+    return encoders.keySet().toArray(new String[encoders.size()]);
   }
 
   public ImageEncoder createEncoder(final String mimeType) throws UnsupportedEncoderException

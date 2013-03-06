@@ -218,9 +218,9 @@ public abstract class ClassQueryTool
       }
     }
 
-    final URL[] urlsArray = (URL[]) jarURLs.toArray(new URL[jarURLs.size()]);
-    final File[] dirsArray = (File[]) directoryURLs.toArray(new File[directoryURLs.size()]);
-    final URL[] allArray = (URL[]) allURLs.toArray(new URL[allURLs.size()]);
+    final URL[] urlsArray = jarURLs.toArray(new URL[jarURLs.size()]);
+    final File[] dirsArray = directoryURLs.toArray(new File[directoryURLs.size()]);
+    final URL[] allArray = allURLs.toArray(new URL[allURLs.size()]);
 
     for (int i = 0; i < allArray.length; i++)
     {

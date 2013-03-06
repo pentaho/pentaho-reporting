@@ -46,7 +46,7 @@ public class Arc2DSerializer implements SerializeMethod
    * @param stream the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject(Object o, ObjectOutputStream stream) throws IOException
+  public void writeObject(final Object o, final ObjectOutputStream stream) throws IOException
   {
     final Arc2D arc = (Arc2D) o;
     stream.writeDouble(arc.getX());
@@ -66,7 +66,7 @@ public class Arc2DSerializer implements SerializeMethod
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject(ObjectInputStream stream)
+  public Object readObject(final ObjectInputStream stream)
       throws IOException, ClassNotFoundException
   {
     final double x = stream.readDouble();
@@ -76,6 +76,7 @@ public class Arc2DSerializer implements SerializeMethod
     final double as = stream.readDouble(); // Angle Start
     final double ae = stream.readDouble(); // Angle Extent
     final int at = stream.readInt();       // Arc type
+    //noinspection MagicConstant
     return new Arc2D.Double(x, y, w, h, as, ae, at);
   }
 
