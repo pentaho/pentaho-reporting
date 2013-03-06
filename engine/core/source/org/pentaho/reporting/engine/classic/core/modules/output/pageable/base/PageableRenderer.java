@@ -106,8 +106,9 @@ public class PageableRenderer extends AbstractRenderer
 
     pageCount += 1;
     logger.info ("Printing a page: " + pageCount);
-    if (pageCount < -5)
+    if (pageCount == -1)
     {
+      // leave the debug-code in until all of these cases are solved.
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
       ModelPrinter.INSTANCE.print(clone);
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
