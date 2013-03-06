@@ -59,12 +59,11 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 {
   // Set the maximum height to an incredibly high value. This is now 2^43 micropoints or more than
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
-  private static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
+  private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
 
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
   private TableRowHeightCalculation tableRowHeightStep;
-  private LogicalPageBox pageBox;
   private boolean cacheDeepDirty;
 
   public InfiniteMajorAxisLayoutStep()
@@ -76,7 +75,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   public void compute(final LogicalPageBox pageBox)
   {
-    this.pageBox = pageBox;
     this.breakState.deinit();
     this.tableRowHeightStep.reset();
     this.cacheDeepDirty = false;
@@ -87,7 +85,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     finally
     {
       this.breakState.deinit();
-      this.pageBox = null;
     }
   }
 

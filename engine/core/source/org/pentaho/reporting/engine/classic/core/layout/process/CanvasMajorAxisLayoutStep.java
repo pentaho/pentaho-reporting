@@ -58,7 +58,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   // Set the maximum height to an incredibly high value. This is now 2^43 micropoints or more than
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
-  private static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
+  private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
   private boolean paranoidChecks = true;
   private TableRowHeightCalculation tableRowHeightStep;
   private boolean cacheDeepDirty;
