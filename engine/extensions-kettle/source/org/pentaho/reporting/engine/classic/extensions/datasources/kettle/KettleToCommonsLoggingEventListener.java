@@ -1,7 +1,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import org.pentaho.di.core.logging.LoggingEvent;
-import org.pentaho.di.core.logging.LoggingEventListener;
+import org.pentaho.di.core.logging.KettleLoggingEvent;
+import org.pentaho.di.core.logging.KettleLoggingEventListener;
 
 import common.Logger;
 
@@ -11,30 +11,28 @@ import common.Logger;
  * @author Matt Casters
  *
  */
-public class KettleToCommonsLoggingEventListener implements LoggingEventListener {
+public class KettleToCommonsLoggingEventListener implements KettleLoggingEventListener {
 
-  private static Logger logger = Logger.getLogger(KettleDataFactory.class);
+  private static Logger logger = Logger.getLogger(KettleToCommonsLoggingEventListener.class);
 
   @Override
-  public void eventAdded(LoggingEvent loggingEvent) {
-    
+  public void eventAdded(KettleLoggingEvent loggingEvent) {
     // The level mentioned below is the Kettle logging level.
     //
-    switch(loggingEvent.getLevel()) {
-      case NOTHING: 
+    switch (loggingEvent.getLevel()) {
+      case NOTHING:
         break;
-      case ROWLEVEL: 
-      case DEBUG: 
+      case ROWLEVEL:
+      case DEBUG:
         logger.debug(loggingEvent.getMessage());
         break;
-      case ERROR: 
+      case ERROR:
         logger.error(loggingEvent.getMessage());
         break;
-      default: 
+      default:
         logger.info(loggingEvent.getMessage());
         break;
     }
 
   }
-
 }
