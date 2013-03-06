@@ -23,12 +23,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
+
 import javax.swing.table.TableModel;
 
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.exception.KettleValueException;
-import org.pentaho.di.core.logging.LogWriter;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.RepositoryPluginType;
 import org.pentaho.di.core.row.RowMetaInterface;
@@ -50,6 +50,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public abstract class AbstractKettleTransformationProducer implements KettleTransformationProducer
 {
+  private static final long serialVersionUID = -2287953597208384424L;
+
   protected static class TableProducer implements RowListener
   {
     private TypedTableModel tableModel;
@@ -145,7 +147,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     {
       final int colCount = rowMeta.size();
       final String fieldNames[] = new String[colCount];
-      final Class fieldTypes[] = new Class[colCount];
+      final Class<?> fieldTypes[] = new Class<?>[colCount];
       for (int columnNo = 0; columnNo < colCount; columnNo++)
       {
         final ValueMetaInterface valueMeta = rowMeta.getValueMeta(columnNo);
@@ -334,69 +336,60 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
     final String[] params = fillArguments(parameters);
 
-    // Sadly Kettle always insists on creating a log-file. There is no way around it (yet).
-    final LogWriter logWriter = LogWriter.getInstance("Kettle-reporting-datasource", false);
+    final Repository repository = connectToRepository();
     try
     {
-      final Repository repository = connectToRepository(logWriter);
-      try
+      final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
+      transMeta.setArguments(params);
+      final Trans trans = new Trans(transMeta);
+      for (int i = 0; i < definedVariableNames.length; i++)
       {
-        final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
-        transMeta.setArguments(params);
-        final Trans trans = new Trans(transMeta);
-        for (int i = 0; i < definedVariableNames.length; i++)
+        final ParameterMapping mapping = definedVariableNames[i];
+        final String sourceName = mapping.getName();
+        final String variableName = mapping.getAlias();
+        final Object value = parameters.get(sourceName);
+        if (value != null)
         {
-          final ParameterMapping mapping = definedVariableNames[i];
-          final String sourceName = mapping.getName();
-          final String variableName = mapping.getAlias();
-          final Object value = parameters.get(sourceName);
-          if (value != null)
-          {
-            trans.setParameterValue(variableName, String.valueOf(value));
-          }
-        }
-
-        transMeta.setInternalKettleVariables();
-        trans.prepareExecution(transMeta.getArguments());
-
-        TableProducer tableProducer = null;
-        final List stepList = trans.getSteps();
-        for (int i = 0; i < stepList.size(); i++)
-        {
-          final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
-          if (stepName.equals(metaDataCombi.stepname) == false)
-          {
-            continue;
-          }
-          final RowMetaInterface row = transMeta.getStepFields(stepName);
-          tableProducer = new TableProducer(row, queryLimit, stopOnError);
-          metaDataCombi.step.addRowListener(tableProducer);
-          break;
-        }
-
-        if (tableProducer == null)
-        {
-          throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
-        }
-
-        currentlyRunningTransformation = trans;
-        trans.startThreads();
-        trans.waitUntilFinished();
-        trans.cleanup();
-        return tableProducer.getTableModel();
-      }
-      finally
-      {
-        currentlyRunningTransformation = null;
-        if (repository != null)
-        {
-          repository.disconnect();
+          trans.setParameterValue(variableName, String.valueOf(value));
         }
       }
+
+      transMeta.setInternalKettleVariables();
+      trans.prepareExecution(transMeta.getArguments());
+
+      TableProducer tableProducer = null;
+      final List<StepMetaDataCombi> stepList = trans.getSteps();
+      for (int i = 0; i < stepList.size(); i++)
+      {
+        final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
+        if (stepName.equals(metaDataCombi.stepname) == false)
+        {
+          continue;
+        }
+        final RowMetaInterface row = transMeta.getStepFields(stepName);
+        tableProducer = new TableProducer(row, queryLimit, stopOnError);
+        metaDataCombi.step.addRowListener(tableProducer);
+        break;
+      }
+
+      if (tableProducer == null)
+      {
+        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+      }
+
+      currentlyRunningTransformation = trans;
+      trans.startThreads();
+      trans.waitUntilFinished();
+      trans.cleanup();
+      return tableProducer.getTableModel();
     }
     finally
     {
-      logWriter.close();
+      currentlyRunningTransformation = null;
+      if (repository != null)
+      {
+        repository.disconnect();
+      }
     }
   }
 
@@ -420,13 +413,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   }
 
 
-  private Repository connectToRepository(final LogWriter logWriter)
-      throws ReportDataFactoryException, KettleException
+  private Repository connectToRepository() throws ReportDataFactoryException, KettleException
   {
-    if (logWriter == null)
-    {
-      throw new NullPointerException();
-    }
     if (repositoryName == null)
     {
       throw new NullPointerException();
@@ -498,8 +486,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     retval.add(getStepName());
     retval.add(isStopOnError());
     retval.add(getRepositoryName());
-    retval.add(new ArrayList(Arrays.asList(getDefinedArgumentNames())));
-    retval.add(new ArrayList(Arrays.asList(getDefinedVariableNames())));
+    retval.add(new ArrayList<String>(Arrays.asList(getDefinedArgumentNames())));
+    retval.add(new ArrayList<ParameterMapping>(Arrays.asList(getDefinedVariableNames())));
     return retval;
   }
 }
