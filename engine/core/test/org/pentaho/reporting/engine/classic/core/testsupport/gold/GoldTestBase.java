@@ -181,28 +181,34 @@ public class GoldTestBase
   {
     final FilesystemFilter filesystemFilter = new FilesystemFilter(name, "Reports");
     final File marker = findMarker();
-    final File reports = new File(marker, "reports");
-    final File[] files = reports.listFiles(filesystemFilter);
-    final HashSet<String> fileSet = new HashSet<String>();
-    for (final File file : files)
+    final String[] directories = new String[]{"reports", "reports-4.0"};
+    for (int i = 0; i < directories.length; i++)
     {
-      final String s = file.getName().toLowerCase();
-      if (fileSet.add(s) == false)
+      final String directory = directories[i];
+      final File reports = new File(marker, directory);
+      final File[] files = reports.listFiles(filesystemFilter);
+      final HashSet<String> fileSet = new HashSet<String>();
+      for (final File file : files)
       {
-        // the toy systems MacOS X and Windows use case-insensitive file systems and completely
-        // mess up when there are two files with what they consider the same name.
-        throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
-            "filename in the directory. Make sure your files are unique and lowercase.");
+        final String s = file.getName().toLowerCase();
+        if (fileSet.add(s) == false)
+        {
+          // the toy systems MacOS X and Windows use case-insensitive file systems and completely
+          // mess up when there are two files with what they consider the same name.
+          throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
+              "filename in the directory. Make sure your files are unique and lowercase.");
+        }
       }
-    }
 
-    for (final File file : files)
-    {
-      if (file.isDirectory())
+      for (final File file : files)
       {
-        continue;
+        if (file.isDirectory())
+        {
+          continue;
+        }
+        return file;
       }
-      return file;
+
     }
 
     return null;
@@ -291,7 +297,7 @@ public class GoldTestBase
     final byte[] goldData;
     final InputStream goldInput = new BufferedInputStream(new FileInputStream(goldSample));
     final MemoryByteArrayOutputStream goldByteStream =
-        new MemoryByteArrayOutputStream(Math.min (1024*1024, (int) goldSample.length()), 1024*1024);
+        new MemoryByteArrayOutputStream(Math.min(1024 * 1024, (int) goldSample.length()), 1024 * 1024);
 
     try
     {
@@ -443,14 +449,14 @@ public class GoldTestBase
     w.start();
     try
     {
-    if (numThreads == 1)
-    {
-      runAllGoldReportsSerial();
-    }
-    else
-    {
-      runAllGoldReportsInParallel(numThreads);
-    }
+      if (numThreads == 1)
+      {
+        runAllGoldReportsSerial();
+      }
+      else
+      {
+        runAllGoldReportsInParallel(numThreads);
+      }
     }
     finally
     {
@@ -478,9 +484,9 @@ public class GoldTestBase
     final List<Throwable> errors = Collections.synchronizedList(new ArrayList<Throwable>());
 
     final ExecutorService threadPool = new ThreadPoolExecutor(threads, threads,
-                                  0L, TimeUnit.MILLISECONDS,
-                                  new LinkedBlockingQueue<Runnable>(),
-                                  new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+        0L, TimeUnit.MILLISECONDS,
+        new LinkedBlockingQueue<Runnable>(),
+        new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
 
     threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.legacy, errors));
     threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.current, errors));
