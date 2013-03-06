@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -251,36 +250,11 @@ public class TableRowHeightCalculation
     final long shift = position - oldPosition;
     if (shift < 0)
     {
-      ModelPrinter.INSTANCE.print(ModelPrinter.INSTANCE.getRoot(rowBox));
       throw new IllegalStateException
           (String.format("Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)", shift, oldPosition, position, rowBox));
     }
 
     CacheBoxShifter.shiftBox(rowBox, shift);
-/*
-    final RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(rowBox);
-    while (it.hasNext())
-    {
-      final RenderNode cellNode = it.next();
-      if (cellNode instanceof TableCellRenderBox == false)
-      {
-        continue;
-      }
-
-      final TableCellRenderBox cellBox = (TableCellRenderBox) cellNode;
-      final long cellShift = position - cellBox.getCachedY();
-      if (cellShift != 0)
-      {
-        CacheBoxShifter.shiftBox(cellBox, cellShift);
-        // this is an inner shift and therefore it has no influence on the
-        // global shift distance
-      }
-
-      cellBox.setCachedHeight(validatedRowHeight);
-      // Todo: now align all the childs of the cellbox.
-
-    }
-*/
     rowBox.setCachedHeight(validatedRowHeight);
     return validatedRowHeight;
   }

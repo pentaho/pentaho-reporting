@@ -17,12 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-/**
- * Creation-Date: 15.04.2007, 13:34:13
- *
- * @author Thomas Morgner
- */
-public final class PageBreakPositionList
+public final class PageBreakPositionList implements PageBreakPositions
 {
   private static class PageBreakPositionBackend
   {
@@ -204,10 +199,12 @@ public final class PageBreakPositionList
 
 
   /**
-   * Returns the last break position that is smaller or equal
+   * Finds the closest break-position that is larger or equal to the given position.
+   * This returns the next pagebreak in the flow after the given position. If the position given is larger than the
+   * largest posible page-break, then this returns the last pagebreak instead.
    *
-   * @param position
-   * @return
+   * @param position the position from where to search the next pagebreak.
+   * @return the position.
    */
   public long findNextBreakPosition(final long position)
   {
@@ -469,6 +466,15 @@ public final class PageBreakPositionList
 
   }
 
+  /**
+   * Checks, whether the given box will cross a pagebreak. The box's y-position is shifted by the given amount before
+   * testing the result. A box will cross a pagebreak if its shifted y position and its shifted y2 position (y + height)
+   * are located on different pages. A box with a height of zero cannot cross a pagebreak by definition.
+   *
+   * @param box the box, unshifted.
+   * @param shift the current shift that should be applied for the test
+   * @return true, if the box crosses a pagebreak, false otherwise.
+   */
   public boolean isCrossingPagebreak(final RenderBox box,
                                      final long shift)
   {
@@ -492,6 +498,13 @@ public final class PageBreakPositionList
                                                       final long boxHeight,
                                                       final long fixedPositionResolved)
   {
+    // A box does not cross the break, if both Y1 and Y2 are on the same page.
+    if (boxHeight == 0)
+    {
+      // A box without a height can appear on either side of the pagebreak. But under no circumstances it may cross it.
+      return false;
+    }
+
     // Only allow positive values.
     // Make sure that we do not cover the page header area. If so, then correct the value to be
     // directly below the header-area.
@@ -508,13 +521,6 @@ public final class PageBreakPositionList
     else
     {
       fixedPositionInFlow = backend.masterBreaks[pageIndex] + shiftedSpaceOnPage;
-    }
-
-    // A box does not cross the break, if both Y1 and Y2 are on the same page.
-    if (boxHeight == 0)
-    {
-      // A box without a height can appear on either side of the pagebreak. But under no circumstances it may cross it.
-      return false;
     }
 
     final int y1 = findPreviousBreak(fixedPositionInFlow);
@@ -812,9 +818,19 @@ public final class PageBreakPositionList
     return -(low + 1);  // key not found.
   }
 
-  public long findNextMajorBreakPosition(final long pos)
+  /**
+   * Finds the closest master break-position that is larger or equal to the given position. A master pagebreak is the
+   * boundary of a logical page, which in itself can consist of several physical pages.
+   *
+   * This returns the next master pagebreak in the flow after the given position. If the position given is larger than the
+   * largest posible page-break, then this returns the last pagebreak instead.
+   *
+   * @param position the position from where to search the next pagebreak.
+   * @return the position.
+   */
+  public long findNextMajorBreakPosition(final long position)
   {
-    final int majorBreakIndex = findNextMajorBreak(pos);
+    final int majorBreakIndex = findNextMajorBreak(position);
     if (majorBreakIndex < 0)
     {
       return backend.masterBreaks[0];
@@ -876,5 +892,23 @@ public final class PageBreakPositionList
     }
     retval.append("}}");
     return retval.toString();
+  }
+
+  public long findPageStartPositionForPageEndPosition(final long pageOffset)
+  {
+    final int masterBreakSize = getMasterBreakSize();
+    for (int i = masterBreakSize - 1; i > 0; i -= 1)
+    {
+      final long masterBreak = getMasterBreak(i);
+      if (masterBreak == pageOffset)
+      {
+        return getMasterBreak(i - 1);
+      }
+      if (masterBreak < pageOffset)
+      {
+        throw new IllegalStateException("Unable to locate proper page start for given offset " + pageOffset);
+      }
+    }
+    return 0;
   }
 }

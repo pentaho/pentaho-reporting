@@ -17,33 +17,58 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.FilteringPageBreakPositions;
+import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositions;
+
 public class PaginationTableState
 {
   private PaginationTableState parent;
-  private boolean rowOpen;
   private boolean suspended;
+  private long pageOffset;
   private long pageHeight;
   private long pageEnd;
+  private PageBreakPositions breakPositions;
+  private boolean fixedPositionProcessingSuspended;
 
-  public PaginationTableState(final long pageHeight, final long pageEnd)
+  public PaginationTableState(final long pageHeight,
+                              final long pageOffset,
+                              final long pageEnd,
+                              final PageBreakPositions breakPositions)
   {
     this.pageHeight = pageHeight;
+    this.pageOffset = pageOffset;
     this.pageEnd = pageEnd;
+    this.breakPositions = breakPositions;
   }
 
   public PaginationTableState(final PaginationTableState parent)
   {
     this.parent = parent;
-    this.suspended = parent.isVisualStateCollectionSuspended();
+    this.pageOffset = parent.pageOffset;
+    this.breakPositions = parent.breakPositions;
     this.pageHeight = parent.pageHeight;
     this.pageEnd = parent.pageEnd;
+    this.fixedPositionProcessingSuspended = true;
   }
 
-  public PaginationTableState(final PaginationTableState parent, final boolean rowOpen, final boolean suspended)
+  public void suspendVisualStateCollection(final boolean temporary)
   {
-    this(parent);
-    this.rowOpen = rowOpen;
-    this.suspended |= suspended;
+    this.suspended = true;
+
+    if (temporary == false && this.parent != null)
+    {
+      this.parent.suspendVisualStateCollection(temporary);
+    }
+  }
+
+  public long getPageOffset()
+  {
+    return pageOffset;
+  }
+
+  public PageBreakPositions getBreakPositions()
+  {
+    return breakPositions;
   }
 
   public long getPageHeight()
@@ -63,16 +88,21 @@ public class PaginationTableState
       return true;
     }
 
-    if (rowOpen)
-    {
-      return true;
-    }
-
     return false;
   }
 
   public PaginationTableState pop()
   {
     return parent;
+  }
+
+  public boolean isFixedPositionProcessingSuspended()
+  {
+    return fixedPositionProcessingSuspended;
+  }
+
+  public void defineArtificialPageStart(final long offset)
+  {
+    breakPositions = new FilteringPageBreakPositions(breakPositions, offset);
   }
 }

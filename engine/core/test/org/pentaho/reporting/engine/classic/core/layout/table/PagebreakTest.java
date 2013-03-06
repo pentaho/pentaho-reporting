@@ -20,8 +20,11 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSection
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldenSampleGenerator;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class PagebreakTest
 {
@@ -122,6 +125,26 @@ public class PagebreakTest
 //    assertPageValid(report, 4);
   }
 
+  private class CustomProducer extends TableTestUtil.DefaultElementProducer
+  {
+
+    public CustomProducer()
+    {
+      super(true);
+    }
+
+    public Element createDataItem(final String text, final int row, final int column)
+    {
+      if (text.startsWith("Head"))
+      {
+        return TableTestUtil.createDataItem(text, 100, 99);
+      }
+
+      Element dataItem = super.createDataItem(text, row, column);
+      return dataItem;
+    }
+  }
+
   @Test
   public void testCanvasWithPrePostPad() throws Exception
   {
@@ -129,7 +152,7 @@ public class PagebreakTest
     report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
     report.setQuery("query");
 
-    final Band table = TableTestUtil.createTable(1, 1, 6, true);
+    final Band table = TableTestUtil.createTable(1, 1, 6, new CustomProducer());
     table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
     table.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
     table.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 10f);
@@ -144,9 +167,24 @@ public class PagebreakTest
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-canvas.pdf");
 
-    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(20));
+    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
     assertPageValid(report, 1);
     assertPageValid(report, 2);
+  }
+
+  @Test
+  public void testPrd3857Report() throws Exception
+  {
+    File file = GoldenSampleGenerator.locateGoldenSampleReport("Prd-3857-001.prpt");
+    Assert.assertNotNull(file);
+
+    final ResourceManager manager = new ResourceManager();
+    manager.registerDefaults();
+    final Resource res = manager.createDirectly(file, MasterReport.class);
+    final MasterReport report = (MasterReport) res.getResource();
+
+    assertPageValid(report, 0);
+    assertPageValid(report, 1);
   }
 
   private void assertPageValid(final MasterReport report, final int page) throws Exception
