@@ -22,7 +22,6 @@ import java.io.File;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -59,7 +58,6 @@ public class Prd3080Test extends TestCase
     final MasterReport report = (MasterReport) directly.getResource();
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.print(logicalPageBox);
 
     final RenderNode[] nodes = MatchFactory.matchAll(logicalPageBox, "RowRenderBox");
     for (int i = 0; i < nodes.length; i++)

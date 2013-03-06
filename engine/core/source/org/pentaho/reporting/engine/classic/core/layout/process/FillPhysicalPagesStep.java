@@ -37,8 +37,72 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
  */
 public final class FillPhysicalPagesStep extends IterateVisualProcessStep
 {
-  private long contentEnd;
-  private long contentStart;
+  private static class PageContext
+  {
+    private PageContext parent;
+    private long contentEnd;
+    private long contentStart;
+
+    private PageContext(final long contentStart, final long contentEnd)
+    {
+      this.contentStart = contentStart;
+      this.contentEnd = contentEnd;
+    }
+
+    private PageContext(final PageContext parent)
+    {
+      this.parent = parent;
+      this.contentStart = parent.contentStart;
+      this.contentEnd = parent.contentEnd;
+    }
+
+    public PageContext pop()
+    {
+      return parent;
+    }
+
+    public long getContentEnd()
+    {
+      return contentEnd;
+    }
+
+    public long getContentStart()
+    {
+      return contentStart;
+    }
+
+    public void increaseContentStartArea(final long value)
+    {
+      if (value < 0)
+      {
+        throw new NullPointerException();
+      }
+      contentStart += value;
+    }
+
+    public boolean isFiltered(final long y, final long height)
+    {
+      // Special treatment for lines, which have a height of zero.
+      if (y == contentStart && height == 0)
+      {
+        return false;
+      }
+      else if ((y + height) <= contentStart)
+      {
+        return true;
+      }
+      else if (y >= contentEnd)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }
+    }
+  }
+
+  private PageContext pageContext;
 
   public FillPhysicalPagesStep()
   {
@@ -48,8 +112,10 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
                                 final long pageStart,
                                 final long pageEnd)
   {
-    this.contentStart = pagebox.getHeaderArea().getHeight();
-    this.contentEnd = (pageEnd - pageStart) + contentStart;
+
+    final long contentStart = pagebox.getHeaderArea().getHeight();
+    final long contentEnd = (pageEnd - pageStart) + contentStart;
+    pageContext = new PageContext(contentStart, contentEnd);
 
     // This is a simple strategy.
     // Copy and relocate, then prune. (I whished we could prune first, but
@@ -95,12 +161,6 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     processBoxChilds(box);
   }
 
-  /**
-   * Invisible nodes may need special treatment here.
-   *
-   * @param box
-   * @return
-   */
   protected boolean startBlockLevelBox(final RenderBox box)
   {
     return processBox(box);
@@ -108,6 +168,8 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
 
   private boolean processBox(final RenderBox box)
   {
+    establishPageContext(box);
+
     RenderNode node = box.getFirstChild();
     while (node != null)
     {
@@ -119,7 +181,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
 
       final long y = node.getY();
       final long height = node.getOverflowAreaHeight();
-      if (isFiltered(y, height))
+      if (pageContext.isFiltered(y, height))
       {
         final RenderNode next = node.getNext();
         box.remove(node);
@@ -133,24 +195,11 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     return true;
   }
 
-  private boolean isFiltered(final long y, final long height)
+  private void establishPageContext(final RenderBox box)
   {
-      // Special treatment for lines, which have a height of zero.
-    if (y == contentStart && height == 0)
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
     {
-      return false;
-    }
-    else if ((y + height) <= contentStart)
-    {
-      return true;
-    }
-    else if (y >= contentEnd)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
+      pageContext = new FillPhysicalPagesStep.PageContext(pageContext);
     }
   }
 
@@ -173,8 +222,19 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
       {
         return processBox(box);
       }
+      else if (tsr.getDisplayRole() == TableSectionRenderBox.Role.HEADER)
+      {
+        // modify the established context ..
+        pageContext.increaseContentStartArea(box.getHeight());
+        return false;
+      }
+      else
+      {
+        return false;
+      }
     }
-    return false;
+    // auto-boxes and sections are accepted as is ..
+    return true;
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
@@ -186,9 +246,67 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
   {
     return processBox(box);
   }
-  
+
   protected boolean startTableCellLevelBox(final RenderBox box)
   {
     return processBox(box);
+  }
+
+  protected void finishBox(final RenderBox box)
+  {
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      pageContext = pageContext.pop();
+    }
+  }
+
+  protected void finishBlockLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishCanvasLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishInlineLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishRowLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableCellLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableColGroupLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableColLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableRowLevelBox(final RenderBox box)
+  {
+    finishBox(box);
+  }
+
+  protected void finishTableSectionLevelBox(final RenderBox box)
+  {
+    finishBox(box);
   }
 }

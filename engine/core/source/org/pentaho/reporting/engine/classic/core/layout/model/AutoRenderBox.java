@@ -111,8 +111,7 @@ public class AutoRenderBox extends RenderBox
     return super.isEmptyNodesHaveSignificance();
   }
 
-
-  public void extendHeight(final long amount)
+  public void extendHeight(final RenderNode child, final long heightOffset)
   {
     final int layoutNodeType = getLayoutNodeType();
     if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE ||
@@ -120,13 +119,12 @@ public class AutoRenderBox extends RenderBox
         (layoutNodeType & LayoutNodeTypes.MASK_BOX_CANVAS) == LayoutNodeTypes.MASK_BOX_CANVAS ||
         (layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW))
     {
-      extendHeightInRowMode(amount);
+      extendHeightInRowMode(child, heightOffset);
     }
     else
     {
-      extendHeightInBlockMode(amount);
+      extendHeightInBlockMode(child, heightOffset);
     }
-
   }
 
 }

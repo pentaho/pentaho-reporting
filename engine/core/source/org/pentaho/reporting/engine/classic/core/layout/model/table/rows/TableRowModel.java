@@ -40,15 +40,15 @@ public interface TableRowModel
   public void prune(int rows);
   public void clear();
 
-  long getValidateSize(int rowNumber);
-
   void updateDefinedSize(int rowNumber, int rowSpan, long preferredSize);
 
   void updateValidatedSize(int rowNumber, int rowSpan, long leading, long height);
 
   long getValidatedRowSize(int rowNumber);
+  long getValidatedRowSpanSize(int rowIndex);
 
   long getPreferredRowSize(int rowNumber);
 
   public int getMaximumRowSpan(int rowNumber);
+
 }

@@ -22,27 +22,25 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
-import org.pentaho.reporting.engine.classic.core.layout.process.ApplyPageShiftValuesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
-
   private PaginationStep paginationStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
-  private ApplyPageShiftValuesStep applyPageShiftValuesStep;
   private int pageCount;
   private boolean pageStartPending;
   private CountBoxesStep countBoxesStep;
@@ -53,11 +51,9 @@ public class PageableRenderer extends AbstractRenderer
     this.paginationStep = new PaginationStep();
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
-    this.applyPageShiftValuesStep = new ApplyPageShiftValuesStep();
     this.countBoxesStep = new CountBoxesStep();
     initialize();
   }
-
 
   public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
   {
@@ -67,6 +63,12 @@ public class PageableRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
+    if (pageCount == 2)
+    {
+      DebugLog.logEnter();
+//      ModelPrinter.print(pageBox);
+      DebugLog.logExit();
+    }
   }
 
   protected boolean isPageFinished()
@@ -91,89 +93,94 @@ public class PageableRenderer extends AbstractRenderer
     final LogicalPageBox pageBox = getPageBox();
 
     //    final long sizeBeforePagination = pageBox.getHeight();
-    //    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBreak.isOverflow() || pageBox.isOpen() == false)
+    if (pageBox.isOpen() && pageBreak.isOverflow() == false)
     {
-//      final long sizeAfterPagination = pageBox.getHeight();
-      setLastStateKey(pageBreak.getLastVisibleState());
-      setPagebreaks(getPagebreaks() + 1);
-      pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+      return false;
+    }
 
-      pageCount += 1;
+    setLastStateKey(pageBreak.getLastVisibleState());
+    setPagebreaks(getPagebreaks() + 1);
+    pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+
+    pageCount += 1;
+    logger.info ("Printing a page: " + pageCount);
+    if (pageCount == -1)
+    {
+      // leave the debug-code in until all of these cases are solved.
+      DebugLog.log("1: **** Start Printing Page: " + pageCount);
+      ModelPrinter.INSTANCE.print(clone);
+      DebugLog.log("1: **** Start Printing Page: " + pageCount);
+      ModelPrinter.INSTANCE.print(pageBox);
+    }
+
 //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
-      debugPrint(pageBox);
+    debugPrint(pageBox);
 //      DebugLog.log("PaginationResult: " + pageBreak);
 
-      // A new page has been started. Recover the page-grid, then restart
-      // everything from scratch. (We have to recompute, as the pages may
-      // be different now, due to changed margins or page definitions)
-      final OutputProcessor outputProcessor = getOutputProcessor();
-      final long nextOffset = pageBreak.getLastPosition();
-      final long pageOffset = pageBox.getPageOffset();
+    // A new page has been started. Recover the page-grid, then restart
+    // everything from scratch. (We have to recompute, as the pages may
+    // be different now, due to changed margins or page definitions)
+    final OutputProcessor outputProcessor = getOutputProcessor();
+    final long nextOffset = pageBreak.getLastPosition();
+    final long pageOffset = pageBox.getPageOffset();
 
-      if (performOutput)
+    DebugLog.log ("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+
+    if (performOutput)
+    {
+      if (outputProcessor.isNeedAlignedPage())
       {
-        if (outputProcessor.isNeedAlignedPage())
-        {
-          final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
-          outputProcessor.processContent(box);
-          // DebugLog.log("Processing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-        }
-        else
-        {
-          // DebugLog.log("Processing fast contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-          outputProcessor.processContent(pageBox);
-        }
+        final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
+        outputProcessor.processContent(box);
+        // DebugLog.log("Processing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
       }
       else
       {
-        // todo: When recomputing the contents, we have to update the page cursor or the whole excercise is next to useless ..
-        // DebugLog.log("Recomputing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-        outputProcessor.processRecomputedContent(pageBox);
-      }
-
-      // Now fire the pagebreak. This goes through all layers and informs all
-      // components, that a pagebreak has been encountered and possibly a
-      // new page has been set. It does not save the state or perform other
-      // expensive operations. However, it updates the 'isPagebreakEncountered'
-      // flag, which will be active until the input-feed received a new event.
-      //      Log.debug ("PageTime " + (currentPageAge - lastPageAge));
-      final boolean repeat = pageBox.isOpen() || (pageBox.getHeight() > nextOffset);
-      if (repeat)
-      {
-        pageBox.setPageOffset(nextOffset);
-        countBoxesStep.process(pageBox);
-        final long shift = cleanPaginatedBoxesStep.compute(pageBox);
-        if (shift > 0)
-        {
-          final InstanceID shiftNode = cleanPaginatedBoxesStep.getShiftNode();
-          applyPageShiftValuesStep.compute(pageBox, shift, shiftNode);
-        }
-
-//        ModelPrinter.print(pageBox);
-
-        if (pageBreak.isNextPageContainsContent())
-        {
-          if (layoutPagebreakHandler != null)
-          {
-            layoutPagebreakHandler.pageStarted();
-          }
-          return true;
-        }
-        // No need to try again, we know that the result will not change, as the next page is
-        // empty. (We already tested it.)
-        pageStartPending = true;
-        return false;
-      }
-      else
-      {
-        pageBox.setPageOffset(nextOffset);
-        outputProcessor.processingFinished();
-        return false;
+        // DebugLog.log("Processing fast contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+        outputProcessor.processContent(pageBox);
       }
     }
-    return false;
+    else
+    {
+      // todo: When recomputing the contents, we have to update the page cursor or the whole excercise is next to useless ..
+      // DebugLog.log("Recomputing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+      outputProcessor.processRecomputedContent(pageBox);
+    }
+
+    // Now fire the pagebreak. This goes through all layers and informs all
+    // components, that a pagebreak has been encountered and possibly a
+    // new page has been set. It does not save the state or perform other
+    // expensive operations. However, it updates the 'isPagebreakEncountered'
+    // flag, which will be active until the input-feed received a new event.
+    //      Log.debug ("PageTime " + (currentPageAge - lastPageAge));
+    final boolean repeat = pageBox.isOpen() || (pageBox.getHeight() > nextOffset);
+    if (repeat)
+    {
+      pageBox.setPageOffset(nextOffset);
+      countBoxesStep.process(pageBox);
+      cleanPaginatedBoxesStep.compute(pageBox);
+
+      if (pageBreak.isNextPageContainsContent())
+      {
+        if (layoutPagebreakHandler != null)
+        {
+          layoutPagebreakHandler.pageStarted();
+        }
+        return true;
+      }
+      // No need to try again, we know that the result will not change, as the next page is
+      // empty. (We already tested it.)
+      pageStartPending = true;
+      return false;
+    }
+    else
+    {
+      pageBox.setPageOffset(nextOffset);
+      outputProcessor.processingFinished();
+      return false;
+    }
   }
 
   public boolean clearPendingPageStart(final LayoutPagebreakHandler layoutPagebreakHandler)
@@ -210,7 +217,6 @@ public class PageableRenderer extends AbstractRenderer
     final boolean nextPageContainsContent = (logicalPageBox.getHeight() > masterBreak);
     return nextPageContainsContent == false;
   }
-
 
   public boolean isPageStartPending()
   {

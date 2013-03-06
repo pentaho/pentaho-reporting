@@ -124,8 +124,8 @@ public class TableRowRenderBox extends RenderBox
     this.rowIndex = rowIndex;
   }
 
-  public void extendHeight(final long amount)
+  public void extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(amount);
+    extendHeightInRowMode(child, heightOffset);
   }
 }

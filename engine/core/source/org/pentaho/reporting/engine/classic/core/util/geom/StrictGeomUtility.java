@@ -30,6 +30,7 @@ import org.pentaho.reporting.libraries.base.util.FloatDimension;
  */
 public strictfp class StrictGeomUtility
 {
+  public static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
   /**
    * This is the correction factor used to convert points into 'Micro-Points'.
    */

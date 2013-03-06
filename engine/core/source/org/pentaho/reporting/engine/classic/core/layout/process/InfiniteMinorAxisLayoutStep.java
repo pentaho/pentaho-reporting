@@ -75,7 +75,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -106,7 +106,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -140,7 +140,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -180,7 +180,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -231,7 +231,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -262,7 +262,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -293,7 +293,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -342,7 +342,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -375,7 +375,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -396,7 +396,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -432,7 +432,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -473,7 +473,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -528,7 +528,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -537,14 +537,14 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     {
       startTableCol((TableColumnNode) box);
     }
-    return true;
+    return false;
   }
 
   protected void finishTableColGroupLevelBox(final RenderBox box)
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         return;
       }
