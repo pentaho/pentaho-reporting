@@ -44,6 +44,8 @@ import org.w3c.dom.Node;
  */
 public class KettleTransFromFileProducer extends AbstractKettleTransformationProducer
 {
+  private static final long serialVersionUID = -7222333765312572612L;
+
   private static Log logger = LogFactory.getLog(KettleTransFromFileProducer.class);
 
   private String transformationFile;

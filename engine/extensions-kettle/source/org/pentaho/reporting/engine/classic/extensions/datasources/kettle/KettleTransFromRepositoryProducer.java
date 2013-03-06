@@ -36,6 +36,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  */
 public class KettleTransFromRepositoryProducer extends AbstractKettleTransformationProducer
 {
+  private static final long serialVersionUID = -2029785159214228120L;
+  
   private String directoryName;
   private String transformationName;
 

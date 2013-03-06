@@ -33,6 +33,8 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
  */
 public class KettleDataFactory extends AbstractDataFactory
 {
+  private static final long serialVersionUID = 3378733681824193349L;
+  
   private LinkedHashMap<String, KettleTransformationProducer> queries;
   private transient KettleTransformationProducer currentlyRunningQuery;
 
@@ -114,6 +116,7 @@ public class KettleDataFactory extends AbstractDataFactory
     }
   }
 
+  @SuppressWarnings("unchecked")
   public KettleDataFactory clone()
   {
     final KettleDataFactory df = (KettleDataFactory) super.clone();

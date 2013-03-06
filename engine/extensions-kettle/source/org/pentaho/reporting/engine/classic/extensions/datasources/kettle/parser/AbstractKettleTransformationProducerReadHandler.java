@@ -38,13 +38,13 @@ public abstract class AbstractKettleTransformationProducerReadHandler
   private String repositoryName;
   private String[] definedArgumentNames;
   private ParameterMapping[] definedVariableNames;
-  private ArrayList argumentHandlers;
-  private ArrayList variablesHandlers;
+  private ArrayList<ArgumentReadHandler> argumentHandlers;
+  private ArrayList<VariableReadHandler> variablesHandlers;
 
   public AbstractKettleTransformationProducerReadHandler()
   {
-    argumentHandlers = new ArrayList();
-    variablesHandlers = new ArrayList();
+    argumentHandlers = new ArrayList<ArgumentReadHandler>();
+    variablesHandlers = new ArrayList<VariableReadHandler>();
   }
 
   public String getName()
