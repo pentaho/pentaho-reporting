@@ -71,6 +71,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -266,6 +267,35 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
   }
 
+  private static class TableContext
+  {
+    private TableContext parent;
+    private StrictBounds bounds;
+    private StrictBounds drawArea;
+
+    private TableContext(final TableContext parent)
+    {
+      this.parent = parent;
+      this.bounds = new StrictBounds();
+      this.drawArea = new StrictBounds();
+    }
+
+    public StrictBounds getDrawArea()
+    {
+      return drawArea;
+    }
+
+    public StrictBounds getBounds()
+    {
+      return bounds;
+    }
+
+    public TableContext pop()
+    {
+      return parent;
+    }
+  }
+
   public static final BasicStroke DEFAULT_STROKE = new BasicStroke(1);
   private static final Log logger = LogFactory.getLog(LogicalPageDrawable.class);
 
@@ -295,6 +325,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   private boolean clipOnWordBoundary;
   private boolean strictClipping;
   private boolean unalignedPageBands;
+  private TableContext tableContext;
+  private FastStack<Graphics2D> graphicsContexts;
 
   public LogicalPageDrawable(final LogicalPageBox rootBox,
                              final OutputProcessorMetaData metaData,
@@ -313,6 +345,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       throw new NullPointerException();
     }
 
+    this.graphicsContexts = new FastStack<Graphics2D>();
     this.borderRenderer = new BorderRenderer();
     this.codePointBuffer = new CodePointBuffer(400);
     this.resourceManager = resourceManager;
@@ -641,12 +674,44 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   protected boolean startTableSectionBox(final TableSectionRenderBox box)
   {
+    if (box.getDisplayRole() != TableSectionRenderBox.Role.HEADER)
+    {
+      final StrictBounds bounds = tableContext.getBounds();
+      if (bounds.getHeight() != 0)
+      {
+        // clip the printable area to an infinite large area below the header.
+        final StrictBounds clipBounds =
+            new StrictBounds(bounds.getX(), bounds.getY() + bounds.getHeight(), StrictGeomUtility.MAX_AUTO, StrictGeomUtility.MAX_AUTO);
+        clip(clipBounds);
+        tableContext.drawArea.setRect(drawArea);
+        drawArea.setRect(drawArea.createIntersection(clipBounds));
+      }
+    }
     return startBox(box);
+  }
+
+  protected void finishTableSectionBox(final TableSectionRenderBox box)
+  {
+    if (box.getDisplayRole() == TableSectionRenderBox.Role.HEADER)
+    {
+      tableContext.getBounds().setRect(box.getX(), box.getY(), box.getWidth(), box.getHeight());
+    }
+    else if (tableContext.getBounds().getHeight() != 0)
+    {
+      drawArea.setRect(tableContext.drawArea);
+      clearClipping();
+    }
   }
 
   protected boolean startTableBox(final TableRenderBox box)
   {
+    tableContext = new TableContext(tableContext);
     return startBox(box);
+  }
+
+  protected void finishTableBox(final TableRenderBox box)
+  {
+    tableContext = tableContext.pop();
   }
 
   protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
@@ -844,7 +909,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   private void drawTextDecoration(final FontDecorationSpec decorationSpec)
   {
-    final Graphics2D graphics = (Graphics2D) this.graphics.create();
+    final Graphics2D graphics = (Graphics2D) getGraphics().create();
     graphics.setColor(decorationSpec.getTextColor());
     graphics.setStroke(new BasicStroke((float) decorationSpec.getLineWidth()));
     graphics.draw(new Line2D.Double(decorationSpec.getStart(), decorationSpec.getVerticalPosition(),
@@ -1500,6 +1565,21 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     return metaData;
   }
 
+  public void clip(final StrictBounds bounds)
+  {
+    final Graphics2D g = getGraphics();
+    graphicsContexts.push(g);
+
+    graphics = (Graphics2D) g.create();
+    graphics.clip(StrictGeomUtility.createAWTRectangle(bounds));
+  }
+
+  public void clearClipping ()
+  {
+    final Graphics2D graphics2D = graphicsContexts.pop();
+    graphics.dispose();
+    graphics = graphics2D;
+  }
   public Graphics2D getGraphics()
   {
     return graphics;
@@ -1528,5 +1608,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     return collectSelectedNodesStep.getNodesAt
         (this.rootBox, StrictGeomUtility.createBounds(x, y, width, height), namespace, name);
   }
+
 
 }
