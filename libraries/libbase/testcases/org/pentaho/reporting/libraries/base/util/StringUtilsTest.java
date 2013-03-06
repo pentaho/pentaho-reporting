@@ -18,10 +18,10 @@
 package org.pentaho.reporting.libraries.base.util;
 
 import junit.framework.TestCase;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
  * Tests for the <code>StringUtils</code> class.
+ *
  * @author David Kincade
  */
 public class StringUtilsTest extends TestCase

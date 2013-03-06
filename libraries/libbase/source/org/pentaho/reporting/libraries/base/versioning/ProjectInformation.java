@@ -34,8 +34,8 @@ public abstract class ProjectInformation extends DependencyInformation
 {
   private String copyright;
   private String bootClass;
-  private ArrayList libraries;
-  private ArrayList optionalLibraries;
+  private ArrayList<DependencyInformation> libraries;
+  private ArrayList<DependencyInformation> optionalLibraries;
   private VersionHelper versionHelper;
   private String internalName;
 
@@ -67,8 +67,8 @@ public abstract class ProjectInformation extends DependencyInformation
     {
       this.internalName = internalName;
     }
-    this.libraries = new ArrayList();
-    optionalLibraries = new ArrayList();
+    this.libraries = new ArrayList<DependencyInformation>();
+    optionalLibraries = new ArrayList<DependencyInformation>();
   }
 
   /**
@@ -215,7 +215,6 @@ public abstract class ProjectInformation extends DependencyInformation
       try
       {
         // This cast is necessary for JDK 1.5 or later
-        //noinspection RedundantCast
         final Method m = c.getMethod("getInstance", (Class[]) null);
         return (DependencyInformation) m.invoke(null, (Object[]) null);
       }

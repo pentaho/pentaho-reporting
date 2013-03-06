@@ -66,8 +66,68 @@ public final class PackageManager
     }
   }
 
-  private static final Log LOGGER = LogFactory.getLog(PackageManager.class);
+  public class BootTimeEntry implements Comparable<BootTimeEntry>
+  {
+    private long time;
+    private String name;
 
+    public BootTimeEntry(final String name, final long time)
+    {
+      if (name == null)
+      {
+        throw new NullPointerException("Name must not be null");
+      }
+      this.name = name;
+      this.time = time;
+    }
+
+    public int compareTo(final BootTimeEntry o)
+    {
+      if (time < o.time)
+      {
+        return -1;
+      }
+      if (time > o.time)
+      {
+        return +1;
+      }
+      return name.compareTo(o.name);
+    }
+
+    public boolean equals(final Object o)
+    {
+      if (this == o)
+      {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass())
+      {
+        return false;
+      }
+
+      final BootTimeEntry that = (BootTimeEntry) o;
+
+      if (time != that.time)
+      {
+        return false;
+      }
+      if (name != null ? !name.equals(that.name) : that.name != null)
+      {
+        return false;
+      }
+
+      return true;
+    }
+
+    public int hashCode()
+    {
+      int result = (int) (time ^ (time >>> 32));
+      result = 31 * result + (name != null ? name.hashCode() : 0);
+      return result;
+    }
+  }
+
+  private static final Log LOGGER = LogFactory.getLog(PackageManager.class);
   /**
    * An internal constant declaring that the specified module was already loaded.
    */
@@ -80,29 +140,25 @@ public final class PackageManager
    * An internal constant declaring that the specified module produced an error while loading.
    */
   private static final int RETURN_MODULE_ERROR = 2;
-
-
+  private static final boolean trackBootTime = false;
   /**
    * The module configuration instance that should be used to store module properties. This separates the user defined
    * properties from the implementation defined properties.
    */
   private final PackageConfiguration packageConfiguration;
-
   /**
    * A list of all defined modules.
    */
   private final ArrayList<PackageState> modules;
-  private HashMap<String, PackageState> modulesByClass;
   /**
    * A list of module name definitions.
    */
   private final ArrayList<String> initSections;
-
+  private HashMap<String, PackageState> modulesByClass;
   /**
    * The boot implementation for which the modules are managed.
    */
   private AbstractBoot booter;
-  private static final boolean trackBootTime = false;
 
   /**
    * Creates a new package manager.
@@ -208,31 +264,6 @@ public final class PackageManager
     LOGGER.debug("Loaded a total of " + count + " modules under prefix: " + modulePrefix);
   }
 
-  public class BootTimeEntry implements Comparable<BootTimeEntry>
-  {
-    private long time;
-    private String name;
-
-    public BootTimeEntry(final String name, final long time)
-    {
-      this.name = name;
-      this.time = time;
-    }
-
-    public int compareTo(final BootTimeEntry o)
-    {
-      if (time < o.time)
-      {
-        return -1;
-      }
-      if (time > o.time)
-      {
-        return +1;
-      }
-      return name.compareTo(o.name);
-    }
-  }
-
   /**
    * Initializes all previously uninitialized modules. Once a module is initialized, it is not re-initialized a second
    * time.
@@ -272,7 +303,7 @@ public final class PackageManager
         continue;
       }
 
-      StopWatch stopWatch = StopWatch.startNew();
+      final StopWatch stopWatch = StopWatch.startNew();
       if (mod.initialize(this.booter))
       {
         if (LOGGER.isDebugEnabled())
@@ -290,7 +321,7 @@ public final class PackageManager
       Collections.sort(times);
       LOGGER.debug("Detailed Module boot times");
       long totalTime = 0;
-      for (BootTimeEntry time : times)
+      for (final BootTimeEntry time : times)
       {
         totalTime += time.time;
         LOGGER.debug(time.name + " - " + time.time);
@@ -692,7 +723,7 @@ public final class PackageManager
    */
   public Module[] getActiveModules()
   {
-    final ArrayList mods = new ArrayList();
+    final ArrayList<Module> mods = new ArrayList<Module>();
     for (int i = 0; i < this.modules.size(); i++)
     {
       final PackageState state = this.modules.get(i);
@@ -712,7 +743,7 @@ public final class PackageManager
   public void printUsedModules(final PrintStream p)
   {
     final Module[] allMods = getAllModules();
-    final ArrayList activeModules = new ArrayList();
+    final ArrayList<Module> activeModules = new ArrayList<Module>();
     //final ArrayList failedModules = new ArrayList();
 
     for (int i = 0; i < allMods.length; i++)

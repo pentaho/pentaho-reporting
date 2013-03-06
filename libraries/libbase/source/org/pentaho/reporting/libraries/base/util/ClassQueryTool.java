@@ -157,9 +157,9 @@ public abstract class ClassQueryTool
    */
   public void processDirectory(final File directory) throws IOException
   {
-    final ArrayList allURLs = new ArrayList();
-    final ArrayList jarURLs = new ArrayList();
-    final ArrayList directoryURLs = new ArrayList();
+    final ArrayList<URL> allURLs = new ArrayList<URL>();
+    final ArrayList<URL> jarURLs = new ArrayList<URL>();
+    final ArrayList<File> directoryURLs = new ArrayList<File>();
 
     final String classpath = System.getProperty("java.class.path");
     final String pathSeparator = System.getProperty("path.separator");
@@ -173,7 +173,7 @@ public abstract class ClassQueryTool
       final File file = directoryOrJar.getAbsoluteFile();
       if (file.isDirectory() && file.exists() && file.canRead())
       {
-        allURLs.add(file.toURL());
+        allURLs.add(file.toURI().toURL());
         directoryURLs.add(file);
         continue;
       }
@@ -186,8 +186,8 @@ public abstract class ClassQueryTool
       final String fileName = file.getName();
       if (fileName.endsWith(".jar") || fileName.endsWith(".zip"))
       {
-        allURLs.add(file.toURL());
-        jarURLs.add(file.toURL());
+        allURLs.add(file.toURI().toURL());
+        jarURLs.add(file.toURI().toURL());
       }
     }
 
@@ -199,7 +199,7 @@ public abstract class ClassQueryTool
         final File file = driverFiles[i];
         if (file.isDirectory() && file.exists() && file.canRead())
         {
-          allURLs.add(file.toURL());
+          allURLs.add(file.toURI().toURL());
           directoryURLs.add(file);
           continue;
         }
@@ -212,8 +212,8 @@ public abstract class ClassQueryTool
         final String fileName = file.getName();
         if (fileName.endsWith(".jar") || fileName.endsWith(".zip"))
         {
-          allURLs.add(file.toURL());
-          jarURLs.add(file.toURL());
+          allURLs.add(file.toURI().toURL());
+          jarURLs.add(file.toURI().toURL());
         }
       }
     }

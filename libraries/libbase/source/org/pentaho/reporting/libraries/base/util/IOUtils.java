@@ -112,9 +112,9 @@ public class IOUtils
    * @param name the name, that should be parsed.
    * @return the parsed name.
    */
-  private List parseName(final String name)
+  private List<String> parseName(final String name)
   {
-    final ArrayList list = new ArrayList();
+    final ArrayList<String> list = new ArrayList<String>();
     final StringTokenizer strTok = new StringTokenizer(name, "/");
     while (strTok.hasMoreElements())
     {
@@ -136,7 +136,7 @@ public class IOUtils
    */
   private String formatName(final List name, final String query)
   {
-    final StringBuffer b = new StringBuffer(128);
+    final StringBuilder b = new StringBuilder(128);
     final Iterator it = name.iterator();
     while (it.hasNext())
     {
@@ -226,7 +226,7 @@ public class IOUtils
     {
       return targetFile;
     }
-    final List urlName = parseName(targetFile);
+    final List<String> urlName = parseName(targetFile);
     if (urlName.isEmpty())
     {
       return targetFile;
@@ -264,7 +264,7 @@ public class IOUtils
       commonIndex -= 1;
     }
 
-    final ArrayList retval = new ArrayList();
+    final ArrayList<String> retval = new ArrayList<String>();
     if ((baseName.size() + 1) != urlName.size())
     {
       final int levels = baseName.size() - commonIndex;
@@ -301,8 +301,8 @@ public class IOUtils
 
       // If the URL contains a query, ignore that URL; do not
       // attemp to modify it...
-      final List urlName = parseName(getPath(url));
-      final List baseName = parseName(getPath(baseURL));
+      final List<String> urlName = parseName(getPath(url));
+      final List<String> baseName = parseName(getPath(baseURL));
       final String query = getQuery(url);
 
       if (!isPath(baseURL))
@@ -336,7 +336,7 @@ public class IOUtils
         commonIndex -= 1;
       }
 
-      final ArrayList retval = new ArrayList();
+      final ArrayList<String> retval = new ArrayList<String>();
       if (baseName.size() != urlName.size())
       {
         final int levels = baseName.size() - commonIndex;
@@ -719,7 +719,7 @@ public class IOUtils
     {
       throw new NullPointerException("targetFile must not be null.");
     }
-    if (baseFile == null || "".equals(baseFile))
+    if (baseFile == null || (baseFile != null && baseFile.isEmpty()))
     {
       return stripNavigationPaths(targetFile);
     }
@@ -729,7 +729,7 @@ public class IOUtils
       return stripNavigationPaths(targetFile.substring(1));
     }
 
-    final List baseName = parseName(baseFile);
+    final List<String> baseName = parseName(baseFile);
     if (baseName.isEmpty())
     {
       return stripNavigationPaths(targetFile);
@@ -755,7 +755,7 @@ public class IOUtils
     for (int i = 0; i < urlName.size(); i++)
     {
       final String pathElement = (String) urlName.get(i);
-      if ("".equals(pathElement) || pathElement == null)
+      if ((pathElement != null && pathElement.isEmpty()) || pathElement == null)
       {
         continue;
       }
@@ -790,13 +790,13 @@ public class IOUtils
    */
   private String stripNavigationPaths(final String targetFile)
   {
-    final List list = parseName(targetFile);
+    final List<String> list = parseName(targetFile);
     final int capacity = list.size();
-    final List path = new ArrayList(capacity);
+    final List<String> path = new ArrayList<String>(capacity);
     for (int i = 0; i < capacity; i++)
     {
       final String pathElement = (String) list.get(i);
-      if ("".equals(pathElement) || pathElement == null)
+      if ((pathElement != null && pathElement.isEmpty()) || pathElement == null)
       {
         continue;
       }

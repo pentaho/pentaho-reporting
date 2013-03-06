@@ -158,7 +158,10 @@ public class LinkedMap implements Cloneable, Serializable
      */
     public void setCollisionNext(final MapEntry collisionNext)
     {
-      if (collisionNext == this) throw new IllegalStateException();
+      if (collisionNext == this)
+      {
+        throw new IllegalStateException();
+      }
       this.collisionNext = collisionNext;
     }
   }
@@ -213,6 +216,34 @@ public class LinkedMap implements Cloneable, Serializable
   }
 
   /**
+   * A helper to ensure that null-keys are maped into a special marker object.
+   *
+   * @param o the potential key.
+   * @return the null-marker.
+   */
+  private static Object ensureKey(final Object o)
+  {
+    if (o == null)
+    {
+      return NULL_MARKER;
+    }
+    return o;
+  }
+
+  /**
+   * Ensures that the hashcode produced by the key is sane. This does some bit-juggeling to avoid incorrect
+   * hashkey implementations.
+   *
+   * @param h the original hashcode.
+   * @return the cleaned hashcode.
+   */
+  private static int cleanHash(int h)
+  {
+    h ^= (h >>> 20) ^ (h >>> 12);
+    return h ^ (h >>> 7) ^ (h >>> 4);
+  }
+
+  /**
    * Ensures that the map contains enough space to store the next entry.
    */
   private void ensureSize()
@@ -254,7 +285,10 @@ public class LinkedMap implements Cloneable, Serializable
       while (mapEntry != null)
       {
         final int insertIndex = mapEntry.hashKey & newMask;
-        if (i != insertIndex) throw new IllegalStateException();
+        if (i != insertIndex)
+        {
+          throw new IllegalStateException();
+        }
         mapEntry = mapEntry.collisionNext;
       }
 
@@ -678,34 +712,6 @@ public class LinkedMap implements Cloneable, Serializable
     lastEntry = null;
     Arrays.fill(backend, null);
     size = 0;
-  }
-
-  /**
-   * A helper to ensure that null-keys are maped into a special marker object.
-   *
-   * @param o the potential key.
-   * @return the null-marker.
-   */
-  private static Object ensureKey(final Object o)
-  {
-    if (o == null)
-    {
-      return NULL_MARKER;
-    }
-    return o;
-  }
-
-  /**
-   * Ensures that the hashcode produced by the key is sane. This does some bit-juggeling to avoid incorrect
-   * hashkey implementations.
-   *
-   * @param h the original hashcode.
-   * @return the cleaned hashcode.
-   */
-  private static int cleanHash(int h)
-  {
-    h ^= (h >>> 20) ^ (h >>> 12);
-    return h ^ (h >>> 7) ^ (h >>> 4);
   }
 
   /**

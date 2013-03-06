@@ -18,64 +18,74 @@
 package org.pentaho.reporting.libraries.base.util;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
 import junit.framework.TestCase;
-import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
+import junit.framework.TestSuite;
 
 /**
  * @author Thomas Morgner
  * @author Rob Edgeler
  */
-public class CSVTokenizerTest  extends TestCase
+public class CSVTokenizerTest extends TestCase
 {
   public CSVTokenizerTest(final String name)
   {
     super(name);
   }
 
+  /**
+   * @return a <code>TestSuite</code>
+   */
+  public static Test suite()
+  {
+    final TestSuite suite = new TestSuite();
+    suite.setName("Test for CSVTokenizer.");
+    suite.addTest(new CSVTokenizerTest("testHasMoreTokens"));
+    return suite;
+  }
+
   public void testHasMoreTokens()
   {
     CSVTokenizer tokeniser = new CSVTokenizer("", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertTrue("Should have no more tokens.", (!tokeniser.hasMoreTokens()));
 
     tokeniser = new CSVTokenizer("a,b,c", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("a", tokeniser.nextToken());
     assertEquals("b", tokeniser.nextToken());
     assertEquals("c", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer(",b,c", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("", tokeniser.nextToken());
     assertEquals("b", tokeniser.nextToken());
     assertEquals("c", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer("a,,c", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("a", tokeniser.nextToken());
     assertEquals("", tokeniser.nextToken());
     assertEquals("c", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer("a,b,", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("a", tokeniser.nextToken());
     assertEquals("b", tokeniser.nextToken());
     assertEquals("", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer(",,", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("", tokeniser.nextToken());
     assertEquals("", tokeniser.nextToken());
     assertEquals("", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer("\"\",\"\",\"\"", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 3, tokeniser.countTokens());
     assertEquals("", tokeniser.nextToken());
     assertEquals("", tokeniser.nextToken());
@@ -85,23 +95,14 @@ public class CSVTokenizerTest  extends TestCase
   public void testNextToken()
   {
     CSVTokenizer tokeniser = new CSVTokenizer("\"Test\"\"Test\"", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 1, tokeniser.countTokens());
     assertEquals("Test\"Test", tokeniser.nextToken());
 
     tokeniser = new CSVTokenizer("\"Test Test\"", CSVTokenizer.SEPARATOR_COMMA,
-            CSVTokenizer.DOUBLE_QUATE);
+        CSVTokenizer.DOUBLE_QUATE);
     assertEquals("Should count tokens correctly", 1, tokeniser.countTokens());
     assertEquals("Test Test", tokeniser.nextToken());
-  }
-
-  /** @return a <code>TestSuite</code> */
-  public static Test suite()
-  {
-    final TestSuite suite = new TestSuite();
-    suite.setName("Test for CSVTokenizer.");
-    suite.addTest(new CSVTokenizerTest("testHasMoreTokens"));
-    return suite;
   }
 
 }

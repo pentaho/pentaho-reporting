@@ -18,7 +18,6 @@
 package org.pentaho.reporting.libraries.base.util;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,9 +48,9 @@ public final class Empty {
 
   /**
    * An empty Map. (Collections.EMPTY_MAP is not available until JDK 1.4)
-   * @noinspection PublicStaticCollectionField
+   * @deprecated this is a redeclaration of the Collections.EMPTY_MAP field and should be killed.
    */
-  public static final Map MAP = Collections.unmodifiableMap(new HashMap());
+  public static final Map MAP = Collections.EMPTY_MAP;
 
   /**
    * An empty List.

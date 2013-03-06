@@ -24,10 +24,15 @@ import org.pentaho.reporting.libraries.base.util.PngEncoder;
 
 public class ImageEncoderRegistry
 {
-  private static ImageEncoderRegistry instance;
-  private HashMap encoders;
   public static final String IMAGE_PNG = "image/png";
   public static final String IMAGE_JPEG = "image/jpeg";
+  private static ImageEncoderRegistry instance;
+  private HashMap<String, String> encoders;
+
+  private ImageEncoderRegistry()
+  {
+    encoders = new HashMap<String, String>();
+  }
 
   public static synchronized ImageEncoderRegistry getInstance()
   {
@@ -39,14 +44,9 @@ public class ImageEncoderRegistry
     return instance;
   }
 
-  private ImageEncoderRegistry()
-  {
-    encoders = new HashMap();
-  }
-
   private void registerDefaults()
   {
-    encoders.put (IMAGE_PNG, PngEncoder.class.getName());
+    encoders.put(IMAGE_PNG, PngEncoder.class.getName());
     if (JpegImageEncoder.isJpegEncodingAvailable())
     {
       encoders.put(IMAGE_JPEG, JpegImageEncoder.class.getName());

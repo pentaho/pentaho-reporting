@@ -27,7 +27,7 @@ import java.util.StringTokenizer;
  *
  * @author Thomas Morgner.
  */
-public class StringUtils
+public final class StringUtils
 {
   // Constants used to convert a string to a boolean
   private static final String TRUE = "true";
@@ -215,7 +215,7 @@ public class StringUtils
    */
   public static String makeUniqueName(final String[] knownNames, final String pattern)
   {
-    final HashSet knownNamesSet = new HashSet(knownNames.length);
+    final HashSet<String> knownNamesSet = new HashSet<String>(knownNames.length);
     for (int i = 0; i < knownNames.length; i++)
     {
       final String name = knownNames[i];
@@ -270,7 +270,7 @@ public class StringUtils
     {
       return (String[]) first.clone();
     }
-    final HashSet total = new HashSet(first.length + second.length);
+    final HashSet<String> total = new HashSet<String>(first.length + second.length);
     for (int i = 0; i < first.length; i++)
     {
       total.add(first[i]);

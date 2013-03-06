@@ -49,14 +49,14 @@ public class SystemInformation
     final StringBuilder sb = new StringBuilder(10000);
     sb.append("Current System Configuration\n");
     sb.append("----------------------------\n");
-    printMapAsTable(sb, new TreeMap(System.getProperties()));
+    printMapAsTable(sb, new TreeMap<Object,Object>(System.getProperties()));
     sb.append("\n");
     sb.append("\n");
 
     //environment
     sb.append("Current System Environment Variables\n");
     sb.append("------------------------------------\n");
-    printMapAsTable(sb, new TreeMap(System.getenv()));
+    printMapAsTable(sb, new TreeMap<Object,Object>(System.getenv()));
     sb.append("\n");
     sb.append("\n");
 
