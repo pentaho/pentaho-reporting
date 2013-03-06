@@ -101,10 +101,6 @@ public class PmdDataSourceReadHandler extends AbstractXmlReadHandler implements 
     pmddf.setConnectionProvider(configReadHandler.getConnectionProvider());
     pmddf.setDomainId(configReadHandler.getDomain());
     pmddf.setXmiFile(configReadHandler.getXmiFile());
-    if (configReadHandler != null)
-    {
-      pmddf.setLabelMapping(configReadHandler.isLabelMapping());
-    }
     if (globalScriptReadHandler != null)
     {
       pmddf.setGlobalScript(globalScriptReadHandler.getResult());

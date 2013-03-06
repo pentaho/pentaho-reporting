@@ -51,12 +51,70 @@
     <target name="longrun-test" depends="clean-all,resolve">
         <antcall target="test">
             <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+            <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
         </antcall>
     </target>
 
     <target name="longrun-cobertura" depends="clean-all,resolve">
         <antcall target="cobertura">
             <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+            <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
         </antcall>
     </target>
+
+    <!--=======================================================================
+    cobertura.test-instrumented
+
+    Runs tests against instrumented classes and generates xml and html JUnit test reports
+    ====================================================================-->
+    <target name="cobertura.test-instrumented"
+            depends="init-test-reports,install-cobertura,compile,compile-tests,cobertura.instrument-classes">
+        <mkdir dir="${instrumented.classes.dir}"/>
+        <path id="cobertura.classpath">
+            <fileset dir="${subfloor.resources.dir}/cobertura">
+                <include name="*.jar"/>
+            </fileset>
+        </path>
+        <junit fork="yes" dir="${basedir}" forkmode="${junit.forkmode}"
+               maxmemory="${junit.maxmemory}"
+               failureProperty="test.failed"
+               haltonfailure="${junit.haltonfailure}">
+            <sysproperty key="java.awt.headless" value="${headless.unittest}"/>
+
+            <!-- Specify the name of the coverage data file to use. -->
+            <sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.data.dir}/cobertura.ser"/>
+
+            <syspropertyset>
+                <propertyref prefix="junit.sysprop."/>
+                <mapper type="glob" from="junit.sysprop.*" to="*"/>
+            </syspropertyset>
+
+            <!--
+              Note the classpath order: instrumented classes are before the
+              original (uninstrumented) classes.  This is important.
+            -->
+            <classpath location="${instrumented.classes.dir}"/>
+            <classpath location="${classes.dir}"/>
+            <classpath location="${testclasses.dir}"/>
+            <classpath refid="test.classpath"/>
+            <classpath refid="cobertura.classpath"/>
+
+            <formatter type="xml"/>
+            <test name="${testcase}" todir="${testreports.xml.dir}" if="testcase"/>
+            <batchtest todir="${testreports.xml.dir}" unless="testcase">
+                <fileset dir="${testsrc.dir}" casesensitive="yes">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+
+        <junitreport todir="${testreports.html.dir}">
+            <fileset dir="${testreports.xml.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${testreports.html.dir}"/>
+        </junitreport>
+    </target>
+
+
 </project>

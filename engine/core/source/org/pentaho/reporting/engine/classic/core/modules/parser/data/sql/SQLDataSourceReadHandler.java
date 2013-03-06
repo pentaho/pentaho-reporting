@@ -123,10 +123,6 @@ public class SQLDataSourceReadHandler extends AbstractXmlReadHandler
     }
 
     final SQLReportDataFactory dataFactory = new SQLReportDataFactory(provider);
-    if (configReadHandler != null)
-    {
-      dataFactory.setLabelMapping(configReadHandler.isLabelMapping());
-    }
     for (int i = 0; i < queries.size(); i++)
     {
       final PropertyReadHandler handler = queries.get(i);

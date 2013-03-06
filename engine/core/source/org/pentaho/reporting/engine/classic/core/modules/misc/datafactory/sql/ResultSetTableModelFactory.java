@@ -15,7 +15,7 @@
  * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
+package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -32,15 +32,18 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.DefaultTableMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TypeMapper;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
+import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 
 /**
  * Creates a <code>TableModel</code> which is backed up by a <code>ResultSet</code>. If the <code>ResultSet</code> is
- * scrollable, a {@link org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ScrollableResultSetTableModel}
+ * scrollable, a {@link ScrollableResultSetTableModel}
  * is created, otherwise all data is copied from the <code>ResultSet</code> into a <code>DefaultTableModel</code>.
  * <p/>
  * The creation of a <code>DefaultTableModel</code> can be forced if the system property
@@ -56,7 +59,7 @@ public final class ResultSetTableModelFactory
    * The configuration key defining how to map column names to column indices.
    */
   public static final String COLUMN_NAME_MAPPING_KEY =
-      "org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ColumnNameMapping"; //$NON-NLS-1$
+      "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode"; //$NON-NLS-1$
 
   /**
    * The 'ResultSet factory mode'.
@@ -79,21 +82,22 @@ public final class ResultSetTableModelFactory
   /**
    * Creates a table model by using the given <code>ResultSet</code> as the backend. If the <code>ResultSet</code> is
    * scrollable (the type is not <code>TYPE_FORWARD_ONLY</code>), an instance of {@link
-   * org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.ScrollableResultSetTableModel} is returned. This
-   * model uses the extended capabilities of scrollable resultsets to directly read data from the database without
+   * org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ScrollableResultSetTableModel} is returned. This
+   * model uses the extended capabilities of scrollable result sets to directly read data from the database without
    * caching or the need of copying the complete <code>ResultSet</code> into the programs memory.
    * <p/>
-   * If the <code>ResultSet</code> lacks the scollable features, the data will be copied into a
+   * If the <code>ResultSet</code> lacks the scrollable features, the data will be copied into a
    * <code>DefaultTableModel</code> and the <code>ResultSet</code> gets closed.
    *
    * @param rs             the result set.
-   * @param labelMapping   defines, whether to use column names or column labels to compute the column index.
+   * @param columnNameMapping   defines, whether to use column names or column labels to compute the column index.
+   *                       If true, then we map the Name.  If false, then we map the Label
    * @param closeStatement a flag indicating whether closing the resultset should also close the statement.
    * @return a closeable table model.
    * @throws SQLException if there is a problem with the result set.
    */
   public CloseableTableModel createTableModel(final ResultSet rs,
-                                              final boolean labelMapping,
+                                              final boolean columnNameMapping,
                                               final boolean closeStatement)
       throws SQLException
   {
@@ -104,7 +108,7 @@ public final class ResultSetTableModelFactory
 
     if ("simple".equalsIgnoreCase(prop)) //$NON-NLS-1$
     {
-      return generateDefaultTableModel(rs, labelMapping);
+      return generateDefaultTableModel(rs, columnNameMapping);
     }
 
     int resultSetType = ResultSet.TYPE_FORWARD_ONLY;
@@ -119,11 +123,11 @@ public final class ResultSetTableModelFactory
     }
     if (resultSetType == ResultSet.TYPE_FORWARD_ONLY)
     {
-      return generateDefaultTableModel(rs, labelMapping);
+      return generateDefaultTableModel(rs, columnNameMapping);
     }
     else
     {
-      return new ScrollableResultSetTableModel(rs, labelMapping, closeStatement);
+      return new ScrollableResultSetTableModel(rs, columnNameMapping, closeStatement);
     }
   }
 
@@ -241,12 +245,13 @@ public final class ResultSetTableModelFactory
    * AS "JavaColumnName" FROM ....</code>
    *
    * @param rs           the result set.
-   * @param labelMapping defines, whether to use column names or column labels to compute the column index.
+   * @param columnNameMapping defines, whether to use column names or column labels to compute the column index.
+   *                          If true, then we map the Name.  If false, then we map the Label
+
    * @return a closeable table model.
    * @throws SQLException if there is a problem with the result set.
    */
-  public CloseableTableModel generateDefaultTableModel
-      (final ResultSet rs, final boolean labelMapping)
+  public CloseableTableModel generateDefaultTableModel(final ResultSet rs, final boolean columnNameMapping)
       throws SQLException
   {
     try
@@ -256,20 +261,43 @@ public final class ResultSetTableModelFactory
       final Object[] header = new Object[colcount];
       final Class[] colTypes = TypeMapper.mapTypes(rsmd);
       final DefaultTableMetaData metaData = new DefaultTableMetaData(colcount);
-      for (int i = 0; i < colcount; i++)
+
+      // In past many database drivers were returning same value for column label and column name.  So it is inconsistent
+      // what the database driver will return for column name vs column label.
+      // We have a legacy configuration for this.  If set, then if column label is null or empty then return column name.
+      // Otherwise return column label.
+      // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name) without
+      // any interpretation or interpolation.
+      final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
+      final boolean useLegacyColumnMapping =  "legacy".equalsIgnoreCase(                                                                            // NON-NLS
+          globalConfig.getConfigProperty("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode", "legacy"));  // NON-NLS
+
+      for (int columnIndex = 0; columnIndex < colcount; columnIndex++)
       {
-        if (labelMapping)
+        String columnLabel = rsmd.getColumnLabel(columnIndex + 1);
+        if (useLegacyColumnMapping)
         {
-          final String name = rsmd.getColumnLabel(i + 1);
-          header[i] = name;
+          if ((columnLabel == null) || (columnLabel.isEmpty()))
+          {
+            // We are in legacy mode and column label is either null or empty, we then use column name instead.
+            columnLabel = rsmd.getColumnName(columnIndex + 1);
+          }
+
+          header[columnIndex] = columnLabel;
         }
         else
         {
-          final String name = rsmd.getColumnName(i + 1);
-          header[i] = name;
+          if (columnNameMapping)
+          {
+            header[columnIndex] = rsmd.getColumnName(columnIndex + 1);
+          }
+          else
+          {
+            header[columnIndex] = columnLabel;
+          }
         }
 
-        ResultSetTableModelFactory.updateMetaData(rsmd, metaData, i);
+        ResultSetTableModelFactory.updateMetaData(rsmd, metaData, columnIndex);
       }
       final ArrayList rows = new ArrayList();
       while (rs.next())

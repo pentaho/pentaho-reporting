@@ -74,11 +74,7 @@ public class SimplePmdDataSourceReadHandler extends AbstractXmlReadHandler imple
     pmddf.setConnectionProvider(configReadHandler.getConnectionProvider());
     pmddf.setDomainId(configReadHandler.getDomain());
     pmddf.setXmiFile(configReadHandler.getXmiFile());
-    if (configReadHandler != null)
-    {
-      pmddf.setLabelMapping(configReadHandler.isLabelMapping());
-      // srdf.setDomain(configReadHandler.getDomain());
-    }
+
     dataFactory = pmddf;
   }
 

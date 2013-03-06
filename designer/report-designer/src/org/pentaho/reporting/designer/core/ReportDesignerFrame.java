@@ -119,6 +119,7 @@ import org.pentaho.reporting.designer.core.widgets.CloseTabIcon;
 import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
 import org.pentaho.reporting.designer.core.xul.XulDesignerFrame;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
@@ -1628,6 +1629,10 @@ public class ReportDesignerFrame extends JFrame
     if (report instanceof MasterReport)
     {
       return Messages.getString("ReportDesignerFrame.TabName.UntitledReport");// NON-NLS
+    }
+    else if (report instanceof CrosstabElement)
+    {
+      return Messages.getString("ReportDesignerFrame.TabName.UntitledCrosstab");// NON-NLS
     }
     else
     {

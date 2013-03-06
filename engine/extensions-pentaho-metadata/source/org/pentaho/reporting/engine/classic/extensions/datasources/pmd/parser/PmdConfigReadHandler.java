@@ -26,10 +26,8 @@ import org.xml.sax.SAXException;
 /**
  * @author Michael D'Amour
  */
-public class PmdConfigReadHandler extends AbstractXmlReadHandler implements
-    IPmdConfigReadHandler
+public class PmdConfigReadHandler extends AbstractXmlReadHandler implements IPmdConfigReadHandler
 {
-  private boolean labelMapping;
   private String domain;
   private String xmiFile;
 
@@ -47,19 +45,8 @@ public class PmdConfigReadHandler extends AbstractXmlReadHandler implements
   {
     super.startParsing(attrs);
 
-    final String labelMappingAttr = attrs.getValue(getUri(), "label-mapping");
-    if (labelMappingAttr != null)
-    {
-      labelMapping = "true".equals(labelMappingAttr);
-    }
-
     xmiFile = attrs.getValue(getUri(), "xmi-file");
     domain = attrs.getValue(getUri(), "domain");
-  }
-
-  public boolean getLabelMapping()
-  {
-    return labelMapping;
   }
 
   public String getDomain()
@@ -72,10 +59,6 @@ public class PmdConfigReadHandler extends AbstractXmlReadHandler implements
     return xmiFile;
   }
 
-  public boolean isLabelMapping()
-  {
-    return labelMapping;
-  }
 
   /**
    * Returns the object for this element or null, if this element does not

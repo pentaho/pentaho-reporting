@@ -105,8 +105,6 @@ public class DirectSqlDataFactoryWriterHandler implements BundleDataFactoryWrite
     final AttributeList configAttrs = new AttributeList();
     configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "user-field", sqlDataFactory.getUserField());
     configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "password-field", sqlDataFactory.getPasswordField());    
-    configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "label-mapping",
-        String.valueOf(sqlDataFactory.isLabelMapping()));
     xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
 
     writeConnectionInfo(bundle, state, xmlWriter, sqlDataFactory.getConnectionProvider());

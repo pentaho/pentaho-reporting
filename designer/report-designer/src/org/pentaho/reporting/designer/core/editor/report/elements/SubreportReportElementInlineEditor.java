@@ -20,11 +20,13 @@ package org.pentaho.reporting.designer.core.editor.report.elements;
 import java.awt.Component;
 import javax.swing.AbstractCellEditor;
 
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementInlineEditor;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.SubReport;
@@ -55,7 +57,14 @@ public class SubreportReportElementInlineEditor extends AbstractCellEditor imple
       }
     }
 
-    final SubReport report = (SubReport) value;
+    final SubReport report = (SubReport)value;
+
+    // If this is a crosstab sub-report, increase zoom factor.
+    if (value instanceof CrosstabElement)
+    {
+      report.getReportDefinition().setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f);
+    }
+
     try
     {
       context.addSubReport(rootBandRenderComponent.getRenderContext(), report);

@@ -60,7 +60,6 @@ public class PmdDataFactoryWriteHandler implements DataFactoryWriteHandler
     xmlWriter.writeTag(PmdDataFactoryModule.NAMESPACE, "pmd-datasource", rootAttrs, XmlWriter.OPEN);
 
     final AttributeList configAttrs = new AttributeList();
-    configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "label-mapping", String.valueOf(df.isLabelMapping()));
     configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "domain", String.valueOf(df.getDomainId()));
     configAttrs.setAttribute(PmdDataFactoryModule.NAMESPACE, "xmi-file", String.valueOf(df.getXmiFile()));
     xmlWriter.writeTag(PmdDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);

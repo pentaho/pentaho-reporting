@@ -34,6 +34,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.prefs.Preferences;
 import javax.script.ScriptEngineFactory;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -251,8 +252,8 @@ public class JdbcDataSourceDialog extends CommonDialog
         final QueryBuilder queryBuilder = new QueryBuilder(conn);
         QueryBuilder.autoAlias = false;
         final JdbcQueryDesignerDialog queryDesigner = new JdbcQueryDesignerDialog(JdbcDataSourceDialog.this, queryBuilder);
-        final String query = queryDesigner.designQuery
-            (designTimeContext, factory.getConnectionProvider(), schema, queryTextArea.getText());
+        final String query = queryDesigner.designQuery(designTimeContext, factory.getConnectionProvider(),
+                                                       schema, queryTextArea.getText());
         if (query != null)
         {
           queryTextArea.setText(query);
@@ -305,16 +306,20 @@ public class JdbcDataSourceDialog extends CommonDialog
           }
           rs.close();
 
-          // bring up dialog
+          // bring up schema selection dialog only if preferences is set
           final String[] schemasArray = (String[]) schemas.keys(new String[schemas.size()]);
           if (schemas.size() > 1)
           {
-            final SchemaSelectionDialog schemaSelectionDialog =
-                new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
-            schema = schemaSelectionDialog.getSchema();
+            final Preferences properties = Preferences.userRoot().node("org/pentaho/reporting/ui/datasources/jdbc/Settings"); // NON-NLS
+            if (properties.getBoolean("show-schema-dialog", false))
+            {
+              final SchemaSelectionDialog schemaSelectionDialog = new SchemaSelectionDialog(JdbcDataSourceDialog.this, schemasArray);
+              schema = schemaSelectionDialog.getSchema();
+            }
           }
           else if (schemas.size() == 1)
           {
+            // Usually PUBLIC schema
             schema = schemasArray[0];
           }
         }
@@ -378,6 +383,7 @@ public class JdbcDataSourceDialog extends CommonDialog
       final String queryName = dialogModel.generateQueryName();
       dialogModel.addQuery(queryName, "", null, null);
       queryNameList.setSelectedValue(queryName, true);
+      queryNameList.setSelectedIndex(queryNameList.getLastVisibleIndex());
     }
   }
 

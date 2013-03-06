@@ -165,9 +165,9 @@ public class DefaultReportDesignerContext implements ReportDesignerContext
     setSelectionWaiting(false);
 
     subReportElement.setDataFactory(CompoundDataFactory.normalize(subReportElement.getDataFactory()));
-    final ReportRenderContext context = new ReportRenderContext
-        (parentReportContext.getMasterReportElement(),
-            subReportElement, parentReportContext, getGlobalAuthenticationStore());
+    final ReportRenderContext context = new ReportRenderContext(parentReportContext.getMasterReportElement(),
+                                                                subReportElement, parentReportContext,
+                                                                getGlobalAuthenticationStore());
     contexts.add(context);
 
     subReportElement.addReportModelListener(new SubReportsRemovealHandler(this));

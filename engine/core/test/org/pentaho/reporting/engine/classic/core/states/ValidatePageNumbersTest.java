@@ -47,6 +47,11 @@ public class ValidatePageNumbersTest extends TestCase
 
   public void testPageSystem() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL target = ValidatePageNumbersTest.class.getResource("validate-page-numbers.xml");
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
