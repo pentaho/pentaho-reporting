@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/report-designer"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/test"/>
+		<excludeFolder url="file://$MODULE_DIR$/bin"/>
+		<excludeFolder url="file://$MODULE_DIR$/dist"/>
+	</contentEntry>
+	<lib name="$MODULE_DIR$/lib/external" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/browserlauncher2-1.3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-beanutils-1.8.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-codec-1.3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-collections-3.2.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-httpclient-3.0.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-lang-2.2.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/commons-logging-1.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/dom4j-1.6.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/filters-2.0.235.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/groovy-all-1.5.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/jaxen-1.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/jug-lgpl-2.0.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/pentaho-versionchecker-TRUNK-SNAPSHOT.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/pentaho-xul-core-TRUNK-SNAPSHOT.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/pentaho-xul-swing-TRUNK-SNAPSHOT.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/rsyntaxtextarea-1.3.2.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/simple-jndi-TRUNK-SNAPSHOT.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/swing-worker-1.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/report-designer/lib/external/swingx-1.6.1.jar!/"/>
+	</lib>
+</component>

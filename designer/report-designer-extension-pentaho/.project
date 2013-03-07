@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>report-designer-extension-pentaho</name>
-	<comment></comment>
-	<projects>
-	</projects>
+	<name>report-designer-extensions-pentaho</name>
+	<comment/>
+	<projects/>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures></projectDescription>
+	</natures>
+</projectDescription>

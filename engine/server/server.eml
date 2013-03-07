@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/server"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="$MODULE_DIR$/lib/jsp-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/server/lib/jsp-api.jar!/"/>
+	</lib>
+	<lib name="$MODULE_DIR$/lib/servlet-api.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/server/lib/servlet-api.jar!/"/>
+	</lib>
+</component>

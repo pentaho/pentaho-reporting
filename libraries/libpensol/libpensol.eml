@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/libpensol"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/test"/>
+	</contentEntry>
+	<lib name="$MODULE_DIR$/lib/external" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/commons-codec-1.2.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/commons-httpclient-3.0.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/commons-vfs-1.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-apache-client-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-client-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-core-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-json-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-multipart-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-server-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-servlet-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/jersey-spring-1.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/mimepull-1.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/libpensol/lib/external/pentaho-platform-repository-TRUNK-SNAPSHOT.jar!/"/>
+	</lib>
+</component>

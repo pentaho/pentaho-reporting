@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/core"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/test"/>
+		<excludeFolder url="file://$MODULE_DIR$/bin"/>
+		<excludeFolder url="file://$MODULE_DIR$/dist"/>
+	</contentEntry>
+	<lib name="Core-External" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bcmail-jdk14-1.38.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bcmail-jdk14-138.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bcprov-jdk14-1.38.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bcprov-jdk14-138.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bctsp-jdk14-1.38.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bsf-2.4.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/bsh-1.3.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/commons-logging-api-1.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/dom4j-1.6.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/itext-rtf-2.1.7.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/poi-3.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/poi-ooxml-3.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/poi-ooxml-schemas-3.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/stax-api-1.0.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/xmlbeans-2.3.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/lib/external/pentaho-database-model-TRUNK-SNAPSHOT.jar!/"/>
+	</lib>
+	<lib name="Test-Lib" scope="TEST">
+		<srcroot url="jar://$MODULE_DIR$/test-lib/mockito-all-1.9.5-rc1.jar!/"/>
+		<relative-module-src project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/mockito-all-1.9.5-rc1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/hsqldb-1.8.0.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/junit-4.10.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/mockito-all-1.9.5-rc1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/simple-jndi-0.11.3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/slf4j-jcl-1.5.8.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/core/test-lib/xmlunit-1.3.jar!/"/>
+	</lib>
+</component>
