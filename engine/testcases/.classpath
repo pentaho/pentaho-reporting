@@ -3,7 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="src" path="devresource"/>
-	<classpathentry exported="true" kind="lib" path="/opt/data/source/pentaho-reporting/pentaho-reporting/engine/testcases/test-lib/junit-3.8.1.jar"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/extensions-drilldown"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/extensions-kettle"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/extensions-mondrian"/>
@@ -16,5 +15,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/legacy-charts"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/wizard-core"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/demo"/>
+	<classpathentry exported="true" kind="lib" path="test-lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

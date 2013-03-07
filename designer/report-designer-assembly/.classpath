@@ -4,8 +4,6 @@
 	<classpathentry kind="src" path="resource.mac"/>
 	<classpathentry kind="src" path="resource/resources"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer-extensions-legacy-charts"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer-extensions-pentaho"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/datasource-editor-external"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/datasource-editor-hibernate"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/datasource-editor-jdbc"/>
@@ -21,6 +19,9 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer-extension-toc"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/datasource-editor-cda"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/extensions-sampledata"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/datasource-editor-openerp"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer-extension-legacy-charts"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer-extension-pentaho"/>
 	<classpathentry exported="true" kind="lib" path="lib" sourcepath="lib"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

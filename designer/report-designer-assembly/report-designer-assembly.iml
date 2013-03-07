@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://$MODULE_DIR$/lib" />
+    <src_description expected_position="1">
+      <src_folder value="file://$MODULE_DIR$/resource.mac" expected_position="1" />
+      <src_folder value="file://$MODULE_DIR$/resource/resources" expected_position="2" />
+    </src_description>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -9,8 +16,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="report-designer" exported="" />
-    <orderEntry type="module" module-name="report-designer-extensions-legacy-charts" exported="" />
-    <orderEntry type="module" module-name="report-designer-extensions-pentaho" exported="" />
     <orderEntry type="module" module-name="datasource-editor-external" exported="" />
     <orderEntry type="module" module-name="datasource-editor-hibernate" exported="" />
     <orderEntry type="module" module-name="datasource-editor-jdbc" exported="" />
@@ -26,8 +31,11 @@
     <orderEntry type="module" module-name="report-designer-extension-toc" exported="" />
     <orderEntry type="module" module-name="datasource-editor-cda" exported="" />
     <orderEntry type="module" module-name="extensions-sampledata" exported="" />
+    <orderEntry type="module" module-name="datasource-editor-openerp" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-legacy-charts" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-pentaho" exported="" />
     <orderEntry type="module-library" exported="">
-      <library>
+      <library name="lib">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
         </CLASSES>
@@ -35,8 +43,6 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

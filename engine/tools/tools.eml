@@ -3,14 +3,7 @@
 	<output-test url="file://$MODULE_DIR$/../../../out/test/tools"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
-	<lib name="$MODULE_DIR$/lib/external" scope="COMPILE">
+	<lib name="external" scope="COMPILE">
 		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/bcel-5.1.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/hsqldb-1.8.0.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/junit-4.10.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/regexp-1.2.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/simple-jndi-0.11.3.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/slf4j-jcl-1.5.8.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/tools/lib/external/xmlunit-1.3.jar!/"/>
 	</lib>
 </component>

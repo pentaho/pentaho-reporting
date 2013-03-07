@@ -4,8 +4,6 @@
 	<classpathentry kind="src" path="devresource"/>
 	<classpathentry kind="src" path="source"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/report-designer"/>
-	<classpathentry kind="lib" path="/opt/data/source/pentaho-reporting/pentaho-reporting/designer/report-designer-extension-pentaho/lib/pentaho-cwm-1.5.4.jar"/>
-	<classpathentry kind="lib" path="/opt/data/source/pentaho-reporting/pentaho-reporting/designer/report-designer-extension-pentaho/lib/pentaho-publisher-1.6.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/libpensol"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libpensol"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

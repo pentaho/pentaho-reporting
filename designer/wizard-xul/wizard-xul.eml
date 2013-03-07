@@ -3,16 +3,7 @@
 	<output-test url="file://$MODULE_DIR$/../../../out/test/wizard-xul"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
-	<lib name="$MODULE_DIR$/lib/external" scope="COMPILE">
+	<lib name="external" scope="COMPILE">
 		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/commons-beanutils-1.8.0.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/commons-collections-3.2.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/commons-lang-2.2.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/commons-logging-1.0.4.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/dom4j-1.6.1.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/groovy-all-1.5.6.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/jaxen-1.1.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/pentaho-xul-core-TRUNK-SNAPSHOT.jar!/"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/designer/wizard-xul/lib/external/pentaho-xul-swing-TRUNK-SNAPSHOT.jar!/"/>
 	</lib>
 </component>

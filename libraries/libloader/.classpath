@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="source"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libbase"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/pixie"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libpixie"/>
 	<classpathentry exported="true" kind="lib" path="lib/external"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

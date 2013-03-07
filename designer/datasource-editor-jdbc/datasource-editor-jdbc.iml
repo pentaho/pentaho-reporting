@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://$MODULE_DIR$/lib/external" />
+    <src_description expected_position="1">
+      <src_folder value="file://$MODULE_DIR$/source" expected_position="1" />
+    </src_description>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -10,13 +16,12 @@
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module" module-name="libswing" exported="" />
     <orderEntry type="module-library" exported="">
-      <library>
+      <library name="external">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
   </component>

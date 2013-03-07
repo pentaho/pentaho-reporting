@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/jsp-api.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/servlet-api.jar!/" />
+    <src_description expected_position="1">
+      <src_folder value="file://$MODULE_DIR$/source" expected_position="1" />
+    </src_description>
+  </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -9,7 +16,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module-library" exported="">
-      <library>
+      <library name="jsp-api.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jsp-api.jar!/" />
         </CLASSES>
@@ -18,7 +25,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library>
+      <library name="servlet-api.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/servlet-api.jar!/" />
         </CLASSES>

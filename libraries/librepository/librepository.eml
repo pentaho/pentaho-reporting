@@ -5,8 +5,7 @@
 	<contentEntry url="file://$MODULE_DIR$">
 		<testFolder url="file://$MODULE_DIR$/test"/>
 	</contentEntry>
-	<lib name="librepository-ext-lib" scope="COMPILE">
+	<lib name="external" scope="COMPILE">
 		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/libraries/librepository/lib/external"/>
-		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/libraries/librepository/lib/external/mail-1.4.1.jar!/"/>
 	</lib>
 </component>
