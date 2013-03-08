@@ -135,7 +135,7 @@ CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -221,7 +221,7 @@ CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -307,7 +307,7 @@ CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(5, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -393,7 +393,7 @@ CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(7, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -479,7 +479,7 @@ CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attribu
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(9, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -565,7 +565,7 @@ CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(11, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
@@ -651,7 +651,7 @@ CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attrib
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
-CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
 CellAttribute(13, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=Sales
