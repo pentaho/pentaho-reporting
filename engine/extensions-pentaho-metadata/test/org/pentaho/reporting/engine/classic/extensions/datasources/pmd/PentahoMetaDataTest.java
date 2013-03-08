@@ -402,10 +402,6 @@ public class PentahoMetaDataTest extends DataSourceTestBase
         TableModelInfo.printTableMetaData(tableModel, out);
         TableModelInfo.printTableCellAttributes(tableModel, out);
         
-        PrintWriter pw = new PrintWriter(new FileWriter("output.txt"));
-        pw.print(sw.toString());
-        pw.close();
-        
         compareLineByLine("agg-query-results.txt", sw.toString());
       }
       finally
