@@ -11,7 +11,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external-libs">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>

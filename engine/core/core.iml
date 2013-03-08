@@ -29,26 +29,29 @@
     <orderEntry type="module" module-name="librepository" exported="" />
     <orderEntry type="module" module-name="libxml" exported="" />
     <orderEntry type="module" module-name="libswing" exported="" />
+    <orderEntry type="module" module-name="libbase" exported="" />
+    <orderEntry type="module" module-name="flute" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="libbase" exported="" />
-    <orderEntry type="module" module-name="flute" exported="" />
-    <orderEntry type="module-library" exported="">
-      <library name="hsqldb-1.8.0.jar">
+    <orderEntry type="module-library" exported="" scope="TEST">
+      <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/test-lib/hsqldb-1.8.0.jar!/" />
+          <root url="file://$MODULE_DIR$/test-lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/test-lib/mockito-all-1.9.5-rc1.jar!/" />
+          <root url="file://$MODULE_DIR$/test-lib" />
         </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

@@ -22,16 +22,17 @@
     <orderEntry type="module" module-name="libswing" exported="" />
     <orderEntry type="module" module-name="extensions-reportdesigner-parser" exported="" />
     <orderEntry type="module" module-name="extensions-drilldown" exported="" />
+    <orderEntry type="module" module-name="configuration-editor" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="configuration-editor" exported="" />
   </component>
   <component name="copyright">
     <Base>

@@ -17,8 +17,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="junit-3.8.1.jar">
+    <orderEntry type="module-library" exported="" scope="TEST">
+      <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/test-lib/junit-3.8.1.jar!/" />
         </CLASSES>

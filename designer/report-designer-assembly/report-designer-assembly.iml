@@ -35,14 +35,18 @@
     <orderEntry type="module" module-name="report-designer-extension-legacy-charts" exported="" />
     <orderEntry type="module" module-name="report-designer-extension-pentaho" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="lib">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
+          <root url="file://$MODULE_DIR$/lib/jdbc" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/lib/jdbc" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

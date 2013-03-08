@@ -19,9 +19,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="libbase" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external">
+      <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/lib/external" />
+          <root url="jar://$MODULE_DIR$/lib/external/mail-1.4.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

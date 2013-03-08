@@ -16,12 +16,16 @@
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module" module-name="libswing" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib/external" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

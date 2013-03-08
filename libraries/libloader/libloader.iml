@@ -20,12 +20,13 @@
     <orderEntry type="module" module-name="libbase" exported="" />
     <orderEntry type="module" module-name="libpixie" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="external">
+      <library>
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
   </component>
