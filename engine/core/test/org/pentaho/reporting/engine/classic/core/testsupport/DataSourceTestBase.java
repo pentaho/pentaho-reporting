@@ -169,21 +169,28 @@ public abstract class DataSourceTestBase extends TestCase
       final String query = queriesAndResults[i][0];
       final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory(query);
-      final String queryResult = performQueryTest(dataFactory);
+      initializeDataFactory(dataFactory);
+      generate(dataFactory, resultFile);
+    }
+  }
 
-      final String packageName = getClass().getPackage().getName();
-      final String pathName = packageName.replace(".", "/");
-      final File file = new File(getTestDirectory()  + "/" + pathName + "/" + resultFile);
-      System.out.println("Generating test result: " + file.getAbsolutePath());
-      final FileOutputStream fout = new FileOutputStream(file);
-      try
-      {
-        fout.write(queryResult.getBytes("UTF-8"));
-      }
-      finally
-      {
-        fout.close();
-      }
+  protected void generate(final DataFactory dataFactory,
+                          final String resultFile) throws ReportDataFactoryException, SQLException, IOException
+  {
+    final String queryResult = performQueryTest(dataFactory);
+
+    final String packageName = getClass().getPackage().getName();
+    final String pathName = packageName.replace(".", "/");
+    final File file = new File(getTestDirectory() + "/" + pathName + "/" + resultFile);
+    System.out.println("Generating test result: " + file.getAbsolutePath());
+    final FileOutputStream fout = new FileOutputStream(file);
+    try
+    {
+      fout.write(queryResult.getBytes("UTF-8"));
+    }
+    finally
+    {
+      fout.close();
     }
   }
 
@@ -196,7 +203,7 @@ public abstract class DataSourceTestBase extends TestCase
   {
     dataFactory.initialize(new DesignTimeDataFactoryContext());
   }
-  
+
   protected abstract DataFactory createDataFactory(final String query) throws ReportDataFactoryException;
 
   protected void compareLineByLine(final String sourceFile, final String resultText) throws IOException

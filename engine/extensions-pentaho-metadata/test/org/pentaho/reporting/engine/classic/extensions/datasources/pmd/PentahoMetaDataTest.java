@@ -19,9 +19,11 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -228,6 +230,12 @@ public class PentahoMetaDataTest extends DataSourceTestBase
   public static final String[][] QUERIES_AND_RESULTS = new String[][]{
       {QUERY, "query-results.txt"},
       {PARAMETRIZED_QUERY, "query-results-2.txt"},
+  };
+
+  public static final String[][] QUERIES_AND_RESULTS_GEN = new String[][]{
+      {QUERY, "query-results.txt"},
+      {PARAMETRIZED_QUERY, "query-results-2.txt"},
+      {MULTIPLE_AGG_QUERY, "agg-query-results.txt"},
   };
 
   public PentahoMetaDataTest()
@@ -438,6 +446,18 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     assertEquals(DataFactory.QUERY_LIMIT, fields2[0]);
   }
 
+  public void runGenerateMultiAgg() throws ReportDataFactoryException, IOException, SQLException
+  {
+    final PmdDataFactory pmdDataFactory = new PmdDataFactory();
+    PmdConnectionProvider provider = new MultipleAggregationTestConnectionProvider();
+    pmdDataFactory.setConnectionProvider(provider);
+    pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
+    pmdDataFactory.setDomainId("steel-wheels");
+    pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY);
+    pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
+
+    generate(pmdDataFactory, "agg-query-results.txt");
+  }
 
   public void testSaveAndLoad() throws Exception
   {
