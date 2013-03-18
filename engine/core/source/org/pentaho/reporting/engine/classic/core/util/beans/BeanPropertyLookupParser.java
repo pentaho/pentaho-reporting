@@ -21,7 +21,8 @@ import org.pentaho.reporting.engine.classic.core.util.PropertyLookupParser;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 
 /**
- * Todo: Analyze this class; it might not do what it promises ..
+ * A lookup parser that uses the standard ${..} syntax to lookup bean references. It can chain lookups along
+ * standard bean properties.
  */
 public abstract class BeanPropertyLookupParser extends PropertyLookupParser
 {

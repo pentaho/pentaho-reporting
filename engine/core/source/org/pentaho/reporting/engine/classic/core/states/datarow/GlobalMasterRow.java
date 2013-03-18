@@ -543,7 +543,8 @@ public final class GlobalMasterRow implements MasterDataRow
 
   public int getRowCount()
   {
-    // todo
+    // todo: Shall we return the padded count (includes all additional crosstab rows) or shall we just
+    // return the raw row count?
     final TableModel rawData = paddingData.getRawData();
     if (rawData != null)
     {

@@ -6,14 +6,6 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 26.03.2010
- * Time: 11:05:55
- *
- * @author Thomas Morgner.
- */
 public class GeneratorTableModel extends AbstractTableModel
 {
   private String[] columnNames;

@@ -21,11 +21,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document me!
- *
- * @author : Thomas Morgner
- */
 public class ParameterAttributeReadHandler extends StringReadHandler
 {
   private String namespace;
