@@ -251,10 +251,7 @@ public abstract class DataSourceTestBase extends TestCase
     try
     {
       final TableModel tableModel = dataFactory.queryData(getLogicalQueryForNextTest(), getParameterForNextTest());
-      TableModelInfo.printTableModel(tableModel, ps);
-      TableModelInfo.printTableMetaData(tableModel, ps);
-      TableModelInfo.printTableCellAttributes(tableModel, ps);
-      TableModelInfo.printTableModelContents(tableModel, ps);
+      generateCompareText(ps, tableModel);
       if (tableModel instanceof CloseableTableModel)
       {
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
@@ -266,6 +263,14 @@ public abstract class DataSourceTestBase extends TestCase
       dataFactory.close();
     }
     return sw.toString();
+  }
+
+  protected void generateCompareText(final PrintStream ps, final TableModel tableModel)
+  {
+    TableModelInfo.printTableModel(tableModel, ps);
+    TableModelInfo.printTableMetaData(tableModel, ps);
+    TableModelInfo.printTableCellAttributes(tableModel, ps);
+    TableModelInfo.printTableModelContents(tableModel, ps);
   }
 
   protected DataRow getParameterForNextTest()

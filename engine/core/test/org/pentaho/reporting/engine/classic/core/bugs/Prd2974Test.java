@@ -130,7 +130,7 @@ public class Prd2974Test extends TestCase
     XmlPageReportUtil.createXml(report, out);
     final String outText = out.toString("UTF-8");
 /**
- * TODO: PRD-4344 - Fix this regression
+ * TESTBUG: PRD-4344 - Fix this regression
  */
  /*
     System.out.println(outText);
@@ -187,7 +187,7 @@ public class Prd2974Test extends TestCase
     System.out.println(outText);
     assertTrue(outText.indexOf(">Label</text>") > 0);
     assertTrue(outText.indexOf(">PageFooter-Label<") > 0);
-    // todo: this is not a true structural test at all.
+    // TESTBUG: this is not a true structural test at all.
   }
 
 }
