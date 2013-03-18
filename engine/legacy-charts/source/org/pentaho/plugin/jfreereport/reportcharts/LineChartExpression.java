@@ -51,6 +51,8 @@ public class LineChartExpression extends CategoricalChartExpression
           orientation, isShowLegend(), false, false);
       chart.getCategoryPlot().setDomainAxis(new FormattedCategoryAxis3D(getCategoryAxisLabel(),
           getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale()));
+      final CategoryPlot plot = (CategoryPlot) chart.getPlot();
+      configureLogarithmicAxis(plot);
       return chart;
     }
     else
@@ -59,6 +61,8 @@ public class LineChartExpression extends CategoricalChartExpression
           orientation, isShowLegend(), false, false);
       chart.getCategoryPlot().setDomainAxis(new FormattedCategoryAxis(getCategoryAxisLabel(),
           getCategoricalAxisMessageFormat(), getRuntime().getResourceBundleFactory().getLocale()));
+      final CategoryPlot plot = (CategoryPlot) chart.getPlot();
+      configureLogarithmicAxis(plot);
       return chart;
     }
   }
