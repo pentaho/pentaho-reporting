@@ -228,6 +228,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     sblp.setDominantBaseline(-1);
     sblp.setOrphans(style.getIntStyleProperty(ElementStyleKeys.ORPHANS, 0));
     sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
+    sblp.setWidowOrphanOptOut(style.getBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, false));
 
     final ExtendedBaselineInfo baselineInfo = metaData.getBaselineInfo('x', style);
     if (baselineInfo == null)

@@ -190,6 +190,7 @@ public class ElementStyleKeys
 
   public static final StyleKey ORPHANS = StyleKey.getStyleKey("orphans", Integer.class, false, false);
   public static final StyleKey WIDOWS = StyleKey.getStyleKey("widows", Integer.class, false, false);
+  public static final StyleKey WIDOW_ORPHAN_OPT_OUT = StyleKey.getStyleKey("widow-orphan-opt-out", Boolean.class, false, false);
 
   public static final StyleKey ANTI_ALIASING = StyleKey.getStyleKey("anti-aliasing", Boolean.class);
 

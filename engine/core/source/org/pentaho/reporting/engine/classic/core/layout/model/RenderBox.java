@@ -81,6 +81,8 @@ public abstract class RenderBox extends RenderNode
   private long contentAge;
   private long overflowAreaWidth;
   private long overflowAreaHeight;
+  private long orphanConstraintSize;
+  private long widowConstraintSize;
 
   protected RenderBox(final int majorAxis,
                       final int minorAxis,

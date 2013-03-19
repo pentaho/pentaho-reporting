@@ -25,11 +25,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class CommonStyleReadHandler extends AbstractXmlReadHandler implements StyleReadHandler
 {
   private ElementStyleSheet styleSheet;
@@ -103,7 +98,13 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
       styleSheet.setStyleProperty(ElementStyleKeys.WIDOWS, ReportParserUtil.parseInteger(widows, getLocator()));
     }
 
-    final String orphans = attrs.getValue(getUri(), "orphans");
+    final String widowsOrphanOptOut = attrs.getValue(getUri(), ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName());
+    if (widowsOrphanOptOut != null)
+    {
+      styleSheet.setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, ReportParserUtil.parseBoolean(widows, getLocator()));
+    }
+
+    final String orphans = attrs.getValue(getUri(), ElementStyleKeys.ORPHANS.getName());
     if (orphans != null)
     {
       styleSheet.setStyleProperty(ElementStyleKeys.ORPHANS, ReportParserUtil.parseInteger(orphans, getLocator()));

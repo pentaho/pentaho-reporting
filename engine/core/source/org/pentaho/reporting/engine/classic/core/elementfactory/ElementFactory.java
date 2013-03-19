@@ -133,6 +133,8 @@ public abstract class ElementFactory
    */
   private Integer orphans;
 
+  private Boolean widowOrphanOptOut;
+
   /**
    * The background color of the box.
    */
@@ -1449,6 +1451,16 @@ public abstract class ElementFactory
     this.orphans = orphans;
   }
 
+  public Boolean getWidowOrphanOptOut()
+  {
+    return widowOrphanOptOut;
+  }
+
+  public void setWidowOrphanOptOut(final Boolean widowOrphanOptOut)
+  {
+    this.widowOrphanOptOut = widowOrphanOptOut;
+  }
+
   /**
    * Returns the defined background color of the box.
    *
@@ -2262,6 +2274,10 @@ public abstract class ElementFactory
     if (widows != null)
     {
       style.setStyleProperty(ElementStyleKeys.WIDOWS, getWidows());
+    }
+    if (widowOrphanOptOut != null)
+    {
+      style.setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, getWidowOrphanOptOut());
     }
     if (overflowX != null)
     {
