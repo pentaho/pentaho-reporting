@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.libraries.libsparklines;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.framework.TestCase;
 import java.math.BigDecimal;
 import java.util.StringTokenizer;
-import org.pentaho.reporting.libraries.libsparklines.util.StringUtils;
+
+import junit.framework.TestCase;
 
 /**
  * StringUtils Tester.
@@ -31,80 +29,9 @@ import org.pentaho.reporting.libraries.libsparklines.util.StringUtils;
  */
 public class StringUtilsTest extends TestCase
 {
-  private static final String INTEGERS = "10,58,-15";
-  private static final Number[] NUMBERS = {new Integer(10), new Integer(58), new Integer(-15), new Double("2.56d"),
-      new Integer(-89), new Float("45f"), new BigDecimal("10e+6")};
-  private static final String DOUBLES = "10,58,-15,2.56 ,  -89";
-  private static final String ALL = "10,58,-15,2.56,-89, 45., 10e+6";
-
   public StringUtilsTest(final String name)
   {
     super(name);
-  }
-
-  public void setUp() throws Exception
-  {
-    super.setUp();
-  }
-
-  public void tearDown() throws Exception
-  {
-    super.tearDown();
-  }
-
-  public static Test suite()
-  {
-    return new TestSuite(StringUtilsTest.class);
-  }
-
-  public void testToIntListSimple()
-  {
-    final Number[] numbers = StringUtils.toIntList(INTEGERS);
-    assertNotNull("The list is null", numbers);
-    assertEquals("Unexpected list size", 3, numbers.length);
-    for (int i = 0; i < numbers.length; i++)
-    {
-      assertEquals("Unexpected number value", NUMBERS[i], numbers[i]);
-    }
-  }
-
-  public void testToIntListDouble()
-  {
-    try
-    {
-      final Number[] numbers = StringUtils.toIntList(DOUBLES);
-      fail("Should not be able to parse double");
-    }
-    catch (Exception e)
-    {
-      //nothing
-    }
-  }
-
-  public void testToBigDecimalListDouble()
-  {
-    final Number[] numbers = StringUtils.toBigDecimalList(DOUBLES);
-    assertNotNull("The list is null", numbers);
-    assertEquals("Unexpected list size", 5, numbers.length);
-    for (int i = 0; i < numbers.length; i++)
-    {
-      final BigDecimal ref = new BigDecimal(NUMBERS[i].toString());
-      final BigDecimal value = new BigDecimal(numbers[i].toString());
-      assertEquals("Unexpected number value", 0, ref.compareTo(value));
-    }
-  }
-
-  public void testToBigDecimalListEveryTypes()
-  {
-    final Number[] numbers = StringUtils.toBigDecimalList(ALL);
-    assertNotNull("The list is null", numbers);
-    assertEquals("Unexpected list size", 7, numbers.length);
-    for (int i = 0; i < numbers.length; i++)
-    {
-      final BigDecimal ref = new BigDecimal(NUMBERS[i].toString());
-      final BigDecimal value = new BigDecimal(numbers[i].toString());
-      assertEquals("Unexpected number value", 0, ref.compareTo(value));
-    }
   }
 
   public static void testBigDecimal()
