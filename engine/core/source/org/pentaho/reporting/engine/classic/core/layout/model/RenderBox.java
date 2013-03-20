@@ -142,6 +142,8 @@ public abstract class RenderBox extends RenderNode
     b.setContentRefHolder(false);
     b.descendantCount = 1;
     b.tableValidationAge = -1;
+    b.orphanConstraintSize = 0;
+    b.widowConstraintSize = 0;
     return b;
   }
 
@@ -1463,5 +1465,30 @@ public abstract class RenderBox extends RenderNode
       next = next.getNext();
     }
     return count;
+  }
+
+  public long getOrphanConstraintSize()
+  {
+    return orphanConstraintSize;
+  }
+
+  public void setOrphanConstraintSize(final long orphanConstraintSize)
+  {
+    this.orphanConstraintSize = orphanConstraintSize;
+  }
+
+  public long getWidowConstraintSize()
+  {
+    return widowConstraintSize;
+  }
+
+  public void setWidowConstraintSize(final long widowConstraintSize)
+  {
+    this.widowConstraintSize = widowConstraintSize;
+  }
+
+  public boolean isValidForWidowOrphanCount()
+  {
+    return false;
   }
 }

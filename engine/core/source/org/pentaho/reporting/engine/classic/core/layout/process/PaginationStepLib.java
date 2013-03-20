@@ -34,9 +34,13 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 /**
  * A helper class that contains generic methods that would distract me from the actual pagination logic.
  */
-public class PaginationStepLib
+public final class PaginationStepLib
 {
   private static final Log logger = LogFactory.getLog(PaginationStepLib.class);
+
+  private PaginationStepLib()
+  {
+  }
 
   public static void configureBreakUtility(final PageBreakPositionList breakUtility,
                                             final LogicalPageBox pageBox,
@@ -153,15 +157,15 @@ public class PaginationStepLib
       {
         ModelPrinter.INSTANCE.print(box);
         ModelPrinter.INSTANCE.print(ModelPrinter.getRoot(box));
-        throw new InvalidReportStateException("Assert: Shift is not as expected: realY=" + realY +
-            " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
-            "; RealShift=" + realShift);
+        throw new InvalidReportStateException(String.format("Assert: Shift is not as expected: " +
+            "realY=%d != expectation=%d; Shift=%d; AdditionalShift=%d; RealShift=%d",
+            realY, expectedYPos, shift, additionalShift, realShift));
       }
       else
       {
-        logger.debug("Assert: Shift is not as expected: realY=" + realY +
-            " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
-            "; RealShift=" + realShift + " (False positive if block box has valign != TOP");
+        logger.debug(String.format("Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
+            "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
+            realY, expectedYPos, shift, additionalShift, realShift));
       }
     }
   }
@@ -202,52 +206,16 @@ public class PaginationStepLib
       return 0;
     }
 
-    final int orphans = sblp.getOrphans();
-    final int widows = sblp.getWidows();
-    if (orphans == 0 && widows == 0)
+    final long widowHeight = box.getWidowConstraintSize();
+    final long orphanHeight = box.getOrphanConstraintSize();
+
+    if (widowHeight + orphanHeight > box.getHeight())
     {
-      // Widows and orphans will be ignored if both of them are zero.
-      return 0;
+      // if the widows and orphan areas overlap, then the box becomes non-breakable.
+      return box.getHeight();
     }
 
-    int counter = 0;
-    RenderNode child = box.getFirstChild();
-    while (child != null && counter < orphans)
-    {
-      counter += 1;
-      child = child.getNext();
-    }
-
-    final long orphanHeight;
-    if (child == null)
-    {
-      orphanHeight = 0;
-    }
-    else
-    {
-      orphanHeight = box.getY() - (child.getY() + child.getHeight());
-    }
-
-    counter = 0;
-    child = box.getLastChild();
-    while (child != null && counter < orphans)
-    {
-      counter += 1;
-      child = child.getPrev();
-    }
-
-    final long widowHeight;
-    if (child == null)
-    {
-      widowHeight = 0;
-    }
-    else
-    {
-      widowHeight = (box.getY() + box.getHeight()) - (child.getY());
-    }
-
-    // todo: Compute the height the orphans and widows consume.
-    return Math.max(orphanHeight, widowHeight);
+    return orphanHeight;
   }
 
 }
