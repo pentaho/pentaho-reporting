@@ -1489,6 +1489,7 @@ public abstract class RenderBox extends RenderNode
 
   public boolean isValidForWidowOrphanCount()
   {
-    return false;
+    // todo: Hack
+    return this instanceof BlockRenderBox;
   }
 }

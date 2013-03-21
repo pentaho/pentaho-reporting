@@ -32,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBo
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.WidowOrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -39,6 +40,7 @@ public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
   private PaginationStep paginationStep;
+  private WidowOrphanStep widowOrphanStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
   private int pageCount;
@@ -52,6 +54,7 @@ public class PageableRenderer extends AbstractRenderer
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
     this.countBoxesStep = new CountBoxesStep();
+    this.widowOrphanStep = new WidowOrphanStep();
     initialize();
   }
 
@@ -76,6 +79,7 @@ public class PageableRenderer extends AbstractRenderer
     final LogicalPageBox pageBox = getPageBox();
 //    final long sizeBeforePagination = pageBox.getHeight();
 //    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    widowOrphanStep.processWidowOrphanAnnotation(pageBox);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
@@ -94,6 +98,7 @@ public class PageableRenderer extends AbstractRenderer
 
     //    final long sizeBeforePagination = pageBox.getHeight();
     final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    widowOrphanStep.processWidowOrphanAnnotation(pageBox);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBox.isOpen() && pageBreak.isOverflow() == false)
     {

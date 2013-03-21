@@ -4,8 +4,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.util.LongRingBuffer;
+import org.pentaho.reporting.engine.classic.core.util.RingBuffer;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Computes break positions that prevent Orphan and Widow elements, according to the definitions on
@@ -41,115 +43,206 @@ import org.pentaho.reporting.engine.classic.core.util.LongRingBuffer;
  */
 public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 {
+  private static class ElementContext
+  {
+    public final long value;
+    public final RenderNode instance;
+    public boolean open;
+
+    private ElementContext(final long value, final RenderNode instance)
+    {
+      this.open = true;
+      this.value = value;
+      this.instance = instance;
+    }
+  }
+
   private static interface WidowOrphanContext
   {
-    public WidowOrphanContext getParent();
+    public void startChild(RenderBox box);
 
-    public void add(RenderBox box);
-    public void addDeep(RenderBox box);
+//    public void startIndirectChild(RenderBox box);
 
+//    public void endIndirectChild(RenderBox box, long orphan, long widow);
+
+    public void endChild(RenderBox box);
+
+    /**
+     * Orphan value is the y2/bottom-boundary for the element after which the box becomes breakable.
+     *
+     * @return
+     */
     public long getOrphanValue();
+
+    /**
+     * Widow is the y/top boundary for the element after which the box becomes unbreakable.
+     *
+     * @return
+     */
     public long getWidowValue();
-    public void finish();
+
+    public WidowOrphanContext commit(RenderBox box);
+
+    public void subContextCommited(RenderBox contextBox);
   }
 
   private static class BlockWidowOrphanContext implements WidowOrphanContext
   {
     private WidowOrphanContext parent;
+    private RenderBox contextBox;
     private int widows;
     private int orphans;
     private int count;
-    private LongRingBuffer orphanSize;
-    private LongRingBuffer widowSize;
-    private boolean firstDeep;
+    private RingBuffer<ElementContext> orphanSize;
+    private RingBuffer<ElementContext> widowSize;
+    private boolean debug;
+    private long orphanOverride;
+    private long widowOverride;
+
+    private RenderBox currentNode;
 
     private BlockWidowOrphanContext(final WidowOrphanContext parent,
+                                    final RenderBox contextBox,
                                     final int widows, final int orphans)
     {
       this.parent = parent;
+      this.contextBox = contextBox;
       this.widows = widows;
       this.orphans = orphans;
-      this.firstDeep = true;
+      this.widowOverride = contextBox.getY() + contextBox.getHeight();
+
       if (widows > 0)
       {
-        this.widowSize = new LongRingBuffer(widows);
+        this.widowSize = new RingBuffer(widows);
       }
       if (orphans > 0)
       {
-        this.orphanSize = new LongRingBuffer(orphans);
+        this.orphanSize = new RingBuffer(orphans);
+      }
+
+      if ("group-outside".equals(contextBox.getName()))
+      {
+        debug = true;
       }
     }
 
-    public WidowOrphanContext getParent()
+    public void startChild(final RenderBox box)
     {
-      return parent;
-    }
-
-    public void add(final RenderBox box)
-    {
-      if (count < orphans && orphanSize != null)
-      {
-        final long y2 = box.getY() + box.getHeight();
-        orphanSize.add(y2);
-      }
-
-      if (widowSize != null)
-      {
-        widowSize.add(box.getY());
-      }
-
-      count += 1;
+      currentNode = box;
 
       if (parent != null)
       {
-        parent.addDeep(box);
+        parent.startChild(box);
       }
     }
 
-    public void addDeep(final RenderBox box)
+    public void endChild(final RenderBox box)
     {
-      final long y2 = box.getY() + box.getHeight();
-      if (firstDeep)
-      {
-        if (widowSize != null)
-        {
-          widowSize.replaceLastAdded(box.getY());
-        }
-        if (count < orphans && orphanSize != null)
-        {
-          orphanSize.replaceLastAdded(y2);
-        }
-
-        firstDeep = false;
-      }
-      else
+      if (currentNode != null)
       {
         if (count < orphans && orphanSize != null)
         {
-          orphanSize.add(y2);
+          final long y2 = box.getY() + box.getHeight();
+          orphanSize.add(new ElementContext(y2, box));
+          if (debug)
+          {
+            DebugLog.log("Orphan size added (DIRECT): " + y2 + " -> " + box.getName());
+          }
+          count += 1;
         }
+
         if (widowSize != null)
         {
-          widowSize.add(box.getY());
+          widowSize.add(new ElementContext(box.getY(), box));
+          if (debug)
+          {
+            DebugLog.log("Widow size added (DIRECT): " + box.getY() + " -> " + box.getName());
+          }
         }
+
+        currentNode = null;
       }
 
-      count += 1;
+      if (parent != null)
+      {
+        parent.endChild(box);
+      }
     }
 
     public long getOrphanValue()
     {
-      return orphanSize.getLastValue();
+      if (orphanSize == null)
+      {
+        return orphanOverride;
+      }
+      final ElementContext lastValue = orphanSize.getLastValue();
+      if (lastValue == null)
+      {
+        return orphanOverride;
+      }
+      return Math.max(orphanOverride, lastValue.value);
     }
 
     public long getWidowValue()
     {
-      return widowSize.getFirstValue();
+      if (widowSize == null)
+      {
+        return widowOverride;
+      }
+      final ElementContext firstValue = widowSize.getFirstValue();
+      if (firstValue == null)
+      {
+        return widowOverride;
+      }
+      return Math.min(widowOverride, firstValue.value);
     }
 
-    public void finish()
+    public WidowOrphanContext commit(final RenderBox box)
     {
+      box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getY()));
+      box.setWidowConstraintSize((box.getY() + box.getHeight()) - getWidowValue());
+/*
+      if (box.getStyleSheet().getBooleanStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE))
+      {
+        box.setOrphanConstraintSize(box.getHeight());
+        box.setWidowConstraintSize(box.getHeight());
+      }
+*/
+      if (debug)
+      {
+        DebugLog.log("Final Orphan Size: " + box.getOrphanConstraintSize());
+        DebugLog.log("Final Widow Size: " + box.getWidowConstraintSize());
+      }
+      if (parent != null)
+      {
+        parent.subContextCommited(box);
+      }
 
+      return parent;
+    }
+
+    public void subContextCommited(final RenderBox contextBox)
+    {
+      // if there is overlap between the child context and the current lock-out area, process it.
+      if (contextBox.getY() <= getOrphanValue())
+      {
+        orphanOverride = Math.max(orphanOverride, contextBox.getY() + contextBox.getOrphanConstraintSize());
+      }
+
+      if (debug)
+        DebugLog.logHere();
+      final long widowLimit = getWidowValue();
+      final long contextY2 = contextBox.getY() + contextBox.getHeight();
+      if (contextY2 >= widowLimit)
+      {
+        final long absConstraint = contextY2 - contextBox.getWidowConstraintSize();
+        widowOverride = Math.min(widowOverride, absConstraint);
+      }
+
+      if (parent != null)
+      {
+        parent.subContextCommited(contextBox);
+      }
     }
   }
 
@@ -167,19 +260,19 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
       return parent;
     }
 
-    public void add(final RenderBox box)
+    public void startChild(final RenderBox box)
     {
       if (parent != null)
       {
-        parent.add(box);
+        parent.startChild(box);
       }
     }
 
-    public void addDeep(final RenderBox box)
+    public void endChild(final RenderBox box)
     {
       if (parent != null)
       {
-        parent.addDeep(box);
+        parent.endChild(box);
       }
     }
 
@@ -193,9 +286,17 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
       return 0;
     }
 
-    public void finish()
+    public WidowOrphanContext commit(final RenderBox box)
     {
+      return parent;
+    }
 
+    public void subContextCommited(final RenderBox contextBox)
+    {
+      if (parent != null)
+      {
+        parent.subContextCommited(contextBox);
+      }
     }
   }
 
@@ -208,17 +309,22 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
       this.parent = parent;
     }
 
-    public WidowOrphanContext getParent()
+    public void startChild(final RenderBox box)
+    {
+
+    }
+
+    public void endChild(final RenderBox box)
+    {
+
+    }
+
+    public WidowOrphanContext commit(final RenderBox box)
     {
       return parent;
     }
 
-    public void add(final RenderBox box)
-    {
-      // ignore. A canvas box cannot compute a widow/orphan context in a meaningful way.
-    }
-
-    public void addDeep(final RenderBox box)
+    public void subContextCommited(final RenderBox contextBox)
     {
 
     }
@@ -231,11 +337,6 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     public long getWidowValue()
     {
       return 0;
-    }
-
-    public void finish()
-    {
-      // ignore ..
     }
   }
 
@@ -252,15 +353,18 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     context = null;
   }
 
-  private WidowOrphanContext create(final RenderBox box, final int widows, final int orphans)
+  private WidowOrphanContext create(final RenderBox box)
   {
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
+      final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
+      final int widows = properties.getWidows();
+      final int orphans = properties.getOrphans();
       if (widows == 0 && orphans == 0)
       {
         return new PassThroughWidowOrphanContext(context);
       }
-      return new BlockWidowOrphanContext(context, widows, orphans);
+      return new BlockWidowOrphanContext(context, box, widows, orphans);
     }
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
     {
@@ -280,22 +384,21 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
     if (properties.isWidowOrphanOptOut() == false)
     {
-      context.add(box);
+      context.startChild(box);
     }
 
-    final int widows = properties.getWidows();
-    final int orphans = properties.getOrphans();
-    context = create(box, widows, orphans);
+    context = create(box);
     return true;
   }
 
   protected void finishBox(final RenderBox box)
   {
-    context.finish();
-    box.setOrphanConstraintSize(context.getOrphanValue() - box.getY());
-    box.setWidowConstraintSize((box.getY() + box.getHeight()) - context.getWidowValue());
-
-    context = context.getParent();
+    context = context.commit(box);
+    final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
+    if (properties.isWidowOrphanOptOut() == false)
+    {
+      context.endChild(box);
+    }
   }
 
 }

@@ -171,8 +171,27 @@ public class ModelPrinter
     b.append(box.getContentAreaX1());
     b.append(", content-area-x2=");
     b.append(box.getContentAreaX2());
-
     print(b.toString());
+
+    b = new StringBuffer();
+    for (int i = 0; i < level; i++)
+    {
+      b.append("   ");
+    }
+    b.append("- widow-size=");
+    b.append(box.getWidowConstraintSize());
+    b.append(", orphan-size=");
+    b.append(box.getOrphanConstraintSize());
+    b.append(", widows=");
+    b.append(box.getStaticBoxLayoutProperties().getWidows());
+    b.append(", orphans=");
+    b.append(box.getStaticBoxLayoutProperties().getOrphans());
+    b.append(", keep-together=");
+    b.append(box.getStaticBoxLayoutProperties().isAvoidPagebreakInside());
+    b.append(", widow-orphan-opt-out=");
+    b.append(box.isValidForWidowOrphanCount());
+    print(b.toString());
+
     b = new StringBuffer();
     for (int i = 0; i < level; i++)
     {
