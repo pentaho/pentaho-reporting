@@ -633,6 +633,9 @@ public final class PaginationStep extends IterateVisualProcessStep
     {
       // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
       // break.
+
+      // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
+      // into account.
       final long nextShift = nextMinorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);

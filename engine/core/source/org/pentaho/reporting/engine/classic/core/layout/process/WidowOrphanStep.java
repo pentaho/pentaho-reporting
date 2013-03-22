@@ -6,6 +6,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.RingBuffer;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -201,13 +202,13 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     {
       box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getY()));
       box.setWidowConstraintSize((box.getY() + box.getHeight()) - getWidowValue());
-/*
+
       if (box.getStyleSheet().getBooleanStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE))
       {
         box.setOrphanConstraintSize(box.getHeight());
         box.setWidowConstraintSize(box.getHeight());
       }
-*/
+
       if (debug)
       {
         DebugLog.log("Final Orphan Size: " + box.getOrphanConstraintSize());
@@ -360,7 +361,7 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
       final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
       final int widows = properties.getWidows();
       final int orphans = properties.getOrphans();
-      if (widows == 0 && orphans == 0)
+      if (widows == 0 && orphans == 0 && properties.isAvoidPagebreakInside() == false)
       {
         return new PassThroughWidowOrphanContext(context);
       }

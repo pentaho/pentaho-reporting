@@ -118,6 +118,14 @@ public class SimplePageDefinition implements PageDefinition
     this(PageFormatFactory.getInstance().create(papersize, orientation, margins), 1, 1);
   }
 
+  /**
+   * Creates a 1x1 page defintion. The physical page size is equal to the logical page size.
+   */
+  public SimplePageDefinition(final PageSize papersize)
+  {
+    this(PageFormatFactory.getInstance().create(papersize, PageFormat.PORTRAIT, new Insets(0,0,0,0)), 1, 1);
+  }
+
 
   /**
    * Returns the number of physical pages in this page definition.

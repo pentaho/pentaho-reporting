@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A helper class that contains generic methods that would distract me from the actual pagination logic.
@@ -43,10 +44,10 @@ public final class PaginationStepLib
   }
 
   public static void configureBreakUtility(final PageBreakPositionList breakUtility,
-                                            final LogicalPageBox pageBox,
-                                            final long[] allCurrentBreaks,
-                                            final long reservedHeight,
-                                            final long lastBreakLocal)
+                                           final LogicalPageBox pageBox,
+                                           final long[] allCurrentBreaks,
+                                           final long reservedHeight,
+                                           final long lastBreakLocal)
   {
     final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
     breakUtility.copyFrom(allPreviousBreak);
@@ -87,8 +88,8 @@ public final class PaginationStepLib
     }
   }
 
-  public static long restrictPageAreaHeights (final LogicalPageBox pageBox,
-                                        final long[] allCurrentBreaks)
+  public static long restrictPageAreaHeights(final LogicalPageBox pageBox,
+                                             final long[] allCurrentBreaks)
   {
     final BlockRenderBox headerArea = pageBox.getHeaderArea();
     final long headerHeight = Math.min(headerArea.getHeight(), allCurrentBreaks[0]);
@@ -216,6 +217,37 @@ public final class PaginationStepLib
     }
 
     return orphanHeight;
+  }
+
+  public static boolean isInsideRestrictedOrphanRange(final RenderBox box)
+  {
+    DebugLog.log ("Testing whether box is nside restricted area: " + box.getName());
+    RenderBox parent = box.getParent();
+    while (parent != null)
+    {
+      if (parent.isValidForWidowOrphanCount())
+      {
+        final StaticBoxLayoutProperties staticBoxLayoutProperties = parent.getStaticBoxLayoutProperties();
+        final long restrictedAreaBounds;
+        if (staticBoxLayoutProperties.isAvoidPagebreakInside())
+        {
+          restrictedAreaBounds = parent.getCachedY() + parent.getCachedHeight();
+        }
+        else
+        {
+          restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
+        }
+
+        if (restrictedAreaBounds > box.getCachedY())
+        {
+          DebugLog.log ("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+          return true;
+        }
+      }
+
+      parent = parent.getParent();
+    }
+    return false;
   }
 
 }
