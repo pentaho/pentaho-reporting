@@ -603,6 +603,9 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long nextMinorBreak = breakUtility.findNextBreakPosition(boxYShifted);
     final long spaceAvailable = nextMinorBreak - boxYShifted;
 
+    if ("group-body-outside".equals(box.getName()))
+      DebugLog.logHere();
+
     // This box sits directly on a pagebreak. This means, the page is empty, and there is no need for additional
     // shifting.
     if (spaceAvailable == 0)
@@ -617,36 +620,27 @@ public final class PaginationStep extends IterateVisualProcessStep
       return true;
     }
 
-    if (assumePinned || box.isPinned())
-    {
-      final long nextShift = box.getPinned() - boxY;
-      final long shiftDelta = nextShift - shift;
-      box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-      boxContext.setShift(nextShift);
-      updateStateKey(box);
-      return true;
-    }
-
     final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box);
     if (spaceAvailable < spaceConsumed)
     {
       // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
       // break.
-
       // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
       // into account.
-      final long nextShift = nextMinorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
-      box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-      boxContext.setShift(nextShift);
-      updateStateKey(box);
-      if (box.getY() < nextMinorBreak)
+      if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
       {
-        box.markPinned(nextMinorBreak);
+        final long nextShift = nextMinorBreak - boxY;
+        final long shiftDelta = nextShift - shift;
+        box.setY(boxY + nextShift);
+        BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+        boxContext.setShift(nextShift);
+        updateStateKey(box);
+        if (box.getY() < nextMinorBreak)
+        {
+          box.markPinned(nextMinorBreak);
+        }
+        return true;
       }
-      return true;
     }
 
     // OK, there *is* enough space available. Start the normal processing

@@ -911,4 +911,9 @@ public final class PageBreakPositionList implements PageBreakPositions
     }
     return 0;
   }
+
+  public boolean isPageStart(final long position)
+  {
+    return isMasterBreak(position);
+  }
 }

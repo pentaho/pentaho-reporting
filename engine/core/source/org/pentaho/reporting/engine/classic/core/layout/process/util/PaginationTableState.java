@@ -104,5 +104,11 @@ public class PaginationTableState
   public void defineArtificialPageStart(final long offset)
   {
     breakPositions = new FilteringPageBreakPositions(breakPositions, offset);
+    pageOffset = offset;
+  }
+
+  public boolean isOnPageStart(final long offset)
+  {
+    return breakPositions.isPageStart(offset);
   }
 }

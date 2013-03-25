@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -219,9 +220,11 @@ public final class PaginationStepLib
     return orphanHeight;
   }
 
-  public static boolean isInsideRestrictedOrphanRange(final RenderBox box)
+  public static boolean isRestrictedKeepTogether(final RenderBox box,
+                                                 final long shift,
+                                                 final PaginationTableState paginationTableState)
   {
-    DebugLog.log ("Testing whether box is nside restricted area: " + box.getName());
+    DebugLog.log("Testing whether box is inside restricted area: " + box.getName());
     RenderBox parent = box.getParent();
     while (parent != null)
     {
@@ -240,8 +243,18 @@ public final class PaginationStepLib
 
         if (restrictedAreaBounds > box.getCachedY())
         {
-          DebugLog.log ("Inside restricted area: " + box.getName() + " -> " + parent.getName());
-          return true;
+          DebugLog.log("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+          if (parent.getY() == paginationTableState.getPageOffset())
+          {
+            // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
+            // for all its direct childs. Nothing we can do now, ignore the constraints.
+            return true;
+          }
+
+          if (paginationTableState.isOnPageStart(parent.getY() + shift))
+          {
+            return true;
+          }
         }
       }
 
