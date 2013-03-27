@@ -69,7 +69,7 @@ public class PageableRenderer extends AbstractRenderer
     if (pageCount == 2)
     {
       DebugLog.logEnter();
-//      ModelPrinter.print(pageBox);
+      ModelPrinter.INSTANCE.print(pageBox);
       DebugLog.logExit();
     }
   }

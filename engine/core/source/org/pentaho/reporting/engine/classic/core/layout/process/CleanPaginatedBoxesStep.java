@@ -46,9 +46,11 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   private long pageOffset;
   private long shiftOffset;
   private InstanceID shiftNode;
+  private CountWidowOrphanOptInBoxesStep counter;
 
   public CleanPaginatedBoxesStep()
   {
+    counter = new CountWidowOrphanOptInBoxesStep();
   }
 
   public long compute(final LogicalPageBox pageBox)
@@ -116,26 +118,26 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   {
     if (box.isFinishedPaginate() == false)
     {
-      return true;
+      return Boolean.TRUE;
     }
 
     final RenderNode firstNode = box.getFirstChild();
     if (firstNode == null)
     {
       // The cell is empty ..
-      return false;
+      return Boolean.FALSE;
     }
 
     final long nodeY = firstNode.getY();
     if (nodeY > pageOffset)
     {
       // This box will be visible or will be processed in the future.
-      return false;
+      return Boolean.FALSE;
     }
 
     if (firstNode.isOpen())
     {
-      return true;
+      return Boolean.TRUE;
     }
 /*
     if ((nodeY + firstNode.getOverflowAreaHeight()) > pageOffset)
@@ -294,6 +296,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     final long marginsBottom = last.getEffectiveMarginBottom();
     final boolean breakAfter = isBreakAfter(last);
 
+    int nodeCount = 0;
     RenderNode removeNode = firstNode;
     while (removeNode != last)
     {
@@ -302,6 +305,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       {
         throw new IllegalStateException("A node is still open. We should not have come that far.");
       }
+//      nodeCount += counter.countChildren(next);
       box.remove(removeNode);
       removeNode = next;
     }
@@ -310,7 +314,8 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     {
       throw new IllegalStateException("The last node is still open. We should not have come that far.");
     }
-    final FinishedRenderNode replacement = new FinishedRenderNode(width, height, marginsTop, marginsBottom, breakAfter);
+    final FinishedRenderNode replacement = new FinishedRenderNode
+        (width, height, marginsTop, marginsBottom, breakAfter, nodeCount);
     if (startOfBox + height > pageOffset)
     {
       throw new IllegalStateException("This finished node will intrude into the visible area.");
@@ -368,13 +373,13 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         // Node is first, so the parent's y is the next edge we take care of.
         final long y = parent.getY();
         final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true));
+        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, 0));
       }
       else
       {
         final long y = prevSilbling.getY() + prevSilbling.getHeight();
         final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true));
+        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, 0));
       }
     }
   }

@@ -79,7 +79,7 @@ public class WidowOrphanTest extends TestCase
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
 
-    // ModelPrinter.INSTANCE.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
 
@@ -120,6 +120,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(createBand("group-footer-outside"));
 
     final ReportHeader header = report.getReportHeader();
+    header.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
+    header.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     header.setLayout("block");
     header.addElement(createBand("placeholder", 60));
     header.addElement(band);
@@ -133,13 +135,17 @@ public class WidowOrphanTest extends TestCase
     assertNull(grOut);
 
     final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-header-outside");
     assertNotNull(grHOut2);
     final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-outside");
     assertNotNull(grOut2);
-    final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
+    final RenderNode ib3_miss = MatchFactory.findElementByName(logicalPageBox2, "ib3");
+    assertNull(ib3_miss);
+
+    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 2);
+    final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox3, "ib3");
     assertNotNull(ib3);
+//    ModelPrinter.INSTANCE.print(logicalPageBox3);
   }
 
   public void testKeepTogetherEffect() throws ReportProcessingException, ContentProcessingException
@@ -183,14 +189,14 @@ public class WidowOrphanTest extends TestCase
     final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
     assertTrue(grOut instanceof RenderBox);
     final RenderBox grOutBox = (RenderBox) grOut;
-    assertEquals(StrictGeomUtility.toInternalValue(100), grOutBox.getOrphanConstraintSize());
-    assertEquals(StrictGeomUtility.toInternalValue(100), grOutBox.getWidowConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getOrphanConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getWidowConstraintSize());
 
     final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
     assertTrue(grIn instanceof RenderBox);
     final RenderBox grInBox = (RenderBox) grIn;
-    assertEquals(StrictGeomUtility.toInternalValue(80), grInBox.getOrphanConstraintSize());
-    assertEquals(StrictGeomUtility.toInternalValue(80), grInBox.getWidowConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
   }
 
 
@@ -223,6 +229,7 @@ public class WidowOrphanTest extends TestCase
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
+    band.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
     band.setLayout("block");
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
@@ -231,21 +238,21 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    // when we have a keep-together, the system would naively shift the details-body to the next page.
-    // we need to prevent that by claiming that this section belongs to the same widow/orphan group as their parents.
-    // they all shift together ..
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
-    final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
-    assertTrue(grOut instanceof RenderBox);
-    final RenderBox grOutBox = (RenderBox) grOut;
-    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getOrphanConstraintSize());
-    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getWidowConstraintSize());
+    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    ModelPrinter.INSTANCE.print(logicalPageBox1);
+    final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
+    assertNotNull(grHOut2);
+    final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-outside");
+    assertNotNull(grOut2);
+    final RenderNode ib1 = MatchFactory.findElementByName(logicalPageBox1, "ib1");
+    assertNotNull(ib1);
+    final RenderNode ib2_miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
+    assertNull(ib2_miss);
 
-    final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
-    assertTrue(grIn instanceof RenderBox);
-    final RenderBox grInBox = (RenderBox) grIn;
-    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
-    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
+    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    ModelPrinter.INSTANCE.print(logicalPageBox2);
+    final RenderNode ib2 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
+    assertNotNull(ib2);
   }
 
   private Band createBand(final String name)
@@ -257,6 +264,7 @@ public class WidowOrphanTest extends TestCase
   {
     final Band ghO1 = new Band();
     ghO1.setName(name);
+    ghO1.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, false);
     ghO1.addElement(TableTestUtil.createDataItem(name, 100, height));
     return ghO1;
   }

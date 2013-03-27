@@ -111,6 +111,8 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
 
     setBooleanStyleProperty(ElementStyleKeys.FILL_SHAPE, false);
     setBooleanStyleProperty(ElementStyleKeys.DRAW_SHAPE, false);
+
+    setBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
     setLocked(true);
   }
 

@@ -7,6 +7,7 @@ public class RingBuffer<T>
   private ArrayList<T> values;
   private int index;
   private int count;
+  private int size;
 
   public RingBuffer(final int size)
   {
@@ -14,19 +15,20 @@ public class RingBuffer<T>
     {
       throw new IllegalArgumentException();
     }
-    values = new ArrayList<T>(size);
-    for (int i = 0; i < size; i+= 1)
+    this.size = size;
+    this.values = new ArrayList<T>(size);
+    for (int i = 0; i < size; i += 1)
     {
       values.add(null);
     }
   }
 
-  public void add (final T value)
+  public void add(final T value)
   {
     values.set(index, value);
     index += 1;
     count += 1;
-    if (index == values.size())
+    if (index == size)
     {
       index = 0;
     }
@@ -43,18 +45,18 @@ public class RingBuffer<T>
     count -= 1;
     if (index == 0)
     {
-      index = values.size() - 1;
+      index = size - 1;
     }
     else
     {
       index -= 1;
     }
-    add (value);
+    add(value);
   }
 
   public T getFirstValue()
   {
-    if (count < values.size())
+    if (count < size)
     {
       return values.get(0);
     }
@@ -66,7 +68,7 @@ public class RingBuffer<T>
     final int lastIndex;
     if (index == 0)
     {
-      lastIndex = values.size() - 1;
+      lastIndex = size - 1;
     }
     else
     {
@@ -77,16 +79,35 @@ public class RingBuffer<T>
 
   public int size()
   {
-    return values.size();
+    return size;
   }
 
-  public T get (int index)
+  public T get(final int index)
   {
     return values.get(index);
   }
 
-  public void set (int index, T value)
+  public void set(final int index, final T value)
   {
     values.set(index, value);
+  }
+
+  public void resize(final int newSize)
+  {
+    if (newSize <= 0)
+    {
+      throw new IllegalStateException();
+    }
+
+    if (newSize > values.size())
+    {
+      values.clear();
+      for (int i = 0; i < newSize; i += 1)
+      {
+        values.add(null);
+      }
+    }
+
+    size = newSize;
   }
 }

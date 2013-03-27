@@ -1142,6 +1142,7 @@ public abstract class RenderBox extends RenderNode
         ", width='" + getWidth() + '\'' +
         ", height='" + getHeight() + '\'' +
         ", hexId='" + System.identityHashCode(this) + '\'' +
+        ", elementType='" + getElementType() + '\'' +
         ", finishedPaginate='" + isFinishedPaginate() + '\'' +
         ", finishedTable='" + isFinishedTable() + '\'' +
         ", commited='" + isCommited() + '\'' +

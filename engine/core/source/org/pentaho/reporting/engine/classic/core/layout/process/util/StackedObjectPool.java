@@ -54,7 +54,7 @@ public abstract class StackedObjectPool<T>
     backend = new ArrayList<T>();
   }
 
-  public abstract T create();
+  protected abstract T create();
 
   protected T get()
   {

@@ -228,7 +228,7 @@ public final class PaginationStepLib
     RenderBox parent = box.getParent();
     while (parent != null)
     {
-      if (parent.isValidForWidowOrphanCount())
+      if (parent.getOrphanConstraintSize() > 0)
       {
         final StaticBoxLayoutProperties staticBoxLayoutProperties = parent.getStaticBoxLayoutProperties();
         final long restrictedAreaBounds;
@@ -243,16 +243,19 @@ public final class PaginationStepLib
 
         if (restrictedAreaBounds > box.getCachedY())
         {
-          DebugLog.log("Inside restricted area: " + box.getName() + " -> " + parent.getName());
           if (parent.getY() == paginationTableState.getPageOffset())
           {
             // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
             // for all its direct childs. Nothing we can do now, ignore the constraints.
+            DebugLog.log("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+            DebugLog.log("                      : Parent on page-offset -> " + parent);
             return true;
           }
 
           if (paginationTableState.isOnPageStart(parent.getY() + shift))
           {
+            DebugLog.log("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
+            DebugLog.log("                      : Parent on table-offset -> " + parent);
             return true;
           }
         }

@@ -73,7 +73,7 @@ public final class ElementTypeRegistry
     catch (Exception e)
     {
       ElementTypeRegistry.logger.debug("Failed:", e);
-      throw new IOException("Error: Could not parse the element meta-data description file");
+      throw new IOException("Error: Could not parse the element meta-data description file: " + metaDataSource);
     }
   }
 

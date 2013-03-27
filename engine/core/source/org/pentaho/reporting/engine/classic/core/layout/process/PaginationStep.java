@@ -155,6 +155,18 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
     }
 
+    // Handle widow-constraints.
+    if (isWidowConstraintViolated(box, shiftState))
+    {
+      // break-pending flag treats that next manual break eval as mandatory and forces a break.
+      breakPending = true;
+      if (handleManualBreakOnBox(box, shiftState))
+      {
+        logger.info("Widow constraint triggered pagebreak: " + box);
+        return true;
+      }
+    }
+
     // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
     final RenderLength fixedPositionLength = box.getBoxDefinition().getFixedPosition();
     if (shiftState.isManualBreakSuspended() ||
@@ -199,6 +211,26 @@ public final class PaginationStep extends IterateVisualProcessStep
     BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
+  }
+
+  private boolean isWidowConstraintViolated(final RenderBox box, final PaginationShiftState shiftState)
+  {
+    RenderBox parent = box.getParent();
+    while (parent != null)
+    {
+      if (parent.getWidowConstraintSize() > 0)
+      {
+        final long constraintBoundary = parent.getY() + Math.max(0, parent.getHeight() - parent.getWidowConstraintSize());
+        if (constraintBoundary != paginationTableState.getPageOffset() &&
+            constraintBoundary == box.getY())
+        {
+          return true;
+        }
+      }
+
+      parent = parent.getParent();
+    }
+    return false;
   }
 
   private boolean handleFixedPositionWithoutBreakOnBox(final RenderBox box,
@@ -603,9 +635,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long nextMinorBreak = breakUtility.findNextBreakPosition(boxYShifted);
     final long spaceAvailable = nextMinorBreak - boxYShifted;
 
-    if ("group-body-outside".equals(box.getName()))
-      DebugLog.logHere();
-
     // This box sits directly on a pagebreak. This means, the page is empty, and there is no need for additional
     // shifting.
     if (spaceAvailable == 0)
@@ -629,6 +658,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       // into account.
       if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
       {
+        logger.info("Automatic pagebreak, after orphan-opt-out: " + box);
         final long nextShift = nextMinorBreak - boxY;
         final long shiftDelta = nextShift - shift;
         box.setY(boxY + nextShift);
