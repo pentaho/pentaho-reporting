@@ -53,8 +53,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler implements ElementReadHandler
-{
+public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler implements ElementReadHandler {
   private static final Log logger = LogFactory.getLog(AbstractElementReadHandler.class);
 
   private Element element;
@@ -64,36 +63,29 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   private ArrayList<BulkAttributeReadHandler> bulkattributes;
   private ArrayList<BulkExpressionReadHandler> bulkexpressions;
 
-  protected AbstractElementReadHandler()
-  {
+  protected AbstractElementReadHandler() {
     styleExpressions = new ArrayList<StyleExpressionHandler>();
     attributeExpressions = new ArrayList<AttributeExpressionReadHandler>();
     bulkattributes = new ArrayList<BulkAttributeReadHandler>();
     bulkexpressions = new ArrayList<BulkExpressionReadHandler>();
   }
 
-  protected AbstractElementReadHandler(final ElementType elementType) throws ParseException
-  {
+  protected AbstractElementReadHandler(final ElementType elementType) throws ParseException {
     this();
     initialize(elementType);
   }
 
   protected void initialize(final ElementType elementType)
-      throws ParseException
-  {
+      throws ParseException {
     metaData = elementType.getMetaData();
     element = createElement();
   }
 
-  protected Element createElement() throws ParseException
-  {
-    try
-    {
+  protected Element createElement() throws ParseException {
+    try {
       final ElementType elementTypeObj = metaData.create();
       return (Element) elementTypeObj.create();
-    }
-    catch (InstantiationException e)
-    {
+    } catch (InstantiationException e) {
       // This should not happen at this point, as there is no way to instantiate the class if the
       // element is not there. But it could happen if the element is not registered, which indicates
       // a user error (Engine not booted).
@@ -107,41 +99,27 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing(final Attributes attrs) throws SAXException {
     final ReportElement element = getElement();
-    if (element == null)
-    {
+    if (element == null) {
       throw new IllegalStateException("Failed at " + getClass());
     }
-    
+
     final int length = attrs.getLength();
-    for (int i = 0; i < length; i++)
-    {
+    for (int i = 0; i < length; i++) {
       if ("xmlns".equals(attrs.getQName(i)) ||
-          attrs.getQName(i).startsWith("xmlns:"))
-      {
+          attrs.getQName(i).startsWith("xmlns:")) {
         // workaround for buggy parsers
         continue;
       }
       final String name = attrs.getLocalName(i);
-      if (name.indexOf(':') > -1)
-      {
+      if (name.indexOf(':') > -1) {
         // attribute with ':' are not valid and indicate a namespace definition or so 
         continue;
       }
       final String namespace = attrs.getURI(i);
       final String attributeValue = attrs.getValue(i);
 
-      final AttributeMetaData attributeDescription = element.getMetaData().getAttributeDescription(namespace, name);
-      if (attributeDescription == null)
-      {
-        continue;
-      }
-      if (attributeDescription.isTransient())
-      {
-        continue;
-      }
       setAttributeValue(element, namespace, name, attributeValue, ReportAttributeMap.EMPTY_MAP);
     }
   }
@@ -150,47 +128,37 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
                                  final String namespace,
                                  final String name,
                                  final String attributeValue,
-                                 final ReportAttributeMap attributes) throws ParseException
-  {
+                                 final ReportAttributeMap attributes) throws ParseException {
     final AttributeMetaData attributeMetaData = metaData.getAttributeDescription(namespace, name);
-    if (attributeMetaData == null || attributeValue == null)
-    {
+    if (attributeMetaData == null || attributeValue == null) {
       element.setAttribute(namespace, name, attributeValue);
       return;
     }
 
-    if (attributeMetaData.isTransient())
-    {
+    if (attributeMetaData.isTransient()) {
       return;
     }
 
-    if (isFiltered(attributeMetaData))
-    {
+    if (isFiltered(attributeMetaData)) {
       return;
     }
 
-    if ("Resource".equals(attributeMetaData.getValueRole()))
-    {
-      try
-      {
+    if ("Resource".equals(attributeMetaData.getValueRole())) {
+      try {
         final Object type = attributes.getAttribute(AttributeNames.Core.NAMESPACE, "resource-type");
-        if ("url".equals(type))
-        {
+        if ("url".equals(type)) {
           element.setAttribute(namespace, name, new URL(attributeValue));
           return;
         }
-        if ("file".equals(type))
-        {
+        if ("file".equals(type)) {
           element.setAttribute(namespace, name, new File(attributeValue));
           return;
         }
-        if ("local-ref".equals(type))
-        {
+        if ("local-ref".equals(type)) {
           element.setAttribute(namespace, name, attributeValue);
           return;
         }
-        if ("resource-key".equals(type))
-        {
+        if ("resource-key".equals(type)) {
           final ResourceManager resourceManager = getRootHandler().getResourceManager();
           final ResourceKey key = getRootHandler().getContext();
           final ResourceKey parent = key.getParent();
@@ -203,51 +171,35 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
         }
         element.setAttribute(namespace, name, attributeValue);
         return;
-      }
-      catch (MalformedURLException e)
-      {
+      } catch (MalformedURLException e) {
         throw new ParseException("Failed to parse URL value", e);
-      }
-      catch (ResourceKeyCreationException e)
-      {
+      } catch (ResourceKeyCreationException e) {
         throw new ParseException("Failed to parse resource-key value", e);
       }
     }
 
     final Class type = attributeMetaData.getTargetType();
-    if (String.class.equals(type))
-    {
+    if (String.class.equals(type)) {
       element.setAttribute(namespace, name, attributeValue);
-    }
-    else
-    {
-      try
-      {
+    } else {
+      try {
         final PropertyEditor propertyEditor = attributeMetaData.getEditor();
-        if (propertyEditor != null)
-        {
+        if (propertyEditor != null) {
           propertyEditor.setAsText(attributeValue);
           element.setAttribute(namespace, name, propertyEditor.getValue());
-        }
-        else
-        {
+        } else {
           final ConverterRegistry instance = ConverterRegistry.getInstance();
           final ValueConverter valueConverter = instance.getValueConverter(type);
-          if (valueConverter != null)
-          {
+          if (valueConverter != null) {
             final Object o = ConverterRegistry.toPropertyValue(attributeValue, type);
             element.setAttribute(namespace, name, o);
-          }
-          else if (String.class.isAssignableFrom(type))
-          {
+          } else if (String.class.isAssignableFrom(type)) {
             // the attribute would allow raw-string values, so copy the element ..
             element.setAttribute(namespace, name, attributeValue);
           }
         }
 
-      }
-      catch (BeanException e)
-      {
+      } catch (BeanException e) {
         // ignore.
         AbstractElementReadHandler.logger.warn(
             "Attribute '" + namespace + '|' + name + "' is not convertible with the bean-methods " + getLocator());
@@ -255,45 +207,33 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
     }
   }
 
-  protected boolean isFiltered(final AttributeMetaData attributeMetaData)
-  {
-    if (AttributeNames.Core.NAMESPACE.equals(attributeMetaData.getNameSpace()))
-    {
-      if (AttributeNames.Core.ELEMENT_TYPE.equals(attributeMetaData.getName()))
-      {
+  protected boolean isFiltered(final AttributeMetaData attributeMetaData) {
+    if (AttributeNames.Core.NAMESPACE.equals(attributeMetaData.getNameSpace())) {
+      if (AttributeNames.Core.ELEMENT_TYPE.equals(attributeMetaData.getName())) {
         return true;
       }
     }
     return false;
   }
 
-  private ResourceKey localizeKey(final ResourceManager resourceManager, final ResourceKey valueKey)
-  {
+  private ResourceKey localizeKey(final ResourceManager resourceManager, final ResourceKey valueKey) {
     final Object object = valueKey.getFactoryParameters().get(ClassicEngineFactoryParameters.EMBED);
-    if ("false".equals(object))
-    {
+    if ("false".equals(object)) {
       return valueKey;
     }
     if ("org.pentaho.reporting.libraries.docbundle.bundleloader.RepositoryResourceBundleLoader".equals(valueKey.getSchema()) == false &&
-        object == null)
-    {
+        object == null) {
       return valueKey;
     }
 
-    try
-    {
+    try {
       final ResourceData resourceData = resourceManager.load(valueKey);
       final byte[] resource = resourceData.getResource(resourceManager);
       return resourceManager.createKey(resource, valueKey.getFactoryParameters());
-    }
-    catch (ResourceException e)
-    {
-      if (logger.isDebugEnabled())
-      {
+    } catch (ResourceException e) {
+      if (logger.isDebugEnabled()) {
         logger.info("Unable to normalize embedded resource-key, using ordinary key-object instead.", e);
-      }
-      else
-      {
+      } else {
         logger.info("Unable to normalize embedded resource-key, using ordinary key-object instead.");
       }
     }
@@ -311,33 +251,24 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
    */
   protected XmlReadHandler getHandlerForChild(final String uri,
                                               final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.LAYOUT.equals(uri))
-    {
-      if ("attribute-expression".equals(tagName))
-      {
+                                              final Attributes atts) throws SAXException {
+    if (BundleNamespaces.LAYOUT.equals(uri)) {
+      if ("attribute-expression".equals(tagName)) {
         final AttributeExpressionReadHandler readHandler = new AttributeExpressionReadHandler();
         attributeExpressions.add(readHandler);
         return readHandler;
-      }
-      else if ("style-expression".equals(tagName))
-      {
+      } else if ("style-expression".equals(tagName)) {
         final StyleExpressionHandler readHandler = new StyleExpressionHandler();
         styleExpressions.add(readHandler);
         return readHandler;
-      }
-      else if ("expression".equals(tagName))
-      {
+      } else if ("expression".equals(tagName)) {
         final BulkExpressionReadHandler readHandler = new BulkExpressionReadHandler();
         bulkexpressions.add(readHandler);
         return readHandler;
       }
     }
-    if (BundleNamespaces.STYLE.equals(uri))
-    {
-      if ("element-style".equals(tagName))
-      {
+    if (BundleNamespaces.STYLE.equals(uri)) {
+      if ("element-style".equals(tagName)) {
         return new ElementStyleReadHandler(getElement().getStyle());
       }
     }
@@ -352,35 +283,29 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    for (int i = 0; i < styleExpressions.size(); i++)
-    {
+  protected void doneParsing() throws SAXException {
+    for (int i = 0; i < styleExpressions.size(); i++) {
       final StyleExpressionHandler handler = styleExpressions.get(i);
       final StyleKey key = handler.getKey();
-      if (handler.getKey() != null)
-      {
+      if (handler.getKey() != null) {
         final Expression expression = handler.getExpression();
         element.setStyleExpression(key, expression);
       }
     }
 
-    for (int i = 0; i < attributeExpressions.size(); i++)
-    {
+    for (int i = 0; i < attributeExpressions.size(); i++) {
       final AttributeExpressionReadHandler handler = attributeExpressions.get(i);
       final Expression expression = handler.getExpression();
       element.setAttributeExpression(handler.getNamespace(), handler.getName(), expression);
     }
 
-    for (int i = 0; i < bulkattributes.size(); i++)
-    {
+    for (int i = 0; i < bulkattributes.size(); i++) {
       final BulkAttributeReadHandler attributeReadHandler = bulkattributes.get(i);
       setAttributeValue(element, attributeReadHandler.getNamespace(),
           attributeReadHandler.getName(), attributeReadHandler.getResult(),
           attributeReadHandler.getAttributes());
     }
-    for (int i = 0; i < bulkexpressions.size(); i++)
-    {
+    for (int i = 0; i < bulkexpressions.size(); i++) {
       final BulkExpressionReadHandler expressionReadHandler = bulkexpressions.get(i);
       element.setAttribute(expressionReadHandler.getAttributeNameSpace(),
           expressionReadHandler.getAttributeName(), expressionReadHandler.getObject());
@@ -393,13 +318,11 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getElement();
   }
 
-  public Element getElement()
-  {
+  public Element getElement() {
     return element;
   }
 }
