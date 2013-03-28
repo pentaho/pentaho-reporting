@@ -83,8 +83,6 @@ public class DirectSQLDataFactoryWriteHandler implements DataFactoryWriteHandler
       rootAttrs.addNamespaceDeclaration("data", SQLDataFactoryModule.NAMESPACE);
     }
     xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "direct-sql-datasource", rootAttrs, XmlWriterSupport.OPEN);
-    xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "config", "label-mapping",
-        String.valueOf(sqlDataFactory.isLabelMapping()), XmlWriterSupport.CLOSE);
 
     writeConnectionInfo(reportWriter, xmlWriter, sqlDataFactory.getConnectionProvider());
 

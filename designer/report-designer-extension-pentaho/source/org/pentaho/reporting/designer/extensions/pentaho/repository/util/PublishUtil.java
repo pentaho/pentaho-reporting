@@ -155,6 +155,16 @@ public class PublishUtil
                              final AuthenticationData loginData)
       throws IOException
   {
+	  
+	final String versionText = loginData.getOption(SERVER_VERSION);
+	final int version = ParserUtil.parseInt(versionText, SERVER_VERSION_SUGAR);  
+
+	if (SERVER_VERSION_SUGAR == version){
+			
+		new PublishRestUtil(loginData.getUrl(), loginData.getUsername(), loginData.getPassword()).publishFile(path, data, true);
+		     
+	}else {
+  
 
 	final String versionText = loginData.getOption(SERVER_VERSION);
 	final int version = ParserUtil.parseInt(versionText, SERVER_VERSION_SUGAR);  

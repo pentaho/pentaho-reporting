@@ -16,6 +16,14 @@ public class DataCacheFactory
   {
   }
 
+  public static synchronized void notifyCacheShutdown(final DataCache cache)
+  {
+    if (cache == dataCache)
+    {
+      dataCache = null;
+    }
+  }
+
   public static synchronized DataCache getCache()
   {
     if (dataCache == null && noCacheDefined == false)

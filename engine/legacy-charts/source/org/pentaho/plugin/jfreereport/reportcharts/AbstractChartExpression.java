@@ -615,6 +615,7 @@ public abstract class AbstractChartExpression extends AbstractExpression impleme
     try
     {
       final BSFManager interpreter = new BSFManager();
+      interpreter.declareBean("chartExpression", this, getClass()); //$NON-NLS-1$
       interpreter.declareBean("chart", originalChart, JFreeChart.class); //$NON-NLS-1$
       interpreter.declareBean("runtime", runtimeWrapper, ExpressionRuntime.class); //$NON-NLS-1$
       interpreter.declareBean("dataRow", legacyDataRowWrapper, DataRow.class); //$NON-NLS-1$

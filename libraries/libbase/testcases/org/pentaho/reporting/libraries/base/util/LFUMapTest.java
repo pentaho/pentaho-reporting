@@ -19,6 +19,7 @@ package org.pentaho.reporting.libraries.base.util;
 
 import junit.framework.TestCase;
 
+@SuppressWarnings({"AutoBoxing", "HardCodedStringLiteral"})
 public class LFUMapTest extends TestCase
 {
   public LFUMapTest()
@@ -144,7 +145,7 @@ public class LFUMapTest extends TestCase
 
   public void testAddReplace()
   {
-    LFUMap<Integer,Integer> map = new LFUMap<Integer, Integer>(10);
+    final LFUMap<Integer,Integer> map = new LFUMap<Integer, Integer>(10);
     map.put(1, 20);
     assertEquals((Integer) 20, map.get(1));
     map.put(1, 25);

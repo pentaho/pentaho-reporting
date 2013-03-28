@@ -4,22 +4,22 @@ Checking the data inside
 ValueAt (0, 0) is in a typed column and is of type class java.lang.Double
 Tablemodel contains 1 rows.
 Checking the attributes inside
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=0
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=105,331
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105331.0
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=105,331
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=105331.0
 Tablemodel contains 1 rows.
 Column: 0 Name=Measure; DataType=class java.lang.Double
 Checking the data inside

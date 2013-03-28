@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface CompatiblityMapping
 {
   public String mapClassName(String className);

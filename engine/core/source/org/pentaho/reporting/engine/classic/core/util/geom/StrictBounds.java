@@ -112,6 +112,23 @@ public class StrictBounds implements Serializable, Cloneable
     return retval;
   }
 
+
+  /**
+   * Sets the location and size of this <code>StrictBounds</code> to the specified double values.
+   *
+   * @param bounds the bounds from where to copy all properties <code>StrictBounds</code>
+   */
+  public void setRect(final StrictBounds bounds)
+  {
+    if (locked)
+    {
+      throw new IllegalStateException("This object is locked");
+    }
+    this.x = bounds.x;
+    this.y = bounds.y;
+    this.width = bounds.width;
+    this.height = bounds.height;
+  }
   /**
    * Sets the location and size of this <code>StrictBounds</code> to the specified double values.
    *

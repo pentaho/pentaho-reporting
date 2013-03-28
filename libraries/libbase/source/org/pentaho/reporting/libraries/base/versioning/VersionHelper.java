@@ -27,7 +27,8 @@ import java.util.StringTokenizer;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
@@ -69,6 +70,8 @@ public class VersionHelper
     }
   }
 
+  private static final Log logger = LogFactory.getLog(VersionHelper.class);
+  private static final ManifestCache manifestCache = new ManifestCache();
   private String version;
   private String title;
   private String productId;
@@ -79,7 +82,6 @@ public class VersionHelper
   private String releaseNumber;
   private String releaseBuildNumber;
   private ProjectInformation projectInformation;
-  private static final ManifestCache manifestCache = new ManifestCache();
 
 
   /**
@@ -143,7 +145,11 @@ public class VersionHelper
       catch (Exception e)
       {
         // Ignore; Maybe log.
-        e.printStackTrace();
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Failed to read manifest for retrieving library version information for " +
+              projectInformation.getProductId(), e);
+        }
       }
     }
     if (manifest != null)
@@ -152,7 +158,10 @@ public class VersionHelper
     }
     else
     {
-      DebugLog.log("Failed to create version information for " + projectInformation.getInternalName());
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Failed to create version information for " + projectInformation.getInternalName());
+      }
       version = "TRUNK.development";
       title = projectInformation.getInternalName();
       productId = projectInformation.getInternalName();

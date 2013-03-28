@@ -88,7 +88,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");
@@ -149,7 +149,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");
@@ -169,7 +169,7 @@ public class Prd3688Test extends TestCase
     assertEquals(StrictGeomUtility.toInternalValue(0), e3Box.getX());
     assertEquals(StrictGeomUtility.toInternalValue(12.5), e3Box.getY());
     assertEquals(StrictGeomUtility.toInternalValue(1464f), e3Box.getWidth());
-    assertEquals(StrictGeomUtility.toInternalValue(8), e3Box.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(3.5f), e3Box.getHeight());
 
     assertEquals(StrictGeomUtility.toInternalValue(0), rhBox.getX());
     assertEquals(StrictGeomUtility.toInternalValue(0), rhBox.getY());

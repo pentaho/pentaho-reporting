@@ -19,7 +19,6 @@ package org.pentaho.reporting.libraries.formatting;
 
 import java.text.ChoiceFormat;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * A wrapper around the java.text.ChoiceFormat class. This wrapper limits the possible interactions with

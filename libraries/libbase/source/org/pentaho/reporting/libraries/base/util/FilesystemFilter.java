@@ -19,7 +19,6 @@ package org.pentaho.reporting.libraries.base.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Arrays;
 import javax.swing.filechooser.FileFilter;
 
 /**
@@ -78,11 +77,10 @@ public class FilesystemFilter extends FileFilter implements FilenameFilter
   public FilesystemFilter(final String[] fileext, final String descr,
                           final boolean accDirs)
   {
-    this.fileext = (String[]) fileext.clone();
+    this.fileext = fileext.clone();
     this.descr = descr;
     this.accDirs = accDirs;
   }
-
 
   /**
    * Returns <code>true</code> if the file is accepted, and <code>false</code> otherwise.

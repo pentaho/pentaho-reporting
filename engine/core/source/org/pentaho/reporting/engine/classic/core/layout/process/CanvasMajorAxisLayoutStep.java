@@ -58,9 +58,10 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   // Set the maximum height to an incredibly high value. This is now 2^43 micropoints or more than
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
-  private static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
+  private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
   private boolean paranoidChecks = true;
   private TableRowHeightCalculation tableRowHeightStep;
+  private boolean cacheDeepDirty;
 
   public CanvasMajorAxisLayoutStep()
   {
@@ -71,8 +72,28 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   public void compute(final LogicalPageBox pageBox)
   {
+    cacheDeepDirty = false;
     tableRowHeightStep.reset();
     startProcessing(pageBox);
+  }
+
+  protected boolean checkCacheValid(final RenderNode node)
+  {
+    if (cacheDeepDirty)
+    {
+      node.markCacheDirty();
+      return false;
+    }
+    final RenderNode.CacheState cacheState = node.getCacheState();
+    if (cacheState == RenderNode.CacheState.CLEAN)
+    {
+      return true;
+    }
+    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      cacheDeepDirty = true;
+    }
+    return false;
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -95,7 +116,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -203,7 +224,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishBlockLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -377,7 +398,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -450,7 +471,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
    */
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -647,7 +668,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -712,7 +733,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -783,7 +804,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -806,7 +827,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
@@ -825,16 +846,6 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return false;
-    }
-
-    if (box.isCacheValid())
-    {
-      return false;
-    }
-
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalBlockPosition(box);
     CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
@@ -856,11 +867,6 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
-    {
-      return;
-    }
-
     if (box instanceof TableSectionRenderBox)
     {
       tableRowHeightStep.finishTableSection((TableSectionRenderBox) box);
@@ -874,7 +880,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -882,14 +888,20 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     if (box instanceof TableRowRenderBox)
     {
       tableRowHeightStep.startTableRow((TableRowRenderBox) box);
+      final long blockHeight = computeRowHeightAndAlign(box, 0, false);
+      box.setCachedHeight(blockHeight);
     }
+    else
+    {
+      // must be an auto-box, so we treat it as a block-element.
 
-    final long oldPosition = box.getCachedY();
-    final long newYPosition = computeVerticalBlockPosition(box);
-    CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
+      final long oldPosition = box.getCachedY();
+      final long newYPosition = computeVerticalBlockPosition(box);
+      CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
 
-    final long blockHeight = computeTableHeightAndAlign(box, false);
-    box.setCachedHeight(blockHeight);
+      final long blockHeight = computeTableHeightAndAlign(box, false);
+      box.setCachedHeight(blockHeight);
+    }
     return true;
   }
 
@@ -900,13 +912,21 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return;
     }
 
-    final long blockHeight = computeTableHeightAndAlign(box, true);
-    box.setCachedHeight(blockHeight);
+    if (box instanceof TableRowRenderBox)
+    {
+      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
+      box.setCachedHeight(blockHeight);
+    }
+    else
+    {
+      final long blockHeight = computeTableHeightAndAlign(box, true);
+      box.setCachedHeight(blockHeight);
+    }
   }
 
   private static long computeTableHeightAndAlign(final RenderBox box, final boolean align)

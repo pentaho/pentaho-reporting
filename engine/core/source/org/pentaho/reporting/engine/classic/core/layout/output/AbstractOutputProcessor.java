@@ -90,7 +90,6 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
    */
   public final void processingFinished()
   {
-    pageCursor = 0;
     if (processingState == AbstractOutputProcessor.PROCESSING_PAGES)
     {
       // the pagination is complete. So, now we can produce real content.
@@ -103,6 +102,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
       processingContentFinished();
       logPerformance("Content Processing finished");
     }
+    pageCursor = 0;
   }
 
   private void logPerformance(final String message)

@@ -742,7 +742,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
 
   public void print()
   {
-    ModelPrinter.print(context.getRenderBox());
+    ModelPrinter.INSTANCE.print(context.getRenderBox());
   }
 
   protected LayoutModelBuilderContext getContext()

@@ -117,9 +117,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   {
     validationInfo = null;
     result = true;
-    logger.debug("Validation");
     // do not validate the header or footer or watermark sections..
     processBoxChilds(root);
+    logger.debug("Validation result: " + result);
     return result;
   }
 
@@ -130,8 +130,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -153,6 +154,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return true;
   }
 
+  protected void finishCanvasBox(final CanvasRenderBox box)
+  {
+    box.setValidateModelResult(result);
+  }
+
   protected boolean validateBlockOrAutoBox(final RenderBox box)
   {
     if (result == false)
@@ -160,8 +166,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -212,6 +219,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateBlockOrAutoBox(box);
   }
 
+  protected void finishBlockBox(final BlockRenderBox box)
+  {
+    box.setValidateModelResult(result);
+  }
+
   protected boolean startAutoBox(final RenderBox box)
   {
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
@@ -228,6 +240,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishAutoBox(final RenderBox box)
+  {
+    box.setValidateModelResult(result);
+  }
+
   private boolean validateInlineRowOrTableCellBox(final RenderBox box)
   {
     if (result == false)
@@ -235,8 +252,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isCacheValid())
+    if (box.isValidateModelCacheValid())
     {
+      result &= box.isValidateModelResult();
       return false;
     }
 
@@ -261,14 +279,29 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishTableCellBox(final TableCellRenderBox box)
+  {
+    box.setValidateModelResult(result);
+  }
+
   protected boolean startInlineBox(final InlineRenderBox box)
   {
     return validateInlineRowOrTableCellBox(box);
   }
 
+  protected void finishInlineBox(final InlineRenderBox box)
+  {
+    box.setValidateModelResult(result);
+  }
+
   protected boolean startRowBox(final RenderBox box)
   {
     return validateInlineRowOrTableCellBox(box);
+  }
+
+  protected void finishRowBox(final RenderBox box)
+  {
+    box.setValidateModelResult(result);
   }
 
   protected boolean startTableBox(final TableRenderBox table)
@@ -280,8 +313,9 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (table.isCacheValid())
+    if (table.isValidateModelCacheValid())
     {
+      result &= table.isValidateModelResult();
       return true;
     }
 
@@ -334,10 +368,12 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   {
     try
     {
-      if (table.isCacheValid())
+      if (table.isValidateModelCacheValid())
       {
         return;
       }
+
+      table.setValidateModelResult(result);
 
       if (validationInfo.isNeedCheck() == false)
       {

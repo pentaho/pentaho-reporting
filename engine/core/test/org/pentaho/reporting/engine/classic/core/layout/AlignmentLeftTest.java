@@ -94,7 +94,7 @@ public class AlignmentLeftTest extends TestCase
     {
       count = 0;
       processBoxChilds(box);
-      ModelPrinter.print(box);
+      ModelPrinter.INSTANCE.print(box);
       assertEquals("Line-Count", 1, count);
     }
 

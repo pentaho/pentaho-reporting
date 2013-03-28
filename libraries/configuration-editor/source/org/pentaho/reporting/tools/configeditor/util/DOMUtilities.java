@@ -80,7 +80,7 @@ public final class DOMUtilities
   public static String getText(final Element e)
   {
     final NodeList nl = e.getChildNodes();
-    final StringBuffer result = new StringBuffer(100);
+    final StringBuilder result = new StringBuilder(100);
 
     for (int i = 0; i < nl.getLength(); i++)
     {

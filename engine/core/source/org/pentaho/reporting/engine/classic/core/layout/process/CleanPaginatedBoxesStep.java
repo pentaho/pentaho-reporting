@@ -28,8 +28,11 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 
@@ -98,10 +101,15 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   {
     if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
     {
-      return startTableRowBoxes(box);
+      return startCleanTableRowBoxesFromSection(box);
     }
 
     return false;
+  }
+
+  protected boolean startTableCellBox(final TableCellRenderBox box)
+  {
+    return startBlockBox(box);
   }
 
   private Boolean filterNonRemovableStates(final RenderBox box)
@@ -129,29 +137,33 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     {
       return true;
     }
-
+/*
     if ((nodeY + firstNode.getOverflowAreaHeight()) > pageOffset)
     {
       // this box will span to the next page and cannot be removed ...
       return true;
     }
+    */
     return null;
   }
 
-  private boolean startTableRowBoxes(final TableSectionRenderBox box)
+  private boolean startCleanTableRowBoxesFromSection(final TableSectionRenderBox box)
   {
     removeBreakMarker(box);
     if (box.isFinishedPaginate() == false)
     {
       return true;
     }
-/*
+
     final Boolean filterResult = filterNonRemovableStates(box);
     if (filterResult != null)
     {
       return filterResult.booleanValue();
     }
-*/
+
+    // todo: PRD-3857 - this model of cleaning out rows fails when faced with auto-boxes.
+
+    final TableRowModel rowModel = box.getRowModel();
     final RenderBoxNonAutoIterator rows = new RenderBoxNonAutoIterator(box);
     RenderNode lastNode = null;
     while (rows.hasNext())
@@ -169,23 +181,16 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         break;
       }
 
-      if ((rowNode.getY() + rowNode.getOverflowAreaHeight()) > pageOffset)
-      {
-        // we cant handle that. This node will be visible. So the current last
-        // node is the one we can shrink ..
-        break;
-      }
-
-/*      if (rowNode.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+      if (rowNode.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
       {
         final TableRowRenderBox rowRenderBox = (TableRowRenderBox) rowNode;
-        final int maxRowSpan = rowModel.getMaximumRowSpan(rowRenderBox.getRowIndex());
-        if (maxRowSpan == 1)
+        final long height = rowModel.getValidatedRowSpanSize(rowRenderBox.getRowIndex());
+        if (rowNode.getY() + height > pageOffset)
         {
+          break;
         }
+        lastNode = rowNode;
       }
-      */
-      lastNode = rowNode;
     }
 
     if (lastNode != null)

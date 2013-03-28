@@ -179,14 +179,15 @@ public class SerializerHelper
    * @return the method or null, if there is no registered method for the
    *         class.
    */
+  @SuppressWarnings("unchecked")
   protected SerializeMethod getSuperClassObjectDescription
       (final Class d)
   {
     SerializeMethod knownSuperClass = null;
-    final Iterator keys = methods.keySet().iterator();
+    final Iterator<Class> keys = methods.keySet().iterator();
     while (keys.hasNext())
     {
-      final Class keyClass = (Class) keys.next();
+      final Class keyClass = keys.next();
       if (keyClass.isAssignableFrom(d))
       {
         final SerializeMethod od = methods.get(keyClass);

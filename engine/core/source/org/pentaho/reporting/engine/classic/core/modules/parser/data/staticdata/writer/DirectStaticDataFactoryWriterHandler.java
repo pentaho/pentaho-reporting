@@ -33,11 +33,6 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class DirectStaticDataFactoryWriterHandler implements BundleDataFactoryWriterHandler
 {
   public DirectStaticDataFactoryWriterHandler()

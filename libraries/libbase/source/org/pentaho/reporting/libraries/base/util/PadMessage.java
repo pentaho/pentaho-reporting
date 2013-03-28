@@ -58,7 +58,7 @@ public class PadMessage
    */
   public String toString()
   {
-    final StringBuffer b = new StringBuffer(length);
+    final StringBuilder b = new StringBuilder(length);
     b.append(this.text);
     if (b.length() < this.length)
     {

@@ -16,10 +16,13 @@
  */
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
+import java.util.HashMap;
+
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.SeparateRowModel;
@@ -49,6 +52,10 @@ public class TableSectionRenderBox extends BlockRenderBox
   private Role displayRole;
   private TableRowModel rowModel;
 
+  private HashMap<Long,Long> headerShift;
+  private HashMap<Long,Long> markedHeaderShift;
+  private HashMap<Long,Long> appliedHeaderShift;
+
   public static enum Role
   {
     BODY, HEADER, FOOTER
@@ -60,7 +67,6 @@ public class TableSectionRenderBox extends BlockRenderBox
         AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
   }
 
-
   public TableSectionRenderBox(final StyleSheet styleSheet,
                                final InstanceID instanceID,
                                final BoxDefinition boxDefinition,
@@ -70,6 +76,9 @@ public class TableSectionRenderBox extends BlockRenderBox
   {
     super(styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey);
     this.rowModel = new SeparateRowModel();
+    this.appliedHeaderShift = new HashMap<Long, Long>();
+    this.markedHeaderShift = new HashMap<Long, Long>();
+    this.headerShift = new HashMap<Long, Long>();
     final Object layoutMode = styleSheet.getStyleProperty(BandStyleKeys.LAYOUT);
     if (BandStyleKeys.LAYOUT_TABLE_FOOTER.equals(layoutMode))
     {
@@ -85,18 +94,40 @@ public class TableSectionRenderBox extends BlockRenderBox
     }
   }
 
+  public RenderBox create(final StyleSheet styleSheet)
+  {
+    final TableSectionRenderBox renderBox = (TableSectionRenderBox) super.create(styleSheet);
+    renderBox.appliedHeaderShift = new HashMap<Long, Long>();
+    renderBox.markedHeaderShift = new HashMap<Long, Long>();
+    renderBox.headerShift = new HashMap<Long, Long>();
+    return renderBox;
+  }
+
   public boolean useMinimumChunkWidth()
   {
     return true;
   }
 
-  /*  public void appyStyle(final LayoutContext context, final OutputProcessorMetaData metaData)
-    {
-      super.appyStyle(context, metaData);
-      this.displayRole = context.getValue(BoxStyleKeys.DISPLAY_ROLE);
-    }
+  public long getHeaderShift(final long pageOffset)
+  {
+    final Long retval = headerShift.get(pageOffset);
+    if (retval == null)
+      return 0;
+    return retval;
+  }
 
-  */
+  public void setHeaderShift(final long pageOffset, final long headerShift)
+  {
+    this.headerShift.put(pageOffset, headerShift);
+  }
+
+  public Object clone()
+  {
+    final TableSectionRenderBox clone = (TableSectionRenderBox) super.clone();
+    clone.headerShift = (HashMap<Long, Long>) headerShift.clone();
+    return clone;
+  }
+
   public boolean isBody()
   {
     return Role.BODY.equals(displayRole);
@@ -137,7 +168,6 @@ public class TableSectionRenderBox extends BlockRenderBox
     setFlag(FLAG_TABLE_SECTION_STRUCTURE_VALIDATED, structureValidated);
   }
 
-
   public boolean isActive()
   {
     return isFlag(FLAG_TABLE_SECTION_ACTIVE);
@@ -172,11 +202,13 @@ public class TableSectionRenderBox extends BlockRenderBox
   {
     super.markBoxSeen();
     setMarkedActive(isActive());
+    markedHeaderShift = (HashMap<Long, Long>) headerShift.clone();
   }
 
   public void commit()
   {
     super.commit();
+    appliedHeaderShift = (HashMap<Long, Long>) markedHeaderShift.clone();
     setAppliedActive(isMarkedActive());
   }
 
@@ -184,5 +216,8 @@ public class TableSectionRenderBox extends BlockRenderBox
   {
     super.rollback(deepDirty);
     setActive(isAppliedActive());
+    this.headerShift = (HashMap<Long, Long>) appliedHeaderShift.clone();
   }
+
+
 }

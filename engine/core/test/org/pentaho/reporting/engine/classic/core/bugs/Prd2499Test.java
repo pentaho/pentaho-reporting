@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -61,6 +62,23 @@ public class Prd2499Test extends TestCase
 
   }
 
+  public void testRunSampleShort() throws ResourceException, ReportProcessingException
+  {
+    final URL url = getClass().getResource("Prd-2499.prpt");
+    assertNotNull(url);
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+
+    SubReport subReport = (SubReport) report.getItemBand().getElement(0);
+    subReport.setQueryLimit(13);
+
+    final MyDebugRenderer renderer = new MyDebugRenderer();
+    final DebugReportProcessor processor = new DebugReportProcessor(report, renderer);
+    processor.processReport();
+
+  }
   private static class ValidateRunner extends IterateVisualProcessStep
   {
     private long lastEnd;

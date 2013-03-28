@@ -18,13 +18,13 @@
 package org.pentaho.reporting.libraries.serializer.methods;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.AttributedCharacterIterator;
-import java.text.CharacterIterator;
 import java.text.AttributedString;
-import java.util.Map;
+import java.text.CharacterIterator;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.pentaho.reporting.libraries.serializer.SerializeMethod;
 
@@ -50,10 +50,10 @@ public class AttributedStringSerializer implements SerializeMethod
    * @param stream the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject(Object o, ObjectOutputStream stream) throws IOException
+  public void writeObject(final Object o, final ObjectOutputStream stream) throws IOException
   {
-    AttributedString as = (AttributedString) o;
-    AttributedCharacterIterator aci = as.getIterator();
+    final AttributedString as = (AttributedString) o;
+    final AttributedCharacterIterator aci = as.getIterator();
     // build a plain string from aci
     // then write the string
     StringBuffer plainStr = new StringBuffer(100);
@@ -66,7 +66,7 @@ public class AttributedStringSerializer implements SerializeMethod
 
     // then write the attributes and limits for each run
     current = aci.first();
-    int begin = aci.getBeginIndex();
+    final int begin = aci.getBeginIndex();
     while (current != CharacterIterator.DONE) {
         // write the current character - when the reader sees that this
         // is not CharacterIterator.DONE, it will know to read the
@@ -74,11 +74,12 @@ public class AttributedStringSerializer implements SerializeMethod
         stream.writeChar(current);
 
         // now write the limit, adjusted as if beginIndex is zero
-        int limit = aci.getRunLimit();
+        final int limit = aci.getRunLimit();
         stream.writeInt(limit - begin);
 
         // now write the attribute set
-        Map atts = new HashMap(aci.getAttributes());
+        final Map<AttributedCharacterIterator.Attribute,Object> atts =
+            new HashMap<AttributedCharacterIterator.Attribute,Object>(aci.getAttributes());
         stream.writeObject(atts);
         current = aci.setIndex(limit);
     }
@@ -96,17 +97,18 @@ public class AttributedStringSerializer implements SerializeMethod
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject(ObjectInputStream stream)
+  public Object readObject(final ObjectInputStream stream)
           throws IOException, ClassNotFoundException
   {
     // read string and attributes then create result
-    String plainStr = (String) stream.readObject();
-    AttributedString result = new AttributedString(plainStr);
+    final String plainStr = (String) stream.readObject();
+    final AttributedString result = new AttributedString(plainStr);
     char c = stream.readChar();
     int start = 0;
     while (c != CharacterIterator.DONE) {
-        int limit = stream.readInt();
-        Map atts = (Map) stream.readObject();
+        final int limit = stream.readInt();
+        final Map<AttributedCharacterIterator.Attribute,Object> atts =
+            (Map<AttributedCharacterIterator.Attribute,Object>) stream.readObject();
         result.addAttributes(atts, start, limit);
         start = limit;
         c = stream.readChar();

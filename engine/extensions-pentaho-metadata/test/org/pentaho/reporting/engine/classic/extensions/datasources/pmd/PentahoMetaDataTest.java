@@ -18,10 +18,10 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +43,6 @@ import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
-import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
@@ -66,9 +65,9 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     private static final long serialVersionUID = 2672461111722673121L;
 
     public IMetadataDomainRepository getMetadataDomainRepository(final String domainId,
-        final ResourceManager resourceManager,
-        final ResourceKey contextKey,
-        final String xmiFile) throws ReportDataFactoryException
+                                                                 final ResourceManager resourceManager,
+                                                                 final ResourceKey contextKey,
+                                                                 final String xmiFile) throws ReportDataFactoryException
     {
       try
       {
@@ -79,9 +78,9 @@ public class PentahoMetaDataTest extends DataSourceTestBase
           final XmiParser parser = new XmiParser();
           final Domain domain = parser.parseXmi(stream);
           // add a couple of agg types to the quantity ordered physical column
-          IPhysicalTable table = ((SqlPhysicalModel)domain.getPhysicalModels().get(0)).getPhysicalTables().get(7);
-          IPhysicalColumn col = table.getPhysicalColumns().get(3);
-          List<AggregationType> list = new ArrayList<AggregationType>();
+          final IPhysicalTable table = ((SqlPhysicalModel) domain.getPhysicalModels().get(0)).getPhysicalTables().get(7);
+          final IPhysicalColumn col = table.getPhysicalColumns().get(3);
+          final List<AggregationType> list = new ArrayList<AggregationType>();
           list.add(AggregationType.SUM);
           list.add(AggregationType.AVERAGE);
           col.setAggregationList(list);
@@ -230,6 +229,12 @@ public class PentahoMetaDataTest extends DataSourceTestBase
       {PARAMETRIZED_QUERY, "query-results-2.txt"},
   };
 
+  public static final String[][] QUERIES_AND_RESULTS_GEN = new String[][]{
+      {QUERY, "query-results.txt"},
+      {PARAMETRIZED_QUERY, "query-results-2.txt"},
+      {MULTIPLE_AGG_QUERY, "agg-query-results.txt"},
+  };
+
   public PentahoMetaDataTest()
   {
   }
@@ -373,16 +378,17 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     assertNotEquals("Physical Connection is the same", queryHash, metaData.getQueryHash(pmdDataFactory4, "default2", new StaticDataRow()));
   }
 
-  public void testMultipleAggregations() throws Exception {
+  public void testMultipleAggregations() throws Exception
+  {
     final PmdDataFactory pmdDataFactory = new PmdDataFactory();
-    PmdConnectionProvider provider = new MultipleAggregationTestConnectionProvider();
-    pmdDataFactory.setConnectionProvider(provider);
+    pmdDataFactory.setConnectionProvider(new MultipleAggregationTestConnectionProvider());
     pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory.setDomainId("steel-wheels");
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
-    try {
+    try
+    {
       pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY);
-      
+
       final CloseableTableModel tableModel = (CloseableTableModel) pmdDataFactory.queryData("default", new ParameterDataRow());
       try
       {
@@ -396,16 +402,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
         assertEquals("BC_ORDERDETAILS_QUANTITYORDERED:AVERAGE", names[2]);
         final ByteArrayOutputStream sw = new ByteArrayOutputStream();
         final PrintStream out = new PrintStream(sw);
-
-        TableModelInfo.printTableModel(tableModel, out);
-        TableModelInfo.printTableModelContents(tableModel, out);
-        TableModelInfo.printTableMetaData(tableModel, out);
-        TableModelInfo.printTableCellAttributes(tableModel, out);
-        
-        PrintWriter pw = new PrintWriter(new FileWriter("output.txt"));
-        pw.print(sw.toString());
-        pw.close();
-        
+        generateCompareText(out, tableModel);
         compareLineByLine("agg-query-results.txt", sw.toString());
       }
       finally
@@ -417,6 +414,18 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     {
       pmdDataFactory.close();
     }
+  }
+
+  public void runGenerateMultiAgg() throws ReportDataFactoryException, IOException, SQLException
+  {
+    final PmdDataFactory pmdDataFactory = new PmdDataFactory();
+    pmdDataFactory.setConnectionProvider(new MultipleAggregationTestConnectionProvider());
+    pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
+    pmdDataFactory.setDomainId("steel-wheels");
+    pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY);
+    pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
+
+    generate(pmdDataFactory, "agg-query-results.txt");
   }
 
   public void testParameter() throws ReportDataFactoryException
@@ -441,7 +450,6 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     assertEquals(1, fields2.length);
     assertEquals(DataFactory.QUERY_LIMIT, fields2[0]);
   }
-
 
   public void testSaveAndLoad() throws Exception
   {

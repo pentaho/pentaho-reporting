@@ -20,11 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.e
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface GroupBodyReadHandler extends XmlReadHandler
 {
   public GroupBody getGroupBody();

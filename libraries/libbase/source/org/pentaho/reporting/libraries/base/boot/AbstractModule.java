@@ -357,7 +357,7 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
   public String toString()
   {
     final String lineSeparator = StringUtils.getLineSeparator();
-    final StringBuffer buffer = new StringBuffer(120);
+    final StringBuilder buffer = new StringBuilder(120);
     buffer.append("Module : ");
     buffer.append(getName());
     buffer.append(lineSeparator);

@@ -63,7 +63,7 @@ public class ConfigDescriptionModel extends AbstractListModel
    * Compares an config description entry against an other entry. This simple implementation just compares the names of
    * the two entries.
    */
-  private static class ConfigEntryComparator implements Comparator, Serializable
+  private static class ConfigEntryComparator implements Comparator<ConfigDescriptionEntry>, Serializable
   {
     /**
      * DefaultConstructor.
@@ -80,7 +80,7 @@ public class ConfigDescriptionModel extends AbstractListModel
      * @param o2 the second object to compare
      * @return an integer indicating the comparison result.
      */
-    public int compare(final Object o1, final Object o2)
+    public int compare(final ConfigDescriptionEntry o1, final ConfigDescriptionEntry o2)
     {
       if (o1 == null && o2 == null)
       {
@@ -94,16 +94,14 @@ public class ConfigDescriptionModel extends AbstractListModel
       {
         return 1;
       }
-      final ConfigDescriptionEntry e1 = (ConfigDescriptionEntry) o1;
-      final ConfigDescriptionEntry e2 = (ConfigDescriptionEntry) o2;
-      return e1.getKeyName().compareTo(e2.getKeyName());
+      return o1.getKeyName().compareTo(o2.getKeyName());
     }
   }
 
   /**
    * The content of this list; all config description entries.
    */
-  private final ArrayList content;
+  private final ArrayList<ConfigDescriptionEntry> content;
 
   /**
    * Provides access to externalized strings
@@ -116,7 +114,7 @@ public class ConfigDescriptionModel extends AbstractListModel
   public ConfigDescriptionModel()
   {
     messages = Messages.getInstance();
-    content = new ArrayList();
+    content = new ArrayList<ConfigDescriptionEntry>();
   }
 
   /**
@@ -148,7 +146,7 @@ public class ConfigDescriptionModel extends AbstractListModel
   {
     for (int i = 0; i < content.size(); i++)
     {
-      final ConfigDescriptionEntry configDescriptionEntry = (ConfigDescriptionEntry) content.get(i);
+      final ConfigDescriptionEntry configDescriptionEntry = content.get(i);
       if (key.equals(configDescriptionEntry.getKeyName()))
       {
         return i;
@@ -206,7 +204,7 @@ public class ConfigDescriptionModel extends AbstractListModel
    */
   public ConfigDescriptionEntry get(final int pos)
   {
-    return (ConfigDescriptionEntry) content.get(pos);
+    return content.get(pos);
   }
 
   /**
@@ -266,7 +264,7 @@ public class ConfigDescriptionModel extends AbstractListModel
    */
   public ConfigDescriptionEntry[] toArray()
   {
-    return (ConfigDescriptionEntry[]) content.toArray(new ConfigDescriptionEntry[content.size()]);
+    return content.toArray(new ConfigDescriptionEntry[content.size()]);
   }
 
   /**

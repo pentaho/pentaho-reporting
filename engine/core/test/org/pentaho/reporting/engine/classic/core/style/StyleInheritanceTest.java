@@ -59,6 +59,6 @@ public class StyleInheritanceTest extends TestCase
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.addElement(createLabel("Text"));
 
-    ModelPrinter.print(DebugReportRunner.layoutPage(report, 0));
+    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 0));
   }
 }
