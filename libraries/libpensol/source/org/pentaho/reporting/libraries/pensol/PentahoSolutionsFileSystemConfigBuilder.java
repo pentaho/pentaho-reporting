@@ -11,11 +11,6 @@ public class PentahoSolutionsFileSystemConfigBuilder extends DefaultFileSystemCo
   {
   }
 
-  protected Class getConfigClass()
-  {
-    return PentahoSolutionFileProvider.class;
-  }
-
   public void setTimeOut(final FileSystemOptions opts, final int timeOut)
   {
       setParam(opts, TIMEOUT_KEY, timeOut);

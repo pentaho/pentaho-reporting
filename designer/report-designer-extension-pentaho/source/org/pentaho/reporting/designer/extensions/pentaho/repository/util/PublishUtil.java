@@ -30,6 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
+import org.pentaho.reporting.libraries.pensol.sugar.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -154,6 +155,16 @@ public class PublishUtil
                              final AuthenticationData loginData)
       throws IOException
   {
+	  
+	final String versionText = loginData.getOption(SERVER_VERSION);
+	final int version = ParserUtil.parseInt(versionText, SERVER_VERSION_SUGAR);  
+
+	if (SERVER_VERSION_SUGAR == version){
+			
+		new PublishRestUtil(loginData.getUrl(), loginData.getUsername(), loginData.getPassword()).publishFile(path, data, true);
+		     
+	}else {
+  
 
     final FileObject connection = createVFSConnection(loginData);
     final FileObject object = connection.resolveFile(path);
@@ -166,6 +177,7 @@ public class PublishUtil
     {
       out.close();
     }
+	}
   }
 
   public static boolean acceptFilter(final String[] filters, final String name)

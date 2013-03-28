@@ -91,12 +91,12 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
           glassPane.setVisible(true);
           glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
           final FileObject child = treeNode.resolveFile(newFolderDialog.getFolderName());
+          child.createFolder();
           if (child instanceof WebSolutionFileObject)
           {
             final WebSolutionFileObject webSolutionFileObject = (WebSolutionFileObject) child;
             webSolutionFileObject.setDescription(newFolderDialog.getDescription());
           }
-          child.createFolder();
           getTable().refresh();
         }
         catch (Exception e1)
