@@ -11,7 +11,7 @@ public class MemoryStringReader extends Reader
 
   public MemoryStringReader(final char[] backend, final int offset, final int length)
   {
-    this.backend = backend;
+    this.backend = backend.clone();
     this.offset = offset;
     this.length = length;
   }

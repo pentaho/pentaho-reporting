@@ -10,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  * <p>
  * This implementation guarantees consistent results for all valid character ranges.
  */
-public class PasswordObscurification
+public final class PasswordObscurification
 {
   /**
    * The word that is put before a password to indicate an encrypted form.
@@ -104,7 +104,7 @@ public class PasswordObscurification
       final byte[] val = password.getBytes("UTF-8");
       final byte[] seed = SEED.getBytes("UTF-8");
 
-      final StringBuffer b = new StringBuffer();
+      final StringBuilder b = new StringBuilder();
       for (int i = 0; i < val.length; i++)
       {
         final byte seedByte = seed[i % seed.length];

@@ -244,41 +244,17 @@ public class TableRowHeightCalculation
                                            final TableRowModel rows,
                                            final TableRowRenderBox rowBox)
   {
-//    final TableRow row = ;
-    final long validatedRowHeight = rows.getValidateSize(rowBox.getRowIndex());
+    final long validatedRowHeight = rows.getValidatedRowSize(rowBox.getRowIndex());
 
     final long oldPosition = rowBox.getCachedY();
     final long shift = position - oldPosition;
     if (shift < 0)
     {
-      throw new IllegalStateException("Shift-back is not allowed: " + shift + ": " + oldPosition + " -> " + position);
+      throw new IllegalStateException
+          (String.format("Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)", shift, oldPosition, position, rowBox));
     }
 
     CacheBoxShifter.shiftBox(rowBox, shift);
-/*
-    final RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(rowBox);
-    while (it.hasNext())
-    {
-      final RenderNode cellNode = it.next();
-      if (cellNode instanceof TableCellRenderBox == false)
-      {
-        continue;
-      }
-
-      final TableCellRenderBox cellBox = (TableCellRenderBox) cellNode;
-      final long cellShift = position - cellBox.getCachedY();
-      if (cellShift != 0)
-      {
-        CacheBoxShifter.shiftBox(cellBox, cellShift);
-        // this is an inner shift and therefore it has no influence on the
-        // global shift distance
-      }
-
-      cellBox.setCachedHeight(validatedRowHeight);
-      // Todo: now align all the childs of the cellbox.
-
-    }
-*/
     rowBox.setCachedHeight(validatedRowHeight);
     return validatedRowHeight;
   }

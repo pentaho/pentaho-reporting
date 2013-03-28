@@ -88,7 +88,7 @@ public class LinkedMapTest extends TestCase
 
     map.remove("5");
 
-    Object[] arrayCache = map.values(new String[map.size()]);
+    final Object[] arrayCache = map.values(new String[map.size()]);
 
     map.remove("5");
     map.remove("3");

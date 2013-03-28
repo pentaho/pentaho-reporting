@@ -45,18 +45,18 @@
       <module fileurl="file://$PROJECT_DIR$/libraries/libformula-ui/libformula-ui.iml" filepath="$PROJECT_DIR$/libraries/libformula-ui/libformula-ui.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libloader/libloader.iml" filepath="$PROJECT_DIR$/libraries/libloader/libloader.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libpensol/libpensol.iml" filepath="$PROJECT_DIR$/libraries/libpensol/libpensol.iml" group="libraries" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libpixie/libpixie.iml" filepath="$PROJECT_DIR$/libraries/libpixie/libpixie.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/librepository/librepository.iml" filepath="$PROJECT_DIR$/libraries/librepository/librepository.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libserializer/libserializer.iml" filepath="$PROJECT_DIR$/libraries/libserializer/libserializer.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libsparkline/libsparkline.iml" filepath="$PROJECT_DIR$/libraries/libsparkline/libsparkline.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libswing/libswing.iml" filepath="$PROJECT_DIR$/libraries/libswing/libswing.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libxml/libxml.iml" filepath="$PROJECT_DIR$/libraries/libxml/libxml.iml" group="libraries" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/libpixie/pixie.iml" filepath="$PROJECT_DIR$/libraries/libpixie/pixie.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/designer/report-designer/report-designer.iml" filepath="$PROJECT_DIR$/designer/report-designer/report-designer.iml" group="designer" />
       <module fileurl="file://$PROJECT_DIR$/designer/report-designer-assembly/report-designer-assembly.iml" filepath="$PROJECT_DIR$/designer/report-designer-assembly/report-designer-assembly.iml" group="designer" />
+      <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/report-designer-extension-legacy-charts.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/report-designer-extension-legacy-charts.iml" group="designer" />
+      <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-pentaho/report-designer-extension-pentaho.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-pentaho/report-designer-extension-pentaho.iml" group="designer" />
       <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-toc/report-designer-extension-toc.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-toc/report-designer-extension-toc.iml" group="designer" />
       <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-wizard/report-designer-extension-wizard.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-wizard/report-designer-extension-wizard.iml" group="designer" />
-      <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/report-designer-extensions-legacy-charts.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-legacy-charts/report-designer-extensions-legacy-charts.iml" group="designer" />
-      <module fileurl="file://$PROJECT_DIR$/designer/report-designer-extension-pentaho/report-designer-extensions-pentaho.iml" filepath="$PROJECT_DIR$/designer/report-designer-extension-pentaho/report-designer-extensions-pentaho.iml" group="designer" />
       <module fileurl="file://$PROJECT_DIR$/engine/samples/samples.iml" filepath="$PROJECT_DIR$/engine/samples/samples.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/sdk/sdk.iml" filepath="$PROJECT_DIR$/engine/sdk/sdk.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/server/server.iml" filepath="$PROJECT_DIR$/engine/server/server.iml" group="engine" />

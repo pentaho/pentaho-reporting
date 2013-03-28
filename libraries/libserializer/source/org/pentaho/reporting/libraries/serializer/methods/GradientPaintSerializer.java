@@ -48,7 +48,7 @@ public class GradientPaintSerializer implements SerializeMethod
    * @param stream the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject(Object o, ObjectOutputStream stream) throws IOException
+  public void writeObject(final Object o, final ObjectOutputStream stream) throws IOException
   {
     final GradientPaint gp = (GradientPaint) o;
     final Point2D point2D1 = gp.getPoint1();
@@ -70,7 +70,7 @@ public class GradientPaintSerializer implements SerializeMethod
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject(ObjectInputStream stream)
+  public Object readObject(final ObjectInputStream stream)
       throws IOException, ClassNotFoundException
   {
     final float x1 = stream.readFloat();

@@ -26,11 +26,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document me!
- *
- * @author : Thomas Morgner
- */
 public class ParameterMappingsReadHandler extends AbstractXmlReadHandler
 {
   private ArrayList inputParameters;

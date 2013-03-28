@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.logging.Log;
@@ -54,7 +55,7 @@ public final class PdfReportUtil
    */
   public static boolean createPDF(final MasterReport report,
                                   final File fileName)
-    throws ReportProcessingException
+      throws ReportProcessingException, IOException
   {
     if (report == null)
     {
@@ -80,8 +81,7 @@ public final class PdfReportUtil
     }
     catch (Exception e)
     {
-      logger.error("Writing PDF failed.", e);
-      return false;
+      throw new ReportProcessingException("Writing PDF failed", e);
     }
     finally
     {
@@ -92,9 +92,10 @@ public final class PdfReportUtil
           out.close();
         }
       }
-      catch (Exception e)
+      catch (IOException e)
       {
         logger.error("Saving PDF failed.", e);
+        throw e;
       }
     }
   }
@@ -159,7 +160,7 @@ public final class PdfReportUtil
    */
   public static boolean createPDF(final MasterReport report,
                                   final String fileName)
-    throws ReportProcessingException
+      throws ReportProcessingException, IOException
   {
     return createPDF(report, new File(fileName));
   }

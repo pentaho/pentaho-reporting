@@ -80,7 +80,7 @@ public class ConfigTreeRenderer extends DefaultTreeCellRenderer
     else if (value instanceof ConfigTreeModuleNode)
     {
       final ConfigTreeModuleNode node = (ConfigTreeModuleNode) value;
-      final StringBuffer text = new StringBuffer(100);
+      final StringBuilder text = new StringBuilder(100);
       text.append(node.getModule().getName());
 //      text.append(" - "); //$NON-NLS-1$
 //      text.append(node.getModule().getMajorVersion());

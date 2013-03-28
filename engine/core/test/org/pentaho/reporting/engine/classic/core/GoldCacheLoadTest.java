@@ -19,6 +19,7 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 import net.sf.ehcache.CacheManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -121,6 +123,7 @@ public class GoldCacheLoadTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
+    final ArrayList<Exception> exceptions = new ArrayList<Exception>();
     for (int numThread = 0; numThread < maxThreads; numThread++)
     {
       threadPool.submit(new Runnable()
@@ -138,6 +141,7 @@ public class GoldCacheLoadTest extends GoldTestBase
           }
           catch (Exception ex)
           {
+            exceptions.add(ex);
             System.out.println("Exception caught: " + ex.toString());
           }
         }
@@ -149,5 +153,7 @@ public class GoldCacheLoadTest extends GoldTestBase
     {
       threadPool.awaitTermination(5, TimeUnit.MINUTES);
     }
+
+    assertTrue(exceptions.isEmpty());
   }
 }

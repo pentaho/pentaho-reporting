@@ -70,7 +70,6 @@ public final class PackageSorter
      *
      * @param state the package state object, that should be wrapped up
      *              by this class.
-     * @noinspection PublicConstructorInNonPublicClass
      */
     private SortModule(final PackageState state)
     {

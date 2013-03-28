@@ -6,10 +6,10 @@ TableAttribute [http://reporting.pentaho.org/namespaces/engine/meta-attributes/c
 Tablemodel contains 1 rows.
 Checking the attributes inside
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
-CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
 CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
 Tablemodel contains 1 rows.

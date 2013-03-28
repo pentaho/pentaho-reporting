@@ -26,11 +26,6 @@ import java.beans.PropertyEditor;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class HorizontalAlignmentPropertyEditor implements PropertyEditor
 {
   private ElementAlignment value;

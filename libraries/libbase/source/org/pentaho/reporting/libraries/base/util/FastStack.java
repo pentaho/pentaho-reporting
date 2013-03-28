@@ -123,7 +123,6 @@ public final class FastStack<T> implements Serializable, Cloneable
     {
       throw new EmptyStackException();
     }
-    //noinspection unchecked
     return (T) contents[size - 1];
   }
 
@@ -140,7 +139,6 @@ public final class FastStack<T> implements Serializable, Cloneable
       throw new EmptyStackException();
     }
     size -= 1;
-    //noinspection unchecked
     final T retval = (T) contents[size];
     contents[size] = null;
     return retval;
@@ -193,7 +191,6 @@ public final class FastStack<T> implements Serializable, Cloneable
     {
       throw new IndexOutOfBoundsException();
     }
-    //noinspection unchecked
     return (T) contents[index];
   }
 }

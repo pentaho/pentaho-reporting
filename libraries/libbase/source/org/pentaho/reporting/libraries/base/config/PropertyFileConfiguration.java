@@ -113,6 +113,7 @@ public class PropertyFileConfiguration extends HierarchicalConfiguration
       final BufferedInputStream bin = new BufferedInputStream(in);
       final Properties p = new Properties();
       p.load(bin);
+      //noinspection UseOfPropertiesAsHashtable
       this.getConfiguration().putAll(p);
       bin.close();
     }

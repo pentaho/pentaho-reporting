@@ -25,11 +25,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class InlineTableRowReadHandler extends AbstractXmlReadHandler
 {
   private ArrayList data;

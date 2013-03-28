@@ -453,7 +453,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
     final int colSpan = box.getColSpan();
 
     final int startPos = currentTable.increaseCellPosition(colSpan, rowSpan);
-    while (currentTable.columnModel.getColumnCount() <= startPos)
+    while (currentTable.columnModel.getColumnCount() < (startPos + colSpan))
     {
       currentTable.columnModel.addAutoColumn();
     }

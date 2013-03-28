@@ -23,7 +23,6 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
@@ -65,7 +64,7 @@ public class Pre449Test extends TestCase
         (report, report.getReportHeader(), false, true);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner().startValidation(logicalPageBox);
   }
 

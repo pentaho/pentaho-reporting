@@ -28,8 +28,6 @@ import org.xml.sax.SAXException;
  */
 public class ConfigReadHandler extends AbstractXmlReadHandler
 {
-  private boolean labelMapping;
-
   public ConfigReadHandler()
   {
   }
@@ -43,17 +41,6 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-
-    final String labelMappingAttr = attrs.getValue(getUri(), "label-mapping");
-    if (labelMappingAttr != null)
-    {
-      labelMapping = "true".equals(labelMappingAttr);
-    }
-  }
-
-  public boolean isLabelMapping()
-  {
-    return labelMapping;
   }
 
   /**

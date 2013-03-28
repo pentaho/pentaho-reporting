@@ -20,19 +20,19 @@ package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.e
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Iterator;
 
+import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter.ColorConverter;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter.DoubleDimensionConverter;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.converter.Point2DConverter;
-import org.pentaho.reporting.libraries.base.util.Empty;
 import org.pentaho.reporting.libraries.xmlns.parser.PropertiesReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
@@ -168,6 +168,6 @@ public abstract class AbstractReportElementReadHandler extends PropertiesReadHan
     {
       return (Map) styleExpressions.getObject();
     }
-    return Empty.MAP;
+    return Collections.emptyMap();
   }
 }

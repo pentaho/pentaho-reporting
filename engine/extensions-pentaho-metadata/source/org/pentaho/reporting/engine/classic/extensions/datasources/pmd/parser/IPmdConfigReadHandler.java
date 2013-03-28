@@ -25,5 +25,4 @@ public interface IPmdConfigReadHandler extends XmlReadHandler
   public IPmdConnectionProvider getConnectionProvider();
   public String getDomain();
   public String getXmiFile();
-  public boolean isLabelMapping();
 }

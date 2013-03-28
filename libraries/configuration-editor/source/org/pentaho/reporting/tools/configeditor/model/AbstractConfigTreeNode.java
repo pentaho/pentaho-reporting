@@ -33,7 +33,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
   /**
    * The list of tree nodes that act as childs.
    */
-  private final ArrayList childs;
+  private final ArrayList<ConfigTreeNode> childs;
   /**
    * The name of this node.
    */
@@ -50,7 +50,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    */
   protected AbstractConfigTreeNode(final String name)
   {
-    childs = new ArrayList();
+    childs = new ArrayList<ConfigTreeNode>();
     this.name = name;
   }
 
@@ -79,7 +79,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
   {
     for (int i = 0; i < childs.size(); i++)
     {
-      final ConfigTreeNode node = (ConfigTreeNode) childs.get(i);
+      final ConfigTreeNode node = childs.get(i);
       node.setParent(null);
     }
     childs.clear();
@@ -93,7 +93,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    */
   public TreeNode getChildAt(final int childIndex)
   {
-    return (TreeNode) childs.get(childIndex);
+    return childs.get(childIndex);
   }
 
   /**

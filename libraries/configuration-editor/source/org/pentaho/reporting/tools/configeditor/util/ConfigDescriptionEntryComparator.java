@@ -4,16 +4,14 @@ import java.util.Comparator;
 
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
 
-public class ConfigDescriptionEntryComparator implements Comparator
+public class ConfigDescriptionEntryComparator implements Comparator<ConfigDescriptionEntry>
 {
   public ConfigDescriptionEntryComparator()
   {
   }
 
-  public int compare(final Object o1, final Object o2)
+  public int compare(final ConfigDescriptionEntry e1, final ConfigDescriptionEntry e2)
   {
-    final ConfigDescriptionEntry e1 = (ConfigDescriptionEntry) o1;
-    final ConfigDescriptionEntry e2 = (ConfigDescriptionEntry) o2;
     if (e1 == null)
     {
       return 1;

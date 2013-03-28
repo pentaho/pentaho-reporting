@@ -418,7 +418,7 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
     for (int i = 0; i < groupSize; i++)
     {
 
-      // todo: This is probably not correct.
+      // This will fail for crosstabs. But this code is legacy, so it is ok.
       final RelationalGroup g = (RelationalGroup) getReport().getGroup(i);
       writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.GROUP_TAG,
           "name", g.getName(), XmlWriterSupport.OPEN);

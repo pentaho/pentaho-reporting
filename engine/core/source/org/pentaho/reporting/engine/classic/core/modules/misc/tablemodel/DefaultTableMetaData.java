@@ -22,11 +22,6 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class DefaultTableMetaData
 {
   private DefaultDataAttributes tableAttributes;

@@ -20,11 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class PlainParameterReadHandler extends AbstractParameterReadHandler
 {
   private PlainParameter result;

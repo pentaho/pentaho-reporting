@@ -27,7 +27,6 @@ import java.util.Arrays;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -136,6 +135,22 @@ public class DefaultModuleEditor implements ModuleEditor
   }
 
   /**
+   * The contentpane that holds all other components.
+   */
+  private final JPanel contentpane;
+  /**
+   * The rootpane holds the editor and the help area.
+   */
+  private final JSplitPane rootpane;
+  /**
+   * The rootpane holds the editor and the help area.
+   */
+  private final JEditorPane helpPane;
+  /**
+   * Externalized string access
+   */
+  private final Messages messages;
+  /**
    * The report configuration used in this module editor.
    */
   private HierarchicalConfiguration config;
@@ -143,10 +158,6 @@ public class DefaultModuleEditor implements ModuleEditor
    * The list of keynames used in the editor.
    */
   private ConfigDescriptionEntry[] keyNames;
-  /**
-   * The contentpane that holds all other components.
-   */
-  private final JPanel contentpane;
   /**
    * all active key editors as array.
    */
@@ -159,19 +170,6 @@ public class DefaultModuleEditor implements ModuleEditor
    * The package of the module implementation.
    */
   private String modulePackage;
-  /**
-   * The rootpane holds the editor and the help area.
-   */
-  private final JSplitPane rootpane;
-  /**
-   * The rootpane holds the editor and the help area.
-   */
-  private final JEditorPane helpPane;
-
-  /**
-   * Externalized string access
-   */
-  private final Messages messages;
 
   /**
    * Creates a new, uninitialized module editor.
@@ -186,7 +184,7 @@ public class DefaultModuleEditor implements ModuleEditor
     helpPane.setEditable(false);
     helpPane.setEditorKit(new HTMLEditorKit());
     helpPane.setPreferredSize(new Dimension(600, 100));
-    
+
     final JPanel toolbar = new JPanel();
     toolbar.setLayout(new BorderLayout());
     toolbar.add(new JScrollPane(helpPane));
@@ -219,8 +217,8 @@ public class DefaultModuleEditor implements ModuleEditor
    * @see ModuleEditor#createInstance(Module, HierarchicalConfiguration, ConfigDescriptionEntry[])
    */
   public ModuleEditor createInstance
-      (final Module module, final HierarchicalConfiguration config,
-       final ConfigDescriptionEntry[] keyNames)
+  (final Module module, final HierarchicalConfiguration config,
+   final ConfigDescriptionEntry[] keyNames)
   {
     final DefaultModuleEditor ed = new DefaultModuleEditor();
     ed.setConfig(config);
@@ -294,7 +292,7 @@ public class DefaultModuleEditor implements ModuleEditor
    */
   protected ConfigDescriptionEntry[] getKeyNames()
   {
-    return (ConfigDescriptionEntry[]) keyNames.clone();
+    return keyNames.clone();
   }
 
   /**
@@ -305,7 +303,7 @@ public class DefaultModuleEditor implements ModuleEditor
    */
   protected void setKeyNames(final ConfigDescriptionEntry[] keyNames)
   {
-    this.keyNames = (ConfigDescriptionEntry[]) keyNames.clone();
+    this.keyNames = keyNames.clone();
     Arrays.sort(this.keyNames, new ConfigDescriptionEntryComparator());
   }
 

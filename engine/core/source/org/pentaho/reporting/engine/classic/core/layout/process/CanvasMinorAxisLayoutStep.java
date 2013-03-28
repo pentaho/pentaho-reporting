@@ -145,6 +145,12 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     else
     {
       final ParagraphPoolBox node = box.getPool();
+
+      if (node.getFirstChild() == null)
+      {
+        return;
+      }
+
       // all childs of the linebox container must be inline boxes. They
       // represent the lines in the paragraph. Any other element here is
       // a error that must be reported
@@ -276,7 +282,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -312,7 +318,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -357,7 +363,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -402,7 +408,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -464,7 +470,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -500,7 +506,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -610,7 +616,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -659,7 +665,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -701,7 +707,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -722,7 +728,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -767,7 +773,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -808,7 +814,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         nodeContext.updateParentX2(box.getCachedX2());
         return;
@@ -863,7 +869,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (box.isCacheValid())
+    if (checkCacheValid(box))
     {
       return false;
     }
@@ -879,7 +885,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (box.isCacheValid())
+      if (checkCacheValid(box))
       {
         return;
       }

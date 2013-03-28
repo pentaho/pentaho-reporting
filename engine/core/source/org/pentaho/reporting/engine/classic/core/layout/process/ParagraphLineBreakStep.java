@@ -94,11 +94,13 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       final long poolChangeTracker = paragraphBox.getPool().getChangeTracker();
       final boolean unchanged = poolChangeTracker == paragraphBox.getLineBoxAge();
 
-      if (unchanged)
+      if (unchanged || paragraphBox.getPool().getFirstChild() == null)
       {
         // If the paragraph is unchanged (no new elements have been added to the pool) then we can take a
         // shortcut. The childs of this paragraph will also be unchanged (as any structural change would have increased
         // the change-tracker).
+        //
+        // We treat an empty paragraph (pool has no childs) as unchanged at any time.
         paragraphNesting.push(ParagraphLineBreakStep.LEAF_BREAK_STATE);
         breakState = ParagraphLineBreakStep.LEAF_BREAK_STATE;
         return false;
@@ -188,7 +190,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     // some other block box ..
     if (breakState == null)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -207,6 +209,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected void finishBlockBox(final BlockRenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
       if (breakState == ParagraphLineBreakStep.LEAF_BREAK_STATE && paragraphNesting.isEmpty())
@@ -266,7 +270,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (breakState == null || breakState.isWritable() == false)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -279,6 +283,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected void finishInlineBox(final InlineRenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (breakState == null || breakState.isWritable() == false)
     {
       return;
@@ -333,6 +339,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   private void finishBox(final RenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (breakState == null)
     {
       return;
@@ -350,7 +358,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (breakState == null)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -456,7 +464,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (breakState == null)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -475,6 +483,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected void finishOtherBox(final RenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (breakState != null && breakState.isWritable())
     {
       breakState.finishBlockBox(box);
@@ -485,7 +495,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (breakState == null)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -504,6 +514,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected void finishTableCellBox(final TableCellRenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (breakState != null && breakState.isWritable())
     {
       breakState.finishBlockBox(box);
@@ -519,7 +531,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (breakState == null)
     {
-      if (box.getChangeTracker() == box.getCachedAge())
+      if (box.isLinebreakCacheValid())
       {
         return false;
       }
@@ -538,6 +550,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected void finishTableBox(final TableRenderBox box)
   {
+    box.setLinebreakAge(box.getChangeTracker());
+
     if (breakState != null && breakState.isWritable())
     {
       breakState.finishBlockBox(box);

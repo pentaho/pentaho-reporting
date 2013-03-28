@@ -216,7 +216,7 @@ public class DefaultModuleInfo implements ModuleInfo
    */
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer(128);
+    final StringBuilder buffer = new StringBuilder(128);
     buffer.append(getClass().getName());
     buffer.append("={ModuleClass=");
     buffer.append(getModuleClass());

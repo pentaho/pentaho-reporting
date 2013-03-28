@@ -63,7 +63,7 @@ public class BrokeCellsTest extends TestCase
     }
 
     final LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.print(box);
+    ModelPrinter.INSTANCE.print(box);
 
 //    DebugReportRunner.showDialog(report);
   }

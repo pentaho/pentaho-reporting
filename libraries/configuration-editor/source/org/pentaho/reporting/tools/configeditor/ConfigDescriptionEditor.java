@@ -716,8 +716,7 @@ public class ConfigDescriptionEditor extends JFrame
    */
   public ConfigDescriptionEditor(final String booterClass)
   {
-    final AbstractBoot boot = (AbstractBoot)
-        ObjectUtilities.loadAndInstantiate(booterClass, ConfigDescriptionEditor.class, AbstractBoot.class);
+    final AbstractBoot boot = ObjectUtilities.loadAndInstantiate(booterClass, ConfigDescriptionEditor.class, AbstractBoot.class);
     if (boot != null)
     {
       boot.start();
@@ -1489,6 +1488,7 @@ public class ConfigDescriptionEditor extends JFrame
    *
    * @param args ignored.
    */
+  @SuppressWarnings("UseOfSystemOutOrSystemErr")
   public static void main(final String[] args)
   {
     ConfigEditorBoot.getInstance().start();

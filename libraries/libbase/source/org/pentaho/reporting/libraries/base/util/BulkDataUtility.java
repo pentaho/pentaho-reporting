@@ -22,7 +22,7 @@ package org.pentaho.reporting.libraries.base.util;
  *
  * @author Thomas Morgner
  */
-public class BulkDataUtility
+public final class BulkDataUtility
 {
   /**
    * Private constructor prevents instantiation.

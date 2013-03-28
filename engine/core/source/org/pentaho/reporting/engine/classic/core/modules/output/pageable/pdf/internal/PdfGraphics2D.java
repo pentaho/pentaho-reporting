@@ -351,11 +351,6 @@ public class PdfGraphics2D extends Graphics2D
     }
   }
 
-  /**
-   * todo
-   *
-   * @see Graphics2D#drawString(String, float, float)
-   */
   public void drawString(final String s, final float x, float y)
   {
     if (s.length() == 0)

@@ -19,11 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.bas
 
 import java.util.TimeZone;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class TimeZoneObjectDescription extends AbstractObjectDescription
 {
   public TimeZoneObjectDescription()

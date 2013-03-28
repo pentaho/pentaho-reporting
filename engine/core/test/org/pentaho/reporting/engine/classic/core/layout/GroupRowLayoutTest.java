@@ -83,8 +83,6 @@ public class GroupRowLayoutTest extends TestCase
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
 
-    ModelPrinter.print(logicalPageBox);
-    
     final RenderNode[] nodes = MatchFactory.matchAll(logicalPageBox, "RowRenderBox > *");
     assertEquals("Number of nodes is 3", 3, nodes.length);
     for (int i = 0; i < nodes.length; i++)
@@ -114,8 +112,6 @@ public class GroupRowLayoutTest extends TestCase
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
 
-    ModelPrinter.print(logicalPageBox);
-
     final RenderNode nodes = MatchFactory.match(logicalPageBox, "CanvasRenderBox > CanvasRenderBox");
     assertNotNull(nodes);
 
@@ -139,8 +135,6 @@ public class GroupRowLayoutTest extends TestCase
     band.addElement(createDataItem("Header"));
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-
-    ModelPrinter.print(logicalPageBox);
 
     final RenderNode nodes = MatchFactory.match(logicalPageBox, "CanvasRenderBox > CanvasRenderBox");
     assertNotNull(nodes);

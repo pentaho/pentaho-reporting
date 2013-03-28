@@ -147,7 +147,7 @@ public class Prd3479Test extends TestCase
     band.addElement(rowBand);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band);
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode labelRenderBox = MatchFactory.findElementByName(logicalPageBox, "Label");
     final RenderNode rowRenderBox = MatchFactory.findElementByName(logicalPageBox, "RowBand");
@@ -213,7 +213,7 @@ public class Prd3479Test extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getDetailsHeader());
-    ModelPrinter.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
 
   }
 

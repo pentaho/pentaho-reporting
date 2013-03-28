@@ -1,17 +1,21 @@
 package org.pentaho.reporting.libraries.base.util;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Utility class used to handle some of the messy items when building URLs
  */
-public class UrlBuilder
+public final class UrlBuilder
 {
   private static final Log log = LogFactory.getLog(UrlBuilder.class);
+
+  private UrlBuilder()
+  {
+  }
 
   /**
    * Generates a URL using the <b>server</b>, <b>path</b>, <b>paramters</b>, and <b>fragment</b> items. The URL will
