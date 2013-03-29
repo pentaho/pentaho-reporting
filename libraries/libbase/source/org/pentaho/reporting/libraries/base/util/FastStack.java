@@ -193,4 +193,13 @@ public final class FastStack<T> implements Serializable, Cloneable
     }
     return (T) contents[index];
   }
+
+  public String toString()
+  {
+    return "FastStack{" +
+        "contents=" + (contents == null ? null : Arrays.asList(contents)) +
+        ", size=" + size +
+        ", initialSize=" + initialSize +
+        '}';
+  }
 }
