@@ -30,27 +30,13 @@ public class WidowOrphanContextPool
     }
   }
 
-  private static class PassThroughContextPool extends StackedObjectPool<PassThroughWidowOrphanContext>
-  {
-    private PassThroughContextPool()
-    {
-    }
-
-    protected PassThroughWidowOrphanContext create()
-    {
-      return new PassThroughWidowOrphanContext();
-    }
-  }
-
   private CanvasContextPool canvasContextPool;
   private BlockContextPool blockContextPool;
-  private PassThroughContextPool passThroughContextPool;
 
   public WidowOrphanContextPool()
   {
     canvasContextPool = new CanvasContextPool();
     blockContextPool = new BlockContextPool();
-    passThroughContextPool = new PassThroughContextPool();
   }
 
   public WidowOrphanContext create(final RenderBox box,
@@ -61,13 +47,6 @@ public class WidowOrphanContextPool
       final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
       final int widows = properties.getWidows();
       final int orphans = properties.getOrphans();
-      if (widows == 0 && orphans == 0 && properties.isAvoidPagebreakInside() == false)
-      {
-        final PassThroughWidowOrphanContext retval = passThroughContextPool.get();
-        retval.init(passThroughContextPool, context);
-        return retval;
-      }
-
       final BlockWidowOrphanContext retval = blockContextPool.get();
       retval.init(blockContextPool, context, box, widows, orphans);
       return retval;

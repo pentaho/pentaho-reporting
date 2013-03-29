@@ -36,16 +36,16 @@ public final class FinishedRenderNode extends RenderNode
   private long marginsBottom;
   private boolean breakAfter;
   private ReportStateKey stateKey;
-  private int nodeCount;
+  private final boolean orphan;
 
   public FinishedRenderNode(final long layoutedWidth,
                             final long layoutedHeight,
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
-                            final int nodeCount)
+                            final boolean orphan)
   {
-    this(layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, nodeCount, null);
+    this(layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, orphan, null);
   }
 
   public FinishedRenderNode(final long layoutedWidth,
@@ -53,7 +53,7 @@ public final class FinishedRenderNode extends RenderNode
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
-                            final int nodeCount,
+                            final boolean orphan,
                             final ReportStateKey stateKey)
   {
     super(NodeLayoutProperties.GENERIC_PROPERTIES);
@@ -72,7 +72,7 @@ public final class FinishedRenderNode extends RenderNode
     this.layoutedHeight = layoutedHeight;
     this.marginsBottom = marginsBottom;
     this.marginsTop = marginsTop;
-    this.nodeCount = nodeCount;
+    this.orphan = orphan;
     setFinishedPaginate(true);
     setFinishedTable(true);
     setMinimumChunkWidth(layoutedWidth);
@@ -126,5 +126,10 @@ public final class FinishedRenderNode extends RenderNode
   public ReportStateKey getStateKey()
   {
     return stateKey;
+  }
+
+  public boolean isOrphanLeaf()
+  {
+    return orphan;
   }
 }

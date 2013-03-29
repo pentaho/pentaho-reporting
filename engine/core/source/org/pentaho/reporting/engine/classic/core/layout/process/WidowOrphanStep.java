@@ -47,6 +47,7 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
   private WidowOrphanContext context;
   private WidowOrphanContextPool contextPool;
   private PassThroughWidowOrphanContext rootContext;
+  private boolean invalidNodeFound;
 
   public WidowOrphanStep()
   {
@@ -54,11 +55,13 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     rootContext = new PassThroughWidowOrphanContext();
   }
 
-  public void processWidowOrphanAnnotation(final LogicalPageBox box)
+  public boolean processWidowOrphanAnnotation(final LogicalPageBox box)
   {
+    invalidNodeFound = false;
     context = rootContext;
     startProcessing(box.getContentArea());
     context = null;
+    return invalidNodeFound;
   }
 
 
@@ -69,6 +72,9 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 
   protected boolean startBox(final RenderBox box)
   {
+    box.setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.UNRESTRICTED);
+    box.setWidowBox(false);
+
     final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
     if (properties.isWidowOrphanOptOut() == false)
     {
@@ -81,9 +87,16 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 
   protected void processOtherNode(final RenderNode node)
   {
+    node.setWidowBox(false);
+
     if (node instanceof FinishedRenderNode)
     {
-      // feed information about the collapsed nodes and their sizes.
+      final FinishedRenderNode finNode = (FinishedRenderNode) node;
+      if (finNode.isOrphanLeaf())
+      {
+        context.registerFinishedNode(finNode);
+        // feed information about the collapsed node into the parent to have a consistent pagination run.
+      }
     }
   }
 
@@ -92,6 +105,11 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
     final WidowOrphanContext oldContext = context;
     context = oldContext.commit(box);
     contextPool.free(oldContext);
+
+    if (box.isInvalidWidowOrphanNode())
+    {
+      invalidNodeFound = true;
+    }
 
     final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
     if (properties.isWidowOrphanOptOut() == false)

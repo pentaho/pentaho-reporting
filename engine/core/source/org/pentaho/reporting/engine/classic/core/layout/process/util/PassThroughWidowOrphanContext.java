@@ -1,5 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public class PassThroughWidowOrphanContext implements WidowOrphanContext
@@ -46,6 +47,11 @@ public class PassThroughWidowOrphanContext implements WidowOrphanContext
   public long getWidowValue()
   {
     return 0;
+  }
+
+  public void registerFinishedNode(final FinishedRenderNode node)
+  {
+
   }
 
   public WidowOrphanContext commit(final RenderBox box)

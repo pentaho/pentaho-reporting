@@ -1,5 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public interface WidowOrphanContext
@@ -11,6 +12,8 @@ public interface WidowOrphanContext
 //    public void endIndirectChild(RenderBox box, long orphan, long widow);
 
   public void endChild(RenderBox box);
+
+  public void registerFinishedNode(FinishedRenderNode node);
 
   /**
    * Orphan value is the y2/bottom-boundary for the element after which the box becomes breakable.

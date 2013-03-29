@@ -68,6 +68,7 @@ public abstract class RenderNode implements Cloneable
   private static final int FLAG_FINISHED_PAGINATE = 0x02;
   private static final int FLAG_FINISHED_TABLE = 0x04;
   private static final int FLAG_VIRTUAL_NODE = 0x04;
+  private static final int FLAG_WIDOW_BOX = 0x08;
   private static final int FLAG_RESERVED = 0xFFF0;
 
   private int flags;
@@ -208,12 +209,6 @@ public abstract class RenderNode implements Cloneable
   public final NodeLayoutProperties getNodeLayoutProperties()
   {
     return nodeLayoutProperties;
-  }
-
-  @Deprecated
-  public long getComputedWidth()
-  {
-    return 0;
   }
 
   public final long getX()
@@ -1063,5 +1058,20 @@ public abstract class RenderNode implements Cloneable
   public int getChildCount ()
   {
     return 0;
+  }
+
+  public boolean isWidowBox()
+  {
+    return isFlag(FLAG_WIDOW_BOX);
+  }
+
+  public void setWidowBox(final boolean widowBox)
+  {
+    setFlag(FLAG_WIDOW_BOX, widowBox);
+  }
+
+  public boolean isOrphanLeaf ()
+  {
+    return false;
   }
 }

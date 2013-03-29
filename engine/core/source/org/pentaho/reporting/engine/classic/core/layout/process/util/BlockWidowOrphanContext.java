@@ -1,8 +1,8 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
+import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.util.RingBuffer;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -15,12 +15,13 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
   private int orphans;
   private int count;
   private RingBuffer<Long> orphanSize;
-  private RingBuffer<Long> widowSize;
+  private RingBuffer<RenderNode> widowSize;
   private boolean debug;
   private long orphanOverride;
   private long widowOverride;
 
-  private RenderBox currentNode;
+  private RenderNode currentNode;
+  private boolean markWidowBoxes;
 
   public BlockWidowOrphanContext()
   {
@@ -38,12 +39,15 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     this.widows = widows;
     this.orphans = orphans;
     this.widowOverride = contextBox.getY() + contextBox.getHeight();
+    this.orphanOverride = contextBox.getY();
+    this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
+    this.count = 0;
 
     if (widows > 0)
     {
       if (this.widowSize == null)
       {
-        this.widowSize = new RingBuffer<Long>(widows);
+        this.widowSize = new RingBuffer<RenderNode>(widows);
       }
       else
       {
@@ -61,11 +65,6 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
         this.orphanSize.resize(orphans);
       }
     }
-
-    if (contextBox.getElementType() instanceof RelationalGroupType)
-    {
-    }
-    debug = true;
   }
 
 
@@ -92,11 +91,12 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
           DebugLog.log("Orphan size added (DIRECT): " + y2 + " -> " + box);
         }
         count += 1;
+        box.setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.LEAF);
       }
 
       if (widows > 0)
       {
-        widowSize.add(box.getY());
+        widowSize.add(box);
         if (debug)
         {
           DebugLog.log("Widow size added (DIRECT): " + box.getY() + " -> " + box);
@@ -109,6 +109,36 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     if (parent != null)
     {
       parent.endChild(box);
+    }
+  }
+
+  public void registerFinishedNode(final FinishedRenderNode box)
+  {
+    if (count < orphans && orphans > 0)
+    {
+      final long y2 = box.getY() + box.getHeight();
+      orphanSize.add(y2);
+      if (debug)
+      {
+        DebugLog.log("Orphan size added (DIRECT): " + y2 + " -> " + box);
+      }
+      box.getParent().setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.RESTRICTED);
+      count += 1;
+    }
+
+    if (widows > 0)
+    {
+      widowSize.add(box);
+      if (debug)
+      {
+        DebugLog.log("Widow size added (DIRECT): " + box.getY() + " -> " + box);
+      }
+    }
+
+    currentNode = null;
+    if (parent != null)
+    {
+      parent.registerFinishedNode(box);
     }
   }
 
@@ -132,18 +162,53 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     {
       return widowOverride;
     }
-    final Long firstValue = widowSize.getFirstValue();
+    final RenderNode firstValue = widowSize.getFirstValue();
     if (firstValue == null)
     {
       return widowOverride;
     }
-    return Math.min(widowOverride, firstValue.longValue());
+    return Math.min(widowOverride, firstValue.getY());
   }
 
   public WidowOrphanContext commit(final RenderBox box)
   {
     box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getY()));
     box.setWidowConstraintSize((box.getY() + box.getHeight()) - getWidowValue());
+
+    final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
+    if (incomplete && count < orphans)
+    {
+      // the box is either open or has an open sub-report and the orphan constraint is not fulfilled.
+      box.setInvalidWidowOrphanNode(true);
+    }
+    else if (box.getStaticBoxLayoutProperties().isAvoidPagebreakInside())
+    {
+      if (incomplete)
+      {
+        box.setInvalidWidowOrphanNode(true);
+      }
+      else
+      {
+        box.setInvalidWidowOrphanNode(false);
+      }
+    }
+    else
+    {
+      // the box is safe to process
+      box.setInvalidWidowOrphanNode(false);
+    }
+
+    if (widows > 0)
+    {
+      for (int i = 0; i < widowSize.size(); i += 1)
+      {
+        final RenderNode widowBox = widowSize.get(i);
+        if (widowBox != null)
+        {
+          widowBox.setWidowBox(markWidowBoxes || widowBox.isWidowBox());
+        }
+      }
+    }
 
     if (debug)
     {

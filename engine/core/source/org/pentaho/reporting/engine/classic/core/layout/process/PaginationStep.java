@@ -151,6 +151,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     {
       if (handleManualBreakOnBox(box, shiftState))
       {
+        logger.info("pending page-break or manual break: " + box);
         return true;
       }
     }
@@ -162,7 +163,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       breakPending = true;
       if (handleManualBreakOnBox(box, shiftState))
       {
-        logger.info("Widow constraint triggered pagebreak: " + box);
+        logger.info("Widow constraint triggered page-break: " + box);
         return true;
       }
     }
@@ -220,7 +221,8 @@ public final class PaginationStep extends IterateVisualProcessStep
     {
       if (parent.getWidowConstraintSize() > 0)
       {
-        final long constraintBoundary = parent.getY() + Math.max(0, parent.getHeight() - parent.getWidowConstraintSize());
+        final long constraintBoundary = parent.getY() +
+            Math.min(parent.getHeight(), parent.getHeight() - parent.getWidowConstraintSize());
         if (constraintBoundary != paginationTableState.getPageOffset() &&
             constraintBoundary == box.getY())
         {

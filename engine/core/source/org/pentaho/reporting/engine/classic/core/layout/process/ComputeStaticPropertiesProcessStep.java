@@ -38,7 +38,6 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Computes the width for all elements. This uses the CSS alogorithm, percentages are resolved against the parent's
@@ -228,7 +227,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
     sblp.setDominantBaseline(-1);
     sblp.setOrphans(style.getIntStyleProperty(ElementStyleKeys.ORPHANS, 0));
-    sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
+    // todo sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
     final boolean orphanOptOut = style.getBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
     sblp.setWidowOrphanOptOut(orphanOptOut);
 

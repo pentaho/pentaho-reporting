@@ -220,41 +220,86 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       return true;
     }
 
-    // Next, search the last node that is fully invisible. We collapse all
-    // invisible node into one big box for efficiency reasons. They wont be
-    // visible anyway and thus the result will be the same as if they were
-    // still alive ..
-    final RenderNode firstNode = box.getFirstChild();
-    RenderNode currentNode = firstNode;
-    RenderNode lastToRemove = null;
-
-    while (true)
+    if (box.getRestrictFinishedClearout() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
     {
-      if (currentNode == null)
+      // Next, search the last node that is fully invisible. We collapse all
+      // invisible node into one big box for efficiency reasons. They wont be
+      // visible anyway and thus the result will be the same as if they were
+      // still alive ..
+      final RenderNode firstNode = box.getFirstChild();
+      RenderNode currentNode = firstNode;
+      RenderNode lastToRemove = null;
+
+      while (currentNode != null && currentNode.isOpen() == false)
       {
-        break;
-      }
-      if (currentNode.isOpen())
-      {
-        // as long as a box is open, it can grow and therefore it cannot be
-        // removed ..
-        break;
+        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+        {
+          // we cant handle that. This node will be visible. So the current last
+          // node is the one we can shrink ..
+          break;
+        }
+
+        lastToRemove = currentNode;
+        currentNode = currentNode.getNext();
       }
 
-      if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+      if (lastToRemove != null)
       {
-        // we cant handle that. This node will be visible. So the current last
-        // node is the one we can shrink ..
-        break;
+        removeFinishedNodes(box, firstNode, lastToRemove);
       }
-
-      lastToRemove = currentNode;
-      currentNode = currentNode.getNext();
     }
-
-    if (lastToRemove != null)
+    else
     {
-      removeFinishedNodes(box, firstNode, lastToRemove);
+      // any kind of restricted element.
+      RenderNode firstNode = box.getFirstChild();
+      while (firstNode != null)
+      {
+        RenderNode currentNode = firstNode;
+
+        while (currentNode != null && currentNode.isOpen() == false && currentNode.isOrphanLeaf())
+        {
+          if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+          {
+            // we cant handle that. This node will be visible. So the current last
+            // node is the one we can shrink ..
+            break;
+          }
+
+          final RenderNode nodeForRemoval = currentNode;
+          currentNode = currentNode.getNext();
+          firstNode = currentNode;
+          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval);
+        }
+
+        RenderNode lastToRemove = null;
+        while (currentNode != null && currentNode.isOpen() == false)
+        {
+          if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+          {
+            // we cant handle that. This node will be visible. So the current last
+            // node is the one we can shrink ..
+            break;
+          }
+          if (currentNode.isOrphanLeaf())
+          {
+            break;
+          }
+
+          lastToRemove = currentNode;
+          currentNode = currentNode.getNext();
+        }
+
+        if (lastToRemove != null)
+        {
+          removeFinishedNodes(box, firstNode, lastToRemove);
+          firstNode = lastToRemove.getNext();
+        }
+        else
+        {
+          firstNode = null;
+        }
+      }
+
     }
     return true;
   }
@@ -296,7 +341,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     final long marginsBottom = last.getEffectiveMarginBottom();
     final boolean breakAfter = isBreakAfter(last);
 
-    int nodeCount = 0;
     RenderNode removeNode = firstNode;
     while (removeNode != last)
     {
@@ -305,7 +349,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       {
         throw new IllegalStateException("A node is still open. We should not have come that far.");
       }
-//      nodeCount += counter.countChildren(next);
       box.remove(removeNode);
       removeNode = next;
     }
@@ -315,7 +358,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       throw new IllegalStateException("The last node is still open. We should not have come that far.");
     }
     final FinishedRenderNode replacement = new FinishedRenderNode
-        (width, height, marginsTop, marginsBottom, breakAfter, nodeCount);
+        (width, height, marginsTop, marginsBottom, breakAfter, false);
     if (startOfBox + height > pageOffset)
     {
       throw new IllegalStateException("This finished node will intrude into the visible area.");
@@ -373,13 +416,13 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         // Node is first, so the parent's y is the next edge we take care of.
         final long y = parent.getY();
         final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, 0));
+        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, false));
       }
       else
       {
         final long y = prevSilbling.getY() + prevSilbling.getHeight();
         final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, 0));
+        parent.replaceChild(box, new FinishedRenderNode(width, y2 - y, 0, 0, true, false));
       }
     }
   }

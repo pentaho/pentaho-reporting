@@ -69,9 +69,18 @@ public class PageableRenderer extends AbstractRenderer
     if (pageCount == 2)
     {
       DebugLog.logEnter();
-      ModelPrinter.INSTANCE.print(pageBox);
+//      ModelPrinter.INSTANCE.print(pageBox);
       DebugLog.logExit();
     }
+  }
+
+  protected boolean preparePagination(final LogicalPageBox pageBox)
+  {
+    if (widowOrphanStep.processWidowOrphanAnnotation(pageBox))
+    {
+      return false;
+    }
+    return true;
   }
 
   protected boolean isPageFinished()
@@ -79,7 +88,6 @@ public class PageableRenderer extends AbstractRenderer
     final LogicalPageBox pageBox = getPageBox();
 //    final long sizeBeforePagination = pageBox.getHeight();
 //    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
-    widowOrphanStep.processWidowOrphanAnnotation(pageBox);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {

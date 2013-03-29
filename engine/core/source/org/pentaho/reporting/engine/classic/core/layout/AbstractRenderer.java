@@ -415,6 +415,12 @@ public abstract class AbstractRenderer implements Renderer
     revalidateAllAxisLayoutStep.compute(pageBox); // VISUAL
 
     applyCachedValuesStep.compute(pageBox); // STRUCT
+
+    if (preparePagination(pageBox) == false)
+    {
+      return LayoutResult.LAYOUT_UNVALIDATABLE;
+    }
+
     if (isPageFinished())
     {
       lastValidateResult = LayoutResult.LAYOUT_PAGEBREAK;
@@ -425,6 +431,11 @@ public abstract class AbstractRenderer implements Renderer
       lastValidateResult = LayoutResult.LAYOUT_NO_PAGEBREAK;
       return LayoutResult.LAYOUT_NO_PAGEBREAK;
     }
+  }
+
+  protected boolean preparePagination(final LogicalPageBox pageBox)
+  {
+    return true;
   }
 
   protected void clearDirty()
@@ -499,6 +510,11 @@ public abstract class AbstractRenderer implements Renderer
       revalidateAllAxisLayoutStep.compute(pageBox);
 
       applyCachedValuesStep.compute(pageBox);
+
+      if (preparePagination(pageBox) == false)
+      {
+        return (pagebreaks > 0);
+      }
 
       repeat = performPagination(handler, performOutput);
     }

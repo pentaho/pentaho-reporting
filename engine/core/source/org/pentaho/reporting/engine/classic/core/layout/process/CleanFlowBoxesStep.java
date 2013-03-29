@@ -307,7 +307,7 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
     final long marginsBottom = last.getEffectiveMarginBottom();
     final boolean breakAfter = last.isBreakAfter();
     final FinishedRenderNode replacement =
-        new FinishedRenderNode(width, height, marginsTop, marginsBottom, breakAfter, 0, lastSeenStateKey);
+        new FinishedRenderNode(width, height, marginsTop, marginsBottom, breakAfter, false, lastSeenStateKey);
 
     RenderNode removeNode = first;
     while (removeNode != last)

@@ -1,5 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public class CanvasWidowOrphanContext implements WidowOrphanContext
@@ -18,6 +19,11 @@ public class CanvasWidowOrphanContext implements WidowOrphanContext
   }
 
   public void startChild(final RenderBox box)
+  {
+
+  }
+
+  public void registerFinishedNode(final FinishedRenderNode node)
   {
 
   }
