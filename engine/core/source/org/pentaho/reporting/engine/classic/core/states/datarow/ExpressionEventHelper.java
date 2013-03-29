@@ -95,6 +95,11 @@ public abstract class ExpressionEventHelper
     {
       fireSummaryRowEvent(event);
     }
+    else if ((event.getType() & ReportEvent.GROUP_BODY_FINISHED) ==
+        ReportEvent.GROUP_BODY_FINISHED)
+    {
+      // ignore, nothing we handle here
+    }
     else
     {
       throw new IllegalArgumentException();
@@ -805,7 +810,7 @@ public abstract class ExpressionEventHelper
     }
   }
 
-  private void evaluateSingleExpression(final Expression expression)
+  protected void evaluateSingleExpression(final Expression expression)
   {
     final int activeLevel = getProcessingLevel();
     final String name = expression.getName();
@@ -834,7 +839,7 @@ public abstract class ExpressionEventHelper
     }
   }
 
-  private void evaluateToNull(final Expression expression)
+  protected void evaluateToNull(final Expression expression)
   {
     final String name = expression.getName();
     if (name != null)

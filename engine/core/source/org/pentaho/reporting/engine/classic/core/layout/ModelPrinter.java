@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
@@ -290,6 +291,20 @@ public class ModelPrinter
       print(b.toString());
     }
 
+    if (box instanceof BreakMarkerRenderBox)
+    {
+      final BreakMarkerRenderBox pageBox = (BreakMarkerRenderBox) box;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- InstanceID=");
+      b.append(pageBox.getInstanceId());
+      print(b.toString());
+    }
+
+
     if (box.isOpen())
     {
       b = new StringBuilder();
@@ -432,19 +447,26 @@ public class ModelPrinter
     b.append(node.getCachedWidth());
     b.append(", cached-height=");
     b.append(node.getCachedHeight());
+    print(b.toString());
 
     if (node instanceof FinishedRenderNode)
     {
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
       final FinishedRenderNode fn = (FinishedRenderNode) node;
+      b.append("layouted-y=");
+      b.append(fn.getLayoutedY());
       b.append(", layouted-width=");
       b.append(fn.getLayoutedWidth());
       b.append(", layouted-height=");
       b.append(fn.getLayoutedHeight());
       b.append(", orphan-leaf=");
       b.append(fn.isOrphanLeaf());
+      print(b.toString());
     }
-    b.append('}');
-    print(b.toString());
 
     if (node instanceof RenderableText)
     {

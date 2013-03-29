@@ -53,6 +53,7 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 public class DefaultOutputFunction extends AbstractFunction
@@ -305,6 +306,7 @@ public class DefaultOutputFunction extends AbstractFunction
    */
   public void itemsFinished(final ReportEvent event)
   {
+    DebugLog.log("ItemFinished: " + outputHandlers);
     clearPendingPageStart(event);
 
     setCurrentEvent(event);
@@ -321,6 +323,30 @@ public class DefaultOutputFunction extends AbstractFunction
     catch (Exception e)
     {
       throw new InvalidReportStateException("ItemsFinished failed", e);
+    }
+    finally
+    {
+      clearCurrentEvent();
+    }
+  }
+
+  public void groupBodyFinished(final ReportEvent event)
+  {
+    clearPendingPageStart(event);
+
+    setCurrentEvent(event);
+    try
+    {
+      final GroupOutputHandler handler = outputHandlers.peek();
+      handler.groupBodyFinished(this, event);
+    }
+    catch (InvalidReportStateException fe)
+    {
+      throw fe;
+    }
+    catch (Exception e)
+    {
+      throw new InvalidReportStateException("GroupBody failed", e);
     }
     finally
     {

@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.base;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
+import org.pentaho.reporting.engine.classic.core.dom.MatcherContext;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
@@ -119,7 +120,7 @@ public class PageableRenderer extends AbstractRenderer
 
     pageCount += 1;
     logger.info ("Printing a page: " + pageCount);
-    if (pageCount == -1)
+    if (pageCount == -7 || pageCount == -6 )
     {
       // leave the debug-code in until all of these cases are solved.
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
@@ -139,7 +140,7 @@ public class PageableRenderer extends AbstractRenderer
     final long nextOffset = pageBreak.getLastPosition();
     final long pageOffset = pageBox.getPageOffset();
 
-    DebugLog.log ("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    logger.info ("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
 
     if (performOutput)
     {

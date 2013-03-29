@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
@@ -59,4 +60,6 @@ public interface OutputFunction extends Function
   public void restart(final ReportState state) throws ReportProcessingException;
 
   public boolean createRollbackInformation();
+
+  public void groupBodyFinished (ReportEvent event);
 }

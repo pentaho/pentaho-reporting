@@ -224,7 +224,7 @@ public final class PaginationStepLib
                                                  final long shift,
                                                  final PaginationTableState paginationTableState)
   {
-    DebugLog.log("Testing whether box is inside restricted area: " + box.getName());
+    logger.debug("Testing whether box is inside restricted area: " + box.getName());
     RenderBox parent = box.getParent();
     while (parent != null)
     {
@@ -247,15 +247,15 @@ public final class PaginationStepLib
           {
             // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
             // for all its direct childs. Nothing we can do now, ignore the constraints.
-            DebugLog.log("Inside restricted area: " + box.getName() + " -> " + parent.getName());
-            DebugLog.log("                      : Parent on page-offset -> " + parent);
+            logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+            logger.debug("                      : Parent on page-offset -> " + parent);
             return true;
           }
 
           if (paginationTableState.isOnPageStart(parent.getY() + shift))
           {
-            DebugLog.log("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
-            DebugLog.log("                      : Parent on table-offset -> " + parent);
+            logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
+            logger.debug("                      : Parent on table-offset -> " + parent);
             return true;
           }
         }

@@ -709,6 +709,11 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
     }
   }
 
+  public void groupBodyFinished(final ReportEvent event)
+  {
+
+  }
+
   public void restart(final ReportState state)
   {
 

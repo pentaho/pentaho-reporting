@@ -414,12 +414,12 @@ public abstract class AbstractRenderer implements Renderer
     canvasMajorAxisLayoutStep.compute(pageBox); // VISUAL
     revalidateAllAxisLayoutStep.compute(pageBox); // VISUAL
 
-    applyCachedValuesStep.compute(pageBox); // STRUCT
-
     if (preparePagination(pageBox) == false)
     {
       return LayoutResult.LAYOUT_UNVALIDATABLE;
     }
+
+    applyCachedValuesStep.compute(pageBox); // STRUCT
 
     if (isPageFinished())
     {
@@ -477,7 +477,7 @@ public abstract class AbstractRenderer implements Renderer
     setPagebreaks(0);
     if (validateModelStep.isLayoutable(pageBox) == false)
     {
-      DebugLog.log("Not layoutable");
+      logger.debug("Not layoutable");
       return false;
     }
 
@@ -509,12 +509,12 @@ public abstract class AbstractRenderer implements Renderer
       canvasMajorAxisLayoutStep.compute(pageBox);
       revalidateAllAxisLayoutStep.compute(pageBox);
 
-      applyCachedValuesStep.compute(pageBox);
-
       if (preparePagination(pageBox) == false)
       {
         return (pagebreaks > 0);
       }
+
+      applyCachedValuesStep.compute(pageBox);
 
       repeat = performPagination(handler, performOutput);
     }

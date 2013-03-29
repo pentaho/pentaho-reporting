@@ -9,6 +9,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PassThroughWidowOrphanContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContextPool;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Computes break positions that prevent Orphan and Widow elements, according to the definitions on
@@ -72,6 +73,7 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 
   protected boolean startBox(final RenderBox box)
   {
+    box.setInvalidWidowOrphanNode(false);
     box.setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.UNRESTRICTED);
     box.setWidowBox(false);
 

@@ -30,6 +30,8 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  */
 public final class FinishedRenderNode extends RenderNode
 {
+  private long layoutedX;
+  private long layoutedY;
   private long layoutedWidth;
   private long layoutedHeight;
   private long marginsTop;
@@ -38,17 +40,21 @@ public final class FinishedRenderNode extends RenderNode
   private ReportStateKey stateKey;
   private final boolean orphan;
 
-  public FinishedRenderNode(final long layoutedWidth,
+  public FinishedRenderNode(final long layoutedX,
+                            final long layoutedY,
+                            final long layoutedWidth,
                             final long layoutedHeight,
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
                             final boolean orphan)
   {
-    this(layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, orphan, null);
+    this(layoutedX, layoutedY, layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, orphan, null);
   }
 
-  public FinishedRenderNode(final long layoutedWidth,
+  public FinishedRenderNode(final long layoutedX,
+                            final long layoutedY,
+                            final long layoutedWidth,
                             final long layoutedHeight,
                             final long marginsTop,
                             final long marginsBottom,
@@ -68,6 +74,9 @@ public final class FinishedRenderNode extends RenderNode
 
     this.stateKey = stateKey;
     this.breakAfter = breakAfter;
+    this.layoutedX = layoutedX;
+    this.layoutedY = layoutedY;
+    this.layoutedWidth = layoutedWidth;
     this.layoutedWidth = layoutedWidth;
     this.layoutedHeight = layoutedHeight;
     this.marginsBottom = marginsBottom;
@@ -77,6 +86,10 @@ public final class FinishedRenderNode extends RenderNode
     setFinishedTable(true);
     setMinimumChunkWidth(layoutedWidth);
     setMaximumBoxWidth(layoutedWidth);
+    setX(layoutedX);
+    setY(layoutedY);
+    setWidth(layoutedWidth);
+    setHeight(layoutedHeight);
   }
 
   public int getNodeType()
@@ -132,4 +145,10 @@ public final class FinishedRenderNode extends RenderNode
   {
     return orphan;
   }
+
+  public long getLayoutedY()
+  {
+    return layoutedY;
+  }
+
 }

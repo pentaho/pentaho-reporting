@@ -17,21 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.states.process;
 
-import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
-/**
- * Creation-Date: 03.07.2007, 13:57:49
- *
- * @author Thomas Morgner
- */
-public class EndGroupHandler implements AdvanceHandler
+public class EndCrosstabOtherBodyHandler implements AdvanceHandler
 {
-  public static final AdvanceHandler HANDLER = new EndGroupHandler();
+  public static final AdvanceHandler HANDLER = new EndCrosstabOtherBodyHandler();
 
-  public EndGroupHandler()
+  public EndCrosstabOtherBodyHandler()
   {
   }
 
@@ -40,22 +33,18 @@ public class EndGroupHandler implements AdvanceHandler
     final ProcessState next = state.deriveForAdvance();
     next.leavePresentationGroup();
     next.fireReportEvent();
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
-    return InlineSubreportProcessor.processInline(next, group.getFooter());
+    return next;
   }
 
   public ProcessState commit(final ProcessState next) throws ReportProcessingException
   {
-    next.setAdvanceHandler(JoinEndGroupHandler.HANDLER);
-
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
-    final RootLevelBand rootLevelBand = group.getFooter();
-    return InlineSubreportProcessor.process(next, rootLevelBand);
+    next.setAdvanceHandler(EndCrosstabOtherAxisHandler.HANDLER);
+    return next;
   }
 
   public int getEventCode()
   {
-    return ReportEvent.GROUP_FINISHED;
+    return ReportEvent.GROUP_BODY_FINISHED | ReportEvent.CROSSTABBING_OTHER;
   }
 
   public boolean isFinish()

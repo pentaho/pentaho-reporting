@@ -131,6 +131,11 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
       crosstabLayout.setCrosstabHeaderOpen(false);
     }
+  }
+
+  public void groupBodyFinished(final DefaultOutputFunction outputFunction,
+                                final ReportEvent event) throws ReportProcessingException
+  {
 
   }
 

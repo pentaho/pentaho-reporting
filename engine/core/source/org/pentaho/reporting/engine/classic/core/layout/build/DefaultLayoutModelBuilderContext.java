@@ -240,4 +240,13 @@ public class DefaultLayoutModelBuilderContext implements LayoutModelBuilderConte
   {
 
   }
+
+  public int getDepth()
+  {
+    if (parent == null)
+    {
+      return 1;
+    }
+    return 1 + parent.getDepth();
+  }
 }

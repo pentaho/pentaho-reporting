@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
+import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
@@ -56,11 +57,23 @@ public class CrosstabOutputHandler implements GroupOutputHandler
     renderer.startGroupBody(groupBody, event.getState().getPredictedStateCount());
   }
 
-  public void groupFinished(final DefaultOutputFunction outputFunction,
-                            final ReportEvent event) throws ReportProcessingException
+  public void groupBodyFinished(final DefaultOutputFunction outputFunction,
+                                final ReportEvent event) throws ReportProcessingException
   {
     CrosstabOutputHelper.closeCrosstabTable(outputFunction);
 
+    final int gidx = event.getState().getCurrentGroupIndex();
+    final RelationalGroup g = (RelationalGroup) event.getReport().getGroup(gidx);
+    final Band b = g.getFooter();
+
+    final Renderer renderer = outputFunction.getRenderer();
+    outputFunction.updateFooterArea(event);
+    renderer.endGroupBody();
+  }
+
+  public void groupFinished(final DefaultOutputFunction outputFunction,
+                            final ReportEvent event) throws ReportProcessingException
+  {
     final int gidx = event.getState().getCurrentGroupIndex();
     final CrosstabGroup g = (CrosstabGroup) event.getReport().getGroup(gidx);
     final Band b = g.getFooter();
@@ -68,7 +81,6 @@ public class CrosstabOutputHandler implements GroupOutputHandler
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea(event);
 
-    renderer.endGroupBody();
     renderer.startSection(Renderer.SectionType.NORMALFLOW);
     renderer.add(b, outputFunction.getRuntime());
     outputFunction.addSubReportMarkers(renderer.endSection());

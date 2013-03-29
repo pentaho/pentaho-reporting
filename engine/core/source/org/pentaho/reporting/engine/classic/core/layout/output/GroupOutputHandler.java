@@ -37,6 +37,9 @@ public interface GroupOutputHandler
   public void groupFinished(final DefaultOutputFunction outputFunction,
                             ReportEvent event) throws ReportProcessingException;
 
+  public void groupBodyFinished(final DefaultOutputFunction outputFunction,
+                            ReportEvent event) throws ReportProcessingException;
+
   public void summaryRowStart(DefaultOutputFunction outputFunction, ReportEvent event) throws ReportProcessingException;
   public void summaryRowEnd(DefaultOutputFunction outputFunction, ReportEvent event) throws ReportProcessingException;
   public void summaryRow(DefaultOutputFunction outputFunction, ReportEvent event) throws ReportProcessingException;

@@ -1,5 +1,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -8,6 +10,7 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class BlockWidowOrphanContext implements WidowOrphanContext
 {
+  private static final Log logger = LogFactory.getLog(BlockWidowOrphanContext.class);
   private StackedObjectPool<BlockWidowOrphanContext> pool;
   private WidowOrphanContext parent;
   private RenderBox contextBox;
@@ -38,8 +41,8 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     this.contextBox = contextBox;
     this.widows = widows;
     this.orphans = orphans;
-    this.widowOverride = contextBox.getY() + contextBox.getHeight();
-    this.orphanOverride = contextBox.getY();
+    this.widowOverride = contextBox.getCachedY() + contextBox.getCachedHeight();
+    this.orphanOverride = contextBox.getCachedY();
     this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
     this.count = 0;
 
@@ -84,11 +87,11 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     {
       if (count < orphans && orphans > 0)
       {
-        final long y2 = box.getY() + box.getHeight();
+        final long y2 = box.getCachedY() + box.getCachedHeight();
         orphanSize.add(y2);
         if (debug)
         {
-          DebugLog.log("Orphan size added (DIRECT): " + y2 + " -> " + box);
+          logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
         }
         count += 1;
         box.setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.LEAF);
@@ -99,7 +102,7 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
         widowSize.add(box);
         if (debug)
         {
-          DebugLog.log("Widow size added (DIRECT): " + box.getY() + " -> " + box);
+          logger.debug("Widow size added (DIRECT): " + box.getCachedY() + " -> " + box);
         }
       }
 
@@ -116,11 +119,11 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
   {
     if (count < orphans && orphans > 0)
     {
-      final long y2 = box.getY() + box.getHeight();
+      final long y2 = box.getCachedY() + box.getCachedHeight();
       orphanSize.add(y2);
       if (debug)
       {
-        DebugLog.log("Orphan size added (DIRECT): " + y2 + " -> " + box);
+        logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
       }
       box.getParent().setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.RESTRICTED);
       count += 1;
@@ -131,7 +134,7 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
       widowSize.add(box);
       if (debug)
       {
-        DebugLog.log("Widow size added (DIRECT): " + box.getY() + " -> " + box);
+        logger.debug("Widow size added (DIRECT): " + box.getCachedY() + " -> " + box);
       }
     }
 
@@ -167,24 +170,21 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     {
       return widowOverride;
     }
-    return Math.min(widowOverride, firstValue.getY());
+    return Math.min(widowOverride, firstValue.getCachedY());
   }
 
   public WidowOrphanContext commit(final RenderBox box)
   {
-    box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getY()));
-    box.setWidowConstraintSize((box.getY() + box.getHeight()) - getWidowValue());
+    box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getCachedY()));
+    box.setWidowConstraintSize((box.getCachedY() + box.getCachedHeight()) - getWidowValue());
 
     final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
-    if (incomplete && count < orphans)
+    if (incomplete)
     {
-      // the box is either open or has an open sub-report and the orphan constraint is not fulfilled.
-      box.setInvalidWidowOrphanNode(true);
-    }
-    else if (box.getStaticBoxLayoutProperties().isAvoidPagebreakInside())
-    {
-      if (incomplete)
+      if (count < orphans ||
+          box.getStaticBoxLayoutProperties().isAvoidPagebreakInside())
       {
+        // the box is either open or has an open sub-report and the orphan constraint is not fulfilled.
         box.setInvalidWidowOrphanNode(true);
       }
       else
@@ -212,8 +212,8 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
 
     if (debug)
     {
-      DebugLog.log("Final Orphan Size: " + box.getOrphanConstraintSize());
-      DebugLog.log("Final Widow Size: " + box.getWidowConstraintSize());
+      logger.debug("Final Orphan Size: " + box.getOrphanConstraintSize());
+      logger.debug("Final Widow Size: " + box.getWidowConstraintSize());
     }
     if (parent != null)
     {
@@ -226,13 +226,13 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
   public void subContextCommitted(final RenderBox contextBox)
   {
     // if there is overlap between the child context and the current lock-out area, process it.
-    if (contextBox.getY() <= getOrphanValue())
+    if (contextBox.getCachedY() <= getOrphanValue())
     {
-      orphanOverride = Math.max(orphanOverride, contextBox.getY() + contextBox.getOrphanConstraintSize());
+      orphanOverride = Math.max(orphanOverride, contextBox.getCachedY() + contextBox.getOrphanConstraintSize());
     }
 
     final long widowLimit = getWidowValue();
-    final long contextY2 = contextBox.getY() + contextBox.getHeight();
+    final long contextY2 = contextBox.getCachedY() + contextBox.getCachedHeight();
     if (contextY2 >= widowLimit)
     {
       final long absConstraint = contextY2 - contextBox.getWidowConstraintSize();

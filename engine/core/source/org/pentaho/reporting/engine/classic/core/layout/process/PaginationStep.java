@@ -78,6 +78,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     this.visualState = null;
     this.pageOffsetKey = pageBox.getPageOffset();
     this.shiftState = new InitialPaginationShiftState();
+    this.breakPending = false;
 
     try
     {
@@ -160,6 +161,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (isWidowConstraintViolated(box, shiftState))
     {
       // break-pending flag treats that next manual break eval as mandatory and forces a break.
+      logger.info("BreakPending True for forced Widow Constrain Violation: " + box);
       breakPending = true;
       if (handleManualBreakOnBox(box, shiftState))
       {
@@ -273,7 +275,11 @@ public final class PaginationStep extends IterateVisualProcessStep
     node.setY(node.getY() + shift);
     if (breakPending == false && node.isBreakAfter())
     {
-      breakPending = (true);
+      breakPending = breakPending || paginationTableState.isOnPageStart(node.getY()) == false;
+      if (breakPending)
+      {
+        logger.info("BreakPending True for Node:isBreakAfter: " + node);
+      }
     }
   }
 
@@ -283,7 +289,11 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     if (breakPending == false && box.isBreakAfter())
     {
-      breakPending = (true);
+      breakPending = breakPending || paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
+      if (breakPending)
+      {
+        logger.info("BreakPending True for Box:isBreakAfter: " + box);
+      }
     }
 
     shiftState = shiftState.pop();

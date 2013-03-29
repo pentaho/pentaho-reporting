@@ -68,15 +68,15 @@ public class JoinEndCrosstabRowAxisHandler implements AdvanceHandler
       // reach an non-advance state where inner group-footers are printed.
       if (parentGroup instanceof CrosstabRowGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabRowAxisHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabRowBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabOtherGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabOtherAxisHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabOtherBodyHandler.HANDLER);
       }
       else
       {
@@ -95,15 +95,15 @@ public class JoinEndCrosstabRowAxisHandler implements AdvanceHandler
       // continue with an other EndGroup-State ...
       if (parentGroup instanceof CrosstabRowGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabRowAxisHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabRowBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabOtherGroup)
       {
-        next.setPostSummaryRowAdvanceHandler(EndCrosstabOtherAxisHandler.HANDLER);
+        next.setPostSummaryRowAdvanceHandler(EndCrosstabOtherBodyHandler.HANDLER);
       }
       else
       {

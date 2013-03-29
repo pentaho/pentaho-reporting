@@ -86,6 +86,13 @@ public class ReportEvent extends EventObject
   public static final int SUMMARY_ROW_START = 0x1800;
   public static final int SUMMARY_ROW_END = 0x2800;
 
+  /**
+   * This is a layout-helper event. It is only passed down to layouter functions.
+   * This event is fired before a group-finished event is fired and helps the layouter to close the group-body
+   * so that keep-together and widows can compute their state properly.
+   */
+  public static final int GROUP_BODY_FINISHED = 0x8000;
+
   private static final int RESERVED_BLOCK_1 = 0xC000;
 
   /**
@@ -272,6 +279,10 @@ public class ReportEvent extends EventObject
     if ((code & ITEMS_FINISHED) == ITEMS_FINISHED)
     {
       b.append("Items-Finished");
+    }
+    if ((code & GROUP_BODY_FINISHED) == GROUP_BODY_FINISHED)
+    {
+      b.append("Group-Body-Finished");
     }
     if ((code & GROUP_FINISHED) == GROUP_FINISHED)
     {
