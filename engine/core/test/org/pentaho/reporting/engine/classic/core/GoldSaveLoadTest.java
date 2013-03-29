@@ -23,6 +23,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
@@ -68,6 +69,7 @@ public class GoldSaveLoadTest extends GoldTestBase
   @Test
   public void testParallelExecutionIsSafe() throws Exception
   {
+    final boolean[] error = { false };
     final ExecutorService threadPool = new ThreadPoolExecutor(3, 3,
                                   0L, TimeUnit.MILLISECONDS,
                                   new LinkedBlockingQueue<Runnable>(),
@@ -84,8 +86,7 @@ public class GoldSaveLoadTest extends GoldTestBase
         catch (Exception e)
         {
           e.printStackTrace();
-          System.exit(1);
-
+          error[0] = true;
         }
       }
     });
@@ -94,6 +95,8 @@ public class GoldSaveLoadTest extends GoldTestBase
     {
       threadPool.awaitTermination(5, TimeUnit.MINUTES);
     }
+
+    assertFalse(error[0]);
 
   }
 }
