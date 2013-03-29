@@ -39,7 +39,7 @@ public class ModelPrinter
   {
   }
 
-  public static RenderBox getRoot(RenderNode node)
+  public static RenderBox getRoot(final RenderNode node)
   {
     RenderBox parent = node.getParent();
     RenderBox retval = node.getParent();
@@ -60,7 +60,7 @@ public class ModelPrinter
   {
     while (box != null)
     {
-      final StringBuffer b = new StringBuffer();
+      final StringBuilder b = new StringBuilder();
 
       b.append(box.getClass().getName());
       b.append('[');
@@ -81,8 +81,6 @@ public class ModelPrinter
       b.append(box.getHeight());
       b.append(", min-chunk-width=");
       b.append(box.getMinimumChunkWidth());
-      b.append(", computed-width=");
-      b.append(box.getComputedWidth());
       b.append(", cached-x=");
       b.append(box.getCachedX());
       b.append(", cached-y=");
@@ -116,7 +114,7 @@ public class ModelPrinter
 
   public void printBox(final RenderBox box, final int level)
   {
-    StringBuffer b = new StringBuffer();
+    StringBuilder b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -135,7 +133,7 @@ public class ModelPrinter
     b.append('}');
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -154,7 +152,7 @@ public class ModelPrinter
     b.append(box.getY() + box.getHeight());
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -173,7 +171,7 @@ public class ModelPrinter
     b.append(box.getContentAreaX2());
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -189,10 +187,16 @@ public class ModelPrinter
     b.append(", keep-together=");
     b.append(box.getStaticBoxLayoutProperties().isAvoidPagebreakInside());
     b.append(", widow-orphan-opt-out=");
-    b.append(box.isValidForWidowOrphanCount());
+    b.append(box.getStaticBoxLayoutProperties().isWidowOrphanOptOut());
+    b.append(", widows-box=");
+    b.append(box.isWidowBox());
+    b.append(", orphan-restrict-finish=");
+    b.append(box.getRestrictFinishedClearout());
+    b.append(", invalid-widow-orphan-node=");
+    b.append(box.isInvalidWidowOrphanNode());
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -200,7 +204,8 @@ public class ModelPrinter
     b.append("- boxDefinition=");
     b.append(box.getBoxDefinition());
     print(b.toString());
-    b = new StringBuffer();
+
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -208,7 +213,8 @@ public class ModelPrinter
     b.append("- nodeLayoutProperties=");
     b.append(box.getNodeLayoutProperties());
     print(b.toString());
-    b = new StringBuffer();
+
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -217,7 +223,7 @@ public class ModelPrinter
     b.append(box.getStaticBoxLayoutProperties());
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -227,7 +233,7 @@ public class ModelPrinter
     if (box instanceof LogicalPageBox)
     {
       final LogicalPageBox pageBox = (LogicalPageBox) box;
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -243,7 +249,7 @@ public class ModelPrinter
       b.append('}');
       print(b.toString());
 
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -257,7 +263,7 @@ public class ModelPrinter
     if (box instanceof TableSectionRenderBox)
     {
       final TableSectionRenderBox pageBox = (TableSectionRenderBox) box;
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -270,7 +276,7 @@ public class ModelPrinter
     if (box instanceof TableCellRenderBox)
     {
       final TableCellRenderBox pageBox = (TableCellRenderBox) box;
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -286,7 +292,7 @@ public class ModelPrinter
 
     if (box.isOpen())
     {
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -297,7 +303,7 @@ public class ModelPrinter
 
     if (box.isFinishedTable() || box.isFinishedPaginate())
     {
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -315,7 +321,7 @@ public class ModelPrinter
     }
     if (box.isCommited())
     {
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -324,7 +330,7 @@ public class ModelPrinter
       print(b.toString());
     }
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -383,7 +389,7 @@ public class ModelPrinter
 
   private void printNode(final RenderNode node, final int level)
   {
-    StringBuffer b = new StringBuffer();
+    StringBuilder b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -394,7 +400,7 @@ public class ModelPrinter
     b.append(']');
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -413,7 +419,7 @@ public class ModelPrinter
     b.append(node.getY() + node.getHeight());
     print(b.toString());
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
@@ -434,6 +440,8 @@ public class ModelPrinter
       b.append(fn.getLayoutedWidth());
       b.append(", layouted-height=");
       b.append(fn.getLayoutedHeight());
+      b.append(", orphan-leaf=");
+      b.append(fn.isOrphanLeaf());
     }
     b.append('}');
     print(b.toString());
@@ -441,7 +449,7 @@ public class ModelPrinter
     if (node instanceof RenderableText)
     {
       final RenderableText text = (RenderableText) node;
-      b = new StringBuffer();
+      b = new StringBuilder();
       for (int i = 0; i < level; i++)
       {
         b.append("   ");
@@ -452,7 +460,7 @@ public class ModelPrinter
       print(b.toString());
     }
 
-    b = new StringBuffer();
+    b = new StringBuilder();
     for (int i = 0; i < level; i++)
     {
       b.append("   ");
