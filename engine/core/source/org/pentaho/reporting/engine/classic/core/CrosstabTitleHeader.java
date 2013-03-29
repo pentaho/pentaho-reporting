@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabTitleHeaderType;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
@@ -120,7 +121,7 @@ public class CrosstabTitleHeader extends Band implements RootLevelBand
 
   public ElementStyleSheet getDefaultStyleSheet()
   {
-    return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
+    return BandDefaultStyleSheet.getBandDefaultStyle();
   }
 
 }
