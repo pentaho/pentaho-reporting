@@ -63,7 +63,7 @@ public class CrosstabOutputHandler implements GroupOutputHandler
     CrosstabOutputHelper.closeCrosstabTable(outputFunction);
 
     final int gidx = event.getState().getCurrentGroupIndex();
-    final RelationalGroup g = (RelationalGroup) event.getReport().getGroup(gidx);
+    final CrosstabGroup g = (CrosstabGroup) event.getReport().getGroup(gidx);
     final Band b = g.getFooter();
 
     final Renderer renderer = outputFunction.getRenderer();

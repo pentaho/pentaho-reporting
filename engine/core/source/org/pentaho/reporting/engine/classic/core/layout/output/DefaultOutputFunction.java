@@ -626,6 +626,10 @@ public class DefaultOutputFunction extends AbstractFunction
   protected void updateHeaderArea(final ReportState givenState)
       throws ReportProcessingException
   {
+    if (getRenderer().getPageCount() == 2)
+    {
+      DebugLog.logHere();
+    }
     ReportState state = givenState;
     while (state != null && state.isInlineProcess())
     {

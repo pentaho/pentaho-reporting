@@ -38,7 +38,6 @@ public class EndGroupHandler implements AdvanceHandler
   public ProcessState advance(final ProcessState state) throws ReportProcessingException
   {
     final ProcessState next = state.deriveForAdvance();
-    next.leavePresentationGroup();
     next.fireReportEvent();
     final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
     return InlineSubreportProcessor.processInline(next, group.getFooter());
