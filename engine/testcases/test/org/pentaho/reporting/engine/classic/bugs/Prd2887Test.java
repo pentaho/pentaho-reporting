@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
@@ -89,7 +90,7 @@ public class Prd2887Test extends TestCase
 //    final SheetLayout layout = tlb.getLayout();
   }
 
-  public void testRun() throws ResourceException
+  public void testRun() throws ResourceException, ReportProcessingException
   {
     final URL url = getClass().getResource("Prd-2887.prpt");
     assertNotNull(url);
