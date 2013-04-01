@@ -1074,4 +1074,9 @@ public abstract class RenderNode implements Cloneable
   {
     return false;
   }
+
+  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
+  {
+    return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
+  }
 }

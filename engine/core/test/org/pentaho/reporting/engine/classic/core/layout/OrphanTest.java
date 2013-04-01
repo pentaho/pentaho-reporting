@@ -15,12 +15,13 @@ import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class OrphanTest extends TestCase
@@ -34,7 +35,7 @@ public class OrphanTest extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReport() throws ReportProcessingException, IOException
+  public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
   {
     final TypedTableModel model = new TypedTableModel();
     model.addColumn("g0", String.class);
@@ -73,7 +74,9 @@ public class OrphanTest extends TestCase
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
 
-    PdfReportUtil.createPDF(report, "/tmp/OrphanTest.pdf");
+//    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-0.prpt");
+    DebugReportRunner.createPDF(report);
+//    PdfReportUtil.createPDF(report, "/tmp/OrphanTest.pdf");
   }
 
   public void testInvalidReport() throws Exception
@@ -120,7 +123,9 @@ public class OrphanTest extends TestCase
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 200);
     group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
 
-    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
+//    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-1.prpt");
+    DebugReportRunner.createPDF(report);
+//    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
 
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 1));
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 2));
@@ -171,7 +176,9 @@ public class OrphanTest extends TestCase
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 200);
     group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
 
-    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
+//    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
+//    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-2.prpt");
+    DebugReportRunner.createPDF(report);
 
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 4));
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 5));

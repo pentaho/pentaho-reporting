@@ -1,14 +1,11 @@
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.io.IOException;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
@@ -16,9 +13,6 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -163,6 +157,7 @@ public class KeepTogetherTest extends TestCase
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
     group0.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
 
+    DebugReportRunner.createPDF(report);
 //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Keep-Together-1.prpt");
   }
 

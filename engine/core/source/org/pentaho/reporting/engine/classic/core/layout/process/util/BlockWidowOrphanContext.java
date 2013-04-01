@@ -6,7 +6,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.util.RingBuffer;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class BlockWidowOrphanContext implements WidowOrphanContext
 {
@@ -94,7 +93,10 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
           logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
         }
         count += 1;
-        box.setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.LEAF);
+        if (markWidowBoxes)
+        {
+          box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
+        }
       }
 
       if (widows > 0)
@@ -125,7 +127,10 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
       {
         logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
       }
-      box.getParent().setRestrictFinishedClearout(RenderBox.RestrictFinishClearOut.RESTRICTED);
+      if (markWidowBoxes)
+      {
+        box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
+      }
       count += 1;
     }
 

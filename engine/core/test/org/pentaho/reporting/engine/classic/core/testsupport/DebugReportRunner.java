@@ -408,7 +408,7 @@ public class DebugReportRunner
    * @param report the report.
    * @return true or false.
    */
-  public static boolean createPDF(final MasterReport report)
+  public static boolean createPDF(final MasterReport report) throws ReportProcessingException
   {
     final OutputStream out = new NullOutputStream();
     try
@@ -426,7 +426,7 @@ public class DebugReportRunner
     catch (Exception e)
     {
       logger.error("Writing PDF failed.", e);
-      return false;
+      throw new ReportProcessingException("Failed to create PDF", e);
     }
   }
 

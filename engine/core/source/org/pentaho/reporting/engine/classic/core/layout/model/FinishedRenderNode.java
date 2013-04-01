@@ -146,6 +146,15 @@ public final class FinishedRenderNode extends RenderNode
     return orphan;
   }
 
+  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
+  {
+    if (orphan)
+    {
+      return RenderBox.RestrictFinishClearOut.LEAF;
+    }
+    return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
+  }
+
   public long getLayoutedY()
   {
     return layoutedY;

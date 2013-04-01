@@ -1514,12 +1514,12 @@ public abstract class RenderBox extends RenderNode
     setFlag(FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE, invalidWidowOrphanNode);
   }
 
-  public RestrictFinishClearOut getRestrictFinishedClearout()
+  public RestrictFinishClearOut getRestrictFinishedClearOut()
   {
     return restrictFinishClearOut;
   }
 
-  public void setRestrictFinishedClearout(final RestrictFinishClearOut restrictFinishedClearOut)
+  public void setRestrictFinishedClearOut(final RestrictFinishClearOut restrictFinishedClearOut)
   {
     if (this.restrictFinishClearOut == restrictFinishedClearOut)
     {
@@ -1530,7 +1530,7 @@ public abstract class RenderBox extends RenderNode
     final RenderBox parent = getParent();
     if (parent != null && restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED)
     {
-      parent.setRestrictFinishedClearout(RestrictFinishClearOut.RESTRICTED);
+      parent.setRestrictFinishedClearOut(RestrictFinishClearOut.RESTRICTED);
     }
   }
 

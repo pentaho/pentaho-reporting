@@ -53,7 +53,6 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 public class DefaultOutputFunction extends AbstractFunction
@@ -306,7 +305,6 @@ public class DefaultOutputFunction extends AbstractFunction
    */
   public void itemsFinished(final ReportEvent event)
   {
-    DebugLog.log("ItemFinished: " + outputHandlers);
     clearPendingPageStart(event);
 
     setCurrentEvent(event);
@@ -626,10 +624,6 @@ public class DefaultOutputFunction extends AbstractFunction
   protected void updateHeaderArea(final ReportState givenState)
       throws ReportProcessingException
   {
-    if (getRenderer().getPageCount() == 2)
-    {
-      DebugLog.logHere();
-    }
     ReportState state = givenState;
     while (state != null && state.isInlineProcess())
     {

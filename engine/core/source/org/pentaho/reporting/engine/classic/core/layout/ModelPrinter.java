@@ -192,7 +192,7 @@ public class ModelPrinter
     b.append(", widows-box=");
     b.append(box.isWidowBox());
     b.append(", orphan-restrict-finish=");
-    b.append(box.getRestrictFinishedClearout());
+    b.append(box.getRestrictFinishedClearOut());
     b.append(", invalid-widow-orphan-node=");
     b.append(box.isInvalidWidowOrphanNode());
     print(b.toString());

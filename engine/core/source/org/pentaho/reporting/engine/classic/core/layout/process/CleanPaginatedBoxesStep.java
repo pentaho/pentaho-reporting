@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
@@ -36,7 +35,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRend
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -231,7 +229,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       return true;
     }
 
-    if (box.getRestrictFinishedClearout() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
+    if (box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
     {
       // Next, search the last node that is fully invisible. We collapse all
       // invisible node into one big box for efficiency reasons. They wont be
@@ -296,6 +294,11 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     {
       return true;
     }
+    if (node.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
+    {
+      return true;
+    }
+
     if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
     {
       final RenderBox box = (RenderBox) node;
@@ -303,6 +306,10 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       if (child != null && child == box.getLastChild())
       {
         if (child.isOrphanLeaf())
+        {
+          return true;
+        }
+        if (child.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
         {
           return true;
         }

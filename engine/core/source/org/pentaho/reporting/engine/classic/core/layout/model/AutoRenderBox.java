@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class AutoRenderBox extends RenderBox
 {
@@ -126,12 +125,5 @@ public class AutoRenderBox extends RenderBox
     {
       extendHeightInBlockMode(child, heightOffset);
     }
-  }
-
-  public void markPinned(final long pinPosition)
-  {
-    if (pinPosition == 70000000)
-      DebugLog.logHere();
-    super.markPinned(pinPosition);
   }
 }
