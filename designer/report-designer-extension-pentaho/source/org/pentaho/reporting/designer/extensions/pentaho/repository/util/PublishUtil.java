@@ -30,7 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
-import org.pentaho.reporting.libraries.pensol.sugar.PublishRestUtil;
+import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -104,30 +104,12 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
-    final String[] pathElements = StringUtils.split(path, "/");
-    if (pathElements.length < 2)
-    {
-      throw new IOException("Path is invalid.");
-    }
-
-    final int lastElementIndex = pathElements.length - 1;
-
-    final String solution = pathElements[0];
-    final String filename = pathElements[lastElementIndex];
-    final StringBuilder contentPath = new StringBuilder();
-    for (int i = 1; i < lastElementIndex; i++)
-    {
-      contentPath.append('/');
-      contentPath.append(pathElements[i]);
-    }
-
-
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
     final String urlMessage = config.getConfigProperty
         ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
     final MessageFormat fmt = new MessageFormat(urlMessage);
-    final String fullpath = fmt.format(new Object[]{URLEncoder.encode(solution, "UTF-8"),
-        URLEncoder.encode(contentPath.toString(), "UTF-8"), URLEncoder.encode(filename, "UTF-8")});
+    final String urlPath = path.replace("/",":");
+    final String fullpath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
     final String url = baseUrl + fullpath;
     ExternalToolLauncher.openURL(url);
   }
