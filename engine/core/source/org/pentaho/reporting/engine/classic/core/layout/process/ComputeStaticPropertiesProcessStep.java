@@ -227,7 +227,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
     sblp.setDominantBaseline(-1);
     sblp.setOrphans(style.getIntStyleProperty(ElementStyleKeys.ORPHANS, 0));
-    // todo sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
+    sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
+
     final boolean orphanOptOut = style.getBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
     sblp.setWidowOrphanOptOut(orphanOptOut);
 

@@ -55,14 +55,17 @@ public class WidowTest extends TestCase
     group0.addField("g0");
     group0.getHeader().addElement(TableTestUtil.createDataItem("outer-header-field", 100, 20));
     group0.getFooter().addElement(TableTestUtil.createDataItem("outer-footer-field", 100, 20));
+    group0.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
+
     final RelationalGroup group1 = (RelationalGroup) report.getGroup(1);
     group1.setName("inner-group");
     group1.addField("g1");
     group1.getHeader().addElement(TableTestUtil.createDataItem("inner-header-field", 100, 20));
     group1.getFooter().addElement(TableTestUtil.createDataItem("inner-footer-field", 100, 20));
+    group1.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
+
     report.getItemBand().addElement(TableTestUtil.createDataItem("detail-field", 100, 20));
-    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
-    group1.getParentSection().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
+    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
 
     PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
   }
