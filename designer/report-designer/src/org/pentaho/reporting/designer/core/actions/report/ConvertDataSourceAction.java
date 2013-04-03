@@ -145,7 +145,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
       }
 
       final DataFactoryMetaData metadata =
-          DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+          dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);

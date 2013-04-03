@@ -58,7 +58,8 @@ public class MondrianMetaDataTest extends TestCase
     mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY);
 
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(BandedMDXDataFactory.class.getName());
+    final DataFactoryMetaData metaData = mondrianDataFactory.getMetaData();
+    
     final Object queryHash = metaData.getQueryHash(mondrianDataFactory, "default", new StaticDataRow());
     assertNotNull(queryHash);
 
@@ -105,7 +106,7 @@ public class MondrianMetaDataTest extends TestCase
     mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY);
     mondrianDataFactory.setQuery("default2", QUERY);
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(BandedMDXDataFactory.class.getName());
+    final DataFactoryMetaData metaData = mondrianDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(mondrianDataFactory, "default", new StaticDataRow());
     assertNotNull(fields);
     assertEquals(3, fields.length);

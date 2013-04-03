@@ -241,7 +241,7 @@ public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
       }
       else
       {
-        final DataFactoryMetaData data = DataFactoryRegistry.getInstance().getMetaData(dfac.getClass().getName());
+        final DataFactoryMetaData data = dfac.getMetaData();
 
         final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
         if (image != null)
@@ -275,7 +275,7 @@ public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
       }
       else
       {
-        final DataFactoryMetaData data = DataFactoryRegistry.getInstance().getMetaData(dfac.getClass().getName());
+        final DataFactoryMetaData data = dfac.getMetaData();
 
         final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
         if (image != null)

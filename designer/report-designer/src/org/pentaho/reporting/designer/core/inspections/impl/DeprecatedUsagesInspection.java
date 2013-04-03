@@ -191,7 +191,7 @@ public class DeprecatedUsagesInspection extends AbstractStructureInspection
     {
       return;
     }
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(key);
+    final DataFactoryMetaData metaData = dataFactory.getMetaData();
     if (metaData.isDeprecated())
     {
       final String message = metaData.getDeprecationMessage(Locale.getDefault());
