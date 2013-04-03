@@ -342,7 +342,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
     pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY);
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(PmdDataFactory.class.getName());
+    final DataFactoryMetaData metaData = pmdDataFactory.getMetaData();
     final Object queryHash = metaData.getQueryHash(pmdDataFactory, "default", new StaticDataRow());
     assertNotNull(queryHash);
 
@@ -438,7 +438,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY);
     pmdDataFactory.setQuery("default2", QUERY);
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(PmdDataFactory.class.getName());
+    final DataFactoryMetaData metaData = pmdDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(pmdDataFactory, "default", new StaticDataRow());
     assertNotNull(fields);
     assertEquals(2, fields.length);

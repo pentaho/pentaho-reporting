@@ -46,8 +46,7 @@ public class SqlDataFactoryJndiTest extends DataSourceTestBase
     drc.setConnectionPath("sampledata");
 
     final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory(drc);
-    final DataFactoryMetaData metaData =
-        DataFactoryRegistry.getInstance().getMetaData(SQLReportDataFactory.class.getName());
+    final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
     assertEquals("Name property set, so display name must be test",
         "sampledata", metaData.getDisplayConnectionName(sqlReportDataFactory));
     sqlReportDataFactory.setQuery("test", "SELECT * FROM TABLE");

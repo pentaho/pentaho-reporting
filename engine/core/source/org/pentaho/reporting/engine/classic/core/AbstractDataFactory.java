@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core;
 
 import java.util.Locale;
 
+import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -129,5 +131,10 @@ public abstract class AbstractDataFactory implements DataFactory, Cloneable
   public DataFactory derive()
   {
     return clone();
+  }
+  
+  public DataFactoryMetaData getMetaData()
+  {
+    return DataFactoryRegistry.getInstance().getMetaData(getClass().getName());
   }
 }
