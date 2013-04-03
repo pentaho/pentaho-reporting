@@ -49,8 +49,7 @@ public class SqlDataFactoryDriverTest extends DataSourceTestBase
     drc.setProperty("user", "sa");
     drc.setProperty("password", "");
     final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory(drc);
-    final DataFactoryMetaData metaData =
-        DataFactoryRegistry.getInstance().getMetaData(SQLReportDataFactory.class.getName());
+    final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
     assertNull("No name property set, so display-name must be null",
         metaData.getDisplayConnectionName(sqlReportDataFactory));
     drc.setProperty("::pentaho-reporting::name", "test");
@@ -100,8 +99,7 @@ public class SqlDataFactoryDriverTest extends DataSourceTestBase
     drc.setProperty("password", "");
     final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory(drc);
     initializeDataFactory(sqlReportDataFactory);
-    final DataFactoryMetaData metaData =
-        DataFactoryRegistry.getInstance().getMetaData(SQLReportDataFactory.class.getName());
+    final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
     sqlReportDataFactory.setQuery("test", "SELECT * FROM TABLE WHERE p=${x}");
     String[] fields = metaData.getReferencedFields(sqlReportDataFactory, "test", new StaticDataRow());
     assertNotNull(fields);

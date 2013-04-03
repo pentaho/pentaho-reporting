@@ -283,7 +283,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
           continue;
         }
 
-        final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(key);
+        final DataFactoryMetaData metaData = dataFactory.getMetaData();
         final String[] referencedFields = metaData.getReferencedFields(dataFactory, query, dataRow);
         if (referencedFields == null)
         {

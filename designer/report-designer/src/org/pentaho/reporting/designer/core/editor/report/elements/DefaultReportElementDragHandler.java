@@ -169,7 +169,7 @@ public class DefaultReportElementDragHandler implements ReportElementDragHandler
             final String key = dataFactory.getClass().getName();
             if (DataFactoryRegistry.getInstance().isRegistered(key))
             {
-              final DataFactoryMetaData data = DataFactoryRegistry.getInstance().getMetaData(key);
+              final DataFactoryMetaData data = dataFactory.getMetaData();
               if (data.isFormattingMetaDataSource())
               {
                 visualElement.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, Boolean.TRUE);
