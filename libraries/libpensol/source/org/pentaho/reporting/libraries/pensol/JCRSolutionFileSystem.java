@@ -1,4 +1,4 @@
-package org.pentaho.reporting.libraries.pensol.sugar;
+package org.pentaho.reporting.libraries.pensol;
 
 import java.util.Collection;
 
@@ -7,8 +7,6 @@ import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemOptions;
 import org.apache.commons.vfs.provider.AbstractFileSystem;
-import org.pentaho.reporting.libraries.pensol.PentahoSolutionFileProvider;
-import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 
 public class JCRSolutionFileSystem extends AbstractFileSystem
 {
