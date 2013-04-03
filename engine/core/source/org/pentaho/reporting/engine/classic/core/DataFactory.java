@@ -18,7 +18,10 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import java.io.Serializable;
+
 import javax.swing.table.TableModel;
+
+import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 
 /**
  * Creates a tablemodel on request. If the returned tablemodel is a {@link org.pentaho.reporting.engine.classic.core.util.CloseableTableModel}
@@ -100,4 +103,6 @@ public interface DataFactory extends Serializable, Cloneable
       throws ReportDataFactoryException;
 
   public Object clone();
+  
+  public DataFactoryMetaData getMetaData();
 }
