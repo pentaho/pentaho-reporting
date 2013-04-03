@@ -30,7 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
-import org.pentaho.reporting.libraries.pensol.sugar.PublishRestUtil;
+import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -43,9 +43,8 @@ public class PublishUtil
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
-   private static final String SLASH = "/";
-+  private static final String VIEWER = "/viewer";
-+  private static final String COLON_SEP = ":";
+  private static final String SLASH = "/";
+  private static final String COLON_SEP = ":";
 
   private PublishUtil()
   {
@@ -107,30 +106,15 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
-    final String[] pathElements = StringUtils.split(path, "/");
-    if (pathElements.length < 2)
-    {
-      throw new IOException("Path is invalid.");
-    }
-
-    final int lastElementIndex = pathElements.length - 1;
-
-    final String solution = pathElements[0];
-    final String filename = pathElements[lastElementIndex];
-    final StringBuilder contentPath = new StringBuilder();
-    for (int i = 1; i < lastElementIndex; i++)
-    {
-      contentPath.append('/');
-      contentPath.append(pathElements[i]);
-    }
-
-
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
     final String urlMessage = config.getConfigProperty
-        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");   
-+   final String fullpath = COLON_SEP+ solution.replaceAll(SLASH,COLON_SEP) +
-+        contentPath.toString().replaceAll(SLASH,COLON_SEP) + COLON_SEP + filename;
-+   final String url = (baseUrl + urlMessage + fullpath).replaceAll(" ","%20")+VIEWER;
+        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
+
+    final MessageFormat fmt = new MessageFormat(urlMessage);
+    final String urlPath = path.replace(SLASH,COLON_SEP);
+    final String fullRepoViewerPath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
+    final String url = baseUrl + fullRepoViewerPath;
+
     ExternalToolLauncher.openURL(url);
   }
 

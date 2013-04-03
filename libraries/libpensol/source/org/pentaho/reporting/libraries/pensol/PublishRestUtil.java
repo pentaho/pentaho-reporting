@@ -1,10 +1,6 @@
-package org.pentaho.reporting.libraries.pensol.sugar;
+package org.pentaho.reporting.libraries.pensol;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -16,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.WebResource.Builder;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
@@ -29,7 +24,7 @@ public class PublishRestUtil {
 
 	private static final Log logger = LogFactory.getLog(PublishRestUtil.class);
 	
-	public static final String REPO_FILES_IMPORT = "api/repo/files/import";
+	public static final String REPO_FILES_IMPORT = "api/repo/publish/publishfile";
 	public static final int HTTP_RESPONSE_OK = 200;
 
 	private String baseUrl;
@@ -71,17 +66,15 @@ public class PublishRestUtil {
 			throw new IOException("missing file path and/or data"); 
 		}
 		
-		String repositoryPath = null;
 		String fileName = null;
 		
 		int fileNameIdx = filePath.lastIndexOf("/");
 		if(fileNameIdx >= 0){
-			repositoryPath = filePath.substring(0, fileNameIdx);
 			fileName = filePath.substring(fileNameIdx + 1);
 		}
 		
 		try{
-			publishFile(repositoryPath, fileName, new ByteArrayInputStream(data), true);
+			publishFile(filePath, fileName, new ByteArrayInputStream(data), true);
 		}catch(Exception ex){
 			logger.error(ex);
 			throw new IOException(ex);
@@ -103,17 +96,15 @@ public class PublishRestUtil {
 		WebResource resource = client.resource(url);
 		try {
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.field("importDir", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
+			part.field("importPath", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("overwriteFile", String.valueOf(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field("overwriteAclPermissions", "true", MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field("applyAclPermissions", "true", MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field("retainOwnership", "true", MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field("charSet", "UTF-8");
 
 			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName(fileName).build());
 
-			ClientResponse response = resource.type(MediaType.MULTIPART_FORM_DATA).post(ClientResponse.class, part);
+      WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA).accept(MediaType.TEXT_PLAIN);
+			ClientResponse response =  builder.post(ClientResponse.class, part);
+
 
 			if(response != null){
 				String message = response.getEntity(String.class);

@@ -1,4 +1,4 @@
-package org.pentaho.reporting.libraries.pensol.sugar;
+package org.pentaho.reporting.libraries.pensol;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,8 +23,6 @@ import org.apache.commons.vfs.FileSystemException;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.FastStack;
-import org.pentaho.reporting.libraries.pensol.LibPensolBoot;
-import org.pentaho.reporting.libraries.pensol.SolutionFileModel;
 
 public class JCRSolutionFileModel implements SolutionFileModel
 {
