@@ -107,8 +107,7 @@ public class StaticDataSourceFactoryTest extends DataSourceTestBase
   public void testMetaData()
   {
     final NamedStaticDataFactory sqlReportDataFactory = new NamedStaticDataFactory();
-    final DataFactoryMetaData metaData =
-        DataFactoryRegistry.getInstance().getMetaData(NamedStaticDataFactory.class.getName());
+    final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
     sqlReportDataFactory.setQuery("test", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel");
 
     assertNotNull("QueryHash must exist",
@@ -131,8 +130,7 @@ public class StaticDataSourceFactoryTest extends DataSourceTestBase
   public void testParameterMetadata()
   {
     final NamedStaticDataFactory sqlReportDataFactory = new NamedStaticDataFactory();
-    final DataFactoryMetaData metaData =
-        DataFactoryRegistry.getInstance().getMetaData(NamedStaticDataFactory.class.getName());
+    final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
     sqlReportDataFactory.setQuery("test", StaticDataSourceFactoryTestSupport.class.getName() +
         "(parameter1,parameter2)#createParametrizedTableModel(parameter2,parameter1,parameter3)");
     final String[] fields = metaData.getReferencedFields(sqlReportDataFactory, "test", new StaticDataRow());

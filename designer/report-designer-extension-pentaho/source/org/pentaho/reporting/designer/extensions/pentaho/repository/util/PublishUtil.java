@@ -31,6 +31,7 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
 import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
+import org.pentaho.reporting.libraries.pensol.sugar.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -44,6 +45,7 @@ public class PublishUtil
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
   private static final String SLASH = "/";
+  private static final String VIEWER = "/viewer";
   private static final String COLON_SEP = ":";
 
   private PublishUtil()
@@ -115,6 +117,29 @@ public class PublishUtil
     final String fullRepoViewerPath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
     final String url = baseUrl + fullRepoViewerPath;
 
+    final String[] pathElements = StringUtils.split(path, "/");
+    if (pathElements.length < 2)
+    {
+      throw new IOException("Path is invalid.");
+    }
+
+    final int lastElementIndex = pathElements.length - 1;
+
+    final String solution = pathElements[0];
+    final String filename = pathElements[lastElementIndex];
+    final StringBuilder contentPath = new StringBuilder();
+    for (int i = 1; i < lastElementIndex; i++)
+    {
+      contentPath.append('/');
+      contentPath.append(pathElements[i]);
+    }
+
+    final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
+    final String urlMessage = config.getConfigProperty
+        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");   
+    final String fullpath = COLON_SEP+ solution.replaceAll(SLASH,COLON_SEP) +
+        contentPath.toString().replaceAll(SLASH,COLON_SEP) + COLON_SEP + filename;
+    final String url = (baseUrl + urlMessage + fullpath).replaceAll(" ","%20")+VIEWER;
     ExternalToolLauncher.openURL(url);
   }
 
@@ -152,6 +177,16 @@ public class PublishUtil
 	}else {
   
 
+	final String versionText = loginData.getOption(SERVER_VERSION);
+	final int version = ParserUtil.parseInt(versionText, SERVER_VERSION_SUGAR);  
+
+	if (SERVER_VERSION_SUGAR == version){
+		
+		new PublishRestUtil(loginData.getUrl(), loginData.getUsername(), loginData.getPassword()).publishFile(path, data, true);
+	     
+	}else {  
+	  
+	  
     final FileObject connection = createVFSConnection(loginData);
     final FileObject object = connection.resolveFile(path);
     final OutputStream out = object.getContent().getOutputStream(false);
