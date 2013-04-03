@@ -43,6 +43,9 @@ public class PublishUtil
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
+   private static final String SLASH = "/";
++  private static final String VIEWER = "/viewer";
++  private static final String COLON_SEP = ":";
 
   private PublishUtil()
   {
@@ -124,11 +127,10 @@ public class PublishUtil
 
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
     final String urlMessage = config.getConfigProperty
-        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
-    final MessageFormat fmt = new MessageFormat(urlMessage);
-    final String fullpath = fmt.format(new Object[]{URLEncoder.encode(solution, "UTF-8"),
-        URLEncoder.encode(contentPath.toString(), "UTF-8"), URLEncoder.encode(filename, "UTF-8")});
-    final String url = baseUrl + fullpath;
+        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");   
++   final String fullpath = COLON_SEP+ solution.replaceAll(SLASH,COLON_SEP) +
++        contentPath.toString().replaceAll(SLASH,COLON_SEP) + COLON_SEP + filename;
++   final String url = (baseUrl + urlMessage + fullpath).replaceAll(" ","%20")+VIEWER;
     ExternalToolLauncher.openURL(url);
   }
 
