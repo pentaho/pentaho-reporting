@@ -20,8 +20,9 @@
 		<!--  Compile dependency for the servlet -->        
         <dependency org="javax.servlet" name="servlet-api" rev="2.4" transitive="false" />
 
-      <!-- slf4j impl -->
-      <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" />
+        <!-- slf4j impl -->
+        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.4" />
+        <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
         <!--  runtime dependencies -->
         <dependency org="hsqldb" name="hsqldb" rev="${dependency.hsqldb.revision}" transitive="false"/>
