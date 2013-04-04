@@ -694,6 +694,10 @@ public abstract class RenderNode implements Cloneable
     return cachedY;
   }
 
+  public final long getCachedY2()
+  {
+    return cachedY + cachedHeight;
+  }
   /**
    * Defines the cached y position. This position is known after all layouting steps have been finished. In most cases
    * the layouter tries to reuse the cached values instead of recomputing everything from scratch on each iteration.

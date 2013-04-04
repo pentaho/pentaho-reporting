@@ -53,7 +53,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationS
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * The LayoutSystem is a simplified version of the LibLayout-rendering system.
@@ -205,7 +204,7 @@ public abstract class AbstractRenderer implements Renderer
   {
     this.paranoidChecks = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks"));
-    this.wrapProgressMarkerInSection= "true".equals(metaData.getConfiguration().getConfigProperty
+    this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
     staticPropertiesStep.initialize(metaData);
     canvasMinorAxisLayoutStep.initialize(metaData);
@@ -707,7 +706,14 @@ public abstract class AbstractRenderer implements Renderer
 
   public void print()
   {
-    ModelPrinter.INSTANCE.print(renderModelBuilder.getPageBox());
+    if (renderModelBuilder.getPageBox() == null)
+    {
+      logger.info("Printing impossible - Page-Box empty");
+    }
+    else
+    {
+      ModelPrinter.INSTANCE.print(renderModelBuilder.getPageBox());
+    }
   }
 
   public void newPageStarted()

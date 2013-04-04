@@ -49,7 +49,6 @@ public class WidowTest extends TestCase
     detailBody.addElement(createBand("ib3"));
 
     final Band insideGroup = new Band();
-    insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
     insideGroup.setLayout("block");
     insideGroup.setName("group-inside");
@@ -65,7 +64,6 @@ public class WidowTest extends TestCase
     detailBody2.addElement(createBand("ib3"));
 
     final Band insideGroup2 = new Band();
-    insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
     insideGroup2.setLayout("block");
     insideGroup2.setName("group-inside");
@@ -83,7 +81,6 @@ public class WidowTest extends TestCase
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     band.setLayout("block");
     band.setName("group-outside");
-    band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
     band.addElement(createBand("group-header-outside"));
     band.addElement(outsideBody);
@@ -93,13 +90,11 @@ public class WidowTest extends TestCase
     final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
     assertTrue(grOut instanceof RenderBox);
     final RenderBox grOutBox = (RenderBox) grOut;
-    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getWidowConstraintSize());
 
     final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
     assertTrue(grIn instanceof RenderBox);
     final RenderBox grInBox = (RenderBox) grIn;
-    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
 
     ModelPrinter.INSTANCE.print(logicalPageBox);

@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.base;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
-import org.pentaho.reporting.engine.classic.core.dom.MatcherContext;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
@@ -33,7 +32,8 @@ import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBo
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.WidowOrphanStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -41,7 +41,8 @@ public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
   private PaginationStep paginationStep;
-  private WidowOrphanStep widowOrphanStep;
+  private OrphanStep orphanStep;
+  private WidowStep widowStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
   private int pageCount;
@@ -55,7 +56,8 @@ public class PageableRenderer extends AbstractRenderer
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
     this.countBoxesStep = new CountBoxesStep();
-    this.widowOrphanStep = new WidowOrphanStep();
+    this.orphanStep = new OrphanStep();
+    this.widowStep = new WidowStep();
     initialize();
   }
 
@@ -77,8 +79,14 @@ public class PageableRenderer extends AbstractRenderer
 
   protected boolean preparePagination(final LogicalPageBox pageBox)
   {
-    if (widowOrphanStep.processWidowOrphanAnnotation(pageBox))
+    if (orphanStep.processOrphanAnnotation(pageBox))
     {
+      logger.info("Orphans unlayoutable.");
+      return false;
+    }
+    if (widowStep.processWidowAnnotation(pageBox))
+    {
+      logger.info("Widows unlayoutable.");
       return false;
     }
     return true;
@@ -92,7 +100,8 @@ public class PageableRenderer extends AbstractRenderer
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
-      print();
+      logger.info("Detected pagebreak : " + pageBreak.getLastVisibleState());
+//      print();
       setLastStateKey(pageBreak.getLastVisibleState());
       return true;
     }
@@ -108,7 +117,7 @@ public class PageableRenderer extends AbstractRenderer
 
     //    final long sizeBeforePagination = pageBox.getHeight();
     final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
-    widowOrphanStep.processWidowOrphanAnnotation(pageBox);
+    orphanStep.processOrphanAnnotation(pageBox);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBox.isOpen() && pageBreak.isOverflow() == false)
     {
@@ -121,7 +130,7 @@ public class PageableRenderer extends AbstractRenderer
 
     pageCount += 1;
     logger.info ("Printing a page: " + pageCount);
-    if (pageCount == 1 || pageCount == 2 )
+    if (pageCount == -7)
     {
       // leave the debug-code in until all of these cases are solved.
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
@@ -141,7 +150,7 @@ public class PageableRenderer extends AbstractRenderer
     final long nextOffset = pageBreak.getLastPosition();
     final long pageOffset = pageBox.getPageOffset();
 
-    logger.info ("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    logger.info("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
 
     if (performOutput)
     {

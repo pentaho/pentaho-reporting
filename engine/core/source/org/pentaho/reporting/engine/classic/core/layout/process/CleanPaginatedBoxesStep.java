@@ -47,12 +47,10 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   private long pageOffset;
   private long shiftOffset;
   private InstanceID shiftNode;
-  private CountWidowOrphanOptInBoxesStep counter;
   private PageBreakPositionList allVerticalBreaks;
 
   public CleanPaginatedBoxesStep()
   {
-    counter = new CountWidowOrphanOptInBoxesStep();
   }
 
   public long compute(final LogicalPageBox pageBox)
@@ -262,7 +260,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       // any kind of restricted element: We can only remove one element at a time and only if the
       // element is a orphan-leaf element. A orphan-leaf has no children that take part in the
       // widow/orphan constraint calculation and removing the leaf does not alter the result of the
-      // calculation of the WidowOrphanStep.
+      // calculation of the OrphanStep.
 
       final RenderNode firstNode = box.getFirstChild();
       RenderNode currentNode = firstNode;

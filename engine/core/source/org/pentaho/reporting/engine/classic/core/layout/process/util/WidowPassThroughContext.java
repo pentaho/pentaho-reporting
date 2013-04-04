@@ -3,21 +3,21 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class PassThroughWidowOrphanContext implements WidowOrphanContext
+public class WidowPassThroughContext implements WidowContext
 {
-  private StackedObjectPool<PassThroughWidowOrphanContext> pool;
-  private WidowOrphanContext parent;
+  private StackedObjectPool<WidowPassThroughContext> pool;
+  private WidowContext parent;
 
-  public PassThroughWidowOrphanContext()
+  public WidowPassThroughContext()
   {
   }
 
-  public WidowOrphanContext getParent()
+  public WidowContext getParent()
   {
     return parent;
   }
 
-  public void init(final StackedObjectPool<PassThroughWidowOrphanContext> pool, final WidowOrphanContext parent)
+  public void init(final StackedObjectPool<WidowPassThroughContext> pool, final WidowContext parent)
   {
     this.pool = pool;
     this.parent = parent;
@@ -39,22 +39,12 @@ public class PassThroughWidowOrphanContext implements WidowOrphanContext
     }
   }
 
-  public long getOrphanValue()
-  {
-    return 0;
-  }
-
-  public long getWidowValue()
-  {
-    return 0;
-  }
-
   public void registerFinishedNode(final FinishedRenderNode node)
   {
 
   }
 
-  public WidowOrphanContext commit(final RenderBox box)
+  public WidowContext commit(final RenderBox box)
   {
     return parent;
   }

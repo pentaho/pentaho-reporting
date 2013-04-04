@@ -193,7 +193,7 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
   protected void reportCachePerformance()
   {
     super.reportCachePerformance();
-    logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
+//    logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
   }
 
   protected boolean evaluateElement(final ReportElement e)
@@ -255,7 +255,7 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
     }
 
     super.reportDone(event);
-    logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
+//    logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
   }
 
 

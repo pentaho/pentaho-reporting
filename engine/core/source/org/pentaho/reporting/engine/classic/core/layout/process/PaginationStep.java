@@ -658,6 +658,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
       {
         logger.info("Automatic pagebreak, after orphan-opt-out: " + box);
+        logger.info("Automatic pagebreak                      : " + visualState);
         final long nextShift = nextMinorBreak - boxY;
         final long shiftDelta = nextShift - shift;
         box.setY(boxY + nextShift);

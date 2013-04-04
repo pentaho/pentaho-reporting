@@ -4,23 +4,29 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
+import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 
 @SuppressWarnings("HardCodedStringLiteral")
@@ -33,6 +39,71 @@ public class OrphanTest extends TestCase
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
+  }
+
+
+  public void testStandardLayout() throws ReportProcessingException, ContentProcessingException
+  {
+    final MasterReport report = new MasterReport();
+    report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+
+    final Band detailBody = new Band();
+    detailBody.setLayout("block");
+    detailBody.setName("detail-body-1");
+    detailBody.addElement(createBand("ib1"));
+    detailBody.addElement(createBand("ib2"));
+    detailBody.addElement(createBand("ib3"));
+
+    final Band insideGroup = new Band();
+    insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    insideGroup.setLayout("block");
+    insideGroup.setName("group-inside");
+    insideGroup.addElement(createBand("group-header-inside"));
+    insideGroup.addElement(detailBody);
+    insideGroup.addElement(createBand("group-footer-inside"));
+
+    final Band detailBody2 = new Band();
+    detailBody2.setLayout("block");
+    detailBody2.setName("detail-body-1");
+    detailBody2.addElement(createBand("ib1"));
+    detailBody2.addElement(createBand("ib2"));
+    detailBody2.addElement(createBand("ib3"));
+
+    final Band insideGroup2 = new Band();
+    insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    insideGroup2.setLayout("block");
+    insideGroup2.setName("group-inside");
+    insideGroup2.addElement(createBand("group-header-inside"));
+    insideGroup2.addElement(detailBody2);
+    insideGroup2.addElement(createBand("group-footer-inside"));
+
+    final Band outsideBody = new Band();
+    outsideBody.setLayout("block");
+    outsideBody.setName("group-body-outside");
+    outsideBody.addElement(insideGroup);
+    outsideBody.addElement(insideGroup2);
+
+    final ReportHeader band = report.getReportHeader();
+    band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
+    band.setLayout("block");
+    band.setName("group-outside");
+    band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    band.addElement(createBand("group-header-outside"));
+    band.addElement(outsideBody);
+    band.addElement(createBand("group-footer-outside"));
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
+    assertTrue(grOut instanceof RenderBox);
+    final RenderBox grOutBox = (RenderBox) grOut;
+    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getOrphanConstraintSize());
+
+    final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
+    assertTrue(grIn instanceof RenderBox);
+    final RenderBox grInBox = (RenderBox) grIn;
+    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
+
+    ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
@@ -220,5 +291,19 @@ public class OrphanTest extends TestCase
   {
     final RenderNode ib1 = MatchFactory.findElementByName(box, element);
     assertNotNull("Element '" + element + "' exists.", ib1);
+  }
+
+  private Band createBand(final String name)
+  {
+    return createBand(name, 20);
+  }
+
+  private Band createBand(final String name, final float height)
+  {
+    final Band ghO1 = new Band();
+    ghO1.setName(name);
+    ghO1.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, false);
+    ghO1.addElement(TableTestUtil.createDataItem(name, 100, height));
+    return ghO1;
   }
 }

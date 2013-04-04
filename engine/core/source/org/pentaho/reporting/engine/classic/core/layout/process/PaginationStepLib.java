@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A helper class that contains generic methods that would distract me from the actual pagination logic.
@@ -182,10 +181,13 @@ public final class PaginationStepLib
   public static long computeNonBreakableBoxHeight(final RenderBox box,
                                                   final PaginationShiftState shiftState)
   {
+    // must return the reserved space starting from box's y position.
+    final long widowSize = getWidowConstraint(box, shiftState);
+
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
     if (sblp.isAvoidPagebreakInside() && box.isPinned() == false)
     {
-      return box.getHeight();
+      return Math.max(widowSize, box.getHeight());
     }
 
     if (box.isPinned())
@@ -201,46 +203,47 @@ public final class PaginationStepLib
     {
       // inline boxes are never broken down (at least we avoid it as if the breakinside is set.
       // same for renderable replaced content
-      return box.getHeight();
+      return Math.max(widowSize, box.getHeight());
     }
 
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) != LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       // Canvas boxes have no notion of lines, and therefore they cannot have orphans and widows.
-      return 0;
+      return widowSize;
     }
 
     final long widowHeight = box.getWidowConstraintSize();
     final long orphanHeight = box.getOrphanConstraintSize();
-
     if (widowHeight + orphanHeight > box.getHeight())
     {
       // if the widows and orphan areas overlap, then the box becomes non-breakable.
-      return box.getHeight();
+      return Math.max(widowSize, box.getHeight());
     }
 
-    return Math.max(orphanHeight, getWidowConstraint(box, shiftState));
+    return Math.max(orphanHeight, widowSize);
   }
 
   private static long getWidowConstraint(final RenderBox box,
                                          final PaginationShiftState shiftState)
   {
+    final long boxY = box.getY() + shiftState.getShiftForNextChild();
+    long retval = 0;
     RenderBox parent = box.getParent();
     while (parent != null)
     {
       if (parent.getWidowConstraintSize() > 0)
       {
-        final long constraintBoundary = parent.getY() +
-            Math.min(parent.getHeight(), parent.getHeight() - parent.getWidowConstraintSize());
-        if (constraintBoundary == box.getY())
+        final long y2 = parent.getY() + parent.getHeight();
+        final long constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
+        if (constraintBoundary == boxY)
         {
-          return parent.getWidowConstraintSize();
+          retval = Math.max (retval, y2 - boxY);
         }
       }
 
       parent = parent.getParent();
     }
-    return 0;
+    return retval;
   }
 
   public static boolean isRestrictedKeepTogether(final RenderBox box,

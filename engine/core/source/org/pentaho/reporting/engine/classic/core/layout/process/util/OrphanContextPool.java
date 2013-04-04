@@ -4,66 +4,65 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 
-public class WidowOrphanContextPool
+public class OrphanContextPool
 {
-  private static class BlockContextPool extends StackedObjectPool<BlockWidowOrphanContext>
+  private static class BlockContextPool extends StackedObjectPool<OrphanBlockContext>
   {
     private BlockContextPool()
     {
     }
 
-    protected BlockWidowOrphanContext create()
+    protected OrphanBlockContext create()
     {
-      return new BlockWidowOrphanContext();
+      return new OrphanBlockContext();
     }
   }
 
-  private static class CanvasContextPool extends StackedObjectPool<CanvasWidowOrphanContext>
+  private static class CanvasContextPool extends StackedObjectPool<OrphanCanvasContext>
   {
     private CanvasContextPool()
     {
     }
 
-    protected CanvasWidowOrphanContext create()
+    protected OrphanCanvasContext create()
     {
-      return new CanvasWidowOrphanContext();
+      return new OrphanCanvasContext();
     }
   }
 
   private CanvasContextPool canvasContextPool;
   private BlockContextPool blockContextPool;
 
-  public WidowOrphanContextPool()
+  public OrphanContextPool()
   {
     canvasContextPool = new CanvasContextPool();
     blockContextPool = new BlockContextPool();
   }
 
-  public WidowOrphanContext create(final RenderBox box,
-                                   final WidowOrphanContext context)
+  public OrphanContext create(final RenderBox box,
+                                   final OrphanContext context)
   {
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
-      final int widows = properties.getWidows();
       final int orphans = properties.getOrphans();
-      final BlockWidowOrphanContext retval = blockContextPool.get();
-      retval.init(blockContextPool, context, box, widows, orphans);
+      final OrphanBlockContext retval = blockContextPool.get();
+      retval.init(blockContextPool, context, box, orphans);
       return retval;
     }
 
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
     {
       // todo: Make this a row-context later .. (Not needed for 3.9)
-      // return new CanvasWidowOrphanContext(context);
+      // return new WidowCanvasContext(context);
     }
 
-    final CanvasWidowOrphanContext retval = canvasContextPool.get();
+    final OrphanCanvasContext retval = canvasContextPool.get();
     retval.init(canvasContextPool, context);
     return retval;
   }
 
-  public void free (final WidowOrphanContext context)
+  public void free (final OrphanContext context)
   {
     context.clearForPooledReuse();
   }

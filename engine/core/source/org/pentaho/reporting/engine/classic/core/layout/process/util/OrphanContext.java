@@ -3,7 +3,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public interface WidowOrphanContext
+public interface OrphanContext
 {
   public void startChild(RenderBox box);
 
@@ -29,7 +29,7 @@ public interface WidowOrphanContext
    */
 //  public long getWidowValue();
 
-  public WidowOrphanContext commit(RenderBox box);
+  public OrphanContext commit(RenderBox box);
 
   public void subContextCommitted(RenderBox contextBox);
 

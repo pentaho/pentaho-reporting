@@ -3,16 +3,16 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class CanvasWidowOrphanContext implements WidowOrphanContext
+public class WidowCanvasContext implements WidowContext
 {
-  private StackedObjectPool<CanvasWidowOrphanContext> pool;
-  private WidowOrphanContext parent;
+  private StackedObjectPool<WidowCanvasContext> pool;
+  private WidowContext parent;
 
-  public CanvasWidowOrphanContext()
+  public WidowCanvasContext()
   {
   }
 
-  public void init(final StackedObjectPool<CanvasWidowOrphanContext> pool, final WidowOrphanContext parent)
+  public void init(final StackedObjectPool<WidowCanvasContext> pool, final WidowContext parent)
   {
     this.pool = pool;
     this.parent = parent;
@@ -33,7 +33,7 @@ public class CanvasWidowOrphanContext implements WidowOrphanContext
 
   }
 
-  public WidowOrphanContext commit(final RenderBox box)
+  public WidowContext commit(final RenderBox box)
   {
     return parent;
   }
@@ -41,16 +41,6 @@ public class CanvasWidowOrphanContext implements WidowOrphanContext
   public void subContextCommitted(final RenderBox contextBox)
   {
 
-  }
-
-  public long getOrphanValue()
-  {
-    return 0;
-  }
-
-  public long getWidowValue()
-  {
-    return 0;
   }
 
   public void clearForPooledReuse()

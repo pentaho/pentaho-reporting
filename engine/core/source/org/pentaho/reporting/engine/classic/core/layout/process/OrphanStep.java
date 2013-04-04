@@ -1,16 +1,14 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PassThroughWidowOrphanContext;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContext;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContextPool;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.OrphanContext;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.OrphanContextPool;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.OrphanPassThroughContext;
 
 /**
  * Computes break positions that prevent Orphan and Widow elements, according to the definitions on
@@ -44,20 +42,20 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
  * widow-orphan constraint with the fixed-position constrained yields undefined results. The widow and orphan constraint
  * is only active for paginated reports. It has no effect on flow or streaming report outputs.
  */
-public class WidowOrphanStep extends IterateSimpleStructureProcessStep
+public class OrphanStep extends IterateSimpleStructureProcessStep
 {
-  private WidowOrphanContext context;
-  private WidowOrphanContextPool contextPool;
-  private PassThroughWidowOrphanContext rootContext;
+  private OrphanContext context;
+  private OrphanContextPool contextPool;
+  private OrphanPassThroughContext rootContext;
   private boolean invalidNodeFound;
 
-  public WidowOrphanStep()
+  public OrphanStep()
   {
-    contextPool = new WidowOrphanContextPool();
-    rootContext = new PassThroughWidowOrphanContext();
+    contextPool = new OrphanContextPool();
+    rootContext = new OrphanPassThroughContext();
   }
 
-  public boolean processWidowOrphanAnnotation(final LogicalPageBox box)
+  public boolean processOrphanAnnotation(final LogicalPageBox box)
   {
     invalidNodeFound = false;
     context = rootContext;
@@ -76,7 +74,6 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
   {
     box.setInvalidWidowOrphanNode(false);
     box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.UNRESTRICTED);
-    box.setWidowBox(false);
 
     final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
     if (properties.isWidowOrphanOptOut() == false)
@@ -90,8 +87,6 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 
   protected void processOtherNode(final RenderNode node)
   {
-    node.setWidowBox(false);
-
     if (node instanceof FinishedRenderNode)
     {
       final FinishedRenderNode finNode = (FinishedRenderNode) node;
@@ -105,7 +100,7 @@ public class WidowOrphanStep extends IterateSimpleStructureProcessStep
 
   protected void finishBox(final RenderBox box)
   {
-    final WidowOrphanContext oldContext = context;
+    final OrphanContext oldContext = context;
     context = oldContext.commit(box);
     contextPool.free(oldContext);
 
