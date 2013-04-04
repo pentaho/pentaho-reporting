@@ -27,7 +27,7 @@ public interface WidowOrphanContext
    *
    * @return
    */
-  public long getWidowValue();
+//  public long getWidowValue();
 
   public WidowOrphanContext commit(RenderBox box);
 

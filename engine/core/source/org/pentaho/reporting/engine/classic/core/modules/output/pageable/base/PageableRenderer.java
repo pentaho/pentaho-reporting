@@ -92,6 +92,7 @@ public class PageableRenderer extends AbstractRenderer
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
+      print();
       setLastStateKey(pageBreak.getLastVisibleState());
       return true;
     }

@@ -1,5 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
@@ -9,6 +10,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PassThroughWidowOrphanContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.WidowOrphanContextPool;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Computes break positions that prevent Orphan and Widow elements, according to the definitions on

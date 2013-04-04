@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -178,7 +179,8 @@ public final class PaginationStepLib
    * @param box the box for which the height is computed
    * @return the height in micro-points.
    */
-  public static long computeNonBreakableBoxHeight(final RenderBox box)
+  public static long computeNonBreakableBoxHeight(final RenderBox box,
+                                                  final PaginationShiftState shiftState)
   {
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
     if (sblp.isAvoidPagebreakInside() && box.isPinned() == false)
@@ -217,7 +219,28 @@ public final class PaginationStepLib
       return box.getHeight();
     }
 
-    return orphanHeight;
+    return Math.max(orphanHeight, getWidowConstraint(box, shiftState));
+  }
+
+  private static long getWidowConstraint(final RenderBox box,
+                                         final PaginationShiftState shiftState)
+  {
+    RenderBox parent = box.getParent();
+    while (parent != null)
+    {
+      if (parent.getWidowConstraintSize() > 0)
+      {
+        final long constraintBoundary = parent.getY() +
+            Math.min(parent.getHeight(), parent.getHeight() - parent.getWidowConstraintSize());
+        if (constraintBoundary == box.getY())
+        {
+          return parent.getWidowConstraintSize();
+        }
+      }
+
+      parent = parent.getParent();
+    }
+    return 0;
   }
 
   public static boolean isRestrictedKeepTogether(final RenderBox box,

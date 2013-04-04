@@ -21,7 +21,6 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
   private RingBuffer<RenderNode> widowSize;
   private boolean debug;
   private long orphanOverride;
-  private long widowOverride;
 
   private RenderNode currentNode;
   private boolean markWidowBoxes;
@@ -41,7 +40,6 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     this.contextBox = contextBox;
     this.widows = widows;
     this.orphans = orphans;
-    this.widowOverride = contextBox.getCachedY() + contextBox.getCachedHeight();
     this.orphanOverride = contextBox.getCachedY();
     this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
     this.orphanCount = 0;
@@ -168,18 +166,19 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     return Math.max(orphanOverride, lastValue.longValue());
   }
 
-  public long getWidowValue()
+  private long getWidowValue()
   {
     if (widows == 0)
     {
-      return widowOverride;
+      return contextBox.getCachedY() + contextBox.getCachedHeight();
     }
     final RenderNode firstValue = widowSize.getFirstValue();
     if (firstValue == null)
     {
-      return widowOverride;
+      return contextBox.getCachedY() + contextBox.getCachedHeight();
     }
-    return Math.min(widowOverride, firstValue.getCachedY());
+
+    return firstValue.getCachedY();
   }
 
   public WidowOrphanContext commit(final RenderBox box)
@@ -247,7 +246,7 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
     {
       orphanOverride = Math.max(orphanOverride, contextBox.getCachedY() + contextBox.getOrphanConstraintSize());
     }
-
+/*
     final long widowLimit = getWidowValue();
     final long contextY2 = contextBox.getCachedY() + contextBox.getCachedHeight();
     if (contextY2 >= widowLimit)
@@ -255,7 +254,7 @@ public class BlockWidowOrphanContext implements WidowOrphanContext
       final long absConstraint = contextY2 - contextBox.getWidowConstraintSize();
       widowOverride = Math.min(widowOverride, absConstraint);
     }
-
+*/
     if (parent != null)
     {
       parent.subContextCommitted(contextBox);
