@@ -30,7 +30,7 @@
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-wizard-core" rev="${project.revision}" transitive="true" changing="true" />
 
     <!-- slf4j impl -->
-    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" />
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.4" />
 
 	</dependencies>
 </ivy-module>

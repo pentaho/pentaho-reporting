@@ -27,23 +27,23 @@
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-mondrian" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-olap4j" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-openerp" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-pmd" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
+        <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-pmd" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-reflection" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-scriptable" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-xpath" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-extensions-sampledata" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-legacy-functions" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
+        <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-legacy-functions" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-legacy-charts" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
 		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-pentaho" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
 		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-wizard" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
-    <dependency org="${ivy.artifact.group}"     name="report-designer-ext-toc" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
+        <dependency org="${ivy.artifact.group}"     name="report-designer-ext-toc" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
 
 		<!-- launcher -->
 		<dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}" transitive="true" changing="true" conf="runtime->default" />
 
-    <!-- slf4j impl requires at least log4j 1.2.12-->
-    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" />
-    <dependency org="log4j" name="log4j" rev="1.2.15"/>
+        <!-- slf4j impl requires at least log4j 1.2.12-->
+        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" />
+        <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
 		<!-- driver dependencies -->
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="drivers->default" />
