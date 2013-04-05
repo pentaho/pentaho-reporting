@@ -31,6 +31,7 @@
     <dependency org="${kettle.group}" name="kettle-core" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="${kettle.group}" name="kettle-db" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="${kettle.group}" name="kettle5-log4j-plugin" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
+    <dependency org="${pentaho.group}" name="metastore" rev="${dependency.metastore.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="joda-time" name="joda-time" rev="1.6" transitive="false" conf="default_external->default"/>
     <dependency org="commons-collections" name="commons-collections" rev="3.2" conf="default_external->default"/>
     <dependency org="commons-lang" name="commons-lang" rev="2.4" conf="default_external->default"/>
