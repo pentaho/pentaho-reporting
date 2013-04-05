@@ -76,10 +76,7 @@ public class WidowBlockContext implements WidowContext
           logger.debug("Widow size added (DIRECT): " + y2 + " -> " + box);
         }
         widowCount += 1;
-        if (markWidowBoxes)
-        {
-          box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
-        }
+        box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
       currentNode = null;
     }
@@ -100,10 +97,7 @@ public class WidowBlockContext implements WidowContext
         final long y2 = box.getCachedY2() - box.getCachedHeight();
         logger.debug("Widow size added (DIRECT): " + y2 + " -> " + box);
       }
-      if (markWidowBoxes)
-      {
-        box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
-      }
+      box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
       widowCount += 1;
     }
 

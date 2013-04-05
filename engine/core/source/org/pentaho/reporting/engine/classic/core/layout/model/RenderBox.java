@@ -99,6 +99,7 @@ public abstract class RenderBox extends RenderNode
    */
   private long widowConstraintSize;
   private RestrictFinishClearOut restrictFinishClearOut;
+  private int parentWidowContexts;
 
   protected RenderBox(final int majorAxis,
                       final int minorAxis,
@@ -162,7 +163,18 @@ public abstract class RenderBox extends RenderNode
     b.orphanConstraintSize = 0;
     b.widowConstraintSize = 0;
     b.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
+    b.parentWidowContexts = 0;
     return b;
+  }
+
+  public void setParentWidowContexts(final int parentWidowContexts)
+  {
+    this.parentWidowContexts = parentWidowContexts;
+  }
+
+  public int getParentWidowContexts()
+  {
+    return parentWidowContexts;
   }
 
   public int getDescendantCount()

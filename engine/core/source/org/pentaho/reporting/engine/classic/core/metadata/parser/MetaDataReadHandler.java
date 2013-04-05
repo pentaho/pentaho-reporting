@@ -74,7 +74,7 @@ public class MetaDataReadHandler extends AbstractXmlReadHandler
       {
         continue;
       }
-      System.out.println(href);
+
       try
       {
         final ResourceKey resourceKey = resourceManager.deriveKey(context, href);

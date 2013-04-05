@@ -126,6 +126,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     finally
     {
+      this.breakIndicatorEncountered = null;
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;
@@ -176,6 +177,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         logger.info("pending page-break or manual break: " + box);
         return true;
       }
+      breakPending = false;
     }
 
     // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
@@ -691,6 +693,16 @@ public final class PaginationStep extends IterateVisualProcessStep
       return false;
     }
 
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      BreakMarkerRenderBox bmrb = (BreakMarkerRenderBox) box;
+      if (bmrb.getValidityRange() > paginationTableState.getPageEnd())
+      {
+        // we ignore this one.
+        return false;
+      }
+    }
+
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long shift = boxContext.getShiftForNextChild();
     final RenderLength fixedPosition = box.getBoxDefinition().getFixedPosition();
@@ -767,7 +779,8 @@ public final class PaginationStep extends IterateVisualProcessStep
   {
     final long shift = boxContext.getShiftForNextChild();
     if (boxContext.isManualBreakSuspended() == false &&
-        breakIndicatorEncountered == null && box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+        breakIndicatorEncountered == null &&
+        box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
     {
       // pin the parent ...
       // This beast is overly optimistic, so we can only pin if the box is within range
@@ -776,8 +789,12 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         box.markPinned(pageEnd);
       }
-
-      breakIndicatorEncountered = (BreakMarkerRenderBox) box;
+      final BreakMarkerRenderBox breakMarkerRenderBox = (BreakMarkerRenderBox) box;
+      if (breakMarkerRenderBox.getValidityRange() <= paginationTableState.getPageEnd())
+      {
+        // only recognize a break, if that break is within our limits.
+        breakIndicatorEncountered = (BreakMarkerRenderBox) box;
+      }
     }
   }
 

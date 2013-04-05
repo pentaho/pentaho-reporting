@@ -81,12 +81,12 @@ public class PageableRenderer extends AbstractRenderer
   {
     if (orphanStep.processOrphanAnnotation(pageBox))
     {
-      logger.info("Orphans unlayoutable.");
+//      logger.info("Orphans unlayoutable.");
       return false;
     }
     if (widowStep.processWidowAnnotation(pageBox))
     {
-      logger.info("Widows unlayoutable.");
+//      logger.info("Widows unlayoutable.");
       return false;
     }
     return true;

@@ -76,10 +76,7 @@ public class OrphanBlockContext implements OrphanContext
           logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
         }
         orphanCount += 1;
-        if (markWidowBoxes)
-        {
-          box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
-        }
+        box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
       currentNode = null;
     }
@@ -100,10 +97,7 @@ public class OrphanBlockContext implements OrphanContext
       {
         logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
       }
-      if (markWidowBoxes)
-      {
-        box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
-      }
+      box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
       orphanCount += 1;
     }
 

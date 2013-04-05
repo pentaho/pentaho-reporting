@@ -195,7 +195,7 @@ public abstract class RenderNode implements Cloneable
   {
     return getNodeType();
   }
-  
+
   public int getMinorAxis()
   {
     return this.nodeLayoutProperties.getMinorAxis();
@@ -379,7 +379,7 @@ public abstract class RenderNode implements Cloneable
         }
       }
     }
-    // Object oldParent = this.parent;
+
     this.parentNode = parent;
   }
 
@@ -698,6 +698,7 @@ public abstract class RenderNode implements Cloneable
   {
     return cachedY + cachedHeight;
   }
+
   /**
    * Defines the cached y position. This position is known after all layouting steps have been finished. In most cases
    * the layouter tries to reuse the cached values instead of recomputing everything from scratch on each iteration.
@@ -942,7 +943,7 @@ public abstract class RenderNode implements Cloneable
 
   public boolean isVirtualNode()
   {
-    return isFlag (FLAG_VIRTUAL_NODE);
+    return isFlag(FLAG_VIRTUAL_NODE);
   }
 
   public void setVirtualNode(final boolean virtualNode)
@@ -950,7 +951,7 @@ public abstract class RenderNode implements Cloneable
     setFlag(FLAG_VIRTUAL_NODE, virtualNode);
   }
 
-  protected void setFlag (final int flag, final boolean value)
+  protected void setFlag(final int flag, final boolean value)
   {
     if (value)
     {
@@ -961,7 +962,8 @@ public abstract class RenderNode implements Cloneable
       flags = flags & (~flag);
     }
   }
-  protected boolean isFlag (final int flag)
+
+  protected boolean isFlag(final int flag)
   {
     return (flags & flag) != 0;
   }
@@ -1059,7 +1061,7 @@ public abstract class RenderNode implements Cloneable
     return minimumChunkWidth;
   }
 
-  public int getChildCount ()
+  public int getChildCount()
   {
     return 0;
   }
@@ -1074,7 +1076,7 @@ public abstract class RenderNode implements Cloneable
     setFlag(FLAG_WIDOW_BOX, widowBox);
   }
 
-  public boolean isOrphanLeaf ()
+  public boolean isOrphanLeaf()
   {
     return false;
   }

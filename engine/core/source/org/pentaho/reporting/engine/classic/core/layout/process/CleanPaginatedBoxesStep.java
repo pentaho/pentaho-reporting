@@ -87,7 +87,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startRowBox(final RenderBox box)
   {
-    return false;
+    return true;
   }
 
   protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
@@ -227,7 +227,8 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       return true;
     }
 
-    if (box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
+    final boolean safeForRemove = box.getParentWidowContexts() == 0 && (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
+    if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
     {
       // Next, search the last node that is fully invisible. We collapse all
       // invisible node into one big box for efficiency reasons. They wont be
@@ -475,7 +476,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     }
     return false;
   }
-
 
   protected boolean startInlineBox(final InlineRenderBox box)
   {

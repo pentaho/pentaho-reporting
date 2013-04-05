@@ -90,6 +90,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.chunkWidthUpdate = createChunkWidthUpdate(box);
 
     updateStaticProperties(box);
+    computeWidowOrphanIndicator(box);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
@@ -206,6 +207,27 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     computeMarginsAndBorders(box, boxDefinition, sblp);
     computeResolvedStyleProperties(box, sblp);
     computeBreakIndicator(box);
+  }
+
+  private void computeWidowOrphanIndicator(final RenderBox box)
+  {
+    final RenderBox parent = box.getParent();
+    if (parent == null)
+    {
+      box.setParentWidowContexts(0);
+      return;
+    }
+
+    final StaticBoxLayoutProperties sblp = parent.getStaticBoxLayoutProperties();
+    if (sblp.getOrphans() > 0 || sblp.getWidows() > 0)
+    {
+      box.setParentWidowContexts(parent.getParentWidowContexts() + 1);
+    }
+    else
+    {
+      box.setParentWidowContexts(parent.getParentWidowContexts());
+    }
+
   }
 
   private void computeResolvedStyleProperties(final RenderBox box, final StaticBoxLayoutProperties sblp)
