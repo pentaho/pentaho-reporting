@@ -102,7 +102,7 @@
     </category>
 
     <category name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor">
-        <priority value="TRACE"/>
+        <priority value="INFO"/>
     </category>
 
     <category name="org.pentaho.reporting.engine.classic.core.states.datarow">
