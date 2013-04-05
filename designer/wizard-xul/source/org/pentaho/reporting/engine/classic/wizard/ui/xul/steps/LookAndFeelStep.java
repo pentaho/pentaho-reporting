@@ -243,7 +243,6 @@ public class LookAndFeelStep extends AbstractWizardStep
   {
 
     final File homeDir = computeInstallationDirectory();
-    System.out.println(homeDir.getAbsolutePath());
     if (homeDir == null)
     {
       return;

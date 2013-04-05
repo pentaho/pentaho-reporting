@@ -126,7 +126,7 @@ public class MacOSXIntegration
 
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable
     {
-      System.out.println("Receiving event from Apple-System: " + method);
+      logger.info("Receiving event from Apple-System: " + method);
       if (isMatch("handleQuit", method, args))
       {
         if (handleAction(args[0], quitAction, "handleQuit"))
