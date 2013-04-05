@@ -105,9 +105,10 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
       return backend.getBoxDefinition(style);
     }
 
-    public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey)
+    public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey,
+                                                 final long range)
     {
-      return backend.createPageBreakIndicatorBox(stateKey);
+      return backend.createPageBreakIndicatorBox(stateKey, range);
     }
 
     public RenderableReplacedContentBox createReplacedContent(final ReportElement element,
@@ -199,7 +200,7 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
     slotCounter += 1;
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
     throw new UnsupportedOperationException("PageBreak sections cannot be started for page headers");
   }

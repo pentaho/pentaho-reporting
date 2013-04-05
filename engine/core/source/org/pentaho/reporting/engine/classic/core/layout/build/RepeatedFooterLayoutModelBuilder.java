@@ -93,7 +93,7 @@ public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper
     super.addProgressMarkerBox();
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
     throw new UnsupportedOperationException("PageBreak sections cannot be started for page headers");
   }

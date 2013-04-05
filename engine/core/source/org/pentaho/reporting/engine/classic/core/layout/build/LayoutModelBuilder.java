@@ -74,7 +74,7 @@ public interface LayoutModelBuilder extends Cloneable
 
   void addProgressMarkerBox();
 
-  void addManualPageBreakBox();
+  void addManualPageBreakBox(final long range);
 
   LayoutModelBuilder deriveForStorage(RenderBox clonedContent);
 

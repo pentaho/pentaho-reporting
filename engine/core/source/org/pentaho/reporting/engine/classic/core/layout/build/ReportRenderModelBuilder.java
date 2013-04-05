@@ -176,7 +176,11 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
 
   public void addPageBreak()
   {
-    normalFlow.addManualPageBreakBox();
+    if (getPageBox() == null)
+    {
+      throw new IllegalStateException();
+    }
+    normalFlow.addManualPageBreakBox(getPageBox().getPageEnd());
   }
 
   public void add(final ExpressionRuntime runtime,

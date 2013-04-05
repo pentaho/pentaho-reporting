@@ -138,7 +138,7 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
     slotCounter += 1;
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
     throw new UnsupportedOperationException("PageBreak sections cannot be started for page headers");
   }

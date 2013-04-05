@@ -32,14 +32,23 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public final class BreakMarkerRenderBox extends BlockRenderBox
 {
+  private long validityRange;
+
   public BreakMarkerRenderBox(final StyleSheet styleSheet,
                               final InstanceID instanceID,
                               final BoxDefinition boxDefinition,
                               final ElementType elementType,
                               final ReportAttributeMap attributeMap,
-                              final ReportStateKey stateKey)
+                              final ReportStateKey stateKey,
+                              final long validityRange)
   {
     super(styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey);
+    this.validityRange = validityRange;
+  }
+
+  public long getValidityRange()
+  {
+    return validityRange;
   }
 
   public boolean isIgnorableForRendering()

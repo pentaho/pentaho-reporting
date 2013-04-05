@@ -874,17 +874,12 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     this.context.setEmpty(false);
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
-    final RenderBox breakIndicatorBox = renderNodeFactory.createPageBreakIndicatorBox(stateKey);
+    final RenderBox breakIndicatorBox = renderNodeFactory.createPageBreakIndicatorBox(stateKey, range);
 
     this.context.addChild(breakIndicatorBox);
     this.context.setEmpty(false);
-
-    // todo
-    if (context.getRenderBox() instanceof BlockRenderBox)
-    {
-    }
   }
 
   public void setCollapseProgressMarker(final boolean collapseProgressMarker)

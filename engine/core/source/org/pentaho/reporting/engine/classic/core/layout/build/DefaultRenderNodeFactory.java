@@ -297,7 +297,8 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
     }
   }
 
-  public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey)
+  public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey,
+                                               final long range)
   {
     if (this.manualBreakBoxStyle == null)
     {
@@ -307,7 +308,7 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
 
     final RenderBox sectionBox = new BreakMarkerRenderBox
         (manualBreakBoxStyle, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-            ReportAttributeMap.EMPTY_MAP, stateKey);
+            ReportAttributeMap.EMPTY_MAP, stateKey, range);
     sectionBox.setName("pagebreak");
     sectionBox.close();
     return sectionBox;
