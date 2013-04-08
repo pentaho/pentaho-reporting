@@ -59,39 +59,19 @@ public class ModelPrinter
 
   public void printParents(RenderNode box)
   {
+    int level = 0;
     while (box != null)
     {
-      final StringBuilder b = new StringBuilder();
+      if (box instanceof RenderBox)
+      {
+        printBoxDetails((RenderBox) box, level);
+      }
+      else
+      {
+        printNode(box, level);
+      }
+      level += 1;
 
-      b.append(box.getClass().getName());
-      b.append('[');
-      b.append(box.getElementType().getClass().getName());
-      //b.append(Integer.toHexString(System.identityHashCode(box)));
-      b.append(';');
-      b.append(box.getName());
-      b.append(']');
-      b.append("={stateKey=");
-      b.append(box.getStateKey());
-      b.append(", x=");
-      b.append(box.getX());
-      b.append(", y=");
-      b.append(box.getY());
-      b.append(", width=");
-      b.append(box.getWidth());
-      b.append(", height=");
-      b.append(box.getHeight());
-      b.append(", min-chunk-width=");
-      b.append(box.getMinimumChunkWidth());
-      b.append(", cached-x=");
-      b.append(box.getCachedX());
-      b.append(", cached-y=");
-      b.append(box.getCachedY());
-      b.append(", cached-width=");
-      b.append(box.getCachedWidth());
-      b.append(", cached-height=");
-      b.append(box.getCachedHeight());
-      b.append('}');
-      print(b.toString());
       box = box.getParent();
     }
   }
@@ -114,6 +94,50 @@ public class ModelPrinter
   }
 
   public void printBox(final RenderBox box, final int level)
+  {
+    printBoxDetails(box, level);
+
+    final StringBuilder b = new StringBuilder();
+    for (int i = 0; i < level; i++)
+    {
+      b.append("   ");
+    }
+    print(b.toString());
+
+    if (box instanceof ParagraphRenderBox)
+    {
+      if (PRINT_LINEBOX_CONTENTS)
+      {
+        final ParagraphRenderBox paraBox = (ParagraphRenderBox) box;
+        print("----------------  START PARAGRAPH POOL CONTAINER -------------------------------------");
+        printBox(paraBox.getPool(), level + 1);
+        print("---------------- FINISH PARAGRAPH POOL CONTAINER -------------------------------------");
+
+        if (paraBox.isComplexParagraph())
+        {
+          print("----------------  START PARAGRAPH LINEBOX CONTAINER -------------------------------------");
+          printBox(paraBox.getLineboxContainer(), level + 1);
+          print("---------------- FINISH PARAGRAPH LINEBOX CONTAINER -------------------------------------");
+        }
+      }
+    }
+
+    if (false && box instanceof LogicalPageBox)
+    {
+      final LogicalPageBox lbox = (LogicalPageBox) box;
+      printBox(lbox.getHeaderArea(), level + 1);
+      printBox(lbox.getWatermarkArea(), level + 1);
+    }
+    printChilds(box, level);
+    if (false && box instanceof LogicalPageBox)
+    {
+      final LogicalPageBox lbox = (LogicalPageBox) box;
+      printBox(lbox.getRepeatFooterArea(), level + 1);
+      printBox(lbox.getFooterArea(), level + 1);
+    }
+  }
+
+  private void printBoxDetails(final RenderBox box, final int level)
   {
     StringBuilder b = new StringBuilder();
     for (int i = 0; i < level; i++)
@@ -301,6 +325,8 @@ public class ModelPrinter
       }
       b.append("- InstanceID=");
       b.append(pageBox.getInstanceId());
+      b.append(", validity-range=");
+      b.append(pageBox.getValidityRange());
       print(b.toString());
     }
 
@@ -343,45 +369,6 @@ public class ModelPrinter
       }
       b.append("- INFO: THIS BOX IS COMMITED");
       print(b.toString());
-    }
-
-    b = new StringBuilder();
-    for (int i = 0; i < level; i++)
-    {
-      b.append("   ");
-    }
-    print(b.toString());
-
-    if (box instanceof ParagraphRenderBox)
-    {
-      if (PRINT_LINEBOX_CONTENTS)
-      {
-        final ParagraphRenderBox paraBox = (ParagraphRenderBox) box;
-        print("----------------  START PARAGRAPH POOL CONTAINER -------------------------------------");
-        printBox(paraBox.getPool(), level + 1);
-        print("---------------- FINISH PARAGRAPH POOL CONTAINER -------------------------------------");
-
-        if (paraBox.isComplexParagraph())
-        {
-          print("----------------  START PARAGRAPH LINEBOX CONTAINER -------------------------------------");
-          printBox(paraBox.getLineboxContainer(), level + 1);
-          print("---------------- FINISH PARAGRAPH LINEBOX CONTAINER -------------------------------------");
-        }
-      }
-    }
-
-    if (false && box instanceof LogicalPageBox)
-    {
-      final LogicalPageBox lbox = (LogicalPageBox) box;
-      printBox(lbox.getHeaderArea(), level + 1);
-      printBox(lbox.getWatermarkArea(), level + 1);
-    }
-    printChilds(box, level);
-    if (false && box instanceof LogicalPageBox)
-    {
-      final LogicalPageBox lbox = (LogicalPageBox) box;
-      printBox(lbox.getRepeatFooterArea(), level + 1);
-      printBox(lbox.getFooterArea(), level + 1);
     }
   }
 

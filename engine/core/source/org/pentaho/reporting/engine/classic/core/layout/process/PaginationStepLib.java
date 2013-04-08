@@ -257,15 +257,7 @@ public final class PaginationStepLib
       if (parent.getOrphanConstraintSize() > 0)
       {
         final StaticBoxLayoutProperties staticBoxLayoutProperties = parent.getStaticBoxLayoutProperties();
-        final long restrictedAreaBounds;
-        if (staticBoxLayoutProperties.isAvoidPagebreakInside())
-        {
-          restrictedAreaBounds = parent.getCachedY() + parent.getCachedHeight();
-        }
-        else
-        {
-          restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
-        }
+        final long restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
 
         if (restrictedAreaBounds > box.getCachedY())
         {

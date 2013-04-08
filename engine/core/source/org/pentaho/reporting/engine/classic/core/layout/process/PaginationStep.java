@@ -118,7 +118,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
       PaginationStepLib.assertProgress(pageBox);
 
-      final long usedPageHeight = Math.min (pageBox.getHeight(), usablePageHeight);
+      final long usedPageHeight = Math.min(pageBox.getHeight(), usablePageHeight);
       final long masterBreak = basePageBreakList.getLastMasterBreak();
       final boolean overflow = breakIndicatorEncountered != null || usedPageHeight > masterBreak;
       final boolean nextPageContainsContent = (pageBox.getHeight() > masterBreak);
@@ -153,7 +153,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (box.isWidowBox())
     {
       unresolvedWidowReferenceEncountered = true;
-      usablePageHeight = Math.min (usablePageHeight, box.getY() + shift);
+      usablePageHeight = Math.min(usablePageHeight, box.getY() + shift);
     }
 
     if (unresolvedWidowReferenceEncountered)
@@ -695,8 +695,10 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
     {
-      BreakMarkerRenderBox bmrb = (BreakMarkerRenderBox) box;
-      if (bmrb.getValidityRange() > paginationTableState.getPageEnd())
+      final BreakMarkerRenderBox bmrb = (BreakMarkerRenderBox) box;
+      final long pageEndValidity =
+          paginationTableState.getBreakPositions().findNextMajorBreakPosition(bmrb.getValidityRange());
+      if (pageEndValidity > paginationTableState.getPageEnd())
       {
         // we ignore this one.
         return false;
@@ -790,7 +792,9 @@ public final class PaginationStep extends IterateVisualProcessStep
         box.markPinned(pageEnd);
       }
       final BreakMarkerRenderBox breakMarkerRenderBox = (BreakMarkerRenderBox) box;
-      if (breakMarkerRenderBox.getValidityRange() <= paginationTableState.getPageEnd())
+      final long pageEndValidity =
+          paginationTableState.getBreakPositions().findNextMajorBreakPosition(breakMarkerRenderBox.getValidityRange());
+      if (pageEndValidity <= paginationTableState.getPageEnd())
       {
         // only recognize a break, if that break is within our limits.
         breakIndicatorEncountered = (BreakMarkerRenderBox) box;

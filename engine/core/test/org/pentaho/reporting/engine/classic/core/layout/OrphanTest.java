@@ -12,6 +12,7 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
@@ -20,6 +21,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -64,7 +67,7 @@ public class OrphanTest extends TestCase
 
     final Band detailBody2 = new Band();
     detailBody2.setLayout("block");
-    detailBody2.setName("detail-body-1");
+    detailBody2.setName("detail-body-2");
     detailBody2.addElement(createBand("ib1"));
     detailBody2.addElement(createBand("ib2"));
     detailBody2.addElement(createBand("ib3"));
@@ -102,6 +105,73 @@ public class OrphanTest extends TestCase
     assertTrue(grIn instanceof RenderBox);
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
+
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+  }
+
+
+  public void testStandardLayoutKT() throws ReportProcessingException, ContentProcessingException
+  {
+    final MasterReport report = new MasterReport();
+    report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+
+    final Band detailBody = new Band();
+    detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
+    detailBody.setLayout("block");
+    detailBody.setName("detail-body-1");
+    detailBody.addElement(createBand("ib1"));
+    detailBody.addElement(createBand("ib2"));
+    detailBody.addElement(createBand("ib3"));
+
+    final Band insideGroup = new Band();
+    insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    insideGroup.setLayout("block");
+    insideGroup.setName("group-inside");
+    insideGroup.addElement(createBand("group-header-inside"));
+    insideGroup.addElement(detailBody);
+    insideGroup.addElement(createBand("group-footer-inside"));
+
+    final Band detailBody2 = new Band();
+    detailBody2.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
+    detailBody2.setLayout("block");
+    detailBody2.setName("detail-body-2");
+    detailBody2.addElement(createBand("ib1"));
+    detailBody2.addElement(createBand("ib2"));
+    detailBody2.addElement(createBand("ib3"));
+
+    final Band insideGroup2 = new Band();
+    insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    insideGroup2.setLayout("block");
+    insideGroup2.setName("group-inside");
+    insideGroup2.addElement(createBand("group-header-inside"));
+    insideGroup2.addElement(detailBody2);
+    insideGroup2.addElement(createBand("group-footer-inside"));
+
+    final Band outsideBody = new Band();
+    outsideBody.setLayout("block");
+    outsideBody.setName("group-body-outside");
+    outsideBody.addElement(insideGroup);
+    outsideBody.addElement(insideGroup2);
+
+    final ReportHeader band = report.getReportHeader();
+    band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
+    band.setLayout("block");
+    band.setName("group-outside");
+    band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    band.addElement(createBand("group-header-outside"));
+    band.addElement(outsideBody);
+    band.addElement(createBand("group-footer-outside"));
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
+    assertTrue(grOut instanceof RenderBox);
+    final RenderBox grOutBox = (RenderBox) grOut;
+    assertEquals(StrictGeomUtility.toInternalValue(100), grOutBox.getOrphanConstraintSize());
+
+    final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
+    assertTrue(grIn instanceof RenderBox);
+    final RenderBox grInBox = (RenderBox) grIn;
+    assertEquals(StrictGeomUtility.toInternalValue(80), grInBox.getOrphanConstraintSize());
 
     ModelPrinter.INSTANCE.print(logicalPageBox);
   }
@@ -150,6 +220,57 @@ public class OrphanTest extends TestCase
 //    PdfReportUtil.createPDF(report, "/tmp/OrphanTest.pdf");
   }
 
+  public void testSubReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
+  {
+    final TypedTableModel model = new TypedTableModel();
+    model.addColumn("g0", String.class);
+    model.addColumn("g1", String.class);
+    model.addColumn("value", String.class);
+    model.addRow("a", "1", "row-0");
+    model.addRow("a", "2", "row-1");
+    model.addRow("b", "1", "row-2");
+    model.addRow("b", "2", "row-3");
+    model.addRow("b", "2", "row-4");
+    model.addRow("b", "2", "row-5");
+    model.addRow("b", "3", "row-6");
+    model.addRow("a", "1", "row-7");
+    model.addRow("b", "1", "row-8");
+    model.addRow("b", "2", "row-9");
+
+    final SubReport report = new SubReport();
+    report.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 20f);
+    report.addGroup(new RelationalGroup());
+    report.setDataFactory(new TableDataFactory("query", model));
+    report.setQuery("query");
+
+    final RelationalGroup group0 = (RelationalGroup) report.getGroup(0);
+    group0.setName("outer-group");
+    group0.addField("g0");
+    group0.getHeader().addElement(createDataItem("outer-header-field", 100, 20));
+    group0.getFooter().addElement(createDataItem("outer-footer-field", 100, 20));
+    group0.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+    final RelationalGroup group1 = (RelationalGroup) report.getGroup(1);
+    group1.setName("inner-group");
+    group1.addField("g1");
+    group1.getHeader().addElement(createDataItem("inner-header-field", 100, 20));
+    group1.getFooter().addElement(createDataItem("inner-footer-field", 100, 20));
+    report.getItemBand().addElement(createDataItem("detail-field", 100, 20));
+    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+    group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+
+    final MasterReport master = new MasterReport();
+    master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+    master.getReportHeader().addElement(report);
+
+    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-3.prpt");
+    PdfReportUtil.createPDF(master, "/tmp/OrphanTest3.pdf");
+    DebugReportRunner.createPDF(master);
+  }
+
   public void testInvalidReport() throws Exception
   {
     final TypedTableModel model = new TypedTableModel();
@@ -196,10 +317,66 @@ public class OrphanTest extends TestCase
 
 //    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Orphan-1.prpt");
     DebugReportRunner.createPDF(report);
-//    PdfReportUtil.createPDF(report, "/tmp/OrphanTest2.pdf");
+//    PdfReportUtil.createPDF(report, "/tmp/OrphanTest1.pdf");
 
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 1));
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 2));
+  }
+
+
+  public void testInvalidSubReport() throws Exception
+  {
+    final TypedTableModel model = new TypedTableModel();
+    model.addColumn("g0", String.class);
+    model.addColumn("g1", String.class);
+    model.addColumn("value", String.class);
+    model.addRow("a", "1", "row-0");
+    model.addRow("a", "1", "row-1");
+    model.addRow("a", "1", "row-2");
+    model.addRow("a", "2", "row-3");
+    model.addRow("b", "1", "row-4");
+    model.addRow("b", "2", "row-5");
+    model.addRow("b", "2", "row-6");
+    model.addRow("b", "2", "row-7");
+    model.addRow("b", "3", "row-8");
+    model.addRow("b", "3", "row-9");
+    model.addRow("b", "3", "row-10");
+    model.addRow("b", "3", "row-11");
+    model.addRow("a", "1", "row-12");
+    model.addRow("b", "1", "row-13");
+    model.addRow("b", "2", "row-14");
+
+    final SubReport report = new SubReport();
+    report.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 20f);
+    report.addGroup(new RelationalGroup());
+    report.setDataFactory(new TableDataFactory("query", model));
+    report.setQuery("query");
+
+    final RelationalGroup group0 = (RelationalGroup) report.getGroup(0);
+    group0.setName("outer-group");
+    group0.addField("g0");
+    group0.getHeader().addElement(createDataItem("outer-header-field", 100, 20));
+    group0.getFooter().addElement(createDataItem("outer-footer-field", 100, 20));
+    group0.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+    final RelationalGroup group1 = (RelationalGroup) report.getGroup(1);
+    group1.setName("inner-group");
+    group1.addField("g1");
+    group1.getHeader().addElement(createDataItem("inner-header-field", 100, 20));
+    group1.getFooter().addElement(createDataItem("inner-footer-field", 100, 20));
+    report.getItemBand().addElement(createFieldItem("detail-field", 100, 20));
+    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 200);
+    group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+    final MasterReport master = new MasterReport();
+    master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+    master.getReportHeader().addElement(report);
+
+    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-4.prpt");
+    PdfReportUtil.createPDF(master, "/tmp/OrphanTest4.pdf");
+    DebugReportRunner.createPDF(master);
   }
 
   public void testInvalidReport2() throws Exception
@@ -253,6 +430,63 @@ public class OrphanTest extends TestCase
 
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 4));
 //    ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 5));
+  }
+
+
+  public void testInvalidSubReport2() throws Exception
+  {
+    final TypedTableModel model = new TypedTableModel();
+    model.addColumn("g0", String.class);
+    model.addColumn("g1", String.class);
+    model.addColumn("value", String.class);
+    model.addRow("a", "1", "row-0");
+    model.addRow("a", "1", "row-1");
+    model.addRow("a", "1", "row-2");
+    model.addRow("a", "2", "row-3");
+    model.addRow("b", "1", "row-4");
+    model.addRow("b", "2", "row-5");
+    model.addRow("b", "2", "row-6");
+    model.addRow("b", "2", "row-7");
+    model.addRow("b", "3", "row-8");
+    model.addRow("b", "3", "row-9");
+    model.addRow("b", "3", "row-10");
+    model.addRow("b", "3", "row-11");
+    model.addRow("b", "3", "row-12");
+    model.addRow("a", "1", "row-13");
+    model.addRow("b", "1", "row-14");
+    model.addRow("b", "2", "row-15");
+
+    final SubReport report = new SubReport();
+    report.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 20f);
+    report.addGroup(new RelationalGroup());
+    report.setDataFactory(new TableDataFactory("query", model));
+    report.setQuery("query");
+
+    final RelationalGroup group0 = (RelationalGroup) report.getGroup(0);
+    group0.setName("outer-group");
+    group0.addField("g0");
+    group0.getHeader().addElement(createDataItem("outer-header-field", 100, 20));
+    group0.getFooter().addElement(createDataItem("outer-footer-field", 100, 20));
+    group0.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+    final RelationalGroup group1 = (RelationalGroup) report.getGroup(1);
+    group1.setName("inner-group");
+    group1.addField("g1");
+    group1.getHeader().addElement(createDataItem("inner-header-field", 100, 20));
+    group1.getFooter().addElement(createDataItem("inner-footer-field", 100, 20));
+    report.getItemBand().addElement(createFieldItem("detail-field", 100, 20));
+    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 200);
+    group1.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
+
+    final MasterReport master = new MasterReport();
+    master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+    master.getReportHeader().addElement(report);
+
+//    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-5.prpt");
+    PdfReportUtil.createPDF(master, "/tmp/OrphanTest5.pdf");
+//    DebugReportRunner.createPDF(master);
   }
 
   public static Element createDataItem(final String text, final float width, final float height)

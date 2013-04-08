@@ -32,8 +32,8 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -113,7 +113,6 @@ public class PageableRenderer extends AbstractRenderer
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
       logger.info("Detected pagebreak : " + pageBreak.getLastVisibleState());
-//      print();
       setLastStateKey(pageBreak.getLastVisibleState());
       return true;
     }
@@ -141,8 +140,8 @@ public class PageableRenderer extends AbstractRenderer
     pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
     pageCount += 1;
-    logger.info ("Printing a page: " + pageCount);
-    if (pageCount == -7)
+    logger.info("Printing a page: " + pageCount);
+    if (pageCount == -2)
     {
       // leave the debug-code in until all of these cases are solved.
       DebugLog.log("1: **** Start Printing Page: " + pageCount);

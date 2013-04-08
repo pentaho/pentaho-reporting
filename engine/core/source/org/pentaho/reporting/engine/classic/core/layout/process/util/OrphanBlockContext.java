@@ -16,7 +16,6 @@ public class OrphanBlockContext implements OrphanContext
   private int orphans;
   private int orphanCount;
   private RingBuffer<Long> orphanSize;
-  private boolean debug;
   private long orphanOverride;
 
   private RenderNode currentNode;
@@ -71,10 +70,6 @@ public class OrphanBlockContext implements OrphanContext
       {
         final long y2 = box.getCachedY() + box.getCachedHeight();
         orphanSize.add(y2);
-        if (debug)
-        {
-          logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
-        }
         orphanCount += 1;
         box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
@@ -93,10 +88,6 @@ public class OrphanBlockContext implements OrphanContext
     {
       final long y2 = box.getCachedY() + box.getCachedHeight();
       orphanSize.add(y2);
-      if (debug)
-      {
-        logger.debug("Orphan size added (DIRECT): " + y2 + " -> " + box);
-      }
       box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
       orphanCount += 1;
     }
@@ -124,12 +115,22 @@ public class OrphanBlockContext implements OrphanContext
 
   public OrphanContext commit(final RenderBox box)
   {
-    box.setOrphanConstraintSize(Math.max(0, getOrphanValue() - box.getCachedY()));
+    final boolean keepTogether = box.getStaticBoxLayoutProperties().isAvoidPagebreakInside();
+    final long constraintSize;
+    if (keepTogether)
+    {
+      constraintSize = Math.max(getOrphanValue(), box.getCachedY() + box.getCachedHeight());
+    }
+    else
+    {
+      constraintSize = getOrphanValue();
+    }
+    box.setOrphanConstraintSize(Math.max(0, constraintSize - box.getCachedY()));
 
     final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
     if (incomplete)
     {
-      if (orphanCount < orphans || box.getStaticBoxLayoutProperties().isAvoidPagebreakInside())
+      if (orphanCount < orphans || keepTogether)
       {
         // the box is either open or has an open sub-report and the orphan constraint is not fulfilled.
         // also block if there is an overlap between the orphan range and the widow range.
@@ -146,10 +147,6 @@ public class OrphanBlockContext implements OrphanContext
       box.setInvalidWidowOrphanNode(false);
     }
 
-    if (debug)
-    {
-      logger.debug("Final Orphan Size: " + box.getOrphanConstraintSize());
-    }
     if (parent != null)
     {
       parent.subContextCommitted(box);
@@ -161,9 +158,12 @@ public class OrphanBlockContext implements OrphanContext
   public void subContextCommitted(final RenderBox contextBox)
   {
     // if there is overlap between the child context and the current lock-out area, process it.
-    if (contextBox.getCachedY() <= getOrphanValue())
+    // also process it if the overlap area is currently empty and the box's upper edges match.
+    final long cachedY = contextBox.getCachedY();
+    if (cachedY < getOrphanValue() ||
+        (cachedY == this.contextBox.getCachedY() && cachedY == getOrphanValue()))
     {
-      orphanOverride = Math.max(orphanOverride, contextBox.getCachedY() + contextBox.getOrphanConstraintSize());
+      orphanOverride = Math.max(orphanOverride, cachedY + contextBox.getOrphanConstraintSize());
     }
 
     if (parent != null)

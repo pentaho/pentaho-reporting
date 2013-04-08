@@ -16,7 +16,6 @@ public class WidowBlockContext implements WidowContext
   private int widows;
   private int widowCount;
   private RingBuffer<RenderNode> widowSize;
-  private boolean debug;
   private long widowOverride;
   private RenderNode currentNode;
   private boolean markWidowBoxes;
@@ -70,11 +69,6 @@ public class WidowBlockContext implements WidowContext
       if (widowCount < widows && widows > 0)
       {
         widowSize.add(box);
-        if (debug)
-        {
-          final long y2 = box.getCachedY2() - box.getCachedHeight();
-          logger.debug("Widow size added (DIRECT): " + y2 + " -> " + box);
-        }
         widowCount += 1;
         box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
@@ -92,11 +86,6 @@ public class WidowBlockContext implements WidowContext
     if (widowCount < widows && widows > 0)
     {
       widowSize.add(box);
-      if (debug)
-      {
-        final long y2 = box.getCachedY2() - box.getCachedHeight();
-        logger.debug("Widow size added (DIRECT): " + y2 + " -> " + box);
-      }
       box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
       widowCount += 1;
     }
@@ -168,11 +157,6 @@ public class WidowBlockContext implements WidowContext
       }
     }
 
-
-    if (debug)
-    {
-      logger.debug("Final Widow Size: " + box.getWidowConstraintSize());
-    }
     if (parent != null)
     {
       parent.subContextCommitted(box);
@@ -183,9 +167,11 @@ public class WidowBlockContext implements WidowContext
 
   public void subContextCommitted(final RenderBox contextBox)
   {
-    if (contextBox.getCachedY2() >= getWidowValue())
+    final long cachedY2 = contextBox.getCachedY2();
+    if (cachedY2 > getWidowValue() ||
+        (cachedY2 == this.contextBox.getCachedY2() && cachedY2 == getWidowValue()))
     {
-      widowOverride = Math.min(widowOverride, contextBox.getCachedY2() - contextBox.getWidowConstraintSize());
+      widowOverride = Math.min(widowOverride, cachedY2 - contextBox.getWidowConstraintSize());
     }
 
     if (parent != null)

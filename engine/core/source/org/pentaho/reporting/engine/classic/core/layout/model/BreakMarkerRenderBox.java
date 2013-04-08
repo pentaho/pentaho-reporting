@@ -46,6 +46,12 @@ public final class BreakMarkerRenderBox extends BlockRenderBox
     this.validityRange = validityRange;
   }
 
+  /**
+   * The page-offset of the page where this break-marker is valid. Note that the page-offset denotes the
+   * start of the page, not the end.
+   *
+   * @return the validity of this break marker.
+   */
   public long getValidityRange()
   {
     return validityRange;

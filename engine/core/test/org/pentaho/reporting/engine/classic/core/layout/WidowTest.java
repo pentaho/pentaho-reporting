@@ -10,6 +10,7 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -17,12 +18,15 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class WidowTest extends TestCase
@@ -100,7 +104,7 @@ public class WidowTest extends TestCase
     ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
-  public void testReport() throws ReportProcessingException, IOException
+  public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
   {
     final TypedTableModel model = new TypedTableModel();
     model.addColumn("g0", String.class);
@@ -140,7 +144,61 @@ public class WidowTest extends TestCase
     report.getItemBand().addElement(TableTestUtil.createDataItem("detail-field", 100, 20));
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
 
-    PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
+    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Widow-1.prpt");
+    //PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
+  }
+
+
+  public void testSubReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
+  {
+    final TypedTableModel model = new TypedTableModel();
+    model.addColumn("g0", String.class);
+    model.addColumn("g1", String.class);
+    model.addColumn("value", String.class);
+    model.addRow("a", "1", "row-0");
+    model.addRow("a", "2", "row-1");
+    model.addRow("b", "1", "row-2");
+    model.addRow("b", "2", "row-3");
+    model.addRow("b", "2", "row-4");
+    model.addRow("b", "2", "row-5");
+    model.addRow("b", "3", "row-6");
+    model.addRow("a", "1", "row-7");
+    model.addRow("b", "1", "row-8");
+    model.addRow("b", "2", "row-9");
+
+    final SubReport report = new SubReport();
+    report.addGroup(new RelationalGroup());
+    report.setDataFactory(new TableDataFactory("query", model));
+    report.setQuery("query");
+    report.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 200f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
+    report.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 20f);
+
+    final RelationalGroup group0 = (RelationalGroup) report.getGroup(0);
+    group0.setName("outer-group");
+    group0.addField("g0");
+    group0.getHeader().addElement(TableTestUtil.createDataItem("outer-header-field", 100, 20));
+    group0.getFooter().addElement(TableTestUtil.createDataItem("outer-footer-field", 100, 20));
+    group0.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
+
+    final RelationalGroup group1 = (RelationalGroup) report.getGroup(1);
+    group1.setName("inner-group");
+    group1.addField("g1");
+    group1.getHeader().addElement(TableTestUtil.createDataItem("inner-header-field", 100, 20));
+    group1.getFooter().addElement(TableTestUtil.createDataItem("inner-footer-field", 100, 20));
+    group1.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
+
+    report.getItemBand().addElement(TableTestUtil.createDataItem("detail-field", 100, 20));
+    report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
+
+
+    final MasterReport master = new MasterReport();
+    master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+    master.getReportHeader().addElement(report);
+
+    DebugReportRunner.createPDF(master);
+//    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Widow-2.prpt");
+//    PdfReportUtil.createPDF(master, "/tmp/WidowTest.pdf");
   }
 
   private Band createBand(final String name)

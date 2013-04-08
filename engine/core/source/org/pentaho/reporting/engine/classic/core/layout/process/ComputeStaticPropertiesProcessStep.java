@@ -236,7 +236,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     }
 
     final StaticBoxLayoutProperties sblp = parent.getStaticBoxLayoutProperties();
-    if (sblp.getOrphans() > 0 || sblp.getWidows() > 0)
+    if (sblp.getOrphans() > 0 || sblp.getWidows() > 0 || sblp.isAvoidPagebreakInside())
     {
       widowOrphanDefinitionsEncountered = true;
       box.setParentWidowContexts(parent.getParentWidowContexts() + 1);

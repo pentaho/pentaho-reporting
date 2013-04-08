@@ -135,7 +135,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="1" row-count="5">
+  <table col-count="1" row-count="6">
     <cols>
       <column width="500"/>
     </cols>
@@ -188,6 +188,9 @@
           <text x="0.0" y="80.0" width="25.0" height="10.0">row-5</text>
         </line>
       </cell>
+    </row>
+    <row height="20">
+      <empty-cell/>
     </row>
   </table>
   <table col-count="1" row-count="5">
