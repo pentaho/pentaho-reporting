@@ -180,6 +180,11 @@ public abstract class AbstractRenderer implements Renderer
     return outputProcessor;
   }
 
+  protected boolean isWidowOrphanDefinitionsEncountered()
+  {
+    return staticPropertiesStep.isWidowOrphanDefinitionsEncountered();
+  }
+
   public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
   {
     if (report == null)
@@ -194,19 +199,18 @@ public abstract class AbstractRenderer implements Renderer
 
     outputProcessor.processingStarted(report, processingContext);
 
-    initializeRendererOnStartReport();
-
+    initializeRendererOnStartReport(processingContext);
     renderModelBuilder.startReport(report, processingContext);
     markDirty();
   }
 
-  protected void initializeRendererOnStartReport()
+  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
   {
     this.paranoidChecks = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks"));
     this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
-    staticPropertiesStep.initialize(metaData);
+    staticPropertiesStep.initialize(metaData, processingContext);
     canvasMinorAxisLayoutStep.initialize(metaData);
     minorAxisLayoutStep.initialize(metaData);
     revalidateAllAxisLayoutStep.initialize(metaData);

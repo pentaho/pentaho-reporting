@@ -579,7 +579,7 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
           linesAxis.setTickLabelFont(getLineTickFont());
         }
         final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-        if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+        if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
         {
           if (getRangeMinimum() != 0)
           {
@@ -657,7 +657,7 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
   {
     super.reconfigureForCompatibility(versionTag);
 
-    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8, 99))
+    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8))
     {
       setLineAxisAutoRange(getLineRangeMinimum() == 0 && getLineRangeMaximum() == 1);
     }

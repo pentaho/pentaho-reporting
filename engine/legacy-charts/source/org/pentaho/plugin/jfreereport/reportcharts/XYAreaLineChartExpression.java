@@ -469,7 +469,7 @@ public class XYAreaLineChartExpression extends XYAreaChartExpression implements 
           linesAxis.setTickLabelFont(getLineTickFont());
         }
         final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-        if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+        if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
         {
           final double lineRangeMinimumVal = lineRangeMinimum == null ? 0 : lineRangeMinimum;
           final double lineRangeMaximumVal = lineRangeMaximum == null ? 0 : lineRangeMaximum;

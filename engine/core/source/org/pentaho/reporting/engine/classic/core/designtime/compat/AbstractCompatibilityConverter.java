@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.InternationalizedLoader;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -44,14 +43,13 @@ public abstract class AbstractCompatibilityConverter implements CompatibilityCon
     {
     }
 
-    public byte[] load (final String name, final Locale locale)
+    public byte[] load(final String name, final Locale locale)
     {
       return super.load(name, locale);
     }
 
     protected byte[] loadData(final String name)
     {
-      DebugLog.log("Try to load: " + name);
       final InputStream stream = ObjectUtilities.getResourceAsStream(name, getClass());
       if (stream == null)
       {
@@ -99,7 +97,7 @@ public abstract class AbstractCompatibilityConverter implements CompatibilityCon
         return "";
       }
 
-      return new String (bytes, "UTF-8");
+      return new String(bytes, "UTF-8");
     }
     catch (UnsupportedEncodingException e)
     {

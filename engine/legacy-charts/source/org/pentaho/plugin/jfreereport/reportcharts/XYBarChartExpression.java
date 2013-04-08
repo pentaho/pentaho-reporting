@@ -320,7 +320,7 @@ public class XYBarChartExpression extends XYChartExpression
 
       final ValueAxis rangeAxis = xypl.getRangeAxis();
       final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
       {
         if (getRangeMinimum() != 0)
         {

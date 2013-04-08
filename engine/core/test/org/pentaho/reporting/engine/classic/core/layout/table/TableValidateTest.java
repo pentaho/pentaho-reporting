@@ -89,7 +89,7 @@ public class TableValidateTest extends TestCase
     new ParagraphLineBreakStep().compute(pageBox);
     
     final ComputeStaticPropertiesProcessStep computeStaticPropertiesProcessStep = new ComputeStaticPropertiesProcessStep();
-    computeStaticPropertiesProcessStep.initialize(processingContext.getOutputProcessorMetaData());
+    computeStaticPropertiesProcessStep.initialize(processingContext.getOutputProcessorMetaData(), processingContext);
     computeStaticPropertiesProcessStep.compute(pageBox);
 
     //ModelPrinter.print(pageBox);

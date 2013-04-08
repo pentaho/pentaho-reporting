@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.base;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
@@ -48,6 +49,7 @@ public class PageableRenderer extends AbstractRenderer
   private int pageCount;
   private boolean pageStartPending;
   private CountBoxesStep countBoxesStep;
+  private boolean widowsEnabled;
 
   public PageableRenderer(final OutputProcessor outputProcessor)
   {
@@ -65,6 +67,7 @@ public class PageableRenderer extends AbstractRenderer
   {
     super.startReport(report, processingContext);
     pageCount = 0;
+    widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
   }
 
   protected void debugPrint(final LogicalPageBox pageBox)
@@ -79,6 +82,15 @@ public class PageableRenderer extends AbstractRenderer
 
   protected boolean preparePagination(final LogicalPageBox pageBox)
   {
+    if (widowsEnabled == false)
+    {
+      return true;
+    }
+    if (isWidowOrphanDefinitionsEncountered() == false)
+    {
+      return true;
+    }
+
     if (orphanStep.processOrphanAnnotation(pageBox))
     {
 //      logger.info("Orphans unlayoutable.");
