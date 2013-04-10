@@ -22,11 +22,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class DataDefinitionXmlFactoryModule implements XmlFactoryModule
 {
   public DataDefinitionXmlFactoryModule()

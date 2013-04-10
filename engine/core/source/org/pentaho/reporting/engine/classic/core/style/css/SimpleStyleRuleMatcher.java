@@ -282,6 +282,13 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
     return this;
   }
 
+  /**
+   * Returns all matching rules for the given element. Each matched rule must carry the weight of the matching
+   * selector.
+   *
+   * @param element
+   * @return
+   */
   public MatcherResult[] getMatchingRules(final ReportElement element)
   {
     final ArrayList<MatcherResult> retvals = new ArrayList<MatcherResult>();
@@ -528,7 +535,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
       case Condition.SAC_CONTENT_CONDITION:
       default:
       {
-        // todo
+        // any of these conditionals are not yet implemented. They are defined as part of the CSS standard.
         return false;
       }
     }

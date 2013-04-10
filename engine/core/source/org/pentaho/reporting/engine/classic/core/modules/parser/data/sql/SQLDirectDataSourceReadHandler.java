@@ -100,10 +100,6 @@ public class SQLDirectDataSourceReadHandler extends AbstractXmlReadHandler
     }
 
     final SimpleSQLReportDataFactory srdf = new SimpleSQLReportDataFactory(provider);
-    if (configReadHandler != null)
-    {
-      srdf.setLabelMapping(configReadHandler.isLabelMapping());
-    }
     dataFactory = srdf;
   }
 

@@ -56,7 +56,7 @@ public class UrlBuilderTest extends TestCase
 
   public void testUrlBuilder() throws URISyntaxException
   {
-    for (String [] testData : urlBuilderTestData)
+    for (final String [] testData : urlBuilderTestData)
     {
       assertEquals(testData[0], UrlBuilder.generateUrl(testData[1], testData[2], testData[3], testData[4]));
     }

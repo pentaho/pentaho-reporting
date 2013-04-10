@@ -29,7 +29,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBreakContext;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 /**
@@ -79,7 +78,7 @@ public class PaginationStepLib
       {
         //ModelPrinter.print(pageBox);
         throw new IllegalStateException
-            ("Assertation failed: Block layouting did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
+            ("Assertation failed: Pagination did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
       }
     }
   }
@@ -106,34 +105,18 @@ public class PaginationStepLib
 
     final long footerHeight = footerArea.getHeight();
     final long repeatFooterHeight = repeatFooterArea.getHeight();
-    // Assertation: Make sure that we do not run into a infinite loop..
+    // Assertion: Make sure that we do not run into a infinite loop..
     return headerHeight + repeatFooterHeight + footerHeight;
-  }
-
-  public static PageableBreakContext getBreakContext(final RenderBox box,
-                                               final boolean createBoxIfNeeded,
-                                               final boolean useInitialShift)
-  {
-    final PageableBreakContext boxContext = box.getBreakContext();
-    final RenderBox parentBox = box.getParent();
-    if (createBoxIfNeeded)
-    {
-      if (parentBox != null)
-      {
-        final PageableBreakContext parentContext = getBreakContext(parentBox, false, false);
-        boxContext.updateFromParent(parentContext, useInitialShift);
-      }
-      else
-      {
-        // reset ...
-        boxContext.reset();
-      }
-    }
-    return boxContext;
   }
 
   public static void assertBlockPosition(final RenderBox box, final long shift)
   {
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      // no point in testing table-sections, as the header will be an out-of-order band.
+      return;
+    }
+
     final boolean error;
     final long expectedYPos;
     if (box.getPrev() != null)
@@ -168,7 +151,8 @@ public class PaginationStepLib
       final long realShift = shift + additionalShift;
       if (error)
       {
-        ModelPrinter.print(box);
+        ModelPrinter.INSTANCE.print(box);
+        ModelPrinter.INSTANCE.print(ModelPrinter.getRoot(box));
         throw new InvalidReportStateException("Assert: Shift is not as expected: realY=" + realY +
             " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
             "; RealShift=" + realShift);

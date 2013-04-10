@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Arrays;
 import java.util.Locale;
 import javax.swing.table.TableModel;
 
@@ -57,10 +58,12 @@ public final class TableModelInfo
         new DefaultDataAttributeContext(new GenericOutputProcessorMetaData(), Locale.US);
 
     final String[] tableAttrDomains = tableAttributes.getMetaAttributeDomains();
+    Arrays.sort(tableAttrDomains);
     for (int i = 0; i < tableAttrDomains.length; i++)
     {
       final String tableAttrDomain = tableAttrDomains[i];
       final String[] attributeNames = tableAttributes.getMetaAttributeNames(tableAttrDomain);
+      Arrays.sort(attributeNames);
       for (int j = 0; j < attributeNames.length; j++)
       {
         final String attributeName = attributeNames[j];
@@ -75,10 +78,12 @@ public final class TableModelInfo
     {
       final DataAttributes columnAttributes = metaTableModel.getColumnAttributes(column);
       final String[] columnAttributeDomains = columnAttributes.getMetaAttributeDomains();
+      Arrays.sort(columnAttributeDomains);
       for (int i = 0; i < columnAttributeDomains.length; i++)
       {
         final String colAttrDomain = columnAttributeDomains[i];
         final String[] attributeNames = columnAttributes.getMetaAttributeNames(colAttrDomain);
+        Arrays.sort(attributeNames);
         for (int j = 0; j < attributeNames.length; j++)
         {
           final String attributeName = attributeNames[j];
@@ -118,10 +123,12 @@ public final class TableModelInfo
       {
         final DataAttributes cellAttributes = metaTableModel.getCellDataAttributes(rows, i);
         final String[] columnAttributeDomains = cellAttributes.getMetaAttributeDomains();
+        Arrays.sort(columnAttributeDomains);
         for (int attrDomainIdx = 0; attrDomainIdx < columnAttributeDomains.length; attrDomainIdx++)
         {
           final String colAttrDomain = columnAttributeDomains[attrDomainIdx];
           final String[] attributeNames = cellAttributes.getMetaAttributeNames(colAttrDomain);
+          Arrays.sort(attributeNames);
           for (int j = 0; j < attributeNames.length; j++)
           {
             final String attributeName = attributeNames[j];
@@ -151,7 +158,7 @@ public final class TableModelInfo
       for (int i = 0; i < mod.getColumnCount(); i++)
       {
         final Object value = mod.getValueAt(rows, i);
-        final Class c = mod.getColumnClass(i);
+        final Class<?> c = mod.getColumnClass(i);
         if (value == null)
         {
           out.println("ValueAt (" + rows + ", " + i + ") is null"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -212,7 +219,7 @@ public final class TableModelInfo
     }
   }
 
-  private static String format(Object value)
+  private static String format(final Object value)
   {
     if (value instanceof Float ||
         value instanceof Double)

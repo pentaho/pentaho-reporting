@@ -22,11 +22,6 @@ import java.util.HashMap;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class DefaultCompatibilityMapping implements CompatiblityMapping
 {
   private static final String OLD_DEMO = "org.jfree.report.demo.";

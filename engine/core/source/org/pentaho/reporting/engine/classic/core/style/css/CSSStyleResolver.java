@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.style.css;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.logging.Log;
@@ -193,6 +194,7 @@ public class CSSStyleResolver implements StyleResolver, Cloneable
     {
       final StyleRuleMatcher.MatcherResult activeStyleRule = activeStyleRules[i];
       final ElementStyleRule rule = activeStyleRule.getRule();
+      final SelectorWeight weight = activeStyleRule.getWeight();
 
       final StyleKey[] definedPropertyNamesArray = rule.getDefinedPropertyNamesArray();
       for (int j = 0; j < definedPropertyNamesArray.length; j++)
@@ -204,13 +206,13 @@ public class CSSStyleResolver implements StyleResolver, Cloneable
         }
         
         final SelectorWeight selectorWeight = weights[j];
-        if (selectorWeight == null || (selectorWeight.compareTo(activeStyleRule.getWeight()) > 0))
+        if (selectorWeight == null || (selectorWeight.compareTo(weight) > 0))
         {
           final Object styleProperty = rule.getStyleProperty(styleKey);
           if (styleProperty != null)
           {
             target.setStyleProperty(styleKey, styleProperty);
-            weights[j] = activeStyleRule.getWeight();
+            weights[j] = weight;
           }
         }
       }

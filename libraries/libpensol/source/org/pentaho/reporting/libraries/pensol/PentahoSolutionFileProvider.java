@@ -17,8 +17,6 @@ import org.apache.commons.vfs.provider.LayeredFileName;
 import org.apache.commons.vfs.provider.LayeredFileNameParser;
 import org.apache.commons.vfs.provider.http.HttpClientFactory;
 import org.apache.commons.vfs.util.UserAuthenticatorUtils;
-import org.pentaho.reporting.libraries.pensol.sugar.JCRSolutionFileModel;
-import org.pentaho.reporting.libraries.pensol.sugar.JCRSolutionFileSystem;
 import org.pentaho.reporting.libraries.pensol.vfs.LocalFileModel;
 import org.pentaho.reporting.libraries.pensol.vfs.WebSolutionFileSystem;
 

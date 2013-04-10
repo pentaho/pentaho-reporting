@@ -277,7 +277,7 @@ public class FastDecimalFormat implements FastFormat
   {
     try
     {
-      FastDecimalFormat format = (FastDecimalFormat) super.clone();
+      final FastDecimalFormat format = (FastDecimalFormat) super.clone();
       format.decimalFormat = (DecimalFormat) decimalFormat.clone();
       return format;
     }

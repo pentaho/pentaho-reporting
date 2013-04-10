@@ -97,7 +97,7 @@ public class ReplacedContentTest extends TestCase
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, containerBand, true, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    ModelPrinter.print(logicalPageBox);
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRelativeRunner().startValidation(logicalPageBox);
   }
 

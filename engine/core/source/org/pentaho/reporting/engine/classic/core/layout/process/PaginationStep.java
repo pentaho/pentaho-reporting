@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
+import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositions;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
@@ -31,26 +32,41 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PageableBreakContext;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.InitialPaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationState;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
+/**
+ * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
+ * page-boundary of the next page.
+ * <p/>
+ * We have two shift positions. The normal shift denotes artificial paddings, inserted into the flow where needed to
+ * move content to the next page. The header-shift is inserted when a repeatable table-header is processed. This header
+ * reserves a virtual padding area in the infinite-canvas flow to push the next assumed pagebreak to the y2-position
+ * of the header. A header-shift modifies the pin-position on a box, and modifies where pagebreaks are detected.
+ */
 public final class PaginationStep extends IterateVisualProcessStep
 {
   private static final Log logger = LogFactory.getLog(PaginationStep.class);
-
   private boolean breakPending;
   private FindOldestProcessKeyStep findOldestProcessKeyStep;
-  private PageBreakPositionList breakUtility;
+  private PageBreakPositionList basePageBreakList;
   private ReportStateKey visualState;
   private BreakMarkerRenderBox breakIndicatorEncountered;
-  private PaginationState paginationState;
+  private PaginationTableState paginationTableState;
+  private PaginationShiftState shiftState;
+  private PaginationShiftStatePool shiftStatePool;
+  private long pageOffsetKey;
 
   public PaginationStep()
   {
     findOldestProcessKeyStep = new FindOldestProcessKeyStep();
-    breakUtility = new PageBreakPositionList();
+    basePageBreakList = new PageBreakPositionList();
+    shiftStatePool = new PaginationShiftStatePool();
   }
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
@@ -60,6 +76,8 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long pageHeight = pageBox.getPageHeight();
     this.breakIndicatorEncountered = null;
     this.visualState = null;
+    this.pageOffsetKey = pageBox.getPageOffset();
+    this.shiftState = new InitialPaginationShiftState();
 
     try
     {
@@ -80,10 +98,11 @@ public final class PaginationStep extends IterateVisualProcessStep
         throw new InvalidReportStateException("Header and footer consume the whole page. No space left for normal-flow.");
       }
 
-      PaginationStepLib.configureBreakUtility(breakUtility, pageBox, allCurrentBreaks, reservedHeight, lastBreakLocal);
+      PaginationStepLib.configureBreakUtility(basePageBreakList, pageBox, allCurrentBreaks, reservedHeight, lastBreakLocal);
 
-      final long pageEnd = breakUtility.getLastMasterBreak();
-      this.paginationState = new PaginationState(pageHeight, pageEnd);
+      final long pageEnd = basePageBreakList.getLastMasterBreak();
+      this.paginationTableState = new PaginationTableState
+          (pageHeight, pageBox.getPageOffset(), pageEnd, basePageBreakList);
 
       // now process all the other content (excluding the header and footer area)
       if (startBlockLevelBox(pageBox))
@@ -94,21 +113,16 @@ public final class PaginationStep extends IterateVisualProcessStep
 
       PaginationStepLib.assertProgress(pageBox);
 
-      final PageableBreakContext context = pageBox.getBreakContext();
-      if (context == null)
-      {
-        throw new IllegalStateException("After pagination, we have no break context. Why?");
-      }
-
-      final long masterBreak = breakUtility.getLastMasterBreak();
+      final long masterBreak = basePageBreakList.getLastMasterBreak();
       final boolean overflow = breakIndicatorEncountered != null || pageBox.getHeight() > masterBreak;
       final boolean nextPageContainsContent = (pageBox.getHeight() > masterBreak);
-      return new PaginationResult(breakUtility, overflow, nextPageContainsContent, visualState);
+      return new PaginationResult(basePageBreakList, overflow, nextPageContainsContent, visualState);
     }
     finally
     {
-      this.paginationState = null;
-      visualState = null;
+      this.paginationTableState = null;
+      this.visualState = null;
+      this.shiftState = null;
     }
   }
 
@@ -119,16 +133,23 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    final PageableBreakContext boxContext = PaginationStepLib.getBreakContext(box, true, false);
-    final long shift = boxContext.getShift();
+    final boolean retval = handleStartBlockLevelBox(box);
+    installTableContext(box);
+    return retval;
+  }
+
+  private boolean handleStartBlockLevelBox(final RenderBox box)
+  {
+    this.shiftState = shiftStatePool.create(box, shiftState);
+    final long shift = shiftState.getShiftForNextChild();
 
     PaginationStepLib.assertBlockPosition(box, shift);
-    handleForcedBreakIndicator(box, boxContext);
+    handleForcedBreakIndicator(box, shiftState);
     handleBlockLevelBoxFinishedMarker(box, shift);
 
-    if (boxContext.isBreakSuspended() == false)
+    if (shiftState.isManualBreakSuspended() == false)
     {
-      if (handleManualBreakOnBox(box, boxContext))
+      if (handleManualBreakOnBox(box, shiftState))
       {
         return true;
       }
@@ -136,20 +157,23 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
     final RenderLength fixedPositionLength = box.getBoxDefinition().getFixedPosition();
-    if (boxContext.isBreakSuspended() || RenderLength.AUTO.equals(fixedPositionLength))
+    if (shiftState.isManualBreakSuspended() ||
+        RenderLength.AUTO.equals(fixedPositionLength) ||
+        paginationTableState.isFixedPositionProcessingSuspended())
     {
-      return handleAutomaticPagebreak(box, boxContext, false);
+      return handleAutomaticPagebreak(box, shiftState, false);
     }
 
     // If you've come this far, this means, that your box has a fixed position defined.
     final long boxY = box.getY();
     final long shiftedBoxPosition = boxY + shift;
-    final long fixedPositionResolved = fixedPositionLength.resolve(paginationState.getPageHeight(), 0);
+    final long fixedPositionResolved = fixedPositionLength.resolve(paginationTableState.getPageHeight(), 0);
+    final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long fixedPositionInFlow = breakUtility.computeFixedPositionInFlow(shiftedBoxPosition, fixedPositionResolved);
     if (fixedPositionInFlow < shiftedBoxPosition)
     {
       // ... but the fixed position is invalid, so treat it as non-defined.
-      return handleAutomaticPagebreak(box, boxContext, false);
+      return handleAutomaticPagebreak(box, shiftState, false);
     }
 
     // The computed break seems to be valid.
@@ -159,31 +183,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (breakUtility.isCrossingPagebreakWithFixedPosition
         (shiftedBoxPosition, box.getHeight(), fixedPositionResolved) == false)
     {
-      final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
-      final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
-      if (breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK)
-      {
-        // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
-        // for now, we will only apply the ordinary shift.
-        box.setY(fixedPositionInFlow);
-        boxContext.setShift(shift + fixedPositionDelta);
-        boxContext.setAppliedShift(shift + fixedPositionDelta);
-        BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
-        updateStateKey(box);
-        return true;
-      }
-      else // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
-      {
-        // The whole box fits on the current page. However, we have to apply the shifting to move the box
-        // to its defined fixed-position.
-        //
-        // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
-        // from here.
-        BoxShifter.shiftBox(box, fixedPositionDelta);
-        BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
-        updateStateKeyDeep(box);
-        return false;
-      }
+      return handleFixedPositionWithoutBreakOnBox(box, shift, fixedPositionInFlow);
     }
 
     // The box will not fit on the current page.
@@ -194,18 +194,49 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     // Treat as if there is enough space available. Start the normal processing.
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
-    boxContext.setShift(shift + fixedPositionDelta);
-    boxContext.setAppliedShift(shift + fixedPositionDelta);
+    shiftState.setShift(shift + fixedPositionDelta);
     box.setY(fixedPositionInFlow);
-    BoxShifter.extendHeight(box.getParent(), fixedPositionDelta);
+    BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
   }
 
+  private boolean handleFixedPositionWithoutBreakOnBox(final RenderBox box,
+                                                       final long shift,
+                                                       final long fixedPositionInFlow)
+  {
+    final long boxY = box.getY();
+    final long shiftedBoxPosition = boxY + shift;
+    final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
+    final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
+    if (breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK)
+    {
+      // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
+      // for now, we will only apply the ordinary shift.
+      box.setY(fixedPositionInFlow);
+      shiftState.setShift(shift + fixedPositionDelta);
+      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
+      updateStateKey(box);
+      return true;
+    }
+    else // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
+    {
+      // The whole box fits on the current page. However, we have to apply the shifting to move the box
+      // to its defined fixed-position.
+      //
+      // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
+      // from here.
+      BoxShifter.shiftBox(box, fixedPositionDelta);
+      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
+      updateStateKeyDeep(box);
+      return false;
+    }
+  }
+
   protected void processBlockLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    final long shift = shiftState.getShiftForNextChild();
+    node.setY(node.getY() + shift);
     if (breakPending == false && node.isBreakAfter())
     {
       breakPending = (true);
@@ -214,17 +245,14 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected void finishBlockLevelBox(final RenderBox box)
   {
+    uninstallTableContext(box);
+
     if (breakPending == false && box.isBreakAfter())
     {
       breakPending = (true);
     }
-    final RenderBox parentBox = box.getParent();
-    if (parentBox == null)
-    {
-      return;
-    }
-    final PageableBreakContext parentContext = PaginationStepLib.getBreakContext(parentBox, false, false);
-    parentContext.commitShift();
+
+    shiftState = shiftState.pop();
   }
 
   // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
@@ -232,21 +260,23 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
-    context.suspendBreaks();
-    box.setY(box.getY() + context.getShift());
+    if (box.isCommited())
+    {
+      box.setFinishedPaginate(true);
+    }
+
+    installTableContext(box);
+
+    shiftState = shiftStatePool.create(box, shiftState);
+    shiftState.suspendManualBreaks();
+    box.setY(box.getY() + shiftState.getShiftForNextChild());
     return true;
   }
 
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    final RenderBox parentBox = box.getParent();
-    if (parentBox == null)
-    {
-      return;
-    }
-    final PageableBreakContext parentContext = PaginationStepLib.getBreakContext(parentBox, false, false);
-    parentContext.commitShift();
+    shiftState = shiftState.pop();
+    uninstallTableContext(box);
   }
 
   protected boolean startRowLevelBox(final RenderBox box)
@@ -256,71 +286,139 @@ public final class PaginationStep extends IterateVisualProcessStep
       box.setFinishedPaginate(true);
     }
 
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
-    context.suspendBreaks();
-    box.setY(box.getY() + context.getShift());
+    installTableContext(box);
+
+    shiftState = shiftStatePool.create(box, shiftState);
+    shiftState.suspendManualBreaks();
+    box.setY(box.getY() + shiftState.getShiftForNextChild());
     return true;
   }
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    final RenderBox parentBox = box.getParent();
-    if (parentBox == null)
-    {
-      return;
-    }
-    final PageableBreakContext parentContext = PaginationStepLib.getBreakContext(parentBox, false, false);
-    parentContext.commitShift();
+    shiftState = shiftState.pop();
+    uninstallTableContext(box);
   }
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
+    shiftState = shiftStatePool.create(box, shiftState);
+
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-
-      paginationState = new PaginationState(paginationState, false, !sectionRenderBox.isBody());
-
-      if (sectionRenderBox.isBody() == false)
+      switch (sectionRenderBox.getDisplayRole())
       {
-        // never paginate inside a table-header or table-footer.
-        return false;
+        case HEADER:
+        {
+          paginationTableState = new PaginationTableState(paginationTableState);
+          paginationTableState.suspendVisualStateCollection(true);
+
+          startTableHeaderSection(box, sectionRenderBox);
+          return false;
+        }
+        case FOOTER:
+        {
+          paginationTableState = new PaginationTableState(paginationTableState);
+          paginationTableState.suspendVisualStateCollection(true);
+
+          // shift the box and all children downwards. Suspend pagebreaks.
+          final long contextShift = shiftState.getShiftForNextChild();
+          BoxShifter.shiftBox(box, contextShift);
+          return false;
+        }
+        case BODY:
+          return startBlockLevelBox(box);
+        default:
+          throw new IllegalArgumentException();
       }
     }
     else
     {
-      paginationState = new PaginationState(paginationState, false, true);
       return true;
     }
+  }
 
-    return startBlockLevelBox(box);
+  private void startTableHeaderSection(final RenderBox box, final TableSectionRenderBox sectionRenderBox)
+  {
+    final long contextShift = shiftState.getShiftForNextChild();
+    // shift the header downwards,
+    // 1. Check that this table actually breaks across the current page. Header position must be
+    //    before the pagebox-offset. If not, return false, after the normal shifting.
+    final long pageOffset = paginationTableState.getPageOffset();
+    final long delta = pageOffset - (sectionRenderBox.getY() + contextShift);
+    if (delta <= 0)
+    {
+      BoxShifter.shiftBox(box, contextShift);
+      DebugLog.log("HEADER NOT SHIFTED; DELTA = " + delta + " -> " + contextShift);
+      sectionRenderBox.setHeaderShift(pageOffsetKey, 0);
+      return;
+    }
+
+    // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
+    //    return false afterwards.
+
+    DebugLog.log("HEADER SHIFTED; DELTA = " + delta + " -> " + contextShift);
+    long headerShift = sectionRenderBox.getHeaderShift(pageOffsetKey);
+    if (headerShift == 0)
+    {
+      final long previousPageOffset =
+          paginationTableState.getBreakPositions().findPageStartPositionForPageEndPosition(pageOffset);
+      headerShift = sectionRenderBox.getHeaderShift(previousPageOffset) + box.getHeight();
+      DebugLog.log("HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset);
+      sectionRenderBox.setHeaderShift(pageOffsetKey, headerShift);
+    }
+    else
+    {
+      DebugLog.log("Existing HeaderShift: " + headerShift + " <=> " + pageOffset);
+    }
+
+    DebugLog.log("Table-Height before extension: " + box.getParent().getHeight());
+    BoxShifter.shiftBox(box, delta);
+    updateStateKeyDeep(box);
+    BoxShifter.extendHeight(box.getParent(), box, headerShift);
+    shiftState.increaseShift(headerShift);
+    DebugLog.log("Table-Height after extension: " + box.getParent().getHeight());
   }
 
   protected void finishTableLevelBox(final RenderBox box)
   {
-    paginationState = paginationState.pop();
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-      if (sectionRenderBox.isBody() == false)
+      switch (sectionRenderBox.getDisplayRole())
       {
-        // never paginate inside a table-header or table-footer.
-        return;
+        case HEADER:
+          shiftState = shiftState.pop();
+          paginationTableState = paginationTableState.pop();
+          paginationTableState.defineArtificialPageStart(box.getHeight() + paginationTableState.getPageOffset());
+          break;
+        case FOOTER:
+          shiftState = shiftState.pop();
+          paginationTableState = paginationTableState.pop();
+          break;
+        case BODY:
+          finishBlockLevelBox(box);
+          break;
+        default:
+          throw new IllegalStateException();
       }
-      finishBlockLevelBox(box);
+      return;
     }
+
+    finishBlockLevelBox(box);
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
-      paginationState = new PaginationState(paginationState, box.isOpen(), false);
+      if (box.isOpen())
+      {
+        paginationTableState = new PaginationTableState(paginationTableState);
+        paginationTableState.suspendVisualStateCollection(false);
+      }
     }
-
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
-    context.suspendBreaks();
 
     // ignore all other break requests ..
     return startBlockLevelBox(box);
@@ -328,12 +426,14 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    finishBlockLevelBox(box);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
-      paginationState = paginationState.pop();
+      if (box.isOpen())
+      {
+        paginationTableState = paginationTableState.pop();
+      }
     }
+    finishBlockLevelBox(box);
   }
 
   protected boolean startTableRowLevelBox(final RenderBox box)
@@ -348,38 +448,29 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableCellLevelBox(final RenderBox box)
   {
+    installTableContext(box);
     return startBlockLevelBox(box);
   }
 
   protected void finishTableCellLevelBox(final RenderBox box)
   {
     finishBlockLevelBox(box);
+    uninstallTableContext(box);
   }
-
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(box, true, true);
-    context.suspendBreaks();
-    BoxShifter.shiftBox(box, context.getShift());
+    BoxShifter.shiftBox(box, shiftState.getShiftForNextChild());
     return false;
   }
 
   protected void processInlineLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
-    final RenderBox parentBox = box.getParent();
-    if (parentBox == null)
-    {
-      return;
-    }
-    final PageableBreakContext parentContext = PaginationStepLib.getBreakContext(parentBox, false, false);
-    parentContext.commitShift();
   }
 
   protected boolean startTableColLevelBox(final RenderBox box)
@@ -394,56 +485,47 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected void processCanvasLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processRowLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processOtherLevelChild(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableRowLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableSectionLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableCellLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableColLevelNode(final RenderNode node)
   {
-    final PageableBreakContext context = PaginationStepLib.getBreakContext(node.getParent(), false, false);
-    node.setY(node.getY() + context.getShift());
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
-
 
   private void updateStateKey(final RenderBox box)
   {
-    if (paginationState.isVisualStateCollectionSuspended())
+    if (paginationTableState.isVisualStateCollectionSuspended())
     {
       return;
     }
@@ -454,7 +536,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
 
     final long y = box.getY();
-    if (y < paginationState.getPageEnd())
+    if (y < paginationTableState.getPageEnd())
     {
       final ReportStateKey stateKey = box.getStateKey();
       if (stateKey != null)
@@ -466,13 +548,13 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   private void updateStateKeyDeep(final RenderBox box)
   {
-    if (paginationState.isVisualStateCollectionSuspended())
+    if (paginationTableState.isVisualStateCollectionSuspended())
     {
       return;
     }
 
     final long y = box.getY();
-    if (y >= paginationState.getPageEnd())
+    if (y >= paginationTableState.getPageEnd())
     {
       return;
     }
@@ -485,10 +567,11 @@ public final class PaginationStep extends IterateVisualProcessStep
   }
 
   private boolean handleAutomaticPagebreak(final RenderBox box,
-                                           final PageableBreakContext boxContext,
+                                           final PaginationShiftState boxContext,
                                            final boolean assumePinned)
   {
-    final long shift = boxContext.getShift();
+    final long shift = boxContext.getShiftForNextChild();
+    final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     if (breakUtility.isCrossingPagebreak(box, shift) == false)
     {
       // The whole box fits on the current page. No need to do anything fancy.
@@ -526,8 +609,9 @@ public final class PaginationStep extends IterateVisualProcessStep
     {
       box.setY(boxYShifted);
       updateStateKey(box);
-      if (shift + box.getY() < nextMinorBreak)
+      if (boxYShifted < nextMinorBreak)
       {
+        // this position is shifted, but not header-shifted
         box.markPinned(nextMinorBreak);
       }
       return true;
@@ -538,9 +622,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = box.getPinned() - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
-      boxContext.setAppliedShift(nextShift);
       updateStateKey(box);
       return true;
     }
@@ -548,16 +631,15 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box);
     if (spaceAvailable < spaceConsumed)
     {
-      // So we have not enough space to fullfill the layout-constraints. Be it so. Lets shift the box to the next
+      // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
       // break.
       final long nextShift = nextMinorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
-      boxContext.setAppliedShift(nextShift);
       updateStateKey(box);
-      if (shift + box.getY() < nextMinorBreak)
+      if (box.getY() < nextMinorBreak)
       {
         box.markPinned(nextMinorBreak);
       }
@@ -571,9 +653,8 @@ public final class PaginationStep extends IterateVisualProcessStep
   }
 
   private boolean handleManualBreakOnBox(final RenderBox box,
-                                         final PageableBreakContext boxContext)
+                                         final PaginationShiftState boxContext)
   {
-    final long shift = boxContext.getShift();
     final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
     // First check the simple cases:
     // If the box wants to break, then there's no point in waiting: Shift the box and continue.
@@ -582,8 +663,10 @@ public final class PaginationStep extends IterateVisualProcessStep
       return false;
     }
 
+    final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
+    final long shift = boxContext.getShiftForNextChild();
     final RenderLength fixedPosition = box.getBoxDefinition().getFixedPosition();
-    final long fixedPositionResolved = fixedPosition.resolve(paginationState.getPageHeight(), 0);
+    final long fixedPositionResolved = fixedPosition.resolve(paginationTableState.getPageHeight(), 0);
     final long boxY = box.getY();
     final long shiftedBoxY = boxY + shift;
     final long nextNonShiftedMajorBreak = breakUtility.findNextMajorBreakPosition(shiftedBoxY);
@@ -601,14 +684,13 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), shiftDelta);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
-      boxContext.setAppliedShift(nextShift);
     }
 
     updateStateKey(box);
-    final long pageEnd = paginationState.getPageEnd();
-    if (shift + box.getY() < pageEnd)
+    final long pageEnd = paginationTableState.getPageEnd();
+    if (box.getY() < pageEnd)
     {
       box.markPinned(pageEnd);
     }
@@ -634,6 +716,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         // Check, whether this box sits on a break-position. In that case, we can call that box finished as well.
         final long boxY = box.getY();
+        final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
         final long nextMinorBreak = breakUtility.findNextBreakPosition(boxY + shift);
         final long spaceAvailable = nextMinorBreak - (boxY + shift);
 
@@ -653,15 +736,15 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
   }
 
-  private void handleForcedBreakIndicator(final RenderBox box, final PageableBreakContext boxContext)
+  private void handleForcedBreakIndicator(final RenderBox box, final PaginationShiftState boxContext)
   {
-    final long shift = boxContext.getShift();
-    if (boxContext.isBreakSuspended() == false &&
+    final long shift = boxContext.getShiftForNextChild();
+    if (boxContext.isManualBreakSuspended() == false &&
         breakIndicatorEncountered == null && box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
     {
       // pin the parent ...
       // This beast is overly optimistic, so we can only pin if the box is within range
-      final long pageEnd = paginationState.getPageEnd();
+      final long pageEnd = paginationTableState.getPageEnd();
       if (shift + box.getY() < pageEnd)
       {
         box.markPinned(pageEnd);
@@ -671,4 +754,21 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
   }
 
+  protected void installTableContext(final RenderBox box)
+  {
+    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return;
+    }
+    paginationTableState = new PaginationTableState(paginationTableState);
+  }
+
+  protected void uninstallTableContext(final RenderBox box)
+  {
+    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return;
+    }
+    paginationTableState = paginationTableState.pop();
+  }
 }

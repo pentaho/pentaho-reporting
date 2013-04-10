@@ -356,8 +356,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
         // search the datafactory that executes a query
         // metadata: query fields that are used
         // metadata: get a query-string hash-object (or the raw query)
-        final String metaKey = dataFactoryForQuery.getClass().getName();
-        final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(metaKey);
+        final DataFactoryMetaData metaData = dataFactoryForQuery.getMetaData();
         final String[] referencedFields = metaData.getReferencedFields(dataFactoryForQuery, query, parameters);
         if (referencedFields != null)
         {

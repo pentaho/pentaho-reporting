@@ -237,7 +237,7 @@ public class CSVTokenizer implements Enumeration
     {
       final int quateLength = this.quate.length();
       int startOffset = this.currentIndex + quateLength;
-      final StringBuffer b = new StringBuffer();
+      final StringBuilder b = new StringBuilder();
       while (true)
       {
         final int end = record.indexOf(this.quate, startOffset);
@@ -368,7 +368,7 @@ public class CSVTokenizer implements Enumeration
 
   public String[] toArray()
   {
-    ArrayList<String> retval = new ArrayList<String>(20);
+    final ArrayList<String> retval = new ArrayList<String>(20);
     while (hasMoreElements())
     {
       retval.add(nextToken());

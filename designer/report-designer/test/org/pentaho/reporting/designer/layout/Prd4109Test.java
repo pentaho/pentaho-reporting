@@ -64,7 +64,7 @@ public class Prd4109Test extends TestCase
         (new ReportRenderContext(report, report, null, new GlobalAuthenticationStore()));
     final LogicalPageBox layout = l.layout();
 
-    ModelPrinter.print(layout);
+    ModelPrinter.INSTANCE.print(layout);
     assertNotNull(MatchFactory.findElementsByElementType(layout, ItemBandType.INSTANCE));
     assertNotNull(MatchFactory.findElementsByElementType(layout, SubReportType.INSTANCE));
 

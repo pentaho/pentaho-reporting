@@ -67,19 +67,16 @@ public final class DebugLog
    */
   public static void logHereWE()
   {
-    //noinspection ThrowableInstanceNeverThrown
     logger.info("HERE: Debug point reached", new Exception("Debug-Point reached"));
   }
 
   public static void logEnter()
   {
-    //noinspection ThrowableInstanceNeverThrown
     logger.info("HERE: Enter");
   }
 
   public static void logExit()
   {
-    //noinspection ThrowableInstanceNeverThrown
     logger.info("HERE: Exit");
   }
 

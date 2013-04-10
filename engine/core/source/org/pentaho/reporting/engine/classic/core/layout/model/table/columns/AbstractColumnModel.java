@@ -113,10 +113,14 @@ public abstract class AbstractColumnModel implements TableColumnModel
   public TableColumn getColumn(final int i)
   {
     buildColumns();
+    if (i >= columns.length)
+    {
+      throw new ArrayIndexOutOfBoundsException(i);
+    }
     return columns[i];
   }
 
-  public TableColumn[] getColumns ()
+  public TableColumn[] getColumns()
   {
     buildColumns();
     return columns;
@@ -150,7 +154,7 @@ public abstract class AbstractColumnModel implements TableColumnModel
     throw new IndexOutOfBoundsException("No such group");
   }
 
-  public Object clone () throws CloneNotSupportedException
+  public Object clone() throws CloneNotSupportedException
   {
     final AbstractColumnModel cm = (AbstractColumnModel) super.clone();
     cm.columns = null;

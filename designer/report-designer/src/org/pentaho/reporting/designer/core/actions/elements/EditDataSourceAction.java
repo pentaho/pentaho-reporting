@@ -71,7 +71,7 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
       }
 
       final DataFactoryMetaData metadata =
-          DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+          dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
@@ -121,7 +121,7 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
     }
 
     final DataFactoryMetaData metadata =
-        DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+        dataFactory.getMetaData();
     if (metadata.isEditable() == false)
     {
       return;

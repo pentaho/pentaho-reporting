@@ -587,6 +587,7 @@ public final class ObjectUtilities
    */
   public static boolean equalArray(final Object[] array1, final Object[] array2)
   {
+    //noinspection ArrayEquality
     if (array1 == array2)
     {
       return true;

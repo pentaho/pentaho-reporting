@@ -28,7 +28,6 @@ import javax.swing.JPanel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
-import org.pentaho.reporting.tools.configeditor.ConfigEditorBoot;
 import org.pentaho.reporting.tools.configeditor.Messages;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
 
@@ -44,16 +43,6 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    * A constant for the "validInput" property name.
    */
   public static final String VALID_INPUT_PROPERTY = "validInput"; //$NON-NLS-1$
-
-  /**
-   * The error icon used for the key editors.
-   */
-  private Icon errorIcon;
-  /**
-   * The empty icon used for the key editors.
-   */
-  private Icon emptyIcon;
-
   /**
    * The report configuration that provides the values for this editor.
    */
@@ -63,10 +52,6 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    */
   private final ConfigDescriptionEntry entry;
   /**
-   * A flag indicating whether the input is valid.
-   */
-  private boolean validInput;
-  /**
    * A label that holds the error indicator icons.
    */
   private final JLabel stateLabel;
@@ -74,6 +59,18 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    * the resource bundle instance used to translate the text.
    */
   private final ResourceBundleSupport resources;
+  /**
+   * The error icon used for the key editors.
+   */
+  private Icon errorIcon;
+  /**
+   * The empty icon used for the key editors.
+   */
+  private Icon emptyIcon;
+  /**
+   * A flag indicating whether the input is valid.
+   */
+  private boolean validInput;
 
   /**
    * Creates a new key editor for the given report configuration and key entry.

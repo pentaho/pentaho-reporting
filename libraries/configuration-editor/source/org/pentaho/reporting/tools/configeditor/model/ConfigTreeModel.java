@@ -62,7 +62,7 @@ public class ConfigTreeModel implements TreeModel
   /**
    * A list of model listeners.
    */
-  private final ArrayList listeners;
+  private final ArrayList<TreeModelListener> listeners;
 
   /**
    * Creates a new tree model from the given specifications. These specifications contain the config description entry
@@ -79,7 +79,7 @@ public class ConfigTreeModel implements TreeModel
         "ConfigTreeModel.GLOBAL_CONFIGURATION")); //$NON-NLS-1$
     this.localSection = new ConfigTreeSectionNode(messages.getString(
         "ConfigTreeModel.LOCAL_CONFIGURATION")); //$NON-NLS-1$
-    this.listeners = new ArrayList();
+    this.listeners = new ArrayList<TreeModelListener>();
     if (includeGlobals)
     {
       root.add(globalSection);
@@ -135,7 +135,7 @@ public class ConfigTreeModel implements TreeModel
   {
     for (int i = 0; i < listeners.size(); i++)
     {
-      final TreeModelListener l = (TreeModelListener) listeners.get(i);
+      final TreeModelListener l = listeners.get(i);
       l.treeStructureChanged(new TreeModelEvent(this, new TreePath(root)));
     }
   }

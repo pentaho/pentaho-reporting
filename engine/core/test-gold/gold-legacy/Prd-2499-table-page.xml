@@ -222,7 +222,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="3" row-count="8">
+  <table col-count="3" row-count="7">
     <cols>
       <column width="116"/>
       <column width="128"/>
@@ -250,8 +250,8 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="48">
-      <cell row-span="2" col-span="1">
+    <row height="66">
+      <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CUSTOMERNUMBER"/>
         <line type="ParagraphPoolBox" x="0.0" y="132.0" width="43.36" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -261,20 +261,8 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="18">
-      <spanned-cell/>
-      <empty-cell/>
-      <cell background-color="#ff9999" row-span="2" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="master-label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
-        <line type="ParagraphPoolBox" x="244.0" y="180.0" width="24.46" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="244.0" y="180.0" width="24.46" height="10.0">Label</text>
-        </line>
-      </cell>
-    </row>
-    <row height="2">
-      <cell row-span="3" col-span="2">
+    <row height="39">
+      <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="SR-label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
@@ -283,21 +271,41 @@
         </line>
       </cell>
       <spanned-cell/>
-      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell background-color="#ff9999">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="master-gf"/>
+      </empty-cell>
+      <empty-cell background-color="#ff9999">
+      </empty-cell>
+      <cell background-color="#ff9999" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="master-label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="244.0" y="237.0" width="24.46" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="244.0" y="237.0" width="24.46" height="10.0">Label</text>
+        </line>
+      </cell>
     </row>
     <row height="35">
-      <spanned-cell/>
-      <spanned-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+      </empty-cell>
+      <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="2">
-      <spanned-cell/>
-      <spanned-cell/>
+    <row height="491">
       <empty-cell/>
-    </row>
-    <row height="546">
-      <empty-cell/>
-      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="master-footer"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="116.0" y="292.0" width="24.46" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="116.0" y="292.0" width="24.46" height="10.0">Label</text>
+        </line>
+      </cell>
       <empty-cell/>
     </row>
   </table>

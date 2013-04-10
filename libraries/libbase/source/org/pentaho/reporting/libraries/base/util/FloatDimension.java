@@ -134,7 +134,6 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @return a clone of this instance.
    * @see Cloneable
-   * @noinspection CloneDoesntDeclareCloneNotSupportedException
    */
   public Object clone()
   {
@@ -174,10 +173,12 @@ public class FloatDimension extends Dimension2D implements Serializable
 
     final FloatDimension floatDimension = (FloatDimension) o;
 
+    //noinspection FloatingPointEquality
     if (this.height != floatDimension.height)
     {
       return false;
     }
+    //noinspection FloatingPointEquality
     if (this.width != floatDimension.width)
     {
       return false;

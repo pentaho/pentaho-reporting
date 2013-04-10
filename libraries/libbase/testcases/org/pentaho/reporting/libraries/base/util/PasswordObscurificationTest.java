@@ -19,7 +19,7 @@ public class PasswordObscurificationTest extends TestCase
     assertNotNull(enc1);
     assertEquals("test", PasswordObscurification.decryptPassword(enc1));
 
-    final StringBuffer b = new StringBuffer();
+    final StringBuilder b = new StringBuilder();
     for (int i = 0; i < 65535; i++)
     {
       if (i >= 0xD800 && i <= 0xDFFF)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true">
+	<output-test url="file://$MODULE_DIR$/../../../out/test/extensions-hibernate"/>
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$">
+		<testFolder url="file://$MODULE_DIR$/test"/>
+	</contentEntry>
+	<lib name="external-libs" scope="COMPILE">
+		<relative-module-cls project-related="file://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/antlr-2.7.6.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/asm-2.2.3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/asm-attrs-2.2.3.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/cglib-nodep-2.2.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/commons-collections-2.1.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/commons-logging-1.0.4.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/dom4j-1.6.1.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/hibernate-core-3.6.9.Final.jar!/"/>
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/pentaho-reporting/engine/extensions-hibernate/lib/external/jta-1.1.jar!/"/>
+	</lib>
+</component>

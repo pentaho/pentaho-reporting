@@ -81,16 +81,16 @@ public final class BoxShifter
   }
 
 
-  public static void extendHeight(final RenderBox parent, final long amount)
+  public static void extendHeight(final RenderBox parent, final RenderNode child, final long amountDelta)
   {
-    if (amount < 0)
+    if (amountDelta < 0)
     {
-      throw new IllegalArgumentException("Cannot shrink elements: " + parent + " + " + amount);
+      throw new IllegalArgumentException("Cannot shrink elements: " + parent + " + " + amountDelta);
     }
-    if (parent == null || amount == 0)
+    if (parent == null || amountDelta == 0)
     {
       return;
     }
-    parent.extendHeight(amount);
+    parent.extendHeight(child, amountDelta);
   }
 }

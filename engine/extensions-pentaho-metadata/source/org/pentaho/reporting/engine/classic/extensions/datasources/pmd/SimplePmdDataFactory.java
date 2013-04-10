@@ -91,7 +91,6 @@ public class SimplePmdDataFactory extends AbstractDataFactory
   private String xmiFile;
   private IPmdConnectionProvider connectionProvider;
 
-  private boolean labelMapping;
   private String userField;
   private String passwordField;
 
@@ -168,16 +167,6 @@ public class SimplePmdDataFactory extends AbstractDataFactory
   public String[] getQueryNames()
   {
     return EMPTY_QUERYNAMES;
-  }
-
-  public boolean isLabelMapping()
-  {
-    return labelMapping;
-  }
-
-  public void setLabelMapping(final boolean labelMapping)
-  {
-    this.labelMapping = labelMapping;
   }
 
   protected IMetadataDomainRepository getDomainRepository() throws ReportDataFactoryException
@@ -326,7 +315,6 @@ public class SimplePmdDataFactory extends AbstractDataFactory
       final String password = computePassword(parameters);
       connection = getConnectionProvider().createConnection(databaseMeta, user, password);
       sqlReportDataFactory = new PmdSQLDataFactory(connection);
-      sqlReportDataFactory.setLabelMapping(labelMapping);
       sqlReportDataFactory.initialize(getDataFactoryContext());
     }
 
@@ -703,7 +691,6 @@ public class SimplePmdDataFactory extends AbstractDataFactory
     retval.add(domainId);
     retval.add(xmiFile);
     retval.add(getContextKey());
-    retval.add(labelMapping);
     retval.add(connectionProvider.getClass());
     return retval;
   }

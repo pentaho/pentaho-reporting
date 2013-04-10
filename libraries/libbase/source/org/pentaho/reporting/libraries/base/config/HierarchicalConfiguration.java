@@ -349,7 +349,7 @@ public class HierarchicalConfiguration implements ModifiableConfiguration
     final boolean readParent = in.readBoolean();
     if (readParent)
     {
-      parentConfiguration = (ModifiableConfiguration) in.readObject();
+      parentConfiguration = (Configuration) in.readObject();
     }
     else
     {

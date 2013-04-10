@@ -37,10 +37,22 @@ public class TableTestUtil
   public static class DefaultElementProducer implements ElementProducer
   {
     private boolean createText;
+    private float width;
+    private float height;
 
     public DefaultElementProducer(final boolean createText)
     {
       this.createText = createText;
+      this.width = 100;
+      this.height = 200;
+    }
+
+    public DefaultElementProducer(final float width,
+                                  final float height)
+    {
+      this.createText = true;
+      this.width = width;
+      this.height = height;
     }
 
     public Band createCell(final int row, final int column)
@@ -52,7 +64,7 @@ public class TableTestUtil
     {
       if (createText)
       {
-        return TableTestUtil.createDataItem(text);
+        return TableTestUtil.createDataItem(text, width, height);
       }
       return null;
     }
@@ -216,10 +228,15 @@ public class TableTestUtil
 
   public static Band createCell(final int rowSpan, final int colSpan)
   {
+    return createCell(150, 20, rowSpan, colSpan);
+  }
+
+  public static Band createCell(final float width, final float height, final int rowSpan, final int colSpan)
+  {
     final Band tableCell = new Band();
     tableCell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL);
-    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 150f);
-    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, width);
+    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, height);
     tableCell.setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, rowSpan);
     tableCell.setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.COLSPAN, colSpan);
     return tableCell;

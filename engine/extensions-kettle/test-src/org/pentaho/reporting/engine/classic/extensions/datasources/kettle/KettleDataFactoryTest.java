@@ -72,7 +72,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
     kettleDataFactory.setQuery("default",
         new KettleTransFromFileProducer(QUERY, STEP, new String[0], new ParameterMapping[0]));
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(KettleDataFactory.class.getName());
+    final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
     final Object queryHash = metaData.getQueryHash(kettleDataFactory, "default", new StaticDataRow());
     assertNotNull(queryHash);
 
@@ -100,7 +100,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
     kettleDataFactory.setQuery("default",
         new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
 
-    final DataFactoryMetaData metaData = DataFactoryRegistry.getInstance().getMetaData(KettleDataFactory.class.getName());
+    final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(kettleDataFactory, "default", new StaticDataRow());
     assertNotNull(fields);
     assertEquals(4, fields.length);

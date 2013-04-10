@@ -493,6 +493,7 @@ public class ResourceBundleSupport
     {
       mask = getMenuKeyMask();
     }
+    //noinspection MagicConstant
     return KeyStroke.getKeyStroke(createMnemonic(name).intValue(), mask);
   }
 
@@ -571,6 +572,7 @@ public class ResourceBundleSupport
       {
         mask = getMenuKeyMask();
       }
+      //noinspection MagicConstant
       return KeyStroke.getKeyStroke(createMnemonic(name).intValue(), mask);
     }
     catch (MissingResourceException mre)
@@ -608,6 +610,7 @@ public class ResourceBundleSupport
     }
 
     final String name = strictString(key);
+    //noinspection MagicConstant
     return KeyStroke.getKeyStroke(createMnemonic(name).intValue(), mask);
   }
 
@@ -643,6 +646,7 @@ public class ResourceBundleSupport
 
     if (name != null && name.length() > 0)
     {
+      //noinspection MagicConstant
       return KeyStroke.getKeyStroke(createMnemonic(name).intValue(), mask);
     }
     return null;

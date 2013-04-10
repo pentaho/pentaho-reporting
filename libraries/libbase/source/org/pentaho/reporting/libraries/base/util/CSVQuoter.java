@@ -129,7 +129,7 @@ public final class CSVQuoter
   {
     if (isQuotingNeeded(nativeString))
     {
-      final StringBuffer b = new StringBuffer(nativeString.length());
+      final StringBuilder b = new StringBuilder(nativeString.length());
       final int length = nativeString.length() - 1;
       int start = 1;
 

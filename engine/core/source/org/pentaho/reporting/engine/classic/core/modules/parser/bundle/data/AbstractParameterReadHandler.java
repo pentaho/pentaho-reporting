@@ -30,22 +30,17 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Todo: Document me!
- *
- * @author : Thomas Morgner
- */
 public abstract class AbstractParameterReadHandler extends AbstractXmlReadHandler
 {
   private String name;
   private Class type;
   private boolean mandatory;
   private Object defaultValue;
-  private ArrayList attributeReadHandlers;
+  private ArrayList<ParameterAttributeReadHandler> attributeReadHandlers;
 
   protected AbstractParameterReadHandler()
   {
-    attributeReadHandlers = new ArrayList();
+    attributeReadHandlers = new ArrayList<ParameterAttributeReadHandler>();
   }
 
   /**
@@ -127,8 +122,7 @@ public abstract class AbstractParameterReadHandler extends AbstractXmlReadHandle
 
   private ParameterAttributeReadHandler[] getAttributeReadHandlers()
   {
-    return (ParameterAttributeReadHandler[]) attributeReadHandlers.toArray(
-        new ParameterAttributeReadHandler[attributeReadHandlers.size()]);
+    return attributeReadHandlers.toArray(new ParameterAttributeReadHandler[attributeReadHandlers.size()]);
   }
 
   public boolean isMandatory()

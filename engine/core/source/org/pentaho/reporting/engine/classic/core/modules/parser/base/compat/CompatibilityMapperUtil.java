@@ -17,12 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
-public class CompatibilityMapperUtil
+public final class CompatibilityMapperUtil
 {
   private static CompatiblityMapping mapping = new DefaultCompatibilityMapping();
 

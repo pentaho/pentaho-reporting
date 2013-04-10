@@ -104,8 +104,6 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     final AttributeList configAttrs = new AttributeList();
     configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "user-field", df.getUserField());
     configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "password-field", df.getPasswordField());
-    configAttrs.setAttribute(SQLDataFactoryModule.NAMESPACE, "label-mapping",
-        String.valueOf(df.isLabelMapping()));
     xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
 
     writeConnectionInfo(bundle, state, xmlWriter, df.getConnectionProvider());

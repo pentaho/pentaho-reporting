@@ -46,7 +46,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
   /**
    * A list of keys from that module.
    */
-  private final ArrayList assignedKeys;
+  private final ArrayList<ConfigDescriptionEntry> assignedKeys;
 
   /**
    * Creates a new module node for the given module object and report configuration.
@@ -56,7 +56,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
   public ConfigTreeModuleNode(final Module module)
   {
     super(module.getName());
-    this.assignedKeys = new ArrayList();
+    this.assignedKeys = new ArrayList<ConfigDescriptionEntry>();
     this.module = module;
     configurationPrefix = ModuleNodeFactory.getPackage(this.module.getClass());
   }
@@ -89,7 +89,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    */
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("ConfigTreeModule={"); //$NON-NLS-1$
     buffer.append(getConfigurationPrefix());
     buffer.append('}');
@@ -156,7 +156,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    */
   public ConfigDescriptionEntry[] getAssignedKeys()
   {
-    return (ConfigDescriptionEntry[]) assignedKeys.toArray
+    return assignedKeys.toArray
         (new ConfigDescriptionEntry[assignedKeys.size()]);
   }
 }

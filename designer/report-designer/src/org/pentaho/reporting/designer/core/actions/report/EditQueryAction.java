@@ -84,7 +84,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
       }
 
       final DataFactoryMetaData metadata =
-          DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+          dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
@@ -148,8 +148,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
       return;
     }
 
-    final DataFactoryMetaData metadata =
-        DataFactoryRegistry.getInstance().getMetaData(dataFactory.getClass().getName());
+    final DataFactoryMetaData metadata = dataFactory.getMetaData();
     if (metadata.isEditable() == false)
     {
       return;

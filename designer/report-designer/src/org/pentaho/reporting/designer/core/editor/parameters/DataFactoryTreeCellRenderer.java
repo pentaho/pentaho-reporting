@@ -68,7 +68,7 @@ public class DataFactoryTreeCellRenderer extends DefaultTreeCellRenderer
         throw new IllegalArgumentException("Try to render a node that has been removed.");
       }
       final DataFactory dfac = wrapper.getEditedDataFactory();
-      final DataFactoryMetaData data = DataFactoryRegistry.getInstance().getMetaData(dfac.getClass().getName());
+      final DataFactoryMetaData data = dfac.getMetaData();
 
       final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
       if (image != null)

@@ -21,6 +21,7 @@ import java.util.LinkedHashMap;
 
 public class ConfigurationMetaDataEntry
 {
+  public static final String[] EMPTY_TAGS = new String[0];
   private String key;
   private boolean global;
   private boolean hidden;
@@ -82,7 +83,7 @@ public class ConfigurationMetaDataEntry
   {
     if (tags == null)
     {
-      return new String[0];
+      return EMPTY_TAGS;
     }
     return tags.keySet().toArray(new String[tags.size()]);
   }

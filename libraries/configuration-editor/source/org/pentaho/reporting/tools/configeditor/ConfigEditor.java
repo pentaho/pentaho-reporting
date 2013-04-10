@@ -431,7 +431,7 @@ public class ConfigEditor extends JFrame
   private void write(final String filename)
   {
     final Properties prop = new Properties();
-    final ArrayList names = new ArrayList();
+    final ArrayList<String> names = new ArrayList<String>();
     // clear all previously set configuration settings ...
     final Enumeration defaults = configuration.getConfigProperties();
     while (defaults.hasMoreElements())
@@ -450,7 +450,7 @@ public class ConfigEditor extends JFrame
 
       for (int i = 0; i < names.size(); i++)
       {
-        final String key = (String) names.get(i);
+        final String key = names.get(i);
         final String value = prop.getProperty(key);
 
         final String description = editorPane.getDescriptionForKey(key);
