@@ -59,14 +59,14 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 {
   private ReportSelectionModel selectionModel;
 
-  static private ArrayList<Element> otherGroupBodyList;
-  static private ArrayList<Element> rowGroupBodyList;
-  static private ArrayList<Element> columnGroupBodyList;
-  static private ArrayList<Element> cellBodyList;
-  static private ArrayList<Element> noneList;
-  static private ArrayList<Element> allElementsList;
+  private ArrayList<Element> otherGroupBodyList;
+  private ArrayList<Element> rowGroupBodyList;
+  private ArrayList<Element> columnGroupBodyList;
+  private ArrayList<Element> cellBodyList;
+  private ArrayList<Element> noneList;
+  private ArrayList<Element> allElementsList;
 
-  static private CrosstabSelectionBandState selectionBandState;
+  private CrosstabSelectionBandState selectionBandState;
 
   private enum CrosstabSelectionBandState
   {
@@ -85,28 +85,6 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
 
     public abstract CrosstabSelectionBandState getNextState();
     public abstract CrosstabSelectionBandState getCurrentState();
-
-    public ArrayList<Element> getNextSelectionList()
-    {
-      selectionBandState = getNextState();
-      switch (selectionBandState)
-      {
-        case NONE:
-          return noneList;
-       case OTHER:
-          return otherGroupBodyList;
-        case ROW:
-          return rowGroupBodyList;
-        case COLUMN:
-          return columnGroupBodyList;
-        case CELL:
-          return cellBodyList;
-        case ALL:
-          return allElementsList;
-      }
-
-      return noneList;
-    }
   }
 
   public SelectCrosstabBandAction()
@@ -130,6 +108,29 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     setEnabled(true);
   }
 
+  private ArrayList<Element> getNextSelectionList()
+  {
+    selectionBandState = selectionBandState.getNextState();
+    switch (selectionBandState)
+    {
+      case NONE:
+        return noneList;
+      case OTHER:
+        return otherGroupBodyList;
+      case ROW:
+        return rowGroupBodyList;
+      case COLUMN:
+        return columnGroupBodyList;
+      case CELL:
+        return cellBodyList;
+      case ALL:
+        return allElementsList;
+    }
+
+    return noneList;
+  }
+
+
   public boolean isSelected()
   {
     return Boolean.TRUE.equals(getValue(Action.SELECTED_KEY));
@@ -141,12 +142,33 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
   }
 
 
-  /**
-   * Invoked when an action occurs.  We are going to select all the elements inside
-   * of a crosstab band (row, column, or cell) every time actionPerformed is called -
-   * usually when user clicks on selection icon in subreport toolbar
-   */
-  public void actionPerformed(final ActionEvent e)
+  public void initialize()
+  {
+    allElementsList.clear();
+    otherGroupBodyList.clear();
+    rowGroupBodyList.clear();
+    columnGroupBodyList.clear();
+    cellBodyList.clear();
+  }
+
+  private ReportSelectionModel getSelectionModel()
+  {
+    if (selectionModel == null)
+    {
+      final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
+      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      selectionModel = activeContext.getSelectionModel();
+    }
+
+    return selectionModel;
+  }
+
+  public ArrayList<Element> getOtherGroupBodyList()
+  {
+    return otherGroupBodyList;
+  }
+
+  public void buildCrosstabLists()
   {
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
     if (reportDesignerContext == null)
@@ -154,8 +176,11 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
       return;
     }
 
+    // Clear lists just in case something changed.
+    initialize();
+
     final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
-    selectionModel = activeContext.getSelectionModel();
+    selectionModel = getSelectionModel();
 
     final AbstractReportDefinition reportDefinition = activeContext.getReportDefinition();
     if (reportDefinition instanceof CrosstabElement)
@@ -167,34 +192,45 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
         final CrosstabGroup crosstabGroup = (CrosstabGroup)group;
         final GroupBody crosstabGroupBody = crosstabGroup.getBody();
 
-        // We want to build the row, column and cell lists only once.  These lists
-        // contain all the elements for a particular section of the crosstab.
-        if (allElementsList.isEmpty())
+        // Start with the other group and work our way deeper recursively.
+        // Note: Other Group is optional.
+        if (crosstabGroupBody instanceof CrosstabOtherGroupBody)
         {
-          // Start with the other group and work our way deeper recursively.
-          // Note: Other Group is optional.
-          if (crosstabGroupBody instanceof CrosstabOtherGroupBody)
-          {
-            final CrosstabOtherGroup crosstabOtherGroup = ((CrosstabOtherGroupBody)crosstabGroupBody).getGroup();
-            buildCrosstabOtherRowGroupBands(crosstabOtherGroup);
-          }
-          else if (crosstabGroupBody instanceof CrosstabRowGroupBody)
-          {
-            final CrosstabRowGroupBody crosstabRowGroupBody = (CrosstabRowGroupBody)crosstabGroup.getBody();
-            buildCrosstabRowGroupBands(crosstabRowGroupBody);
-          }
-
-          // Create an array of all elements.
-          allElementsList.addAll(otherGroupBodyList);
-          allElementsList.addAll(rowGroupBodyList);
-          allElementsList.addAll(columnGroupBodyList);
-          allElementsList.addAll(cellBodyList);
+          final CrosstabOtherGroup crosstabOtherGroup = ((CrosstabOtherGroupBody)crosstabGroupBody).getGroup();
+          buildCrosstabOtherRowGroupBands(crosstabOtherGroup);
+        }
+        else if (crosstabGroupBody instanceof CrosstabRowGroupBody)
+        {
+          final CrosstabRowGroupBody crosstabRowGroupBody = (CrosstabRowGroupBody)crosstabGroup.getBody();
+          buildCrosstabRowGroupBands(crosstabRowGroupBody);
         }
 
-        // Select the next crosstab band
-        selectCrosstabElements(selectionBandState.getNextSelectionList());
+        // Create an array of all elements.
+        allElementsList.addAll(otherGroupBodyList);
+        allElementsList.addAll(rowGroupBodyList);
+        allElementsList.addAll(columnGroupBodyList);
+        allElementsList.addAll(cellBodyList);
       }
     }
+  }
+
+
+  /**
+   * Invoked when an action occurs.  We are going to select all the elements inside
+   * of a crosstab band (row, column, or cell) every time actionPerformed is called -
+   * usually when user clicks on selection icon in subreport toolbar
+   */
+  public void actionPerformed(final ActionEvent e)
+  {
+    // We want to build the row, column and cell lists only once.  These lists
+    // contain all the elements for a particular section of the crosstab.
+    if (allElementsList.isEmpty())
+    {
+      buildCrosstabLists();
+    }
+
+    // Select the next crosstab band
+    selectCrosstabElements(getNextSelectionList());
   }
 
   /**
@@ -261,7 +297,6 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
       // values of the crosstab).  This is the most granular we go.
       buildCrosstabCellBands((CrosstabCellBody)body);
     }
-
   }
 
 
@@ -337,9 +372,13 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
    */
   private void selectCrosstabElements(final ArrayList<Element> elementsList)
   {
-    if ((elementsList == null) || (selectionModel == null))
+    if (elementsList == null)
     {
       return;
+    }
+
+    if (selectionModel == null) {
+      selectionModel = getSelectionModel();
     }
 
     // First clear any previously selected elements
