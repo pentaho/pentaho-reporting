@@ -108,24 +108,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   </target>
 
   <target name="package"
-          depends="assemble,package-zip,package-targz"
+          depends="assemble,package-zip"
           description="Creates packaged distributable artifacts" />
 
   <target name="package-zip">
-    <zip destfile="${dist.dir}/${package.basename}.zip">
-      <zipfileset dir="${stage.dir}" />
-    </zip>
-  </target>
-
-  <target name="package-targz">
-    <tar destfile="${dist.dir}/${package.basename}.tar.gz" longfile="gnu" compression="gzip">
-      <tarfileset dir="${stage.dir}" mode="755">
+      <zipfileset dir="${stage.dir}" mode="755">
         <include name="**/*.sh" />
-      </tarfileset>
-      <tarfileset dir="${stage.dir}">
+        <include name="**/JavaApplicationStub" />
+      </zipfileset>
+      <zipfileset dir="${stage.dir}">
         <exclude name="**/*.sh" />
-      </tarfileset>
-    </tar>
+        <exclude name="**/JavaApplicationStub" />
+      </zipfileset>
   </target>
 
   <!-- ============================================linuxPackage===================================================== -->
