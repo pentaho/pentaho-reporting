@@ -182,19 +182,6 @@
                 <exclude name="**/run-mailcap"/>
             </zipfileset>
         </zip>
-
-        <tar destfile="${dist.dir}/${dist.name}-mac-${project.revision}.tar.gz" longfile="gnu" compression="gzip">
-            <tarfileset dir="${stage.dir.mac}" mode="755">
-                <include name="**/*.sh"/>
-                <include name="**/JavaApplicationStub"/>
-                <include name="**/run-mailcap"/>
-            </tarfileset>
-            <tarfileset dir="${stage.dir.mac}">
-                <exclude name="**/*.sh"/>
-                <exclude name="**/JavaApplicationStub"/>
-                <exclude name="**/run-mailcap"/>
-            </tarfileset>
-        </tar>
     </target>
 
     <!-- Stages the distribution files for the windows and linux platforms -->
@@ -238,19 +225,6 @@
                 <exclude name="**/run-mailcap"/>
             </zipfileset>
         </zip>
-
-        <tar destfile="${dist.dir}/${dist.name}-${project.revision}.tar.gz" longfile="gnu" compression="gzip">
-            <tarfileset dir="${stage.dir.winlinux}" mode="755">
-                <include name="**/*.sh"/>
-                <include name="**/JavaApplicationStub"/>
-                <include name="**/run-mailcap"/>
-            </tarfileset>
-            <tarfileset dir="${stage.dir.winlinux}">
-                <exclude name="**/*.sh"/>
-                <exclude name="**/JavaApplicationStub"/>
-                <exclude name="**/run-mailcap"/>
-            </tarfileset>
-        </tar>
     </target>
 
     <!-- The dist target is where everything is assembled -->
