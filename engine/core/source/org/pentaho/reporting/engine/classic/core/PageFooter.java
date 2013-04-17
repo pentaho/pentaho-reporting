@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.PageFooterType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A report band that appears at the bottom of every page. The page-footer is the last band that is printed on a page.
@@ -149,5 +151,10 @@ public class PageFooter extends Band implements RootLevelBand
   public SubReport[] getSubReports()
   {
     return PageFooter.EMPTY_REPORTS;
+  }
+
+  public ElementStyleSheet getDefaultStyleSheet()
+  {
+    return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

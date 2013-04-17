@@ -18,11 +18,11 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.WatermarkType;
-import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A report band used to print information at the background of every page in the report. There is an option to suppress
@@ -44,7 +44,7 @@ public class Watermark extends Band implements RootLevelBand
   /**
    * A default style sheet for shape elements. This defined a default stroke for all shapes.
    */
-  private static class WatermarkDefaultStyleSheet extends BandDefaultStyleSheet
+  private static class WatermarkDefaultStyleSheet extends RootLevelBandDefaultStyleSheet
   {
     /**
      * Creates a new style-sheet. The stylesheet is not modifiable
@@ -208,5 +208,4 @@ public class Watermark extends Band implements RootLevelBand
     getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
     notifyNodePropertiesChanged();
   }
-
 }
