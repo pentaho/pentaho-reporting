@@ -189,13 +189,13 @@ public class WidowOrphanTest extends TestCase
     final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
     assertTrue(grOut instanceof RenderBox);
     final RenderBox grOutBox = (RenderBox) grOut;
-    assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getOrphanConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(100), grOutBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(60), grOutBox.getWidowConstraintSize());
 
     final RenderNode grIn = MatchFactory.findElementByName(logicalPageBox, "group-inside");
     assertTrue(grIn instanceof RenderBox);
     final RenderBox grInBox = (RenderBox) grIn;
-    assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
+    assertEquals(StrictGeomUtility.toInternalValue(80), grInBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
   }
 
@@ -238,6 +238,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
+    DebugReportRunner.showDialog(report);
+
     final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
@@ -247,12 +249,12 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib1 = MatchFactory.findElementByName(logicalPageBox1, "ib1");
     assertNotNull(ib1);
     final RenderNode ib2_miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
-    assertNull(ib2_miss);
+    assertNotNull(ib2_miss);
 
     final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib2 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
-    assertNotNull(ib2);
+    assertNull(ib2);
   }
 
   private Band createBand(final String name)
