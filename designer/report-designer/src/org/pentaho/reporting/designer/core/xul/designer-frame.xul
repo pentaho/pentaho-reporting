@@ -103,9 +103,12 @@
                   pen:action="org.pentaho.reporting.designer.core.actions.selection.SelectAllAction"/>
         <menuitem id="edit.deselect-all"
                   pen:action="org.pentaho.reporting.designer.core.actions.selection.DeselectAllAction"/>
-        <menuseparator/>
-        <menuitem id="data-menu.groups"
+        <menuitem id="edit.groups"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.MenuEditGroupsAction"/>
+        <menuseparator id="edit.insert-point"/>
+        <menuseparator/>
+        <menuitem id="edit.settings"
+                  pen:action="org.pentaho.reporting.designer.core.actions.global.SettingsAction"/>
       </menupopup>
     </menu>
     <menu id="view-menu" label="${menu.view.Label}" accesskey="${menu.view.Mnemonic}">
@@ -305,8 +308,6 @@
         <menuseparator/>
         <menuitem id="extra-menu.report-style-editor"
                   pen:action="org.pentaho.reporting.designer.core.actions.global.ShowExternalStyleDefinitionEditorAction"/>
-        <menuitem id="extra-menu.settings"
-                  pen:action="org.pentaho.reporting.designer.core.actions.global.SettingsAction"/>
       </menupopup>
     </menu>
     

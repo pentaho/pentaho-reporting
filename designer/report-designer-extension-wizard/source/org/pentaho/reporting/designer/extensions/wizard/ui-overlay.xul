@@ -9,9 +9,9 @@
               pen:action="org.pentaho.reporting.designer.extensions.wizard.NewWizardReportAction"/>
   </menupopup>
 
-  <menupopup id="extra-menu-popup">
-    <menuseparator/>
-    <menuitem id="modify.wizard" pen:action="org.pentaho.reporting.designer.extensions.wizard.EditWizardReportAction"/>
+  <menupopup id="edit-popup">
+    <menuitem id="modify.wizard" insertafter="edit.insert-point"
+              pen:action="org.pentaho.reporting.designer.extensions.wizard.EditWizardReportAction"/>
   </menupopup>
 
 </overlay>
