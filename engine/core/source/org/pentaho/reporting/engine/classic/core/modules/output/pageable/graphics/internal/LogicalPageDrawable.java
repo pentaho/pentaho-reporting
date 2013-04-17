@@ -86,6 +86,7 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
  *
  * @author Thomas Morgner
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class LogicalPageDrawable extends IterateStructuralProcessStep implements PageDrawable
 {
   protected static class TextSpec
@@ -94,7 +95,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     private boolean italics;
     private String fontName;
     private float fontSize;
-    private OutputProcessorMetaData metaData;
     private Graphics2D graphics;
 
     protected TextSpec(final StyleSheet layoutContext,
@@ -115,39 +115,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       }
 
       this.graphics = graphics;
-      this.metaData = metaData;
       fontName = metaData.getNormalizedFontFamilyName
           ((String) layoutContext.getStyleProperty(TextStyleKeys.FONT));
       fontSize = (float) layoutContext.getDoubleStyleProperty(TextStyleKeys.FONTSIZE, 10);
       bold = layoutContext.getBooleanStyleProperty(TextStyleKeys.BOLD);
       italics = layoutContext.getBooleanStyleProperty(TextStyleKeys.ITALIC);
-    }
-
-    public boolean isSame(final StyleSheet layoutContext)
-    {
-      if (layoutContext == null)
-      {
-        throw new NullPointerException();
-      }
-
-      if (this.fontName.equals(metaData.getNormalizedFontFamilyName
-          ((String) layoutContext.getStyleProperty(TextStyleKeys.FONT))) == false)
-      {
-        return false;
-      }
-      if (this.fontSize != (float) layoutContext.getDoubleStyleProperty(TextStyleKeys.FONTSIZE, 10))
-      {
-        return false;
-      }
-      if (bold != layoutContext.getBooleanStyleProperty(TextStyleKeys.BOLD))
-      {
-        return false;
-      }
-      if (italics == layoutContext.getBooleanStyleProperty(TextStyleKeys.ITALIC))
-      {
-        return false;
-      }
-      return true;
     }
 
     public boolean isBold()
@@ -441,6 +413,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
    *
    * @return true, if an aspect ratio is preserved, false otherwise.
    */
+  @SuppressWarnings("UnusedDeclaration")
   public boolean isPreserveAspectRatio()
   {
     return true;
@@ -465,7 +438,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   public void draw(final Graphics2D graphics, final Rectangle2D area)
   {
     final Graphics2D g2 = (Graphics2D) graphics.create();
-    if (drawPageBackground)
+    if (isDrawPageBackground())
     {
       g2.setPaint(Color.white);
       g2.fill(area);
@@ -683,7 +656,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         final StrictBounds clipBounds =
             new StrictBounds(bounds.getX(), bounds.getY() + bounds.getHeight(), StrictGeomUtility.MAX_AUTO, StrictGeomUtility.MAX_AUTO);
         clip(clipBounds);
-        tableContext.drawArea.setRect(drawArea);
+        tableContext.getDrawArea().setRect(drawArea);
         drawArea.setRect(drawArea.createIntersection(clipBounds));
       }
     }
@@ -698,7 +671,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
     else if (tableContext.getBounds().getHeight() != 0)
     {
-      drawArea.setRect(tableContext.drawArea);
+      drawArea.setRect(tableContext.getDrawArea());
       clearClipping();
     }
   }
@@ -778,7 +751,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   protected void renderBoxBorderAndBackground(final RenderBox box)
   {
     final Graphics2D g2 = getGraphics();
-    if (outlineMode)
+    if (isOutlineMode())
     {
       drawOutlineBox(g2, box);
       if (isIgnoreBorderWhenDrawingOutline())
@@ -930,11 +903,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
   }
 
-  protected RevalidateTextEllipseProcessStep getRevalidateTextEllipseProcessStep()
-  {
-    return revalidateTextEllipseProcessStep;
-  }
-
   protected void processTextLine(final RenderBox lineBox,
                                  final long contentAreaX1,
                                  final long contentAreaX2)
@@ -1005,7 +973,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       {
         if (ellipseDrawn == false)
         {
-          if (clipOnWordBoundary == false && type == LayoutNodeTypes.TYPE_NODE_TEXT)
+          if (isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_TEXT)
           {
             final RenderableText text = (RenderableText) node;
             final long ellipseSize = extractEllipseSize(node);

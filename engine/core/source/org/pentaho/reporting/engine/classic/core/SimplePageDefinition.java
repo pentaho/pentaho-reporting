@@ -115,7 +115,7 @@ public class SimplePageDefinition implements PageDefinition
    */
   public SimplePageDefinition(final PageSize papersize, final int orientation, final Insets margins)
   {
-    this(PageFormatFactory.getInstance().create(papersize, orientation, margins), 1, 1);
+    this(PageFormatFactory.create(papersize, orientation, margins), 1, 1);
   }
 
   /**
@@ -123,7 +123,7 @@ public class SimplePageDefinition implements PageDefinition
    */
   public SimplePageDefinition(final PageSize papersize)
   {
-    this(PageFormatFactory.getInstance().create(papersize, PageFormat.PORTRAIT, new Insets(0,0,0,0)), 1, 1);
+    this(PageFormatFactory.create(papersize, PageFormat.PORTRAIT, new Insets(0,0,0,0)), 1, 1);
   }
 
 

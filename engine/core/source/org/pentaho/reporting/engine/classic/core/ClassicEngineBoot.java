@@ -494,6 +494,7 @@ public class ClassicEngineBoot extends AbstractBoot
   {
     return isEnforceCompatibilityFor(level, prptVersionMajorRaw, prptVersionMinorRaw, 999);
   }
+
   public static boolean isEnforceCompatibilityFor(final int level,
                                                   final int prptVersionMajorRaw,
                                                   final int prptVersionMinorRaw,
