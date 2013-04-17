@@ -138,4 +138,13 @@ public class ProxyLayoutModelBuilderContext implements LayoutModelBuilderContext
   {
 
   }
+
+  public int getDepth()
+  {
+    if (context == null)
+    {
+      return 1;
+    }
+    return 1 + context.getDepth();
+  }
 }

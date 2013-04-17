@@ -438,6 +438,11 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
 
   }
 
+  public void groupBodyFinished(final ReportEvent event)
+  {
+
+  }
+
   public boolean createRollbackInformation()
   {
     return false;

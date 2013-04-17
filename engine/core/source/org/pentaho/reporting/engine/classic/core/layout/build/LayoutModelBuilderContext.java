@@ -54,4 +54,6 @@ public interface LayoutModelBuilderContext
   public void restoreStateAfterRollback();
 
   public void commitAsEmpty();
+
+  public int getDepth();
 }

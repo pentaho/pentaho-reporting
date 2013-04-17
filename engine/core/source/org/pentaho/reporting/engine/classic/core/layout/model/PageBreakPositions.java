@@ -47,4 +47,7 @@ public interface PageBreakPositions
    * @return the position.
    */
   long findNextMajorBreakPosition(long position);
+
+  public boolean isPageStart(final long position);
+
 }

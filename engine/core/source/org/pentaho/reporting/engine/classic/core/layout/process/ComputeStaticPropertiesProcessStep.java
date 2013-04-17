@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -40,7 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 /**
- * Computes the width for all elements. This uses the CSS alogorithm, percentages are resolved against the parent's
+ * Computes the width for all elements. This uses the CSS algorithm, percentages are resolved against the parent's
  * already known width.
  *
  * @author Thomas Morgner
@@ -56,19 +58,29 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private OutputProcessorMetaData metaData;
   private boolean overflowXSupported;
   private boolean overflowYSupported;
+  private boolean widowsEnabled;
   private StaticChunkWidthUpdate chunkWidthUpdate;
   private StaticChunkWidthUpdatePool chunkWidthUpdatePool;
+  private boolean widowOrphanDefinitionsEncountered;
 
   public ComputeStaticPropertiesProcessStep()
   {
     chunkWidthUpdatePool = new StaticChunkWidthUpdatePool();
   }
 
-  public void initialize(final OutputProcessorMetaData metaData)
+  public void initialize(final OutputProcessorMetaData metaData,
+                         final ProcessingContext processingContext)
   {
     this.metaData = metaData;
     this.overflowXSupported = metaData.isFeatureSupported(OutputProcessorFeature.ASSUME_OVERFLOW_X);
     this.overflowYSupported = metaData.isFeatureSupported(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
+    this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
+    this.widowOrphanDefinitionsEncountered = false;
+  }
+
+  public boolean isWidowOrphanDefinitionsEncountered()
+  {
+    return widowOrphanDefinitionsEncountered;
   }
 
   public void compute(final LogicalPageBox root)
@@ -90,6 +102,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.chunkWidthUpdate = createChunkWidthUpdate(box);
 
     updateStaticProperties(box);
+    computeWidowOrphanIndicator(box);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
@@ -208,6 +221,33 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     computeBreakIndicator(box);
   }
 
+  private void computeWidowOrphanIndicator(final RenderBox box)
+  {
+    final RenderBox parent = box.getParent();
+    if (parent == null)
+    {
+      box.setParentWidowContexts(0);
+      return;
+    }
+
+    if (widowsEnabled == false)
+    {
+      return;
+    }
+
+    final StaticBoxLayoutProperties sblp = parent.getStaticBoxLayoutProperties();
+    if (sblp.getOrphans() > 0 || sblp.getWidows() > 0 || sblp.isAvoidPagebreakInside())
+    {
+      widowOrphanDefinitionsEncountered = true;
+      box.setParentWidowContexts(parent.getParentWidowContexts() + 1);
+    }
+    else
+    {
+      box.setParentWidowContexts(parent.getParentWidowContexts());
+    }
+
+  }
+
   private void computeResolvedStyleProperties(final RenderBox box, final StaticBoxLayoutProperties sblp)
   {
     final StyleSheet style = box.getStyleSheet();
@@ -226,9 +266,15 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     }
 
     sblp.setDominantBaseline(-1);
-    sblp.setOrphans(style.getIntStyleProperty(ElementStyleKeys.ORPHANS, 0));
-    sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
 
+    if (widowsEnabled)
+    {
+      sblp.setOrphans(style.getIntStyleProperty(ElementStyleKeys.ORPHANS, 0));
+      sblp.setWidows(style.getIntStyleProperty(ElementStyleKeys.WIDOWS, 0));
+
+      final boolean orphanOptOut = style.getBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
+      sblp.setWidowOrphanOptOut(orphanOptOut);
+    }
     final ExtendedBaselineInfo baselineInfo = metaData.getBaselineInfo('x', style);
     if (baselineInfo == null)
     {
@@ -274,7 +320,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     {
       return chunkWidthUpdatePool.createInline(chunkWidthUpdate, box);
     }
-    
+
     final int nodeType = box.getLayoutNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
@@ -300,10 +346,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     }
 
     box.setStaticBoxPropertiesAge(box.getChangeTracker());
-    
+
     final StaticChunkWidthUpdate boxUpdate = chunkWidthUpdate;
     boxUpdate.finish();
-    
+
     chunkWidthUpdate = chunkWidthUpdate.pop();
     chunkWidthUpdate.update(box.getMinimumChunkWidth());
   }

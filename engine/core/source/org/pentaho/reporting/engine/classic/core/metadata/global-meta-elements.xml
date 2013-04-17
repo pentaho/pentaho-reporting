@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
   <attribute-group name="rich-text-attributes">
@@ -1204,6 +1205,7 @@
     <style name="visible" expert="false" hidden="false" mandatory="false"/>
     <style name="widows" expert="true" hidden="false" mandatory="false"/>
     <style name="orphans" expert="true" hidden="false" mandatory="false"/>
+    <style name="widow-orphan-opt-out" expert="true" hidden="false" mandatory="false"/>
     <style name="overflow-x" expert="true" hidden="false" mandatory="false"/>
     <style name="overflow-y" expert="true" hidden="false" mandatory="false"/>
     <style name="avoid-page-break" expert="true" hidden="false" mandatory="false"/>

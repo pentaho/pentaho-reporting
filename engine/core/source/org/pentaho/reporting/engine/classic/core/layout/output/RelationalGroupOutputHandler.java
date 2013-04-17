@@ -113,6 +113,15 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
     }
   }
 
+  public void groupBodyFinished(final DefaultOutputFunction outputFunction,
+                                final ReportEvent event) throws ReportProcessingException
+  {
+    final Renderer renderer = outputFunction.getRenderer();
+    outputFunction.updateFooterArea(event);
+    // only happens for inner groups.
+    renderer.endGroupBody();
+  }
+
   public void groupFinished(final DefaultOutputFunction outputFunction,
                             final ReportEvent event) throws ReportProcessingException
   {
@@ -123,7 +132,6 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea(event);
 
-    renderer.endGroupBody();
     renderer.startSection(Renderer.SectionType.NORMALFLOW);
     outputFunction.print(outputFunction.getRuntime(), b);
     outputFunction.addSubReportMarkers(renderer.endSection());

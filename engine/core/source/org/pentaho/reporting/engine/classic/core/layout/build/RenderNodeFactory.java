@@ -60,7 +60,8 @@ public interface RenderNodeFactory extends Cloneable
 
   public BoxDefinition getBoxDefinition(StyleSheet style);
 
-  public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey);
+  public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey,
+                                               final long range);
 
   public StyleSheet createStyle(StyleSheet style);
 

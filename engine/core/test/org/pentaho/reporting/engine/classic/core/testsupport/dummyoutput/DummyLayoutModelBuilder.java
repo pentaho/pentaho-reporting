@@ -138,19 +138,19 @@ public class DummyLayoutModelBuilder implements LayoutModelBuilder
 
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
 
   }
 
   public LayoutModelBuilder deriveForStorage(final RenderBox clonedContent)
   {
-    return (LayoutModelBuilder) clone();
+    return clone();
   }
 
   public LayoutModelBuilder deriveForPageBreak()
   {
-    return (LayoutModelBuilder) clone();
+    return clone();
   }
 
   public void validateAfterCommit()

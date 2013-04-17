@@ -98,7 +98,7 @@ public class CrosstabTestSequence extends AbstractSequence
       {
         values[pos] = r.nextDouble();
         model.addRow(values);
-        System.out.println (Arrays.asList(values));
+
         pos -= 1;
         continue;
       }

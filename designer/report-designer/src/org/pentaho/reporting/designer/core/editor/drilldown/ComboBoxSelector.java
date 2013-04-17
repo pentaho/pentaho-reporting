@@ -84,7 +84,6 @@ public class ComboBoxSelector extends JComboBox implements DrillDownSelector
 
   public void setSelectedProfile(final DrillDownUiProfile profile)
   {
-    System.out.println ("Request to change to " + profile);
     setSelectedItem(profile);
   }
 

@@ -38,7 +38,7 @@ public class EndCrosstabFactHandler implements AdvanceHandler
 
   public ProcessState commit(final ProcessState state) throws ReportProcessingException
   {
-    state.setAdvanceHandler(EndCrosstabColumnAxisHandler.HANDLER);
+    state.setAdvanceHandler(EndCrosstabColumnBodyHandler.HANDLER);
     return state;
   }
 

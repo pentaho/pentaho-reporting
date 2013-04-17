@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.CompoundDataFactory"

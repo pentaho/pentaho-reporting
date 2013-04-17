@@ -119,6 +119,11 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler
     CrosstabOutputHelper.printCrosstabSummary(outputFunction, event);
   }
 
+  public void groupBodyFinished(final DefaultOutputFunction outputFunction,
+                                final ReportEvent event) throws ReportProcessingException
+  {
+  }
+
   public void itemsStarted(final DefaultOutputFunction outputFunction,
                            final ReportEvent event) throws ReportProcessingException
   {

@@ -61,6 +61,8 @@ public final class PaginationStep extends IterateVisualProcessStep
   private PaginationShiftState shiftState;
   private PaginationShiftStatePool shiftStatePool;
   private long pageOffsetKey;
+  private boolean unresolvedWidowReferenceEncountered;
+  private long usablePageHeight;
 
   public PaginationStep()
   {
@@ -73,11 +75,13 @@ public final class PaginationStep extends IterateVisualProcessStep
   {
     PaginationStepLib.assertProgress(pageBox);
 
-    final long pageHeight = pageBox.getPageHeight();
+    this.unresolvedWidowReferenceEncountered = false;
     this.breakIndicatorEncountered = null;
     this.visualState = null;
     this.pageOffsetKey = pageBox.getPageOffset();
     this.shiftState = new InitialPaginationShiftState();
+    this.breakPending = false;
+    this.usablePageHeight = Long.MAX_VALUE;
 
     try
     {
@@ -101,6 +105,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       PaginationStepLib.configureBreakUtility(basePageBreakList, pageBox, allCurrentBreaks, reservedHeight, lastBreakLocal);
 
       final long pageEnd = basePageBreakList.getLastMasterBreak();
+      final long pageHeight = pageBox.getPageHeight();
       this.paginationTableState = new PaginationTableState
           (pageHeight, pageBox.getPageOffset(), pageEnd, basePageBreakList);
 
@@ -113,13 +118,15 @@ public final class PaginationStep extends IterateVisualProcessStep
 
       PaginationStepLib.assertProgress(pageBox);
 
+      final long usedPageHeight = Math.min(pageBox.getHeight(), usablePageHeight);
       final long masterBreak = basePageBreakList.getLastMasterBreak();
-      final boolean overflow = breakIndicatorEncountered != null || pageBox.getHeight() > masterBreak;
+      final boolean overflow = breakIndicatorEncountered != null || usedPageHeight > masterBreak;
       final boolean nextPageContainsContent = (pageBox.getHeight() > masterBreak);
       return new PaginationResult(basePageBreakList, overflow, nextPageContainsContent, visualState);
     }
     finally
     {
+      this.breakIndicatorEncountered = null;
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;
@@ -143,16 +150,34 @@ public final class PaginationStep extends IterateVisualProcessStep
     this.shiftState = shiftStatePool.create(box, shiftState);
     final long shift = shiftState.getShiftForNextChild();
 
+    if (box.isWidowBox())
+    {
+      unresolvedWidowReferenceEncountered = true;
+      usablePageHeight = Math.min(usablePageHeight, box.getY() + shift);
+    }
+
+    if (unresolvedWidowReferenceEncountered)
+    {
+      // once we have hit a unresolved widow box, we cannot process the page any further
+      // we have to wait until the box is closed to know whether the widow-constraint can be
+      // fulfilled.
+      BoxShifter.shiftBox(box, shift);
+      return false;
+    }
+
     PaginationStepLib.assertBlockPosition(box, shift);
     handleForcedBreakIndicator(box, shiftState);
     handleBlockLevelBoxFinishedMarker(box, shift);
 
     if (shiftState.isManualBreakSuspended() == false)
     {
-      if (handleManualBreakOnBox(box, shiftState))
+      if (handleManualBreakOnBox(box, shiftState, breakPending))
       {
+        breakPending = false;
+        logger.info("pending page-break or manual break: " + box);
         return true;
       }
+      breakPending = false;
     }
 
     // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
@@ -161,7 +186,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         RenderLength.AUTO.equals(fixedPositionLength) ||
         paginationTableState.isFixedPositionProcessingSuspended())
     {
-      return handleAutomaticPagebreak(box, shiftState, false);
+      return handleAutomaticPagebreak(box, shiftState);
     }
 
     // If you've come this far, this means, that your box has a fixed position defined.
@@ -173,7 +198,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (fixedPositionInFlow < shiftedBoxPosition)
     {
       // ... but the fixed position is invalid, so treat it as non-defined.
-      return handleAutomaticPagebreak(box, shiftState, false);
+      return handleAutomaticPagebreak(box, shiftState);
     }
 
     // The computed break seems to be valid.
@@ -239,7 +264,11 @@ public final class PaginationStep extends IterateVisualProcessStep
     node.setY(node.getY() + shift);
     if (breakPending == false && node.isBreakAfter())
     {
-      breakPending = (true);
+      breakPending = paginationTableState.isOnPageStart(node.getY()) == false;
+      if (breakPending)
+      {
+        logger.info("BreakPending True for Node:isBreakAfter: " + node);
+      }
     }
   }
 
@@ -249,7 +278,11 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     if (breakPending == false && box.isBreakAfter())
     {
-      breakPending = (true);
+      breakPending = paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
+      if (breakPending)
+      {
+        logger.info("BreakPending True for Box:isBreakAfter: " + box);
+      }
     }
 
     shiftState = shiftState.pop();
@@ -567,8 +600,7 @@ public final class PaginationStep extends IterateVisualProcessStep
   }
 
   private boolean handleAutomaticPagebreak(final RenderBox box,
-                                           final PaginationShiftState boxContext,
-                                           final boolean assumePinned)
+                                           final PaginationShiftState boxContext)
   {
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
@@ -617,33 +649,29 @@ public final class PaginationStep extends IterateVisualProcessStep
       return true;
     }
 
-    if (assumePinned || box.isPinned())
-    {
-      final long nextShift = box.getPinned() - boxY;
-      final long shiftDelta = nextShift - shift;
-      box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-      boxContext.setShift(nextShift);
-      updateStateKey(box);
-      return true;
-    }
-
-    final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box);
+    final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box, boxContext);
     if (spaceAvailable < spaceConsumed)
     {
       // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
       // break.
-      final long nextShift = nextMinorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
-      box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-      boxContext.setShift(nextShift);
-      updateStateKey(box);
-      if (box.getY() < nextMinorBreak)
+      // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
+      // into account.
+      if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
       {
-        box.markPinned(nextMinorBreak);
+        logger.info("Automatic pagebreak, after orphan-opt-out: " + box);
+        logger.info("Automatic pagebreak                      : " + visualState);
+        final long nextShift = nextMinorBreak - boxY;
+        final long shiftDelta = nextShift - shift;
+        box.setY(boxY + nextShift);
+        BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+        boxContext.setShift(nextShift);
+        updateStateKey(box);
+        if (box.getY() < nextMinorBreak)
+        {
+          box.markPinned(nextMinorBreak);
+        }
+        return true;
       }
-      return true;
     }
 
     // OK, there *is* enough space available. Start the normal processing
@@ -653,7 +681,8 @@ public final class PaginationStep extends IterateVisualProcessStep
   }
 
   private boolean handleManualBreakOnBox(final RenderBox box,
-                                         final PaginationShiftState boxContext)
+                                         final PaginationShiftState boxContext,
+                                         final boolean breakPending)
   {
     final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
     // First check the simple cases:
@@ -661,6 +690,18 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (breakIndicator != RenderBox.BreakIndicator.DIRECT_MANUAL_BREAK && breakPending == false)
     {
       return false;
+    }
+
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      final BreakMarkerRenderBox bmrb = (BreakMarkerRenderBox) box;
+      final long pageEndValidity =
+          paginationTableState.getBreakPositions().findNextMajorBreakPosition(bmrb.getValidityRange());
+      if (pageEndValidity > paginationTableState.getPageEnd())
+      {
+        // we ignore this one.
+        return false;
+      }
     }
 
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
@@ -694,7 +735,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     {
       box.markPinned(pageEnd);
     }
-    breakPending = false;
     return true;
   }
 
@@ -740,7 +780,8 @@ public final class PaginationStep extends IterateVisualProcessStep
   {
     final long shift = boxContext.getShiftForNextChild();
     if (boxContext.isManualBreakSuspended() == false &&
-        breakIndicatorEncountered == null && box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+        breakIndicatorEncountered == null &&
+        box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
     {
       // pin the parent ...
       // This beast is overly optimistic, so we can only pin if the box is within range
@@ -749,8 +790,14 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         box.markPinned(pageEnd);
       }
-
-      breakIndicatorEncountered = (BreakMarkerRenderBox) box;
+      final BreakMarkerRenderBox breakMarkerRenderBox = (BreakMarkerRenderBox) box;
+      final long pageEndValidity =
+          paginationTableState.getBreakPositions().findNextMajorBreakPosition(breakMarkerRenderBox.getValidityRange());
+      if (pageEndValidity <= paginationTableState.getPageEnd())
+      {
+        // only recognize a break, if that break is within our limits.
+        breakIndicatorEncountered = (BreakMarkerRenderBox) box;
+      }
     }
   }
 

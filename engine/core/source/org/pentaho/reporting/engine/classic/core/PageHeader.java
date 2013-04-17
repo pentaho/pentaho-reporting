@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.PageHeaderType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A report band used to print information at the top of every page in the report. The page header is the first band
@@ -150,5 +152,10 @@ public class PageHeader extends Band implements RootLevelBand
   public SubReport[] getSubReports()
   {
     return PageHeader.EMPTY_SUB_REPORTS;
+  }
+
+  public ElementStyleSheet getDefaultStyleSheet()
+  {
+    return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

@@ -43,7 +43,7 @@ public class EndDetailsHandler implements AdvanceHandler
 
   public ProcessState commit(final ProcessState state) throws ReportProcessingException
   {
-    state.setAdvanceHandler(EndGroupHandler.HANDLER);
+    state.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
     return state;
   }
 

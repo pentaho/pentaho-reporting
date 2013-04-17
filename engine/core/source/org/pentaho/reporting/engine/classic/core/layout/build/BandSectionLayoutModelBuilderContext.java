@@ -259,4 +259,13 @@ public class BandSectionLayoutModelBuilderContext implements LayoutModelBuilderC
     }
     return parentContext;
   }
+
+  public int getDepth()
+  {
+    if (parent == null)
+    {
+      return 1;
+    }
+    return 1 + parent.getDepth();
+  }
 }

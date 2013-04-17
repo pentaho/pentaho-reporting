@@ -328,6 +328,30 @@ public class DefaultOutputFunction extends AbstractFunction
     }
   }
 
+  public void groupBodyFinished(final ReportEvent event)
+  {
+    clearPendingPageStart(event);
+
+    setCurrentEvent(event);
+    try
+    {
+      final GroupOutputHandler handler = outputHandlers.peek();
+      handler.groupBodyFinished(this, event);
+    }
+    catch (InvalidReportStateException fe)
+    {
+      throw fe;
+    }
+    catch (Exception e)
+    {
+      throw new InvalidReportStateException("GroupBody failed", e);
+    }
+    finally
+    {
+      clearCurrentEvent();
+    }
+  }
+
   /**
    * Receives notification that a group has finished. <P> Prints the GroupFooter.
    *

@@ -179,7 +179,16 @@ public class InitialLayoutProcess extends ExpressionEventHelper implements Layou
 
     try
     {
-      super.fireReportEvent(event);
+      final int pageEventMask = ReportEvent.PAGE_STARTED | ReportEvent.PAGE_FINISHED;
+      if ((event.getType() & pageEventMask) == 0 &&
+         ((event.getType() & ReportEvent.GROUP_BODY_FINISHED) == ReportEvent.GROUP_BODY_FINISHED))
+      {
+        fireGroupBodyFinishedEvent(event);
+      }
+      else
+      {
+        super.fireReportEvent(event);
+      }
     }
     catch (InvalidReportStateException exception)
     {
@@ -193,5 +202,40 @@ public class InitialLayoutProcess extends ExpressionEventHelper implements Layou
     {
       inlineDataRowRuntime.setState(state);
     }
+  }
+
+  private void fireGroupBodyFinishedEvent(final ReportEvent event)
+  {
+    if (event.getLevel() != LayoutProcess.LEVEL_PAGINATE)
+    {
+      return;
+    }
+
+    final ExpressionRuntime runtime = getRuntime();
+    final OutputFunction expression = getOutputFunction();
+
+    final boolean deepTraversing = event.isDeepTraversing();
+    if (deepTraversing && expression.isDeepTraversing() == false)
+    {
+      return;
+    }
+
+    final ExpressionRuntime oldRuntime = expression.getRuntime();
+    expression.setRuntime(runtime);
+    try
+    {
+      expression.groupBodyFinished(event);
+      evaluateSingleExpression(expression);
+    }
+    catch (InvalidReportStateException rse)
+    {
+      throw rse;
+    }
+    catch (Exception ex)
+    {
+      evaluateToNull(expression);
+    }
+
+    expression.setRuntime(oldRuntime);
   }
 }

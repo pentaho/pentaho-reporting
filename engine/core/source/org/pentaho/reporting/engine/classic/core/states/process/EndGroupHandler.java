@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.states.process;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
-import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
 /**
@@ -39,7 +38,6 @@ public class EndGroupHandler implements AdvanceHandler
   public ProcessState advance(final ProcessState state) throws ReportProcessingException
   {
     final ProcessState next = state.deriveForAdvance();
-    next.leavePresentationGroup();
     next.fireReportEvent();
     final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
     return InlineSubreportProcessor.processInline(next, group.getFooter());

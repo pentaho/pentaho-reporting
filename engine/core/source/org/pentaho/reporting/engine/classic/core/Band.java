@@ -515,6 +515,7 @@ public class Band extends Section
   public void setLayout(final String layout)
   {
     getStyle().setStyleProperty(BandStyleKeys.LAYOUT, layout);
+    notifyNodePropertiesChanged();
   }
 
   public String getLayout()

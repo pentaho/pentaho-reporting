@@ -49,6 +49,7 @@ public final class StaticBoxLayoutProperties implements Serializable
   private static final int FLAG_VISIBLE = 0x20;
   private static final int FLAG_BREAK_AFTER = 0x40;
   private static final int FLAG_SECTION_CONTEXT = 0x80;
+  private static final int FLAG_WIDOW_ORPHAN_OPT_OUT = 0x100;
 
   private static final Log logger = LogFactory.getLog(StaticBoxLayoutProperties.class);
 
@@ -87,6 +88,16 @@ public final class StaticBoxLayoutProperties implements Serializable
   private boolean isFlag (final int flag)
   {
     return (flags & flag) != 0;
+  }
+
+  public boolean isWidowOrphanOptOut()
+  {
+    return isFlag(FLAG_WIDOW_ORPHAN_OPT_OUT);
+  }
+
+  public void setWidowOrphanOptOut(final boolean widowOrphanOptOut)
+  {
+    setFlag(FLAG_WIDOW_ORPHAN_OPT_OUT, widowOrphanOptOut);
   }
 
   public boolean isSectionContext()

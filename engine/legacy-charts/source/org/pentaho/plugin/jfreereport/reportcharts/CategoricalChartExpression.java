@@ -722,7 +722,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
         rangeAxis.setTickLabelFont(getRangeTickFont());
       }
       final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
       {
         if (getRangeMinimum() != 0)
         {
@@ -840,7 +840,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 
   public void reconfigureForCompatibility(final int versionTag)
   {
-    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8, 99))
+    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8))
     {
       setAutoRange(getRangeMinimum() == 0 && getRangeMaximum() == 1);
     }

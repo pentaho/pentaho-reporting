@@ -18,14 +18,14 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 
 public class CrosstabCell extends AbstractRootLevelBand
 {
   public CrosstabCell()
   {
     setElementType(CrosstabCellType.INSTANCE);
-    getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, null);
   }
 
   public String getColumnField()
@@ -46,5 +46,10 @@ public class CrosstabCell extends AbstractRootLevelBand
   public void setRowField(final String rowField)
   {
     setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.ROW_FIELD, rowField);
+  }
+
+  public ElementStyleSheet getDefaultStyleSheet()
+  {
+    return BandDefaultStyleSheet.getBandDefaultStyle();
   }
 }

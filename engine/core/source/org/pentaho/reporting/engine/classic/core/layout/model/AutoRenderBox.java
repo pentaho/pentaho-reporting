@@ -126,5 +126,4 @@ public class AutoRenderBox extends RenderBox
       extendHeightInBlockMode(child, heightOffset);
     }
   }
-
 }

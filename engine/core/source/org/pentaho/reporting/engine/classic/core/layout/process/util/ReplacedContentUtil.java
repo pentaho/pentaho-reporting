@@ -21,7 +21,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 
-public class ReplacedContentUtil
+public final class ReplacedContentUtil
 {
   private ReplacedContentUtil()
   {
@@ -67,7 +67,7 @@ public class ReplacedContentUtil
         if (contentHeight > 0)
         {
           final long height = requestedHeight.resolve(blockContextWidth);
-          return height * contentBox.getComputedWidth() / contentHeight;
+          return height * blockContextWidth / contentHeight;
         }
         else
         {

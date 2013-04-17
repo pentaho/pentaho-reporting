@@ -157,6 +157,12 @@ public class BundleWriter
     }
   }
 
+  public static void writeReportToZipFile(final MasterReport report, final String file)
+      throws BundleWriterException, ContentIOException, IOException
+  {
+    writeReportToZipFile(report, new File (file));
+  }
+
   public static void writeReportToZipFile(final MasterReport report, final File file)
       throws IOException, BundleWriterException, ContentIOException
   {

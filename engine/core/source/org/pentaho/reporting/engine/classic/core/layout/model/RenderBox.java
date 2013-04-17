@@ -43,10 +43,17 @@ public abstract class RenderBox extends RenderNode
     NO_MANUAL_BREAK, DIRECT_MANUAL_BREAK, INDIRECT_MANUAL_BREAK
   }
 
+  public enum RestrictFinishClearOut
+  {
+    UNRESTRICTED, RESTRICTED, LEAF
+  }
+
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED2 = 0x1000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED3 = 0x2000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 = 0x4000000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED5 = 0x8000000;
+  protected static final int FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE = 0x10000000;
   private static final int FLAG_BOX_OPEN = 0x10000;
   private static final int FLAG_BOX_MARKED_OPEN = 0x20000;
   private static final int FLAG_BOX_APPLIED_OPEN = 0x40000;
@@ -82,6 +89,18 @@ public abstract class RenderBox extends RenderNode
   private long overflowAreaWidth;
   private long overflowAreaHeight;
 
+  /**
+   * Is the amount of space reserved for orphans beginning at the y-position of the box.
+   */
+  private long orphanConstraintSize;
+  /**
+   * The amount of space reserved for widows, starting at the y2-positions of the box. If zero, the constraint
+   * points to y2.
+   */
+  private long widowConstraintSize;
+  private RestrictFinishClearOut restrictFinishClearOut;
+  private int parentWidowContexts;
+
   protected RenderBox(final int majorAxis,
                       final int minorAxis,
                       final StyleSheet styleSheet,
@@ -111,6 +130,7 @@ public abstract class RenderBox extends RenderNode
         (getStyleSheet().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER));
     this.stateKey = stateKey;
     this.descendantCount = 1;
+    this.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
   }
 
   public RenderBox create(final StyleSheet styleSheet)
@@ -140,7 +160,21 @@ public abstract class RenderBox extends RenderNode
     b.setContentRefHolder(false);
     b.descendantCount = 1;
     b.tableValidationAge = -1;
+    b.orphanConstraintSize = 0;
+    b.widowConstraintSize = 0;
+    b.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
+    b.parentWidowContexts = 0;
     return b;
+  }
+
+  public void setParentWidowContexts(final int parentWidowContexts)
+  {
+    this.parentWidowContexts = parentWidowContexts;
+  }
+
+  public int getParentWidowContexts()
+  {
+    return parentWidowContexts;
   }
 
   public int getDescendantCount()
@@ -1138,6 +1172,7 @@ public abstract class RenderBox extends RenderNode
         ", width='" + getWidth() + '\'' +
         ", height='" + getHeight() + '\'' +
         ", hexId='" + System.identityHashCode(this) + '\'' +
+        ", elementType='" + getElementType() + '\'' +
         ", finishedPaginate='" + isFinishedPaginate() + '\'' +
         ", finishedTable='" + isFinishedTable() + '\'' +
         ", commited='" + isCommited() + '\'' +
@@ -1429,17 +1464,15 @@ public abstract class RenderBox extends RenderNode
   {
     final long parentY2 = getY() + getHeight();
     final long childY2 = child.getY() + child.getHeight();
-    long delta = childY2 - parentY2;
-
-    if (delta <= 0)
+    final long deltaToBase = childY2 - parentY2;
+    if (deltaToBase <= 0)
     {
+      // child expands without expanding this parent band. There was enough space available to contain the
+      // child inside the parent box.
       return;
     }
 
-    if (isBoxOverflowY())
-    {
-      delta = Math.min(delta, heightOffset);
-    }
+    final long delta = Math.min(deltaToBase, heightOffset);
     setHeight(getHeight() + delta);
     setOverflowAreaHeight(getOverflowAreaHeight() + delta);
     updateCacheState(CACHE_DEEP_DIRTY);
@@ -1461,5 +1494,60 @@ public abstract class RenderBox extends RenderNode
       next = next.getNext();
     }
     return count;
+  }
+
+  public long getOrphanConstraintSize()
+  {
+    return orphanConstraintSize;
+  }
+
+  public void setOrphanConstraintSize(final long orphanConstraintSize)
+  {
+    this.orphanConstraintSize = orphanConstraintSize;
+  }
+
+  public long getWidowConstraintSize()
+  {
+    return widowConstraintSize;
+  }
+
+  public void setWidowConstraintSize(final long widowConstraintSize)
+  {
+    this.widowConstraintSize = widowConstraintSize;
+  }
+
+  public boolean isInvalidWidowOrphanNode()
+  {
+    return isFlag(FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE);
+  }
+
+  public void setInvalidWidowOrphanNode(final boolean invalidWidowOrphanNode)
+  {
+    setFlag(FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE, invalidWidowOrphanNode);
+  }
+
+  public RestrictFinishClearOut getRestrictFinishedClearOut()
+  {
+    return restrictFinishClearOut;
+  }
+
+  public void setRestrictFinishedClearOut(final RestrictFinishClearOut restrictFinishedClearOut)
+  {
+    if (this.restrictFinishClearOut == restrictFinishedClearOut)
+    {
+      return;
+    }
+
+    this.restrictFinishClearOut = restrictFinishedClearOut;
+    final RenderBox parent = getParent();
+    if (parent != null && restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED)
+    {
+      parent.setRestrictFinishedClearOut(RestrictFinishClearOut.RESTRICTED);
+    }
+  }
+
+  public boolean isOrphanLeaf()
+  {
+    return this.restrictFinishClearOut == RestrictFinishClearOut.LEAF;
   }
 }

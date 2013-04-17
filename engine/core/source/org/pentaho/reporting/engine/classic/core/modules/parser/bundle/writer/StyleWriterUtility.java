@@ -785,6 +785,11 @@ public class StyleWriterUtility
         bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "orphans", String.valueOf(value));
       }
     }
+    if (style.isLocalKey(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT))
+    {
+      final boolean value = style.getBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT);
+      bandStyleAtts.setAttribute(BundleNamespaces.STYLE, ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName(), String.valueOf(value));
+    }
     if (style.isLocalKey(ElementStyleKeys.OVERFLOW_X))
     {
       final boolean value = style.getBooleanStyleProperty(ElementStyleKeys.OVERFLOW_X);

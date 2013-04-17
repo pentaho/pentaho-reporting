@@ -18,8 +18,10 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabHeaderType;
+import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A details header is printed between the last group-header and the first detail band. The header is printed on the
@@ -117,4 +119,8 @@ public class CrosstabHeader extends Band implements RootLevelBand
     notifyNodePropertiesChanged();
   }
 
+  public ElementStyleSheet getDefaultStyleSheet()
+  {
+    return BandDefaultStyleSheet.getBandDefaultStyle();
+  }
 }

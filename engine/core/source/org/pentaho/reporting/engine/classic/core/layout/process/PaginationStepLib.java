@@ -29,20 +29,26 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 /**
  * A helper class that contains generic methods that would distract me from the actual pagination logic.
  */
-public class PaginationStepLib
+public final class PaginationStepLib
 {
   private static final Log logger = LogFactory.getLog(PaginationStepLib.class);
 
+  private PaginationStepLib()
+  {
+  }
+
   public static void configureBreakUtility(final PageBreakPositionList breakUtility,
-                                            final LogicalPageBox pageBox,
-                                            final long[] allCurrentBreaks,
-                                            final long reservedHeight,
-                                            final long lastBreakLocal)
+                                           final LogicalPageBox pageBox,
+                                           final long[] allCurrentBreaks,
+                                           final long reservedHeight,
+                                           final long lastBreakLocal)
   {
     final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
     breakUtility.copyFrom(allPreviousBreak);
@@ -83,8 +89,8 @@ public class PaginationStepLib
     }
   }
 
-  public static long restrictPageAreaHeights (final LogicalPageBox pageBox,
-                                        final long[] allCurrentBreaks)
+  public static long restrictPageAreaHeights(final LogicalPageBox pageBox,
+                                             final long[] allCurrentBreaks)
   {
     final BlockRenderBox headerArea = pageBox.getHeaderArea();
     final long headerHeight = Math.min(headerArea.getHeight(), allCurrentBreaks[0]);
@@ -153,15 +159,15 @@ public class PaginationStepLib
       {
         ModelPrinter.INSTANCE.print(box);
         ModelPrinter.INSTANCE.print(ModelPrinter.getRoot(box));
-        throw new InvalidReportStateException("Assert: Shift is not as expected: realY=" + realY +
-            " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
-            "; RealShift=" + realShift);
+        throw new InvalidReportStateException(String.format("Assert: Shift is not as expected: " +
+            "realY=%d != expectation=%d; Shift=%d; AdditionalShift=%d; RealShift=%d",
+            realY, expectedYPos, shift, additionalShift, realShift));
       }
       else
       {
-        logger.debug("Assert: Shift is not as expected: realY=" + realY +
-            " != expectation=" + expectedYPos + "; Shift=" + shift + "; AdditionalShift=" + additionalShift +
-            "; RealShift=" + realShift + " (False positive if block box has valign != TOP");
+        logger.debug(String.format("Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
+            "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
+            realY, expectedYPos, shift, additionalShift, realShift));
       }
     }
   }
@@ -172,12 +178,16 @@ public class PaginationStepLib
    * @param box the box for which the height is computed
    * @return the height in micro-points.
    */
-  public static long computeNonBreakableBoxHeight(final RenderBox box)
+  public static long computeNonBreakableBoxHeight(final RenderBox box,
+                                                  final PaginationShiftState shiftState)
   {
+    // must return the reserved space starting from box's y position.
+    final long widowSize = getWidowConstraint(box, shiftState);
+
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
     if (sblp.isAvoidPagebreakInside() && box.isPinned() == false)
     {
-      return box.getHeight();
+      return Math.max(widowSize, box.getHeight());
     }
 
     if (box.isPinned())
@@ -193,61 +203,85 @@ public class PaginationStepLib
     {
       // inline boxes are never broken down (at least we avoid it as if the breakinside is set.
       // same for renderable replaced content
-      return box.getHeight();
+      return Math.max(widowSize, box.getHeight());
     }
 
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) != LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       // Canvas boxes have no notion of lines, and therefore they cannot have orphans and widows.
-      return 0;
+      return widowSize;
     }
 
-    final int orphans = sblp.getOrphans();
-    final int widows = sblp.getWidows();
-    if (orphans == 0 && widows == 0)
+    final long widowHeight = box.getWidowConstraintSize();
+    final long orphanHeight = box.getOrphanConstraintSize();
+    if (widowHeight + orphanHeight > box.getHeight())
     {
-      // Widows and orphans will be ignored if both of them are zero.
-      return 0;
+      // if the widows and orphan areas overlap, then the box becomes non-breakable.
+      return Math.max(widowSize, box.getHeight());
     }
 
-    int counter = 0;
-    RenderNode child = box.getFirstChild();
-    while (child != null && counter < orphans)
-    {
-      counter += 1;
-      child = child.getNext();
-    }
+    return Math.max(orphanHeight, widowSize);
+  }
 
-    final long orphanHeight;
-    if (child == null)
+  private static long getWidowConstraint(final RenderBox box,
+                                         final PaginationShiftState shiftState)
+  {
+    final long boxY = box.getY() + shiftState.getShiftForNextChild();
+    long retval = 0;
+    RenderBox parent = box.getParent();
+    while (parent != null)
     {
-      orphanHeight = 0;
-    }
-    else
-    {
-      orphanHeight = box.getY() - (child.getY() + child.getHeight());
-    }
+      if (parent.getWidowConstraintSize() > 0)
+      {
+        final long y2 = parent.getY() + parent.getHeight();
+        final long constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
+        if (constraintBoundary == boxY)
+        {
+          retval = Math.max (retval, y2 - boxY);
+        }
+      }
 
-    counter = 0;
-    child = box.getLastChild();
-    while (child != null && counter < orphans)
-    {
-      counter += 1;
-      child = child.getPrev();
+      parent = parent.getParent();
     }
+    return retval;
+  }
 
-    final long widowHeight;
-    if (child == null)
+  public static boolean isRestrictedKeepTogether(final RenderBox box,
+                                                 final long shift,
+                                                 final PaginationTableState paginationTableState)
+  {
+    logger.debug("Testing whether box is inside restricted area: " + box.getName());
+    RenderBox parent = box.getParent();
+    while (parent != null)
     {
-      widowHeight = 0;
-    }
-    else
-    {
-      widowHeight = (box.getY() + box.getHeight()) - (child.getY());
-    }
+      if (parent.getOrphanConstraintSize() > 0)
+      {
+        final StaticBoxLayoutProperties staticBoxLayoutProperties = parent.getStaticBoxLayoutProperties();
+        final long restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
 
-    // todo: Compute the height the orphans and widows consume.
-    return Math.max(orphanHeight, widowHeight);
+        if (restrictedAreaBounds > box.getCachedY())
+        {
+          if (parent.getY() == paginationTableState.getPageOffset())
+          {
+            // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
+            // for all its direct childs. Nothing we can do now, ignore the constraints.
+            logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+            logger.debug("                      : Parent on page-offset -> " + parent);
+            return true;
+          }
+
+          if (paginationTableState.isOnPageStart(parent.getY() + shift))
+          {
+            logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
+            logger.debug("                      : Parent on table-offset -> " + parent);
+            return true;
+          }
+        }
+      }
+
+      parent = parent.getParent();
+    }
+    return false;
   }
 
 }

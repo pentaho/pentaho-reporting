@@ -31,7 +31,6 @@ public class EndCrosstabHandler implements AdvanceHandler
   public ProcessState advance(final ProcessState state) throws ReportProcessingException
   {
     final ProcessState next = state.deriveForAdvance();
-    next.leavePresentationGroup();
     next.fireReportEvent();
     return next;
   }

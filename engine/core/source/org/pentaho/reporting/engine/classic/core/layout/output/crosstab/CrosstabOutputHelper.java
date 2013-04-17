@@ -166,7 +166,7 @@ public final class CrosstabOutputHelper
     return false;
   }
 
-  public static void closeCrosstabTable(final DefaultOutputFunction outputFunction)
+  public static boolean closeCrosstabTable(final DefaultOutputFunction outputFunction)
   {
     final RenderedCrosstabLayout crosstabLayout = outputFunction.getCurrentRenderedCrosstabLayout();
     if (crosstabLayout.isCrosstabTableOpen())
@@ -175,7 +175,9 @@ public final class CrosstabOutputHelper
       outputFunction.getRenderer().getNormalFlowLayoutModelBuilder().finishBox(); // table-body
       outputFunction.getRenderer().getNormalFlowLayoutModelBuilder().finishBox(); // table
       crosstabLayout.setCrosstabTableOpen(false);
+      return true;
     }
+    return false;
   }
 
   public static void printCrosstabSummary(final DefaultOutputFunction outputFunction,

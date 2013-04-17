@@ -794,7 +794,7 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         domainAxis.setTickLabelFont(getDomainTickFont());
       }
       final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
       {
         if (getDomainMinimum() != 0)
         {
@@ -899,7 +899,7 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
         rangeAxis.setTickLabelFont(getRangeTickFont());
       }
       final int level = getRuntime().getProcessingContext().getCompatibilityLevel();
-      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8, 99))
+      if (ClassicEngineBoot.isEnforceCompatibilityFor(level, 3, 8))
       {
         if (getRangeMinimum() != 0)
         {
@@ -1075,7 +1075,7 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
 
   public void reconfigureForCompatibility(final int versionTag)
   {
-    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8, 99))
+    if (ClassicEngineBoot.isEnforceCompatibilityFor(versionTag, 3, 8))
     {
       setRangeAxisAutoRange(getRangeMinimum() == 0 && getRangeMaximum() == 1);
       setDomainAxisAutoRange(getDomainMinimum() == 0 && getDomainMaximum() == 1);

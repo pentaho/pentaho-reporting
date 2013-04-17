@@ -67,7 +67,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     renderNodeFactory.initialize(outputProcessorMetaData);
 
     this.processingContext = processingContext;
-    
+
     final StyleSheet resolverStyle = report.getComputedStyle();
     this.pageBox = renderNodeFactory.createPage(report, resolverStyle);
 
@@ -176,7 +176,12 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
 
   public void addPageBreak()
   {
-    normalFlow.addManualPageBreakBox();
+    if (getPageBox() == null)
+    {
+      throw new IllegalStateException();
+    }
+
+    normalFlow.addManualPageBreakBox(getPageBox().getPageOffset());
   }
 
   public void add(final ExpressionRuntime runtime,
@@ -228,7 +233,7 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
   {
     getPageBox().getContentArea().close();
     getPageBox().close();
-    
+
     normalFlow.close();
     header.close();
     footer.close();

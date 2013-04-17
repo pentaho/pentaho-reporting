@@ -150,12 +150,9 @@ public class SortedMergeCrosstabSpecification implements CrosstabSpecification
 
   public void endCrosstab()
   {
-    System.out.println (rootNode.printFormatted());
     final DimensionNode[] dimensionNodes = existingNodes.keySet().toArray(new DimensionNode[existingNodes.size()]);
     Arrays.sort(dimensionNodes);
 
-    System.out.println ("--------------");
-    System.out.println (Arrays.asList(dimensionNodes));
     this.entries.clear();
     for (int i = 0; i < dimensionNodes.length; i++)
     {

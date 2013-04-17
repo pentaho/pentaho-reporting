@@ -30,27 +30,36 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  */
 public final class FinishedRenderNode extends RenderNode
 {
+  private long layoutedX;
+  private long layoutedY;
   private long layoutedWidth;
   private long layoutedHeight;
   private long marginsTop;
   private long marginsBottom;
   private boolean breakAfter;
   private ReportStateKey stateKey;
+  private final boolean orphan;
 
-  public FinishedRenderNode(final long layoutedWidth,
-                            final long layoutedHeight,
-                            final long marginsTop,
-                            final long marginsBottom,
-                            final boolean breakAfter)
-  {
-    this(layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, null);
-  }
-
-  public FinishedRenderNode(final long layoutedWidth,
+  public FinishedRenderNode(final long layoutedX,
+                            final long layoutedY,
+                            final long layoutedWidth,
                             final long layoutedHeight,
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
+                            final boolean orphan)
+  {
+    this(layoutedX, layoutedY, layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, orphan, null);
+  }
+
+  public FinishedRenderNode(final long layoutedX,
+                            final long layoutedY,
+                            final long layoutedWidth,
+                            final long layoutedHeight,
+                            final long marginsTop,
+                            final long marginsBottom,
+                            final boolean breakAfter,
+                            final boolean orphan,
                             final ReportStateKey stateKey)
   {
     super(NodeLayoutProperties.GENERIC_PROPERTIES);
@@ -65,14 +74,22 @@ public final class FinishedRenderNode extends RenderNode
 
     this.stateKey = stateKey;
     this.breakAfter = breakAfter;
+    this.layoutedX = layoutedX;
+    this.layoutedY = layoutedY;
+    this.layoutedWidth = layoutedWidth;
     this.layoutedWidth = layoutedWidth;
     this.layoutedHeight = layoutedHeight;
     this.marginsBottom = marginsBottom;
     this.marginsTop = marginsTop;
+    this.orphan = orphan;
     setFinishedPaginate(true);
     setFinishedTable(true);
     setMinimumChunkWidth(layoutedWidth);
     setMaximumBoxWidth(layoutedWidth);
+    setX(layoutedX);
+    setY(layoutedY);
+    setWidth(layoutedWidth);
+    setHeight(layoutedHeight);
   }
 
   public int getNodeType()
@@ -123,4 +140,24 @@ public final class FinishedRenderNode extends RenderNode
   {
     return stateKey;
   }
+
+  public boolean isOrphanLeaf()
+  {
+    return orphan;
+  }
+
+  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
+  {
+    if (orphan)
+    {
+      return RenderBox.RestrictFinishClearOut.LEAF;
+    }
+    return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
+  }
+
+  public long getLayoutedY()
+  {
+    return layoutedY;
+  }
+
 }

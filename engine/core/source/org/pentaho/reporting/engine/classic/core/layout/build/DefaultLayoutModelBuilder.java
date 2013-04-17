@@ -249,7 +249,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
 
   private static boolean isEmptyElement(final ReportElement band,
                                         final StyleSheet style,
-                                       final OutputProcessorMetaData metaData)
+                                        final OutputProcessorMetaData metaData)
   {
     if (isControlBand(style))
     {
@@ -549,7 +549,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     }
   }
 
-  private boolean isTableContext (RenderNode node)
+  private boolean isTableContext(RenderNode node)
   {
     while (node != null)
     {
@@ -603,19 +603,19 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
       renderBox.setRawValue(rawValue);
 
       this.context = new DefaultLayoutModelBuilderContext(this.context, renderBox);
-      this.context.setEmpty(renderNodes.length == 0 && isEmptyElement(element,resolverStyleSheet, metaData));
+      this.context.setEmpty(renderNodes.length == 0 && isEmptyElement(element, resolverStyleSheet, metaData));
       this.context = this.context.close();
     }
     else
     {
-      final StyleSheet safeElementStyle = renderNodeFactory.createStyle (resolverStyleSheet);
+      final StyleSheet safeElementStyle = renderNodeFactory.createStyle(resolverStyleSheet);
       final RenderBox renderBox = renderNodeFactory.produceRenderBox(element, resolverStyleSheet, BandStyleKeys.LAYOUT_INLINE, stateKey);
       final RenderNode[] renderNodes = textProducer.getRenderNodes(element, safeElementStyle, computedValue);
       renderBox.addChilds(renderNodes);
       renderBox.setRawValue(rawValue);
 
       this.context = new DefaultLayoutModelBuilderContext(this.context, renderBox);
-      this.context.setEmpty(renderNodes.length == 0 && isEmptyElement(element,resolverStyleSheet, metaData));
+      this.context.setEmpty(renderNodes.length == 0 && isEmptyElement(element, resolverStyleSheet, metaData));
       this.context = this.context.close();
     }
   }
@@ -629,7 +629,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     reportDrawable.setStyleSheet(resolverStyleSheet);
     reportDrawable.setConfiguration(processingContext.getConfiguration());
     reportDrawable.setResourceBundleFactory(processingContext.getResourceBundleFactory());
-    
+
     if (reportDrawable instanceof DrawableWrapper)
     {
       processReplacedContent(element, reportDrawable, rawValue);
@@ -788,7 +788,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     pushBoxToContext(box, false);
   }
 
-  protected void pushBoxToContext (final RenderBox box, final boolean empty)
+  protected void pushBoxToContext(final RenderBox box, final boolean empty)
   {
     this.context = new DefaultLayoutModelBuilderContext(this.context, box);
     this.context.setEmpty(empty);
@@ -874,17 +874,12 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     this.context.setEmpty(false);
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
-    final RenderBox breakIndicatorBox = renderNodeFactory.createPageBreakIndicatorBox(stateKey);
+    final RenderBox breakIndicatorBox = renderNodeFactory.createPageBreakIndicatorBox(stateKey, range);
 
     this.context.addChild(breakIndicatorBox);
     this.context.setEmpty(false);
-    
-    // todo
-    if (context.getRenderBox() instanceof BlockRenderBox)
-    {
-    }
   }
 
   public void setCollapseProgressMarker(final boolean collapseProgressMarker)

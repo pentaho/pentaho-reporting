@@ -22,7 +22,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public class StaticChunkWidthUpdatePool
 {
-  private class HorizontalPool extends StackedObjectPool<StaticHorizontalChunkWidthUpdate>
+  private static class HorizontalPool extends StackedObjectPool<StaticHorizontalChunkWidthUpdate>
   {
     private HorizontalPool()
     {
@@ -41,7 +41,7 @@ public class StaticChunkWidthUpdatePool
     }
   }
 
-  private class VerticalPool extends StackedObjectPool<StaticVerticalChunkWidthUpdate>
+  private static class VerticalPool extends StackedObjectPool<StaticVerticalChunkWidthUpdate>
   {
     private VerticalPool()
     {
@@ -60,7 +60,7 @@ public class StaticChunkWidthUpdatePool
     }
   }
 
-  private class InlinePool extends StackedObjectPool<StaticInlineBoxChunkWidthUpdate>
+  private static class InlinePool extends StackedObjectPool<StaticInlineBoxChunkWidthUpdate>
   {
     private InlinePool()
     {
@@ -79,7 +79,7 @@ public class StaticChunkWidthUpdatePool
     }
   }
 
-  private class ParagraphPool extends StackedObjectPool<StaticParagraphChunkWidthUpdate>
+  private static class ParagraphPool extends StackedObjectPool<StaticParagraphChunkWidthUpdate>
   {
     private ParagraphPool()
     {

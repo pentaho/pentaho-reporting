@@ -5,7 +5,6 @@ import java.io.File;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -38,7 +37,7 @@ public class CrosstabPagebreakTest extends TestCase
 
     final LogicalPageBox boxP1 = DebugReportRunner.layoutPage(report, 0);
     final LogicalPageBox boxP2 = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(boxP1);
+//    ModelPrinter.INSTANCE.print(boxP1);
     final RenderNode[] rowsPage1 = MatchFactory.findElementsByNodeType(boxP1, LayoutNodeTypes.TYPE_BOX_TABLE_ROW);
     assertEquals(23, rowsPage1.length);
 //    ModelPrinter.INSTANCE.print(boxP2);

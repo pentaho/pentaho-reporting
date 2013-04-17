@@ -33,6 +33,7 @@ public class CompatibilityConverterRegistry
   public CompatibilityConverterRegistry()
   {
     this.converters = new ArrayList<Class<? extends CompatibilityConverter>>();
+    this.converters.add(LayoutCompatibility_3_9_Converter.class);
     this.converters.add(LayoutCompatibility_4_0_Converter.class);
   }
 

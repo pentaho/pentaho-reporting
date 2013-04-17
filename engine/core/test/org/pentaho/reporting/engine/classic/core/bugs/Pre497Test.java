@@ -7,6 +7,7 @@ import javax.swing.table.TableModel;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory;
@@ -53,7 +54,7 @@ public class Pre497Test extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBug()
+  public void testBug() throws ReportProcessingException
   {
     synchronized (Pre497Test.class)
     {

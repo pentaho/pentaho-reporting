@@ -43,7 +43,15 @@ public class CompatibilityUpdater extends AbstractStructureVisitor
 
   public void performUpdate(final MasterReport report)
   {
-    version = report.getCompatibilityLevel();
+    final Integer versionRaw = report.getCompatibilityLevel();
+    if (versionRaw == null)
+    {
+      version = -1;
+    }
+    else
+    {
+      version = versionRaw.intValue();
+    }
     if (version == -1)
     {
       return;
@@ -61,7 +69,15 @@ public class CompatibilityUpdater extends AbstractStructureVisitor
     }
 
     final MasterReport masterReport = (MasterReport) reportDefinition;
-    version = masterReport.getCompatibilityLevel();
+    final Integer versionRaw = masterReport.getCompatibilityLevel();
+    if (versionRaw == null)
+    {
+      version = -1;
+    }
+    else
+    {
+      version = versionRaw.intValue();
+    }
     if (version == -1)
     {
       return;

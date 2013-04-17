@@ -19,7 +19,8 @@ package org.pentaho.reporting.engine.classic.core;
 
 import java.util.ArrayList;
 
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * The root-level band is the container that is processed by a report-state. The root-level band processing is atomic -
@@ -43,7 +44,6 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    */
   protected AbstractRootLevelBand()
   {
-    getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
   }
 
   /**
@@ -56,7 +56,6 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
                                   final boolean pagebreakAfter)
   {
     super(pagebreakBefore, pagebreakAfter);
-    getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
   }
 
   /**
@@ -217,7 +216,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
     {
       return;
     }
-    
+
     e.setParent(null);
     subReports.remove(e);
     notifyNodeChildRemoved(e);
@@ -235,5 +234,10 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
       return AbstractRootLevelBand.EMPTY_SUBREPORTS;
     }
     return subReports.toArray(new SubReport[subReports.size()]);
+  }
+
+  public ElementStyleSheet getDefaultStyleSheet()
+  {
+    return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

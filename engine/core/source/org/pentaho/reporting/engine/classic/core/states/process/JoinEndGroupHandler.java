@@ -75,7 +75,7 @@ public class JoinEndGroupHandler implements AdvanceHandler
     {
       // This happens for empty - reports. Empty-Reports are never advanceable, therefore we can
       // reach an non-advance state where inner group-footers are printed.
-      next.setAdvanceHandler(EndGroupHandler.HANDLER);
+      next.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
       return next;
     }
 
@@ -85,7 +85,7 @@ public class JoinEndGroupHandler implements AdvanceHandler
     if (ProcessState.isLastItemInGroup(group, fc.getMasterRow(), cfc.getMasterRow()))
     {
       // continue with an other EndGroup-State ...
-      next.setAdvanceHandler(EndGroupHandler.HANDLER);
+      next.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
       return next;
     }
     else

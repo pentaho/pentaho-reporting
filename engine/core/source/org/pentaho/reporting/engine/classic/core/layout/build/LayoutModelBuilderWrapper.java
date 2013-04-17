@@ -132,9 +132,9 @@ public abstract class LayoutModelBuilderWrapper implements LayoutModelBuilder
     parent.addProgressMarkerBox();
   }
 
-  public void addManualPageBreakBox()
+  public void addManualPageBreakBox(final long range)
   {
-    parent.addManualPageBreakBox();
+    parent.addManualPageBreakBox(range);
   }
 
   protected LayoutModelBuilder getParent()

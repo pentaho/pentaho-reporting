@@ -103,4 +103,17 @@ public class FilteringPageBreakPositions implements PageBreakPositions
     return backend.computeFixedPositionInFlow(shiftedBoxPosition, fixedPositionResolved);
   }
 
+  public boolean isPageStart(final long position)
+  {
+    if (position < pageStart)
+    {
+      return false;
+    }
+    if (position == pageStart)
+    {
+      return true;
+    }
+
+    return backend.isPageStart(position);
+  }
 }

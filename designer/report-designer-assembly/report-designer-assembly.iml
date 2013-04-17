@@ -49,6 +49,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="jdbc" level="application" />
   </component>
   <component name="copyright">
     <Base>

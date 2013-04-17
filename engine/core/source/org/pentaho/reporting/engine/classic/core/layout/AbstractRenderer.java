@@ -53,7 +53,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationS
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * The LayoutSystem is a simplified version of the LibLayout-rendering system.
@@ -181,6 +180,11 @@ public abstract class AbstractRenderer implements Renderer
     return outputProcessor;
   }
 
+  protected boolean isWidowOrphanDefinitionsEncountered()
+  {
+    return staticPropertiesStep.isWidowOrphanDefinitionsEncountered();
+  }
+
   public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
   {
     if (report == null)
@@ -195,19 +199,18 @@ public abstract class AbstractRenderer implements Renderer
 
     outputProcessor.processingStarted(report, processingContext);
 
-    initializeRendererOnStartReport();
-
+    initializeRendererOnStartReport(processingContext);
     renderModelBuilder.startReport(report, processingContext);
     markDirty();
   }
 
-  protected void initializeRendererOnStartReport()
+  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
   {
     this.paranoidChecks = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks"));
-    this.wrapProgressMarkerInSection= "true".equals(metaData.getConfiguration().getConfigProperty
+    this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
-    staticPropertiesStep.initialize(metaData);
+    staticPropertiesStep.initialize(metaData, processingContext);
     canvasMinorAxisLayoutStep.initialize(metaData);
     minorAxisLayoutStep.initialize(metaData);
     revalidateAllAxisLayoutStep.initialize(metaData);
@@ -414,7 +417,13 @@ public abstract class AbstractRenderer implements Renderer
     canvasMajorAxisLayoutStep.compute(pageBox); // VISUAL
     revalidateAllAxisLayoutStep.compute(pageBox); // VISUAL
 
+    if (preparePagination(pageBox) == false)
+    {
+      return LayoutResult.LAYOUT_UNVALIDATABLE;
+    }
+
     applyCachedValuesStep.compute(pageBox); // STRUCT
+
     if (isPageFinished())
     {
       lastValidateResult = LayoutResult.LAYOUT_PAGEBREAK;
@@ -425,6 +434,11 @@ public abstract class AbstractRenderer implements Renderer
       lastValidateResult = LayoutResult.LAYOUT_NO_PAGEBREAK;
       return LayoutResult.LAYOUT_NO_PAGEBREAK;
     }
+  }
+
+  protected boolean preparePagination(final LogicalPageBox pageBox)
+  {
+    return true;
   }
 
   protected void clearDirty()
@@ -466,7 +480,7 @@ public abstract class AbstractRenderer implements Renderer
     setPagebreaks(0);
     if (validateModelStep.isLayoutable(pageBox) == false)
     {
-      DebugLog.log("Not layoutable");
+      logger.debug("Not layoutable");
       return false;
     }
 
@@ -497,6 +511,11 @@ public abstract class AbstractRenderer implements Renderer
       majorAxisLayoutStep.compute(pageBox);
       canvasMajorAxisLayoutStep.compute(pageBox);
       revalidateAllAxisLayoutStep.compute(pageBox);
+
+      if (preparePagination(pageBox) == false)
+      {
+        return (pagebreaks > 0);
+      }
 
       applyCachedValuesStep.compute(pageBox);
 
@@ -691,7 +710,14 @@ public abstract class AbstractRenderer implements Renderer
 
   public void print()
   {
-    ModelPrinter.INSTANCE.print(renderModelBuilder.getPageBox());
+    if (renderModelBuilder.getPageBox() == null)
+    {
+      logger.info("Printing impossible - Page-Box empty");
+    }
+    else
+    {
+      ModelPrinter.INSTANCE.print(renderModelBuilder.getPageBox());
+    }
   }
 
   public void newPageStarted()

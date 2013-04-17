@@ -66,11 +66,11 @@ public class JoinEndCrosstabColumnAxisHandler implements AdvanceHandler
       // reach an non-advance state where inner group-footers are printed.
       if (parentGroup instanceof CrosstabRowGroup)
       {
-        next.setAdvanceHandler(EndCrosstabRowAxisHandler.HANDLER);
+        next.setAdvanceHandler(EndCrosstabRowBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabColumnGroup)
       {
-        next.setAdvanceHandler(EndCrosstabColumnAxisHandler.HANDLER);
+        next.setAdvanceHandler(EndCrosstabColumnBodyHandler.HANDLER);
       }
       else
       {
@@ -86,11 +86,11 @@ public class JoinEndCrosstabColumnAxisHandler implements AdvanceHandler
       // continue with an other EndGroup-State ...
       if (parentGroup instanceof CrosstabRowGroup)
       {
-        next.setAdvanceHandler(EndCrosstabRowAxisHandler.HANDLER);
+        next.setAdvanceHandler(EndCrosstabRowBodyHandler.HANDLER);
       }
       else if (parentGroup instanceof CrosstabColumnGroup)
       {
-        next.setAdvanceHandler(EndCrosstabColumnAxisHandler.HANDLER);
+        next.setAdvanceHandler(EndCrosstabColumnBodyHandler.HANDLER);
       }
       else
       {

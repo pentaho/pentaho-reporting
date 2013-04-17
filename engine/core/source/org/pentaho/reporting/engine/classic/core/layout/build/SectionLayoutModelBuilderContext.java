@@ -163,4 +163,13 @@ public class SectionLayoutModelBuilderContext implements LayoutModelBuilderConte
   {
     section.restoreStateAfterRollback();
   }
+
+  public int getDepth()
+  {
+    if (parent == null)
+    {
+      return 1;
+    }
+    return 1 + parent.getDepth();
+  }
 }

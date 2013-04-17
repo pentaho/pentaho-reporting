@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.base;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
@@ -31,7 +32,9 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillPhysicalPagesStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
@@ -39,11 +42,14 @@ public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
   private PaginationStep paginationStep;
+  private OrphanStep orphanStep;
+  private WidowStep widowStep;
   private FillPhysicalPagesStep fillPhysicalPagesStep;
   private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
   private int pageCount;
   private boolean pageStartPending;
   private CountBoxesStep countBoxesStep;
+  private boolean widowsEnabled;
 
   public PageableRenderer(final OutputProcessor outputProcessor)
   {
@@ -52,6 +58,8 @@ public class PageableRenderer extends AbstractRenderer
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
     this.countBoxesStep = new CountBoxesStep();
+    this.orphanStep = new OrphanStep();
+    this.widowStep = new WidowStep();
     initialize();
   }
 
@@ -59,16 +67,41 @@ public class PageableRenderer extends AbstractRenderer
   {
     super.startReport(report, processingContext);
     pageCount = 0;
+    widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
   }
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
     if (pageCount == 2)
     {
-      DebugLog.logEnter();
-//      ModelPrinter.print(pageBox);
-      DebugLog.logExit();
+//      DebugLog.logEnter();
+//      ModelPrinter.INSTANCE.print(pageBox);
+//      DebugLog.logExit();
     }
+  }
+
+  protected boolean preparePagination(final LogicalPageBox pageBox)
+  {
+    if (widowsEnabled == false)
+    {
+      return true;
+    }
+    if (isWidowOrphanDefinitionsEncountered() == false)
+    {
+      return true;
+    }
+
+    if (orphanStep.processOrphanAnnotation(pageBox))
+    {
+//      logger.info("Orphans unlayoutable.");
+      return false;
+    }
+    if (widowStep.processWidowAnnotation(pageBox))
+    {
+//      logger.info("Widows unlayoutable.");
+      return false;
+    }
+    return true;
   }
 
   protected boolean isPageFinished()
@@ -79,6 +112,7 @@ public class PageableRenderer extends AbstractRenderer
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
+      logger.info("Detected pagebreak : " + pageBreak.getLastVisibleState());
       setLastStateKey(pageBreak.getLastVisibleState());
       return true;
     }
@@ -94,6 +128,7 @@ public class PageableRenderer extends AbstractRenderer
 
     //    final long sizeBeforePagination = pageBox.getHeight();
     final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    orphanStep.processOrphanAnnotation(pageBox);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBox.isOpen() && pageBreak.isOverflow() == false)
     {
@@ -105,8 +140,8 @@ public class PageableRenderer extends AbstractRenderer
     pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
     pageCount += 1;
-    logger.info ("Printing a page: " + pageCount);
-    if (pageCount == -1)
+    logger.info("Printing a page: " + pageCount);
+    if (pageCount == -2)
     {
       // leave the debug-code in until all of these cases are solved.
       DebugLog.log("1: **** Start Printing Page: " + pageCount);
@@ -126,7 +161,7 @@ public class PageableRenderer extends AbstractRenderer
     final long nextOffset = pageBreak.getLastPosition();
     final long pageOffset = pageBox.getPageOffset();
 
-    DebugLog.log ("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    logger.info("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
 
     if (performOutput)
     {
