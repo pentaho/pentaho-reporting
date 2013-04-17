@@ -116,10 +116,6 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
   public void groupBodyFinished(final DefaultOutputFunction outputFunction,
                                 final ReportEvent event) throws ReportProcessingException
   {
-    final int gidx = event.getState().getCurrentGroupIndex();
-    final RelationalGroup g = (RelationalGroup) event.getReport().getGroup(gidx);
-    final Band b = g.getFooter();
-
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea(event);
     // only happens for inner groups.

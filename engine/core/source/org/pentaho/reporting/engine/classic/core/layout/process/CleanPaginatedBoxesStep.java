@@ -263,9 +263,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       // widow/orphan constraint calculation and removing the leaf does not alter the result of the
       // calculation of the OrphanStep.
 
-      final RenderNode firstNode = box.getFirstChild();
-      RenderNode currentNode = firstNode;
-
+      RenderNode currentNode = box.getFirstChild();
       while (currentNode != null && currentNode.isOpen() == false)
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)

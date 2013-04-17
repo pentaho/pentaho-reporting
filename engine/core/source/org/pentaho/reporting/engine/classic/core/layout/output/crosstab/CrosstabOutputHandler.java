@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
-import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
@@ -61,10 +60,6 @@ public class CrosstabOutputHandler implements GroupOutputHandler
                                 final ReportEvent event) throws ReportProcessingException
   {
     CrosstabOutputHelper.closeCrosstabTable(outputFunction);
-
-    final int gidx = event.getState().getCurrentGroupIndex();
-    final CrosstabGroup g = (CrosstabGroup) event.getReport().getGroup(gidx);
-    final Band b = g.getFooter();
 
     final Renderer renderer = outputFunction.getRenderer();
     outputFunction.updateFooterArea(event);

@@ -186,7 +186,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         RenderLength.AUTO.equals(fixedPositionLength) ||
         paginationTableState.isFixedPositionProcessingSuspended())
     {
-      return handleAutomaticPagebreak(box, shiftState, false);
+      return handleAutomaticPagebreak(box, shiftState);
     }
 
     // If you've come this far, this means, that your box has a fixed position defined.
@@ -198,7 +198,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (fixedPositionInFlow < shiftedBoxPosition)
     {
       // ... but the fixed position is invalid, so treat it as non-defined.
-      return handleAutomaticPagebreak(box, shiftState, false);
+      return handleAutomaticPagebreak(box, shiftState);
     }
 
     // The computed break seems to be valid.
@@ -264,7 +264,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     node.setY(node.getY() + shift);
     if (breakPending == false && node.isBreakAfter())
     {
-      breakPending = breakPending || paginationTableState.isOnPageStart(node.getY()) == false;
+      breakPending = paginationTableState.isOnPageStart(node.getY()) == false;
       if (breakPending)
       {
         logger.info("BreakPending True for Node:isBreakAfter: " + node);
@@ -278,7 +278,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
     if (breakPending == false && box.isBreakAfter())
     {
-      breakPending = breakPending || paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
+      breakPending = paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
       if (breakPending)
       {
         logger.info("BreakPending True for Box:isBreakAfter: " + box);
@@ -600,8 +600,7 @@ public final class PaginationStep extends IterateVisualProcessStep
   }
 
   private boolean handleAutomaticPagebreak(final RenderBox box,
-                                           final PaginationShiftState boxContext,
-                                           final boolean assumePinned)
+                                           final PaginationShiftState boxContext)
   {
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
