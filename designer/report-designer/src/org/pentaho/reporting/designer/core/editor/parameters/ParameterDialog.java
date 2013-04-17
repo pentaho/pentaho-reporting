@@ -614,6 +614,9 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     availableDataSourcesModel = provisionDataSourcePanel.getDataFactoryTreeModel();
     availableDataSourcesModel.addTreeModelListener(new DataSetQueryUpdateHandler());
+    provisionDataSourcePanel.getDataSourcesTree()
+        .addTreeSelectionListener(new QuerySelectionHandler());
+
 
     availableDataSources = provisionDataSourcePanel.getDataSourcesTree();
 
