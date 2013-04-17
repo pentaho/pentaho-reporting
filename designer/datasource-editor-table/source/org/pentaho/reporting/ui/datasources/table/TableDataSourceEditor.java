@@ -111,8 +111,8 @@ public class TableDataSourceEditor extends CommonDialog
           new ImportFromFileTask(file, useFirstRowAsHeader.isSelected(), TableDataSourceEditor.this);
       final Thread workerThread = new Thread(importFromFileTask);
       workerThread.setName("PRD-import-table-data-task"); // NON-NLS
-      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-          (workerThread, importFromFileTask, TableDataSourceEditor.this);
+      BackgroundCancellableProcessHelper.executeProcessWithCancelDialog (workerThread, importFromFileTask,
+          TableDataSourceEditor.this, Messages.getString("TableDataSourceEditor.ImportSpeadsheet.TaskName"));
     }
   }
 

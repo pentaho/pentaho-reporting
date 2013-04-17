@@ -260,7 +260,8 @@ public class PmdDataSourceEditor extends CommonDialog
             new LoadRepositoryRunnable(context, domainIdTextField.getText(), filenameField.getText());
         final Thread loadRepositoryThread = new Thread(loadRepositoryRunnable);
 
-        BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(loadRepositoryThread, null, PmdDataSourceEditor.this);
+        BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(loadRepositoryThread, null,
+            PmdDataSourceEditor.this, Messages.getString("PmdDataSourceEditor.PreviewTask"));
         final IMetadataDomainRepository repository = loadRepositoryRunnable.getRepository();
         if (repository == null)
         {

@@ -121,7 +121,8 @@ public class DataPreviewDialog extends JDialog
   {
     // Run the query in a separate thread so that we can display a cancel dialog
     final Thread qt = new Thread(previewWorker);
-    BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(qt, previewWorker, this);
+    BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
+        (qt, previewWorker, this, Messages.getInstance().getString("PreviewDialog.PreviewDataTask"));
 
     // Get the results ... or throw the exception that was generated
     final TableModel rawTableModel = previewWorker.getResultTableModel();
