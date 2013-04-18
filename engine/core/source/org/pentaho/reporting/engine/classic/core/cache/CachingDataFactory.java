@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class CachingDataFactory extends AbstractDataFactory implements CompoundDataFactorySupport
 {
@@ -216,7 +217,11 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     final DataCacheKey key = createCacheKey(query, parameters);
     if (key != null)
     {
-      final TableModel model = dataCache.get(key);
+      TableModel model = sessionCache.get(key);
+      if (model == null)
+      {
+        model = dataCache.get(key);
+      }
       if (model != null)
       {
         if (model instanceof MetaTableModel)
@@ -249,6 +254,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
         final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
         closeableTableModel.close();
       }
+      sessionCache.put(key, newData);
       data = newData;
     }
 
