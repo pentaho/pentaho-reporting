@@ -21,17 +21,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
 
 import org.olap4j.OlapConnection;
 import org.olap4j.OlapWrapper;
 
-/**
- * Creation-Date: 07.04.2006, 15:04:26
- *
- * @author Thomas Morgner
- */
 public class DriverConnectionProvider implements OlapConnectionProvider
 {
   private Properties properties;
@@ -100,23 +94,22 @@ public class DriverConnectionProvider implements OlapConnectionProvider
     }
 
     final Properties p = new Properties();
-    for (final Map.Entry entry : properties.entrySet())
+    for (final String entryKey : properties.stringPropertyNames())
     {
-      final String entryKey = (String) entry.getKey();
       if (isFilteredKey(entryKey))
       {
         continue;
       }
-      p.setProperty(entryKey, (String) entry.getValue());
+      p.setProperty(entryKey, properties.getProperty(entryKey));
     }
 
     if (user != null)
     {
-      p.setProperty("user", user);
+      p.setProperty("user", user); // NON-NLS
     }
     if (password != null)
     {
-      p.setProperty("password", password);
+      p.setProperty("password", password);// NON-NLS
     }
     final Connection connection = DriverManager.getConnection(url, p);
     if (connection instanceof OlapConnection)
@@ -142,13 +135,13 @@ public class DriverConnectionProvider implements OlapConnectionProvider
     {
       return true;
     }
-    
+
     return false;
   }
 
   public String[] getPropertyNames()
   {
-    return properties.keySet().toArray(new String[properties.size()]);
+    return properties.stringPropertyNames().toArray(new String[properties.size()]);
   }
 
   public Object getConnectionHash()
