@@ -16,18 +16,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module-library" exported="">
-      <library name="jsp-api.jar">
+      <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/jsp-api.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="servlet-api.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/servlet-api.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/external/servlet-api-2.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

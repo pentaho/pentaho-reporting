@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.webapp.servlet;
 
-import java.util.ArrayList;
-import java.text.MessageFormat;
-import java.net.URLEncoder;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriteException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriter;
@@ -50,7 +50,7 @@ public class WebAppURLRewriter implements URLRewriter
   {
     try
     {
-      final ArrayList entityNames = new ArrayList();
+      final ArrayList<String> entityNames = new ArrayList<String>();
       entityNames.add(dataEntity.getName());
 
       ContentLocation location = dataEntity.getParent();
@@ -60,7 +60,7 @@ public class WebAppURLRewriter implements URLRewriter
         location = location.getParent();
       }
 
-      final ArrayList contentNames = new ArrayList();
+      final ArrayList<String> contentNames = new ArrayList<String>();
       location = dataEntity.getRepository().getRoot();
 
       while (location != null)
@@ -72,8 +72,8 @@ public class WebAppURLRewriter implements URLRewriter
       // now remove all path elements that are equal ..
       while (contentNames.isEmpty() == false && entityNames.isEmpty() == false)
       {
-        final String lastEntity = (String) entityNames.get(entityNames.size() - 1);
-        final String lastContent = (String) contentNames.get(contentNames.size() - 1);
+        final String lastEntity = entityNames.get(entityNames.size() - 1);
+        final String lastContent = contentNames.get(contentNames.size() - 1);
         if (lastContent.equals(lastEntity) == false)
         {
           break;
@@ -82,10 +82,10 @@ public class WebAppURLRewriter implements URLRewriter
         contentNames.remove(contentNames.size() - 1);
       }
 
-      final StringBuffer b = new StringBuffer(100);
+      final StringBuilder b = new StringBuilder(100);
       for (int i = entityNames.size() - 1; i >= 0; i--)
       {
-        final String name = (String) entityNames.get(i);
+        final String name = entityNames.get(i);
         b.append(name);
         if (i != 0)
         {

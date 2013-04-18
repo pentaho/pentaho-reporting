@@ -1,0 +1,7 @@
+<Context>
+  <Resource name="jdbc/SampleData" auth="Container"
+            type="javax.sql.DataSource" driverClassName="org.hsqldb.jdbcDriver"
+            url="jdbc:hsqldb:mem:SampleData"
+            username="pentaho_user" password="password" maxActive="20" maxIdle="10"
+            maxWait="-1"/>
+</Context>

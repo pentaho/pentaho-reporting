@@ -19,17 +19,18 @@ package org.pentaho.reporting.engine.classic.webapp.servlet;
 
 import java.io.IOException;
 import java.net.URL;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Generates a ZIP file that contains the report.
@@ -45,7 +46,7 @@ public class ZipHtmlServlet extends HttpServlet
   protected void doGet(final HttpServletRequest request,
                        final HttpServletResponse response) throws ServletException, IOException
   {
-    final String reportDefinition = request.getParameter("report-definition");
+    final String reportDefinition = request.getParameter("name");
     final URL reportUrl = getServletContext().getResource(reportDefinition);
     if (reportUrl == null)
     {
@@ -55,7 +56,10 @@ public class ZipHtmlServlet extends HttpServlet
 
     try
     {
-      final MasterReport report = ReportGenerator.getInstance().parseReport(reportUrl);
+      final ResourceManager resourceManager = new ResourceManager();
+      resourceManager.registerDefaults();
+      final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
+      final MasterReport report = (MasterReport) resource.getResource();
       response.setContentType("application/zip");
 
       final ServletOutputStream stream = response.getOutputStream();

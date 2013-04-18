@@ -36,14 +36,15 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowR
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
+import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
-import org.pentaho.reporting.libraries.base.util.IOUtils;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Generates a ZIP file that contains the report. The ZIP file is stored in the session context and a
@@ -65,7 +66,7 @@ public class HtmlServlet extends HttpServlet
       String reportName = request.getParameter("report.name");
       if (reportName == null)
       {
-        reportName = generateReport(request, response);
+        reportName = generateReport(request);
         if (reportName == null)
         {
           response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -134,17 +135,20 @@ public class HtmlServlet extends HttpServlet
   }
 
 
-  private String generateReport(final HttpServletRequest request, final HttpServletResponse response)
+  private String generateReport(final HttpServletRequest request)
       throws IOException, ResourceException, ContentIOException, ReportProcessingException
   {
-    final String reportDefinition = request.getParameter("report-definition");
+    final String reportDefinition = request.getParameter("name");
     final URL reportUrl = getServletContext().getResource(reportDefinition);
     if (reportUrl == null)
     {
       return null;
     }
 
-    final MasterReport report = ReportGenerator.getInstance().parseReport(reportUrl);
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
+    final MasterReport report = (MasterReport) resource.getResource();
 
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final ZipRepository zipRepository = new ZipRepository(out);

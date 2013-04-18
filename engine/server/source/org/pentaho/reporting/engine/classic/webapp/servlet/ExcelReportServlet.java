@@ -25,8 +25,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
@@ -51,7 +51,7 @@ public class ExcelReportServlet extends HttpServlet
   protected void doGet(final HttpServletRequest request,
                        final HttpServletResponse response) throws ServletException, IOException
   {
-    final String reportDefinition = request.getParameter("report-definition");
+    final String reportDefinition = request.getParameter("name");
     final URL reportUrl = getServletContext().getResource(reportDefinition);
     if (reportUrl == null)
     {
