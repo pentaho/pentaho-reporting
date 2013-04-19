@@ -190,6 +190,8 @@ public class ContextMenuUtility
                                           final JComponent insertDataSourcesMenu)
   {
     JMenu subMenu = null;
+    UIDefaults uiDefs = UIManager.getDefaults();  
+    uiDefs.put("Tree.leftChildIndent" , new Integer( 0 ) ); 
     final Map<String, Boolean> groupingMap = new HashMap<String, Boolean>();
     final DataFactoryMetaData[] datas = DataFactoryRegistry.getInstance().getAll();
     for (int i = 0; i < datas.length; i++)
