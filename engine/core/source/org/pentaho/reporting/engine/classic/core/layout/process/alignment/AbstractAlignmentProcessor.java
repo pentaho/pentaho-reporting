@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 
@@ -76,8 +77,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
   private static final long[] EMPTY = new long[0];
   private boolean lastLineAlignment;
   private LeftAlignmentProcessor leftAlignProcessor;
-  private OutputProcessorMetaData metaData;
   private boolean overflowX;
+  private LongList pageLongList;
 
 
   protected AbstractAlignmentProcessor()
@@ -266,12 +267,11 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     }
 
     this.overflowX = overflowX;
-    this.metaData = metaData;
     this.sequenceElements = sequence.getSequenceElements(this.sequenceElements);
     this.nodes = sequence.getNodes(this.nodes);
     this.sequenceFill = sequence.size();
     this.pageGrid = breaks;
-    if (elementPositions.length <= sequenceFill)
+    if (elementPositions.length < sequenceFill)
     {
       this.elementPositions = new long[sequenceFill];
     }
@@ -280,7 +280,7 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
       Arrays.fill(this.elementPositions, 0);
     }
 
-    if (elementDimensions.length <= sequenceFill)
+    if (elementDimensions.length < sequenceFill)
     {
       this.elementDimensions = new long[sequenceFill];
     }
@@ -308,14 +308,20 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     this.pendingElements.clear();
     this.contexts.clear();
     this.sequenceFill = 0;
-    this.metaData = null;
   }
 
   private void updateBreaks()
   {
     final long[] horizontalBreaks = pageGrid.getHorizontalBreaks();
     final int breakCount = horizontalBreaks.length;
-    final LongList pageLongList = new LongList(breakCount);
+    if (pageLongList == null)
+    {
+      pageLongList = new LongList(breakCount);
+    }
+    else
+    {
+      pageLongList.clear();
+    }
     for (int i = 0; i < breakCount; i++)
     {
       final long pos = horizontalBreaks[i];

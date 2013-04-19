@@ -1179,13 +1179,6 @@ public abstract class RenderBox extends RenderNode
         '}';
   }
 
-  public void markCacheClean()
-  {
-    super.markCacheClean();
-    this.staticBoxPropertiesAge = getChangeTracker();
-    this.tableValidationAge = getChangeTracker();
-  }
-
   public void commit()
   {
     appliedPinPosition = markedPinPosition;
@@ -1272,6 +1265,7 @@ public abstract class RenderBox extends RenderNode
   {
     resetValidateModelResult();
     setLinebreakAge(-1);
+    setCachedAge(-1);
     if (deepDirty)
     {
       updateCacheState(CACHE_DEEP_DIRTY);
@@ -1423,6 +1417,8 @@ public abstract class RenderBox extends RenderNode
   public void apply()
   {
     super.apply();
+    this.staticBoxPropertiesAge = getChangeTracker();
+    this.tableValidationAge = getChangeTracker();
     overflowAreaWidth = getCachedWidth();
     overflowAreaHeight = getCachedHeight();
   }

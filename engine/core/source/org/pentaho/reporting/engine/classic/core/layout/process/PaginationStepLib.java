@@ -165,9 +165,12 @@ public final class PaginationStepLib
       }
       else
       {
-        logger.debug(String.format("Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
-            "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
-            realY, expectedYPos, shift, additionalShift, realShift));
+        if (logger.isDebugEnabled())
+        {
+          logger.debug(String.format("Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
+              "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
+              realY, expectedYPos, shift, additionalShift, realShift));
+        }
       }
     }
   }
@@ -237,7 +240,7 @@ public final class PaginationStepLib
         final long constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
         if (constraintBoundary == boxY)
         {
-          retval = Math.max (retval, y2 - boxY);
+          retval = Math.max(retval, y2 - boxY);
         }
       }
 
@@ -250,13 +253,15 @@ public final class PaginationStepLib
                                                  final long shift,
                                                  final PaginationTableState paginationTableState)
   {
-    logger.debug("Testing whether box is inside restricted area: " + box.getName());
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Testing whether box is inside restricted area: " + box.getName());
+    }
     RenderBox parent = box.getParent();
     while (parent != null)
     {
       if (parent.getOrphanConstraintSize() > 0)
       {
-        final StaticBoxLayoutProperties staticBoxLayoutProperties = parent.getStaticBoxLayoutProperties();
         final long restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
 
         if (restrictedAreaBounds > box.getCachedY())
@@ -265,15 +270,21 @@ public final class PaginationStepLib
           {
             // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
             // for all its direct childs. Nothing we can do now, ignore the constraints.
-            logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
-            logger.debug("                      : Parent on page-offset -> " + parent);
+            if (logger.isDebugEnabled())
+            {
+              logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
+              logger.debug("                      : Parent on page-offset -> " + parent);
+            }
             return true;
           }
 
           if (paginationTableState.isOnPageStart(parent.getY() + shift))
           {
-            logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
-            logger.debug("                      : Parent on table-offset -> " + parent);
+            if (logger.isDebugEnabled())
+            {
+              logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
+              logger.debug("                      : Parent on table-offset -> " + parent);
+            }
             return true;
           }
         }

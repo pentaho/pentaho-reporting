@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.WatermarkAreaBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
@@ -52,7 +51,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
+public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 {
   private static final Log logger = LogFactory.getLog(CanvasMajorAxisLayoutStep.class);
 
@@ -60,40 +59,17 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
   private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
   private boolean paranoidChecks = true;
-  private TableRowHeightCalculation tableRowHeightStep;
-  private boolean cacheDeepDirty;
 
   public CanvasMajorAxisLayoutStep()
   {
+    super(true);
     paranoidChecks = "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.process.ParanoidChecks"));
-    this.tableRowHeightStep = new TableRowHeightCalculation(true);
   }
 
   public void compute(final LogicalPageBox pageBox)
   {
-    cacheDeepDirty = false;
-    tableRowHeightStep.reset();
-    startProcessing(pageBox);
-  }
-
-  protected boolean checkCacheValid(final RenderNode node)
-  {
-    if (cacheDeepDirty)
-    {
-      node.markCacheDirty();
-      return false;
-    }
-    final RenderNode.CacheState cacheState = node.getCacheState();
-    if (cacheState == RenderNode.CacheState.CLEAN)
-    {
-      return true;
-    }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
-    }
-    return false;
+    super.compute(pageBox);
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -122,10 +98,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     }
 
     final int strictNodeType = box.getNodeType();
-    if (strictNodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
 
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalBlockPosition(box);
@@ -230,10 +203,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
-    }
+    performFinishTable(box);
 
     if (nodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK)
     {
@@ -403,11 +373,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
       return false;
     }
 
-    final int strictNodeType = box.getNodeType();
-    if (strictNodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
 
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalCanvasPosition(box);
@@ -479,7 +445,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     final int type = box.getLayoutNodeType();
     if (type == LayoutNodeTypes.TYPE_BOX_TABLE)
     {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
+      performFinishTable(box);
       box.setCachedHeight(computeCanvasHeight(box, false));
       return;
     }
@@ -674,10 +640,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     }
 
     final int strictNodeType = box.getNodeType();
-    if (strictNodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
 
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalRowPosition(box);
@@ -739,10 +702,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
-    }
+    performFinishTable(box);
 
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
@@ -815,7 +775,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
-      tableRowHeightStep.startTableCell((TableCellRenderBox) box);
+      getTableRowHeightStep().startTableCell((TableCellRenderBox) box);
     }
     else
     {
@@ -835,7 +795,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     if (box instanceof TableCellRenderBox)
     {
       final long blockHeight = computeTableHeightAndAlign(box, true);
-      tableRowHeightStep.finishTableCell((TableCellRenderBox) box, blockHeight);
+      getTableRowHeightStep().finishTableCell((TableCellRenderBox) box, blockHeight);
     }
     else
     {
@@ -855,7 +815,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
     if (box instanceof TableSectionRenderBox)
     {
-      tableRowHeightStep.startTableSection((TableSectionRenderBox) box);
+      getTableRowHeightStep().startTableSection((TableSectionRenderBox) box);
     }
     return true;
   }
@@ -869,7 +829,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
   {
     if (box instanceof TableSectionRenderBox)
     {
-      tableRowHeightStep.finishTableSection((TableSectionRenderBox) box);
+      getTableRowHeightStep().finishTableSection((TableSectionRenderBox) box);
     }
     else
     {
@@ -887,7 +847,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
 
     if (box instanceof TableRowRenderBox)
     {
-      tableRowHeightStep.startTableRow((TableRowRenderBox) box);
+      getTableRowHeightStep().startTableRow((TableRowRenderBox) box);
       final long blockHeight = computeRowHeightAndAlign(box, 0, false);
       box.setCachedHeight(blockHeight);
     }

@@ -97,6 +97,7 @@ public abstract class RenderNode implements Cloneable
   private long width;
   private long height;
 
+  private long cachedAge;
 
   protected RenderNode(final int majorAxis,
                        final int minorAxis,
@@ -230,22 +231,19 @@ public abstract class RenderNode implements Cloneable
   public void shift(final long amount)
   {
     this.y += amount;
-    this.updateCacheState(RenderNode.CACHE_DEEP_DIRTY);
   }
 
   public final void setY(final long y)
   {
     this.y = y;
-    this.updateCacheState(RenderNode.CACHE_DEEP_DIRTY);
   }
 
   protected final void updateCacheState(final CacheState state)
   {
     switch (state)
     {
-//      case CACHE_CLEAN:
-//        this.cacheState = CACHE_CLEAN;
-//        break;
+      case CLEAN:
+        break;
       case DIRTY:
         if (cacheState == RenderNode.CACHE_CLEAN)
         {
@@ -272,11 +270,6 @@ public abstract class RenderNode implements Cloneable
       default:
         throw new IllegalArgumentException();
     }
-  }
-
-  public final void markCacheDirty()
-  {
-    updateCacheState(CacheState.DIRTY);
   }
 
   public final long getWidth()
@@ -495,6 +488,7 @@ public abstract class RenderNode implements Cloneable
     node.prevNode = null;
     if (deep)
     {
+      node.cachedAge = this.changeTracker;
       node.validateModelAge = -1;
       node.cacheState = CACHE_DEEP_DIRTY;
     }
@@ -757,6 +751,7 @@ public abstract class RenderNode implements Cloneable
     this.y = this.cachedY;
     this.width = this.cachedWidth;
     this.height = this.cachedHeight;
+    this.cachedAge = this.changeTracker;
     this.cacheState = RenderNode.CACHE_CLEAN;
     final RenderBox parent = getParent();
     if (parent != null)
@@ -820,15 +815,6 @@ public abstract class RenderNode implements Cloneable
   public CacheState getCacheState()
   {
     return cacheState;
-  }
-
-  public void markCacheClean()
-  {
-    if (cachedY != y)
-    {
-      throw new IllegalStateException();
-    }
-    cacheState = RenderNode.CACHE_CLEAN;
   }
 
   public ReportStateKey getStateKey()
@@ -1072,4 +1058,31 @@ public abstract class RenderNode implements Cloneable
   {
     return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
   }
+
+  public long getCachedAge()
+  {
+    return cachedAge;
+  }
+
+  public boolean isCacheValid()
+  {
+    if (cachedAge != changeTracker)
+    {
+      return false;
+    }
+
+    if (this.cacheState != CACHE_CLEAN)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  protected final void setCachedAge(final long cachedAge)
+  {
+    this.cachedAge = cachedAge;
+  }
+
+
 }

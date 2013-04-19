@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
@@ -37,7 +36,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class PageableRenderer extends AbstractRenderer
 {
@@ -113,7 +111,10 @@ public class PageableRenderer extends AbstractRenderer
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBreak.isOverflow() || pageBox.isOpen() == false)
     {
-      logger.info("Detected pagebreak : " + pageBreak.getLastVisibleState());
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Detected pagebreak : " + pageBreak.getLastVisibleState());
+      }
       setLastStateKey(pageBreak.getLastVisibleState());
       return true;
     }
@@ -141,14 +142,17 @@ public class PageableRenderer extends AbstractRenderer
     pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
     pageCount += 1;
-    logger.info("Printing a page: " + pageCount);
-    if (pageCount == -2)
+    if (logger.isDebugEnabled())
     {
-      // leave the debug-code in until all of these cases are solved.
-      DebugLog.log("1: **** Start Printing Page: " + pageCount);
-      ModelPrinter.INSTANCE.print(clone);
-      DebugLog.log("1: **** Start Printing Page: " + pageCount);
-      ModelPrinter.INSTANCE.print(pageBox);
+      logger.debug("Printing a page: " + pageCount);
+      if (pageCount == -2)
+      {
+        // leave the debug-code in until all of these cases are solved.
+        logger.debug("1: **** Start Printing Page: " + pageCount);
+        ModelPrinter.INSTANCE.print(clone);
+        logger.debug("1: **** Start Printing Page: " + pageCount);
+        ModelPrinter.INSTANCE.print(pageBox);
+      }
     }
 
 //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
@@ -162,7 +166,10 @@ public class PageableRenderer extends AbstractRenderer
     final long nextOffset = pageBreak.getLastPosition();
     final long pageOffset = pageBox.getPageOffset();
 
-    logger.info("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    }
 
     if (performOutput)
     {

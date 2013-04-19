@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.WatermarkAreaBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
@@ -45,7 +44,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.valign.NodeAlign
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.ReplacedContentAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.TextElementAlignContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.VerticalAlignmentProcessor;
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 
 /**
@@ -55,32 +53,24 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
  * @author Thomas Morgner
  * @noinspection PointlessArithmeticExpression, ConstantConditions
  */
-public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
+public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 {
-  // Set the maximum height to an incredibly high value. This is now 2^43 micropoints or more than
-  // 3000 kilometers. Please call me directly at any time if you need more space for printing.
-  private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
-
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
-  private TableRowHeightCalculation tableRowHeightStep;
-  private boolean cacheDeepDirty;
 
   public InfiniteMajorAxisLayoutStep()
   {
+    super(false);
     this.breakState = new MajorAxisParagraphBreakState();
     this.processor = new VerticalAlignmentProcessor();
-    this.tableRowHeightStep = new TableRowHeightCalculation(false);
   }
 
   public void compute(final LogicalPageBox pageBox)
   {
     this.breakState.deinit();
-    this.tableRowHeightStep.reset();
-    this.cacheDeepDirty = false;
     try
     {
-      startProcessing(pageBox);
+      super.compute(pageBox);
     }
     finally
     {
@@ -101,29 +91,15 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       throw new IllegalStateException("Box must be layouted a bit ..");
     }
 
-    this.cacheDeepDirty = false;
     this.breakState.deinit();
-    startProcessing(box);
-    this.breakState.deinit();
-  }
-
-  protected boolean checkCacheValid(final RenderNode node)
-  {
-    if (cacheDeepDirty)
+    try
     {
-      node.markCacheDirty();
-      return false;
+      super.continueComputation(box);
     }
-    final RenderNode.CacheState cacheState = node.getCacheState();
-    if (cacheState == RenderNode.CacheState.CLEAN)
+    finally
     {
-      return true;
+      this.breakState.deinit();
     }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
-    }
-    return false;
   }
 
 
@@ -134,11 +110,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return false;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
     // Compute the block-position of the box. The box is positioned relative to the previous silbling or
     // relative to the parent.
     box.setCachedY(computeVerticalBlockPosition(box));
@@ -204,12 +176,9 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
-    }
+    performFinishTable(box);
 
+    final int nodeType = box.getNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK)
     {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
@@ -319,22 +288,22 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
   {
     return computeBlockHeightAndAlign(box, box.getBoxDefinition(), 0, true);
   }
-  
-  private static long computeTableHeightAndAlign (final RenderBox box)
+
+  private static long computeTableHeightAndAlign(final RenderBox box)
   {
     return computeBlockHeightAndAlign(box, BoxDefinition.EMPTY, 0, true);
   }
 
   public static long computeBlockHeightAndAlign(final RenderBox box,
-                                          final BoxDefinition boxDefinition,
-                                          final long resolveSize,
-                                          final boolean alignChilds)
+                                                final BoxDefinition boxDefinition,
+                                                final long resolveSize,
+                                                final boolean alignChilds)
   {
     if (resolveSize < 0)
     {
       throw new IllegalArgumentException("ResovleSize cannot be negative");
     }
-    
+
     // Check the height. Set the height.
     final RenderLength preferredHeight = boxDefinition.getPreferredHeight();
     final RenderLength minimumHeight = boxDefinition.getMinimumHeight();
@@ -705,16 +674,13 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return false;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
 
     box.setCachedY(computeVerticalCanvasPosition(box));
 
     if (breakState.isActive() == false)
     {
+      final int nodeType = box.getNodeType();
       if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
       {
         final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
@@ -779,11 +745,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
-    }
+    performFinishTable(box);
 
     final int layoutNodeType = box.getLayoutNodeType();
     if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
@@ -796,6 +758,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     }
     else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
     {
+      // ignored ...
     }
     else
     {
@@ -957,11 +920,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return false;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
-    }
+    performStartTable(box);
 
     // Compute the block-position of the box. The box is positioned relative to the previous silbling or
     // relative to the parent.
@@ -1027,11 +986,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
-    final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
-    }
+    performFinishTable(box);
 
     final int layoutNodeType = box.getLayoutNodeType();
     if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
@@ -1044,6 +999,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     }
     else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
     {
+      // ignored ..
     }
     else
     {
@@ -1111,7 +1067,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     box.setCachedY(computeVerticalRowPosition(box));
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
-      tableRowHeightStep.startTableCell((TableCellRenderBox) box);
+      getTableRowHeightStep().startTableCell((TableCellRenderBox) box);
     }
     else
     {
@@ -1126,7 +1082,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       final long blockHeight = computeTableHeightAndAlign(box);
-      tableRowHeightStep.finishTableCell((TableCellRenderBox) box, blockHeight);
+      getTableRowHeightStep().finishTableCell((TableCellRenderBox) box, blockHeight);
     }
     else
     {
@@ -1141,7 +1097,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
     if (box instanceof TableSectionRenderBox)
     {
-      tableRowHeightStep.startTableSection((TableSectionRenderBox) box);
+      getTableRowHeightStep().startTableSection((TableSectionRenderBox) box);
     }
     return true;
   }
@@ -1157,7 +1113,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
     if (box instanceof TableSectionRenderBox)
     {
-      tableRowHeightStep.finishTableSection((TableSectionRenderBox) box);
+      getTableRowHeightStep().finishTableSection((TableSectionRenderBox) box);
     }
   }
 
@@ -1165,7 +1121,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
   {
     if (box instanceof TableRowRenderBox)
     {
-      tableRowHeightStep.startTableRow((TableRowRenderBox) box);
+      getTableRowHeightStep().startTableRow((TableRowRenderBox) box);
     }
 
     box.setCachedY(computeVerticalBlockPosition(box));

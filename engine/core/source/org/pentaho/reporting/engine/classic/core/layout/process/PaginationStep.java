@@ -38,7 +38,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationS
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
@@ -174,7 +173,10 @@ public final class PaginationStep extends IterateVisualProcessStep
       if (handleManualBreakOnBox(box, shiftState, breakPending))
       {
         breakPending = false;
-        logger.info("pending page-break or manual break: " + box);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("pending page-break or manual break: " + box);
+        }
         return true;
       }
       breakPending = false;
@@ -267,7 +269,10 @@ public final class PaginationStep extends IterateVisualProcessStep
       breakPending = paginationTableState.isOnPageStart(node.getY()) == false;
       if (breakPending)
       {
-        logger.info("BreakPending True for Node:isBreakAfter: " + node);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("BreakPending True for Node:isBreakAfter: " + node);
+        }
       }
     }
   }
@@ -281,7 +286,10 @@ public final class PaginationStep extends IterateVisualProcessStep
       breakPending = paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
       if (breakPending)
       {
-        logger.info("BreakPending True for Box:isBreakAfter: " + box);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("BreakPending True for Box:isBreakAfter: " + box);
+        }
       }
     }
 
@@ -383,7 +391,10 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (delta <= 0)
     {
       BoxShifter.shiftBox(box, contextShift);
-      DebugLog.log("HEADER NOT SHIFTED; DELTA = " + delta + " -> " + contextShift);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("HEADER NOT SHIFTED; DELTA = " + delta + " -> " + contextShift);
+      }
       sectionRenderBox.setHeaderShift(pageOffsetKey, 0);
       return;
     }
@@ -391,27 +402,42 @@ public final class PaginationStep extends IterateVisualProcessStep
     // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
     //    return false afterwards.
 
-    DebugLog.log("HEADER SHIFTED; DELTA = " + delta + " -> " + contextShift);
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("HEADER SHIFTED; DELTA = " + delta + " -> " + contextShift);
+    }
     long headerShift = sectionRenderBox.getHeaderShift(pageOffsetKey);
     if (headerShift == 0)
     {
       final long previousPageOffset =
           paginationTableState.getBreakPositions().findPageStartPositionForPageEndPosition(pageOffset);
       headerShift = sectionRenderBox.getHeaderShift(previousPageOffset) + box.getHeight();
-      DebugLog.log("HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset);
+      }
       sectionRenderBox.setHeaderShift(pageOffsetKey, headerShift);
     }
     else
     {
-      DebugLog.log("Existing HeaderShift: " + headerShift + " <=> " + pageOffset);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Existing HeaderShift: " + headerShift + " <=> " + pageOffset);
+      }
     }
 
-    DebugLog.log("Table-Height before extension: " + box.getParent().getHeight());
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Table-Height before extension: " + box.getParent().getHeight());
+    }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
     BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
-    DebugLog.log("Table-Height after extension: " + box.getParent().getHeight());
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Table-Height after extension: " + box.getParent().getHeight());
+    }
   }
 
   protected void finishTableLevelBox(final RenderBox box)
@@ -658,8 +684,11 @@ public final class PaginationStep extends IterateVisualProcessStep
       // into account.
       if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
       {
-        logger.info("Automatic pagebreak, after orphan-opt-out: " + box);
-        logger.info("Automatic pagebreak                      : " + visualState);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
+          logger.debug("Automatic pagebreak                      : " + visualState);
+        }
         final long nextShift = nextMinorBreak - boxY;
         final long shiftDelta = nextShift - shift;
         box.setY(boxY + nextShift);
