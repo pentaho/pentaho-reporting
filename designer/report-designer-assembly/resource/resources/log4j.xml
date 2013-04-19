@@ -97,6 +97,10 @@
         <priority value="INFO"/>
     </category>
 
+    <category name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableRenderer">
+        <priority value="INFO"/>
+    </category>
+
     <category name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter">
         <priority value="DEBUG"/>
     </category>
