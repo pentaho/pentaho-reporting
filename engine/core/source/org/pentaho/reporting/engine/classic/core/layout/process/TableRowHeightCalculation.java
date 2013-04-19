@@ -150,7 +150,7 @@ public class TableRowHeightCalculation
         size += currentTable.getPreferredRowSize(i);
       }
 
-      box.setCachedHeightRelaxed(size);
+      box.setCachedHeight(size);
     }
     else
     {
@@ -161,7 +161,7 @@ public class TableRowHeightCalculation
         size += currentTable.getValidatedRowSize(i);
       }
 
-      box.setCachedHeightRelaxed(size);
+      box.setCachedHeight(size);
     }
   }
 
@@ -180,7 +180,7 @@ public class TableRowHeightCalculation
         size += currentTable.getValidatedRowSize(i);
       }
 
-      cellBox.setCachedHeightRelaxed(size);
+      cellBox.setCachedHeight(size);
     }
   }
 

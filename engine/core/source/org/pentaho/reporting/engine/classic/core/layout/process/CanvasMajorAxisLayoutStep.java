@@ -820,7 +820,7 @@ public final class CanvasMajorAxisLayoutStep extends IterateVisualProcessStep
     else
     {
       final long blockHeight = computeTableHeightAndAlign(box, false);
-      box.setCachedHeightRelaxed(blockHeight);
+      box.setCachedHeight(blockHeight);
     }
     return true;
   }

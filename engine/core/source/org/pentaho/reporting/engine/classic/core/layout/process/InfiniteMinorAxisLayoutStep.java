@@ -375,11 +375,6 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     startTableSectionOrRow(box);
     return true;
   }
@@ -396,12 +391,6 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (checkCacheValid(box))
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
-        return;
-      }
-
       box.setCachedX(nodeContext.getX());
       box.setContentAreaX1(nodeContext.getX1());
       box.setContentAreaX2(nodeContext.getX2());
@@ -431,11 +420,6 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
-
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
 
     if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
@@ -473,12 +457,6 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
   {
     try
     {
-      if (checkCacheValid(box))
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
-        return;
-      }
-
       box.setCachedX(nodeContext.getX());
       box.setContentAreaX1(nodeContext.getX1());
       box.setContentAreaX2(nodeContext.getX2());

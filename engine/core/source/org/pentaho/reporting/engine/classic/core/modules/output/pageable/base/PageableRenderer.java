@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
@@ -196,6 +197,7 @@ public class PageableRenderer extends AbstractRenderer
       pageBox.setPageOffset(nextOffset);
       countBoxesStep.process(pageBox);
       cleanPaginatedBoxesStep.compute(pageBox);
+      pageBox.resetCacheState(true);
 
       if (pageBreak.isNextPageContainsContent())
       {

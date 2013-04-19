@@ -1108,11 +1108,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     box.setCachedY(computeVerticalRowPosition(box));
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
@@ -1121,18 +1116,13 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     else
     {
       final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeightRelaxed(blockHeight);
+      box.setCachedHeight(blockHeight);
     }
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return;
-    }
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       final long blockHeight = computeTableHeightAndAlign(box);
@@ -1141,7 +1131,7 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
     else
     {
       final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeightRelaxed(blockHeight);
+      box.setCachedHeight(blockHeight);
     }
   }
 
@@ -1173,11 +1163,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     if (box instanceof TableRowRenderBox)
     {
       tableRowHeightStep.startTableRow((TableRowRenderBox) box);
@@ -1194,11 +1179,6 @@ public final class InfiniteMajorAxisLayoutStep extends IterateVisualProcessStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return;
-    }
-
     if (box instanceof TableRowRenderBox)
     {
       // rows get their height from the current table-row-model. This model cannot be computed until

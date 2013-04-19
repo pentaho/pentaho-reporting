@@ -31,19 +31,17 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 
-/**
- * Creation-Date: 19.04.2007, 20:47:38
- *
- * @author Thomas Morgner
- */
 public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 {
+  private boolean cacheClean;
+
   public ApplyCachedValuesStep()
   {
   }
 
   public void compute(final RenderBox box)
   {
+    cacheClean = true;
     startProcessing(box);
   }
 
@@ -64,9 +62,10 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   protected void processRenderableContent(final RenderableReplacedContentBox box)
   {
-    box.apply();
+    processBox(box);
     box.setOverflowAreaWidth(box.getCachedWidth());
     box.setOverflowAreaHeight(box.getCachedHeight());
+    processFinishBox(box);
   }
 
   protected boolean startBlockBox(final BlockRenderBox box)
@@ -81,6 +80,19 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   private boolean processBox(final RenderBox box)
   {
+    if (cacheClean)
+    {
+      final RenderNode.CacheState state = box.getCacheState();
+      if (state == RenderNode.CACHE_CLEAN)
+      {
+        return false;
+      }
+      if (state == RenderNode.CACHE_DEEP_DIRTY)
+      {
+        cacheClean = false;
+      }
+    }
+
     box.apply();
     return true;
   }
@@ -97,8 +109,8 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   protected void processTableColumn(final TableColumnNode box)
   {
-    box.apply();
-    box.setStaticBoxPropertiesAge(box.getChangeTracker());
+    processBox(box);
+    processFinishBox(box);
   }
 
   protected boolean startTableBox(final TableRenderBox box)
@@ -173,8 +185,7 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   protected void finishTableColumnGroupBox(final TableColumnGroupNode box)
   {
-    box.apply();
-    box.setStaticBoxPropertiesAge(box.getChangeTracker());
+    processFinishBox(box);
   }
 
   protected void finishTableRowBox(final TableRowRenderBox box)
@@ -189,8 +200,8 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   private void processFinishBox(final RenderBox box)
   {
-    box.setStaticBoxPropertiesAge(box.getChangeTracker());
     processFinishNode(box);
+    box.setStaticBoxPropertiesAge(box.getChangeTracker());
   }
 
   private void processFinishNode(final RenderNode box)

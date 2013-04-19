@@ -707,11 +707,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     startTableSectionOrRow(box);
     return true;
   }
@@ -728,12 +723,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (checkCacheValid(box))
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
-        return;
-      }
-
       box.setCachedX(nodeContext.getX());
       box.setContentAreaX1(nodeContext.getX1());
       box.setContentAreaX2(nodeContext.getX2());
@@ -773,11 +762,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       startTableSectionOrRow(box);
@@ -814,12 +798,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   {
     try
     {
-      if (checkCacheValid(box))
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
-        return;
-      }
-
       box.setCachedX(nodeContext.getX());
       box.setContentAreaX1(nodeContext.getX1());
       box.setContentAreaX2(nodeContext.getX2());

@@ -206,6 +206,7 @@ public class FlowRenderer extends AbstractRenderer
 
         cleanPaginatedBoxesStep.compute(pageBox);
         pageBox.setPageOffset(nextOffset);
+        pageBox.resetCacheState(true);
         if (pageBreak.isNextPageContainsContent())
         {
           if (layoutPagebreakHandler != null)
@@ -223,6 +224,7 @@ public class FlowRenderer extends AbstractRenderer
       {
         outputProcessor.processingFinished();
         pageBox.setPageOffset(nextOffset);
+        pageBox.resetCacheState(true);
         return false;
       }
     }

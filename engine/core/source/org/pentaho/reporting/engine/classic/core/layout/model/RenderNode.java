@@ -261,13 +261,13 @@ public abstract class RenderNode implements Cloneable
       case DEEP_DIRTY:
         if (cacheState == RenderNode.CACHE_CLEAN)
         {
-          this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
           final RenderBox parent = getParent();
           if (parent != null)
           {
             parent.updateCacheState(RenderNode.CACHE_DIRTY);
           }
         }
+        this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
         break;
       default:
         throw new IllegalArgumentException();
@@ -743,19 +743,6 @@ public abstract class RenderNode implements Cloneable
   }
 
   public void setCachedHeight(final long cachedHeight)
-  {
-    if (cachedHeight < 0)
-    {
-      throw new IndexOutOfBoundsException("'cached height' cannot be negative, was " + cachedHeight);
-    }
-    if (cacheState == CACHE_CLEAN && this.cachedHeight > 0 && cachedHeight == 0)
-    {
-      throw new IndexOutOfBoundsException("'cached height' cannot be set to zero, was " + this.cachedHeight + " before.");
-    }
-    this.cachedHeight = cachedHeight;
-  }
-
-  public void setCachedHeightRelaxed(final long cachedHeight)
   {
     if (cachedHeight < 0)
     {
