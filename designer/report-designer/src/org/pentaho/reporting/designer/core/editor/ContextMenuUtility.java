@@ -25,8 +25,6 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.PasteAction;
@@ -192,8 +190,7 @@ public class ContextMenuUtility
                                           final JComponent insertDataSourcesMenu)
   {
     JMenu subMenu = null;
-    UIDefaults uiDefs = UIManager.getDefaults();  
-    uiDefs.put("Tree.leftChildIndent" , new Integer( 0 ) ); 
+
     final Map<String, Boolean> groupingMap = new HashMap<String, Boolean>();
     final DataFactoryMetaData[] datas = DataFactoryRegistry.getInstance().getAll();
     for (int i = 0; i < datas.length; i++)
