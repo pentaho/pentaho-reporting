@@ -122,11 +122,11 @@ public class LibSwingUtil
     final int baseX = parent.getX();
     final int baseY = parent.getY();
 
-    final int parentPointX = baseX + (int) (horizontalPercent * p.width);
-    final int parentPointY = baseY + (int) (verticalPercent * p.height);
+    final int parentPointX = baseX + (int)(horizontalPercent * p.width);
+    final int parentPointY = baseY + (int)(verticalPercent * p.height);
 
-    final int dialogPointX = Math.max (0, parentPointX - (int) (horizontalPercent * d.width));
-    final int dialogPointY = Math.max (0, parentPointY - (int) (verticalPercent * d.height));
+    final int dialogPointX = parentPointX - (int)(horizontalPercent * d.width);
+    final int dialogPointY = parentPointY - (int)(verticalPercent * d.height);
 
     // make sure the dialog fits completely on the screen...
     final Rectangle s = parent.getGraphicsConfiguration().getBounds();
