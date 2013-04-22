@@ -337,6 +337,7 @@ public class ReportDesigner
 
     final UIDefaults uiDefaults = UIManager.getDefaults();
     uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
+    uiDefaults.put("Tree.leftChildIndent" , 0 );//PRD-4419
   }
 
   public static void preloadFonts()
