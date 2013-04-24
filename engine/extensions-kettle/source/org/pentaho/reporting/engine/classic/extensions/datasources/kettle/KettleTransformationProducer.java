@@ -22,6 +22,7 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -41,5 +42,13 @@ public interface KettleTransformationProducer extends Cloneable, Serializable
                              final ResourceKey resourceKey);
 
   public String[] getReferencedFields();
+
+  public String getTransformationFile();
+
+  public String getStepName();
+
+  public String[] getDefinedArgumentNames();
+
+  public ParameterMapping[] getDefinedVariableNames();
 
 }

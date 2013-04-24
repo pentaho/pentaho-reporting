@@ -166,10 +166,10 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     return definedVariableNames;
   }
 
-  public KettleTransformationProducer getTransformationProducer() 
+  public KettleTransformationProducer getTransformationProducer() throws SAXException
   {
     return getObject();
   }
 
-  public abstract KettleTransformationProducer getObject();
+  public abstract KettleTransformationProducer getObject() throws SAXException;
 }
