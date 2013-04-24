@@ -104,5 +104,9 @@ public interface DataFactory extends Serializable, Cloneable
 
   public Object clone();
   
+  /**
+   * 
+   * @return the metadata object for this dataFactory
+   */
   public DataFactoryMetaData getMetaData();
 }

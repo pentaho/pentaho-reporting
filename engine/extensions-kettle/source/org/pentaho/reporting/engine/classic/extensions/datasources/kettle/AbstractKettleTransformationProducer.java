@@ -336,60 +336,66 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
     final String[] params = fillArguments(parameters);
 
-    final Repository repository = connectToRepository();
     try
     {
-      final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
-      transMeta.setArguments(params);
-      final Trans trans = new Trans(transMeta);
-      for (int i = 0; i < definedVariableNames.length; i++)
+      final Repository repository = connectToRepository();
+      try
       {
-        final ParameterMapping mapping = definedVariableNames[i];
-        final String sourceName = mapping.getName();
-        final String variableName = mapping.getAlias();
-        final Object value = parameters.get(sourceName);
-        if (value != null)
+        final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
+        transMeta.setArguments(params);
+        final Trans trans = new Trans(transMeta);
+        for (int i = 0; i < definedVariableNames.length; i++)
         {
-          trans.setParameterValue(variableName, String.valueOf(value));
+          final ParameterMapping mapping = definedVariableNames[i];
+          final String sourceName = mapping.getName();
+          final String variableName = mapping.getAlias();
+          final Object value = parameters.get(sourceName);
+          if (value != null)
+          {
+            trans.setParameterValue(variableName, String.valueOf(value));
+          }
         }
-      }
 
-      transMeta.setInternalKettleVariables();
-      trans.prepareExecution(transMeta.getArguments());
+        transMeta.setInternalKettleVariables();
+        trans.prepareExecution(transMeta.getArguments());
 
-      TableProducer tableProducer = null;
+        TableProducer tableProducer = null;
       final List<StepMetaDataCombi> stepList = trans.getSteps();
-      for (int i = 0; i < stepList.size(); i++)
-      {
-        final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
-        if (stepName.equals(metaDataCombi.stepname) == false)
+        for (int i = 0; i < stepList.size(); i++)
         {
-          continue;
+          final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
+          if (stepName.equals(metaDataCombi.stepname) == false)
+          {
+            continue;
+          }
+          final RowMetaInterface row = transMeta.getStepFields(stepName);
+          tableProducer = new TableProducer(row, queryLimit, stopOnError);
+          metaDataCombi.step.addRowListener(tableProducer);
+          break;
         }
-        final RowMetaInterface row = transMeta.getStepFields(stepName);
-        tableProducer = new TableProducer(row, queryLimit, stopOnError);
-        metaDataCombi.step.addRowListener(tableProducer);
-        break;
-      }
 
-      if (tableProducer == null)
+        if (tableProducer == null)
+        {
+          throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+        }
+
+        currentlyRunningTransformation = trans;
+        trans.startThreads();
+        trans.waitUntilFinished();
+        trans.cleanup();
+        return tableProducer.getTableModel();
+      }
+      finally
       {
-        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+        currentlyRunningTransformation = null;
+        if (repository != null)
+        {
+          repository.disconnect();
+        }
       }
-
-      currentlyRunningTransformation = trans;
-      trans.startThreads();
-      trans.waitUntilFinished();
-      trans.cleanup();
-      return tableProducer.getTableModel();
     }
     finally
     {
-      currentlyRunningTransformation = null;
-      if (repository != null)
-      {
-        repository.disconnect();
-      }
     }
   }
 
@@ -413,7 +419,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   }
 
 
-  private Repository connectToRepository() throws ReportDataFactoryException, KettleException
+  private Repository connectToRepository()
+      throws ReportDataFactoryException, KettleException
   {
     if (repositoryName == null)
     {

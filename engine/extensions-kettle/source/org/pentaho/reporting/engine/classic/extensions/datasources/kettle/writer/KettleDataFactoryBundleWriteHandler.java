@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEnc
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactoryModule;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransFromFileProducer;
@@ -96,6 +97,11 @@ public class KettleDataFactoryBundleWriteHandler implements BundleDataFactoryWri
       else if (prod instanceof KettleTransFromRepositoryProducer)
       {
         writeKettleRepositoryProducer(xmlWriter, queryName, (KettleTransFromRepositoryProducer) prod);
+      }
+      else if (prod instanceof EmbeddedKettleTransformationProducer)
+      {
+        String resourceName = writeFile(bundle, state, xmlWriter, queryName, (EmbeddedKettleTransformationProducer)prod);
+        writeKettleEmbeddedProducer(xmlWriter, queryName, (EmbeddedKettleTransformationProducer) prod, resourceName);
       }
       else
       {
@@ -194,4 +200,75 @@ public class KettleDataFactoryBundleWriteHandler implements BundleDataFactoryWri
     xmlWriter.writeCloseTag();
   }
 
+  private void writeKettleEmbeddedProducer( final XmlWriter xmlWriter, 
+                                            final String queryName,
+                                            final EmbeddedKettleTransformationProducer fileProducer, 
+                                            final String resourceName) 
+                                            throws IOException 
+  {
+    
+    final AttributeList coreAttrs = new AttributeList();
+    // the name is static for now
+    coreAttrs.setAttribute(KettleDataFactoryModule.NAMESPACE, "name", queryName);
+    coreAttrs.setAttribute(KettleDataFactoryModule.NAMESPACE, "plugin-id", fileProducer.getPluginId());
+
+    final String[] definedArgumentNames = fileProducer.getDefinedArgumentNames();
+    final ParameterMapping[] parameterMappings = fileProducer.getDefinedVariableNames();
+    
+    xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "query-embedded", coreAttrs, XmlWriter.OPEN);
+
+    // Now writes the name of the file that the KTR is stored in. 
+    xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "resource", XmlWriter.OPEN);
+    xmlWriter.writeText(resourceName);
+    xmlWriter.writeCloseTag();
+
+    for (int i = 0; i < definedArgumentNames.length; i++) {
+      final String argumentName = definedArgumentNames[i];
+      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "argument", "datarow-name", argumentName, XmlWriter.CLOSE);
+    }
+
+    for (int i = 0; i < parameterMappings.length; i++) {
+      final ParameterMapping parameterMapping = parameterMappings[i];
+      final AttributeList paramAttr = new AttributeList();
+      paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "datarow-name", parameterMapping.getName());
+      if (parameterMapping.getName().equals(parameterMapping.getAlias()) == false) {
+        paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "variable-name", parameterMapping.getAlias());
+      }
+      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "variable", paramAttr, XmlWriter.CLOSE);
+    }
+    xmlWriter.writeCloseTag();
+  }
+  
+  private String writeFile( final WriteableDocumentBundle bundle,
+      final BundleWriterState state,
+      final XmlWriter xmlWriter,
+      final String queryName,
+      final EmbeddedKettleTransformationProducer fileProducer)
+          throws IOException
+  {
+
+    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(), 
+                            queryName.concat("{0}").concat(".ktr"));
+    if (fileName == null)
+    {
+      throw new IOException("Unable to generate unique name for unified datasource. ");
+    }
+
+    OutputStream outputStream = null;
+    try{
+
+      outputStream = bundle.createEntry("datasources/".concat(fileName), "text/xml");
+      outputStream.write(fileProducer.getTransformationRaw());
+      
+
+    }finally{
+      if (outputStream != null) {
+
+        outputStream.flush();
+        outputStream.close();
+        
+      }
+    }
+    return fileName; 
+  }
 }

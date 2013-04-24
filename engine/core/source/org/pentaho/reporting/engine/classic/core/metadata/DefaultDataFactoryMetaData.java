@@ -123,8 +123,7 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     if (editorClass == null)
     {
       final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-      final String className = configuration.getConfigProperty
-          ("org.pentaho.reporting.engine.classic.metadata.datafactory-editor." + getName());
+      final String className = configuration.getConfigProperty(getEditorConfigurationKey());
       if (className != null)
       {
         try
@@ -144,6 +143,11 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
       }
     }
     return editorClass != null;
+  }
+
+  protected String getEditorConfigurationKey()
+  {
+    return "org.pentaho.reporting.engine.classic.metadata.datafactory-editor." + getName();
   }
 
   public boolean isFreeFormQuery()

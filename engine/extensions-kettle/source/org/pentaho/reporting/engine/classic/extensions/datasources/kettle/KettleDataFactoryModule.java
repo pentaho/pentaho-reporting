@@ -21,11 +21,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.logging.CentralLogStore;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryXmlResourceFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleDataSourceReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleDataSourceXmlFactoryModule;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleEmbeddedTransReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleTransFromFileReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleTransformationProducerReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser.KettleTransformationProducerReadHandlerFactory;
@@ -84,9 +86,23 @@ public class KettleDataFactoryModule extends AbstractModule
 
     KettleTransformationProducerReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "query-file", KettleTransFromFileReadHandler.class);
     KettleTransformationProducerReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "query-repository", KettleTransformationProducerReadHandler.class);
+    KettleTransformationProducerReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "query-embedded", KettleEmbeddedTransReadHandler.class);
 
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
         ("org/pentaho/reporting/engine/classic/extensions/datasources/kettle/meta-datafactory.xml");
+
+    // ... initialize the templated datasources ...
+    try 
+    {
+    
+      TransformationDatasourceMetadata.registerDatasources();
+    
+    } catch (ReportDataFactoryException e) {
+      // Do not bail here... this subsystem of datasources is not core to the functioning of the 
+      // Kettle datasource. 
+      logger.warn("Error initializing templated datasources.", e);
+    }
+
 
   }
 }
