@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.di.core.KettleEnvironment;
-import org.pentaho.di.core.logging.CentralLogStore;
+import org.pentaho.di.core.logging.KettleLogStore;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
@@ -66,7 +66,7 @@ public class KettleDataFactoryModule extends AbstractModule
         
         // Route logging from Kettle to Apache Commons Logging...
         //
-        CentralLogStore.getAppender().addLoggingEventListener( new KettleToCommonsLoggingEventListener());
+        KettleLogStore.getAppender().addLoggingEventListener( new KettleToCommonsLoggingEventListener());
       }
     }
     catch (Throwable e)
