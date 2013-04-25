@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="2">
+    <cols>
+      <column width="100"/>
+      <column width="459"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="yyyy-MM-dd"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="51.14" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="51.14" height="10.0">2011-04-07</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="100"/>
+        <line type="ParagraphPoolBox" x="100.0" y="0.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="0.0" width="30.57" height="10.0">100.00</text>
+        </line>
+      </cell>
+    </row>
+    <row height="763">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

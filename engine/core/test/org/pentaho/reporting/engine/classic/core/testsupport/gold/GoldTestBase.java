@@ -188,26 +188,30 @@ public class GoldTestBase
       final File reports = new File(marker, directory);
       final File[] files = reports.listFiles(filesystemFilter);
       final HashSet<String> fileSet = new HashSet<String>();
-      for (final File file : files)
+      if (files != null)
       {
-        final String s = file.getName().toLowerCase();
-        if (fileSet.add(s) == false)
+        for (final File file : files)
         {
-          // the toy systems MacOS X and Windows use case-insensitive file systems and completely
-          // mess up when there are two files with what they consider the same name.
-          throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
-              "filename in the directory. Make sure your files are unique and lowercase.");
+          final String s = file.getName().toLowerCase();
+          if (fileSet.add(s) == false)
+          {
+            // the toy systems MacOS X and Windows use case-insensitive file systems and completely
+            // mess up when there are two files with what they consider the same name.
+            throw new IllegalStateException("There is a golden sample with the same Windows/Mac " +
+                "filename in the directory. Make sure your files are unique and lowercase.");
+          }
+        }
+
+        for (final File file : files)
+        {
+          if (file.isDirectory())
+          {
+            continue;
+          }
+          return file;
         }
       }
 
-      for (final File file : files)
-      {
-        if (file.isDirectory())
-        {
-          continue;
-        }
-        return file;
-      }
 
     }
 
