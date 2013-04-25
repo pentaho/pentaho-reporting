@@ -75,6 +75,10 @@ public class CellFormatFunction extends AbstractElementFormatFunction implements
         }
       }
       final RawDataSource rds = (RawDataSource) source;
+      if (formatSpecification != null)
+      {
+        formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+      }
       formatSpecification = rds.getFormatString(getRuntime(), e, formatSpecification);
       if (formatSpecification != null)
       {
