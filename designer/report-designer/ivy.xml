@@ -27,8 +27,10 @@
                 transitive="true" changing="true"/>
 
     <!-- reporting engine dependencies -->
+
     <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}"
                 transitive="true" changing="true"/>
+
     <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-extensions"
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-extensions-scripting"

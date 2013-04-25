@@ -95,4 +95,10 @@ public class KettleTransFromRepositoryProducer extends AbstractKettleTransformat
     retval.add(getTransformationName());
     return retval;
   }
+
+  @Override
+  public String getTransformationFile() {
+    // intentional... not applicable here
+    return null;
+  }
 }

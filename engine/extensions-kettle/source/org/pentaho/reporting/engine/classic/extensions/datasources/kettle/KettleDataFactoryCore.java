@@ -1,5 +1,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
+import java.util.Locale;
+
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
@@ -7,7 +9,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore
 
 public class KettleDataFactoryCore extends DefaultDataFactoryCore
 {
-  private static final long serialVersionUID = -4261783626193997272L;
+  private static final long serialVersionUID = -8347624479657990545L;
 
   public KettleDataFactoryCore()
   {
@@ -35,5 +37,16 @@ public class KettleDataFactoryCore extends DefaultDataFactoryCore
   {
     final KettleDataFactory kettleDataFactory = (KettleDataFactory) dataFactory;
     return kettleDataFactory.getQueryHash(queryName);
+  }
+
+  public String getDisplayConnectionName(final DataFactoryMetaData metaData, final DataFactory dataFactory)
+  {
+    KettleDataFactory df = (KettleDataFactory) dataFactory;
+    if (df.getMetaData() != null)
+    {
+      return df.getMetaData().getDisplayName(Locale.getDefault());
+    }
+    return metaData.getDisplayName(Locale.getDefault());
+    
   }
 }

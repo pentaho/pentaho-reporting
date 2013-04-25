@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="devresource"/>
 	<classpathentry kind="src" path="source"/>
-	<classpathentry kind="src" path="test"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libdocbundle"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libfonts"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libformat"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libformula"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libloader"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libserializer"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/librepository"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libxml"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libswing"/>
-	<classpathentry exported="true" kind="lib" path="lib/external"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/libbase"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/flute"/>
-	<classpathentry exported="true" kind="lib" path="test-lib/hsqldb-1.8.0.jar" sourcepath="test-lib/mockito-all-1.9.5-rc1.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="devresource"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=engine-core&amp;ivyXmlPath=ivy.xml&amp;confs=*&amp;ivySettingsPath=%24%7Bworkspace_loc%3Aengine-core%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;propertyFiles=%24%7Bworkspace_loc%3Aengine-core%2Fbuild.properties%7D&amp;acceptedTypes=jar&amp;alphaOrder=true&amp;resolveInWorkspace=false&amp;retrievedClasspath=false&amp;sourceTypes=source&amp;javadocTypes=javadoc&amp;sourceSuffixes=-source%2C-sources%2C-src&amp;javadocSuffixes=-javadoc%2C-javadocs%2C-doc%2C-docs&amp;mapIfOnlyOneSource=false&amp;mapIfOnlyOneJavadoc=false"/>
+	<classpathentry kind="output" path="eclipse-bin"/>
 </classpath>

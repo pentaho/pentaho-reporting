@@ -132,12 +132,12 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
       final String filename = computeFullFilename(resourceKey);
       if (filename != null)
       {
-        logger.debug ("Computed Tranformation Location: " + filename);
+        logger.debug("Computed Transformation Location: " + filename);
         meta.setFilename(filename);
       }
       else
       {
-        logger.debug ("No Computed Tranformation Location, using raw name: " + transformationFile);
+        logger.debug("No Computed Transformation Location, using raw name: " + transformationFile);
         meta.setFilename(transformationFile);
       }
       return meta;
@@ -159,6 +159,15 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     else
     {
       retval.add(resourceKey);
+    }
+    try
+    {
+      TransMeta meta = loadTransformation(null, resourceManager, resourceKey);
+      retval.add(meta.hashCode());
+    }
+    catch (Exception e)
+    {
+      // if it fails, move along with original query hash ...
     }
     retval.add(transformationFile);
     return retval;

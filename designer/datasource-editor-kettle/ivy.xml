@@ -17,11 +17,20 @@
 
 	<dependencies defaultconf="default_internal->default">
 		<!-- reporting engine dependencies -->
+
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-kettle" rev="${project.revision}" transitive="true"
                 changing="true"/>
 
-	<dependency org="${library.group}" name="libswing" rev="${dependency.reporting-library.revision}" transitive="true" changing="true" />
+     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}" transitive="true"
+                changing="true"/>
+     
 		<!--  external dependencies -->
+	  <dependency org="pentaho" name="pentaho-xul-core" rev="${dependency.pentaho-xul.revision}" transitive="false" conf="default_external->default"
+      changing="true" />
+
+     <dependency org="pentaho"             name="metastore"           rev="TRUNK-SNAPSHOT"   changing="true" />
+		
+		
 	    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false" conf="default_external->default"/>
 	</dependencies>
 </ivy-module>

@@ -49,6 +49,12 @@ public class KettleDataSourcePlugin implements DataSourcePlugin
                                  final String queryName,
                                  final DataFactoryChangeRecorder changeRecorder)
   {
+    final KettleDataSourceDialog editor = createKettleDataSourceDialog(context);
+     return editor.performConfiguration(context, (KettleDataFactory) input, queryName);
+  }
+
+  protected KettleDataSourceDialog createKettleDataSourceDialog(final DesignTimeContext context)
+  {
   	 final KettleDataSourceDialog editor;
      final Window window = context.getParentWindow();
      if (window instanceof JDialog)
@@ -63,7 +69,7 @@ public class KettleDataSourcePlugin implements DataSourcePlugin
      {
        editor = new KettleDataSourceDialog(context);
      }
-     return editor.performConfiguration((KettleDataFactory) input, queryName);
+    return editor;
   }
 
   public DataFactoryMetaData getMetaData()
