@@ -383,7 +383,6 @@ public class JdbcDataSourceDialog extends CommonDialog
       final String queryName = dialogModel.generateQueryName();
       dialogModel.addQuery(queryName, "", null, null);
       queryNameList.setSelectedValue(queryName, true);
-      queryNameList.clearSelection();
       queryNameList.setSelectedIndex(queryNameList.getLastVisibleIndex());
     }
   }
