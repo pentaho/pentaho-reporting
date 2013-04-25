@@ -104,8 +104,6 @@ public class StructureTreePanel extends SidePanel
       }
 
       final Object o = path.getLastPathComponent();
-      System.out.println("Lead selection row: " + tree.getLeadSelectionRow());
-
       final JPopupMenu pop = ContextMenuUtility.getMenu(context, o);
       if (pop == null)
       {
