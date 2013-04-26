@@ -17,21 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
 
-import sun.misc.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
+import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-
 
 /**
  * @author Gretchen Moran
@@ -64,36 +67,33 @@ public class TransformationDatasourceMetadata
   public static void registerDatasources() throws ReportDataFactoryException
   {
 
-      final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
 
-      URL templateLocation = TransformationDatasourceMetadata.class.getClassLoader().getResource(DATASOURCE_DIRECTORY);
-      File templateDir = null;
-      
-      
-      if (templateLocation != null)
+    final URL templateLocation = TransformationDatasourceMetadata.class.getClassLoader().getResource(DATASOURCE_DIRECTORY);
+    if (templateLocation != null)
+    {
+      try
       {
-        try 
-        {
-          templateDir = new File(templateLocation.toURI());
-        } 
-        catch (URISyntaxException e) 
-        {
-          logger.error("Not able to access location of datasource templates. Some datasources may not be available.", e);
-          throw new ReportDataFactoryException("Templated datasource not available.", e);
-        }
-        
+        final File templateDir = new File(templateLocation.toURI());
         if (templateDir.exists() && templateDir.isDirectory())
         {
           processDirectory(templateDir, resourceManager);
         }
-        
+
       }
-      else
+      catch (URISyntaxException e)
       {
-        // Not a big deal; maybe this install doesn't have templated datasources
-        logger.debug("No datasource template directory found. No templated datasources will be available.");
+        logger.error("Not able to access location of datasource templates. Some datasources may not be available.", e);
+        throw new ReportDataFactoryException("Templated datasource not available.", e);
       }
+
+    }
+    else
+    {
+      // Not a big deal; maybe this install doesn't have templated datasources
+      logger.debug("No datasource template directory found. No templated datasources will be available.");
+    }
   }
 
   /**
@@ -123,23 +123,38 @@ public class TransformationDatasourceMetadata
       Arrays.sort(templatesArray);
       for (final File f : templatesArray)
       {
-        // TODO: the plugin ID should be preserved even if the template name changes.. not the case today.
-        // Ta;kl with Instaview team and Matt C. regarding best place to impose a template ID 
-        
-        byte[] b = IOUtils.readFully(new FileInputStream(f), -1, true);
-        
-        String possiblePluginId = f.getAbsolutePath().substring(
-                                  f.getAbsolutePath().indexOf(DATASOURCE_DIRECTORY), 
-                                  f.getAbsolutePath().length());
-        
-        DataFactoryRegistry.getInstance().register(
-            new EmbeddedKettleDataFactoryMetaData(possiblePluginId, f.getName().replace(".ktr", ""), b));
-
-        if (logger.isDebugEnabled())
+        final String absolutePath = f.getAbsolutePath();
+        try
         {
-          logger.debug("Datasource metadata successfully registered: ".concat(f.getAbsolutePath()));
+          // TODO: the plugin ID should be preserved even if the template name changes.. not the case today.
+          // Ta;kl with Instaview team and Matt C. regarding best place to impose a template ID
+          final InputStream in = new BufferedInputStream(new FileInputStream(f));
+          try
+          {
+            final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            IOUtils.getInstance().copyStreams(in, bout);
+
+            final String possiblePluginId = absolutePath.substring(
+                absolutePath.indexOf(DATASOURCE_DIRECTORY),
+                absolutePath.length());
+
+            DataFactoryRegistry.getInstance().register(new EmbeddedKettleDataFactoryMetaData
+                (possiblePluginId, f.getName().replace(".ktr", ""), bout.toByteArray()));
+
+            if (logger.isDebugEnabled())
+            {
+              logger.debug("Datasource metadata successfully registered: ".concat(absolutePath));
+            }
+          }
+          finally
+          {
+            in.close();
+          }
         }
-      
+        catch (IOException ioe)
+        {
+          logger.warn("Error reading template file: " + absolutePath, ioe);
+        }
       }
 
     }

@@ -8,6 +8,6 @@ public final class KettleDataFactoryTestGenerator
 
   public static void main(final String[] args) throws Exception
   {
-    KettleDataFactoryTest.main(args);
+    KettleDataFactoryTest._main(args);
   }
 }

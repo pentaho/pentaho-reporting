@@ -9,6 +9,16 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="extensions-kettle" exported="" />
     <orderEntry type="module" module-name="libswing" exported="" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/external" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
   <component name="copyright">
     <Base>
