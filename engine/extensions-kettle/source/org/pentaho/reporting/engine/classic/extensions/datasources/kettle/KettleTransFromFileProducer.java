@@ -160,6 +160,7 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     {
       retval.add(resourceKey);
     }
+    // transformation file is a unique identifier already ...
     retval.add(transformationFile);
     return retval;
   }
