@@ -52,20 +52,20 @@ public class TableContentProducer extends IterateStructuralProcessStep
   private static final Log logger = LogFactory.getLog(TableContentProducer.class);
 
   private SheetLayout sheetLayout;
-  private GenericObjectTable contentBackend;
+  private GenericObjectTable<CellMarker> contentBackend;
 
   private long maximumHeight;
   private long maximumWidth;
 
   private TableRectangle lookupRectangle;
   private long pageOffset;
-  private long pageEnd;
+  private long pageEndPosition;
   private String sheetName;
   private int finishedRows;
   private int filledRows;
   private int clearedRows;
   private long contentOffset;
-  private long effectiveOffset;
+  private long effectiveHeaderSize;
   private boolean unalignedPagebands;
   private boolean headerProcessed;
   private boolean ellipseAsBackground;
@@ -120,7 +120,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
     this.sheetLayout = sheetLayout;
     this.maximumHeight = sheetLayout.getMaxHeight();
     this.maximumWidth = sheetLayout.getMaxWidth();
-    this.contentBackend = new GenericObjectTable(Math.max(1, sheetLayout.getRowCount()), Math.max(1,
+    this.contentBackend = new GenericObjectTable<CellMarker>(Math.max(1, sheetLayout.getRowCount()), Math.max(1,
         sheetLayout.getColumnCount()));
     this.contentBackend.ensureCapacity(sheetLayout.getRowCount(), sheetLayout.getColumnCount());
   }
@@ -142,8 +142,8 @@ public class TableContentProducer extends IterateStructuralProcessStep
       // The page-header and footer area are aligned/shifted within the logical pagebox so that all areas
       // share a common coordinate system. This also implies, that the whole logical page is aligned content.
       pageOffset = 0;
-      pageEnd = logicalPage.getPageEnd() - logicalPage.getPageOffset();
-      effectiveOffset = 0;
+      effectiveHeaderSize = 0;
+      pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       sectionType = CellMarker.TYPE_INVALID;
       if (startBlockBox(logicalPage))
@@ -163,12 +163,10 @@ public class TableContentProducer extends IterateStructuralProcessStep
         {
           sectionType = CellMarker.TYPE_REPEAT_FOOTER;
           final BlockRenderBox repeatFooterBox = logicalPage.getRepeatFooterArea();
-          pageEnd += repeatFooterBox.getHeight();
           startProcessing(repeatFooterBox);
 
           sectionType = CellMarker.TYPE_FOOTER;
           final BlockRenderBox pageFooterBox = logicalPage.getFooterArea();
-          pageEnd += pageFooterBox.getHeight();
           startProcessing(pageFooterBox);
         }
       }
@@ -183,51 +181,51 @@ public class TableContentProducer extends IterateStructuralProcessStep
       // so that we dont have to modify the nodes (which invalidates the cache, and therefore is ugly)
 
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
-      effectiveOffset = 0;
-      pageOffset = 0;
-      pageEnd = logicalPage.getPageEnd();
+      effectiveHeaderSize = 0;
+      pageOffset = logicalPage.getPageOffset();
+      pageEndPosition = (logicalPage.getPageEnd());
       sectionType = CellMarker.TYPE_INVALID;
       if (startBlockBox(logicalPage))
       {
         if (headerProcessed == false)
         {
           sectionType = CellMarker.TYPE_HEADER;
+          pageOffset = 0;
           contentOffset = 0;
+          effectiveHeaderSize = 0;
 
           final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
-          pageEnd = watermarkArea.getHeight();
+          pageEndPosition = watermarkArea.getHeight();
           startProcessing(watermarkArea);
 
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
-          pageEnd = headerArea.getHeight();
+          pageEndPosition = headerArea.getHeight();
           startProcessing(headerArea);
           contentOffset = headerArea.getHeight();
           headerProcessed = true;
         }
 
-        final BlockRenderBox headerArea = logicalPage.getHeaderArea();
         sectionType = CellMarker.TYPE_NORMALFLOW;
         pageOffset = logicalPage.getPageOffset();
-        pageEnd = logicalPage.getPageEnd();
-        effectiveOffset = headerArea.getHeight();
+        pageEndPosition = logicalPage.getPageEnd();
+        effectiveHeaderSize = contentOffset;
         processBoxChilds(logicalPage);
 
         if (iterativeUpdate == false)
         {
           sectionType = CellMarker.TYPE_REPEAT_FOOTER;
-          pageOffset = 0;
           final BlockRenderBox repeatFooterArea = logicalPage.getRepeatFooterArea();
           final long repeatFooterOffset = contentOffset + (logicalPage.getPageEnd() - logicalPage.getPageOffset());
-          pageEnd = repeatFooterOffset + repeatFooterArea.getHeight();
-          effectiveOffset = repeatFooterOffset;
+          final long repeatFooterPageEnd = repeatFooterOffset + repeatFooterArea.getHeight();
+          effectiveHeaderSize = repeatFooterOffset;
+          pageEndPosition = repeatFooterPageEnd;
           startProcessing(repeatFooterArea);
 
           final BlockRenderBox footerArea = logicalPage.getFooterArea();
           sectionType = CellMarker.TYPE_FOOTER;
-          pageOffset = 0;
-          final long footerOffset = pageEnd;
-          pageEnd = footerOffset + footerArea.getHeight();
-          effectiveOffset = footerOffset;
+          final long footerPageEnd = repeatFooterPageEnd + footerArea.getHeight();
+          effectiveHeaderSize = repeatFooterPageEnd;
+          pageEndPosition = footerPageEnd;
           startProcessing(footerArea);
         }
       }
@@ -256,9 +254,10 @@ public class TableContentProducer extends IterateStructuralProcessStep
 
   protected void computeDesigntimeConflicts(final RenderBox box)
   {
-    effectiveOffset = 0;
     pageOffset = 0;
-    pageEnd = box.getHeight();
+    effectiveHeaderSize = 0;
+    contentOffset = 0;
+    pageEndPosition = box.getHeight();
     contentOffset = 0;
     contentBackend.clear();
 
@@ -277,7 +276,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       }
     }
 
-    final CellMarker marker = (CellMarker) contentBackend.getObject(row, column);
+    final CellMarker marker = contentBackend.getObject(row, column);
     if (marker == null)
     {
       return null;
@@ -295,7 +294,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       }
     }
 
-    final CellMarker marker = (CellMarker) contentBackend.getObject(row, column);
+    final CellMarker marker = contentBackend.getObject(row, column);
     if (marker instanceof BandMarker)
     {
       final BandMarker bandMarker = (BandMarker) marker;
@@ -314,7 +313,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       }
     }
 
-    final CellMarker marker = (CellMarker) contentBackend.getObject(row, column);
+    final CellMarker marker = contentBackend.getObject(row, column);
     if (marker == null)
     {
       return -1;
@@ -332,7 +331,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       }
     }
 
-    final CellMarker marker = (CellMarker) contentBackend.getObject(row, column);
+    final CellMarker marker = contentBackend.getObject(row, column);
     if (marker == null)
     {
       return 0;
@@ -359,27 +358,18 @@ public class TableContentProducer extends IterateStructuralProcessStep
       return true;
     }
 
-//    if (box.isOpen())
-//    {
-//      Log.debug("Received open box: " + box);
-//    }
-
-    final long y = effectiveOffset + box.getY() - pageOffset;
     final long height = box.getHeight();
-
-    final long pageHeight = effectiveOffset + (pageEnd - pageOffset);
-
-//    Log.debug ("Processing Box " + effectiveOffset + " " + pageHeight + " -> " + y + " " + height);
-//    Log.debug ("Processing Box " + box);
 //
+//    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
+//    DebugLog.log ("Processing Box " + box);
 
     if (height > 0)
     {
-      if ((y + height) <= effectiveOffset)
+      if ((box.getY() + height) <= pageOffset)
       {
         return false;
       }
-      if (y >= pageHeight)
+      if (box.getY() >= pageEndPosition)
       {
         return false;
       }
@@ -387,17 +377,18 @@ public class TableContentProducer extends IterateStructuralProcessStep
     else
     {
       // zero height boxes are always a bit tricky ..
-      if ((y + height) < effectiveOffset)
+      if ((box.getY() + height) < pageOffset)
       {
         return false;
       }
-      if (y > pageHeight)
+      if (box.getY() > pageEndPosition)
       {
         return false;
       }
     }
 
     // Always process everything ..
+    final long y = box.getY() + effectiveHeaderSize - pageOffset;
     final long y1 = Math.max(0, y);
     final long boxX = box.getX();
     final long x1 = Math.max(0, boxX);
@@ -487,7 +478,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
         {
           for (int c = lookupRectangle.getX1(); c < rectX2; c++)
           {
-            final CellMarker o = (CellMarker) contentBackend.getObject(r, c);
+            final CellMarker o = contentBackend.getObject(r, c);
             if (isReplaceableBackground(o, bandMarker))
             {
               contentBackend.setObject(r, c, bandMarker);
@@ -516,7 +507,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       final int rectX2 = lookupRectangle.getX2();
       final int rectY2 = lookupRectangle.getY2();
       contentBackend.ensureCapacity(rectY2, rectX2);
-      final ContentMarker contentMarker = new ContentMarker(box, effectiveOffset - pageOffset, sectionType);
+      final ContentMarker contentMarker = new ContentMarker(box, effectiveHeaderSize - pageOffset, sectionType);
       for (int r = lookupRectangle.getY1(); r < rectY2; r++)
       {
         for (int c = lookupRectangle.getX1(); c < rectX2; c++)
@@ -625,7 +616,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       boolean rowHasContent = false;
       for (int column = 0; column < columnCount; column++)
       {
-        final CellMarker o = (CellMarker) contentBackend.getObject(row, column);
+        final CellMarker o = contentBackend.getObject(row, column);
         if (o == null)
         {
           if (debugReportLayout)
@@ -858,7 +849,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       boolean lastRowsUndefined = false;
       for (int column = 0; column < columnCount; column++)
       {
-        final CellMarker o = (CellMarker) contentBackend.getObject(row, column);
+        final CellMarker o = contentBackend.getObject(row, column);
         if (o == null)
         {
           if (debugReportLayout)

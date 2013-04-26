@@ -43,28 +43,23 @@ public final class SheetLayout
 {
 
   private static final SheetLayoutTableCellDefinition MARKER_DEFINITION = new SheetLayoutTableCellDefinition();
-
   /**
    * An internal flag indicating that the upper or left bounds should be used.
    */
   private static final boolean UPPER_BOUNDS = true;
   private static final boolean LOWER_BOUNDS = false;
-
   /**
    * A flag, defining whether to use strict layout mode.
    */
   private final boolean strict;
-
   /**
    * The XBounds, all vertical cell boundaries (as CoordinateMappings).
    */
   private final TableCutList xBounds;
-
   /**
    * The YBounds, all vertical cell boundaries (as CoordinateMappings).
    */
   private final TableCutList yBounds;
-
   /**
    * The right border of the grid. This is needed when not being in the strict mode.
    */
@@ -212,20 +207,21 @@ public final class SheetLayout
     return null;
   }
 
-
   /**
    * Adds the bounds of the given TableCellData to the grid. The bounds given must be the same as the bounds of the
    * element, or the layouting might produce surprising results.
    * <p/>
    * This method will do nothing, if the element has a width and height of zero and does not define any anchors.
    *
-   * @param element the position that should be added to the grid (might be null).
-   * @param shift   the vertical shift which adjusts the visual position of the content.
+   * @param element    the position that should be added to the grid (might be null).
+   * @param offset     the vertical shift which adjusts the visual position of the content.
+   * @param headerSize the vertical shift which adjusts the visual position of the content.
    * @return true, if the box has not changed and can be safely skipped.
    * @throws NullPointerException if the bounds are null
    */
-  public boolean add(final RenderBox element, final long shift)
+  public boolean add(final RenderBox element, final long offset, final long headerSize)
   {
+    final long shift = headerSize - offset;
     final long shiftedY = element.getY() + shift;
     final long elementY;
     if (shiftedY < 0)
@@ -272,7 +268,7 @@ public final class SheetLayout
     }
 
 
-    if (addLine(element, background, elementY, shiftedY, unmodified))
+    if (addLine(element, background, elementY, shiftedY, unmodified, headerSize))
     {
       return unmodified;
     }
@@ -287,7 +283,10 @@ public final class SheetLayout
     {
       ensureXMapping(elementX, Boolean.FALSE);
     }
-    ensureYMapping(elementY, Boolean.FALSE);
+    if (elementY >= headerSize)
+    {
+      ensureYMapping(elementY, Boolean.FALSE);
+    }
 
     // an end cut is auxilary, if it is not a background and the layout is not strict
     final Boolean aux;
@@ -300,7 +299,10 @@ public final class SheetLayout
       aux = Boolean.FALSE;
     }
     ensureXMapping(elementRightX, aux);
-    ensureYMapping(elementBottomY, aux);
+    if (elementBottomY >= headerSize)
+    {
+      ensureYMapping(elementBottomY, aux);
+    }
 
     // update the collected maximums
     if (xMaxBounds < elementRightX)
@@ -315,8 +317,9 @@ public final class SheetLayout
     return unmodified;
   }
 
-  public void addRenderableContent(final RenderableReplacedContentBox element, final long shift)
+  public void addRenderableContent(final RenderableReplacedContentBox element, final long offset, final long headerSize)
   {
+    final long shift = headerSize - offset;
     final long shiftedY = element.getY() + shift;
     final long elementY;
     if (shiftedY < 0)
@@ -335,7 +338,7 @@ public final class SheetLayout
     }
 
     final SheetLayoutTableCellDefinition background = computeLegacyBackground(element, shift);
-    if (addLine(element, background, elementY, shiftedY, false))
+    if (addLine(element, background, elementY, shiftedY, false, headerSize))
     {
       return;
     }
@@ -345,16 +348,23 @@ public final class SheetLayout
     final long elementBottomY = element.getHeight() + shiftedY;
 
     ensureXMapping(elementX, Boolean.FALSE);
-    ensureYMapping(elementY, Boolean.FALSE);
+    if (elementY >= headerSize)
+    {
+      ensureYMapping(elementY, Boolean.FALSE);
+    }
     ensureXMapping(elementRightX, Boolean.FALSE);
-    ensureYMapping(elementBottomY, Boolean.FALSE);
+    if (elementBottomY >= headerSize)
+    {
+      ensureYMapping(elementBottomY, Boolean.FALSE);
+    }
   }
 
   private boolean addLine(final RenderBox element,
                           final SheetLayoutTableCellDefinition background,
                           final long elementY,
                           final long shiftedY,
-                          final boolean unmodified)
+                          final boolean unmodified,
+                          final long headerSize)
   {
 
     // This method handles several special cases. If the element is a non-area box with borderss,
@@ -381,6 +391,10 @@ public final class SheetLayout
       return false;
     }
     if (background.getLineType() == SheetLayoutTableCellDefinition.LINE_HINT_NONE)
+    {
+      return false;
+    }
+    if (elementY < headerSize)
     {
       return false;
     }

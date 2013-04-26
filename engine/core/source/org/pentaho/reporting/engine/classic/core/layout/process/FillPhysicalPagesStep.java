@@ -152,7 +152,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     // the renderer is responsible for painting the page-header and footer ..
 
     derived.setPageOffset(0);
-    derived.setPageEnd(contentEnd);
+    derived.setPageEnd(contentEnd + footerArea.getHeight() + repeatFooterArea.getHeight());
     return derived;
   }
 

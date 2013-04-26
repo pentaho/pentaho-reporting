@@ -74,6 +74,7 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
@@ -179,9 +180,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     for (int row = startRow; row < finishRow; row++)
     {
       final AttributeList rowAttributes = new AttributeList();
+      final double rowHeight = StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row));
       rowAttributes.setAttribute
           (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
-              pointConverter.format(StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row))));
+              pointConverter.format(rowHeight));
       xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row", rowAttributes, XmlWriter.OPEN);
 
       for (short col = 0; col < columnCount; col++)
@@ -222,6 +224,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
           throw new InvalidReportStateException("Uncommited content encountered");
         }
 
+        if ("Sub report header for $(value) subreport 1.2".equals(content.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE)))
+        {
+          DebugLog.logHere();
+        }
         final long contentOffset = contentProducer.getContentOffset(row, col);
         final TableRectangle rectangle = sheetLayout.getTableBounds
             (content.getX(), content.getY() + contentOffset, content.getWidth(), content.getHeight(), null);
@@ -775,7 +781,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     final String[] anchors = border.getAnchors();
     if (anchors.length > 0)
     {
-      final StringBuffer anchorText = new StringBuffer(100);
+      final StringBuilder anchorText = new StringBuilder(100);
       for (int i = 0; i < anchors.length; i++)
       {
         final String anchor = anchors[i];

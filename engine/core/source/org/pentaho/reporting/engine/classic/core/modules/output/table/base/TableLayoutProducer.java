@@ -44,9 +44,9 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
   private long pageOffset;
   private boolean headerProcessed;
   private long contentOffset;
-  private long effectiveOffset;
+  private long effectiveHeaderSize;
   private boolean unalignedPagebands;
-  private long pageHeight;
+  private long pageEndPosition;
   private boolean strictLayout;
   private boolean ellipseAsRectangle;
 
@@ -75,9 +75,8 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
       // The page-header and footer area are aligned/shifted within the logical pagebox so that all areas
       // share a common coordinate system. This also implies, that the whole logical page is aligned content.
       pageOffset = 0;
-      final long pageEnd = logicalPage.getPageEnd() - logicalPage.getPageOffset();
-      effectiveOffset = 0;
-      pageHeight = effectiveOffset + (pageEnd - pageOffset);
+      effectiveHeaderSize = 0;
+      pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       if (startBlockBox(logicalPage))
       {
@@ -93,11 +92,9 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
         if (iterativeUpdate == false)
         {
           final BlockRenderBox repeatFooterBox = logicalPage.getRepeatFooterArea();
-          pageHeight += repeatFooterBox.getHeight();
           startProcessing(repeatFooterBox);
 
           final BlockRenderBox pageFooterBox = logicalPage.getFooterArea();
-          pageHeight += pageFooterBox.getHeight();
           startProcessing(pageFooterBox);
         }
       }
@@ -108,33 +105,31 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
       // The page-header and footer area are not aligned/shifted within the logical pagebox.
       // All areas have their own coordinate system starting at (0,0). We apply a manual shift here
       // so that we dont have to modify the nodes (which invalidates the cache, and therefore is ugly)
-      effectiveOffset = 0;
-      pageOffset = 0;
-      pageHeight = (logicalPage.getPageEnd());
+      effectiveHeaderSize = 0;
+      pageOffset = logicalPage.getPageOffset();
+      pageEndPosition = (logicalPage.getPageEnd());
       if (startBlockBox(logicalPage))
       {
         if (headerProcessed == false)
         {
+          pageOffset = 0;
           contentOffset = 0;
-          effectiveOffset = 0;
+          effectiveHeaderSize = 0;
 
           final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
-          final long watermarkPageEnd = watermarkArea.getHeight();
-          pageHeight = effectiveOffset + (watermarkPageEnd - pageOffset);
+          pageEndPosition = watermarkArea.getHeight();
           startProcessing(watermarkArea);
 
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
-          final long pageEnd = headerArea.getHeight();
-          pageHeight = effectiveOffset + (pageEnd - pageOffset);
+          pageEndPosition = headerArea.getHeight();
           startProcessing(headerArea);
           contentOffset = headerArea.getHeight();
           headerProcessed = true;
         }
 
         pageOffset = logicalPage.getPageOffset();
-        final long pageEnd = logicalPage.getPageEnd();
-        effectiveOffset = contentOffset;
-        pageHeight = effectiveOffset + (pageEnd - pageOffset);
+        pageEndPosition = logicalPage.getPageEnd();
+        effectiveHeaderSize = contentOffset;
         processBoxChilds(logicalPage);
 
         if (iterativeUpdate == false)
@@ -143,14 +138,14 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
           final BlockRenderBox repeatFooterArea = logicalPage.getRepeatFooterArea();
           final long repeatFooterOffset = contentOffset + (logicalPage.getPageEnd() - logicalPage.getPageOffset());
           final long repeatFooterPageEnd = repeatFooterOffset + repeatFooterArea.getHeight();
-          effectiveOffset = repeatFooterOffset;
-          pageHeight = effectiveOffset + (repeatFooterPageEnd - pageOffset);
+          effectiveHeaderSize = repeatFooterOffset;
+          pageEndPosition = repeatFooterPageEnd;
           startProcessing(repeatFooterArea);
 
           final BlockRenderBox footerArea = logicalPage.getFooterArea();
           final long footerPageEnd = repeatFooterPageEnd + footerArea.getHeight();
-          effectiveOffset = repeatFooterPageEnd;
-          pageHeight = effectiveOffset + (footerPageEnd - pageOffset);
+          effectiveHeaderSize = repeatFooterPageEnd;
+          pageEndPosition = footerPageEnd;
           startProcessing(footerArea);
         }
       }
@@ -170,28 +165,27 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
     this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
 
     pageOffset = 0;
-    effectiveOffset = 0;
+    effectiveHeaderSize = 0;
     contentOffset = 0;
-    pageHeight = section.getHeight();
+    pageEndPosition = section.getHeight();
     startProcessing(section);
     return layout;
   }
 
   private boolean startBox(final RenderBox box)
   {
-    final long y = effectiveOffset + box.getY() - pageOffset;
     final long height = box.getHeight();
 //
-//    DebugLog.log ("Processing Box " + effectiveOffset + " " + y + " " + height);
+//    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
 //    DebugLog.log ("Processing Box " + box);
 
     if (height > 0)
     {
-      if ((y + height) <= effectiveOffset)
+      if ((box.getY() + height) <= pageOffset)
       {
         return false;
       }
-      if (y >= pageHeight)
+      if (box.getY() >= pageEndPosition)
       {
         return false;
       }
@@ -199,31 +193,21 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
     else
     {
       // zero height boxes are always a bit tricky ..
-      if ((y + height) < effectiveOffset)
+      if ((box.getY() + height) < pageOffset)
       {
         return false;
       }
-      if (y > pageHeight)
+      if (box.getY() > pageEndPosition)
       {
         return false;
       }
     }
 
-    // This changes the rendering order; the computed background are most likely not 100% correct.
-    // todo: Insert the box multiple times and replace the background on the whole area where not already merged.
-    // todo: If open, do not produce a bottom-border.
-    // OK, for now, we dont have to worry, as non-rootlevel boxes have neither border or backgrounds. But before
-    // we push this code into 0.9 we should add some handling here ..
-//    if (box.isOpen())
-//    {
-//      layout.add(box, -pageOffset, true);
-//    }
-
     if (box.isOpen() == false &&
         box.isFinishedTable() == false &&
         box.isCommited())
     {
-      if (layout.add(box, -pageOffset + effectiveOffset))
+      if (layout.add(box, pageOffset, effectiveHeaderSize))
       {
         return false;
       }
@@ -292,7 +276,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
         box.isCommited())
     {
       startBox(box);
-      layout.addRenderableContent(box, -pageOffset + effectiveOffset);
+      layout.addRenderableContent(box, pageOffset, effectiveHeaderSize);
     }
   }
 

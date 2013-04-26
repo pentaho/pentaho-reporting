@@ -293,7 +293,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
       }
     }
     
-    if (receivedNoBackground != true && lastProcessed != null)
+    if (receivedNoBackground == false && lastProcessed != null)
     {
       startProcessing(lastProcessed);
     }
@@ -332,7 +332,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
     }
     else
     {
-      if (renderBoxState.getBackgroundDefinitionAge() != contentShift)
+      if (renderBoxState.getBackgroundDefinitionAge() != node.getCachedAge())
       {
         hint = sheetLayout.getTableBoundsWithCache
             (node.getX(), node.getY() + contentShift, node.getWidth(), node.getHeight(), hint);
@@ -344,7 +344,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
     final int x2 = hint.getX2();
     final int y2 = hint.getY2();
     final int retval = computeBackgroundHint(x1, y1, x2, y2);
-    renderBoxState.setCellBackgroundHint(hint, contentShift);
+    renderBoxState.setCellBackgroundHint(hint, node.getCachedAge());
     return retval;
   }
 

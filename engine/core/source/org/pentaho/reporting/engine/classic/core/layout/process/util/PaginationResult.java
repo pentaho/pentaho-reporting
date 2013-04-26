@@ -37,12 +37,15 @@ public final class PaginationResult
                           final boolean nextPageContainsContent,
                           final ReportStateKey lastVisibleState)
   {
+    if (allBreaks == null)
+    {
+      throw new NullPointerException();
+    }
     this.nextPageContainsContent = nextPageContainsContent;
     this.allBreaks = allBreaks;
     this.overflow = overflow;
     this.lastVisibleState = lastVisibleState;
   }
-
 
   public boolean isNextPageContainsContent()
   {
@@ -80,5 +83,48 @@ public final class PaginationResult
     sb.append(", allBreaks=").append(allBreaks);
     sb.append('}');
     return sb.toString();
+  }
+
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass())
+    {
+      return false;
+    }
+
+    final PaginationResult that = (PaginationResult) o;
+
+    if (nextPageContainsContent != that.nextPageContainsContent)
+    {
+      return false;
+    }
+    if (overflow != that.overflow)
+    {
+      return false;
+    }
+    if (!allBreaks.equals(that.allBreaks))
+    {
+      return false;
+    }
+    /*
+    if (lastVisibleState != null ? !lastVisibleState.equals(that.lastVisibleState) : that.lastVisibleState != null)
+    {
+      return false;
+    }
+*/
+    return true;
+  }
+
+  public int hashCode()
+  {
+    int result = allBreaks.hashCode();
+    result = 31 * result + (overflow ? 1 : 0);
+    result = 31 * result + (nextPageContainsContent ? 1 : 0);
+   // result = 31 * result + (lastVisibleState != null ? lastVisibleState.hashCode() : 0);
+    return result;
   }
 }

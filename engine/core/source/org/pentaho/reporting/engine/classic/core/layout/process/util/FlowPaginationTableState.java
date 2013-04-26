@@ -20,35 +20,25 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.FilteringPageBreakPositions;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositions;
 
-public class PaginationTableState implements BasePaginationTableState
+public class FlowPaginationTableState implements BasePaginationTableState
 {
-  private PaginationTableState parent;
+  private FlowPaginationTableState parent;
   private boolean suspended;
   private long pageOffset;
-  private long pageHeight;
-  private long pageEnd;
   private PageBreakPositions breakPositions;
-  private boolean fixedPositionProcessingSuspended;
 
-  public PaginationTableState(final long pageHeight,
-                              final long pageOffset,
-                              final long pageEnd,
-                              final PageBreakPositions breakPositions)
+  public FlowPaginationTableState(final long pageOffset,
+                                  final PageBreakPositions breakPositions)
   {
-    this.pageHeight = pageHeight;
     this.pageOffset = pageOffset;
-    this.pageEnd = pageEnd;
     this.breakPositions = breakPositions;
   }
 
-  public PaginationTableState(final PaginationTableState parent)
+  public FlowPaginationTableState(final FlowPaginationTableState parent)
   {
     this.parent = parent;
     this.pageOffset = parent.pageOffset;
     this.breakPositions = parent.breakPositions;
-    this.pageHeight = parent.pageHeight;
-    this.pageEnd = parent.pageEnd;
-    this.fixedPositionProcessingSuspended = true;
   }
 
   public void suspendVisualStateCollection(final boolean temporary)
@@ -71,16 +61,6 @@ public class PaginationTableState implements BasePaginationTableState
     return breakPositions;
   }
 
-  public long getPageHeight()
-  {
-    return pageHeight;
-  }
-
-  public long getPageEnd()
-  {
-    return pageEnd;
-  }
-
   public boolean isVisualStateCollectionSuspended()
   {
     if (suspended)
@@ -91,14 +71,9 @@ public class PaginationTableState implements BasePaginationTableState
     return false;
   }
 
-  public PaginationTableState pop()
+  public FlowPaginationTableState pop()
   {
     return parent;
-  }
-
-  public boolean isFixedPositionProcessingSuspended()
-  {
-    return fixedPositionProcessingSuspended;
   }
 
   public void defineArtificialPageStart(final long offset)

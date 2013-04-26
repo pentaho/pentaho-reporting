@@ -17,109 +17,74 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
+import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositions;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.BoxShifter;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.FlowPaginationTableState;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.InitialPaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
- * The flow-pagination is a pagination step, where the page-boundaries cannot be determined beforehand. It only works
- * for infinite size pages and ignores all page-header and footers.
+ * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
+ * page-boundary of the next page.
  * <p/>
- * The page-break list is updated on the fly while the report is paginated. A new break will only be added if the old
- * list did not contain the new break. It is guaranteed that only one break is added on every run.
- * <p/>
- * If complex compound layouts are required, this pagination step must be followed by a classical pagination step so
- * that boxes that overlap a break-position get shifted accordingly.
- *
- * @author Thomas Morgner
+ * We have two shift positions. The normal shift denotes artificial paddings, inserted into the flow where needed to
+ * move content to the next page. The header-shift is inserted when a repeatable table-header is processed. This header
+ * reserves a virtual padding area in the infinite-canvas flow to push the next assumed pagebreak to the y2-position
+ * of the header. A header-shift modifies the pin-position on a box, and modifies where pagebreaks are detected.
  */
 public final class FlowPaginationStep extends IterateVisualProcessStep
 {
-  private class PaginationState
-  {
-    private PaginationState parent;
-    private boolean rowOpen;
-    private boolean suspended;
-    private boolean suspendedTemporarily;
-
-    private PaginationState(final PaginationState parent)
-    {
-      this.parent = parent;
-      if (parent != null)
-      {
-        this.suspended = parent.isVisualStateCollectionSuspendedPermanently();
-      }
-    }
-
-    private boolean isVisualStateCollectionSuspendedPermanently()
-    {
-      if (suspended)
-      {
-        return true;
-      }
-
-      if (rowOpen)
-      {
-        return true;
-      }
-
-      return false;
-    }
-
-    public boolean isVisualStateCollectionSuspended()
-    {
-      return suspendedTemporarily || isVisualStateCollectionSuspendedPermanently();
-    }
-  }
-
-  private FindOldestProcessKeyStep findOldestProcessKeyStep;
+  private static final Log logger = LogFactory.getLog(PaginationStep.class);
   private boolean breakPending;
-  private PageBreakPositionList breakUtility;
-  private boolean breakAdded;
-  private ReportStateKey visibleState;
-  private long pageEnd;
-  private PaginationState paginationState;
+  private FindOldestProcessKeyStep findOldestProcessKeyStep;
+  private PageBreakPositionList basePageBreakList;
+  private ReportStateKey visualState;
+  private FlowPaginationTableState paginationTableState;
+  private PaginationShiftState shiftState;
+  private PaginationShiftStatePool shiftStatePool;
+  private long pageOffsetKey;
+  private boolean unresolvedWidowReferenceEncountered;
+  private long recordedPageBreakPosition;
 
   public FlowPaginationStep()
   {
-    breakUtility = new PageBreakPositionList();
     findOldestProcessKeyStep = new FindOldestProcessKeyStep();
+    basePageBreakList = new PageBreakPositionList();
+    shiftStatePool = new PaginationShiftStatePool();
   }
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
   {
-    final RenderNode lastChild = pageBox.getLastChild();
-    if (lastChild != null)
-    {
-      final long lastChildY2 = lastChild.getY() + lastChild.getHeight();
-      if (lastChildY2 < pageBox.getHeight())
-      {
-        throw new IllegalStateException
-            ("Assertation failed: Block layouting did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
-      }
-    }
+    PaginationStepLib.assertProgress(pageBox);
 
-
+    this.unresolvedWidowReferenceEncountered = false;
+    this.visualState = null;
+    this.pageOffsetKey = pageBox.getPageOffset();
+    this.shiftState = new InitialPaginationShiftState();
     this.breakPending = false;
-    this.breakAdded = false;
-    this.visibleState = null;
-    this.pageEnd = pageBox.getHeight();
-    this.paginationState = new PaginationState(null);
+    this.recordedPageBreakPosition = 0;
 
     try
     {
+      // do not add a pagebreak for the physical end.
       final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
+      basePageBreakList.copyFrom(allPreviousBreak);
+      basePageBreakList.addMajorBreak(pageBox.getHeight(), 0);
 
-      // Note: For now, we limit both the header and footer to a single physical
-      // page. This safes me a lot of trouble for now.
-      breakUtility.copyFrom(allPreviousBreak);
+      this.paginationTableState = new FlowPaginationTableState(pageBox.getPageOffset(), basePageBreakList);
 
       // now process all the other content (excluding the header and footer area)
       if (startBlockLevelBox(pageBox))
@@ -128,23 +93,31 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       }
       finishBlockLevelBox(pageBox);
 
-      if (lastChild != null)
-      {
-        final long lastChildY2 = lastChild.getY() + lastChild.getHeight();
-        if (lastChildY2 < pageBox.getHeight())
-        {
-          throw new IllegalStateException
-              ("Assertation failed: Pagination violated block-constraints: " + lastChildY2 + " < " + pageBox.getHeight());
-        }
-      }
+      PaginationStepLib.assertProgress(pageBox);
 
-      final long masterBreak = breakUtility.getLastMasterBreak();
-      final boolean nextPageContainsContent = (pageBox.getHeight() > masterBreak);
-      return new PaginationResult(breakUtility, breakAdded, nextPageContainsContent, visibleState);
+      // reset pagebreaks to state before we performed a pagebreak.
+      basePageBreakList.copyFrom(allPreviousBreak);
+
+      final boolean pagebreakEncountered = recordedPageBreakPosition != 0;
+      final boolean nextPageContainsContent;
+      if (pagebreakEncountered == false)
+      {
+        nextPageContainsContent = false;
+      }
+      else
+      {
+        basePageBreakList.addMajorBreak(recordedPageBreakPosition, 0);
+        nextPageContainsContent = (pageBox.getHeight() > recordedPageBreakPosition);
+      }
+      if (pagebreakEncountered)
+        DebugLog.logHere();
+      return new PaginationResult(basePageBreakList, pagebreakEncountered, nextPageContainsContent, visualState);
     }
     finally
     {
-      this.paginationState = null;
+      this.paginationTableState = null;
+      this.visualState = null;
+      this.shiftState = null;
     }
   }
 
@@ -155,70 +128,323 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
+    final boolean retval = handleStartBlockLevelBox(box);
+    installTableContext(box);
+    return retval;
+  }
 
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+  private boolean handleStartBlockLevelBox(final RenderBox box)
+  {
+    this.shiftState = shiftStatePool.create(box, shiftState);
+    final long shift = shiftState.getShiftForNextChild();
+
+    if (box.isWidowBox())
     {
-      final long boxY = box.getY();
-      if (breakAdded == false &&
-          // boxY != pageEnd &&
-          boxY > breakUtility.getLastMasterBreak())
-      {
-        // This box will cause a new break. Add it.
-        if (breakUtility.getLastMasterBreak() != boxY)
-        {
-          breakAdded = true;
-          breakUtility.addMajorBreak(box.getY(), 0);
-        }
-      }
-      breakPending = false;
+      unresolvedWidowReferenceEncountered = true;
+    }
+
+    if (unresolvedWidowReferenceEncountered)
+    {
+      // once we have hit a unresolved widow box, we cannot process the page any further
+      // we have to wait until the box is closed to know whether the widow-constraint can be
+      // fulfilled.
+      BoxShifter.shiftBox(box, shift);
       return false;
     }
 
-    // First check the simple cases:
-    // If the box wants to break, then there's no point in waiting: Shift the box and continue.
-    if (breakIndicator == RenderBox.BreakIndicator.DIRECT_MANUAL_BREAK || breakPending)
+    PaginationStepLib.assertBlockPosition(box, shift);
+
+    if (shiftState.isManualBreakSuspended() == false)
     {
-      // find the next major break and shift the box to this position.
-      // update the 'shift' to reflect this new change. Process the contents of this box as well, as the box may
-      // have additional breaks inside (or may overflow, or whatever ..).
-      final long boxY = box.getY();
-      if (breakAdded == false &&
-//          boxY != pageEnd && // damn! we cannot deal with breaks on the page-end yet.
-          boxY > breakUtility.getLastMasterBreak())
+      if (handleManualBreakOnBox(box, shiftState, breakPending))
       {
-        if (breakUtility.getLastMasterBreak() != boxY)
-//        if (boxY != pageEnd)
+        breakPending = false;
+        if (logger.isDebugEnabled())
         {
-          // This box will cause a new break. Add it.
-          breakAdded = true;
-          breakUtility.addMajorBreak(box.getY(), 0);
+          logger.debug("pending page-break or manual break: " + box);
         }
+        return true;
       }
       breakPending = false;
-      return true;
     }
 
-    if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
+    // If this box does not cross any (major or minor) break, it may need no additional shifting at all.
+    return handleAutomaticPagebreak(box, shiftState);
+  }
+
+  protected void processBlockLevelNode(final RenderNode node)
+  {
+    final long shift = shiftState.getShiftForNextChild();
+    node.setY(node.getY() + shift);
+    if (breakPending == false && node.isBreakAfter())
     {
-      // As neither this box nor any of the children will cause a pagebreak, skip the processing of the childs.
-      if (breakAdded == false)
+      breakPending = paginationTableState.isOnPageStart(node.getY()) == false;
+      if (breakPending)
       {
-        updateStateKeyDeep(box);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("BreakPending True for Node:isBreakAfter: " + node);
+        }
       }
-      return false;
+    }
+  }
+
+  protected void finishBlockLevelBox(final RenderBox box)
+  {
+    uninstallTableContext(box);
+
+    if (breakPending == false && box.isBreakAfter())
+    {
+      breakPending = paginationTableState.isOnPageStart(box.getY() + box.getHeight()) == false;
+      if (breakPending)
+      {
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("BreakPending True for Box:isBreakAfter: " + box);
+        }
+      }
     }
 
-    // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
-    // for now, we will only apply the ordinary shift.
-    if (breakAdded == false)
+    shiftState = shiftState.pop();
+  }
+
+  // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
+  // shift the box if it doesnt.
+
+  protected boolean startCanvasLevelBox(final RenderBox box)
+  {
+    if (box.isCommited())
     {
-      updateStateKey(box);
+      box.setFinishedPaginate(true);
     }
+
+    installTableContext(box);
+
+    shiftState = shiftStatePool.create(box, shiftState);
+    shiftState.suspendManualBreaks();
+    box.setY(box.getY() + shiftState.getShiftForNextChild());
     return true;
   }
 
+  protected void finishCanvasLevelBox(final RenderBox box)
+  {
+    shiftState = shiftState.pop();
+    uninstallTableContext(box);
+  }
+
+  protected boolean startRowLevelBox(final RenderBox box)
+  {
+    if (box.isCommited())
+    {
+      box.setFinishedPaginate(true);
+    }
+
+    installTableContext(box);
+
+    shiftState = shiftStatePool.create(box, shiftState);
+    shiftState.suspendManualBreaks();
+    box.setY(box.getY() + shiftState.getShiftForNextChild());
+    return true;
+  }
+
+  protected void finishRowLevelBox(final RenderBox box)
+  {
+    shiftState = shiftState.pop();
+    uninstallTableContext(box);
+  }
+
+  protected boolean startTableLevelBox(final RenderBox box)
+  {
+    shiftState = shiftStatePool.create(box, shiftState);
+
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
+      switch (sectionRenderBox.getDisplayRole())
+      {
+        case HEADER:
+        {
+          paginationTableState = new FlowPaginationTableState(paginationTableState);
+          paginationTableState.suspendVisualStateCollection(true);
+
+          startTableHeaderSection(box, sectionRenderBox);
+          return false;
+        }
+        case FOOTER:
+        {
+          paginationTableState = new FlowPaginationTableState(paginationTableState);
+          paginationTableState.suspendVisualStateCollection(true);
+
+          // shift the box and all children downwards. Suspend pagebreaks.
+          final long contextShift = shiftState.getShiftForNextChild();
+          BoxShifter.shiftBox(box, contextShift);
+          return false;
+        }
+        case BODY:
+          return startBlockLevelBox(box);
+        default:
+          throw new IllegalArgumentException();
+      }
+    }
+    else
+    {
+      return true;
+    }
+  }
+
+  private void startTableHeaderSection(final RenderBox box, final TableSectionRenderBox sectionRenderBox)
+  {
+    final long contextShift = shiftState.getShiftForNextChild();
+    // shift the header downwards,
+    // 1. Check that this table actually breaks across the current page. Header position must be
+    //    before the pagebox-offset. If not, return false, after the normal shifting.
+    final long pageOffset = paginationTableState.getPageOffset();
+    final long delta = pageOffset - (sectionRenderBox.getY() + contextShift);
+    if (delta <= 0)
+    {
+      BoxShifter.shiftBox(box, contextShift);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("HEADER NOT SHIFTED; DELTA = " + delta + " -> " + contextShift);
+      }
+      sectionRenderBox.setHeaderShift(pageOffsetKey, 0);
+      return;
+    }
+
+    // 2. Shift the whole header downwards so that its upper edge matches the start of the page.
+    //    return false afterwards.
+
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("HEADER SHIFTED; DELTA = " + delta + " -> " + contextShift);
+    }
+    long headerShift = sectionRenderBox.getHeaderShift(pageOffsetKey);
+    if (headerShift == 0)
+    {
+      final long previousPageOffset =
+          paginationTableState.getBreakPositions().findPageStartPositionForPageEndPosition(pageOffset);
+      headerShift = sectionRenderBox.getHeaderShift(previousPageOffset) + box.getHeight();
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("HeaderShift: " + headerShift + " <=> " + pageOffset + " ; prevOffset=" + previousPageOffset);
+      }
+      sectionRenderBox.setHeaderShift(pageOffsetKey, headerShift);
+    }
+    else
+    {
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Existing HeaderShift: " + headerShift + " <=> " + pageOffset);
+      }
+    }
+
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Table-Height before extension: " + box.getParent().getHeight());
+    }
+    BoxShifter.shiftBox(box, delta);
+    updateStateKeyDeep(box);
+    BoxShifter.extendHeight(box.getParent(), box, headerShift);
+    shiftState.increaseShift(headerShift);
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Table-Height after extension: " + box.getParent().getHeight());
+    }
+  }
+
+  protected void finishTableLevelBox(final RenderBox box)
+  {
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
+      switch (sectionRenderBox.getDisplayRole())
+      {
+        case HEADER:
+          shiftState = shiftState.pop();
+          paginationTableState = paginationTableState.pop();
+          paginationTableState.defineArtificialPageStart(box.getHeight() + paginationTableState.getPageOffset());
+          break;
+        case FOOTER:
+          shiftState = shiftState.pop();
+          paginationTableState = paginationTableState.pop();
+          break;
+        case BODY:
+          finishBlockLevelBox(box);
+          break;
+        default:
+          throw new IllegalStateException();
+      }
+      return;
+    }
+
+    finishBlockLevelBox(box);
+  }
+
+  protected boolean startTableSectionLevelBox(final RenderBox box)
+  {
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    {
+      if (box.isOpen())
+      {
+        paginationTableState = new FlowPaginationTableState(paginationTableState);
+        paginationTableState.suspendVisualStateCollection(false);
+      }
+    }
+
+    // ignore all other break requests ..
+    return startBlockLevelBox(box);
+  }
+
+  protected void finishTableSectionLevelBox(final RenderBox box)
+  {
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    {
+      if (box.isOpen())
+      {
+        paginationTableState = paginationTableState.pop();
+      }
+    }
+    finishBlockLevelBox(box);
+  }
+
   protected boolean startTableRowLevelBox(final RenderBox box)
+  {
+    return startRowLevelBox(box);
+  }
+
+  protected void finishTableRowLevelBox(final RenderBox box)
+  {
+    finishRowLevelBox(box);
+  }
+
+  protected boolean startTableCellLevelBox(final RenderBox box)
+  {
+    installTableContext(box);
+    return startBlockLevelBox(box);
+  }
+
+  protected void finishTableCellLevelBox(final RenderBox box)
+  {
+    finishBlockLevelBox(box);
+    uninstallTableContext(box);
+  }
+
+  protected boolean startInlineLevelBox(final RenderBox box)
+  {
+    BoxShifter.shiftBox(box, shiftState.getShiftForNextChild());
+    return false;
+  }
+
+  protected void processInlineLevelNode(final RenderNode node)
+  {
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
+  }
+
+  protected void finishInlineLevelBox(final RenderBox box)
+  {
+  }
+
+  protected boolean startTableColLevelBox(final RenderBox box)
   {
     return false;
   }
@@ -228,151 +454,49 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     return false;
   }
 
-  protected boolean startTableColLevelBox(final RenderBox box)
-  {
-    return false;
-  }
-
-  protected boolean startTableLevelBox(final RenderBox box)
-  {
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
-    {
-      final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
-
-      paginationState = new PaginationState(paginationState);
-      paginationState.suspended |= !sectionRenderBox.isBody();
-      paginationState.suspendedTemporarily = true;
-
-      if (sectionRenderBox.isBody() == false)
-      {
-        // never paginate inside a table-header or table-footer.
-        return false;
-      }
-    }
-    else
-    {
-      paginationState = new PaginationState(paginationState);
-      paginationState.suspended = true;
-    }
-
-    return startBlockLevelBox(box);
-  }
-
-  protected void finishTableLevelBox(final RenderBox box)
-  {
-    paginationState = paginationState.parent;
-
-    if (BandStyleKeys.LAYOUT_TABLE_BODY.equals(box.getStyleSheet().getStyleProperty(BandStyleKeys.LAYOUT)) == false)
-    {
-      return;
-    }
-
-    if (breakPending == false && box.isBreakAfter())
-    {
-      breakPending = true;
-    }
-  }
-
-  protected boolean startTableSectionLevelBox(final RenderBox box)
-  {
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-    {
-      paginationState = new PaginationState(paginationState);
-      paginationState.rowOpen = box.isOpen();
-    }
-
-    // ignore all other break requests ..
-    return startBlockLevelBox(box);
-  }
-
-  protected void finishTableSectionLevelBox(final RenderBox box)
-  {
-    if (breakPending == false && box.isBreakAfter())
-    {
-      breakPending = true;
-    }
-
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-    {
-      paginationState = paginationState.parent;
-    }
-  }
-
   protected void processCanvasLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
-  }
-
-  protected void processBlockLevelNode(final RenderNode node)
-  {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processRowLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
+  }
+
+  protected void processOtherLevelChild(final RenderNode node)
+  {
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableRowLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableSectionLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableCellLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
   protected void processTableColLevelNode(final RenderNode node)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
+    node.setY(node.getY() + shiftState.getShiftForNextChild());
   }
 
-  protected void processTableColGroupLevelNode(final RenderNode node)
+  private void updateStateKey(final RenderBox box)
   {
-    if (breakAdded == false && node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      updateStateKey(node);
-    }
-  }
-
-  private void updateStateKey(final RenderNode box)
-  {
-    if (paginationState.isVisualStateCollectionSuspended())
+    if (paginationTableState.isVisualStateCollectionSuspended())
     {
       return;
     }
@@ -383,25 +507,27 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
 
     final long y = box.getY();
-    if (y < (pageEnd))
+    if (recordedPageBreakPosition != 0 && y >= recordedPageBreakPosition)
     {
-      final ReportStateKey stateKey = box.getStateKey();
-      if (stateKey != null)
-      {
-        this.visibleState = stateKey;
-      }
+      return;
+    }
+
+    final ReportStateKey stateKey = box.getStateKey();
+    if (stateKey != null)
+    {
+      this.visualState = stateKey;
     }
   }
 
   private void updateStateKeyDeep(final RenderBox box)
   {
-    if (paginationState.isVisualStateCollectionSuspended())
+    if (paginationTableState.isVisualStateCollectionSuspended())
     {
       return;
     }
 
     final long y = box.getY();
-    if (y >= (pageEnd))
+    if (recordedPageBreakPosition != 0 && y >= recordedPageBreakPosition)
     {
       return;
     }
@@ -409,32 +535,157 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     final ReportStateKey reportStateKey = findOldestProcessKeyStep.find(box);
     if (reportStateKey != null)
     {
-      this.visibleState = reportStateKey;
+      this.visualState = reportStateKey;
     }
   }
 
-  protected void finishBlockLevelBox(final RenderBox box)
+  private boolean handleAutomaticPagebreak(final RenderBox box,
+                                           final PaginationShiftState boxContext)
   {
-    if (breakPending == false && box.isBreakAfter())
+    final long shift = boxContext.getShiftForNextChild();
+    final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
+    if (breakUtility.isCrossingPagebreak(box, shift) == false)
     {
-      breakPending = true;
+      // The whole box fits on the current page. No need to do anything fancy.
+      final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
+      if (breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK)
+      {
+        // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
+        // for now, we will only apply the ordinary shift.
+        final long boxY = box.getY();
+        box.setY(boxY + shift);
+        updateStateKey(box);
+        return true;
+      }
+      else // if (breakIndicator == RenderBox.BreakIndicator.NO_MANUAL_BREAK)
+      {
+        // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
+        // from here.
+        BoxShifter.shiftBox(box, shift);
+        updateStateKeyDeep(box);
+        return false;
+      }
     }
+
+    // At this point we know, that the box may cause some shifting. It crosses at least one minor or major pagebreak.
+    // Right now, we are just evaluating the next break. In a future version, we could search all possible break
+    // positions up to the next major break.
+    final long boxY = box.getY();
+    final long boxYShifted = boxY + shift;
+    final long nextMinorBreak = breakUtility.findNextBreakPosition(boxYShifted);
+    final long spaceAvailable = nextMinorBreak - boxYShifted;
+
+    // This box sits directly on a pagebreak. This means, the page is empty, and there is no need for additional
+    // shifting.
+    if (spaceAvailable == 0)
+    {
+      box.setY(boxYShifted);
+      updateStateKey(box);
+      if (boxYShifted < nextMinorBreak)
+      {
+        // this position is shifted, but not header-shifted
+        box.markPinned(nextMinorBreak);
+      }
+      return true;
+    }
+
+    final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box, boxContext);
+    if (spaceAvailable < spaceConsumed)
+    {
+      // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
+      // break.
+      // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
+      // into account.
+      if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
+      {
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
+          logger.debug("Automatic pagebreak                      : " + visualState);
+        }
+        final long nextShift = nextMinorBreak - boxY;
+        final long shiftDelta = nextShift - shift;
+        box.setY(boxY + nextShift);
+        BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+        boxContext.setShift(nextShift);
+        updateStateKey(box);
+        if (box.getY() < nextMinorBreak)
+        {
+          box.markPinned(nextMinorBreak);
+        }
+        return true;
+      }
+    }
+
+    // OK, there *is* enough space available. Start the normal processing
+    box.setY(boxYShifted);
+    updateStateKey(box);
+    return true;
   }
 
-  protected boolean startInlineLevelBox(final RenderBox box)
+  private boolean handleManualBreakOnBox(final RenderBox box,
+                                         final PaginationShiftState boxContext,
+                                         final boolean breakPending)
   {
-    return false;
+    final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
+    // First check the simple cases:
+    // If the box wants to break, then there's no point in waiting: Shift the box and continue.
+    if (breakIndicator != RenderBox.BreakIndicator.DIRECT_MANUAL_BREAK && breakPending == false)
+    {
+      return false;
+    }
+
+    final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
+    final long shift = boxContext.getShiftForNextChild();
+    final long boxY = box.getY();
+    final long shiftedBoxY = boxY + shift;
+    final long nextNonShiftedMajorBreak = breakUtility.findNextMajorBreakPosition(shiftedBoxY);
+    final long fixedPositionOnNextPage =
+        breakUtility.computeFixedPositionInFlow(nextNonShiftedMajorBreak, 0);
+    final long nextMajorBreak = Math.max(nextNonShiftedMajorBreak, fixedPositionOnNextPage);
+    if (nextMajorBreak < shiftedBoxY)
+    {
+      // This band will be outside the last pagebreak. We can only shift it normally, but there is no way
+      // that we could shift it to the final position yet.
+      box.setY(shiftedBoxY);
+    }
+    else
+    {
+      final long nextShift = nextMajorBreak - boxY;
+      final long shiftDelta = nextShift - shift;
+      box.setY(boxY + nextShift);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+      boxContext.setShift(nextShift);
+    }
+
+    updateStateKey(box);
+    final long pageEnd = paginationTableState.getPageOffset();
+    if (box.getY() <= pageEnd)
+    {
+      box.markPinned(pageEnd);
+    }
+    else if (recordedPageBreakPosition == 0)
+    {
+      recordedPageBreakPosition = box.getY();
+    }
+    return true;
   }
 
-  // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
-  // shift the box if it doesnt.
-  protected boolean startCanvasLevelBox(final RenderBox box)
+  protected void installTableContext(final RenderBox box)
   {
-    return false;
+    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return;
+    }
+    paginationTableState = new FlowPaginationTableState(paginationTableState);
   }
 
-  protected boolean startRowLevelBox(final RenderBox box)
+  protected void uninstallTableContext(final RenderBox box)
   {
-    return false;
+    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return;
+    }
+    paginationTableState = paginationTableState.pop();
   }
 }
