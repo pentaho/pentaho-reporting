@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="62" row-count="165">
+  <table col-count="62" row-count="164">
     <cols>
       <column width="95"/>
       <column width="5"/>
@@ -18419,7 +18419,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="1">
+    <row height="59">
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
@@ -18536,70 +18536,6 @@
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid">
       </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="58">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
