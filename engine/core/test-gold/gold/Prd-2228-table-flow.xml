@@ -39,7 +39,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="332.33" y="10.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="337.87" y="10.0" width="5.56" height="10.0">5</text>
+          <text x="337.87" y="10.0" width="5.56" height="10.0">6</text>
         </line>
       </cell>
     </row>
@@ -209,7 +209,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="332.33" y="10.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="337.87" y="10.0" width="5.56" height="10.0">5</text>
+          <text x="337.87" y="10.0" width="5.56" height="10.0">6</text>
         </line>
       </cell>
     </row>
@@ -261,7 +261,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="332.33" y="10.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="337.87" y="10.0" width="5.56" height="10.0">5</text>
+          <text x="337.87" y="10.0" width="5.56" height="10.0">6</text>
         </line>
       </cell>
     </row>
@@ -313,7 +313,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="332.33" y="10.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="337.87" y="10.0" width="5.56" height="10.0">5</text>
+          <text x="337.87" y="10.0" width="5.56" height="10.0">6</text>
         </line>
       </cell>
     </row>
@@ -346,23 +346,17 @@
       <column width="144"/>
     </cols>
     <row height="10">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
     <row height="20">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
-      </empty-cell>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ID"/>
-      </empty-cell>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Value"/>
-      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageOfPagesFunction1"/>
@@ -371,7 +365,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="332.33" y="10.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="337.87" y="10.0" width="5.56" height="10.0">5</text>
+          <text x="337.87" y="10.0" width="5.56" height="10.0">6</text>
         </line>
       </cell>
     </row>
@@ -395,5 +389,9 @@
       </cell>
       <empty-cell/>
     </row>
+  </table>
+  <table col-count="0" row-count="0">
+    <cols>
+    </cols>
   </table>
 </layout-output>
