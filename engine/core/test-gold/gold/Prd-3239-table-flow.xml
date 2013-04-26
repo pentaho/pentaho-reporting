@@ -18691,7 +18691,11 @@
       <empty-cell/>
     </row>
     <row height="2">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REPORT_DATE"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@12283658"/>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -19075,17 +19079,33 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageFunction2"/>
+        <line type="ParagraphPoolBox" x="1006.0" y="2.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1006.0" y="2.0" width="5.56" height="10.0">2</text>
+        </line>
+      </cell>
+      <spanned-cell/>
     </row>
     <row height="20">
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageOfPagesFunction3"/>
+        <line type="ParagraphPoolBox" x="898.0" y="23.0" width="19.43" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="898.0" y="23.0" width="5.56" height="10.0">2</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="906.33" y="23.0" width="2.77" height="10.0">/</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="911.87" y="23.0" width="5.56" height="10.0">2</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
   </table>
 </layout-output>

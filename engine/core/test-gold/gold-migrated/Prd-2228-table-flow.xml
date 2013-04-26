@@ -352,17 +352,9 @@
       <empty-cell/>
     </row>
     <row height="20">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
-      </empty-cell>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="ID"/>
-      </empty-cell>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Value"/>
-      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageOfPagesFunction1"/>
