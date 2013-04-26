@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="1" row-count="13">
+  <table col-count="1" row-count="12">
     <cols>
       <column width="559"/>
     </cols>
@@ -104,7 +104,7 @@
       </cell>
     </row>
     <row height="57">
-      <cell row-span="2" col-span="1">
+      <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CUSTOMERNUMBER"/>
         <line type="ParagraphPoolBox" x="0.0" y="726.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -112,11 +112,8 @@
         </line>
       </cell>
     </row>
-    <row height="906">
-      <spanned-cell/>
-    </row>
   </table>
-  <table col-count="1" row-count="14">
+  <table col-count="1" row-count="13">
     <cols>
       <column width="559"/>
     </cols>
@@ -223,16 +220,13 @@
       </cell>
     </row>
     <row height="48">
-      <cell row-span="2" col-span="1">
+      <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CUSTOMERNUMBER"/>
         <line type="ParagraphPoolBox" x="0.0" y="735.0" width="48.36" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="0.0" y="735.0" width="48.36" height="10.0">asdasdasd</text>
         </line>
       </cell>
-    </row>
-    <row height="123">
-      <spanned-cell/>
     </row>
   </table>
   <table col-count="3" row-count="6">
