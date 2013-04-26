@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="62" row-count="166">
+  <table col-count="62" row-count="164">
     <cols>
       <column width="95"/>
       <column width="5"/>
@@ -18419,7 +18419,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="1">
+    <row height="59">
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
@@ -18536,70 +18536,6 @@
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid">
       </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="58">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -18747,70 +18683,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="20">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -19126,8 +18998,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Notes"/>
-        <line type="ParagraphPoolBox" x="581.723" y="2986.0" width="36.554" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="581.723" y="2986.0" width="36.554" height="14.0">Notes</text>
+        <line type="ParagraphPoolBox" x="581.723" y="2966.0" width="36.554" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="581.723" y="2966.0" width="36.554" height="14.0">Notes</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -19159,28 +19031,28 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Clustered Divisions - Regular"/>
-        <line type="ParagraphPoolBox" x="259.399" y="3026.0" width="181.202" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="259.399" y="3026.0" width="59.892" height="14.0">Clustered</text>
+        <line type="ParagraphPoolBox" x="259.399" y="3006.0" width="181.202" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="259.399" y="3006.0" width="59.892" height="14.0">Clustered</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="323.169" y="3026.0" width="56.0" height="14.0">Divisions</text>
+          <text x="323.169" y="3006.0" width="56.0" height="14.0">Divisions</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="383.047" y="3026.0" width="4.662" height="14.0">-</text>
+          <text x="383.047" y="3006.0" width="4.662" height="14.0">-</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="391.587" y="3026.0" width="49.014" height="14.0">Regular</text>
+          <text x="391.587" y="3006.0" width="49.014" height="14.0">Regular</text>
         </line>
       </cell>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Clustered Divisions - Exclusive"/>
-        <line type="ParagraphPoolBox" x="754.352" y="3026.0" width="191.296" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="754.352" y="3026.0" width="59.892" height="14.0">Clustered</text>
+        <line type="ParagraphPoolBox" x="754.352" y="3006.0" width="191.296" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="754.352" y="3006.0" width="59.892" height="14.0">Clustered</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="818.122" y="3026.0" width="56.0" height="14.0">Divisions</text>
+          <text x="818.122" y="3006.0" width="56.0" height="14.0">Divisions</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="878.0" y="3026.0" width="4.662" height="14.0">-</text>
+          <text x="878.0" y="3006.0" width="4.662" height="14.0">-</text>
           <spacer width="3.878" height="0.0" preserve="true"/>
-          <text x="886.54" y="3026.0" width="59.108" height="14.0">Exclusive</text>
+          <text x="886.54" y="3006.0" width="59.108" height="14.0">Exclusive</text>
         </line>
       </cell>
       <spanned-cell/>
