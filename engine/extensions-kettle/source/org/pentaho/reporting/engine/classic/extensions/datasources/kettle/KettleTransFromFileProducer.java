@@ -160,15 +160,6 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     {
       retval.add(resourceKey);
     }
-    try
-    {
-      TransMeta meta = loadTransformation(null, resourceManager, resourceKey);
-      retval.add(meta.hashCode());
-    }
-    catch (Exception e)
-    {
-      // if it fails, move along with original query hash ...
-    }
     retval.add(transformationFile);
     return retval;
   }
