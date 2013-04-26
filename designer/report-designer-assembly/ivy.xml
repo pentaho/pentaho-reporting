@@ -48,12 +48,15 @@
 		<!-- driver dependencies -->
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="drivers->default" />
 		<dependency org="com.h2database" name="h2" rev="1.0.20070617" transitive="false" conf="drivers->default" />
-		<dependency org="pentaho" name="pentaho-hadoop-hive-jdbc-shim" rev="${dependency.pentaho-hadoop-hive-jdbc-shim.revision}" conf="drivers->default" changing="true" />
+		<dependency org="pentaho" name="pentaho-hadoop-hive-jdbc-shim" rev="${dependency.pentaho-hadoop-hive-jdbc-shim.revision}" conf="drivers->default" changing="true"  transitive="false"/>
 		
 		<!-- Kettle big-data plugin -->
-		<dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin}" transitive="false" conf="plugin->default" changing="true">
+		<dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin}" conf="plugin->default" changing="true" transitive="false">
 			<artifact name="pentaho-big-data-plugin" type="zip"/>
 		</dependency>
+    <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
+      <artifact name="pentaho-mongodb-plugin" type="zip"/>
+    </dependency>
 
 		<!-- JSON dependencies -->
 		<dependency org="com.googlecode.json-simple" name="json-simple" rev="${dependency.json.simple.revision}" transitive="false" conf="default->default" changing="false"/>
