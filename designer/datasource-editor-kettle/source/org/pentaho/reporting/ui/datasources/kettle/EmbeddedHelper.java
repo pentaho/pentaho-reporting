@@ -1,6 +1,5 @@
 package org.pentaho.reporting.ui.datasources.kettle;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
@@ -26,7 +25,6 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Embedd
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.ui.xul.XulComponent;
-import org.pentaho.ui.xul.containers.XulTree;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -59,7 +57,7 @@ public class EmbeddedHelper
     
     
     XulComponent root = dialog.getXulDomContainer().getDocumentRoot().getElementById("root");
-    JComponent panel = (JComponent)root.getManagedObject();
+    JComponent panel = (JComponent)root.getParent().getManagedObject();
     return panel;
   }
 
@@ -77,7 +75,7 @@ public class EmbeddedHelper
       final Constructor <StepDialogInterface> constructor =
       dialog.getDeclaredConstructor(Object.class, BaseStepMeta.class, TransMeta.class, String.class);
       
-      return constructor.newInstance(context.getParentWindow(), step.getStepMetaInterface(),
+      return constructor.newInstance(null, step.getStepMetaInterface(),
       step.getParentTransMeta(), EmbeddedKettleDataFactoryMetaData.DATA_CONFIGURATION_STEP);
       
     }
@@ -135,6 +133,19 @@ public class EmbeddedHelper
     final byte[] rawData = cachedMeta.getXML().getBytes("UTF8");
     return rawData;
     
+  }
+
+  public boolean validate(){
+    if (dialog != null)
+    {
+      if (!dialog.validate()){
+        int val = dialog.showPromptMessage("One or more queries are missing required information. \n\r"
+            + "This can cause these queries to fail when executing. \n\r"
+            + "Select OK to continue, or Cancel to return and correct the query.", "MongoDb Datasource Warning");
+        return (val == 0);
+      }
+    }
+    return true;
   }
 
   public void clear() {

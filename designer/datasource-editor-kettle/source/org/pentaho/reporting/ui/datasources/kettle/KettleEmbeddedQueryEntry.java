@@ -1,5 +1,6 @@
 package org.pentaho.reporting.ui.datasources.kettle;
 
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
@@ -31,6 +32,11 @@ public class KettleEmbeddedQueryEntry extends KettleQueryEntry {
     this.pluginId = pluginId;
     this.raw = raw;
     this.helper = new EmbeddedHelper(pluginId);
+  }
+
+  @Override
+  public boolean validate() {
+    return helper.validate();
   }
 
   @Override
@@ -66,9 +72,8 @@ public class KettleEmbeddedQueryEntry extends KettleQueryEntry {
     throws ReportDataFactoryException
   {
     datasourcePanel.removeAll();
-    datasourcePanel.add(helper.getDialogPanel(createProducer(), designTimeContext, l));
+    datasourcePanel.add(helper.getDialogPanel(createProducer(), designTimeContext, l), BorderLayout.CENTER);
     datasourcePanel.revalidate();
-    datasourcePanel.getParent().repaint();
   }
 
   public void update()

@@ -19,6 +19,7 @@ package org.pentaho.reporting.ui.datasources.kettle;
 
 import java.util.List;
 
+import org.pentaho.di.core.Const;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.TransMeta;
@@ -64,6 +65,12 @@ public class KettleQueryEntry
 
   protected void setDeclaredParameters(String[] declaredParameters) {
     this.declaredParameters = declaredParameters;
+  }
+  
+  public boolean validate(){
+    return (!Const.isEmpty(name)) &&
+           (!Const.isEmpty(selectedStepName)) && 
+           (!Const.isEmpty(file));
   }
 
   public String getName()

@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.ui.datasources.kettle;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
@@ -50,6 +51,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
 
   private String datasourceId = null;
   private JPanel datasourcePanel;
+  private KettleQueryEntry lastSelectedQuery = null;
   
   /**
    * This listener is registered with the XUL dialog. 
@@ -88,8 +90,13 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
         setPanelEnabled(true, datasourcePanel);
       
         final KettleEmbeddedQueryEntry selectedQuery = (KettleEmbeddedQueryEntry) value;
-        updateQueryName(selectedQuery.getName());
-        selectedQuery.refreshQueryUIComponents(datasourcePanel, designTimeContext, new PreviewChangeListener());
+        
+        // This change event gets fired twice, causing the dialog to update twice.. let's stop that. 
+        if ((lastSelectedQuery == null) || (selectedQuery != lastSelectedQuery)){
+          lastSelectedQuery = selectedQuery;
+          updateQueryName(selectedQuery.getName());
+          selectedQuery.refreshQueryUIComponents(datasourcePanel, designTimeContext, new PreviewChangeListener());
+        }
 
         editParameterAction.setEnabled(true);
       }
@@ -130,7 +137,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
   @Override
   protected JPanel createDatasourcePanel() 
   {
-    datasourcePanel = new JPanel();
+    datasourcePanel = new JPanel(new BorderLayout());
     return datasourcePanel;
   }
 
@@ -162,6 +169,21 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
   protected String getDialogId()
   {
     return "EmbeddedKettleDataSourceDialog";
+  }
+
+  @Override
+  protected boolean validateInputs(boolean onConfirm) {
+    boolean valid = true;
+    
+    for (final KettleQueryEntry queryEntry: getQueryEntries())
+    {
+      valid = queryEntry.validate();
+      if (!valid){
+        break;
+      }
+    }
+
+    return valid && super.validateInputs(onConfirm);
   }
 
   public KettleDataFactory performConfiguration(DesignTimeContext context, final KettleDataFactory dataFactory,
