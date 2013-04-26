@@ -29,6 +29,7 @@ import javax.swing.TransferHandler;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.CopyAction;
@@ -196,6 +197,7 @@ public class StructureTreePanel extends SidePanel
     pasteAction = new PasteAction();
 
     tree = new ReportTree(renderType);
+    tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     tree.getSelectionModel().addTreeSelectionListener(new TreeLeadSelectionListener());
     tree.addMouseListener(new ReportTreeContextMenuHandler());
 
