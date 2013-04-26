@@ -47,7 +47,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
     return "test-src";
   }
 
-  public static void main(String[] args) throws Exception
+  public static void _main(String[] args) throws Exception
   {
     final KettleDataFactoryTest test = new KettleDataFactoryTest();
     test.setUp();
