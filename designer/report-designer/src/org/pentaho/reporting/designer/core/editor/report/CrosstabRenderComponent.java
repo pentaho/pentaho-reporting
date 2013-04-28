@@ -44,11 +44,6 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
     super(designerContext, renderContext);
   }
 
-  public void dispose()
-  {
-    super.dispose();
-  }
-
   public void installRenderer(final CrosstabRenderer rendererRoot,
                               final LinealModel horizontalLinealModel,
                               final HorizontalPositionsModel horizontalPositionsModel)

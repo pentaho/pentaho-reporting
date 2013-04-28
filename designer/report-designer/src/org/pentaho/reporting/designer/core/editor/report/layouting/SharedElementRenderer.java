@@ -1,0 +1,200 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
+ */
+
+package org.pentaho.reporting.designer.core.editor.report.layouting;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.util.BreakPositionsList;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableLayoutProducer;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
+/**
+ * @author Thomas Morgner
+ */
+public class SharedElementRenderer
+{
+  private final ReportLayouter reportLayouter;
+  private final MasterReport masterReport;
+  private EventListenerList listenerList;
+  private LogicalPageBox pageBox;
+  private TransferGlobalLayoutProcessStep transferGlobalLayoutProcessor;
+  private TransferLayoutProcessStep transferLayoutProcessor;
+  private Map<InstanceID, Set<InstanceID>> conflicts;
+  private long layoutAge;
+  private boolean lastResult;
+
+  public SharedElementRenderer(final ReportRenderContext reportRenderContext)
+  {
+    if (reportRenderContext == null)
+    {
+      throw new NullPointerException();
+    }
+
+    this.masterReport = reportRenderContext.getMasterReportElement();
+    if (this.masterReport == null)
+    {
+      throw new NullPointerException();
+    }
+    this.reportLayouter = new ReportLayouter(reportRenderContext);
+
+    this.listenerList = new EventListenerList();
+    this.transferGlobalLayoutProcessor = new TransferGlobalLayoutProcessStep();
+    this.transferLayoutProcessor = new TransferLayoutProcessStep();
+    this.conflicts = new HashMap<InstanceID, Set<InstanceID>>();
+  }
+
+  public void addChangeListener(final ChangeListener changeListener)
+  {
+    listenerList.add(ChangeListener.class, changeListener);
+  }
+
+  public void removeChangeListener(final ChangeListener changeListener)
+  {
+    listenerList.remove(ChangeListener.class, changeListener);
+  }
+
+  public void fireChangeEvent()
+  {
+    final ChangeEvent ce = new ChangeEvent(this);
+    final ChangeListener[] changeListeners = listenerList.getListeners(ChangeListener.class);
+    for (int i = 0; i < changeListeners.length; i++)
+    {
+      final ChangeListener listener = changeListeners[i];
+      listener.stateChanged(ce);
+    }
+  }
+
+  protected OutputProcessorMetaData getOutputProcessorMetaData()
+  {
+    return reportLayouter.getOutputProcessorMetaData();
+  }
+
+  public boolean performLayouting()
+  {
+    if (this.layoutAge == masterReport.getChangeTracker())
+    {
+      return lastResult;
+    }
+    try
+    {
+      this.pageBox = reportLayouter.layout();
+    }
+    catch (final Exception e)
+    {
+      //noinspection ThrowableInstanceNeverThrown
+      UncaughtExceptionsModel.getInstance().addException(new ReportProcessingException
+          ("Fatal Layouter Error: This report cannot be processed due to a unrecoverable error in the reporting-engine. " +
+              "Please file a bug-report.", e));
+      pageBox = null;
+    }
+
+    transferGlobalLayoutProcessor.reset();
+
+    try
+    {
+      if (pageBox != null)
+      {
+        final OutputProcessorMetaData outputProcessorMetaData = getOutputProcessorMetaData();
+        final TableLayoutProducer tableLayoutProducer = new TableLayoutProducer(outputProcessorMetaData);
+        tableLayoutProducer.setProcessWatermark(false);
+        // we need to work on a copy here, as the layout computation marks boxes as finished to keep track
+        // of the progress.
+        tableLayoutProducer.update(pageBox, false);
+        final SheetLayout layout = tableLayoutProducer.getLayout();
+        final DesignerTableContentProducer tableContentProducer =
+            new DesignerTableContentProducer(layout, outputProcessorMetaData);
+
+        conflicts.clear();
+        conflicts = tableContentProducer.computeConflicts(pageBox, conflicts);
+
+        // watermark needs extra pass, or it will produce bogus warnings.
+        tableLayoutProducer.computeDesigntimeConflicts(pageBox.getWatermarkArea());
+        final SheetLayout watermarkLayout = tableLayoutProducer.getLayout();
+        final DesignerTableContentProducer watermarkContentProducer =
+            new DesignerTableContentProducer(watermarkLayout, outputProcessorMetaData);
+        conflicts = watermarkContentProducer.computeBoxConflicts(pageBox, conflicts);
+
+
+        transferGlobalLayoutProcessor.performTransfer(pageBox, conflicts, masterReport);
+      }
+      lastResult = true;
+      layoutAge = masterReport.getChangeTracker();
+      fireChangeEvent();
+      return true;
+    }
+    catch (Exception e)
+    {
+      UncaughtExceptionsModel.getInstance().addException(e);
+      lastResult = false;
+      layoutAge = masterReport.getChangeTracker();
+      fireChangeEvent();
+      return false;
+    }
+  }
+
+  public void transferLocalLayout(final Section section,
+                                  final Map<InstanceID, Element> elementsById,
+                                  final BreakPositionsList verticalEdgePositions)
+  {
+    elementsById.clear();
+    verticalEdgePositions.clear();
+    if (pageBox != null)
+    {
+      transferLayoutProcessor.performTransfer(section, pageBox, elementsById, verticalEdgePositions);
+    }
+  }
+
+  public Map<InstanceID, Element> getElementsById()
+  {
+    return transferGlobalLayoutProcessor.getElementsById();
+  }
+
+  public Map<InstanceID, Set<InstanceID>> getConflicts()
+  {
+    return conflicts;
+  }
+
+  public BreakPositionsList getHorizontalEdgePositions()
+  {
+    return transferGlobalLayoutProcessor.getHorizontalEdgePositions();
+  }
+
+  public ReportLayouter getLayouter()
+  {
+    return reportLayouter;
+  }
+
+  public LogicalPageBox getPageBox()
+  {
+    return pageBox;
+  }
+}

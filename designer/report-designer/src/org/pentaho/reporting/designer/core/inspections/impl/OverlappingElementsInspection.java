@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.designer.core.inspections.impl;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -27,7 +30,7 @@ import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
  * Todo: Document Me
@@ -54,11 +57,44 @@ public class OverlappingElementsInspection extends AbstractStructureInspection
     final CachedLayoutData data = ModelUtility.getCachedLayoutData((Element) element);
     if (data.isConflictsInTableMode())
     {
+      final Map<InstanceID, Set<InstanceID>> conflicts = reportRenderContext.getSharedRenderer().getConflicts();
+      final Set<InstanceID> instanceIDs = conflicts.get(element.getObjectID());
+      final String message;
+      if (instanceIDs == null || instanceIDs.isEmpty())
+      {
+        message = Messages.getString("OverlappingElementsInspection.ElementConflictsInTableMode", element.getName());
+      }
+      else
+      {
+        final String elementName = computeConflictingElementName(reportRenderContext, instanceIDs);
+        if (instanceIDs.size() == 1)
+        {
+          message = Messages.getString("OverlappingElementsInspection.ElementConflictsInTableModeSingle", element.getName(), elementName);
+        }
+        else
+        {
+          message = Messages.getString("OverlappingElementsInspection.ElementConflictsInTableModeMultiples",
+              element.getName(), elementName, instanceIDs.size());
+        }
+      }
+
       resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-          Messages.getString("OverlappingElementsInspection.ElementConflictsInTableMode", element.getName()),
-          new LocationInfo(element)));
+          message, new LocationInfo(element)));
     }
 
+  }
+
+  private String computeConflictingElementName(final ReportRenderContext reportRenderContext,
+                                             final Set<InstanceID> instanceIDs)
+  {
+    final Map<InstanceID, Element> elementsById = reportRenderContext.getSharedRenderer().getElementsById();
+    final InstanceID firstElement = instanceIDs.iterator().next();
+    final Element conflictingElement = elementsById.get(firstElement);
+    if (conflictingElement == null)
+    {
+      return Messages.getString("OverlappingElementsInspection.UnidentifiedElement");
+    }
+    return conflictingElement.getName();
   }
 
   public boolean isInlineInspection()
