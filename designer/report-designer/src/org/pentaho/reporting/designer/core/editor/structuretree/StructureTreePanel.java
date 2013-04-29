@@ -99,7 +99,7 @@ public class StructureTreePanel extends SidePanel
       }
       if (tree.getSelectionModel().isPathSelected(path) == false)
       {
-        tree.getSelectionModel().addSelectionPath(path);
+        tree.getSelectionModel().setSelectionPath(path);
       }
 
       final Object o = path.getLastPathComponent();
