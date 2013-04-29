@@ -127,7 +127,7 @@ public class ReportDesigner
         frame.initWindowLocations(files);
         frame.setVisible(true);
       }
-      catch (XulException t)
+      catch (Exception t)
       {
         if (splashScreen != null)
         {
@@ -294,7 +294,7 @@ public class ReportDesigner
 
       final ElementMetaData data = ElementTypeRegistry.getInstance().getElementType("page-header");// NON-NLS
       final AttributeMetaData[] datas = data.getAttributeDescriptions();
-      int x = datas.length; // ensure that there is some metadata.
+      final int x = datas.length; // ensure that there is some metadata.
     }
     catch (Throwable t)
     {
@@ -337,6 +337,7 @@ public class ReportDesigner
 
     final UIDefaults uiDefaults = UIManager.getDefaults();
     uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
+    uiDefaults.put("Tree.leftChildIndent" , 0 );//PRD-4419
   }
 
   public static void preloadFonts()
