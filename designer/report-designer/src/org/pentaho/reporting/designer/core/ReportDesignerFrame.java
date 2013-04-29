@@ -1531,6 +1531,11 @@ public class ReportDesignerFrame extends JFrame
       {
         continue;
       }
+      if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && data.isExperimental())
+      {
+        continue;
+      }
+
 
       final String currentGrouping = data.getGrouping(Locale.getDefault());
       if (firstElement == false)
