@@ -31,7 +31,6 @@
     <!-- kettle dependencies -->
     <dependency org="${kettle.group}" name="kettle-engine" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="${kettle.group}" name="kettle-core" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
-    <dependency org="${kettle.group}" name="kettle-db" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="${kettle.group}" name="kettle5-log4j-plugin" rev="${dependency.kettle.revision}" transitive="false" changing="true" conf="default_external->default"/>
     <dependency org="${pentaho.group}" name="metastore" rev="${dependency.metastore.revision}" transitive="false" changing="true" conf="default_external->default"/>
 
