@@ -26,26 +26,24 @@ import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
+import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public abstract class AbstractReportDataTreeModel implements TreeModel
 {
   private EventListenerList eventListenerList;
   private ReportFunctionNode reportFunctionNode;
   private ReportRenderContext context;
   private ReportEnvironmentDataRow reportEnvironmentDataRow;
+  private Expression[] cachedExpressions;
 
   protected AbstractReportDataTreeModel(final ReportRenderContext context)
   {
@@ -57,6 +55,12 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     this.reportEnvironmentDataRow = new ReportEnvironmentDataRow(context.getMasterReportElement().getReportEnvironment());
     this.eventListenerList = new EventListenerList();
     this.reportFunctionNode = new ReportFunctionNode();
+    refreshExpressionsCache();
+  }
+
+  protected AbstractReportDefinition getReportDefinition()
+  {
+    return this.context.getReportDefinition();
   }
 
   public ReportEnvironmentDataRow getReportEnvironmentDataRow()
@@ -338,6 +342,13 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
       final TreeModelListener listener = treeModelListeners[i];
       listener.treeStructureChanged(treeEvent);
     }
+
+    refreshExpressionsCache();
+  }
+
+  private void refreshExpressionsCache()
+  {
+    this.cachedExpressions = getReportDefinition().getExpressions().getExpressions();
   }
 
   protected TreeModelListener[] getListeners()
@@ -365,7 +376,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
 
   public void fireTreeNodeChanged(final Object element)
   {
-    TreePath path = TreeSelectionHelper.getPathForNode(this, element);
+    TreePath path = getPathForNode(element);
     if (path == null)
     {
       // if we cannot come up with a sensible path, we will take the root and hope the best
@@ -383,7 +394,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
 
   public void fireTreeStructureChanged(final Object element)
   {
-    TreePath path = TreeSelectionHelper.getPathForNode(this, element);
+    TreePath path = getPathForNode(element);
     if (path == null)
     {
       // if we cannot come up with a sensible path, we will take the root and hope the best
@@ -397,6 +408,8 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
       final TreeModelListener listener = treeModelListeners[i];
       listener.treeStructureChanged(treeEvent);
     }
+
+    refreshExpressionsCache();
   }
 
   public void fireQueryChanged(final Object query)
@@ -413,7 +426,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     for (int n = 0; n < nodes.size(); n++)
     {
       final ReportQueryNode queryNode = nodes.get(n);
-      final TreePath path = TreeSelectionHelper.getPathForNode(this, queryNode.getDataFactory());
+      final TreePath path = getPathForNode(queryNode.getDataFactory());
       final TreePath queryPath = path.pathByAddingChild(queryNode);
 
       final TreeModelEvent treeEvent = new TreeModelEvent(this, queryPath);
@@ -446,4 +459,93 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
       }
     }
   }
+
+  public void fireExpressionAdded(final Expression parameter)
+  {
+    final TreePath pathForNode = new TreePath(new Object[]{getRoot(), getReportFunctionNode()});
+    final TreeModelListener[] treeModelListeners = getListeners();
+    final int index = getIndexOfChild(getReportFunctionNode(), parameter);
+    if (index == -1)
+    {
+      return;
+    }
+
+    final TreeModelEvent treeEvent = new TreeModelEvent(this, pathForNode,
+        new int[]{index}, new Object[]{parameter});
+    for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
+    {
+      final TreeModelListener listener = treeModelListeners[i];
+      listener.treeNodesInserted(treeEvent);
+    }
+
+    refreshExpressionsCache();
+  }
+
+  public void fireExpressionRemoved(final Expression parameter)
+  {
+    final TreePath pathForNode = new TreePath(new Object[]{getRoot(), getReportFunctionNode()});
+    final TreeModelListener[] treeModelListeners = getListeners();
+    final int index = findExpressionInCache(parameter);
+    if (index == -1)
+    {
+      return;
+    }
+
+    final TreeModelEvent treeEvent = new TreeModelEvent(this, pathForNode,
+        new int[]{index}, new Object[]{parameter});
+    for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
+    {
+      final TreeModelListener listener = treeModelListeners[i];
+      listener.treeNodesRemoved(treeEvent);
+    }
+
+    refreshExpressionsCache();
+  }
+
+  private int findExpressionInCache(final Expression parameter)
+  {
+    if (cachedExpressions == null)
+    {
+      return -1;
+    }
+    for (int i = 0; i < cachedExpressions.length; i++)
+    {
+      Expression cachedExpression = cachedExpressions[i];
+      if (cachedExpression == parameter)
+      {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public TreePath getPathForNode(final Object node)
+  {
+    if (node == getRoot())
+    {
+      return new TreePath(new Object[]{getRoot()});
+    }
+
+    if (node instanceof Expression)
+    {
+      final ReportFunctionNode functions = getReportFunctionNode();
+      if (getIndexOfChild(functions, node) < 0)
+      {
+        return null;
+      }
+      return new TreePath(new Object[]{getRoot(), functions, node});
+    }
+
+    if (node instanceof DataFactory)
+    {
+      final DataFactory dataFactoryElement = getDataFactoryElement();
+      if (getIndexOfChild(dataFactoryElement, node) < 0)
+      {
+        return null;
+      }
+      return new TreePath(new Object[]{getRoot(), dataFactoryElement, node});
+    }
+    return null;
+  }
+
 }

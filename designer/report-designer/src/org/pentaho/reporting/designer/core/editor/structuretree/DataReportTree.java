@@ -71,21 +71,15 @@ public class DataReportTree extends AbstractReportTree
 
       try
       {
-        if (event.isNodeAddedEvent())
+        if (event.isNodeDeleteEvent())
         {
-          if (event.getElement() == renderContext.getReportDefinition())
-          {
-            realModel.fireTreeDataChanged();
-          }
+          handleNodeRemoved(event, realModel);
           return;
         }
 
-        if (event.isNodeDeleteEvent())
+        if (event.isNodeAddedEvent())
         {
-          if (event.getElement() == renderContext.getReportDefinition())
-          {
-            realModel.fireTreeDataChanged();
-          }
+          handleNodeAdded(event, realModel);
           return;
         }
 
@@ -112,8 +106,10 @@ public class DataReportTree extends AbstractReportTree
                 realModel.fireQueryChanged(attributeChange.getOldValue());
                 realModel.fireQueryChanged(attributeChange.getNewValue());
               }
+              return;
             }
-            else if (eventParameter instanceof Expression ||
+
+            if (eventParameter instanceof Expression ||
                 eventParameter instanceof ReportParameterDefinition)
             {
               realModel.fireTreeNodeChanged(eventParameter);
@@ -133,6 +129,58 @@ public class DataReportTree extends AbstractReportTree
       {
         restoreState();
         expandAfterDataSourceEdit(event);
+      }
+    }
+
+    private void handleNodeRemoved(final ReportModelEvent event, final AbstractReportDataTreeModel realModel)
+    {
+      if (event.getElement() == renderContext.getReportDefinition())
+      {
+        final Object eventParam = event.getParameter();
+        if (eventParam instanceof Expression)
+        {
+          final Expression expression = (Expression) eventParam;
+          realModel.fireExpressionRemoved(expression);
+        }
+        else if (eventParam instanceof ParameterDefinitionEntry)
+        {
+          final ParameterDefinitionEntry parameter = (ParameterDefinitionEntry) eventParam;
+          if (realModel instanceof MasterReportDataTreeModel)
+          {
+            final MasterReportDataTreeModel masterModel = (MasterReportDataTreeModel) realModel;
+            masterModel.fireParameterRemoved(parameter);
+          }
+        }
+        else
+        {
+          realModel.fireTreeDataChanged();
+        }
+      }
+    }
+
+    private void handleNodeAdded(final ReportModelEvent event, final AbstractReportDataTreeModel realModel)
+    {
+      if (event.getElement() == renderContext.getReportDefinition())
+      {
+        final Object eventParam = event.getParameter();
+        if (eventParam instanceof Expression)
+        {
+          final Expression expression = (Expression) eventParam;
+          realModel.fireExpressionAdded(expression);
+        }
+        else if (eventParam instanceof ParameterDefinitionEntry)
+        {
+          final ParameterDefinitionEntry parameter = (ParameterDefinitionEntry) eventParam;
+          if (realModel instanceof MasterReportDataTreeModel)
+          {
+            final MasterReportDataTreeModel masterModel = (MasterReportDataTreeModel) realModel;
+            masterModel.fireParameterAdded(parameter);
+          }
+        }
+        else
+        {
+          realModel.fireTreeDataChanged();
+        }
       }
     }
 
@@ -219,7 +267,7 @@ public class DataReportTree extends AbstractReportTree
       for (int i = 0; i < size; i++)
       {
         final DataFactory df = compoundDataFactory.getReference(i);
-        final TreePath path = TreeSelectionHelper.getPathForNode(treeModel, df);
+        final TreePath path = treeModel.getPathForNode(df);
         if (path == null)
         {
           return;
@@ -467,7 +515,7 @@ public class DataReportTree extends AbstractReportTree
       return null;
     }
 
-    return TreeSelectionHelper.getPathForNode(getDataTreeModel(), node);
+    return getDataTreeModel().getPathForNode(node);
   }
 
   public void setRenderContext(final ReportRenderContext renderContext)
@@ -500,41 +548,41 @@ public class DataReportTree extends AbstractReportTree
       }
 
       final AbstractReportDefinition report = this.renderContext.getReportDefinition();
+      final AbstractReportDataTreeModel model;
       if (report instanceof MasterReport)
       {
-        setModel(new MasterReportDataTreeModel(renderContext));
+        model = new MasterReportDataTreeModel(renderContext);
       }
       else if (report instanceof SubReport)
       {
-        setModel(new SubReportDataTreeModel(renderContext));
+        model = new SubReportDataTreeModel(renderContext);
       }
       else
       {
         setModel(EMPTY_MODEL);
+        return;
       }
 
-      if (getModel() instanceof AbstractReportDataTreeModel)
+      setModel(model);
+
+      final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+      final Object[] selectedElements = selectionModel.getSelectedElements();
+      final ArrayList<TreePath> selectionPaths = new ArrayList<TreePath>();
+      for (int i = 0; i < selectedElements.length; i++)
       {
-        final AbstractReportDataTreeModel model = (AbstractReportDataTreeModel) getModel();
-        final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
-        final Object[] selectedElements = selectionModel.getSelectedElements();
-        final ArrayList<TreePath> selectionPaths = new ArrayList<TreePath>();
-        for (int i = 0; i < selectedElements.length; i++)
+        final Object o = selectedElements[i];
+        final TreePath path = model.getPathForNode(o);
+        if (path != null)
         {
-          final Object o = selectedElements[i];
-          final TreePath path = TreeSelectionHelper.getPathForNode(model, o);
-          if (path != null)
-          {
-            selectionPaths.add(path);
-          }
+          selectionPaths.add(path);
         }
-        getSelectionModel().setSelectionPaths(selectionPaths.toArray(new TreePath[selectionPaths.size()]));
-
-        SwingUtilities.invokeLater(new ExpandDataFactoryNodesTask(model));
-        SwingUtilities.invokeLater(new ExpandExpressionNodesTask(model));
-        SwingUtilities.invokeLater(new ExpandParameterDataSourceTask(model));
-        SwingUtilities.invokeLater(new ExpandEnvironmentDataSourceTask(model));
       }
+      getSelectionModel().setSelectionPaths(selectionPaths.toArray(new TreePath[selectionPaths.size()]));
+
+      SwingUtilities.invokeLater(new ExpandDataFactoryNodesTask(model));
+      SwingUtilities.invokeLater(new ExpandExpressionNodesTask(model));
+      SwingUtilities.invokeLater(new ExpandParameterDataSourceTask(model));
+      SwingUtilities.invokeLater(new ExpandEnvironmentDataSourceTask(model));
     }
     finally
     {

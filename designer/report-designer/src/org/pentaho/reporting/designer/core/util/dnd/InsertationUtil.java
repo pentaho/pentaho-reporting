@@ -577,7 +577,7 @@ public class InsertationUtil
         if (definitionEntry == data)
         {
           mdef.removeParameterDefinition(i);
-          report.notifyNodeStructureChanged();
+          report.notifyNodeChildRemoved(definitionEntry);
           return new ParameterEditUndoEntry(i, definitionEntry, null);
         }
       }
@@ -595,7 +595,7 @@ public class InsertationUtil
         if (definitionEntry == data)
         {
           expressionCollection.removeExpression(i);
-          report.notifyNodeStructureChanged();
+          report.notifyNodeChildRemoved(definitionEntry);
           return new ExpressionRemoveUndoEntry(i, definitionEntry);
         }
       }
@@ -615,7 +615,7 @@ public class InsertationUtil
         if (df == data)
         {
           dataFactory.remove(i);
-          report.notifyNodeStructureChanged();
+          report.notifyNodeChildRemoved(df);
           return new DataSourceEditUndoEntry(i, df, null);
         }
       }

@@ -209,6 +209,12 @@ public abstract class AbstractReportTree extends JTree
   protected TreeSet<Integer> getExpandedNodes()
   {
     final ReportRenderContext renderContext = getRenderContext();
+    if (renderContext == null)
+    {
+      // dummy operation..
+      return new TreeSet<Integer>();
+    }
+
     final Object property = renderContext.getProperty("::layout-report-tree:expanded-nodes");
     if (property instanceof TreeSet)
     {
