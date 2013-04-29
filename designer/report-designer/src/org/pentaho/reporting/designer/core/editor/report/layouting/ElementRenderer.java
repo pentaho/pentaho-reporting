@@ -22,6 +22,9 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
+import org.pentaho.reporting.designer.core.util.BreakPositionsList;
+import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
@@ -36,8 +39,6 @@ public interface ElementRenderer
   public void setVisualHeight(final double visualHeight);
 
   public double getVisualHeight();
-
-  public double getComputedHeight();
 
   public long[] getHorizontalEdgePositionKeys();
 
@@ -60,4 +61,16 @@ public interface ElementRenderer
   public boolean draw(Graphics2D g2);
 
   public StrictBounds getRootElementBounds();
+
+  Section getElement();
+
+  Element[] getElementsAt (double x, double y, double width, double height);
+  Element[] getElementsAt (double x, double y);
+
+  BreakPositionsList getHorizontalEdgePositions();
+  BreakPositionsList getVerticalEdgePositions();
+
+  void invalidateLayout();
+
+  void dispose();
 }

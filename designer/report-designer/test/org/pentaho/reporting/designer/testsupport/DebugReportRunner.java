@@ -15,7 +15,7 @@
  * Copyright (c) 2000 - 2009 Pentaho Corporation, Simba Management Limited and Contributors.  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.util;
+package org.pentaho.reporting.designer.testsupport;
 
 import java.io.OutputStream;
 

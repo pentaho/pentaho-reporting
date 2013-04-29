@@ -21,7 +21,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.util.DebugReportRunner;
+import org.pentaho.reporting.designer.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;

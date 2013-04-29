@@ -8,7 +8,7 @@ import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.DefaultReportDesignerContext;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.util.GUIUtils;
-import org.pentaho.reporting.designer.util.TestReportDesignerView;
+import org.pentaho.reporting.designer.testsupport.TestReportDesignerView;
 import org.pentaho.ui.xul.XulException;
 
 /**

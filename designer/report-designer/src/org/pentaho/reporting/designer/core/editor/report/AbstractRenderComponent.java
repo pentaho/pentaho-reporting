@@ -42,7 +42,6 @@ import java.awt.print.PageFormat;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JComponent;
@@ -99,11 +98,9 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -121,7 +118,8 @@ public abstract class AbstractRenderComponent extends JComponent
   {
     public void run()
     {
-      ((AbstractElementRenderer)(getElementRenderer())).fireChangeEvent();
+      final AbstractElementRenderer elementRenderer = (AbstractElementRenderer) getElementRenderer();
+      elementRenderer.fireChangeEvent();
     }
   }
 
@@ -173,10 +171,10 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       final ReportElement reportElement = (ReportElement) element;
-      final Section band = getRendererRoot().getElement();
+      final Section band = getElementRenderer().getElement();
       if (ModelUtility.isDescendant(band, reportElement))
       {
-        getRendererRoot().resetBounds();
+        getElementRenderer().invalidateLayout();
         AbstractRenderComponent.this.revalidate();
         AbstractRenderComponent.this.repaint();
         return;
@@ -187,7 +185,7 @@ public abstract class AbstractRenderComponent extends JComponent
         final Section section = (Section) reportElement;
         if (ModelUtility.isDescendant(section, band))
         {
-          getRendererRoot().resetBounds();
+          getElementRenderer().invalidateLayout();
           AbstractRenderComponent.this.revalidate();
           AbstractRenderComponent.this.repaint();
         }
@@ -204,7 +202,6 @@ public abstract class AbstractRenderComponent extends JComponent
 
     }
   }
-
 
   protected class MouseSelectionHandler extends MouseAdapter implements MouseMotionListener
   {
@@ -261,7 +258,7 @@ public abstract class AbstractRenderComponent extends JComponent
       final Point2D normalizedSelectionRectangleTarget = normalize(e.getPoint());
       normalizedSelectionRectangleTarget.setLocation(Math.max(0, normalizedSelectionRectangleTarget.getX()), Math.max(0, normalizedSelectionRectangleTarget
           .getY()));
-      final AbstractElementRenderer rendererRoot = getRendererRoot();
+      final ElementRenderer rendererRoot = getElementRenderer();
       final ReportRenderContext renderContext = getRenderContext();
 
       if (clearSelectionOnDrag)
@@ -274,15 +271,13 @@ public abstract class AbstractRenderComponent extends JComponent
       selectionRectangleTarget = e.getPoint();
 
       // Calculate the bounding box for the selection
-      final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
       final double y1 = Math.min(normalizedSelectionRectangleOrigin.getY(), normalizedSelectionRectangleTarget.getY());
       final double x1 = Math.min(normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleTarget.getX());
       final double y2 = Math.max(normalizedSelectionRectangleOrigin.getY(), normalizedSelectionRectangleTarget.getY());
       final double x2 = Math.max(normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleTarget.getX());
 
-      final RenderNode[] allNodes = pageDrawable.getNodesAt(x1, y1, x2 - x1, y2 - y1, null, null);
+      final Element[] allNodes = rendererRoot.getElementsAt(x1, y1, x2 - x1, y2 - y1);
       final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
-      final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
 
       // Convert between points to micro-points (1 point X 100K is a micro-point)
       final StrictBounds rect1 = StrictGeomUtility.createBounds(x1, y1, x2 - x1, y2 - y1);
@@ -290,14 +285,12 @@ public abstract class AbstractRenderComponent extends JComponent
 
       for (int i = allNodes.length - 1; i >= 0; i -= 1)
       {
-        final RenderNode node = allNodes[i];
-        final InstanceID instanceId = node.getInstanceId();
-
-        final Element element = id.get(instanceId);
-        if (element == null || element instanceof RootLevelBand)
+        final Element element = allNodes[i];
+        if (element instanceof RootLevelBand)
         {
           continue;
         }
+
         final CachedLayoutData data = ModelUtility.getCachedLayoutData(element);
         rect2.setRect(data.getX(), data.getY(), data.getWidth(), data.getHeight());
 
@@ -374,19 +367,15 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       final ReportRenderContext renderContext = getRenderContext();
-      final AbstractElementRenderer rendererRoot = getRendererRoot();
+      final ElementRenderer rendererRoot = getElementRenderer();
 
       final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
-      final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
-      final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
-      final RenderNode[] allNodes = pageDrawable.getNodesAt(normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleOrigin.getY(), null, null);
+      final Element[] allNodes = rendererRoot.getElementsAt
+          (normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleOrigin.getY());
       for (int i = allNodes.length - 1; i >= 0; i -= 1)
       {
-        final RenderNode node = allNodes[i];
-        final InstanceID instanceId = node.getInstanceId();
-
-        final Element element = id.get(instanceId);
-        if (element == null || element instanceof RootLevelBand)
+        final Element element = allNodes[i];
+        if (element instanceof RootLevelBand)
         {
           continue;
         }
@@ -415,20 +404,15 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       final ReportSelectionModel selectionModel = getRenderContext().getSelectionModel();
-      final AbstractElementRenderer rendererRoot = getRendererRoot();
-      final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
-      final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
+      final ElementRenderer rendererRoot = getElementRenderer();
 
       // Sorted list of all elements that intersect the point we are seeking
-      final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
+      final Element[] allNodes = rendererRoot.getElementsAt(point.getX(), point.getY());
       for (int i = allNodes.length - 1; i >= 0; i -= 1)
       {
-        final RenderNode node = allNodes[i];
-        final InstanceID instanceId = node.getInstanceId();
-
         // Check if element is null due to structural helper node like (SectionRenderBox)
-        final Element element = id.get(instanceId);
-        if (element == null || element instanceof RootLevelBand)
+        final Element element = allNodes[i];
+        if (element instanceof RootLevelBand)
         {
           continue;
         }
@@ -481,7 +465,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       final Element velement = (Element) element;
       ReportElement parentSearch = velement;
-      final Section rootBand = getRendererRoot().getElement();
+      final Section rootBand = getElementRenderer().getElement();
       final ZoomModel zoomModel = getRenderContext().getZoomModel();
       while (parentSearch != null)
       {
@@ -804,6 +788,10 @@ public abstract class AbstractRenderComponent extends JComponent
       {
         element = (Element) findRootBandForPosition(normalizedPoint);
       }
+      if (element == null)
+      {
+        return;
+      }
 
       final JPopupMenu pop = ContextMenuUtility.getMenu(getDesignerContext(), element);
       if (pop == null)
@@ -929,7 +917,7 @@ public abstract class AbstractRenderComponent extends JComponent
      */
     public void mouseReleased(final MouseEvent e)
     {
-      if(lastPoint == null)
+      if (lastPoint == null)
       {
         return;
       }
@@ -1153,24 +1141,21 @@ public abstract class AbstractRenderComponent extends JComponent
 
   /**
    * Abstract method to retrieve the element renderer
+   *
    * @return ElementRenderer
    */
-  abstract protected ElementRenderer getElementRenderer();
+  protected abstract ElementRenderer getElementRenderer();
 
   /**
    * Abstract method to return the default element
+   *
    * @return Element
    */
-  abstract public Element getDefaultElement();
-
-  public AbstractElementRenderer getRendererRoot()
-  {
-    return (AbstractElementRenderer)getElementRenderer();
-  }
+  public abstract Element getDefaultElement();
 
   public Band getRootBand()
   {
-    return (Band)getRendererRoot().getElement();
+    return (Band) getElementRenderer().getElement();
   }
 
   public boolean isTerminateEditOnFocusLost()
@@ -1292,7 +1277,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
     g2.setColor(new Color(224, 224, 224));
     g2.fillRect(0, 0, getWidth(), getHeight());
-    
+
     final int leftBorder = (int) getLeftBorder();
     final int topBorder = (int) getTopBorder();
     final float scaleFactor = getRenderContext().getZoomModel().getZoomAsPercentage();
@@ -1354,7 +1339,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       // TODO: Check if this is a no-op due to negative offset
       selectionG2.translate(0, -offset.getY() * scaleFactor);
-      
+
       renderer.validate(getRenderContext(), scaleFactor);
       renderer.draw(selectionG2, new Rectangle2D.Double(getLeftBorder(), getTopBorder(), getWidth(), getHeight()), this);
       selectionG2.dispose();
@@ -1436,7 +1421,7 @@ public abstract class AbstractRenderComponent extends JComponent
       }
     }
   }
-  
+
   protected void paintElementAlignment(final Graphics2D g2d)
   {
     if (WorkspaceSettings.getInstance().isShowElementAlignmentHints())
@@ -1499,20 +1484,11 @@ public abstract class AbstractRenderComponent extends JComponent
 
   public Element getElementForLocation(final Point2D point, final boolean onlySelected)
   {
-    final AbstractElementRenderer rendererRoot = getRendererRoot();
-    final HashMap<InstanceID, Element> id = rendererRoot.getElementsById();
-    final DesignerPageDrawable pageDrawable = rendererRoot.getLogicalPageDrawable();
-    final RenderNode[] allNodes = pageDrawable.getNodesAt(point.getX(), point.getY(), null, null);
+    final ElementRenderer rendererRoot = getElementRenderer();
+    final Element[] allNodes = rendererRoot.getElementsAt(point.getX(), point.getY());
     for (int i = allNodes.length - 1; i >= 0; i -= 1)
     {
-      final RenderNode node = allNodes[i];
-      final InstanceID instanceId = node.getInstanceId();
-
-      final Element element = id.get(instanceId);
-      if (element == null)
-      {
-        continue;
-      }
+      final Element element = allNodes[i];
       if (ModelUtility.isHideInLayoutGui(element) == true)
       {
         continue;
@@ -1539,7 +1515,17 @@ public abstract class AbstractRenderComponent extends JComponent
       return null;
     }
 
-    final Section section = ((AbstractElementRenderer)getElementRenderer()).getElement();
+    final Element[] elementsAt = getElementRenderer().getElementsAt(point.getX(), point.getY());
+    for (int i = elementsAt.length - 1; i >= 0; i -= 1)
+    {
+      final Element element = elementsAt[i];
+      if (element instanceof RootLevelBand)
+      {
+        return (RootLevelBand) element;
+      }
+    }
+
+    final Section section = getElementRenderer().getElement();
     if (section instanceof RootLevelBand)
     {
       return (RootLevelBand) section;
@@ -1571,6 +1557,8 @@ public abstract class AbstractRenderComponent extends JComponent
     final ReportRenderContext renderContext = getRenderContext();
     renderContext.getReportDefinition().removeReportModelListener(changeHandler);
     renderContext.getSelectionModel().removeReportSelectionListener(selectionModelListener);
+
+    getElementRenderer().dispose();
   }
 
   protected void removeEditor()
@@ -1727,7 +1715,7 @@ public abstract class AbstractRenderComponent extends JComponent
    */
   protected BreakPositionsList getHorizontalEdgePositions()
   {
-    return getRendererRoot().getHorizontalEdgePositions();
+    return getElementRenderer().getHorizontalEdgePositions();
   }
 
   /**
@@ -1737,7 +1725,7 @@ public abstract class AbstractRenderComponent extends JComponent
    */
   protected BreakPositionsList getVerticalEdgePositions()
   {
-    return getRendererRoot().getVerticalEdgePositions();
+    return getElementRenderer().getVerticalEdgePositions();
   }
 
   protected void initializeDragOperation(final Point2D originPoint,
