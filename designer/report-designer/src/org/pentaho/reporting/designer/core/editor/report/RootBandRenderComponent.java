@@ -39,11 +39,6 @@ public class RootBandRenderComponent extends AbstractRenderComponent
     setShowTopBorder(showTopBorder);
   }
 
-  public void dispose()
-  {
-    super.dispose();
-  }
-
   public Element getDefaultElement()
   {
     if (elementRenderer == null)

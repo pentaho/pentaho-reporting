@@ -1,4 +1,4 @@
-package org.pentaho.reporting.designer.util;
+package org.pentaho.reporting.designer.testsupport;
 
 import java.beans.PropertyChangeListener;
 

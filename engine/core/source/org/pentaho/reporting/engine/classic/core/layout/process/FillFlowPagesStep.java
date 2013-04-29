@@ -104,7 +104,7 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
 
     final RenderBox footerArea = derived.getFooterArea();
     final long footerShift = contentEnd + repeatFooterArea.getHeight();
-    BoxShifter.shiftBoxUnchecked(repeatFooterArea, footerShift);
+    BoxShifter.shiftBoxUnchecked(footerArea, footerShift);
 
     // the renderer is responsible for painting the page-header and footer ..
 
@@ -216,8 +216,6 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
         cellInfo = cellInfo.parent;
       }
     }
-
-
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
