@@ -44,6 +44,12 @@ public class JCRSolutionFileModel implements SolutionFileModel
   private static final String BI_SERVER_NULL_OBJECT = "BI-Server returned a RepositoryFileTreeDto without an attached RepositoryFileDto. " +
       "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
   private static final String FILE_NOT_FOUND = "The specified file name does not exist: {0}";
+  //this is required to retrieve a prpt - if true we get z ZIP file with .locale info
+  private static final String WITH_MANIFEST_FALSE = "?withManifest=false";
+  private static final String SLASH = "/";
+  private static final String COLON = ":";
+  private static final String SPACE = " ";
+  private static final String URL_SPACE = "%20";
 
   private Client client;
   private String url;
@@ -117,7 +123,8 @@ public class JCRSolutionFileModel implements SolutionFileModel
 
   private static String normalizePath(final String path)
   {
-    return path.replace("/", ":");
+    String fullPath = path.replace(SLASH, COLON);
+    return fullPath.replace(SPACE, URL_SPACE);
   }
 
   public RepositoryFileTreeDto getRoot() throws IOException
@@ -364,7 +371,8 @@ public class JCRSolutionFileModel implements SolutionFileModel
     }
     final String path = normalizePath(fileDto.getPath());
     final String service = MessageFormat.format(DOWNLOAD_SERVICE, path);
-    return client.resource(url + service).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
+
+    return client.resource(url + service + WITH_MANIFEST_FALSE).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
   }
 
   public void setData(final FileName file, final byte[] data) throws FileSystemException
@@ -375,7 +383,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     {
       if (i != 0)
       {
-        b.append("/");
+        b.append(SLASH);
       }
       b.append(fileName[i]);
     }

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.apache.commons.vfs.FileObject;
@@ -38,6 +36,7 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
 public class PublishUtil
 {
+  private static final String VIEWER = "/viewer";
   private static final String WEB_SOLUTION_PREFIX = "web-solution:";
   private static final String JCR_SOLUTION_PREFIX = "jcr-solution:";
   public static final String SERVER_VERSION = "server-version";
@@ -45,6 +44,9 @@ public class PublishUtil
   public static final int SERVER_VERSION_LEGACY = 4;
   private static final String SLASH = "/";
   private static final String COLON_SEP = ":";
+  private static final String SPACE = " ";
+  private static final String URL_SPACE = "%20";
+  private static final String TIMEOUT = "timeout";
 
   private PublishUtil()
   {
@@ -110,10 +112,9 @@ public class PublishUtil
     final String urlMessage = config.getConfigProperty
         ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
 
-    final MessageFormat fmt = new MessageFormat(urlMessage);
-    final String urlPath = path.replace(SLASH,COLON_SEP);
-    final String fullRepoViewerPath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
-    final String url = baseUrl + fullRepoViewerPath;
+    final String urlPath = path.replaceAll(SLASH, COLON_SEP);
+    final String fullRepoViewerPath =  urlPath.replaceAll(SPACE, URL_SPACE);
+    final String url = baseUrl + urlMessage + fullRepoViewerPath+ VIEWER ;
 
     ExternalToolLauncher.openURL(url);
   }
@@ -209,7 +210,7 @@ public class PublishUtil
 
   public static int getTimeout(final AuthenticationData loginData)
   {
-    final String s = loginData.getOption("timeout");
+    final String s = loginData.getOption(TIMEOUT);
     return ParserUtil.parseInt(s, WorkspaceSettings.getInstance().getConnectionTimeout());
   }
 
