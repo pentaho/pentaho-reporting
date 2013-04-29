@@ -18,34 +18,30 @@
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
 import java.awt.datatransfer.Transferable;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JComponent;
-import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeWillExpandListener;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import org.pentaho.reporting.designer.core.actions.report.EditParametersAction;
+import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.dnd.FieldDescriptionTransferable;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.designtime.AttributeChange;
 import org.pentaho.reporting.engine.classic.core.designtime.AttributeExpressionChange;
@@ -56,11 +52,10 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
-public class ReportTree extends JTree
+public class DataReportTree extends AbstractReportTree
 {
-  private class ReportUpdateHandler implements ReportSelectionListener, ReportModelListener
+  private class ReportUpdateHandler implements ReportModelListener
   {
     private ReportUpdateHandler()
     {
@@ -68,51 +63,58 @@ public class ReportTree extends JTree
 
     public void nodeChanged(final ReportModelEvent event)
     {
-      if (event.isNodeStructureChanged() || event.isNodeAddedEvent() || event.isNodeDeleteEvent())
+      final AbstractReportDataTreeModel realModel = getDataTreeModel();
+      if (realModel == null)
       {
-        final TreeModel model = getModel();
-        if (model instanceof AbstractReportDataTreeModel)
+        return;
+      }
+
+      try
+      {
+        if (event.isNodeAddedEvent())
         {
           if (event.getElement() == renderContext.getReportDefinition())
           {
-            final AbstractReportDataTreeModel realModel = (AbstractReportDataTreeModel) model;
             realModel.fireTreeDataChanged();
           }
+          return;
         }
-        else if (model instanceof ReportStructureTreeModel)
+
+        if (event.isNodeDeleteEvent())
         {
-          final ReportStructureTreeModel realModel = (ReportStructureTreeModel) model;
-          realModel.fireTreeDataChanged(event.getSource());
+          if (event.getElement() == renderContext.getReportDefinition())
+          {
+            realModel.fireTreeDataChanged();
+          }
+          return;
         }
-      }
-      else if (event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
-      {
-        final TreeModel model = getModel();
-        if (model instanceof AbstractReportDataTreeModel)
+
+        if (event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
         {
-          final AbstractReportDataTreeModel realModel = (AbstractReportDataTreeModel) model;
-          if (event.getElement() == model.getRoot())
+          if (event.getElement() == renderContext.getReportDefinition())
           {
             final Object eventParameter = event.getParameter();
+            if (eventParameter instanceof AttributeExpressionChange ||
+                eventParameter instanceof StyleChange ||
+                eventParameter instanceof StyleExpressionChange)
+            {
+              // these things have no effect on the data ..
+              return;
+            }
+
             if (eventParameter instanceof AttributeChange)
             {
               final AttributeChange attributeChange = (AttributeChange) eventParameter;
               if (AttributeNames.Internal.NAMESPACE.equals(attributeChange.getNamespace()) ||
-                  AttributeNames.Internal.QUERY.equals(attributeChange.getNamespace()))
+                  AttributeNames.Internal.QUERY.equals(attributeChange.getName()))
               {
-                realModel.fireTreeNodeChanged(realModel.getDataFactoryElement());
-              }
 
-              // else do nothing, as style-changes and other attribute-changes have no effect on the datamodel.
-            }
-            else if (eventParameter instanceof AttributeExpressionChange ||
-                     eventParameter instanceof StyleChange ||
-                     eventParameter instanceof StyleExpressionChange)
-            {
-              // these things have no effect on the data ..
+                realModel.fireQueryChanged(attributeChange.getOldValue());
+                realModel.fireQueryChanged(attributeChange.getNewValue());
+              }
             }
             else if (eventParameter instanceof Expression ||
-                     eventParameter instanceof ReportParameterDefinition)
+                eventParameter instanceof ReportParameterDefinition)
             {
               realModel.fireTreeNodeChanged(eventParameter);
             }
@@ -126,50 +128,12 @@ public class ReportTree extends JTree
             realModel.fireTreeNodeChanged(event.getElement());
           }
         }
-        else if (model instanceof ReportStructureTreeModel)
-        {
-          final ReportStructureTreeModel realModel = (ReportStructureTreeModel) model;
-          final Object eventParameter = event.getParameter();
-          if (eventParameter instanceof AttributeChange)
-          {
-            final AttributeChange attributeChange = (AttributeChange) eventParameter;
-            if (AttributeNames.Core.NAMESPACE.equals(attributeChange.getNamespace()))
-            {
-              if (AttributeNames.Core.NAME.equals(attributeChange.getName()) ||
-                  AttributeNames.Core.FIELD.equals(attributeChange.getName()) ||
-                  AttributeNames.Core.VALUE.equals(attributeChange.getName())||
-                  AttributeNames.Core.RESOURCE_IDENTIFIER.equals(attributeChange.getName()))
-              {
-                invalidateLayoutCache();
-              }
-            }
-          }
-          else if (event.getElement() instanceof Band)
-          {
-            if (eventParameter instanceof StyleChange)
-            {
-              final StyleChange change = (StyleChange) eventParameter;
-              if (BandStyleKeys.LAYOUT.equals(change.getStyleKey()))
-              {
-                invalidateLayoutCache();
-                realModel.fireTreeStructureChanged(event.getElement());
-              }
-              else
-              {
-                realModel.fireTreeNodeChanged(event.getElement());
-              }
-            }
-            else
-            {
-              realModel.fireTreeNodeChanged(event.getElement());
-            }
-          }
-
-          realModel.fireTreeNodeChanged(event.getSource());
-        }
       }
-      restoreState();
-      expandAfterDataSourceEdit(event);
+      finally
+      {
+        restoreState();
+        expandAfterDataSourceEdit(event);
+      }
     }
 
     private void expandAfterDataSourceEdit(final ReportModelEvent event)
@@ -202,137 +166,9 @@ public class ReportTree extends JTree
       {
         SwingUtilities.invokeLater(new ExpandParameterDataSourceTask(dataTreeModel));
       }
-
-    }
-
-    public void selectionAdded(final ReportSelectionEvent event)
-    {
-      if (updateFromInternalSource)
-      {
-        return;
-      }
-      try
-      {
-        updateFromExternalSource = true;
-
-        final TreeModel model = getModel();
-        if (model instanceof AbstractReportDataTreeModel)
-        {
-          final TreePath path = TreeSelectionHelper.getPathForNode((AbstractReportDataTreeModel) model,
-              event.getElement());
-          if (path != null)
-          {
-            addSelectionPath(path);
-          }
-        }
-        else if (model instanceof ReportStructureTreeModel)
-        {
-          final TreePath path = TreeSelectionHelper.getPathForNode((ReportStructureTreeModel) model,
-              event.getElement());
-          if (path != null)
-          {
-            addSelectionPath(path);
-          }
-        }
-      }
-      finally
-      {
-        updateFromExternalSource = false;
-      }
-    }
-
-    public void selectionRemoved(final ReportSelectionEvent event)
-    {
-      if (updateFromInternalSource)
-      {
-        return;
-      }
-
-      try
-      {
-        updateFromExternalSource = true;
-
-        final TreeModel model = getModel();
-        if (model instanceof AbstractReportDataTreeModel)
-        {
-          final TreePath path = TreeSelectionHelper.getPathForNode((AbstractReportDataTreeModel) model,
-              event.getElement());
-          if (path != null)
-          {
-            removeSelectionPath(path);
-          }
-        }
-        else if (model instanceof ReportStructureTreeModel)
-        {
-          final TreePath path = TreeSelectionHelper.getPathForNode((ReportStructureTreeModel) model,
-              event.getElement());
-          if (path != null)
-          {
-            removeSelectionPath(path);
-          }
-        }
-
-      }
-      finally
-      {
-        updateFromExternalSource = false;
-      }
-    }
-
-    public void leadSelectionChanged(final ReportSelectionEvent event)
-    {
     }
   }
 
-  private class TreeSelectionHandler implements TreeSelectionListener
-  {
-    /**
-     * Called whenever the value of the selection changes.
-     *
-     * @param e the event that characterizes the change.
-     */
-    public void valueChanged(final TreeSelectionEvent e)
-    {
-      if (renderContext != null)
-      {
-        renderContext.addExpandedNode(getRowForPath(e.getPath()));
-      }
-      if (updateFromExternalSource)
-      {
-        return;
-      }
-      updateFromInternalSource = true;
-      try
-      {
-        final ReportRenderContext renderContext = getRenderContext();
-        if (renderContext == null)
-        {
-          return;
-        }
-
-        final TreePath[] treePaths = getSelectionPaths();
-        if (treePaths == null)
-        {
-          selectionModel.clearSelection();
-          renderContext.getSelectionModel().clearSelection();
-          return;
-        }
-
-        final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
-        final Object[] data = new Object[treePaths.length];
-        for (int i = 0; i < treePaths.length; i++)
-        {
-          final TreePath path = treePaths[i];
-          data[i] = path.getLastPathComponent();
-        }
-        selectionModel.setSelectedElements(data);
-      }
-      finally
-      {
-        updateFromInternalSource = false;
-      }
-    }
-  }
 
   private class SettingsChangeHandler implements SettingsListener
   {
@@ -360,11 +196,6 @@ public class ReportTree extends JTree
       }
       invalidateLayoutCache();
     }
-  }
-
-  public static enum RENDER_TYPE
-  {
-    REPORT, DATA
   }
 
   private class ExpandDataFactoryNodesTask implements Runnable
@@ -497,7 +328,7 @@ public class ReportTree extends JTree
      */
     protected Transferable createTransferable(final JComponent c)
     {
-      if (c != ReportTree.this)
+      if (c != DataReportTree.this)
       {
         return null;
       }
@@ -539,93 +370,89 @@ public class ReportTree extends JTree
     }
   }
 
-  private class RestoreStateTask implements Runnable
+  private class EditQueryDoubleClickHandler extends MouseAdapter
   {
-    private RestoreStateTask()
+    private EditQueryDoubleClickHandler()
     {
     }
 
-    /**
-     * When an object implementing interface <code>Runnable</code> is used
-     * to create a thread, starting the thread causes the object's
-     * <code>run</code> method to be called in that separately executing
-     * thread.
-     * <p/>
-     * The general contract of the method <code>run</code> is that it may
-     * take any action whatsoever.
-     *
-     * @see Thread#run()
-     */
-    public void run()
+    public void mouseClicked(final MouseEvent e)
     {
-      if (renderContext != null)
+      if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1)
       {
-        final Object[] expandedNodesArray = renderContext.getExpandedNodes();
-        for (int i = 0; i < expandedNodesArray.length; i++)
+        final TreePath selectionPath = getLeadSelectionPath();
+        if (selectionPath == null)
         {
-          final Integer path = (Integer) expandedNodesArray[i];
-          expandRow(path.intValue());
+          return;
         }
+
+        try
+        {
+          final Object selection = selectionPath.getLastPathComponent();
+          if (selection instanceof ParameterDefinitionEntry)
+          {
+            final ParameterDefinitionEntry parameterDefinitionEntry = (ParameterDefinitionEntry) selection;
+            EditParametersAction.performEditMasterReportParameters(getReportDesignerContext(), parameterDefinitionEntry);
+            return;
+          }
+
+          if (selection instanceof ParameterMapping ||
+              selection instanceof SubReportParametersNode)
+          {
+            EditParametersAction.performEditSubReportParameters(getReportDesignerContext());
+            return;
+          }
+
+          if (selection instanceof DataFactory)
+          {
+            final EditQueryAction action = new EditQueryAction();
+            action.setReportDesignerContext(getReportDesignerContext());
+            action.performEdit((DataFactory) selection, null);
+            return;
+          }
+
+          if (selection instanceof ReportQueryNode)
+          {
+            final ReportQueryNode queryNode = (ReportQueryNode) selection;
+            if (queryNode.isAllowEdit() == false)
+            {
+              return;
+            }
+            final EditQueryAction action = new EditQueryAction();
+            action.setReportDesignerContext(getReportDesignerContext());
+            action.performEdit(queryNode.getDataFactory(), queryNode.getQueryName());
+            e.consume();
+          }
+        }
+        catch (ReportDataFactoryException e1)
+        {
+          UncaughtExceptionsModel.getInstance().addException(e1);
+        }
+
       }
     }
   }
 
-  private class ReportTreeExpansionListener implements TreeWillExpandListener
-  {
-    public void treeWillExpand(final TreeExpansionEvent event) throws ExpandVetoException
-    {
-      renderContext.addExpandedNode(getRowForPath(event.getPath()));
-    }
-
-    public void treeWillCollapse(final TreeExpansionEvent event) throws ExpandVetoException
-    {
-      renderContext.removeExpandedNode(getRowForPath(event.getPath()));
-    }
-  }
-  
   private ReportRenderContext renderContext;
   private ReportUpdateHandler updateHandler;
 
-  private boolean updateFromExternalSource;
-  private boolean updateFromInternalSource;
-
-  private RENDER_TYPE renderType;
-
-  private static final DefaultTreeModel EMPTY_MODEL = new DefaultTreeModel(null, false);
+  @SuppressWarnings("FieldCanBeLocal")
   private SettingsChangeHandler settingsChangeHandler;
 
-  public ReportTree(final RENDER_TYPE renderType)
+  public DataReportTree()
   {
-    super(EMPTY_MODEL);
-
-    if (renderType == null)
-    {
-      throw new NullPointerException();
-    }
-
-    setRenderType(renderType);
     updateHandler = new ReportUpdateHandler();
-    settingsChangeHandler = new SettingsChangeHandler();
-    WorkspaceSettings.getInstance().addSettingsListener(settingsChangeHandler);
-    
-    addTreeWillExpandListener(new ReportTreeExpansionListener());
 
     setCellRenderer(new StructureTreeCellRenderer());
-    getSelectionModel().addTreeSelectionListener(new TreeSelectionHandler());
     setTransferHandler(new ColumnTransferHandler());
     setDragEnabled(true);
     setEditable(false);
-    if (renderType == RENDER_TYPE.DATA)
-    {
-      setRootVisible(false);
-    }
-  }
+    setRootVisible(false);
 
+    addMouseListener(new EditQueryDoubleClickHandler());
 
-  protected void invalidateLayoutCache()
-  {
-    // this bit of magic invalidates the layout cache
-    setCellRenderer(new StructureTreeCellRenderer());
+    settingsChangeHandler = new SettingsChangeHandler();
+    WorkspaceSettings.getInstance().addSettingsListener(settingsChangeHandler);
   }
 
   public ReportRenderContext getRenderContext()
@@ -633,34 +460,38 @@ public class ReportTree extends JTree
     return renderContext;
   }
 
+  protected TreePath getPathForNode(final Object node)
+  {
+    if (getDataTreeModel() == null)
+    {
+      return null;
+    }
+
+    return TreeSelectionHelper.getPathForNode(getDataTreeModel(), node);
+  }
+
   public void setRenderContext(final ReportRenderContext renderContext)
   {
     if (this.renderContext != null)
     {
-      this.renderContext.getSelectionModel().removeReportSelectionListener(updateHandler);
+      this.renderContext.getSelectionModel().removeReportSelectionListener(getSelectionHandler());
       this.renderContext.getReportDefinition().removeReportModelListener(updateHandler);
     }
     this.renderContext = renderContext;
     if (this.renderContext != null)
     {
-      this.renderContext.getSelectionModel().addReportSelectionListener(updateHandler);
+      this.renderContext.getSelectionModel().addReportSelectionListener(getSelectionHandler());
       this.renderContext.getReportDefinition().addReportModelListener(updateHandler);
     }
     updateFromRenderContext();
     restoreState();
   }
 
-  private void restoreState()
-  {
-    SwingUtilities.invokeLater(new RestoreStateTask());
-  }
-
-
   protected void updateFromRenderContext()
   {
     try
     {
-      updateFromExternalSource = true;
+      setUpdateFromExternalSource(true);
 
       if (this.renderContext == null)
       {
@@ -671,25 +502,11 @@ public class ReportTree extends JTree
       final AbstractReportDefinition report = this.renderContext.getReportDefinition();
       if (report instanceof MasterReport)
       {
-        if (getRenderType() == RENDER_TYPE.REPORT)
-        {
-          setModel(new ReportStructureTreeModel(report));
-        }
-        else
-        {
-          setModel(new MasterReportDataTreeModel(renderContext));
-        }
+        setModel(new MasterReportDataTreeModel(renderContext));
       }
       else if (report instanceof SubReport)
       {
-        if (getRenderType() == RENDER_TYPE.REPORT)
-        {
-          setModel(new ReportStructureTreeModel(report));
-        }
-        else
-        {
-          setModel(new SubReportDataTreeModel(renderContext));
-        }
+        setModel(new SubReportDataTreeModel(renderContext));
       }
       else
       {
@@ -721,22 +538,17 @@ public class ReportTree extends JTree
     }
     finally
     {
-      updateFromExternalSource = false;
+      setUpdateFromExternalSource(false);
     }
   }
 
-  public RENDER_TYPE getRenderType()
+  private AbstractReportDataTreeModel getDataTreeModel()
   {
-    return renderType;
-  }
-
-  public void setRenderType(final RENDER_TYPE renderType)
-  {
-    if (renderType == null)
+    final TreeModel model = getModel();
+    if (model instanceof AbstractReportDataTreeModel)
     {
-      throw new NullPointerException();
+      return (AbstractReportDataTreeModel) model;
     }
-    this.renderType = renderType;
+    return null;
   }
-
 }

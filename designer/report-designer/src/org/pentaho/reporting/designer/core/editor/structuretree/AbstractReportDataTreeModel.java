@@ -369,9 +369,9 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     if (path == null)
     {
       // if we cannot come up with a sensible path, we will take the root and hope the best
-      path = new TreePath(getRoot());  
+      path = new TreePath(getRoot());
     }
-    
+
     final TreeModelListener[] treeModelListeners = getListeners();
     final TreeModelEvent treeEvent = new TreeModelEvent(this, path);
     for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
@@ -396,6 +396,54 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     {
       final TreeModelListener listener = treeModelListeners[i];
       listener.treeStructureChanged(treeEvent);
+    }
+  }
+
+  public void fireQueryChanged(final Object query)
+  {
+    if (query == null)
+    {
+      return;
+    }
+
+    final ArrayList<ReportQueryNode> nodes = new ArrayList<ReportQueryNode>();
+    findAllQueryNodes(query, nodes, getDataFactoryElement());
+
+    final TreeModelListener[] treeModelListeners = getListeners();
+    for (int n = 0; n < nodes.size(); n++)
+    {
+      final ReportQueryNode queryNode = nodes.get(n);
+      final TreePath path = TreeSelectionHelper.getPathForNode(this, queryNode.getDataFactory());
+      final TreePath queryPath = path.pathByAddingChild(queryNode);
+
+      final TreeModelEvent treeEvent = new TreeModelEvent(this, queryPath);
+      for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
+      {
+        final TreeModelListener listener = treeModelListeners[i];
+        listener.treeStructureChanged(treeEvent);
+      }
+    }
+  }
+
+  protected void findAllQueryNodes(final Object query, final ArrayList<ReportQueryNode> nodes,
+                                   final Object element)
+  {
+    final int childCount = getChildCount(element);
+    for (int i = 0; i < childCount; i += 1)
+    {
+      final Object child = getChild(element, i);
+      if (child instanceof ReportQueryNode)
+      {
+        final ReportQueryNode queryNode = (ReportQueryNode) child;
+        if (query.equals(queryNode.getQueryName()))
+        {
+          nodes.add(queryNode);
+        }
+      }
+      if (isLeaf(child) == false)
+      {
+        findAllQueryNodes(query, nodes, child);
+      }
     }
   }
 }
