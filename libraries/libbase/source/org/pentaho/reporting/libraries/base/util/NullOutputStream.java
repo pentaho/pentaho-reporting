@@ -12,21 +12,20 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
+ * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
-package org.pentaho.reporting.libraries.repository.dummy;
+package org.pentaho.reporting.libraries.base.util;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 
 /**
  * A null output stream. All data written to this stream is ignored.
  *
  * @author Thomas Morgner
  */
-public class NullOutputStream extends OutputStream implements Serializable
+public class NullOutputStream extends OutputStream
 {
   /**
    * Default constructor.
@@ -39,7 +38,7 @@ public class NullOutputStream extends OutputStream implements Serializable
    * Writes to the stream (in this case, does nothing).
    *
    * @param i the value.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws IOException if there is an I/O problem.
    */
   public void write(final int i)
       throws IOException
@@ -51,7 +50,7 @@ public class NullOutputStream extends OutputStream implements Serializable
    * Writes to the stream (in this case, does nothing).
    *
    * @param bytes the bytes.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws IOException if there is an I/O problem.
    */
   public void write(final byte[] bytes)
       throws IOException
@@ -65,7 +64,7 @@ public class NullOutputStream extends OutputStream implements Serializable
    * @param bytes the bytes.
    * @param off   the start offset in the data.
    * @param len   the number of bytes to write.
-   * @throws java.io.IOException if there is an I/O problem.
+   * @throws IOException if there is an I/O problem.
    */
   public void write(final byte[] bytes, final int off, final int len)
       throws IOException

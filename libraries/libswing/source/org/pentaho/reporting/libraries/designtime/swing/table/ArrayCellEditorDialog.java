@@ -15,7 +15,7 @@
  * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.util.table;
+package org.pentaho.reporting.libraries.designtime.swing.table;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,18 +48,13 @@ import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.pentaho.openformula.ui.FieldDefinition;
-import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.settings.DateFormatModel;
-import org.pentaho.reporting.designer.core.settings.NumberFormatModel;
-import org.pentaho.reporting.designer.core.util.IconLoader;
-import org.pentaho.reporting.designer.core.util.UtilMessages;
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.GenericTransferable;
+import org.pentaho.reporting.libraries.designtime.swing.Messages;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
 
@@ -72,9 +67,9 @@ public class ArrayCellEditorDialog extends CommonDialog
     private AddEntryAction(final ArrayTableModel tableModel)
     {
       this.tableModel = tableModel;
-      putValue(Action.SMALL_ICON, IconLoader.getInstance().getAddIcon());
+      putValue(Action.SMALL_ICON, Messages.getInstance().getIcon("Icons.Add"));
       putValue(Action.SHORT_DESCRIPTION,
-          UtilMessages.getInstance().getString("ArrayCellEditorDialog.AddEntry.Description"));
+          Messages.getInstance().getString("ArrayCellEditorDialog.AddEntry.Description"));
     }
 
     public void actionPerformed(final ActionEvent e)
@@ -92,9 +87,9 @@ public class ArrayCellEditorDialog extends CommonDialog
                               final ListSelectionModel selectionModel)
     {
       this.tableModel = tableModel;
-      putValue(Action.SMALL_ICON, IconLoader.getInstance().getRemoveIcon());
+      putValue(Action.SMALL_ICON, Messages.getInstance().getIcon("Icons.Remove"));
       putValue(Action.SHORT_DESCRIPTION,
-          UtilMessages.getInstance().getString("ArrayCellEditorDialog.RemoveEntry.Description"));
+          Messages.getInstance().getString("ArrayCellEditorDialog.RemoveEntry.Description"));
 
 
       this.selectionModel = selectionModel;
@@ -184,15 +179,7 @@ public class ArrayCellEditorDialog extends CommonDialog
         final ArrayList<Object> items = new ArrayList<Object>();
         for (final Object item : transferData)
         {
-          if (item instanceof FieldDefinition)
-          {
-            final FieldDefinition fd = (FieldDefinition) item;
-            items.add(fd.getName());
-          }
-          else
-          {
-            items.add(item);
-          }
+          items.add(item);
         }
 
         final DropLocation dropLocation = support.getDropLocation();
@@ -216,7 +203,8 @@ public class ArrayCellEditorDialog extends CommonDialog
       }
       catch (Exception e)
       {
-        UncaughtExceptionsModel.getInstance().addException(e);
+        logger.error ("Unable to transfer data in drag-and-drop operation", e); // NON-NLS
+        return false;
       }
 
       return super.importData(support);
@@ -254,8 +242,8 @@ public class ArrayCellEditorDialog extends CommonDialog
     private AddSelectionAction(final ListSelectionModel selectionModel)
     {
       this.selectionModel = selectionModel;
-      putValue(Action.SMALL_ICON, IconLoader.getInstance().getFowardArrowIcon());
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("EditGroupDetailsDialog.AddColumn"));
+      putValue(Action.SMALL_ICON, Messages.getInstance().getIcon("Icons.ForwardArrow"));
+      putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("ArrayCellEditorDialog.AddRow"));
       selectionModel.addListSelectionListener(this);
       setEnabled(selectionModel.isSelectionEmpty() == false);
     }
@@ -282,15 +270,10 @@ public class ArrayCellEditorDialog extends CommonDialog
     }
   }
 
-  private static final String FIELD_VALUE_ROLE = "Field";
-  private static final String QUERY_VALUE_ROLE = "Query";
-  private static final String GROUP_VALUE_ROLE = "Group";
-  private static final String NUMBER_FORMAT_VALUE_ROLE = "NumberFormat";
-  private static final String DATE_FORMAT_VALUE_ROLE = "DateFormat";
-
+  private static final Log logger = LogFactory.getLog(ArrayCellEditorDialog.class);
   private ArrayTableModel tableModel;
-  private ElementMetaDataTable table;
-  private ElementMetaDataTable paletteList;
+  private PropertyTable table;
+  private PropertyTable paletteList;
   private ArrayTableModel paletteListModel;
   private DataFlavor dataFlavor;
   private JPanel contentPane;
@@ -318,17 +301,17 @@ public class ArrayCellEditorDialog extends CommonDialog
 
   protected void init()
   {
-    setTitle(UtilMessages.getInstance().getString("ArrayCellEditorDialog.Title"));
+    setTitle(Messages.getInstance().getString("ArrayCellEditorDialog.Title"));
 
     tableModel = new ArrayTableModel();
 
-    table = new ElementMetaDataTable();
+    table = new PropertyTable();
     table.setModel(tableModel);
 
     paletteListModel = new ArrayTableModel();
     paletteListModel.setEditable(false);
 
-    paletteList = new ElementMetaDataTable();
+    paletteList = new PropertyTable();
     paletteList.setModel(paletteListModel);
     paletteList.setDragEnabled(true);
     paletteList.setTransferHandler(new ListTransferHandler());
@@ -348,7 +331,7 @@ public class ArrayCellEditorDialog extends CommonDialog
 
   protected String getDialogId()
   {
-    return "ReportDesigner.Core.ArrayCellEditor";
+    return "LibSwing.ArrayCellEditor";// NON-NLS
   }
 
   protected ArrayTableModel getPaletteListModel()
@@ -368,9 +351,7 @@ public class ArrayCellEditorDialog extends CommonDialog
 
   public Object editArray(Object data,
                           final Class arrayType,
-                          final String valueRole,
-                          final Class propertyEditorType,
-                          final String[] extraFields)
+                          final Class propertyEditorType)
   {
     if (arrayType == null)
     {
@@ -396,21 +377,17 @@ public class ArrayCellEditorDialog extends CommonDialog
     }
 
     tableModel.setType(componentType);
-    tableModel.setValueRole(valueRole);
-    tableModel.setExtraFields(extraFields);
     tableModel.setPropertyEditorType(propertyEditorType);
     tableModel.setData(ArrayAccessUtility.normalizeArray(data), componentType);
 
     paletteListModel.setType(componentType);
-    paletteListModel.setValueRole(valueRole);
-    paletteListModel.setExtraFields(extraFields);
     paletteListModel.setPropertyEditorType(propertyEditorType);
     paletteListModel.setData(ArrayAccessUtility.normalizeArray(data), componentType);
 
     if (dataFlavor != null)
     {
       paletteListModel.clear();
-      final Object[] selection = getSelection(arrayType, valueRole, propertyEditorType, extraFields);
+      final Object[] selection = getSelection(arrayType, propertyEditorType);
       if (selection != null && selection.length != 0)
       {
         for (final Object s : selection)
@@ -447,66 +424,18 @@ public class ArrayCellEditorDialog extends CommonDialog
     return ArrayAccessUtility.normalizeNative(objects, componentType);
   }
 
-  public ReportDesignerContext getReportDesignerContext()
-  {
-    return table.getReportDesignerContext();
-  }
-
-  public void setReportDesignerContext(final ReportDesignerContext reportDesignerContext)
-  {
-    if (reportDesignerContext != null)
-    {
-      this.table.setReportDesignerContext(reportDesignerContext);
-      this.paletteList.setReportDesignerContext(reportDesignerContext);
-    }
-    else
-    {
-      this.table.setReportDesignerContext(null);
-      this.paletteList.setReportDesignerContext(null);
-    }
-  }
-
   public DataFlavor getDataFlavor()
   {
     return dataFlavor;
   }
 
   private Object[] getSelection(final Class arrayType,
-                                final String valueRole,
-                                final Class propertyEditorType,
-                                final String[] extraFields)
+                                final Class propertyEditorType)
   {
     if (String[].class.equals(arrayType))
     {
-      if (FIELD_VALUE_ROLE.equals(valueRole))
-      {
-        return CellEditorUtility.getFieldsAsString(getReportDesignerContext(), extraFields);
-      }
-      else if (GROUP_VALUE_ROLE.equals(valueRole))
-      {
-        return CellEditorUtility.getGroups(getReportDesignerContext());
-      }
-      else if (QUERY_VALUE_ROLE.equals(valueRole))
-      {
-        return CellEditorUtility.getQueryNames(getReportDesignerContext());
-      }
-      else if (NUMBER_FORMAT_VALUE_ROLE.equals(valueRole))
-      {
-        return new NumberFormatModel().getNumberFormats();
-      }
-      else if (DATE_FORMAT_VALUE_ROLE.equals(valueRole))
-      {
-        return new DateFormatModel().getNumberFormats();
-      }
-
       if (propertyEditorType != null && PropertyEditor.class.isAssignableFrom(propertyEditorType))
       {
-        // This is a horrible, horrible hack to make the legacy chart editor work properly ..
-        if ("org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor".
-            equals(propertyEditorType.getName()))
-        {
-          return CellEditorUtility.getExcelColorsAsText();
-        }
         try
         {
           final PropertyEditor editor = (PropertyEditor) propertyEditorType.newInstance();
@@ -514,7 +443,7 @@ public class ArrayCellEditorDialog extends CommonDialog
         }
         catch (Throwable e)
         {
-          UncaughtExceptionsModel.getInstance().addException(e);
+          logger.error ("Unable to instantiate property editor.", e);// NON-NLS
         }
       }
     }
@@ -529,7 +458,7 @@ public class ArrayCellEditorDialog extends CommonDialog
   private void configurePanelWithSelection()
   {
     final ListSelectionModel selectionModel = table.getSelectionModel();
-    final JLabel columnsLabel = new JLabel(UtilMessages.getInstance().getString("ArrayCellEditorDialog.SelectedItems"));
+    final JLabel columnsLabel = new JLabel(Messages.getInstance().getString("ArrayCellEditorDialog.SelectedItems"));
 
     final Action addGroupAction = new AddEntryAction(tableModel);
     final Action removeGroupAction = new RemoveEntryAction(tableModel, selectionModel);
@@ -539,7 +468,7 @@ public class ArrayCellEditorDialog extends CommonDialog
     final JPanel tablesPane = new JPanel();
     tablesPane.setLayout(new GridBagLayout());
 
-    final JLabel tablesColumnsLabel = new JLabel(UtilMessages.getInstance().getString("ArrayCellEditorDialog.AvailableSelection"));
+    final JLabel tablesColumnsLabel = new JLabel(Messages.getInstance().getString("ArrayCellEditorDialog.AvailableSelection"));
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 2;
@@ -618,7 +547,7 @@ public class ArrayCellEditorDialog extends CommonDialog
 
   private void configurePanelWithoutSelection()
   {
-    final JLabel columnsLabel = new JLabel(UtilMessages.getInstance().getString("ArrayCellEditorDialog.SelectedItems"));
+    final JLabel columnsLabel = new JLabel(Messages.getInstance().getString("ArrayCellEditorDialog.SelectedItems"));
     final ListSelectionModel selectionModel = table.getSelectionModel();
 
     final Action addGroupAction = new AddEntryAction(tableModel);

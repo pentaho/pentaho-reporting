@@ -58,6 +58,8 @@ public class PropertyTable extends JTable
   private PropertyEditorCellRenderer propertyEditorCellRenderer;
   private PropertyCellEditorWithEllipsis propertyEditorCellEditor;
   private PropertyEditorCellEditor taggedPropertyEditorCellEditor;
+  private ArrayCellRenderer arrayCellRenderer;
+  private ArrayCellEditor arrayCellEditor;
 
   public PropertyTable()
   {
@@ -66,6 +68,8 @@ public class PropertyTable extends JTable
     taggedPropertyEditorCellEditor = new PropertyEditorCellEditor();
     propertyEditorCellEditor = new PropertyCellEditorWithEllipsis();
     propertyEditorCellRenderer = new PropertyEditorCellRenderer();
+    arrayCellRenderer = new ArrayCellRenderer();
+    arrayCellEditor = new ArrayCellEditor();
 
     setDefaultEditor(Object.class, null);
 
@@ -179,11 +183,10 @@ public class PropertyTable extends JTable
       final PropertyTableModel model = (PropertyTableModel) getModel();
       final int column = convertColumnIndexToModel(viewColumn);
 
-      final TableColumn tableColumn = getColumnModel().getColumn(column);
-      final TableCellRenderer renderer = tableColumn.getCellRenderer();
-      if (renderer != null)
+      final Class columnClass = model.getClassForCell(row, column);
+      if (columnClass.isArray())
       {
-        return renderer;
+        return arrayCellRenderer;
       }
 
       final PropertyEditor propertyEditor = model.getEditorForCell(row, column);
@@ -192,8 +195,14 @@ public class PropertyTable extends JTable
         propertyEditorCellRenderer.setPropertyEditor(propertyEditor);
         return propertyEditorCellRenderer;
       }
-      
-      final Class columnClass = model.getClassForCell(row, column);
+
+      final TableColumn tableColumn = getColumnModel().getColumn(column);
+      final TableCellRenderer renderer = tableColumn.getCellRenderer();
+      if (renderer != null)
+      {
+        return renderer;
+      }
+
       final TableCellRenderer defaultRenderer = getDefaultRenderer(columnClass);
       if (defaultRenderer != null)
       {
@@ -225,7 +234,11 @@ public class PropertyTable extends JTable
       {
         final String[] tags = propertyEditor.getTags();
 
-        if (tags == null || tags.length == 0)
+        if (columnClass.isArray())
+        {
+          arrayCellEditor.setPropertyEditorType(propertyEditor.getClass());
+        }
+        else if (tags == null || tags.length == 0)
         {
           propertyEditorCellEditor.setPropertyEditor(propertyEditor);
           return propertyEditorCellEditor;
@@ -244,6 +257,11 @@ public class PropertyTable extends JTable
         return renderer;
       }
 
+      if (columnClass.isArray())
+      {
+        return arrayCellEditor;
+      }
+
       final TableCellEditor editor = getDefaultEditor(columnClass);
       if (editor != null && logger.isTraceEnabled())
       {
@@ -252,5 +270,14 @@ public class PropertyTable extends JTable
       return editor;
     }
     return super.getCellEditor(row, viewColumn);
+  }
+
+  public void stopEditing()
+  {
+    final TableCellEditor cellEditor = getCellEditor();
+    if (cellEditor != null)
+    {
+      cellEditor.stopCellEditing();
+    }
   }
 }
