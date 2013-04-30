@@ -33,7 +33,7 @@ import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
+import  org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 public class PublishUtil
 {
@@ -115,13 +115,11 @@ public class PublishUtil
     final Configuration config = ReportDesignerBoot.getInstance().getGlobalConfig();
     final String urlMessage = config.getConfigProperty
         ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
-    final String launchReportExtension = config.getConfigProperty
-        ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReportExtension");
 
     final MessageFormat fmt = new MessageFormat(urlMessage);
     final String urlPath = path.replace(SLASH,COLON_SEP);
-    final String fullRepoViewerPath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
-    final String url = baseUrl + fullRepoViewerPath + launchReportExtension;
+    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(urlPath, "UTF-8"));
+    final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL(url);
   }
