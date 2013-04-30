@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
-import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -544,6 +543,11 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
         return null;
       }
       return new TreePath(new Object[]{getRoot(), dataFactoryElement, node});
+    }
+
+    if (node == getDataFactoryElement())
+    {
+      return new TreePath(new Object[]{getRoot(), getDataFactoryElement()});
     }
     return null;
   }

@@ -47,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.AttributeChange;
 import org.pentaho.reporting.engine.classic.core.designtime.AttributeExpressionChange;
 import org.pentaho.reporting.engine.classic.core.designtime.StyleChange;
 import org.pentaho.reporting.engine.classic.core.designtime.StyleExpressionChange;
+import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -114,6 +115,14 @@ public class DataReportTree extends AbstractReportTree
             {
               realModel.fireTreeNodeChanged(eventParameter);
             }
+            else if (eventParameter instanceof SubReportParameterChange)
+            {
+              if (realModel instanceof SubReportDataTreeModel)
+              {
+                final SubReportDataTreeModel subReportDataTreeModel = (SubReportDataTreeModel) realModel;
+                realModel.fireTreeStructureChanged(subReportDataTreeModel.getReportParametersNode());
+              }
+            }
             else
             {
               realModel.fireTreeDataChanged();
@@ -151,6 +160,10 @@ public class DataReportTree extends AbstractReportTree
             masterModel.fireParameterRemoved(parameter);
           }
         }
+        else if (eventParam instanceof DataFactory)
+        {
+          realModel.fireTreeStructureChanged(realModel.getDataFactoryElement());
+        }
         else
         {
           realModel.fireTreeDataChanged();
@@ -176,6 +189,10 @@ public class DataReportTree extends AbstractReportTree
             final MasterReportDataTreeModel masterModel = (MasterReportDataTreeModel) realModel;
             masterModel.fireParameterAdded(parameter);
           }
+        }
+        else if (eventParam instanceof DataFactory)
+        {
+          realModel.fireTreeStructureChanged(realModel.getDataFactoryElement());
         }
         else
         {
