@@ -28,7 +28,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
  *
  * @author Thomas Morgner
  */
-public final class LegacyDataRowWrapper
+public final class LegacyDataRowWrapper implements DataRow
 {
   private DataRow parent;
 
@@ -120,4 +120,8 @@ public final class LegacyDataRowWrapper
     return parent.isChanged(name);
   }
 
+  public String[] getColumnNames()
+  {
+    return parent.getColumnNames();
+  }
 }
