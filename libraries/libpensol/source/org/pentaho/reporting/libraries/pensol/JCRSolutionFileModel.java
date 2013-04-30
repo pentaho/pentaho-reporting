@@ -20,7 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileSystemException;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.FastStack;
