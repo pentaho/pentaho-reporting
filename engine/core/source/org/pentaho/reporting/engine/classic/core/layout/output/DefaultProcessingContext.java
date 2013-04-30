@@ -33,6 +33,7 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentMetaData;
 import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
+import org.pentaho.reporting.libraries.formula.LibFormulaBoot;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -79,6 +80,8 @@ public class DefaultProcessingContext implements ProcessingContext
     {
       this.contentBase = null;
     }
+    formulaContext = new DefaultFormulaContext(LibFormulaBoot.getInstance().getGlobalConfig(),
+        resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
     metaData = new MemoryDocumentMetaData();
     compatibilityLevel = -1;
   }
@@ -145,9 +148,10 @@ public class DefaultProcessingContext implements ProcessingContext
 
     this.contentBase = contentBase;
     this.resourceManager = resourceManager;
-    this.formulaContext = new DefaultFormulaContext();
     this.outputProcessorMetaData = outputProcessorMetaData;
     this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory(resourceBundleFactory, environment);
+    this.formulaContext = new DefaultFormulaContext(LibFormulaBoot.getInstance().getGlobalConfig(),
+        resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
     this.configuration = configuration;
     if (metaData == null)
     {

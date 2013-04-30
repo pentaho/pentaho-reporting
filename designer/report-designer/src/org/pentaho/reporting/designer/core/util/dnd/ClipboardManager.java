@@ -30,6 +30,7 @@ import javax.swing.event.EventListenerList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.libraries.designtime.swing.GenericTransferable;
 
 /**
  * Very simple, this class just encapsulates a single clipboard, which may or may not be the system clipboard.

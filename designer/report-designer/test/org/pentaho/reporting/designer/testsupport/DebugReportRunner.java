@@ -33,7 +33,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVRep
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.RTFReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
 public class DebugReportRunner
 {

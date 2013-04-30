@@ -26,7 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver.PlainTextPage;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver.TextFilePrinterDriver;
 import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;

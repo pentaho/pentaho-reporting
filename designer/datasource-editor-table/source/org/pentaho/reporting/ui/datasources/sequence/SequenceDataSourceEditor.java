@@ -210,12 +210,12 @@ public class SequenceDataSourceEditor extends CommonDialog
 
     final QueryNameHandler queryNameHandler = new QueryNameHandler(queries);
 
-    querySelectedHandler = new QuerySelectedHandler<Sequence>(queries, queryNameList);
-
     queryNameList = new JList(queries.getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.setCellRenderer(new QueryNameListCellRenderer());
+
+    querySelectedHandler = new QuerySelectedHandler<Sequence>(queries, queryNameList);
 
     queryNameTextField = new JTextField(null, 0);
     queryNameTextField.setColumns(35);

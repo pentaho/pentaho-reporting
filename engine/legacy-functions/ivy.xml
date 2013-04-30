@@ -20,7 +20,7 @@
 		<dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}" transitive="true" changing="true" />
 
 		<!-- external dependencies -->
-		<dependency org="jfree" name="jfreechart" rev="1.0.9" transitive="false" conf="default_external->default"/>
+		<dependency org="jfree" name="jfreechart" rev="1.0.13" transitive="false" conf="default_external->default"/>
 		<dependency org="jfree" name="jcommon" rev="1.0.14" transitive="false" conf="default_external->default"/>
 	    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false" conf="default_external->default"/>
 	</dependencies>

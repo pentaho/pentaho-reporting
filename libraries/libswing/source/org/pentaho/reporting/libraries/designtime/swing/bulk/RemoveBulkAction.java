@@ -85,7 +85,7 @@ public class RemoveBulkAction extends AbstractAction
 
 
     final Object[] data = tableModel.getBulkData();
-    final ArrayList result = new ArrayList(data.length);
+    final ArrayList<Object> result = new ArrayList<Object>(data.length);
     for (int i = 0; i < data.length; i++)
     {
       if (listSelectionModel.isSelectedIndex(i) == false)

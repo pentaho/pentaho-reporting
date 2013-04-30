@@ -34,7 +34,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllIt
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.SingleRepositoryURLRewriter;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
