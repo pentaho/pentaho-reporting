@@ -54,11 +54,6 @@ public class AddDataFactoryAction extends AbstractReportContextAction
     this.dataSourcePlugin = dataSourcePlugin;
     putValue(Action.NAME, dataSourcePlugin.getDisplayName(Locale.getDefault()));
     putValue(Action.SHORT_DESCRIPTION, dataSourcePlugin.getDescription(Locale.getDefault()));
-    final Image image = dataSourcePlugin.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
-    if (image != null)
-    {
-      putValue(Action.SMALL_ICON, new ImageIcon(image));
-    }
   }
 
   /**
