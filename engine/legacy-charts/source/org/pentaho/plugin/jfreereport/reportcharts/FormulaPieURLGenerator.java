@@ -48,7 +48,7 @@ public class FormulaPieURLGenerator implements PieURLGenerator
       }
       final Object[] values = new Object[]{
           key, keys,
-          IntegerCache.getInteger(dataset.getIndex(key)), items,
+          dataset.getValue(key), items,
           IntegerCache.getInteger(pieIndex)
       };
       formulaExpression.setRuntime(new WrapperExpressionRuntime
