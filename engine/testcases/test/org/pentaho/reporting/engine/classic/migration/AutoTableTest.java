@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableReportUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
 public class AutoTableTest extends TestCase
 {
