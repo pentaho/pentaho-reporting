@@ -20,6 +20,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileSystemException;
+import org.pentaho.reporting.libraries.formula.util.URLEncoder;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.FastStack;
@@ -123,8 +124,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
 
   private static String normalizePath(final String path)
   {
-    String fullPath = path.replace(SLASH, COLON);
-    return fullPath.replace(SPACE, URL_SPACE);
+    return path.replace(SLASH, COLON);
   }
 
   public RepositoryFileTreeDto getRoot() throws IOException
@@ -370,9 +370,11 @@ public class JCRSolutionFileModel implements SolutionFileModel
       throw new IllegalStateException(BI_SERVER_NULL_OBJECT);
     }
     final String path = normalizePath(fileDto.getPath());
-    final String service = MessageFormat.format(DOWNLOAD_SERVICE, path);
+    String urlPath = path;
+    try{urlPath = URLEncoder.encode(path,"UTF-8");}catch(Exception ex){}//tcb
+    final String service = MessageFormat.format(DOWNLOAD_SERVICE, urlPath);
 
-    return client.resource(url + service + WITH_MANIFEST_FALSE).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
+    return client.resource(url + service).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
   }
 
   public void setData(final FileName file, final byte[] data) throws FileSystemException
