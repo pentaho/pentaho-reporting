@@ -55,11 +55,11 @@ import org.pentaho.reporting.designer.core.settings.DateFormatModel;
 import org.pentaho.reporting.designer.core.settings.NumberFormatModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.UtilMessages;
-import org.pentaho.reporting.designer.core.util.dnd.GenericTransferable;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
+import org.pentaho.reporting.libraries.designtime.swing.GenericTransferable;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
 
@@ -294,6 +294,7 @@ public class ArrayCellEditorDialog extends CommonDialog
   private ArrayTableModel paletteListModel;
   private DataFlavor dataFlavor;
   private JPanel contentPane;
+  private boolean defaultSize;
 
   public ArrayCellEditorDialog()
       throws HeadlessException
@@ -337,6 +338,12 @@ public class ArrayCellEditorDialog extends CommonDialog
     contentPane = new JPanel();
     contentPane.setLayout(new BorderLayout());
     super.init();
+  }
+
+  protected void performInitialResize()
+  {
+    super.performInitialResize();
+    defaultSize = true;
   }
 
   protected String getDialogId()
@@ -420,6 +427,12 @@ public class ArrayCellEditorDialog extends CommonDialog
     else
     {
       configurePanelWithoutSelection();
+    }
+
+    if (defaultSize)
+    {
+      performInitialResize();
+      defaultSize = false;
     }
 
     if (performEdit() == false)

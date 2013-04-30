@@ -15,7 +15,7 @@
  * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.util.dnd;
+package org.pentaho.reporting.libraries.designtime.swing;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
