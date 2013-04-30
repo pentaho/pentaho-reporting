@@ -22,15 +22,10 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class GenericTransferable implements Transferable
 {
   public static final DataFlavor ELEMENT_FLAVOR = new DataFlavor(DataFlavor.javaSerializedObjectMimeType +
-      "; class=org.pentaho.reporting.designer.core.util.dnd.SerializedObjectContainer", // NON-NLS
+      "; class=" + SerializedObjectContainer.class.getName(), // NON-NLS
       "Generic Local Transfer"); // NON-NLS
   private SerializedObjectContainer value;
 
