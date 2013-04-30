@@ -16,6 +16,20 @@ public class Prd4442Test extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
+  public void testPieURL() throws Exception
+  {
+    DebugExpressionRuntime runtime = new DebugExpressionRuntime();
+    FormulaPieURLGenerator gen = new FormulaPieURLGenerator(runtime, "=[chart::item]");
+
+    DefaultPieDataset dataSet = new DefaultPieDataset();
+    dataSet.setValue("Key-1", 5);
+    dataSet.setValue("Key-2", 7);
+    dataSet.setValue("Key-3", 10);
+    assertEquals ("5.0", gen.generateURL(dataSet, "Key-1", 0));
+    assertEquals ("7.0", gen.generateURL(dataSet, "Key-2", 1));
+    assertEquals("10.0", gen.generateURL(dataSet, "Key-3", 2));
+  }
+
   public void testPieTooltip() throws Exception
   {
     DebugExpressionRuntime runtime = new DebugExpressionRuntime();
@@ -25,10 +39,8 @@ public class Prd4442Test extends TestCase
     dataSet.setValue("Key-1", 5);
     dataSet.setValue("Key-2", 7);
     dataSet.setValue("Key-3", 10);
-    assertEquals ("5.0", gen.generateToolTip(dataSet, "Key-1"));
-    assertEquals ("7.0", gen.generateToolTip(dataSet, "Key-2"));
-    assertEquals ("10.0", gen.generateToolTip(dataSet, "Key-3"));
-
-
+    assertEquals("5.0", gen.generateToolTip(dataSet, "Key-1"));
+    assertEquals("7.0", gen.generateToolTip(dataSet, "Key-2"));
+    assertEquals("10.0", gen.generateToolTip(dataSet, "Key-3"));
   }
 }
