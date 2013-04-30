@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.report.elements;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.geom.Point2D;
 import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -39,11 +40,15 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
+import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -52,7 +57,7 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabReportElementDragHandler extends BaseReportElementDragHandler
+public class CrosstabReportElementDragHandler extends AbstractSubReportElementDragHandler
 {
 
   public CrosstabReportElementDragHandler()
@@ -60,52 +65,41 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
     super();
   }
 
-  protected void invokeConfigureHandler(final SubReport visualElement,
-                                        final Band band,
-                                        final ReportElementEditorContext dragContext,
-                                        final boolean rootBand)
+  protected void postProcessDrop(final Element visualElement,
+                                 final Band target,
+                                 final ReportElementEditorContext dragContext,
+                                 final Point2D point)
   {
-    SwingUtilities.invokeLater(new CrosstabConfigureHandler(visualElement, band, dragContext, rootBand));
+    final Element rootBand = findRootBand(dragContext, point);
+    SwingUtilities.invokeLater(new CrosstabConfigureHandler
+        ((SubReport) visualElement, target, dragContext, rootBand == target));
   }
 
-  /**
-   * Crosstab specific handling.  Create the visual element and set appropriate attributes
-   * @param elementMetaData
-   * @return
-   * @throws Exception
-   */
-  protected SubReport setReportStyle(final ElementMetaData elementMetaData) throws Exception
+  protected Element createElement(final ElementMetaData elementMetaData,
+                                  final String fieldName,
+                                  final ReportRenderContext context) throws InstantiationException
   {
-    try
-    {
-      // Create a crosstab element
-      final ElementType type = elementMetaData.create();
-      final CrosstabElement visualElement = new CrosstabElement();
-      visualElement.setElementType(type);
+    // Create a crosstab element
+    final ElementType type = elementMetaData.create();
+    final CrosstabElement visualElement = new CrosstabElement();
+    visualElement.setElementType(type);
+    visualElement.setRootGroup(new CrosstabGroup());
 
-      // Hide all bands except for Details
-      visualElement.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
-      visualElement.getRelationalGroup(0).getFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
-      visualElement.getPageHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getReportHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getDetailsFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getDetailsHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getReportFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getPageFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getNoDataBand().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    // Hide all bands except for Details
+    visualElement.getPageHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getReportHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getReportFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getPageFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
 
-      type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
+    type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
-      return visualElement;
-    }
-    catch (Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
-      throw e;
-    }
+    final ElementStyleSheet styleSheet = visualElement.getStyle();
+    styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
+    styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
+
+    return visualElement;
   }
-
 
 
   private static class CrosstabConfigureHandler implements Runnable
@@ -120,7 +114,7 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
                                      final ReportElementEditorContext dragContext,
                                      final boolean rootband)
     {
-      this.subReport = (CrosstabElement)subReport;
+      this.subReport = (CrosstabElement) subReport;
       this.parent = parent;
       this.dragContext = dragContext;
       this.rootband = rootband;
@@ -132,13 +126,13 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
       if (rootband)
       {
         final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),
-                                                        Messages.getString("CrosstabReportElementDragHandler.BandedOrInlineSubreportQuestion"),
-                                                        Messages.getString("CrosstabReportElementDragHandler.InsertSubreport"),
-                                                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-                                                        new String[]{Messages.getString("CrosstabReportElementDragHandler.Inline"),
-                                                          Messages.getString("CrosstabReportElementDragHandler.Banded"),
-                                                          Messages.getString("CrosstabReportElementDragHandler.Cancel")},
-                                                          Messages.getString("CrosstabReportElementDragHandler.Inline"));
+            Messages.getString("CrosstabReportElementDragHandler.BandedOrInlineSubreportQuestion"),
+            Messages.getString("CrosstabReportElementDragHandler.InsertSubreport"),
+            JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+            new String[]{Messages.getString("CrosstabReportElementDragHandler.Inline"),
+                Messages.getString("CrosstabReportElementDragHandler.Banded"),
+                Messages.getString("CrosstabReportElementDragHandler.Cancel")},
+            Messages.getString("CrosstabReportElementDragHandler.Inline"));
         if (result == JOptionPane.CLOSED_OPTION || result == 2)
         {
           return;
@@ -148,7 +142,7 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
         {
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-                         new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
+              new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
           parent.addElement(subReport);
         }
         else
@@ -156,7 +150,7 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-                         new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
+              new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
           arb.addSubReport(subReport);
         }
       }
@@ -164,7 +158,7 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
       {
         final UndoManager undo = context.getUndo();
         undo.addChange(Messages.getString("CrosstabReportElementDragHandler.UndoEntry"),
-                       new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
+            new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
         parent.addElement(subReport);
       }
 
@@ -193,7 +187,7 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog crosstabDataSourceDialog;
-      crosstabDataSourceDialog = new SubReportDataSourceDialog((JFrame)window);
+      crosstabDataSourceDialog = new SubReportDataSourceDialog((JFrame) window);
 
       // User has prompted to select a data-source.  Get the selected query
       final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
@@ -202,15 +196,10 @@ public class CrosstabReportElementDragHandler extends BaseReportElementDragHandl
         subReport.setQuery(queryName);
 
         // Invoke Crosstab dialog
-        InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
+        final InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
         crosstabAction.setReportDesignerContext(designerContext);
         crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
       }
-      else
-      {
-        // User did not select a query.  We need to undo the sub-report
-      }
-
 
       dragContext.getRenderContext().getSelectionModel().setSelectedElements(new Object[]{subReport});
     }

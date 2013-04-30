@@ -18,6 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
 import java.awt.Window;
+import java.awt.geom.Point2D;
 import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,11 +36,14 @@ import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -48,51 +52,42 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
  *
  * @author Thomas Morgner
  */
-public class SubreportReportElementDragHandler extends BaseReportElementDragHandler
+public class SubreportReportElementDragHandler extends AbstractSubReportElementDragHandler
 {
-
   public SubreportReportElementDragHandler()
   {
-    super();
   }
 
-  protected void invokeConfigureHandler(final SubReport visualElement,
-                                        final Band band,
-                                        final ReportElementEditorContext dragContext,
-                                        final boolean rootBand)
+  protected void postProcessDrop(final Element visualElement,
+                                 final Band target,
+                                 final ReportElementEditorContext dragContext,
+                                 final Point2D point)
   {
-    SwingUtilities.invokeLater(new SubreportConfigureHandler(visualElement, band, dragContext, rootBand));
+    final Element rootBand = findRootBand(dragContext, point);
+    SwingUtilities.invokeLater(new SubreportConfigureHandler
+        ((SubReport) visualElement, target, dragContext, rootBand == target));
   }
 
-  /**
-   * Subreport specific handling.  Create the visual element and set appropriate attributes
-   * @param elementMetaData
-   * @return
-   * @throws Exception
-   */
-  protected SubReport setReportStyle(final ElementMetaData elementMetaData) throws Exception
+  protected Element createElement(final ElementMetaData elementMetaData,
+                                  final String fieldName,
+                                  final ReportRenderContext context) throws InstantiationException
   {
-    try
-    {
-      // Create a subreport element
-      final ElementType type = elementMetaData.create();
-      final SubReport visualElement = new SubReport();
-      visualElement.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
-      visualElement.getRelationalGroup(0).getFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
-      visualElement.getDetailsFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
-      visualElement.getDetailsHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getNoDataBand().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-      visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE,Boolean.TRUE);
+    // Create a subreport element
+    final ElementType type = elementMetaData.create();
+    final SubReport visualElement = new SubReport();
+    visualElement.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getRelationalGroup(0).getFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getDetailsFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getDetailsHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getNoDataBand().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
 
-      type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
+    type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
-      return visualElement;
-    }
-    catch (Exception e)
-    {
-      UncaughtExceptionsModel.getInstance().addException(e);
-      throw e;
-    }
+    final ElementStyleSheet styleSheet = visualElement.getStyle();
+    styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
+    styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
+    return visualElement;
   }
 
   private static class SubreportConfigureHandler implements Runnable
@@ -180,7 +175,7 @@ public class SubreportReportElementDragHandler extends BaseReportElementDragHand
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog subreportDataSourceDialog;
-      subreportDataSourceDialog = new SubReportDataSourceDialog((JFrame)window);
+      subreportDataSourceDialog = new SubReportDataSourceDialog((JFrame) window);
 
       final String queryName = subreportDataSourceDialog.performSelection(designerContext);
       if (queryName != null)

@@ -35,6 +35,7 @@ public class SelectLayoutNodes extends IterateSimpleStructureProcessStep
 
   public SelectLayoutNodes()
   {
+    ids = new HashSet<InstanceID>();
   }
 
   public StrictBounds select(final HashSet<InstanceID> ids,
@@ -45,15 +46,40 @@ public class SelectLayoutNodes extends IterateSimpleStructureProcessStep
     {
       throw new NullPointerException();
     }
-    this.ids = ids;
+    this.ids.clear();
+    this.ids.addAll(ids);
     this.bounds = null;
     startProcessing(box);
     if (this.bounds == null)
     {
-      DebugLog.log("Failed to collect bounds for " + section);
-      return new StrictBounds();
+      recurse(box, section.getParentSection());
+      if (this.bounds == null)
+      {
+        return new StrictBounds();
+      }
     }
     return this.bounds;
+  }
+
+  // todo: Condense this into one run where we collect all bounds for all parents ...
+  private void recurse(final LogicalPageBox box, final Section section)
+  {
+    if (section != null)
+    {
+      this.ids.clear();
+      this.ids.add(section.getObjectID());
+      this.bounds = null;
+      startProcessing(box);
+      if (this.bounds == null)
+      {
+        DebugLog.log("Failed to collect bounds for report of section " + section);
+        recurse(box, section.getParentSection());
+        return;
+      }
+
+      DebugLog.log("Generating bounds for empty section " + section);
+      this.bounds.setRect(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), 0);
+    }
   }
 
   private boolean isValidDrawTarget(RenderNode node)
