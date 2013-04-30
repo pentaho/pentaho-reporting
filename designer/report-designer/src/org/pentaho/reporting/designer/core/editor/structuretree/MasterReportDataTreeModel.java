@@ -17,30 +17,31 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
+import javax.swing.tree.TreePath;
+
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 
-/**
- * Todo: Document me!
- *
- * @author Thomas Morgner
- */
 public class MasterReportDataTreeModel extends AbstractReportDataTreeModel
 {
   private MasterReport masterReportElement;
   private ReportParametersNode reportParametersNode;
+  private ParameterDefinitionEntry[] cachedParameterDefinitions;
 
-  public MasterReportDataTreeModel(final ReportRenderContext masterReportElement)
+  public MasterReportDataTreeModel(final ReportRenderContext renderContext)
   {
-    super(masterReportElement);
-    if (masterReportElement.getReportDefinition() instanceof MasterReport == false)
+    super(renderContext);
+    if (renderContext.getReportDefinition() instanceof MasterReport == false)
     {
-      throw new NullPointerException();
+      throw new IllegalArgumentException("Instantiating a MasterReportDataTreeModel on a SubReport-Context");
     }
-    this.masterReportElement = (MasterReport) masterReportElement.getReportDefinition();
+    this.masterReportElement = (MasterReport) renderContext.getReportDefinition();
     this.reportParametersNode = new ReportParametersNode();
+    refreshParameterCache();
   }
 
   protected ReportParametersNode getReportParametersNode()
@@ -139,4 +140,94 @@ public class MasterReportDataTreeModel extends AbstractReportDataTreeModel
 
     return super.getIndexOfChild(parent, child);
   }
+
+  public TreePath getPathForNode(final Object node)
+  {
+    if (node instanceof ParameterDefinitionEntry)
+    {
+      final ReportParametersNode params = getReportParametersNode();
+      if (getIndexOfChild(params, node) < 0)
+      {
+        return null;
+      }
+      return new TreePath(new Object[]{getRoot(), params, node});
+    }
+    return super.getPathForNode(node);
+  }
+
+  public void fireTreeDataChanged()
+  {
+    super.fireTreeDataChanged();
+    refreshParameterCache();
+  }
+
+  public void fireTreeStructureChanged(final Object element)
+  {
+    super.fireTreeStructureChanged(element);
+    refreshParameterCache();
+  }
+
+  public void fireParameterAdded(final ParameterDefinitionEntry parameter)
+  {
+    final TreePath pathForNode = new TreePath(new Object[]{getRoot(), getReportParametersNode()});
+    final TreeModelListener[] treeModelListeners = getListeners();
+    final int index = getIndexOfChild(getReportParametersNode(), parameter);
+    if (index == -1)
+    {
+      return;
+    }
+
+    final TreeModelEvent treeEvent = new TreeModelEvent(this, pathForNode,
+        new int[]{index}, new Object[]{parameter});
+    for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
+    {
+      final TreeModelListener listener = treeModelListeners[i];
+      listener.treeNodesInserted(treeEvent);
+    }
+    refreshParameterCache();
+  }
+
+  public void fireParameterRemoved(final ParameterDefinitionEntry parameter)
+  {
+    final TreePath pathForNode = new TreePath(new Object[]{getRoot(), getReportParametersNode()});
+    final TreeModelListener[] treeModelListeners = getListeners();
+    final int index = findParameterInCache(parameter);
+    if (index == -1)
+    {
+      return;
+    }
+
+    final TreeModelEvent treeEvent = new TreeModelEvent(this, pathForNode,
+        new int[]{index}, new Object[]{parameter});
+    for (int i = treeModelListeners.length - 1; i >= 0; i -= 1)
+    {
+      final TreeModelListener listener = treeModelListeners[i];
+      listener.treeNodesRemoved(treeEvent);
+    }
+
+    refreshParameterCache();
+  }
+
+  private int findParameterInCache(final ParameterDefinitionEntry parameter)
+  {
+    if (cachedParameterDefinitions == null)
+    {
+      return -1;
+    }
+    for (int i = 0; i < cachedParameterDefinitions.length; i++)
+    {
+      final ParameterDefinitionEntry cachedParameterDefinition = cachedParameterDefinitions[i];
+      if (parameter == cachedParameterDefinition)
+      {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  private void refreshParameterCache()
+  {
+    cachedParameterDefinitions = masterReportElement.getParameterDefinition().getParameterDefinitions();
+  }
+
 }

@@ -24,8 +24,6 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
 public class TreeSelectionHelper
 {
@@ -33,58 +31,16 @@ public class TreeSelectionHelper
   {
   }
 
-  public static TreePath getPathForNode(final AbstractReportDataTreeModel treeModel, final Object node)
-  {
-    if (node instanceof ParameterDefinitionEntry &&
-        treeModel instanceof MasterReportDataTreeModel)
-    {
-      final MasterReportDataTreeModel masterTreeModel = (MasterReportDataTreeModel) treeModel;
-      final ReportParametersNode params = masterTreeModel.getReportParametersNode();
-      if (treeModel.getIndexOfChild(params, node) < 0)
-      {
-        return null;
-      }
-      return new TreePath(new Object[]{treeModel.getRoot(), params, node});
-    }
-    if (node instanceof Expression)
-    {
-      final ReportFunctionNode functions = treeModel.getReportFunctionNode();
-      if (treeModel.getIndexOfChild(functions, node) < 0)
-      {
-        return null;
-      }
-      return new TreePath(new Object[]{treeModel.getRoot(), functions, node});
-    }
-    if (treeModel instanceof SubReportDataTreeModel && node == treeModel.getRoot())
-    {
-      return new TreePath(new Object[]{treeModel.getRoot()});
-    }
-    if (node instanceof Element)
-    {
-      return getBasePathForNode((Element) node, null);
-    }
-    if(node instanceof DataFactory) 
-    {
-    	final DataFactory params = treeModel.getDataFactoryElement();
-    	if (treeModel.getIndexOfChild(params, node) < 0)
-      {
-        return null;
-      }
-      return new TreePath(new Object[]{treeModel.getRoot(), params, node});
-    }
-    return null;
-  }
-
   public static TreePath getPathForNode(final ReportStructureTreeModel treeModel, final Object currentSelection)
   {
     if (currentSelection instanceof Element)
     {
-    	return getBasePathForNode((Element) currentSelection, treeModel.getReport());
+      return getBasePathForNode((Element) currentSelection, treeModel.getReport());
     }
-    if(currentSelection instanceof DataFactory) 
+    if (currentSelection instanceof DataFactory)
     {
-    	final DataFactory params = treeModel.getDataFactoryElement();
-    	if (treeModel.getIndexOfChild(params, currentSelection) < 0)
+      final DataFactory params = treeModel.getDataFactoryElement();
+      if (treeModel.getIndexOfChild(params, currentSelection) < 0)
       {
         return null;
       }

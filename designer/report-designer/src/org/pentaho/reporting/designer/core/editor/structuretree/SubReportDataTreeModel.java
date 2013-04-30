@@ -25,25 +25,20 @@ import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 
-/**
- * Todo: Document me!
- *
- * @author Thomas Morgner
- */
 public class SubReportDataTreeModel extends AbstractReportDataTreeModel
 {
   private SubReport reportElement;
   private SubReportParametersNode reportParametersNode;
 
-  public SubReportDataTreeModel(final ReportRenderContext masterReportElement)
+  public SubReportDataTreeModel(final ReportRenderContext renderContext)
   {
-    super(masterReportElement);
-    if (masterReportElement.getReportDefinition() instanceof SubReport == false)
+    super(renderContext);
+    if (renderContext.getReportDefinition() instanceof SubReport == false)
     {
-      throw new NullPointerException();
+      throw new IllegalArgumentException("Instantiating a SubReportDataTreeModel on a MasterReport-Context");
     }
 
-    this.reportElement = (SubReport) masterReportElement.getReportDefinition();
+    this.reportElement = (SubReport) renderContext.getReportDefinition();
     this.reportParametersNode = new SubReportParametersNode();
   }
 
