@@ -290,7 +290,6 @@ public abstract class AbstractElementRenderer implements ElementRenderer
   {
     elementsById.clear();
     sharedRenderer.transferLocalLayout(getElement(), elementsById, verticalEdgePositions);
-    elementsById.putAll(sharedRenderer.getElementsById());
     final LogicalPageBox pageBox = sharedRenderer.getPageBox();
     final OutputProcessorMetaData outputProcessorMetaData = sharedRenderer.getLayouter().getOutputProcessorMetaData();
 
