@@ -524,6 +524,7 @@ public class ReportRendererComponent extends JComponent
     toolBar.add(createButton(new TextAlignmentRightAction()));
     toolBar.add(createButton(new TextAlignmentJustifyAction()));
     toolBar.add(new JToolBar.Separator());
+    toolBar.add(new ToolbarButton(hyperlinkAction));
 
     // Add special crosstab band selection icon
     if (getRenderContext().getReportDefinition() instanceof CrosstabElement)
