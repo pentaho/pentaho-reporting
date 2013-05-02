@@ -811,10 +811,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor
         if (AbstractReportProcessor.SHOW_ROLLBACKS)
         {
           AbstractReportProcessor.logger.debug("Paginate: Validate Page returned " + pagebreakEncountered);
-        }
-        if (assertExpectPagebreak == true && pagebreakEncountered != Renderer.LayoutResult.LAYOUT_PAGEBREAK)
-        {
-          if (SHOW_ROLLBACKS)
+          if (assertExpectPagebreak == true && pagebreakEncountered != Renderer.LayoutResult.LAYOUT_PAGEBREAK)
           {
             AbstractReportProcessor.logger.debug("Paginate: Missed the pagebreak. This smells fishy!");
           }
@@ -1355,11 +1352,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor
         if (AbstractReportProcessor.SHOW_ROLLBACKS)
         {
           AbstractReportProcessor.logger.debug("Print: Validate Page returned " + pagebreakEncountered);
-        }
-
-        if (assertExpectPagebreak == true && pagebreakEncountered != Renderer.LayoutResult.LAYOUT_PAGEBREAK)
-        {
-          if (SHOW_ROLLBACKS)
+          if (assertExpectPagebreak == true && pagebreakEncountered != Renderer.LayoutResult.LAYOUT_PAGEBREAK)
           {
             AbstractReportProcessor.logger.debug("Print: Missed the pagebreak. This smells fishy!");
           }

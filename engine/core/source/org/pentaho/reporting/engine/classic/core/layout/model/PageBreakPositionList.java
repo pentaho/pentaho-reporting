@@ -906,7 +906,8 @@ public final class PageBreakPositionList implements PageBreakPositions
     retval.append(", prevFoundIdx=");
     retval.append(prevFoundIdx);
     retval.append(", masterBreaks={");
-    final int masterBreakCount = backend.masterBreaks.length;
+
+    final int masterBreakCount = masterSize;
     for (int i = 0; i < masterBreakCount; i++)
     {
       if (i > 0)
@@ -918,7 +919,7 @@ public final class PageBreakPositionList implements PageBreakPositions
     }
     retval.append("}, breakPositions={");
 
-    final int breakPosCount = backend.breakPositions.length;
+    final int breakPosCount = breakSize;
     for (int i = 0; i < breakPosCount; i++)
     {
       if (i > 0)
