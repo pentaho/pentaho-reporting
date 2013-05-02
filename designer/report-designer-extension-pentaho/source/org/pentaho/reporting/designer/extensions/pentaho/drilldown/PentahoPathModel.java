@@ -222,6 +222,7 @@ public class PentahoPathModel implements XulEventSource
     String solution = null;
     String path = null;
     String name = null;
+    String localPath = null;
 
     for (int i = 0; i < params.length; i++)
     {
@@ -238,30 +239,42 @@ public class PentahoPathModel implements XulEventSource
       {
         name = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
       }
-    }
-    final StringBuilder b = new StringBuilder();
-    if (StringUtils.isEmpty(solution) == false)
-    {
-      b.append(solution);
-    }
-    if (StringUtils.isEmpty(path) == false)
-    {
-      b.append("/");
-      b.append(path);
-    }
-    if (StringUtils.isEmpty(name) == false)
-    {
-      b.append("/");
-      b.append(name);
+      else if ("::pentaho-path".equals(drillDownParameter.getName())) // NON-NLS
+      {
+        localPath = FormulaUtil.extractStaticTextFromFormulaFragment(drillDownParameter.getFormulaFragment());
+      }
     }
 
-    if (b.length() == 0)
+    if (StringUtils.isEmpty(localPath) == false)
     {
-      setLocalPath(null);
+      setLocalPath(localPath);
     }
     else
     {
-      setLocalPath(b.toString());
+      final StringBuilder b = new StringBuilder();
+      if (StringUtils.isEmpty(solution) == false)
+      {
+        b.append(solution);
+      }
+      if (StringUtils.isEmpty(path) == false)
+      {
+        b.append("/");
+        b.append(path);
+      }
+      if (StringUtils.isEmpty(name) == false)
+      {
+        b.append("/");
+        b.append(name);
+      }
+
+      if (b.length() == 0)
+      {
+        setLocalPath(null);
+      }
+      else
+      {
+        setLocalPath(b.toString());
+      }
     }
   }
 
