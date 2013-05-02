@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="9" row-count="19">
+  <table col-count="9" row-count="17">
     <cols>
       <column width="27"/>
       <column width="108"/>
@@ -151,8 +151,8 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="15">
-      <cell row-span="2" col-span="1">
+    <row height="40">
+      <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(territory_name) - $(productline_name) - $(employee_name) - $(product_name)"/>
         <line type="ParagraphPoolBox" x="0.0" y="0.0" width="3.33" height="10.0" color="white" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -167,17 +167,6 @@
         <line type="ParagraphPoolBox" x="0.0" y="30.0" width="0.0" height="10.0" color="white" font-face="SanSerif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="25">
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -213,7 +202,7 @@
       </empty-cell>
       <empty-cell/>
     </row>
-    <row height="15">
+    <row height="16">
       <empty-cell background-color="#ffc607">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
       </empty-cell>
@@ -247,18 +236,6 @@
       <empty-cell background-color="#ffc607">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
       </empty-cell>
-    </row>
-    <row height="1">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
     </row>
     <row height="2">
       <empty-cell/>

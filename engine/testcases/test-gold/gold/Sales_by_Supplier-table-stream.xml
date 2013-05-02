@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="6" row-count="19">
+  <table col-count="6" row-count="17">
     <cols>
       <column width="81"/>
       <column width="135"/>
@@ -118,7 +118,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="15">
+    <row height="20">
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Supplier"/>
@@ -126,14 +126,6 @@
           <text x="0.0" y="2.5" width="36.67" height="10.0">Supplier</text>
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="5">
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -160,7 +152,7 @@
       </empty-cell>
       <empty-cell/>
     </row>
-    <row height="15">
+    <row height="16">
       <empty-cell background-color="#ffc607">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
       </empty-cell>
@@ -186,15 +178,6 @@
       </cell>
       <empty-cell background-color="#ffc607">
       </empty-cell>
-    </row>
-    <row height="1">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
