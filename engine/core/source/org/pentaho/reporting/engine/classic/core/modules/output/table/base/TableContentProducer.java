@@ -20,21 +20,13 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -47,7 +39,8 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
  *
  * @author Thomas Morgner
  */
-public class TableContentProducer extends IterateStructuralProcessStep
+@SuppressWarnings("HardCodedStringLiteral")
+public class TableContentProducer extends IterateSimpleStructureProcessStep
 {
   private static final Log logger = LogFactory.getLog(TableContentProducer.class);
 
@@ -146,7 +139,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
       sectionType = CellMarker.TYPE_INVALID;
-      if (startBlockBox(logicalPage))
+      if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
@@ -171,7 +164,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
         }
       }
       sectionType = CellMarker.TYPE_INVALID;
-      finishBlockBox(logicalPage);
+      finishBox(logicalPage);
       //ModelPrinter.print(logicalPage);
     }
     else
@@ -185,7 +178,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
       pageOffset = logicalPage.getPageOffset();
       pageEndPosition = (logicalPage.getPageEnd());
       sectionType = CellMarker.TYPE_INVALID;
-      if (startBlockBox(logicalPage))
+      if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
@@ -213,6 +206,8 @@ public class TableContentProducer extends IterateStructuralProcessStep
 
         if (iterativeUpdate == false)
         {
+          pageOffset = 0;
+
           sectionType = CellMarker.TYPE_REPEAT_FOOTER;
           final BlockRenderBox repeatFooterArea = logicalPage.getRepeatFooterArea();
           final long repeatFooterOffset = contentOffset + (logicalPage.getPageEnd() - logicalPage.getPageOffset());
@@ -230,7 +225,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
         }
       }
       sectionType = CellMarker.TYPE_INVALID;
-      finishBlockBox(logicalPage);
+      finishBox(logicalPage);
       //ModelPrinter.print(logicalPage);
     }
 
@@ -389,7 +384,7 @@ public class TableContentProducer extends IterateStructuralProcessStep
 
     // Always process everything ..
     final long y = box.getY() + effectiveHeaderSize - pageOffset;
-    final long y1 = Math.max(0, y);
+    final long y1 = Math.max(effectiveHeaderSize, y);
     final long boxX = box.getX();
     final long x1 = Math.max(0, boxX);
     final long y2 = Math.min(y + box.getHeight(), maximumHeight);
@@ -535,6 +530,10 @@ public class TableContentProducer extends IterateStructuralProcessStep
     if (oldMarker.getSectionType() == CellMarker.TYPE_INVALID)
     {
       return true;
+    }
+    if (oldMarker.getSectionType() != newMarker.getSectionType())
+    {
+      return false;
     }
     if (oldMarker.getSectionDepth() < newMarker.getSectionDepth())
     {
@@ -718,110 +717,9 @@ public class TableContentProducer extends IterateStructuralProcessStep
     }
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
-    // we should not have come that far ..
-    return false;
-  }
-
-  protected boolean startOtherBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
-  public boolean startCanvasBox(final CanvasRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startRowBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
-    return false;
-  }
-
-  protected boolean startTableBox(final TableRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startAutoBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected void endBox(final RenderBox box)
+  protected void finishBox(final RenderBox box)
   {
     sectionDepth -= 1;
-  }
-
-  protected void finishCanvasBox(final CanvasRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishBlockBox(final BlockRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishOtherBox(final RenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishRowBox(final RenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishTableCellBox(final TableCellRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishTableRowBox(final TableRowRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishTableSectionBox(final TableSectionRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishTableBox(final TableRenderBox box)
-  {
-    endBox(box);
-  }
-
-  protected void finishAutoBox(final RenderBox box)
-  {
-    endBox(box);
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
@@ -890,14 +788,18 @@ public class TableContentProducer extends IterateStructuralProcessStep
     }
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox box)
-  {
-    startBox(box);
-    endBox(box);
-  }
-
   public long getContentRowCount()
   {
     return contentBackend.getRowCount();
+  }
+
+  protected void processBoxChilds(final RenderBox box)
+  {
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
+    {
+      // not needed. Keep this method empty so that the paragraph childs are *not* processed.
+      return;
+    }
+    super.processBoxChilds(box);
   }
 }

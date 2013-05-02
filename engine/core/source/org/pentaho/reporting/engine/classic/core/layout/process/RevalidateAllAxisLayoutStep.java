@@ -68,11 +68,8 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
+public final class RevalidateAllAxisLayoutStep extends IterateSimpleStructureProcessStep
 {
-  private static final Log logger = LogFactory.getLog(RevalidateAllAxisLayoutStep.class);
-  private static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
-
   private static class MergeContext
   {
     private RenderBox readContext;
@@ -95,6 +92,8 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
+  private static final Log logger = LogFactory.getLog(RevalidateAllAxisLayoutStep.class);
+  private static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
   private LastLineTextAlignmentProcessor centerProcessor;
   private LastLineTextAlignmentProcessor leftProcessor;
   private LastLineTextAlignmentProcessor rightProcessor;
@@ -109,7 +108,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     this.verticalAlignmentProcessor = new VerticalAlignmentProcessor();
   }
 
-  public void initialize (final OutputProcessorMetaData metaData)
+  public void initialize(final OutputProcessorMetaData metaData)
   {
     this.metaData = metaData;
   }
@@ -146,7 +145,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     return false;
   }
 
-  protected boolean startBlockLevelBox(final RenderBox box)
+  protected boolean startBox(final RenderBox box)
   {
     if (checkCacheValid(box))
     {
@@ -155,26 +154,19 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     return true;
   }
 
-  protected boolean startRowLevelBox(final RenderBox box)
+  protected void processBoxChilds(final RenderBox box)
   {
-    if (checkCacheValid(box))
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
-      return false;
+      processParagraphChilds(box);
     }
-    return true;
+    else
+    {
+      super.processBoxChilds(box);
+    }
   }
 
-
-  protected boolean startCanvasLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  private void performVerticalBlockAlignment(final ParagraphRenderBox box)
+  private void performVerticalBlockAlignment(final RenderBox box)
   {
 
     final RenderNode lastChildNode = box.getLastChild();
@@ -215,21 +207,21 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox paragraph)
+  protected void processParagraphChilds(final RenderBox box)
   {
-    if (paragraph.getStaticBoxLayoutProperties().isOverflowY() == true)
+    if (box.getStaticBoxLayoutProperties().isOverflowY() == true)
     {
-      performVerticalBlockAlignment(paragraph);
+      performVerticalBlockAlignment(box);
       return;
     }
-    
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
+
+    final boolean overflowX = box.getStaticBoxLayoutProperties().isOverflowX();
 
     // Process the direct childs of the paragraph
     // Each direct child represents a line ..
-    final long paragraphBottom = paragraph.getCachedY() + paragraph.getCachedHeight();
+    final long paragraphBottom = box.getCachedY() + box.getCachedHeight();
 
-    final RenderNode lastLine = paragraph.getLastChild();
+    final RenderNode lastLine = box.getLastChild();
     if (lastLine == null)
     {
       // Empty paragraph, no need to do anything ...
@@ -242,6 +234,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
 
+    final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
     RenderNode node = paragraph.getFirstChild();
     ParagraphPoolBox prev = null;
     while (node != null)
@@ -332,7 +325,6 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
-
   private BoxAlignContext createVerticalAlignContext(final InlineRenderBox box)
   {
     BoxAlignContext alignContext = new BoxAlignContext(box);
@@ -403,7 +395,6 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
     return alignContext;
   }
-
 
   private SequenceList createHorizontalSequenceList(final InlineRenderBox box)
   {

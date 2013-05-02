@@ -219,7 +219,7 @@ public final class SheetLayout
    * @return true, if the box has not changed and can be safely skipped.
    * @throws NullPointerException if the bounds are null
    */
-  public boolean add(final RenderBox element, final long offset, final long headerSize)
+  public boolean add(final RenderBox element, final long offset, final long headerSize, final long maxHeight)
   {
     final long shift = headerSize - offset;
     final long shiftedY = element.getY() + shift;
@@ -299,9 +299,13 @@ public final class SheetLayout
       aux = Boolean.FALSE;
     }
     ensureXMapping(elementRightX, aux);
-    if (elementBottomY >= headerSize)
+    if (elementBottomY >= headerSize && elementBottomY <= maxHeight)
     {
       ensureYMapping(elementBottomY, aux);
+      if (yMaxBounds < elementBottomY)
+      {
+        yMaxBounds = elementBottomY;
+      }
     }
 
     // update the collected maximums
@@ -309,15 +313,14 @@ public final class SheetLayout
     {
       xMaxBounds = elementRightX;
     }
-    if (yMaxBounds < elementBottomY)
-    {
-      yMaxBounds = elementBottomY;
-    }
 
     return unmodified;
   }
 
-  public void addRenderableContent(final RenderableReplacedContentBox element, final long offset, final long headerSize)
+  public void addRenderableContent(final RenderableReplacedContentBox element,
+                                   final long offset,
+                                   final long headerSize,
+                                   final long maxHeight)
   {
     final long shift = headerSize - offset;
     final long shiftedY = element.getY() + shift;
@@ -353,9 +356,13 @@ public final class SheetLayout
       ensureYMapping(elementY, Boolean.FALSE);
     }
     ensureXMapping(elementRightX, Boolean.FALSE);
-    if (elementBottomY >= headerSize)
+    if (elementBottomY >= headerSize && elementBottomY <= maxHeight)
     {
       ensureYMapping(elementBottomY, Boolean.FALSE);
+      if (yMaxBounds < elementBottomY)
+      {
+        yMaxBounds = elementBottomY;
+      }
     }
   }
 

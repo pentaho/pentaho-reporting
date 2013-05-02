@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 
 public class MinorAxisNodeContextPool extends StackedObjectPool<MinorAxisNodeContext>
 {
@@ -30,6 +31,39 @@ public class MinorAxisNodeContextPool extends StackedObjectPool<MinorAxisNodeCon
   public MinorAxisNodeContext create()
   {
     return new MinorAxisNodeContext(this);
+  }
+
+  private boolean isEstablishBlockContext(final int nodeType)
+  {
+    if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
+    {
+      return true;
+    }
+
+    if ((nodeType & LayoutNodeTypes.TYPE_BOX_TABLE) == LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return true;
+    }
+
+    if ((nodeType & LayoutNodeTypes.TYPE_BOX_CANVAS) == LayoutNodeTypes.TYPE_BOX_CANVAS)
+    {
+      return true;
+    }
+
+    if ((nodeType & LayoutNodeTypes.TYPE_BOX_ROWBOX) == LayoutNodeTypes.TYPE_BOX_ROWBOX)
+    {
+      return true;
+    }
+
+    if ((nodeType & LayoutNodeTypes.TYPE_BOX_TABLE_SECTION) == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      return true;
+    }
+    if ((nodeType & LayoutNodeTypes.TYPE_BOX_TABLE_CELL) == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
+    {
+      return true;
+    }
+    return false;
   }
 
   public MinorAxisNodeContext createContext(final RenderBox box,
@@ -61,7 +95,10 @@ public class MinorAxisNodeContextPool extends StackedObjectPool<MinorAxisNodeCon
       }
     }
 
-    nodeContext.reuse(horizontal, blockLevelNode, box.isBoxOverflowX(), (nodeType != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT));
+    // auto-boxes do not establish an own block context.
+    final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
+    nodeContext.reuse(horizontal, blockLevelNode, box.isBoxOverflowX(),
+        sblp.isUndefinedWidth() == false && isEstablishBlockContext(box.getNodeType()));
     return nodeContext;
   }
 }

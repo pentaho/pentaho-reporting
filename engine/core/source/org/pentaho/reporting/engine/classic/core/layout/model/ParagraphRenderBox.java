@@ -57,9 +57,12 @@ public final class ParagraphRenderBox extends BlockRenderBox
   private ElementAlignment lastLineAlignment;
   private long lineBoxAge;
   private long minorLayoutAge;
+  private long minorLayoutValidationX1;
+  private long minorLayoutValidationX2;
   private int poolSize;
   private long textIndent;
   private long firstLineIndent;
+  private long cachedMaxChildX2;
 
   public ParagraphRenderBox(final StyleSheet styleSheet,
                             final InstanceID instanceID,
@@ -213,9 +216,11 @@ public final class ParagraphRenderBox extends BlockRenderBox
     return minorLayoutAge;
   }
 
-  public void setMinorLayoutAge(final long minorLayoutAge)
+  public void updateMinorLayoutAge()
   {
-    this.minorLayoutAge = minorLayoutAge;
+    this.minorLayoutAge = getEffectiveLineboxContainer().getChangeTracker();
+    this.minorLayoutValidationX1 = getContentAreaX1();
+    this.minorLayoutValidationX2 = getContentAreaX2();
   }
 
   /**
@@ -321,10 +326,24 @@ public final class ParagraphRenderBox extends BlockRenderBox
   public boolean isLineBoxUnchanged()
   {
     final long lineBoxChangeTracker = getEffectiveLineboxContainer().getChangeTracker();
-    if ((lineBoxChangeTracker == getMinorLayoutAge()))
+    if (lineBoxChangeTracker == getMinorLayoutAge() &&
+        minorLayoutValidationX1 == getContentAreaX1() &&
+        minorLayoutValidationX2 == getContentAreaX2())
     {
+      // testing for both content-changes and positional changes due to subreports or other delayed content
+      // inserting new data at an earlier point in the model.
       return true;
     }
     return false;
+  }
+
+  public long getCachedMaxChildX2()
+  {
+    return cachedMaxChildX2;
+  }
+
+  public void setCachedMaxChildX2(final long cachedMaxChildX2)
+  {
+    this.cachedMaxChildX2 = cachedMaxChildX2;
   }
 }

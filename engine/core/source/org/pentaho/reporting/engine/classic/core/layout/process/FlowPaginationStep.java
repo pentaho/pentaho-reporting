@@ -34,7 +34,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationR
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
@@ -58,6 +57,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
   private long pageOffsetKey;
   private boolean unresolvedWidowReferenceEncountered;
   private long recordedPageBreakPosition;
+  private boolean recordedPageBreakPositionIsForced;
 
   public FlowPaginationStep()
   {
@@ -76,13 +76,13 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     this.shiftState = new InitialPaginationShiftState();
     this.breakPending = false;
     this.recordedPageBreakPosition = 0;
+    this.recordedPageBreakPositionIsForced = false;
 
     try
     {
       // do not add a pagebreak for the physical end.
       final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
       basePageBreakList.copyFrom(allPreviousBreak);
-      basePageBreakList.addMajorBreak(pageBox.getHeight(), 0);
 
       this.paginationTableState = new FlowPaginationTableState(pageBox.getPageOffset(), basePageBreakList);
 
@@ -98,7 +98,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       // reset pagebreaks to state before we performed a pagebreak.
       basePageBreakList.copyFrom(allPreviousBreak);
 
-      final boolean pagebreakEncountered = recordedPageBreakPosition != 0;
+      final boolean pagebreakEncountered = recordedPageBreakPosition != 0 &&
+              (recordedPageBreakPositionIsForced || recordedPageBreakPosition != pageBox.getHeight());
       final boolean nextPageContainsContent;
       if (pagebreakEncountered == false)
       {
@@ -107,10 +108,12 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       else
       {
         basePageBreakList.addMajorBreak(recordedPageBreakPosition, 0);
-        nextPageContainsContent = (pageBox.getHeight() > recordedPageBreakPosition);
+        if (recordedPageBreakPositionIsForced)
+          nextPageContainsContent = false;
+        else
+          nextPageContainsContent = (pageBox.getHeight() > recordedPageBreakPosition);
       }
-      if (pagebreakEncountered)
-        DebugLog.logHere();
+
       return new PaginationResult(basePageBreakList, pagebreakEncountered, nextPageContainsContent, visualState);
     }
     finally
@@ -213,11 +216,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if (box.isCommited())
-    {
-      box.setFinishedPaginate(true);
-    }
-
     installTableContext(box);
 
     shiftState = shiftStatePool.create(box, shiftState);
@@ -234,11 +232,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (box.isCommited())
-    {
-      box.setFinishedPaginate(true);
-    }
-
     installTableContext(box);
 
     shiftState = shiftStatePool.create(box, shiftState);
@@ -658,15 +651,20 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       boxContext.setShift(nextShift);
     }
 
-    updateStateKey(box);
     final long pageEnd = paginationTableState.getPageOffset();
     if (box.getY() <= pageEnd)
     {
+      updateStateKey(box);
       box.markPinned(pageEnd);
     }
     else if (recordedPageBreakPosition == 0)
     {
       recordedPageBreakPosition = box.getY();
+    }
+
+    if (recordedPageBreakPosition == box.getY() && box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      recordedPageBreakPositionIsForced = true;
     }
     return true;
   }

@@ -92,6 +92,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
       if (paragraphBox.isLineBoxUnchanged())
       {
+        nodeContext.updateX2(paragraphBox.getCachedMaxChildX2());
         return false;
       }
 
@@ -109,7 +110,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
       {
         final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
-        paragraph.setMinorLayoutAge(paragraph.getEffectiveLineboxContainer().getChangeTracker());
+        paragraph.updateMinorLayoutAge();
+        paragraph.setCachedMaxChildX2(nodeContext.getMaxChildX2());
         lineBreakState.deinit();
       }
     }

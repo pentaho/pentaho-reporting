@@ -1277,7 +1277,7 @@ public abstract class RenderBox extends RenderNode
     updateChangeTracker();
   }
 
-  public boolean isDeepFinished()
+  public boolean isDeepFinishedTable()
   {
     return isFlag(FLAG_BOX_DEEP_FINISHED);
   }

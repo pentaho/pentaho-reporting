@@ -18,29 +18,17 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 
-/**
- * Creation-Date: 02.05.2007, 18:31:37
- *
- * @author Thomas Morgner
- */
-public class TableLayoutProducer extends IterateStructuralProcessStep
+public class TableLayoutProducer extends IterateSimpleStructureProcessStep
 {
   private SheetLayout layout;
-
   private long pageOffset;
   private boolean headerProcessed;
   private long contentOffset;
@@ -59,7 +47,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
     this.unalignedPagebands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
     this.strictLayout = metaData.isFeatureSupported(AbstractTableOutputProcessor.STRICT_LAYOUT);
     this.ellipseAsRectangle = metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE);
-    this.layout = new SheetLayout (strictLayout, ellipseAsRectangle);
+    this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
   }
 
   public SheetLayout getLayout()
@@ -78,7 +66,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
       effectiveHeaderSize = 0;
       pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
-      if (startBlockBox(logicalPage))
+      if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
@@ -98,7 +86,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
           startProcessing(pageFooterBox);
         }
       }
-      finishBlockBox(logicalPage);
+      finishBox(logicalPage);
     }
     else
     {
@@ -108,7 +96,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
       effectiveHeaderSize = 0;
       pageOffset = logicalPage.getPageOffset();
       pageEndPosition = (logicalPage.getPageEnd());
-      if (startBlockBox(logicalPage))
+      if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
@@ -149,7 +137,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
           startProcessing(footerArea);
         }
       }
-      finishBlockBox(logicalPage);
+      finishBox(logicalPage);
     }
   }
 
@@ -172,8 +160,20 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
     return layout;
   }
 
-  private boolean startBox(final RenderBox box)
+  protected boolean startBox(final RenderBox box)
   {
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
+    {
+      processRenderableContent((RenderableReplacedContentBox) box);
+      return false;
+    }
+
+    return startBoxInternal(box);
+  }
+
+  private boolean startBoxInternal(final RenderBox box)
+  {
+
     final long height = box.getHeight();
 //
 //    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
@@ -207,7 +207,7 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
         box.isFinishedTable() == false &&
         box.isCommited())
     {
-      if (layout.add(box, pageOffset, effectiveHeaderSize))
+      if (layout.add(box, pageOffset, effectiveHeaderSize, pageEndPosition))
       {
         return false;
       }
@@ -218,71 +218,25 @@ public class TableLayoutProducer extends IterateStructuralProcessStep
     return true;
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
-    // we should not have come that far ..
-    return false;
-  }
-
-  protected boolean startOtherBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
-  public boolean startCanvasBox(final CanvasRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startRowBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startTableBox(final TableRenderBox box)
-  {
-    return startBox(box);
-  }
-
-  protected boolean startAutoBox(final RenderBox box)
-  {
-    return startBox(box);
-  }
-
   protected void processRenderableContent(final RenderableReplacedContentBox box)
   {
     if (box.isOpen() == false &&
         box.isFinishedTable() == false &&
         box.isCommited())
     {
-      startBox(box);
-      layout.addRenderableContent(box, pageOffset, effectiveHeaderSize);
+      startBoxInternal(box);
+      layout.addRenderableContent(box, pageOffset, effectiveHeaderSize, pageEndPosition);
     }
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
+  protected void processBoxChilds(final RenderBox box)
   {
-    // not needed. Keep this method empty so that the paragraph childs are *not* processed.
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
+    {
+      // not needed. Keep this method empty so that the paragraph childs are *not* processed.
+      return;
+    }
+    super.processBoxChilds(box);
   }
 
   public void pageCompleted()

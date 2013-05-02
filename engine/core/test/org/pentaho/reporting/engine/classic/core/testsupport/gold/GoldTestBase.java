@@ -45,6 +45,7 @@ import javax.naming.spi.NamingManager;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
+import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Before;
@@ -509,6 +510,7 @@ public class GoldTestBase
       {
         final Throwable throwable = errors.get(i);
         throwable.printStackTrace();
+        LogFactory.getLog(GoldTestBase.class).error("Failed", throwable);
       }
       Assert.fail();
     }
