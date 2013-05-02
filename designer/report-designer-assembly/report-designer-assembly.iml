@@ -34,22 +34,17 @@
     <orderEntry type="module" module-name="datasource-editor-openerp" exported="" />
     <orderEntry type="module" module-name="report-designer-extension-legacy-charts" exported="" />
     <orderEntry type="module" module-name="report-designer-extension-pentaho" exported="" />
+    <orderEntry type="library" exported="" name="jdbc" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$MODULE_DIR$/lib" />
           <root url="file://$MODULE_DIR$/lib/jdbc" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/lib" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+        <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/lib/jdbc" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="jdbc" level="application" />
   </component>
   <component name="copyright">
     <Base>
