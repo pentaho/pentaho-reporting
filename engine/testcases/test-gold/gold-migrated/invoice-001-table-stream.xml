@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="20" row-count="42">
+  <table col-count="20" row-count="41">
     <cols>
       <column width="7.08"/>
       <column width="1.5222"/>
@@ -1003,7 +1003,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="19">
+    <row height="21">
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" background-color="#ffc607">
       </empty-cell>
       <cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" background-color="#ffc607" row-span="1" col-span="8">
@@ -1031,28 +1031,6 @@
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffc607">
       </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
-    <row height="2">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>

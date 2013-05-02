@@ -278,7 +278,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="1" row-count="4" sheet-name="Report-Footer">
+  <table col-count="1" row-count="3" sheet-name="Report-Footer">
     <cols>
       <column width="455"/>
     </cols>
@@ -309,9 +309,6 @@
           <text x="226.94" y="124.0" width="41.63" height="10.0">REPORT</text>
         </line>
       </cell>
-    </row>
-    <row height="92">
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

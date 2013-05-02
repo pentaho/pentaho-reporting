@@ -125,23 +125,21 @@
         <block name="Section-0" type="AutoRenderBox" x="0.0" y="72.0" width="451.0" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="72.0" width="451.0" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
-            <canvas name="one" type="CanvasRenderBox" x="0.0" y="72.0" width="21.09" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas name="one" type="CanvasRenderBox" x="0.0" y="72.0" width="451.0" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="one"/>
-              <replaced-content x="0.0" y="72.0" width="0.0" height="100.0" source="null" content-width="100.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="0.0" y="72.0" width="451.0" height="100.0" source="null" content-width="100.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
               </replaced-content>
-              <p type="ParagraphRenderBox" x="0.0" y="92.0" width="21.09" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <p type="ParagraphRenderBox" x="0.0" y="92.0" width="451.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="After Fzg typ"/>
-                <line type="ParagraphPoolBox" x="0.0" y="92.0" width="21.09" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="0.0" y="92.0" width="21.09" height="10.0">After</text>
-                </line>
-                <line type="ParagraphPoolBox" x="2.215" y="102.0" width="18.875" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="2.215" y="102.0" width="16.66" height="10.0">Fzg</text>
-                </line>
-                <line type="ParagraphPoolBox" x="3.88" y="112.0" width="13.33" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <text x="3.88" y="112.0" width="13.33" height="10.0">typ</text>
+                <line type="ParagraphPoolBox" x="197.19" y="92.0" width="56.62" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="197.19" y="92.0" width="21.09" height="10.0">After</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="221.05" y="92.0" width="16.66" height="10.0">Fzg</text>
+                  <spacer width="2.77" height="0.0" preserve="true"/>
+                  <text x="240.48" y="92.0" width="13.33" height="10.0">typ</text>
                 </line>
               </p>
             </canvas>

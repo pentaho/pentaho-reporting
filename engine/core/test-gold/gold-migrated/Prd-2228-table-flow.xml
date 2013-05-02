@@ -346,7 +346,9 @@
       <column width="144"/>
     </cols>
     <row height="10">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>

@@ -1,37 +1,56 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="4" row-count="6">
+  <table col-count="9" row-count="6">
     <cols>
-      <column width="514.6669"/>
+      <column width="85.7777"/>
+      <column width="85.7777"/>
+      <column width="85.7777"/>
+      <column width="85.7777"/>
+      <column width="85.7785"/>
+      <column width="85.7777"/>
       <column width="85.7777"/>
       <column width="85.7777"/>
       <column width="85.7777"/>
     </cols>
     <row height="2">
-      <cell row-span="3" col-span="1">
+      <cell row-span="2" col-span="9">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="No Data Available"/>
-        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="44.616" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="87.989" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="0.0" y="0.0" width="14.058" height="11.0">No</text>
           <spacer width="3.047" height="0.0" preserve="true"/>
           <text x="17.105" y="0.0" width="23.221" height="11.0">Data</text>
-        </line>
-        <line type="ParagraphPoolBox" x="0.0" y="11.0" width="44.616" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="11.0" width="44.616" height="11.0">Available</text>
+          <spacer width="3.047" height="0.0" preserve="true"/>
+          <text x="43.373" y="0.0" width="44.616" height="11.0">Available</text>
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="18">
       <spanned-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="2">
-      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -41,6 +60,11 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="dummyGroupFooter"/>
       </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -55,9 +79,19 @@
       </empty-cell>
       <empty-cell background-color="#e0d0c0">
       </empty-cell>
+      <empty-cell background-color="#e0d0c0">
+      </empty-cell>
+      <empty-cell background-color="#e0d0c0">
+      </empty-cell>
+      <empty-cell background-color="#e0d0c0">
+      </empty-cell>
+      <empty-cell background-color="#e0d0c0">
+      </empty-cell>
+      <empty-cell background-color="#e0d0c0">
+      </empty-cell>
     </row>
     <row height="15">
-      <cell background-color="#e0d0c0" row-span="1" col-span="1">
+      <cell background-color="#e0d0c0" row-span="1" col-span="6">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Grand Total"/>
         <line type="ParagraphPoolBox" x="0.0" y="26.0" width="58.036" height="11.0" color="black" font-face="SansSerif" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -66,6 +100,11 @@
           <text x="33.605" y="26.0" width="24.431" height="11.0">Total</text>
         </line>
       </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
       <cell background-color="#e0d0c0" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Summary_PRODUCTS_QUANTITYINSTOCKExpression"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="7" row-count="7">
+  <table col-count="7" row-count="6">
     <cols>
       <column width="90"/>
       <column width="51.75"/>
@@ -145,15 +145,6 @@
           <text x="552.09947" y="805.0" width="8.896" height="8.0">18</text>
         </line>
       </cell>
-      <empty-cell/>
-    </row>
-    <row height="196">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
     </row>
   </table>
