@@ -108,8 +108,11 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
       {
-        final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
-        paragraph.setMinorLayoutAge(paragraph.getEffectiveLineboxContainer().getChangeTracker());
+        // commenting out the following 2 lines due to test failures with Prd-3514.prpt
+        // The cached ParagraphRenderBox is not completely up-to-date in some cases.
+        // Being investigated as a part of Prd-3857
+        // final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
+        // paragraph.setMinorLayoutAge(paragraph.getEffectiveLineboxContainer().getChangeTracker());
         lineBreakState.deinit();
       }
     }
