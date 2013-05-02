@@ -38,7 +38,7 @@ public class SugarFormulaLinkCustomizer extends FormulaLinkCustomizer
     {
       final ParameterEntry parameterEntry = entries[i];
       final String parameterName = parameterEntry.getParameterName();
-      if ("path".equals(parameterName))
+      if ("::pentaho-path".equals(parameterName))
       {
         final Object o = parameterEntry.getParameterValue();
         if (o != null)
@@ -72,6 +72,10 @@ public class SugarFormulaLinkCustomizer extends FormulaLinkCustomizer
 
   protected boolean isFiltered(final ParameterEntry entry)
   {
+    if (PENTAHO_PATH.equals(entry.getParameterName()))
+    {
+      return true;
+    }
     if ("path".equals(entry.getParameterName()))
     {
       return true;
