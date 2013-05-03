@@ -6,6 +6,6 @@ public class FixAllBrokenLogging
   {
     System.setProperty("KETTLE_REDIRECT_STDOUT", "N");
     System.setProperty("KETTLE_REDIRECT_STDERR", "N");
-    System.setProperty("org.apache.commons.logging.diagnostics.dest", "diagnostic-log.txt");
+  //  System.setProperty("org.apache.commons.logging.diagnostics.dest", "diagnostic-log.txt");
   }
 }
