@@ -519,7 +519,8 @@ public class BundledResourceEditor extends JDialog
       final String manifestEntryName = manifestEntryNames[i];
 
       final String stickyFlag = metaData.getEntryAttribute(manifestEntryName, BundleUtilities.STICKY_FLAG);
-      if ("true".equals(stickyFlag)) // NON-NLS
+      final String hiddenFlag = metaData.getEntryAttribute(manifestEntryName, BundleUtilities.HIDDEN_FLAG);
+      if ("true".equals(stickyFlag) && "true".equals(hiddenFlag) == false) // NON-NLS
       {
         entries.add(manifestEntryName);
       }

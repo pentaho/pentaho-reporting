@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.MasterReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.LegacyBundleResourceRegistry;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
@@ -529,6 +530,7 @@ public class MasterReport extends AbstractReportDefinition
 
       final MemoryDocumentBundle mem = new MemoryDocumentBundle();
       BundleUtilities.copyStickyInto(mem, bundle);
+      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles());
       BundleUtilities.copyMetaData(mem, bundle);
       mem.getWriteableDocumentMetaData().setBundleType("application/vnd.pentaho.serialized-bundle");
       final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -567,6 +569,7 @@ public class MasterReport extends AbstractReportDefinition
 
       final MemoryDocumentBundle mem = new MemoryDocumentBundle(getContentBase());
       BundleUtilities.copyStickyInto(mem, bundle);
+      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles());
       BundleUtilities.copyMetaData(mem, bundle);
       mem.getWriteableDocumentMetaData().setBundleType(bundleType);
       setBundle(mem);

@@ -32,6 +32,7 @@ import org.pentaho.reporting.engine.classic.wizard.WizardProcessorUtil;
 import org.pentaho.reporting.engine.classic.wizard.model.DetailFieldDefinition;
 import org.pentaho.reporting.engine.classic.wizard.model.GroupDefinition;
 import org.pentaho.reporting.engine.classic.wizard.model.WizardSpecification;
+import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
@@ -69,6 +70,8 @@ public class WizardSpecificationWriteHandler implements BundleWriterHandler
 
       final BundleWriterState wizardFileState = new BundleWriterState(state, "wizard-specification.xml");
       final OutputStream outputStream = new BufferedOutputStream(bundle.createEntry(wizardFileState.getFileName(), "text/xml"));
+      bundle.getWriteableDocumentMetaData().setEntryAttribute(wizardFileState.getFileName(), BundleUtilities.STICKY_FLAG, "true");
+      bundle.getWriteableDocumentMetaData().setEntryAttribute(wizardFileState.getFileName(), BundleUtilities.HIDDEN_FLAG, "true");
       final DefaultTagDescription tagDescription = new DefaultTagDescription();
       tagDescription.setNamespaceHasCData(WizardCoreModule.NAMESPACE, false);
 
