@@ -43,13 +43,10 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 public class TableContentProducer extends IterateSimpleStructureProcessStep
 {
   private static final Log logger = LogFactory.getLog(TableContentProducer.class);
-
   private SheetLayout sheetLayout;
   private GenericObjectTable<CellMarker> contentBackend;
-
   private long maximumHeight;
   private long maximumWidth;
-
   private TableRectangle lookupRectangle;
   private long pageOffset;
   private long pageEndPosition;
@@ -63,12 +60,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
   private boolean headerProcessed;
   private boolean ellipseAsBackground;
   private boolean shapesAsContent;
-
+  private boolean processWatermark;
   private boolean verboseCellMarkers;
   private int verboseCellMarkersThreshold;
   private boolean debugReportLayout;
   private boolean reportCellConflicts;
-
   private int sectionDepth;
   private int sectionType;
   private OutputProcessorMetaData metaData;
@@ -86,6 +82,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     }
 
     this.metaData = metaData;
+    this.processWatermark = metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_SECTION);
     this.unalignedPagebands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
     this.shapesAsContent = metaData.isFeatureSupported(AbstractTableOutputProcessor.SHAPES_CONTENT);
     this.ellipseAsBackground = metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE);
@@ -101,6 +98,16 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold"), 5000);
     this.reportCellConflicts = "true".equals(config.getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts"));
+  }
+
+  public boolean isProcessWatermark()
+  {
+    return processWatermark;
+  }
+
+  public void setProcessWatermark(final boolean processWatermark)
+  {
+    this.processWatermark = processWatermark;
   }
 
   protected void updateSheetLayout(final SheetLayout sheetLayout)
@@ -144,7 +151,10 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         if (headerProcessed == false)
         {
           sectionType = CellMarker.TYPE_HEADER;
-          startProcessing(logicalPage.getWatermarkArea());
+          if (isProcessWatermark())
+          {
+            startProcessing(logicalPage.getWatermarkArea());
+          }
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
           startProcessing(headerArea);
           headerProcessed = true;
@@ -187,10 +197,12 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
           contentOffset = 0;
           effectiveHeaderSize = 0;
 
-          final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
-          pageEndPosition = watermarkArea.getHeight();
-          startProcessing(watermarkArea);
-
+          if (isProcessWatermark())
+          {
+            final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
+            pageEndPosition = watermarkArea.getHeight();
+            startProcessing(watermarkArea);
+          }
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
           pageEndPosition = headerArea.getHeight();
           startProcessing(headerArea);
@@ -300,7 +312,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
 
   public int getSectionType(final int row, final int column)
   {
-    if (verboseCellMarkers == false || row > verboseCellMarkersThreshold )
+    if (verboseCellMarkers == false || row > verboseCellMarkersThreshold)
     {
       if (row < finishedRows)
       {
@@ -318,7 +330,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
 
   public long getContentOffset(final int row, final int column)
   {
-    if (verboseCellMarkers == false || row > verboseCellMarkersThreshold )
+    if (verboseCellMarkers == false || row > verboseCellMarkersThreshold)
     {
       if (row < finishedRows)
       {
@@ -348,7 +360,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
   {
     sectionDepth += 1;
 
-    if (box.isFinishedTable())
+    if (isProcessed(box))
     {
       return true;
     }
@@ -453,7 +465,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         box.setFinishedTable(true);
       }
 
-      if (box.isFinishedTable())
+      if (isProcessed(box))
       {
         final int rectX2 = lookupRectangle.getX2();
         final int rectY2 = lookupRectangle.getY2();
@@ -521,6 +533,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     return true;
   }
 
+  protected boolean isProcessed(final RenderBox box)
+  {
+    return box.isFinishedTable();
+  }
+
   protected boolean isReplaceableBackground(final CellMarker oldMarker, final CellMarker newMarker)
   {
     if (oldMarker == null)
@@ -542,12 +559,17 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     return false;
   }
 
+  protected TableRectangle getLookupRectangle()
+  {
+    return lookupRectangle;
+  }
+
   protected void handleContentConflict(final RenderBox box)
   {
     if (reportCellConflicts)
     {
-      TableContentProducer.logger.debug("LayoutShift: Offending Content: " + box);
-      TableContentProducer.logger.debug("LayoutShift: Offending Content: " + box.isFinishedTable());
+      logger.debug("LayoutShift: Offending Content: " + box);
+      logger.debug("LayoutShift: Offending Content: " + box.isFinishedTable());
     }
   }
 
@@ -569,7 +591,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     {
       if (r < finishedRows)
       {
-        TableContentProducer.logger.debug("Row (" + r + ") already finished");
+        logger.debug("Row (" + r + ") already finished");
         return true;
       }
       else
@@ -581,7 +603,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
           {
             if (reportCellConflicts)
             {
-              TableContentProducer.logger.debug(
+              logger.debug(
                   "Cell (" + c + ", " + r + ") already filled: Content in cell: " + object);
             }
             return true;
@@ -591,7 +613,6 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     }
     return false;
   }
-
 
   public int getFinishedRows()
   {
@@ -604,7 +625,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     final int columnCount = getColumnCount();
     if (debugReportLayout)
     {
-      TableContentProducer.logger.debug("Request: Clearing rows from " + finishedRows + " to " + rowCount);
+      logger.debug("Request: Clearing rows from " + finishedRows + " to " + rowCount);
     }
 
     boolean atleastOneRowHasContent = false;
@@ -620,7 +641,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("maybe Cannot clear row: Cell (" + column + ", " + row + ") is undefined.");
+            logger.debug("maybe Cannot clear row: Cell (" + column + ", " + row + ") is undefined.");
           }
           lastRowsUndefined = true;
           continue;
@@ -629,7 +650,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("Cannot clear row: Inner Cell (" + column + ", " + row + ") is undefined.");
+            logger.debug("Cannot clear row: Inner Cell (" + column + ", " + row + ") is undefined.");
           }
           return;
         }
@@ -638,7 +659,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug(
+            logger.debug(
                 "Cannot clear row: Cell (" + column + ", " + row + ") is not finished: " + o);
           }
           return;
@@ -665,7 +686,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("#Cleared row: " + clearRowNr + '.');
+            logger.debug("#Cleared row: " + clearRowNr + '.');
           }
           if (verboseCellMarkers && filledRows < verboseCellMarkersThreshold)
           {
@@ -687,7 +708,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
 
     if (debugReportLayout)
     {
-      TableContentProducer.logger.debug("Need to clear  row: " + (lastRowCleared + 1) + " - " + filledRows);
+      logger.debug("Need to clear  row: " + (lastRowCleared + 1) + " - " + filledRows);
     }
     finishedRows = filledRows;
 
@@ -697,7 +718,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       {
         if (debugReportLayout)
         {
-          TableContentProducer.logger.debug("*Cleared row: " + clearRowNr + '.');
+          logger.debug("*Cleared row: " + clearRowNr + '.');
         }
         if (verboseCellMarkers && filledRows < verboseCellMarkersThreshold)
         {
@@ -752,7 +773,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("Row: Cell (" + column + ", " + row + ") is undefined.");
+            logger.debug("Row: Cell (" + column + ", " + row + ") is undefined.");
           }
           lastRowsUndefined = true;
           continue;
@@ -761,7 +782,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("Row: Inner Cell (" + column + ", " + row + ") is undefined.");
+            logger.debug("Row: Inner Cell (" + column + ", " + row + ") is undefined.");
           }
           return;
         }
@@ -769,7 +790,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           if (debugReportLayout)
           {
-            TableContentProducer.logger.debug("Row: Cell (" + column + ", " + row + ") is not commited.");
+            logger.debug("Row: Cell (" + column + ", " + row + ") is not commited.");
           }
           return;
         }
@@ -777,14 +798,14 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
 
       if (debugReportLayout)
       {
-        TableContentProducer.logger.debug("Processable Row: " + filledRows + ".");
+        logger.debug("Processable Row: " + filledRows + ".");
       }
       filledRows = row + 1;
     }
 
     if (debugReportLayout)
     {
-      TableContentProducer.logger.debug("Processable Rows: " + finishedRows + ' ' + filledRows + '.');
+      logger.debug("Processable Rows: " + finishedRows + ' ' + filledRows + '.');
     }
   }
 

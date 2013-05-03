@@ -37,6 +37,7 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
   private long pageEndPosition;
   private boolean strictLayout;
   private boolean ellipseAsRectangle;
+  private boolean processWatermark;
 
   public TableLayoutProducer(final OutputProcessorMetaData metaData)
   {
@@ -44,10 +45,21 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
     {
       throw new NullPointerException();
     }
+    this.processWatermark = metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_SECTION);
     this.unalignedPagebands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
     this.strictLayout = metaData.isFeatureSupported(AbstractTableOutputProcessor.STRICT_LAYOUT);
     this.ellipseAsRectangle = metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE);
     this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
+  }
+
+  public boolean isProcessWatermark()
+  {
+    return processWatermark;
+  }
+
+  public void setProcessWatermark(final boolean processWatermark)
+  {
+    this.processWatermark = processWatermark;
   }
 
   public SheetLayout getLayout()
@@ -70,7 +82,10 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
       {
         if (headerProcessed == false)
         {
-          startProcessing(logicalPage.getWatermarkArea());
+          if (processWatermark)
+          {
+            startProcessing(logicalPage.getWatermarkArea());
+          }
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
           startProcessing(headerArea);
           headerProcessed = true;
@@ -104,9 +119,12 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
           contentOffset = 0;
           effectiveHeaderSize = 0;
 
-          final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
-          pageEndPosition = watermarkArea.getHeight();
-          startProcessing(watermarkArea);
+          if (processWatermark)
+          {
+            final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
+            pageEndPosition = watermarkArea.getHeight();
+            startProcessing(watermarkArea);
+          }
 
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
           pageEndPosition = headerArea.getHeight();
@@ -139,25 +157,6 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
       }
       finishBox(logicalPage);
     }
-  }
-
-  /**
-   * A designtime support method to compute a sheet layout for the given section. A new sheetlayout is created
-   * on each call.
-   *
-   * @param section the section that should be processed.
-   * @return the computed sheet layout.
-   */
-  public SheetLayout createSheetLayout(final RenderBox section)
-  {
-    this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
-
-    pageOffset = 0;
-    effectiveHeaderSize = 0;
-    contentOffset = 0;
-    pageEndPosition = section.getHeight();
-    startProcessing(section);
-    return layout;
   }
 
   protected boolean startBox(final RenderBox box)
@@ -244,4 +243,24 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
     layout.pageCompleted();
     headerProcessed = false;
   }
+
+  /**
+   * A designtime support method to compute a sheet layout for the given section. A new sheetlayout is created
+   * on each call.
+   *
+   * @param box the section that should be processed.
+   * @return the computed sheet layout.
+   */
+  public void computeDesigntimeConflicts(final RenderBox box)
+  {
+    this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
+
+    effectiveHeaderSize = 0;
+    pageOffset = 0;
+    pageEndPosition = box.getHeight();
+    contentOffset = 0;
+
+    startProcessing(box);
+  }
+
 }
