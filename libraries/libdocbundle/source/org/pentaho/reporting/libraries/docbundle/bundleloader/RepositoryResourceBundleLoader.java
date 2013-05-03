@@ -62,7 +62,7 @@ public class RepositoryResourceBundleLoader implements ResourceBundleLoader
 
     this.repository = repository;
 
-    final HashMap<FactoryParameterKey,Object> map = new HashMap<FactoryParameterKey,Object>();
+    final HashMap<FactoryParameterKey, Object> map = new HashMap<FactoryParameterKey, Object>();
     map.put(new FactoryParameterKey("repository"), repository);
     map.put(new FactoryParameterKey("repository-loader"), this);
 

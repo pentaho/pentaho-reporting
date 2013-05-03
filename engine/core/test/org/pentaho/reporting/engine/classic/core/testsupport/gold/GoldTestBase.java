@@ -23,6 +23,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -286,10 +287,10 @@ public class GoldTestBase
     }
 
     final String fileName = IOUtils.getInstance().stripFileExtension(file.getName());
+    handleXmlContent(executePageable(report), new File(gold, fileName + "-page.xml"));
     handleXmlContent(executeTableStream(report), new File(gold, fileName + "-table-stream.xml"));
     handleXmlContent(executeTableFlow(report), new File(gold, fileName + "-table-flow.xml"));
     handleXmlContent(executeTablePage(report), new File(gold, fileName + "-table-page.xml"));
-    handleXmlContent(executePageable(report), new File(gold, fileName + "-page.xml"));
   }
 
   protected MasterReport postProcess(final MasterReport originalReport) throws Exception
@@ -327,12 +328,34 @@ public class GoldTestBase
     }
     catch (AssertionFailedError afe)
     {
-      DebugLog.log(new String(reportOutput, "UTF-8"));
+      debugOutput(reportOutput, goldSample);
       throw afe;
     }
     finally
     {
       reader.close();
+    }
+  }
+
+  private void debugOutput(final byte[] reportOutput, final File goldSample) throws IOException
+  {
+    try
+    {
+      new File("test-output").mkdir();
+      final FileOutputStream w = new FileOutputStream("test-output/gold-failure-" + goldSample.getName());
+      try
+      {
+        w.write(reportOutput);
+      }
+      finally
+      {
+        w.close();
+      }
+    }
+    catch (IOException ioe)
+    {
+      // ignored ..
+      DebugLog.log("Failed to write debug-output", ioe);
     }
   }
 

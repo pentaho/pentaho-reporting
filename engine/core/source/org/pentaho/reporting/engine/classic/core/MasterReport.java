@@ -100,15 +100,68 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 public class MasterReport extends AbstractReportDefinition
 {
   /**
+   * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
+   * DocumentBundle.
+   */
+  private static class DocumentBundleChangeHandler implements ReportModelListener
+  {
+    private static final Log log = LogFactory.getLog(DocumentBundleChangeHandler.class);
+
+    private DocumentBundleChangeHandler()
+    {
+    }
+
+    public void nodeChanged(final ReportModelEvent event)
+    {
+      if (event.getElement() instanceof MasterReport == false)
+      {
+        return;
+      }
+      final MasterReport report = (MasterReport) event.getElement();
+
+      if (event.getParameter() instanceof AttributeChange)
+      {
+        final AttributeChange attributeChange = (AttributeChange) event.getParameter();
+
+        // This is an attribute change event on the master report ... see if it is one we are concerned about
+        if (AttributeNames.Core.NAMESPACE.equals(attributeChange.getNamespace()) &&
+            AttributeNames.Core.BUNDLE.equals(attributeChange.getName()))
+        {
+          final Object value = attributeChange.getNewValue();
+          if ((value instanceof DocumentBundle) == false)
+          {
+            return;
+          }
+
+          // Insert the DocumentBundle's ResourceManager as the MasterReports resource manager
+          log.debug("DocumentBundle change detected - changing the ResourceManager for the MasterReport");
+          final DocumentBundle newDocumentBundle = (DocumentBundle) value;
+          final ResourceManager resourceManager = newDocumentBundle.getResourceManager();
+          report.setContentBase(newDocumentBundle.getBundleKey());
+          report.setResourceManager(resourceManager);
+        }
+      }
+      else if (event.getParameter() instanceof ResourceManager)
+      {
+        final ResourceManager mgr = report.getResourceManager();
+        final ResourceBundleFactory resourceBundleFactory = report.getResourceBundleFactory();
+        if (resourceBundleFactory instanceof LibLoaderResourceBundleFactory)
+        {
+          LibLoaderResourceBundleFactory ll = (LibLoaderResourceBundleFactory) resourceBundleFactory;
+          ll.setResourceLoader(mgr, report.getContentBase());
+        }
+      }
+    }
+  }
+
+  /**
    * Key for the 'report date' property.
    */
   public static final String REPORT_DATE_PROPERTY = "report.date";
-
   /**
    * The data factory is used to query data for the reporting.
    */
   private DataFactory dataFactory;
-
   /**
    * The report configuration.
    */
@@ -117,7 +170,6 @@ public class MasterReport extends AbstractReportDefinition
    * The resource manager is used to load the report resources.
    */
   private transient ResourceManager resourceManager;
-
   private ReportParameterDefinition parameterDefinition;
   private ReportEnvironment reportEnvironment;
   private ReportParameterValues parameterValues;
@@ -153,6 +205,36 @@ public class MasterReport extends AbstractReportDefinition
     setBundle(documentBundle);
 
     setContentBase(documentBundle.getBundleMainKey());
+  }
+
+  public static ResourceBundleFactory computeAndInitResourceBundleFactory
+      (final ResourceBundleFactory resourceBundleFactory,
+       final ReportEnvironment environment) throws ReportProcessingException
+  {
+    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory == false)
+    {
+      return resourceBundleFactory;
+    }
+    final ExtendedResourceBundleFactory rawResourceBundleFactory =
+        (ExtendedResourceBundleFactory) resourceBundleFactory;
+    try
+    {
+      final ExtendedResourceBundleFactory extendedResourceBundleFactory =
+          (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
+      if (extendedResourceBundleFactory.getLocale() == null)
+      {
+        extendedResourceBundleFactory.setLocale(environment.getLocale());
+      }
+      if (extendedResourceBundleFactory.getTimeZone() == null)
+      {
+        extendedResourceBundleFactory.setTimeZone(environment.getTimeZone());
+      }
+      return extendedResourceBundleFactory;
+    }
+    catch (CloneNotSupportedException e)
+    {
+      throw new ReportProcessingException("Cannot clone resource-bundle factory");
+    }
   }
 
   /**
@@ -388,7 +470,6 @@ public class MasterReport extends AbstractReportDefinition
     return reportConfiguration;
   }
 
-
   /**
    * Returns the resource manager that was responsible for loading the report. This method will return a default manager
    * if the report had been constructed otherwise.
@@ -418,7 +499,7 @@ public class MasterReport extends AbstractReportDefinition
   public void setResourceManager(final ResourceManager resourceManager)
   {
     this.resourceManager = resourceManager;
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(resourceManager);
   }
 
   public ReportParameterValues getParameterValues()
@@ -471,6 +552,10 @@ public class MasterReport extends AbstractReportDefinition
       throws IOException, ClassNotFoundException
   {
     stream.defaultReadObject();
+
+    reportConfiguration.reconnectConfiguration(ClassicEngineBoot.getInstance().getGlobalConfig());
+    addReportModelListener(new DocumentBundleChangeHandler());
+
     try
     {
       final String bundleType = (String) stream.readObject();
@@ -480,7 +565,7 @@ public class MasterReport extends AbstractReportDefinition
       final Resource bundleResource = mgr.createDirectly(bundleRawZip, DocumentBundle.class);
       final DocumentBundle bundle = (DocumentBundle) bundleResource.getResource();
 
-      final MemoryDocumentBundle mem = new MemoryDocumentBundle();
+      final MemoryDocumentBundle mem = new MemoryDocumentBundle(getContentBase());
       BundleUtilities.copyStickyInto(mem, bundle);
       BundleUtilities.copyMetaData(mem, bundle);
       mem.getWriteableDocumentMetaData().setBundleType(bundleType);
@@ -489,87 +574,6 @@ public class MasterReport extends AbstractReportDefinition
     catch (ResourceException e)
     {
       throw new IOException(e);
-    }
-
-    reportConfiguration.reconnectConfiguration(ClassicEngineBoot.getInstance().getGlobalConfig());
-    addReportModelListener(new DocumentBundleChangeHandler());
-  }
-
-  /**
-   * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
-   * DocumentBundle.
-   */
-  private static class DocumentBundleChangeHandler implements ReportModelListener
-  {
-    private static final Log log = LogFactory.getLog(DocumentBundleChangeHandler.class);
-
-    private DocumentBundleChangeHandler()
-    {
-    }
-
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getParameter() instanceof AttributeChange == false || event.getElement() instanceof MasterReport == false)
-      {
-        return;
-      }
-
-      // This is an attribute change event on the master report ... see if it is one we are concerned about
-      final AttributeChange attributeChange = (AttributeChange) event.getParameter();
-      if (AttributeNames.Core.NAMESPACE.equals(attributeChange.getNamespace()) &&
-          AttributeNames.Core.BUNDLE.equals(attributeChange.getName()))
-      {
-        final Object value = attributeChange.getNewValue();
-        if ((value instanceof DocumentBundle) == false)
-        {
-          return;
-        }
-
-        if (event.getElement() instanceof MasterReport)
-        {
-          // Insert the DocumentBundle's ResourceManager as the MasterReports resource manager
-          log.debug("DocumentBundle change detected - changing the ResourceManager for the MasterReport");
-          final MasterReport report = (MasterReport) event.getElement();
-          final DocumentBundle newDocumentBundle = (DocumentBundle) value;
-          final ResourceManager resourceManager = newDocumentBundle.getResourceManager();
-          report.setResourceManager(resourceManager);
-        }
-        else
-        {
-          log.warn("Could not replace the ResourceKey on a DocumentBundle change - the element is not a MasterReport");
-        }
-      }
-    }
-  }
-
-
-  public static ResourceBundleFactory computeAndInitResourceBundleFactory
-      (final ResourceBundleFactory resourceBundleFactory,
-       final ReportEnvironment environment) throws ReportProcessingException
-  {
-    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory == false)
-    {
-      return resourceBundleFactory;
-    }
-    final ExtendedResourceBundleFactory rawResourceBundleFactory =
-        (ExtendedResourceBundleFactory) resourceBundleFactory;
-    try
-    {
-      final ExtendedResourceBundleFactory extendedResourceBundleFactory =
-          (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
-      if (extendedResourceBundleFactory.getLocale() == null)
-      {
-        extendedResourceBundleFactory.setLocale(environment.getLocale());
-      }
-      if (extendedResourceBundleFactory.getTimeZone() == null)
-      {
-        extendedResourceBundleFactory.setTimeZone(environment.getTimeZone());
-      }
-      return extendedResourceBundleFactory;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new ReportProcessingException("Cannot clone resource-bundle factory");
     }
   }
 
@@ -613,13 +617,13 @@ public class MasterReport extends AbstractReportDefinition
     setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE, styleSheetReference);
   }
 
-  public boolean isStrictLegacyMode ()
+  public boolean isStrictLegacyMode()
   {
     return "true".equals(getReportConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility"));
   }
-  
-  public void setStrictLegacyMode (final boolean strict)
+
+  public void setStrictLegacyMode(final boolean strict)
   {
     getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", String.valueOf(strict));
