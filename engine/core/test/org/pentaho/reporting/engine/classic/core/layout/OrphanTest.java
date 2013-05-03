@@ -104,7 +104,7 @@ public class OrphanTest extends TestCase
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
 
@@ -171,7 +171,7 @@ public class OrphanTest extends TestCase
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals(StrictGeomUtility.toInternalValue(80), grInBox.getOrphanConstraintSize());
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException

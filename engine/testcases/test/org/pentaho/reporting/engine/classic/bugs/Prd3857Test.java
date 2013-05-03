@@ -76,7 +76,7 @@ public class Prd3857Test extends TestCase
     report.getReportHeader().getElement(3).setName("image");
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
-    ModelPrinter.INSTANCE.print(pageBox);
+    //ModelPrinter.INSTANCE.print(pageBox);
 
     final RenderNode m1 = MatchFactory.findElementByName(pageBox, "m1");
     assertEquals(StrictGeomUtility.toInternalValue(234), m1.getX());
@@ -119,7 +119,7 @@ public class Prd3857Test extends TestCase
     element.getElement(0).setName("m1");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
     final RenderNode m1 = MatchFactory.findElementByName(logicalPageBox, "m1");
     assertEquals(StrictGeomUtility.toInternalValue(234), m1.getX());
   }
@@ -182,7 +182,7 @@ public class Prd3857Test extends TestCase
     report.getReportHeader().getElement(3).setName("image");
 
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(pageBox);
+    //ModelPrinter.INSTANCE.print(pageBox);
     final RenderNode img = MatchFactory.findElementByName(pageBox, "image");
     assertEquals(StrictGeomUtility.toInternalValue(0), img.getX());
     assertEquals(StrictGeomUtility.toInternalValue(270), img.getWidth());

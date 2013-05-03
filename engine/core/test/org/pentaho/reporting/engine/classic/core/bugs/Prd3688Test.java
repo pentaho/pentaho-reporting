@@ -23,7 +23,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -88,7 +87,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");
@@ -149,7 +148,7 @@ public class Prd3688Test extends TestCase
     report.getReportHeader().addElement(e3);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode e1Box = MatchFactory.findElementByName(logicalPageBox, "E1");
     final RenderNode e2Box = MatchFactory.findElementByName(logicalPageBox, "E2");

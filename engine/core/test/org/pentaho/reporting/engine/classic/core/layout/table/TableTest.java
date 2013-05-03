@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
@@ -217,7 +216,7 @@ public class TableTest extends TestCase
     band.addElement(tableBody);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
@@ -263,7 +262,7 @@ public class TableTest extends TestCase
     band.addElement(tableBody);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);

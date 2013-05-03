@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -131,7 +130,7 @@ public class Prd3514Test extends TestCase
     report.getReportHeader().addElement(band);
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     RenderBox outerBox = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "outer-box");
     RenderNode dotFieldBox = MatchFactory.findElementByName(logicalPageBox, "dotField");

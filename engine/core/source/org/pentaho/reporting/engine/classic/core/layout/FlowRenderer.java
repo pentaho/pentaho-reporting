@@ -91,8 +91,6 @@ public class FlowRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-    if (getPageCount() > 1000)
-    ModelPrinter.INSTANCE.print(pageBox);
   }
 
 

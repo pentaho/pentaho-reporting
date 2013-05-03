@@ -99,7 +99,7 @@ public class WidowTest extends TestCase
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
