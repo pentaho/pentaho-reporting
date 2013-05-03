@@ -21,12 +21,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModelEvent;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModelListener;
-import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
-import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -91,20 +88,6 @@ public class ModelUtility
     final Object attribute = element.getAttribute(ReportDesignerParserModule.NAMESPACE,
         ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE);
     return attribute != null && Boolean.TRUE.equals(attribute);
-  }
-
-  public static void setShowInLayoutGui(final ReportRenderContext context,
-                                        final Element element, final boolean b)
-  {
-    final UndoManager undo = context.getUndo();
-    final Object oldValue = element.getAttribute(ReportDesignerParserModule.NAMESPACE,
-        ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE);
-    final Boolean newValue = Boolean.valueOf(b);
-    element.setAttribute(ReportDesignerParserModule.NAMESPACE,
-        ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, newValue);
-    undo.addChange(new AttributeEditUndoEntry(element.getObjectID(), ReportDesignerParserModule.NAMESPACE,
-        ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, oldValue, newValue));
-    element.notifyNodeStructureChanged();
   }
 
   public static LinealModel getVerticalLinealModel(final Element rootBand)
@@ -302,17 +285,11 @@ public class ModelUtility
     return groups.toArray(new String[groups.size()]);
   }
 
-  /**
-   * @return
-   */
   public static String[] getNumberFormats()
   {
     return getMessageSeries(NUMBER_FORMAT_CONFIG_PREFIX);
   }
 
-  /**
-   * @return
-   */
   public static String[] getDateFormats()
   {
     return getMessageSeries(DATE_FORMAT_CONFIG_PREFIX);

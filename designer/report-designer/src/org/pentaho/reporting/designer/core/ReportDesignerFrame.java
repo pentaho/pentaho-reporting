@@ -101,7 +101,8 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.ReportRendererComponent;
 import org.pentaho.reporting.designer.core.editor.fieldselector.FieldSelectorPaletteDialog;
 import org.pentaho.reporting.designer.core.editor.palette.PaletteButton;
-import org.pentaho.reporting.designer.core.editor.structuretree.ReportTree;
+import org.pentaho.reporting.designer.core.editor.structuretree.AbstractReportTree;
+import org.pentaho.reporting.designer.core.editor.structuretree.LayoutReportTree;
 import org.pentaho.reporting.designer.core.editor.structuretree.StructureTreePanel;
 import org.pentaho.reporting.designer.core.inspections.InspectionSidePanePanel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
@@ -1415,7 +1416,7 @@ public class ReportDesignerFrame extends JFrame
   private Category createStructureTreeToolWindow()
   {
     // report structure
-    final StructureTreePanel reportTree = new StructureTreePanel(ReportTree.RENDER_TYPE.REPORT);
+    final StructureTreePanel reportTree = new StructureTreePanel(AbstractReportTree.RenderType.REPORT);
     reportTree.setReportDesignerContext(context);
     final JPanel structurePanel = new JPanel(new BorderLayout());
     final JComponent structureToolBar = createToolBar("report-structure-toolbar");// NON-NLS
@@ -1426,7 +1427,7 @@ public class ReportDesignerFrame extends JFrame
 
     final JComponent dataToolBar = createToolBar("report-fields-toolbar");// NON-NLS
     dataPanel.add(dataToolBar, BorderLayout.NORTH);
-    final StructureTreePanel dataTree = new StructureTreePanel(ReportTree.RENDER_TYPE.DATA);
+    final StructureTreePanel dataTree = new StructureTreePanel(AbstractReportTree.RenderType.DATA);
     dataTree.setReportDesignerContext(context);
     dataPanel.add(dataTree, BorderLayout.CENTER);
 
@@ -1531,6 +1532,11 @@ public class ReportDesignerFrame extends JFrame
       {
         continue;
       }
+      if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && data.isExperimental())
+      {
+        continue;
+      }
+
 
       final String currentGrouping = data.getGrouping(Locale.getDefault());
       if (firstElement == false)

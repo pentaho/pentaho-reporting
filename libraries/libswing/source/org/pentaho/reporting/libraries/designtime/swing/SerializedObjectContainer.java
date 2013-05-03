@@ -15,7 +15,7 @@
  * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.util.dnd;
+package org.pentaho.reporting.libraries.designtime.swing;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
@@ -28,15 +28,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class SerializedObjectContainer implements Serializable
 {
   public static class DebuggingObjectOutputStream
@@ -174,8 +168,7 @@ public class SerializedObjectContainer implements Serializable
     }
     catch (IOException e)
     {
-      UncaughtExceptionsModel.getInstance().addException(e);
-      throw new IllegalStateException();
+      throw new IllegalStateException("Object is not serializable.");
     }
   }
 

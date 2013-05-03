@@ -15,7 +15,7 @@
  * Copyright (c) 2000 - 2009 Pentaho Corporation, Simba Management Limited and Contributors.  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.util;
+package org.pentaho.reporting.designer.testsupport;
 
 import java.io.OutputStream;
 
@@ -33,7 +33,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVRep
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.RTFReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
 public class DebugReportRunner
 {

@@ -23,6 +23,7 @@ import org.apache.commons.vfs.FileSystemException;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
 import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 public class JCRSolutionFileModel implements SolutionFileModel
 {
@@ -44,6 +45,12 @@ public class JCRSolutionFileModel implements SolutionFileModel
   private static final String BI_SERVER_NULL_OBJECT = "BI-Server returned a RepositoryFileTreeDto without an attached RepositoryFileDto. " +
       "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
   private static final String FILE_NOT_FOUND = "The specified file name does not exist: {0}";
+  //this is required to retrieve a prpt - if true we get z ZIP file with .locale info
+  private static final String WITH_MANIFEST_FALSE = "?withManifest=false";
+  private static final String SLASH = "/";
+  private static final String COLON = ":";
+  private static final String SPACE = " ";
+  private static final String URL_SPACE = "%20";
 
   private Client client;
   private String url;
@@ -117,7 +124,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
 
   private static String normalizePath(final String path)
   {
-    return path.replace("/", ":");
+    return path.replace(SLASH, COLON);
   }
 
   public RepositoryFileTreeDto getRoot() throws IOException
@@ -363,7 +370,10 @@ public class JCRSolutionFileModel implements SolutionFileModel
       throw new IllegalStateException(BI_SERVER_NULL_OBJECT);
     }
     final String path = normalizePath(fileDto.getPath());
-    final String service = MessageFormat.format(DOWNLOAD_SERVICE, path);
+    String urlPath = path;
+    try{urlPath = URLEncoder.encode(path,"UTF-8");}catch(Exception ex){}//tcb
+    final String service = MessageFormat.format(DOWNLOAD_SERVICE, urlPath);
+
     return client.resource(url + service).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
   }
 
@@ -375,7 +385,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     {
       if (i != 0)
       {
-        b.append("/");
+        b.append(SLASH);
       }
       b.append(fileName[i]);
     }

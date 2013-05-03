@@ -34,17 +34,10 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.CopyAction;
 import org.pentaho.reporting.designer.core.actions.global.CutAction;
 import org.pentaho.reporting.designer.core.actions.global.PasteAction;
-import org.pentaho.reporting.designer.core.actions.report.EditParametersAction;
-import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
 import org.pentaho.reporting.designer.core.editor.ContextMenuUtility;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
 /**
  * By listening for update events, we could keep track of the trees and use a separate JTree for each report which
@@ -75,13 +68,11 @@ public class StructureTreePanel extends SidePanel
     }
   }
 
-
   private class ReportTreeContextMenuHandler extends MouseAdapter
   {
     private ReportTreeContextMenuHandler()
     {
     }
-
 
     private void createPopupMenu(final MouseEvent e)
     {
@@ -99,7 +90,7 @@ public class StructureTreePanel extends SidePanel
       }
       if (tree.getSelectionModel().isPathSelected(path) == false)
       {
-        tree.getSelectionModel().addSelectionPath(path);
+        tree.getSelectionModel().setSelectionPath(path);
       }
 
       final Object o = path.getLastPathComponent();
@@ -113,52 +104,6 @@ public class StructureTreePanel extends SidePanel
 
     public void mouseClicked(final MouseEvent e)
     {
-      if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1)
-      {
-        final JTree tree = getTree();
-        final TreePath selectionPath = tree.getLeadSelectionPath();
-        if (selectionPath == null)
-        {
-          return;
-        }
-        final Object selection = selectionPath.getLastPathComponent();
-        try
-        {
-          if (selection instanceof ParameterDefinitionEntry)
-          {
-            final ParameterDefinitionEntry parameterDefinitionEntry = (ParameterDefinitionEntry) selection;
-            EditParametersAction.performEditMasterReportParameters(getReportDesignerContext(), parameterDefinitionEntry);
-          }
-          else if (selection instanceof ParameterMapping)
-          {
-            EditParametersAction.performEditSubReportParameters(getReportDesignerContext());
-          }
-          if (selection instanceof DataFactory)
-          {
-            final EditQueryAction action = new EditQueryAction();
-            action.setReportDesignerContext(getReportDesignerContext());
-            action.performEdit((DataFactory) selection, null);
-            return;
-          }
-          if (selection instanceof ReportQueryNode == false)
-          {
-            return;
-          }
-          final ReportQueryNode theQuery = (ReportQueryNode) selection;
-          if (theQuery.isAllowEdit() == false)
-          {
-            return;
-          }
-          final EditQueryAction action = new EditQueryAction();
-          action.setReportDesignerContext(getReportDesignerContext());
-          action.performEdit(theQuery.getDataFactory(), theQuery.getQueryName());
-        }
-        catch (ReportDataFactoryException e1)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e1);
-        }
-        return;
-      }
       if (e.isPopupTrigger())
       {
         createPopupMenu(e);
@@ -182,20 +127,28 @@ public class StructureTreePanel extends SidePanel
     }
   }
 
-  private ReportTree tree;
+  private AbstractReportTree tree;
   private Object leadSelection;
   private CutAction cutAction;
   private CopyAction copyAction;
   private PasteAction pasteAction;
   public static final String LEAD_SELECTION_PROPERTY = "leadSelection";
 
-  public StructureTreePanel(final ReportTree.RENDER_TYPE renderType)
+  public StructureTreePanel(final AbstractReportTree.RenderType renderType)
   {
     cutAction = new CutAction();
     copyAction = new CopyAction();
     pasteAction = new PasteAction();
 
-    tree = new ReportTree(renderType);
+    if (renderType == AbstractReportTree.RenderType.REPORT)
+    {
+      tree = new LayoutReportTree();
+    }
+    else
+    {
+      tree = new DataReportTree();
+    }
+
     tree.getSelectionModel().addTreeSelectionListener(new TreeLeadSelectionListener());
     tree.addMouseListener(new ReportTreeContextMenuHandler());
 
@@ -214,6 +167,7 @@ public class StructureTreePanel extends SidePanel
     cutAction.setReportDesignerContext(newContext);
     copyAction.setReportDesignerContext(newContext);
     pasteAction.setReportDesignerContext(newContext);
+    tree.setReportDesignerContext(newContext);
   }
 
   protected void updateSelection(final ReportSelectionModel model)
@@ -255,7 +209,7 @@ public class StructureTreePanel extends SidePanel
     firePropertyChange(LEAD_SELECTION_PROPERTY, oldvalue, leadSelection);
   }
 
-  protected ReportTree getTree()
+  protected JTree getTree()
   {
     return tree;
   }

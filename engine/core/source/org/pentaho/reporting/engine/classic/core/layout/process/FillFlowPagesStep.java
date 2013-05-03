@@ -216,8 +216,6 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
         cellInfo = cellInfo.parent;
       }
     }
-
-
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)

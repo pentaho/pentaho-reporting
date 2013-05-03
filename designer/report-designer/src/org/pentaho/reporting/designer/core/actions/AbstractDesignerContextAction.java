@@ -32,7 +32,6 @@ public abstract class AbstractDesignerContextAction extends AbstractAction imple
    */
   protected AbstractDesignerContextAction()
   {
-    putValue(Action.SMALL_ICON, IconLoader.getInstance().getEmptyIcon());
     setEnabled(false);
   }
 

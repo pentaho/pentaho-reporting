@@ -69,7 +69,7 @@ import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
-import org.pentaho.reporting.engine.classic.core.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;

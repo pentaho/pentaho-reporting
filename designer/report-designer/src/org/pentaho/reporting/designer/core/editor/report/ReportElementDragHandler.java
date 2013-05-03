@@ -23,11 +23,6 @@ import java.awt.dnd.DropTargetEvent;
 
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface ReportElementDragHandler
 {
   public int dragStarted(final DropTargetDragEvent event,

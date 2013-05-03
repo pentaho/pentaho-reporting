@@ -30,6 +30,14 @@ public class QuerySelectedHandler<T> implements ListSelectionListener, ListDataL
 
   public QuerySelectedHandler(final NamedQueryModel<T> queries, final JList queryNameList)
   {
+    if (queryNameList == null)
+    {
+      throw new NullPointerException();
+    }
+    if (queries == null)
+    {
+      throw new NullPointerException();
+    }
     this.queries = queries;
     this.queryNameList = queryNameList;
     this.queryNameList.addListSelectionListener(this);

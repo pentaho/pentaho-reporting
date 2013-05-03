@@ -25,6 +25,7 @@ import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.ReportAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ReportLayouter;
+import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
 import org.pentaho.reporting.designer.core.inspections.AutoInspectionRunner;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
@@ -99,6 +100,7 @@ public class ReportRenderContext
 
   private static final String AUTHENTICATION_STORE_PROPERTY = "authentication-store";
 
+  private SharedElementRenderer sharedRenderer;
   private TreeSet<Integer> expandedNodes;
   private long changeTracker;
   private ZoomModel zoomModel;
@@ -110,12 +112,12 @@ public class ReportRenderContext
   private AutoInspectionRunner inspectionRunner;
   private NodeDeleteListener deleteListener;
   private HashMap<String, Object> properties;
-  private ReportLayouter reportLayouter;
 
   public ReportRenderContext(final MasterReport masterReport)
   {
     this(masterReport, masterReport, null, new GlobalAuthenticationStore());
   }
+
   public ReportRenderContext(final MasterReport masterReportElement,
                              final AbstractReportDefinition report,
                              final ReportRenderContext parentContext,
@@ -139,14 +141,6 @@ public class ReportRenderContext
       throw new NullPointerException();
     }
 
-    if (parentContext == null)
-    {
-      this.properties = new HashMap<String, Object>();
-    }
-    else
-    {
-      this.properties = parentContext.properties;
-    }
 
     this.selectionModel = new DefaultReportSelectionModel();
     this.masterReportElement = masterReportElement;
@@ -186,18 +180,33 @@ public class ReportRenderContext
       this.zoomModel.setZoomAsPercentage(zoomFactor.floatValue());
     }
 
+    if (parentContext == null)
+    {
+      this.properties = new HashMap<String, Object>();
+      this.sharedRenderer = new SharedElementRenderer(this);
+    }
+    else
+    {
+      this.sharedRenderer = parentContext.sharedRenderer;
+      this.properties = parentContext.properties;
+    }
+
     final Object maybeAuthStore = getProperty(AUTHENTICATION_STORE_PROPERTY);
     if (maybeAuthStore == null)
     {
       setProperty(AUTHENTICATION_STORE_PROPERTY, new ReportAuthenticationStore(globalAuthenticationStore));
     }
 
-    this.reportLayouter = new ReportLayouter(this);
   }
 
   public ReportLayouter getReportLayouter()
   {
-    return reportLayouter;
+    return sharedRenderer.getLayouter();
+  }
+
+  public SharedElementRenderer getSharedRenderer()
+  {
+    return sharedRenderer;
   }
 
   public ReportSelectionModel getSelectionModel()

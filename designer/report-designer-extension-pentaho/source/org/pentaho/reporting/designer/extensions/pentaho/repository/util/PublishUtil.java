@@ -5,10 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
 import java.util.Locale;
-
+import java.text.MessageFormat;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
@@ -35,9 +33,11 @@ import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
+import  org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 public class PublishUtil
 {
+
   private static final String WEB_SOLUTION_PREFIX = "web-solution:";
   private static final String JCR_SOLUTION_PREFIX = "jcr-solution:";
   public static final String SERVER_VERSION = "server-version";
@@ -45,6 +45,11 @@ public class PublishUtil
   public static final int SERVER_VERSION_LEGACY = 4;
   private static final String SLASH = "/";
   private static final String COLON_SEP = ":";
+
+
+
+
+  private static final String TIMEOUT = "timeout";
 
   private PublishUtil()
   {
@@ -61,8 +66,9 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
+    final String urlPath =  URLEncoder.encode(path,"UTF-8");
     final FileObject connection = createVFSConnection(loginData);
-    final FileObject object = connection.resolveFile(path);
+    final FileObject object = connection.resolveFile(urlPath);
     if (object.exists() == false)
     {
       throw new FileNotFoundException(path);
@@ -112,7 +118,7 @@ public class PublishUtil
 
     final MessageFormat fmt = new MessageFormat(urlMessage);
     final String urlPath = path.replace(SLASH,COLON_SEP);
-    final String fullRepoViewerPath = fmt.format(new Object[]{URLEncoder.encode(urlPath, "UTF-8")});
+    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(urlPath, "UTF-8"));
     final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL(url);
@@ -209,7 +215,7 @@ public class PublishUtil
 
   public static int getTimeout(final AuthenticationData loginData)
   {
-    final String s = loginData.getOption("timeout");
+    final String s = loginData.getOption(TIMEOUT);
     return ParserUtil.parseInt(s, WorkspaceSettings.getInstance().getConnectionTimeout());
   }
 

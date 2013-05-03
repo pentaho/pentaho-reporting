@@ -39,17 +39,16 @@ public class FormulaPieTooltipGenerator implements PieToolTipGenerator
   {
     try
     {
-      final int count = dataset.getItemCount();
       final Object[] keys = dataset.getKeys().toArray();
       final Object[] items = new Object[keys.length];
       for (int i = 0; i < keys.length; i++)
       {
-        items[i] = dataset.getValue(key);
+        items[i] = dataset.getValue(i);
       }
       final Object[] values = new Object[]{
           key, keys,
-          IntegerCache.getInteger(dataset.getIndex(key)), items,
-          IntegerCache.getInteger(0)
+          dataset.getValue(key), items,
+          IntegerCache.getInteger(dataset.getIndex(key))
       };
       formulaExpression.setRuntime(new WrapperExpressionRuntime
           (new StaticDataRow(ADDITIONAL_COLUMN_KEYS, values), runtime));

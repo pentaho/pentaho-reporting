@@ -82,7 +82,6 @@ public class CellFormatFunction extends AbstractElementFormatFunction implements
       formatSpecification = rds.getFormatString(getRuntime(), e, formatSpecification);
       if (formatSpecification != null)
       {
-        formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
         if (formatSpecification.getType() == FormatSpecification.TYPE_DATE_FORMAT ||
             formatSpecification.getType() == FormatSpecification.TYPE_DECIMAL_FORMAT)
         {

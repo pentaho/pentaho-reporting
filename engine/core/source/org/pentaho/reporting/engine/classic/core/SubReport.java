@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core;
 import java.awt.print.PageFormat;
 import java.util.LinkedHashMap;
 
+import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
@@ -145,8 +146,11 @@ public class SubReport extends AbstractReportDefinition
     {
       throw new NullPointerException();
     }
+
+    final ParameterMapping[] oldMappings = getExportMappings();
     exportParameters.put(outerName, sourceColumn);
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
   }
 
   /**
@@ -160,8 +164,10 @@ public class SubReport extends AbstractReportDefinition
     {
       throw new NullPointerException();
     }
+    final ParameterMapping[] oldMappings = getExportMappings();
     exportParameters.remove(outerName);
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
   }
 
   /**
@@ -192,13 +198,17 @@ public class SubReport extends AbstractReportDefinition
       throw new NullPointerException();
     }
 
+    final ParameterMapping[] oldMappings = getExportMappings();
+
     exportParameters.clear();
     for (int i = 0; i < mappings.length; i++)
     {
       final ParameterMapping mapping = mappings[i];
       exportParameters.put(mapping.getName(), mapping.getAlias());
     }
-    notifyNodePropertiesChanged();
+
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
   }
 
   /**
@@ -221,8 +231,11 @@ public class SubReport extends AbstractReportDefinition
     {
       throw new NullPointerException();
     }
+    final ParameterMapping[] oldMappings = getInputMappings();
+
     inputParameters.put(sourceColumn, outerName);
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
   }
 
   /**
@@ -237,20 +250,30 @@ public class SubReport extends AbstractReportDefinition
       throw new NullPointerException();
     }
 
+    final ParameterMapping[] oldMappings = getInputMappings();
+
     inputParameters.remove(sourceColumn);
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
   }
 
   public void clearInputParameters()
   {
+    final ParameterMapping[] oldMappings = getInputMappings();
+
     inputParameters.clear();
-    notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
   }
 
   public void clearExportParameters()
   {
+    final ParameterMapping[] oldMappings = getExportMappings();
+
     exportParameters.clear();
     notifyNodePropertiesChanged();
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
   }
 
   /**
@@ -280,13 +303,17 @@ public class SubReport extends AbstractReportDefinition
       throw new NullPointerException();
     }
 
+    final ParameterMapping[] oldMappings = getInputMappings();
+
     inputParameters.clear();
     for (int i = 0; i < mappings.length; i++)
     {
       final ParameterMapping mapping = mappings[i];
       inputParameters.put(mapping.getAlias(), mapping.getName());
     }
-    notifyNodePropertiesChanged();
+
+    notifyNodePropertiesChanged(new SubReportParameterChange
+        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
   }
 
   /**

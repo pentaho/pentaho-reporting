@@ -27,6 +27,7 @@ import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
 /**
  * A dummy content item, that does not provide any input and that does swallow all content fed into it.

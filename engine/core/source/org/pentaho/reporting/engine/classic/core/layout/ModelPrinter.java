@@ -57,6 +57,7 @@ public class ModelPrinter
     logger.debug(s);
   }
 
+  @SuppressWarnings("UnusedDeclaration")
   public void printParents(RenderNode box)
   {
     int level = 0;
