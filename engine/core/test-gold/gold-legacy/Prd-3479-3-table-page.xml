@@ -2,11 +2,11 @@
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
   <table col-count="6" row-count="42">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -1541,11 +1541,11 @@
   </table>
   <table col-count="6" row-count="40">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -3140,11 +3140,11 @@
   </table>
   <table col-count="6" row-count="40">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -4769,11 +4769,11 @@
   </table>
   <table col-count="6" row-count="40">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -6374,11 +6374,11 @@
   </table>
   <table col-count="6" row-count="45">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -8010,11 +8010,11 @@
   </table>
   <table col-count="6" row-count="41">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -9648,11 +9648,11 @@
   </table>
   <table col-count="6" row-count="45">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -11215,11 +11215,11 @@
   </table>
   <table col-count="6" row-count="45">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="8">
@@ -12807,11 +12807,11 @@
   </table>
   <table col-count="6" row-count="41">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -14306,11 +14306,11 @@
   </table>
   <table col-count="6" row-count="50">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -15913,11 +15913,11 @@
   </table>
   <table col-count="6" row-count="41">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -17470,11 +17470,11 @@
   </table>
   <table col-count="6" row-count="45">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">
@@ -19120,11 +19120,11 @@
   </table>
   <table col-count="6" row-count="42">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="4">
@@ -20786,11 +20786,11 @@
   </table>
   <table col-count="6" row-count="40">
     <cols>
-      <column width="192.0038"/>
-      <column width="95.9962"/>
+      <column width="192.00384"/>
+      <column width="95.99616"/>
       <column width="2"/>
-      <column width="94.0077"/>
-      <column width="191.9923"/>
+      <column width="94.00768"/>
+      <column width="191.99232"/>
       <column width="2"/>
     </cols>
     <row height="18">

@@ -29,6 +29,7 @@ public class PaginationTableState implements BasePaginationTableState
   private long pageEnd;
   private PageBreakPositions breakPositions;
   private boolean fixedPositionProcessingSuspended;
+  private boolean tableProcessing;
 
   public PaginationTableState(final long pageHeight,
                               final long pageOffset,
@@ -49,6 +50,7 @@ public class PaginationTableState implements BasePaginationTableState
     this.pageHeight = parent.pageHeight;
     this.pageEnd = parent.pageEnd;
     this.fixedPositionProcessingSuspended = true;
+    this.tableProcessing = parent.tableProcessing;
   }
 
   public void suspendVisualStateCollection(final boolean temporary)
@@ -59,6 +61,11 @@ public class PaginationTableState implements BasePaginationTableState
     {
       this.parent.suspendVisualStateCollection(temporary);
     }
+  }
+
+  public boolean isTableProcessing()
+  {
+    return tableProcessing;
   }
 
   public long getPageOffset()
@@ -105,6 +112,7 @@ public class PaginationTableState implements BasePaginationTableState
   {
     breakPositions = new FilteringPageBreakPositions(breakPositions, offset);
     pageOffset = offset;
+    tableProcessing = true;
   }
 
   public boolean isOnPageStart(final long offset)

@@ -35,7 +35,7 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
                 <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="575.0" height="14.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                  <replaced-content x="0.0" y="0.0" width="575.0" height="14.0" source="null" content-width="100.0" content-height="100.0" requested-width="-100%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="0.0" y="0.0" width="575.0" height="14.0" source="null" content-width="100.0" content-height="100.0" requested-width="-100.0%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
                   </replaced-content>
                   <p type="ParagraphRenderBox" x="0.0" y="0.0" width="100.0" height="14.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -53,7 +53,7 @@
                       <text x="460.0" y="0.0" width="5.56" height="10.0">0</text>
                     </line>
                   </p>
-                  <replaced-content x="0.0" y="14.0" width="575.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="-100%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="0.0" y="14.0" width="575.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="-100.0%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                   </replaced-content>
                 </canvas>
@@ -111,7 +111,7 @@
                 <canvas name="continent-footer-inner-1" type="CanvasRenderBox" x="0.0" y="28.0" width="575.0" height="16.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="continent-footer-inner-1"/>
-                  <replaced-content x="0.0" y="28.0" width="575.0" height="16.0" source="null" content-width="100.0" content-height="100.0" requested-width="-100%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="0.0" y="28.0" width="575.0" height="16.0" source="null" content-width="100.0" content-height="100.0" requested-width="-100.0%" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
                   </replaced-content>
                   <p type="ParagraphRenderBox" x="0.0" y="28.0" width="220.0" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="true" font-style-underline="true" font-style-strikethrough="false">

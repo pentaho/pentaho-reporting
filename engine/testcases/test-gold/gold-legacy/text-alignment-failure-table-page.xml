@@ -2,15 +2,15 @@
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
   <table col-count="9" row-count="7">
     <cols>
+      <column width="85.77769"/>
+      <column width="85.77769"/>
       <column width="85.7777"/>
+      <column width="85.77769"/>
+      <column width="85.77846"/>
+      <column width="85.77769"/>
       <column width="85.7777"/>
-      <column width="85.7777"/>
-      <column width="85.7777"/>
-      <column width="85.7785"/>
-      <column width="85.7777"/>
-      <column width="85.7777"/>
-      <column width="85.7777"/>
-      <column width="85.7777"/>
+      <column width="85.77769"/>
+      <column width="85.77769"/>
     </cols>
     <row height="2">
       <cell row-span="2" col-span="9">

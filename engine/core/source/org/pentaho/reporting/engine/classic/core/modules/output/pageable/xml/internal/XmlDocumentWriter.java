@@ -91,6 +91,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
   private XmlWriter xmlWriter;
   private FastDecimalFormat pointIntConverter;
   private FastDecimalFormat pointConverter;
+  private FastDecimalFormat pointShortConverter;
   private boolean ignoreEmptyBorders = true;
   private OutputProcessorMetaData metaData;
 
@@ -103,7 +104,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       throw new NullPointerException();
     }
     this.outputStream = outputStream;
-    this.pointConverter = new FastDecimalFormat("0.####", Locale.US);
+    this.pointConverter = new FastDecimalFormat("0.0####", Locale.US);
+    this.pointShortConverter = new FastDecimalFormat("0.#####", Locale.US);
     this.pointIntConverter = new FastDecimalFormat("0", Locale.US);
   }
 
@@ -155,21 +157,22 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         (page.getHeight() - page.getImageableHeight() - page.getImageableY());
 
     final AttributeList pageAttributes = new AttributeList();
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-x", pointConverter.format(
-        page.getGlobalX()));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-y", pointConverter.format(
-        page.getGlobalY()));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-width", pointConverter.format(width));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-height", pointConverter.format(
-        height));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-top", pointConverter.format(
-        marginTop));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-left", pointConverter.format(
-        marginLeft));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-bottom", pointConverter.format(
-        marginBottom));
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-right", pointConverter.format(
-        marginRight));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-x",
+        pointShortConverter.format(page.getGlobalX()));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-y",
+        pointShortConverter.format(page.getGlobalY()));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-width",
+        pointShortConverter.format(width));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "page-height",
+        pointShortConverter.format(height));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-top",
+        pointShortConverter.format(marginTop));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-left",
+        pointShortConverter.format(marginLeft));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-bottom",
+        pointShortConverter.format(marginBottom));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-right",
+        pointShortConverter.format(marginRight));
 
     xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "physical-page", pageAttributes, XmlWriter.OPEN);
 
@@ -190,8 +193,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     final float height = (float) StrictGeomUtility.toExternalValue(logicalPage.getPageHeight());
 
     final AttributeList pageAttributes = new AttributeList();
-    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "logical-page-number", String.valueOf(
-        key.getPosition()));
+    pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "logical-page-number",
+        pointIntConverter.format(key.getPosition()));
     pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width", pointConverter.format(width));
     pageAttributes.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height", pointConverter.format(height));
 
@@ -374,7 +377,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-color",
           convertColorToString(top));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-width",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getBorderTop())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getBorderTop())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-style",
           String.valueOf(top.getBorderStyle()));
     }
@@ -385,7 +388,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-left-color",
           convertColorToString(left));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-left-width",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getBorderLeft())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getBorderLeft())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-left-style",
           String.valueOf(left.getBorderStyle()));
     }
@@ -396,7 +399,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-color",
           convertColorToString(bottom));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-width",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getBorderBottom())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getBorderBottom())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-style",
           String.valueOf(bottom.getBorderStyle()));
     }
@@ -407,7 +410,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-right-color",
           convertColorToString(right));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-right-width",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getBorderRight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getBorderRight())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-right-style",
           String.valueOf(right.getBorderStyle()));
     }
@@ -416,88 +419,88 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     if (isEmptyCorner(topLeft) == false)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-left-x",
-          String.valueOf(StrictGeomUtility.toExternalValue(topLeft.getWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(topLeft.getWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-left-y",
-          String.valueOf(StrictGeomUtility.toExternalValue(topLeft.getHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(topLeft.getHeight())));
     }
 
     final BorderCorner topRight = border.getTopRight();
     if (isEmptyCorner(topRight) == false)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-right-x",
-          String.valueOf(StrictGeomUtility.toExternalValue(topRight.getWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(topRight.getWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-top-right-y",
-          String.valueOf(StrictGeomUtility.toExternalValue(topRight.getHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(topRight.getHeight())));
     }
 
     final BorderCorner bottomLeft = border.getBottomLeft();
     if (isEmptyCorner(bottomLeft) == false)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-left-x",
-          String.valueOf(StrictGeomUtility.toExternalValue(bottomLeft.getWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(bottomLeft.getWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-left-y",
-          String.valueOf(StrictGeomUtility.toExternalValue(bottomLeft.getHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(bottomLeft.getHeight())));
     }
 
     final BorderCorner bottomRight = border.getBottomRight();
     if (isEmptyCorner(bottomRight) == false)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-right-x",
-          String.valueOf(StrictGeomUtility.toExternalValue(bottomRight.getWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(bottomRight.getWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "border-bottom-right-y",
-          String.valueOf(StrictGeomUtility.toExternalValue(bottomRight.getHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(bottomRight.getHeight())));
     }
 
     if (sblp.getMarginTop() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-top",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getMarginTop())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getMarginTop())));
     }
     if (sblp.getMarginLeft() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-left",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getMarginLeft())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getMarginLeft())));
     }
     if (sblp.getMarginBottom() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-bottom",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getMarginBottom())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getMarginBottom())));
     }
     if (sblp.getMarginRight() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "margin-right",
-          String.valueOf(StrictGeomUtility.toExternalValue(sblp.getMarginRight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(sblp.getMarginRight())));
     }
 
     if (definition.getPaddingTop() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "padding-top",
-          String.valueOf(StrictGeomUtility.toExternalValue(definition.getPaddingTop())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(definition.getPaddingTop())));
     }
     if (definition.getPaddingLeft() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "padding-left",
-          String.valueOf(StrictGeomUtility.toExternalValue(definition.getPaddingLeft())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(definition.getPaddingLeft())));
     }
     if (definition.getPaddingBottom() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "padding-bottom",
-          String.valueOf(StrictGeomUtility.toExternalValue(definition.getPaddingBottom())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(definition.getPaddingBottom())));
     }
     if (definition.getPaddingRight() > 0)
     {
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "padding-right",
-          String.valueOf(StrictGeomUtility.toExternalValue(definition.getPaddingRight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(definition.getPaddingRight())));
     }
 
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
-        String.valueOf(StrictGeomUtility.toExternalValue(box.getX())));
+        pointConverter.format(StrictGeomUtility.toExternalValue(box.getX())));
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
-        String.valueOf(StrictGeomUtility.toExternalValue(box.getY())));
+        pointConverter.format(StrictGeomUtility.toExternalValue(box.getY())));
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
-        String.valueOf(StrictGeomUtility.toExternalValue(box.getWidth())));
+        pointConverter.format(StrictGeomUtility.toExternalValue(box.getWidth())));
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
-        String.valueOf(StrictGeomUtility.toExternalValue(box.getHeight())));
+        pointConverter.format(StrictGeomUtility.toExternalValue(box.getHeight())));
 
     final Color backgroundColor = (Color) box.getStyleSheet().getStyleProperty(ElementStyleKeys.BACKGROUND_COLOR);
     if (backgroundColor != null)
@@ -516,14 +519,14 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         (String) box.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
     final Object o = box.getStyleSheet().getStyleProperty(TextStyleKeys.FONTSIZE);
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-size", pointIntConverter.format(o));
-    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-bold", String.valueOf(
-        box.getStyleSheet().getStyleProperty(TextStyleKeys.BOLD)));
-    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-italics", String.valueOf(
-        box.getStyleSheet().getStyleProperty(TextStyleKeys.ITALIC)));
-    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-underline", String.valueOf(
-        box.getStyleSheet().getStyleProperty(TextStyleKeys.UNDERLINED)));
-    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-strikethrough", String.valueOf(
-        box.getStyleSheet().getStyleProperty(TextStyleKeys.STRIKETHROUGH)));
+    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-bold",
+        String.valueOf(box.getStyleSheet().getStyleProperty(TextStyleKeys.BOLD)));
+    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-italics",
+        String.valueOf(box.getStyleSheet().getStyleProperty(TextStyleKeys.ITALIC)));
+    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-underline",
+        String.valueOf(box.getStyleSheet().getStyleProperty(TextStyleKeys.UNDERLINED)));
+    attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "font-style-strikethrough",
+        String.valueOf(box.getStyleSheet().getStyleProperty(TextStyleKeys.STRIKETHROUGH)));
 
     attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "anchor",
         (String) box.getStyleSheet().getStyleProperty(ElementStyleKeys.ANCHOR_NAME));
@@ -637,13 +640,13 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         final RenderableText text = (RenderableText) node;
         final AttributeList attributeList = new AttributeList();
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getX())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getY())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getWidth())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getHeight())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
         xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
         xmlWriter.writeTextNormalized(text.getRawText(), true);
         xmlWriter.writeCloseTag();
@@ -654,9 +657,9 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         final SpacerRenderNode spacer = (SpacerRenderNode) node;
         final AttributeList attributeList = new AttributeList();
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getWidth())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
-            String.valueOf(StrictGeomUtility.toExternalValue(node.getHeight())));
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "preserve",
             String.valueOf(spacer.isDiscardable() == false));
         xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "spacer", attributeList, XmlWriter.CLOSE);
@@ -675,18 +678,18 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       final RenderableReplacedContent prc = node.getContent();
       final AttributeList attributeList = new AttributeList();
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
-          String.valueOf(StrictGeomUtility.toExternalValue(node.getX())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
-          String.valueOf(StrictGeomUtility.toExternalValue(node.getY())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
-          String.valueOf(StrictGeomUtility.toExternalValue(node.getWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
-          String.valueOf(StrictGeomUtility.toExternalValue(node.getHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "source", String.valueOf(prc.getSource()));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "content-width",
-          String.valueOf(StrictGeomUtility.toExternalValue(prc.getContentWidth())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(prc.getContentWidth())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "content-height",
-          String.valueOf(StrictGeomUtility.toExternalValue(prc.getContentHeight())));
+          pointConverter.format(StrictGeomUtility.toExternalValue(prc.getContentHeight())));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "requested-width",
           convertRenderLength(prc.getRequestedWidth()));
       attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "requested-height",

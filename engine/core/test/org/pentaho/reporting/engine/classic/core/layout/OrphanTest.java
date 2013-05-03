@@ -21,8 +21,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -266,8 +264,8 @@ public class OrphanTest extends TestCase
     master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
     master.getReportHeader().addElement(report);
 
-    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-3.prpt");
-    PdfReportUtil.createPDF(master, "/tmp/OrphanTest3.pdf");
+//    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-3.prpt");
+//    PdfReportUtil.createPDF(master, "/tmp/OrphanTest3.pdf");
     DebugReportRunner.createPDF(master);
   }
 
@@ -374,8 +372,8 @@ public class OrphanTest extends TestCase
     master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
     master.getReportHeader().addElement(report);
 
-    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-4.prpt");
-    PdfReportUtil.createPDF(master, "/tmp/OrphanTest4.pdf");
+//    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-4.prpt");
+//    PdfReportUtil.createPDF(master, "/tmp/OrphanTest4.pdf");
     DebugReportRunner.createPDF(master);
   }
 
@@ -485,8 +483,8 @@ public class OrphanTest extends TestCase
     master.getReportHeader().addElement(report);
 
 //    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Orphan-5.prpt");
-    PdfReportUtil.createPDF(master, "/tmp/OrphanTest5.pdf");
-//    DebugReportRunner.createPDF(master);
+//    PdfReportUtil.createPDF(master, "/tmp/OrphanTest5.pdf");
+    DebugReportRunner.createPDF(master);
   }
 
   public static Element createDataItem(final String text, final float width, final float height)

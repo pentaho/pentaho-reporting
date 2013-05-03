@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
 
 import java.util.Arrays;
 
-public final class PageBreakPositionList implements PageBreakPositions
+public class PageBreakPositionList implements PageBreakPositions
 {
   private static class PageBreakPositionBackend
   {
@@ -600,7 +600,7 @@ public final class PageBreakPositionList implements PageBreakPositions
     return pageStart + positionInPageContentArea;
   }
 
-  private long getPageHeaderHeight(final long position)
+  protected long getPageHeaderHeight(final long position)
   {
     final int majorBreak = findNextMajorBreak(position);
     if (isMasterBreak(position))

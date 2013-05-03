@@ -144,7 +144,8 @@ public class Prd3514Test extends TestCase
     assertEquals(0, dotFieldBox.getY());
     assertEquals(0, textFieldBox.getY());
 
-    assertEquals(StrictGeomUtility.toInternalValue(20), outerBox.getHeight());
+    // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
+    assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getFirstChild().getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(14), dotFieldBox.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());

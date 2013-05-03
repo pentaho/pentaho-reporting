@@ -26,6 +26,7 @@ public class FlowPaginationTableState implements BasePaginationTableState
   private boolean suspended;
   private long pageOffset;
   private PageBreakPositions breakPositions;
+  private boolean tableProcessing;
 
   public FlowPaginationTableState(final long pageOffset,
                                   final PageBreakPositions breakPositions)
@@ -39,6 +40,12 @@ public class FlowPaginationTableState implements BasePaginationTableState
     this.parent = parent;
     this.pageOffset = parent.pageOffset;
     this.breakPositions = parent.breakPositions;
+    this.tableProcessing = parent.tableProcessing;
+  }
+
+  public boolean isTableProcessing()
+  {
+    return tableProcessing;
   }
 
   public void suspendVisualStateCollection(final boolean temporary)
@@ -80,6 +87,7 @@ public class FlowPaginationTableState implements BasePaginationTableState
   {
     breakPositions = new FilteringPageBreakPositions(breakPositions, offset);
     pageOffset = offset;
+    tableProcessing = true;
   }
 
   public boolean isOnPageStart(final long offset)

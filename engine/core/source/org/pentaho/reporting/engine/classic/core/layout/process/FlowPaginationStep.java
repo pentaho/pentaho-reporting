@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.layout.model.FlowPageBreakPositionList;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
@@ -46,10 +47,10 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  */
 public final class FlowPaginationStep extends IterateVisualProcessStep
 {
-  private static final Log logger = LogFactory.getLog(PaginationStep.class);
+  private static final Log logger = LogFactory.getLog(FlowPaginationStep.class);
   private boolean breakPending;
   private FindOldestProcessKeyStep findOldestProcessKeyStep;
-  private PageBreakPositionList basePageBreakList;
+  private FlowPageBreakPositionList basePageBreakList;
   private ReportStateKey visualState;
   private FlowPaginationTableState paginationTableState;
   private PaginationShiftState shiftState;
@@ -62,7 +63,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
   public FlowPaginationStep()
   {
     findOldestProcessKeyStep = new FindOldestProcessKeyStep();
-    basePageBreakList = new PageBreakPositionList();
+    basePageBreakList = new FlowPageBreakPositionList();
     shiftStatePool = new PaginationShiftStatePool();
   }
 
@@ -99,7 +100,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       basePageBreakList.copyFrom(allPreviousBreak);
 
       final boolean pagebreakEncountered = recordedPageBreakPosition != 0 &&
-              (recordedPageBreakPositionIsForced || recordedPageBreakPosition != pageBox.getHeight());
+          (recordedPageBreakPositionIsForced || recordedPageBreakPosition != pageBox.getHeight());
       final boolean nextPageContainsContent;
       if (pagebreakEncountered == false)
       {
@@ -109,9 +110,13 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       {
         basePageBreakList.addMajorBreak(recordedPageBreakPosition, 0);
         if (recordedPageBreakPositionIsForced)
+        {
           nextPageContainsContent = false;
+        }
         else
+        {
           nextPageContainsContent = (pageBox.getHeight() > recordedPageBreakPosition);
+        }
       }
 
       return new PaginationResult(basePageBreakList, pagebreakEncountered, nextPageContainsContent, visualState);
@@ -293,6 +298,10 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     //    before the pagebox-offset. If not, return false, after the normal shifting.
     final long pageOffset = paginationTableState.getPageOffset();
     final long delta = pageOffset - (sectionRenderBox.getY() + contextShift);
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("PageOffset: " + delta);
+    }
     if (delta <= 0)
     {
       BoxShifter.shiftBox(box, contextShift);
@@ -632,23 +641,25 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     final long shift = boxContext.getShiftForNextChild();
     final long boxY = box.getY();
     final long shiftedBoxY = boxY + shift;
-    final long nextNonShiftedMajorBreak = breakUtility.findNextMajorBreakPosition(shiftedBoxY);
-    final long fixedPositionOnNextPage =
-        breakUtility.computeFixedPositionInFlow(nextNonShiftedMajorBreak, 0);
-    final long nextMajorBreak = Math.max(nextNonShiftedMajorBreak, fixedPositionOnNextPage);
+    final long nextMajorBreak = breakUtility.findNextMajorBreakPosition(shiftedBoxY);
     if (nextMajorBreak < shiftedBoxY)
     {
       // This band will be outside the last pagebreak. We can only shift it normally, but there is no way
       // that we could shift it to the final position yet.
       box.setY(shiftedBoxY);
     }
-    else
+    else if (paginationTableState.isTableProcessing() == false ||
+        shiftedBoxY > nextMajorBreak)
     {
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
       BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
+    }
+    else
+    {
+      box.setY(shiftedBoxY);
     }
 
     final long pageEnd = paginationTableState.getPageOffset();
@@ -659,6 +670,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     else if (recordedPageBreakPosition == 0)
     {
+      logger.warn("Breaking on box " + box);
       recordedPageBreakPosition = box.getY();
     }
 
