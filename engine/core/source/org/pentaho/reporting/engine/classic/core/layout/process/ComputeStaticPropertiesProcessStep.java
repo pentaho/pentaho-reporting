@@ -290,6 +290,18 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     sblp.setInvisibleConsumesSpace(style.getBooleanStyleProperty
         (ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX));
     sblp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+
+    if (box.getParent() != null &&
+        style.getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0) == 0 &&
+        style.getDoubleStyleProperty(ElementStyleKeys.WIDTH, 0) == 0)
+    {
+      // only a box with a parent can try to inherit a context ..
+      sblp.setUndefinedWidth(true);
+    }
+    else
+    {
+      sblp.setUndefinedWidth(false);
+    }
   }
 
   private void computeMarginsAndBorders(final RenderBox box,

@@ -39,7 +39,6 @@ public class KettleDataFactoryModule extends AbstractModule
 {
   public static final String NAMESPACE = "http://jfreereport.sourceforge.net/namespaces/datasources/kettle";
   public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.extensions.datasources.kettle.tag-def.";
-
   private static final Log logger = LogFactory.getLog(KettleDataFactoryModule.class);
 
   public KettleDataFactoryModule() throws ModuleInitializeException
@@ -59,14 +58,29 @@ public class KettleDataFactoryModule extends AbstractModule
   {
     try
     {
+      try
+      {
+        if (System.getProperty("KETTLE_REDIRECT_STDOUT") == null)
+        {
+          System.setProperty("KETTLE_REDIRECT_STDOUT", "N");
+        }
+        if (System.getProperty("KETTLE_REDIRECT_STDERR") == null)
+        {
+          System.setProperty("KETTLE_REDIRECT_STDERR", "N");
+        }
+      }
+      catch (SecurityException se)
+      {
+        // ignore ..
+      }
       // init kettle without simplejndi
       if (KettleEnvironment.isInitialized() == false)
       {
         KettleEnvironment.init(false);
-        
+
         // Route logging from Kettle to Apache Commons Logging...
         //
-        KettleLogStore.getAppender().addLoggingEventListener( new KettleToCommonsLoggingEventListener());
+        KettleLogStore.getAppender().addLoggingEventListener(new KettleToCommonsLoggingEventListener());
       }
     }
     catch (Throwable e)
@@ -92,12 +106,14 @@ public class KettleDataFactoryModule extends AbstractModule
         ("org/pentaho/reporting/engine/classic/extensions/datasources/kettle/meta-datafactory.xml");
 
     // ... initialize the templated datasources ...
-    try 
+    try
     {
-    
+
       TransformationDatasourceMetadata.registerDatasources();
-    
-    } catch (ReportDataFactoryException e) {
+
+    }
+    catch (ReportDataFactoryException e)
+    {
       // Do not bail here... this subsystem of datasources is not core to the functioning of the 
       // Kettle datasource. 
       logger.warn("Error initializing templated datasources.", e);

@@ -22,7 +22,6 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
-import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
@@ -68,11 +67,8 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
+public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureProcessStep
 {
-  private static final Log logger = LogFactory.getLog(RevalidateAllAxisLayoutStep.class);
-  private static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
-
   private static class MergeContext
   {
     private RenderBox readContext;
@@ -95,6 +91,8 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
+  private static final Log logger = LogFactory.getLog(RevalidateAllAxisLayoutStep.class);
+  private static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
   private LastLineTextAlignmentProcessor centerProcessor;
   private LastLineTextAlignmentProcessor leftProcessor;
   private LastLineTextAlignmentProcessor rightProcessor;
@@ -102,25 +100,23 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
   private PageGrid pageGrid;
   private OutputProcessorMetaData metaData;
   private VerticalAlignmentProcessor verticalAlignmentProcessor;
-  private boolean cacheDeepDirty;
 
   public RevalidateAllAxisLayoutStep()
   {
     this.verticalAlignmentProcessor = new VerticalAlignmentProcessor();
   }
 
-  public void initialize (final OutputProcessorMetaData metaData)
+  public void initialize(final OutputProcessorMetaData metaData)
   {
     this.metaData = metaData;
   }
 
-  public void compute(final LogicalPageBox pageBox)
+  public void processBoxChilds(final ParagraphRenderBox box, final PageGrid pageGrid)
   {
-    this.cacheDeepDirty = false;
-    this.pageGrid = pageBox.getPageGrid();
     try
     {
-      startProcessing(pageBox);
+      this.pageGrid = pageGrid;
+      processParagraphChilds(box);
     }
     finally
     {
@@ -128,53 +124,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
   }
 
-  protected boolean checkCacheValid(final RenderNode node)
-  {
-    if (cacheDeepDirty)
-    {
-      return false;
-    }
-    final RenderNode.CacheState cacheState = node.getCacheState();
-    if (cacheState == RenderNode.CacheState.CLEAN)
-    {
-      return true;
-    }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
-    }
-    return false;
-  }
-
-  protected boolean startBlockLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  protected boolean startRowLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-    return true;
-  }
-
-
-  protected boolean startCanvasLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-    return true;
-  }
-
-  private void performVerticalBlockAlignment(final ParagraphRenderBox box)
+  private void performVerticalBlockAlignment(final RenderBox box)
   {
 
     final RenderNode lastChildNode = box.getLastChild();
@@ -222,7 +172,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
       performVerticalBlockAlignment(paragraph);
       return;
     }
-    
+
     final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
 
     // Process the direct childs of the paragraph
@@ -307,7 +257,7 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
       {
         final long minimumChunkWidth = paragraph.getMinimumChunkWidth();
         proc.initialize(metaData, sequenceList, lineStart, lineStart + minimumChunkWidth, pageGrid, overflowX);
-        RevalidateAllAxisLayoutStep.logger.warn("Revalidate: Auto-Corrected zero-width linebox.");
+        logger.warn("Auto-Corrected zero-width linebox."); // NON-NLS
       }
       else
       {
@@ -331,7 +281,6 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
       return;
     }
   }
-
 
   private BoxAlignContext createVerticalAlignContext(final InlineRenderBox box)
   {
@@ -403,7 +352,6 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     }
     return alignContext;
   }
-
 
   private SequenceList createHorizontalSequenceList(final InlineRenderBox box)
   {
@@ -487,12 +435,6 @@ public final class RevalidateAllAxisLayoutStep extends IterateVisualProcessStep
     return sequenceList;
   }
 
-  /**
-   * Reuse the processors ..
-   *
-   * @param alignment
-   * @return
-   */
   private LastLineTextAlignmentProcessor create(final ElementAlignment alignment)
   {
     if (ElementAlignment.CENTER.equals(alignment))

@@ -92,6 +92,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
       if (paragraphBox.isLineBoxUnchanged())
       {
+        nodeContext.updateX2(paragraphBox.getCachedMaxChildX2());
         return false;
       }
 
@@ -108,11 +109,9 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
       {
-        // commenting out the following 2 lines due to test failures with Prd-3514.prpt
-        // The cached ParagraphRenderBox is not completely up-to-date in some cases.
-        // Being investigated as a part of Prd-3857
-        // final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
-        // paragraph.setMinorLayoutAge(paragraph.getEffectiveLineboxContainer().getChangeTracker());
+        final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
+        paragraph.updateMinorLayoutAge();
+        paragraph.setCachedMaxChildX2(nodeContext.getMaxChildX2());
         lineBreakState.deinit();
       }
     }

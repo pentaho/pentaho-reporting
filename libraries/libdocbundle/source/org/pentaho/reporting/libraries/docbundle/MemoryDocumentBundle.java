@@ -309,7 +309,7 @@ public class MemoryDocumentBundle implements WriteableDocumentBundle
 
   public ResourceKey getBundleKey()
   {
-    return getBundleMainKey().getParent();
+    return getBundleMainKey();
   }
 
   public boolean isEmbeddedKey(final ResourceKey resourceKey)

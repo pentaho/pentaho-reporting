@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabDetailMode;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
@@ -38,12 +39,14 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRend
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.PhysicalPageDrawable;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.ElementMatcher;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -296,7 +299,7 @@ public class Prd3930Test extends TestCase
   public void testLargeTableSingleBandBlockTableExportWithBreaks() throws Exception
   {
     final MasterReport report = new MasterReport();
-    final Band table = TableTestUtil.createTable(2, 1, 100, true);
+    final Band table = TableTestUtil.createTable(2, 1, 100, new Prd3930ElementProducer());
     final Band body = (Band) table.getElement(1);
     int numberOfPagebreaks = 0;
     for (int i = 1; i < body.getElementCount(); i += 1)
@@ -336,6 +339,55 @@ public class Prd3930Test extends TestCase
       }
     }
 
+    assertEquals(numberOfPagebreaks + 1, count);
+  }
+
+  public void testLargeTableSingleBandBlockTableExportWithBreaksPage() throws Exception
+  {
+    final MasterReport report = new MasterReport();
+    report.setPageDefinition(new SimplePageDefinition(PageSize.A4));
+    final Band table = TableTestUtil.createTable(2, 1, 100, new Prd3930ElementProducer());
+    final Band body = (Band) table.getElement(1);
+    int numberOfPagebreaks = 0;
+    for (int i = 1; i < body.getElementCount(); i += 1)
+    {
+      if (i % 20 == 0)
+      {
+        numberOfPagebreaks += 1;
+        body.getElement(i).getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, true);
+      }
+    }
+
+    table.setName("table");
+    table.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 50f);
+    report.getReportHeader().addElement(table);
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
+
+    final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+    XmlPageReportUtil.createXml(report, bout);
+    final String text = bout.toString("UTF-8");
+  //  DebugLog.log(text);
+    for (int i = 0; i < 100; i += 1)
+    {
+      assertTrue(text.contains("value=\"Data-" + i + "-0"));
+      assertTrue(text.contains("value=\"Data-" + i + "-1"));
+      assertTrue(text.contains(">Data-" + i + "-0</text>"));
+      assertTrue(text.contains(">Data-" + i + "-1</text>"));
+    }
+
+    // count table-tags.
+    int idx = 0;
+    int count = 0;
+    while (idx != -1)
+    {
+      idx = text.indexOf("</physical-page>", idx + 1);
+      if (idx != -1)
+      {
+        count += 1;
+      }
+    }
+
+    // todo: Bug-fixing needed. Creates empty pages when manual-breaking..
     assertEquals(numberOfPagebreaks + 1, count);
   }
 

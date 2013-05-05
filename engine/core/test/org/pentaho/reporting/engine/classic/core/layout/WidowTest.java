@@ -17,8 +17,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -101,7 +99,7 @@ public class WidowTest extends TestCase
     final RenderBox grInBox = (RenderBox) grIn;
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testReport() throws ReportProcessingException, IOException, ContentIOException, BundleWriterException
@@ -144,7 +142,7 @@ public class WidowTest extends TestCase
     report.getItemBand().addElement(TableTestUtil.createDataItem("detail-field", 100, 20));
     report.getItemBand().getParentSection().getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
 
-    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Widow-1.prpt");
+//    BundleWriter.writeReportToZipFile(report, "/tmp/Prd-2087-Widow-1.prpt");
     //PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
   }
 

@@ -337,7 +337,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="3" row-count="8">
+  <table col-count="3" row-count="8" sheet-name="10374">
     <cols>
       <column width="100.8"/>
       <column width="201.6"/>
@@ -552,14 +552,6 @@
           <text x="324.224" y="623.0" width="28.576" height="8.0">$110.45</text>
         </line>
       </cell>
-    </row>
-  </table>
-  <table col-count="1" row-count="1">
-    <cols>
-      <column width="504"/>
-    </cols>
-    <row height="633">
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

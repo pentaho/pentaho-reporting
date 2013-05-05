@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -55,12 +55,8 @@
         </line>
       </cell>
     </row>
-    <row height="720">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -120,12 +116,8 @@
         </line>
       </cell>
     </row>
-    <row height="620">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -185,12 +177,8 @@
         </line>
       </cell>
     </row>
-    <row height="520">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -250,12 +238,8 @@
         </line>
       </cell>
     </row>
-    <row height="420">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -315,12 +299,8 @@
         </line>
       </cell>
     </row>
-    <row height="320">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -380,12 +360,8 @@
         </line>
       </cell>
     </row>
-    <row height="220">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -445,12 +421,8 @@
         </line>
       </cell>
     </row>
-    <row height="120">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -509,10 +481,6 @@
           <text x="100.0" y="80.0" width="72.77" height="10.0">inner-footer-field</text>
         </line>
       </cell>
-    </row>
-    <row height="20">
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
   <table col-count="2" row-count="2">

@@ -11,7 +11,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -197,7 +196,7 @@ public class PagebreakTest
     final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, page);
     final long pageOffset = pageBox.getPageOffset();
 
-    ModelPrinter.INSTANCE.print(pageBox);
+    //ModelPrinter.INSTANCE.print(pageBox);
 
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE_SECTION);
     Assert.assertEquals(2, elementsByNodeType.length);

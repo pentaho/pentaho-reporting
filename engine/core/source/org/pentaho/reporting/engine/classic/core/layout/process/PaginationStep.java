@@ -175,7 +175,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         breakPending = false;
         if (logger.isDebugEnabled())
         {
-          logger.debug("pending page-break or manual break: " + box);
+         // logger.debug("pending page-break or manual break: " + box);
         }
         return true;
       }
@@ -733,6 +733,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
     }
 
+    // todo:
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long shift = boxContext.getShiftForNextChild();
     final RenderLength fixedPosition = box.getBoxDefinition().getFixedPosition();

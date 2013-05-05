@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="3" row-count="10">
+  <table col-count="3" row-count="9">
     <cols>
       <column width="1"/>
       <column width="199"/>
@@ -104,7 +104,7 @@
       </empty-cell>
     </row>
     <row height="20">
-      <cell row-span="2" col-span="3">
+      <cell background-color="#afafaf" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <line type="ParagraphPoolBox" x="416.9" y="11.0" width="51.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="416.9" y="11.0" width="23.34" height="10.0">Page</text>
@@ -116,11 +116,6 @@
           <text x="462.44" y="11.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
-    </row>
-    <row height="4">
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
     </row>

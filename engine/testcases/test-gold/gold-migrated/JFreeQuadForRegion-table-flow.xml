@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="13" row-count="19">
+  <table col-count="13" row-count="18">
     <cols>
       <column width="54"/>
       <column width="27"/>
@@ -361,7 +361,7 @@
       <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="white" border-right-width="1.0" border-right-style="solid" background-color="white">
       </empty-cell>
     </row>
-    <row height="15">
+    <row height="16">
       <cell background-color="#009999" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(REGION) Total"/>
@@ -403,25 +403,6 @@
       <empty-cell background-color="#009999">
       </empty-cell>
       <empty-cell background-color="#009999">
-      </empty-cell>
-    </row>
-    <row height="1">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
     </row>
     <row height="1">
@@ -490,41 +471,6 @@
       </empty-cell>
       <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="white" border-right-width="1.0" border-right-style="solid" background-color="white">
       </empty-cell>
-    </row>
-  </table>
-  <table col-count="1" row-count="4">
-    <cols>
-      <column width="540"/>
-    </cols>
-    <row height="2">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
-      </empty-cell>
-    </row>
-    <row height="15">
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Pentaho Sample Report"/>
-        <line type="ParagraphPoolBox" x="433.34" y="2.0" width="106.66" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="433.34" y="2.0" width="37.23" height="10.0">Pentaho</text>
-          <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="473.34" y="2.0" width="33.89" height="10.0">Sample</text>
-          <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="510.0" y="2.0" width="30.0" height="10.0">Report</text>
-        </line>
-      </cell>
-    </row>
-    <row height="15">
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="JFreeReport"/>
-        <line type="ParagraphPoolBox" x="484.45" y="17.0" width="55.55" height="10.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="484.45" y="17.0" width="55.55" height="10.0">JFreeReport</text>
-        </line>
-      </cell>
-    </row>
-    <row height="106">
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

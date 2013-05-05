@@ -47,7 +47,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.ComputeStaticPro
 import org.pentaho.reporting.engine.classic.core.layout.process.InfiniteMajorAxisLayoutStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.InfiniteMinorAxisLayoutStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.ParagraphLineBreakStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.RevalidateAllAxisLayoutStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.RollbackStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
@@ -73,7 +72,6 @@ public abstract class AbstractRenderer implements Renderer
   private CanvasMinorAxisLayoutStep canvasMinorAxisLayoutStep;
   private InfiniteMajorAxisLayoutStep majorAxisLayoutStep;
   private CanvasMajorAxisLayoutStep canvasMajorAxisLayoutStep;
-  private RevalidateAllAxisLayoutStep revalidateAllAxisLayoutStep;
 
   private ValidateSafeToStoreStateStep validateSafeToStoreStateStep;
   private TableValidationStep tableValidationStep;
@@ -94,7 +92,6 @@ public abstract class AbstractRenderer implements Renderer
   private boolean readOnly;
   private boolean paranoidChecks;
   private boolean wrapProgressMarkerInSection;
-  private boolean clearedHeaderAndFooter;
 
   private LayoutResult lastValidateResult;
 
@@ -110,7 +107,6 @@ public abstract class AbstractRenderer implements Renderer
     this.canvasMinorAxisLayoutStep = new CanvasMinorAxisLayoutStep();
     this.majorAxisLayoutStep = new InfiniteMajorAxisLayoutStep();
     this.canvasMajorAxisLayoutStep = new CanvasMajorAxisLayoutStep();
-    this.revalidateAllAxisLayoutStep = new RevalidateAllAxisLayoutStep();
     this.validateSafeToStoreStateStep = new ValidateSafeToStoreStateStep();
     this.applyCachedValuesStep = new ApplyCachedValuesStep();
     this.commitStep = new CommitStep();
@@ -213,7 +209,7 @@ public abstract class AbstractRenderer implements Renderer
     staticPropertiesStep.initialize(metaData, processingContext);
     canvasMinorAxisLayoutStep.initialize(metaData);
     minorAxisLayoutStep.initialize(metaData);
-    revalidateAllAxisLayoutStep.initialize(metaData);
+    canvasMajorAxisLayoutStep.initialize(metaData);
   }
 
   public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint)
@@ -415,7 +411,6 @@ public abstract class AbstractRenderer implements Renderer
     canvasMinorAxisLayoutStep.compute(pageBox); // VISUAL
     majorAxisLayoutStep.compute(pageBox); // VISUAL
     canvasMajorAxisLayoutStep.compute(pageBox); // VISUAL
-    revalidateAllAxisLayoutStep.compute(pageBox); // VISUAL
 
     if (preparePagination(pageBox) == false)
     {
@@ -510,7 +505,6 @@ public abstract class AbstractRenderer implements Renderer
       canvasMinorAxisLayoutStep.compute(pageBox);
       majorAxisLayoutStep.compute(pageBox);
       canvasMajorAxisLayoutStep.compute(pageBox);
-      revalidateAllAxisLayoutStep.compute(pageBox);
 
       if (preparePagination(pageBox) == false)
       {

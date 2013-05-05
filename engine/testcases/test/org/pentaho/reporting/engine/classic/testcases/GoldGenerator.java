@@ -33,10 +33,16 @@ public class GoldGenerator extends GoldenSampleGenerator
   public static void main(String[] args)
       throws Exception
   {
+    FixAllBrokenLogging.fixBrokenLogging();
     if (GraphicsEnvironment.isHeadless() == false)
     {
       throw new IllegalStateException();
     }
     new GoldGenerator().runAllGoldReports();
+
+//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.current);
+//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.migration);
+//    new GoldGenerator().runSingleGoldReport("Income Statement.xml", ReportProcessingMode.legacy);
+
   }
 }

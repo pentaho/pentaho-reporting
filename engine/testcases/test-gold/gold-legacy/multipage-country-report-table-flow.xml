@@ -58,7 +58,7 @@
       </empty-cell>
     </row>
   </table>
-  <table col-count="1" row-count="2">
+  <table col-count="1" row-count="1">
     <cols>
       <column width="1494"/>
     </cols>
@@ -158,9 +158,6 @@
           <text x="1114.1" y="293.0" width="7.76" height="10.0">it.</text>
         </line>
       </cell>
-    </row>
-    <row height="293">
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

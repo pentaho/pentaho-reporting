@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -55,12 +55,8 @@
         </line>
       </cell>
     </row>
-    <row height="600">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -120,12 +116,8 @@
         </line>
       </cell>
     </row>
-    <row height="500">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -185,12 +177,8 @@
         </line>
       </cell>
     </row>
-    <row height="400">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -250,12 +238,8 @@
         </line>
       </cell>
     </row>
-    <row height="300">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -315,12 +299,8 @@
         </line>
       </cell>
     </row>
-    <row height="200">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -379,10 +359,6 @@
           <text x="100.0" y="80.0" width="45.55" height="10.0">detail-field</text>
         </line>
       </cell>
-    </row>
-    <row height="100">
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
   <table col-count="2" row-count="5">

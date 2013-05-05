@@ -41,11 +41,15 @@
       <spanned-cell/>
     </row>
     <row height="18">
-      <empty-cell>
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
       </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
       <empty-cell/>
     </row>
     <row height="42">
@@ -56,11 +60,15 @@
       <empty-cell/>
     </row>
     <row height="18">
-      <empty-cell>
+      <empty-cell background-color="#afafaf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
       </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
+      <empty-cell background-color="#afafaf">
+      </empty-cell>
       <empty-cell/>
     </row>
     <row height="423">

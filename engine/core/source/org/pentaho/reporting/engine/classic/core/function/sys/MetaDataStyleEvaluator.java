@@ -140,7 +140,7 @@ public class MetaDataStyleEvaluator extends AbstractElementFormatFunction
 
 
     // the element always overrides all properties; properties not defined in the meta-data layer
-    // will be removed from the stylesheet or attribute collection. 
+    // will be removed from the stylesheet or attribute collection.
 
     final DataAttributes attributes = dataSchema.getAttributes(fieldName);
     if (attributes == null)

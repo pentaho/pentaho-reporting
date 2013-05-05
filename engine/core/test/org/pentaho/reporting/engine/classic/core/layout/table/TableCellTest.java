@@ -22,7 +22,6 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -113,7 +112,7 @@ public class TableCellTest extends TestCase
     report.getReportHeader().addElement(table);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(ParagraphRenderBox.class));
     assertEquals(StrictGeomUtility.toInternalValue(20), all[0].getHeight());
   }

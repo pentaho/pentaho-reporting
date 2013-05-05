@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="8" row-count="7">
+  <table col-count="8" row-count="6">
     <cols>
       <column width="90"/>
       <column width="51.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
       <column width="7"/>
     </cols>
     <row height="18">
@@ -157,27 +157,17 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="196">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
   <table col-count="9" row-count="13">
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
-      <column width="6.0045"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
+      <column width="6.00453"/>
       <column width="11.4"/>
-      <column width="95.9955"/>
-      <column width="6.0045"/>
+      <column width="95.99547"/>
+      <column width="6.00453"/>
       <column width="7"/>
     </cols>
     <row height="18">
@@ -1792,10 +1782,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -1982,10 +1972,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -2140,10 +2130,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -2333,10 +2323,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -2525,10 +2515,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -2683,10 +2673,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -2875,10 +2865,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -3032,10 +3022,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -3190,10 +3180,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -3382,10 +3372,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -3540,10 +3530,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -3732,10 +3722,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -3889,10 +3879,10 @@
     <cols>
       <column width="141.75"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
@@ -4047,10 +4037,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="141.75"/>
-      <column width="164.0841"/>
-      <column width="0.0113"/>
+      <column width="164.08413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -4241,10 +4231,10 @@
       <column width="56.7"/>
       <column width="85.05"/>
       <column width="113.4"/>
-      <column width="50.6841"/>
-      <column width="0.0113"/>
+      <column width="50.68413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="18">
       <cell border-bottom-color="#003b79" border-bottom-width="3.0" border-bottom-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
@@ -4557,14 +4547,14 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="6" row-count="8">
+  <table col-count="6" row-count="7">
     <cols>
       <column width="141.75"/>
       <column width="85.05"/>
-      <column width="220.7841"/>
-      <column width="0.0113"/>
+      <column width="220.78413"/>
+      <column width="0.01134"/>
       <column width="113.4"/>
-      <column width="6.0045"/>
+      <column width="6.00453"/>
     </cols>
     <row height="20">
       <cell row-span="1" col-span="2">
@@ -4767,14 +4757,6 @@
           <text x="552.09947" y="22.0" width="8.896" height="8.0">18</text>
         </line>
       </cell>
-      <empty-cell/>
-    </row>
-    <row height="705">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
     </row>
   </table>

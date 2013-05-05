@@ -2,12 +2,12 @@
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
   <table col-count="6" row-count="149">
     <cols>
-      <column width="102.9683"/>
-      <column width="102.9683"/>
-      <column width="102.9683"/>
-      <column width="47.3654"/>
-      <column width="47.3654"/>
-      <column width="47.3654"/>
+      <column width="102.96826"/>
+      <column width="102.96826"/>
+      <column width="102.96826"/>
+      <column width="47.36537"/>
+      <column width="47.36537"/>
+      <column width="47.36537"/>
     </cols>
     <row height="10">
       <cell row-span="1" col-span="1">

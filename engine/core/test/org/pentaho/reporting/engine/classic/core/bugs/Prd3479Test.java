@@ -147,7 +147,7 @@ public class Prd3479Test extends TestCase
     band.addElement(rowBand);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final RenderNode labelRenderBox = MatchFactory.findElementByName(logicalPageBox, "Label");
     final RenderNode rowRenderBox = MatchFactory.findElementByName(logicalPageBox, "RowBand");

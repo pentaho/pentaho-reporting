@@ -29,8 +29,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.BasePaginationTableState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 /**
@@ -251,7 +251,7 @@ public final class PaginationStepLib
 
   public static boolean isRestrictedKeepTogether(final RenderBox box,
                                                  final long shift,
-                                                 final PaginationTableState paginationTableState)
+                                                 final BasePaginationTableState paginationTableState)
   {
     if (logger.isDebugEnabled())
     {

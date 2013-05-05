@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
@@ -35,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ReplacedContentUtil;
@@ -59,17 +61,33 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
   private static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
   private boolean paranoidChecks = true;
+  private RevalidateAllAxisLayoutStep revalidateAllAxisLayoutStep;
+  private PageGrid pageGrid;
 
   public CanvasMajorAxisLayoutStep()
   {
     super(true);
+    revalidateAllAxisLayoutStep = new RevalidateAllAxisLayoutStep();
     paranoidChecks = "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.process.ParanoidChecks"));
   }
 
   public void compute(final LogicalPageBox pageBox)
   {
-    super.compute(pageBox);
+    try
+    {
+      this.pageGrid = pageBox.getPageGrid();
+      super.compute(pageBox);
+    }
+    finally
+    {
+      this.pageGrid = null;
+    }
+  }
+
+  public void initialize(final OutputProcessorMetaData metaData)
+  {
+    revalidateAllAxisLayoutStep.initialize(metaData);
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -364,6 +382,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
+    revalidateAllAxisLayoutStep.processBoxChilds(box, pageGrid);
   }
 
   protected boolean startCanvasLevelBox(final RenderBox box)

@@ -637,14 +637,14 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="3" row-count="6">
+  <table col-count="3" row-count="4">
     <cols>
       <column width="100"/>
       <column width="350.765"/>
       <column width="0.235"/>
     </cols>
-    <row height="8.35">
-      <cell row-span="2" col-span="2">
+    <row height="28.35">
+      <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Main report header for report: $(value)"/>
         <line type="ParagraphPoolBox" x="0.0" y="0.0" width="322.2" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -665,12 +665,7 @@
       <empty-cell/>
     </row>
     <row height="20">
-      <spanned-cell/>
-      <spanned-cell/>
-      <empty-cell/>
-    </row>
-    <row height="20">
-      <cell row-span="1" col-span="2">
+      <cell background-color="#33ff00" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Sub report header for $(value) subreport 1.2"/>
         <line type="ParagraphPoolBox" x="0.0" y="28.35" width="262.108" height="14.0" color="black" font-face="Serif" font-size="14" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
@@ -730,11 +725,6 @@
           <text x="100.0" y="380.0" width="16.1" height="10.0">test</text>
         </line>
       </cell>
-      <empty-cell/>
-    </row>
-    <row height="311.65">
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
     </row>
   </table>

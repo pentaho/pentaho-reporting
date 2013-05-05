@@ -79,7 +79,7 @@ public class WidowOrphanTest extends TestCase
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getOrphanConstraintSize());
     assertEquals(StrictGeomUtility.toInternalValue(40), grInBox.getWidowConstraintSize());
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
 
@@ -241,7 +241,7 @@ public class WidowOrphanTest extends TestCase
     DebugReportRunner.showDialog(report);
 
     final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox1);
+    //ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
     final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-outside");
@@ -252,7 +252,7 @@ public class WidowOrphanTest extends TestCase
     assertNotNull(ib2_miss);
 
     final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(logicalPageBox2);
+  //  ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib2 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib2);
   }

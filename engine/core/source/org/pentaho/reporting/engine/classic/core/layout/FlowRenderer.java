@@ -30,7 +30,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.process.ApplyAutoCommitPageHeaderStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanFlowBoxesStep;
-import org.pentaho.reporting.engine.classic.core.layout.process.CleanPaginatedBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillFlowPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FlowPaginationStep;
@@ -51,7 +50,6 @@ public class FlowRenderer extends AbstractRenderer
 
   private FlowPaginationStep paginationStep;
   private FillFlowPagesStep fillPhysicalPagesStep;
-  private CleanPaginatedBoxesStep cleanPaginatedBoxesStep;
   private CleanFlowBoxesStep cleanFlowBoxesStep;
   private ApplyAutoCommitPageHeaderStep applyAutoCommitPageHeaderStep;
   private int flowCount;
@@ -64,7 +62,6 @@ public class FlowRenderer extends AbstractRenderer
     super(outputProcessor);
     this.paginationStep = new FlowPaginationStep();
     this.fillPhysicalPagesStep = new FillFlowPagesStep();
-    this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
     this.cleanFlowBoxesStep = new CleanFlowBoxesStep();
     this.applyAutoCommitPageHeaderStep = new ApplyAutoCommitPageHeaderStep();
     this.countBoxesStep = new CountBoxesStep();
@@ -94,7 +91,6 @@ public class FlowRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-//    ModelPrinter.print(pageBox);
   }
 
 
@@ -204,7 +200,7 @@ public class FlowRenderer extends AbstractRenderer
         countBoxesStep.process(pageBox);
         cleanFlowBoxesStep.compute(pageBox);
 
-        cleanPaginatedBoxesStep.compute(pageBox);
+        //cleanPaginatedBoxesStep.compute(pageBox);
         pageBox.setPageOffset(nextOffset);
         pageBox.resetCacheState(true);
         if (pageBreak.isNextPageContainsContent())

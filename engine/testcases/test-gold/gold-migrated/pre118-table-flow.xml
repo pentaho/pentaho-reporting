@@ -329,7 +329,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="2" row-count="10">
+  <table col-count="2" row-count="9">
     <cols>
       <column width="39"/>
       <column width="733"/>
@@ -551,10 +551,6 @@
           <text x="508.836" y="258.0" width="15.324" height="12.0">file</text>
         </line>
       </cell>
-    </row>
-    <row height="108">
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

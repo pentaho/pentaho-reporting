@@ -812,6 +812,11 @@ public abstract class RenderNode implements Cloneable
     setFlag(FLAG_FINISHED_TABLE, finished);
   }
 
+  public boolean isDeepFinishedTable()
+  {
+    return isFinishedTable();
+  }
+
   public CacheState getCacheState()
   {
     return cacheState;

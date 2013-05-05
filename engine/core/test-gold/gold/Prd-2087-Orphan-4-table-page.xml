@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="2" row-count="3">
+  <table col-count="2" row-count="2">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -20,12 +20,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
       </empty-cell>
     </row>
-    <row height="780">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -85,12 +81,8 @@
         </line>
       </cell>
     </row>
-    <row height="680">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -150,12 +142,8 @@
         </line>
       </cell>
     </row>
-    <row height="580">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="5">
+  <table col-count="2" row-count="4">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -204,12 +192,8 @@
         </line>
       </cell>
     </row>
-    <row height="500">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -269,12 +253,8 @@
         </line>
       </cell>
     </row>
-    <row height="400">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -334,12 +314,8 @@
         </line>
       </cell>
     </row>
-    <row height="300">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -399,12 +375,8 @@
         </line>
       </cell>
     </row>
-    <row height="200">
-      <empty-cell/>
-      <empty-cell/>
-    </row>
   </table>
-  <table col-count="2" row-count="6">
+  <table col-count="2" row-count="5">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -463,10 +435,6 @@
           <text x="100.0" y="80.0" width="30.56" height="10.0">row-13</text>
         </line>
       </cell>
-    </row>
-    <row height="100">
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
   <table col-count="2" row-count="5">

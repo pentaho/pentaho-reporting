@@ -9,17 +9,20 @@
       <column width="115"/>
     </cols>
     <row height="14">
-      <cell border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="1">
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="CONTINENT:"/>
         <line type="ParagraphPoolBox" x="0.0" y="0.0" width="61.05" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="0.0" y="0.0" width="61.05" height="10.0">CONTINENT:</text>
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <cell row-span="1" col-span="1">
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#617a9c" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#94b2db" border-right-width="1.0" border-right-style="solid" background-color="#94b2db" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="count"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0"/>
@@ -57,14 +60,14 @@
       <spanned-cell/>
     </row>
     <row height="16">
-      <cell border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="1">
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-left-color="#94b2db" border-left-width="1.0" border-left-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Population:"/>
         <line type="ParagraphPoolBox" x="0.0" y="28.0" width="70.0" height="14.0" color="black" font-face="SansSerif" font-size="14" font-style-bold="false" font-style-italics="true" font-style-underline="true" font-style-strikethrough="false">
           <text x="0.0" y="28.0" width="70.0" height="14.0">Population:</text>
         </line>
       </cell>
-      <cell row-span="1" col-span="2">
+      <cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0"/>
@@ -73,8 +76,10 @@
         </line>
       </cell>
       <spanned-cell/>
-      <empty-cell/>
-      <empty-cell/>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" background-color="#94b2db">
+      </empty-cell>
+      <empty-cell border-top-color="#94b2db" border-top-width="1.0" border-top-style="solid" border-bottom-color="#94b2db" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="#94b2db" border-right-width="1.0" border-right-style="solid" background-color="#94b2db">
+      </empty-cell>
     </row>
   </table>
 </layout-output>

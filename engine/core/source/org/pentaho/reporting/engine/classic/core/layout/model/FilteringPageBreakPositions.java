@@ -21,7 +21,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions
    */
   public long findNextBreakPosition(final long position)
   {
-    if (position < pageStart)
+    if (position <= pageStart)
     {
       return pageStart;
     }
@@ -41,7 +41,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions
    */
   public long findNextMajorBreakPosition(final long position)
   {
-    if (position < pageStart)
+    if (position <= pageStart)
     {
       return pageStart;
     }
@@ -69,7 +69,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions
                                      final long pagebreakShift)
   {
     final long shiftedYPos = box.getY() + pagebreakShift;
-    if (shiftedYPos < pageStart)
+    if (shiftedYPos <= pageStart)
     {
       if (shiftedYPos + box.getHeight() >= pageStart)
       {
@@ -85,7 +85,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions
                                                       final long height,
                                                       final long fixedPositionResolved)
   {
-    if (shiftedBoxPosition < pageStart)
+    if (shiftedBoxPosition <= pageStart)
     {
       // by definition: We cannot support fixed-position handling within the complex pagebreak schema of tables.
       return false;
@@ -95,12 +95,12 @@ public class FilteringPageBreakPositions implements PageBreakPositions
 
   public long computeFixedPositionInFlow(final long shiftedBoxPosition, final long fixedPositionResolved)
   {
-    if (shiftedBoxPosition < pageStart)
+    if (shiftedBoxPosition <= pageStart)
     {
       // by definition: We cannot support fixed-position handling within the complex pagebreak schema of tables.
       return shiftedBoxPosition;
     }
-    return backend.computeFixedPositionInFlow(shiftedBoxPosition, fixedPositionResolved);
+    return Math.max (pageStart, backend.computeFixedPositionInFlow(shiftedBoxPosition, fixedPositionResolved));
   }
 
   public boolean isPageStart(final long position)

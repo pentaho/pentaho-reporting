@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.wizard;
 
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.LegacyBundleResourceRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
 import org.pentaho.reporting.engine.classic.wizard.parser.WizardSpecifcationXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.wizard.parser.WizardspecificationResourceFactory;
@@ -42,7 +43,8 @@ public class WizardCoreModule extends AbstractModule
     BundleWriterHandlerRegistry.getInstance().registerSubReportHandler(WizardSpecificationWriteHandler.class);
 
     WizardspecificationResourceFactory.register(WizardSpecifcationXmlFactoryModule.class);
-    
+    LegacyBundleResourceRegistry.getInstance().register("wizard-specification.xml");
+
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
         ("org/pentaho/reporting/engine/classic/wizard/wizard-meta-expressions.xml");
 

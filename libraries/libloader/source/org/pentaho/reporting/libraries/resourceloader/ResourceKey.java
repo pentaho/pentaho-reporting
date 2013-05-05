@@ -41,18 +41,17 @@ public final class ResourceKey implements Serializable
   /**
    * @noinspection StaticCollection
    */
-  private static final Map<ParameterKey,Object> EMPTY_MAP = Collections.emptyMap();
-
-  private Map<? extends ParameterKey,Object> factoryParameters;
+  private static final Map<ParameterKey, Object> EMPTY_MAP = Collections.emptyMap();
+  private static final long serialVersionUID = -7764107570068726772L;
+  private Map<? extends ParameterKey, Object> factoryParameters;
   private Integer hashCode;
   private Object schema;
   private Object identifier;
   private ResourceKey parent;
-  private static final long serialVersionUID = -7764107570068726772L;
 
   public ResourceKey(final Object schema,
                      final Object identifier,
-                     final Map<? extends ParameterKey,Object> factoryParameters)
+                     final Map<? extends ParameterKey, Object> factoryParameters)
   {
     if (schema == null)
     {
@@ -68,7 +67,7 @@ public final class ResourceKey implements Serializable
     if (factoryParameters != null)
     {
       this.factoryParameters =
-          Collections.unmodifiableMap(new HashMap<ParameterKey,Object>(factoryParameters));
+          Collections.unmodifiableMap(new HashMap<ParameterKey, Object>(factoryParameters));
     }
     else
     {
@@ -79,10 +78,20 @@ public final class ResourceKey implements Serializable
   public ResourceKey(final ResourceKey parent,
                      final Object schema,
                      final Object identifier,
-                     final Map<? extends ParameterKey,Object> factoryParameters)
+                     final Map<? extends ParameterKey, Object> factoryParameters)
   {
     this(schema, identifier, factoryParameters);
     this.parent = parent;
+  }
+
+  public static ResourceKey createAsDerived(final ResourceKey parent,
+                                            final ResourceKey child)
+  {
+    if (child.parent != null)
+    {
+      throw new IllegalArgumentException();
+    }
+    return new ResourceKey(parent, child.schema, child.identifier, child.factoryParameters);
   }
 
   public ResourceKey getParent()
@@ -90,7 +99,7 @@ public final class ResourceKey implements Serializable
     return parent;
   }
 
-  public Map<ParameterKey,Object> getFactoryParameters()
+  public Map<ParameterKey, Object> getFactoryParameters()
   {
     return Collections.unmodifiableMap(factoryParameters);
   }
@@ -233,7 +242,6 @@ public final class ResourceKey implements Serializable
   {
     return schema;
   }
-
 
   public String toString()
   {
