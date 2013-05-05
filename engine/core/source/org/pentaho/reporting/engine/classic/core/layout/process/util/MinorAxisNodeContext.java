@@ -72,11 +72,6 @@ public class MinorAxisNodeContext
     this.blockNode = blockNode;
   }
 
-  public boolean isBlockLevelNode()
-  {
-    return blockLevelNode;
-  }
-
   /**
    * Defines the active area for the element. Note that it is absolutely legal to define elements that have
    * a content-area outside of the visible area (ie: sum of left and right insets is larger than the width).
@@ -113,15 +108,6 @@ public class MinorAxisNodeContext
       return 0;
     }
     return parent.getX1();
-  }
-
-  public long getParentX2()
-  {
-    if (parent == null)
-    {
-      return 0;
-    }
-    return parent.getX2();
   }
 
   public long getX2()

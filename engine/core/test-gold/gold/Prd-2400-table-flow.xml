@@ -155,12 +155,4 @@
       </cell>
     </row>
   </table>
-  <table col-count="1" row-count="1">
-    <cols>
-      <column width="559"/>
-    </cols>
-    <row height="130">
-      <empty-cell/>
-    </row>
-  </table>
 </layout-output>

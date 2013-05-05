@@ -11,7 +11,7 @@
       </empty-cell>
     </row>
   </table>
-  <table col-count="2" row-count="3">
+  <table col-count="2" row-count="2">
     <cols>
       <column width="158"/>
       <column width="540"/>
@@ -120,10 +120,6 @@
           <text x="604.119" y="41.0" width="26.895" height="11.0">years</text>
         </line>
       </cell>
-    </row>
-    <row height="18">
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

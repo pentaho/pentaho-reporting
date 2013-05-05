@@ -1,13 +1,13 @@
-<xsd:schema version="3.5"
+<xsd:schema version="3.5" elementFormDefault="qualified"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0"
             targetNamespace="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
 
   <xsd:element name="layout-output">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="table" type="tableType" minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
+    <xsd:complexType mixed="true">
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="table" type="tableType"/>
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 
@@ -18,6 +18,7 @@
     </xsd:sequence>
     <xsd:attribute name="col-count" type="xsd:integer" use="required"/>
     <xsd:attribute name="row-count" type="xsd:integer" use="required"/>
+    <xsd:attribute name="sheet-name" type="xsd:string" use="optional"/>
   </xsd:complexType>
 
   <xsd:complexType name="colsType">
@@ -49,6 +50,7 @@
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="attribute" type="attributeType"/>
     </xsd:choice>
+    <xsd:attributeGroup ref="cellAttributes"/>
   </xsd:complexType>
 
   <xsd:complexType name="spannedCellType"/>

@@ -4209,7 +4209,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="5" row-count="8">
+  <table col-count="5" row-count="7">
     <cols>
       <column width="141.75"/>
       <column width="85.05"/>
@@ -4411,13 +4411,6 @@
           <text x="541.094" y="22.0" width="8.896" height="8.0">16</text>
         </line>
       </cell>
-      <empty-cell/>
-    </row>
-    <row height="538">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
     </row>
   </table>

@@ -9234,12 +9234,4 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="1" row-count="1">
-    <cols>
-      <column width="540"/>
-    </cols>
-    <row height="3742">
-      <empty-cell/>
-    </row>
-  </table>
 </layout-output>

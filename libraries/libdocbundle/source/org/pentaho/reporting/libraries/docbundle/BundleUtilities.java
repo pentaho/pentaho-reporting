@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,6 +56,7 @@ public class BundleUtilities
 {
   private static final Log logger = LogFactory.getLog(BundleUtilities.class);
   public static final String STICKY_FLAG = "sticky";
+  public static final String HIDDEN_FLAG = "sticky";
 
   private BundleUtilities()
   {
@@ -424,10 +426,8 @@ public class BundleUtilities
         targetBundle.getWriteableDocumentMetaData().setEntryAttribute
             (entryName, attributeName, sourceMetaData.getEntryAttribute(entryName, attributeName));
       }
-
     }
   }
-
 
   public static void copyStickyInto(final WriteableDocumentBundle targetBundle,
                                     final DocumentBundle sourceBundle) throws IOException
@@ -480,6 +480,115 @@ public class BundleUtilities
         continue;
       }
       if ("true".equals(bundleMetaData.getEntryAttribute(entryName, STICKY_FLAG)) == false)
+      {
+        continue;
+      }
+
+      logger.debug("Processing " + entryName);
+
+
+      final String entryMimeType = bundleMetaData.getEntryMimeType(entryName);
+      if (entryMimeType == null)
+      {
+        bundleMetaData.getEntryMimeType(entryName);
+        throw new IllegalStateException("Found an entry with an invalid mime-type: " + entryName);
+      }
+      if (entryName.length() > 0 && entryName.charAt(entryName.length() - 1) == '/')
+      {
+        targetBundle.createDirectoryEntry(entryName, entryMimeType);
+        continue;
+      }
+      else
+      {
+        final OutputStream dataStream = targetBundle.createEntry(entryName, entryMimeType);
+        try
+        {
+          final InputStream inStream = sourceBundle.getEntryAsStream(entryName);
+          try
+          {
+            IOUtils.getInstance().copyStreams(inStream, dataStream);
+          }
+          finally
+          {
+            inStream.close();
+          }
+        }
+        finally
+        {
+          dataStream.close();
+        }
+      }
+
+      final DocumentMetaData sourceMetaData = sourceBundle.getMetaData();
+      final String[] attributeNames = sourceMetaData.getEntryAttributeNames(entryName);
+      for (int j = 0; j < attributeNames.length; j++)
+      {
+        final String attributeName = attributeNames[j];
+        targetBundle.getWriteableDocumentMetaData().setEntryAttribute
+            (entryName, attributeName, sourceMetaData.getEntryAttribute(entryName, attributeName));
+      }
+    }
+  }
+
+
+  public static void copyInto(final WriteableDocumentBundle targetBundle,
+                              final DocumentBundle sourceBundle,
+                              final String[] files) throws IOException
+  {
+    if (targetBundle == null)
+    {
+      throw new NullPointerException();
+    }
+    if (sourceBundle == null)
+    {
+      throw new NullPointerException();
+    }
+    if (files == null)
+    {
+      throw new NullPointerException();
+    }
+
+    final HashSet<String> fileSet = new HashSet<String>(Arrays.asList(files));
+
+    final WriteableDocumentMetaData targetBundleMetaData = targetBundle.getWriteableDocumentMetaData();
+    final DocumentMetaData bundleMetaData = sourceBundle.getMetaData();
+    targetBundleMetaData.setBundleType(bundleMetaData.getBundleType());
+    // copy the meta-data
+    final String[] namespaces = bundleMetaData.getMetaDataNamespaces();
+    for (int namespaceIdx = 0; namespaceIdx < namespaces.length; namespaceIdx++)
+    {
+      final String namespace = namespaces[namespaceIdx];
+      final String[] dataNames = bundleMetaData.getMetaDataNames(namespace);
+      for (int dataNameIdx = 0; dataNameIdx < dataNames.length; dataNameIdx++)
+      {
+        final String dataName = dataNames[dataNameIdx];
+        final Object value = bundleMetaData.getBundleAttribute(namespace, dataName);
+        targetBundleMetaData.setBundleAttribute(namespace, dataName, value);
+      }
+    }
+
+    // copy the entries ...
+    final String[] entryNames = bundleMetaData.getManifestEntryNames();
+    for (int i = 0; i < entryNames.length; i++)
+    {
+      final String entryName = entryNames[i];
+      if ("/".equals(entryName))
+      {
+        continue;
+      }
+      if ("mimetype".equals(entryName))
+      {
+        continue;
+      }
+      if ("META-DATA/manifest.xml".equals(entryName))
+      {
+        continue;
+      }
+      if ("meta.xml".equals(entryName))
+      {
+        continue;
+      }
+      if (fileSet.contains(entryName) == false)
       {
         continue;
       }

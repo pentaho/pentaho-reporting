@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="13" row-count="19">
+  <table col-count="13" row-count="18">
     <cols>
       <column width="54"/>
       <column width="27"/>
@@ -361,7 +361,7 @@
       <empty-cell border-top-color="white" border-top-width="1.0" border-top-style="solid" border-bottom-color="white" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="white" border-right-width="1.0" border-right-style="solid" background-color="white">
       </empty-cell>
     </row>
-    <row height="15">
+    <row height="16">
       <cell background-color="#009999" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(REGION) Total"/>
@@ -403,25 +403,6 @@
       <empty-cell background-color="#009999">
       </empty-cell>
       <empty-cell background-color="#009999">
-      </empty-cell>
-    </row>
-    <row height="1">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell>
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
     </row>
     <row height="1">

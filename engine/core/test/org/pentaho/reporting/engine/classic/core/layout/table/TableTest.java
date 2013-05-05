@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
@@ -217,7 +216,7 @@ public class TableTest extends TestCase
     band.addElement(tableBody);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
     final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
@@ -232,6 +231,51 @@ public class TableTest extends TestCase
     }
   }
 
+
+  /**
+   * This test should create auto-table elements to have a fully functional table.
+   *
+   * @throws ReportProcessingException
+   * @throws ContentProcessingException
+   */
+  public void testBrokenTableBody2() throws ReportProcessingException, ContentProcessingException, IOException
+  {
+    final Element label = TableTestUtil.createDataItem("Cell");
+
+    final Band tableCell = new Band();
+    tableCell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL);
+    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
+    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    tableCell.addElement(label);
+
+    final Band tableRow = TableTestUtil.createRow();
+    tableRow.addElement(tableCell);
+
+    final Band tableBody = new Band();
+    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
+    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -50f);
+    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    tableBody.addElement(tableRow);
+
+    final MasterReport report = new MasterReport();
+    final ReportHeader band = report.getReportHeader();
+    band.addElement(tableBody);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
+
+    final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
+    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
+
+    assertEquals(1, all.length);
+    for (final RenderNode renderNode : all)
+    {
+      assertEquals(0l, renderNode.getX());
+      assertEquals(10000000l, renderNode.getWidth());
+      assertEquals(20000000l, renderNode.getHeight());
+      assertEquals(0l, renderNode.getY());
+    }
+  }
   /**
    * This test should create auto-table elements to have a fully functional table.
    * 

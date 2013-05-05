@@ -14,8 +14,6 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -166,8 +164,8 @@ public class KeepTogetherTest extends TestCase
     master.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
     master.getReportHeader().addElement(report);
 
-    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Keep-Together-2.prpt");
-    PdfReportUtil.createPDF(master, "/tmp/KeepTogetherTest5.pdf");
+//    BundleWriter.writeReportToZipFile(master, "/tmp/Prd-2087-Keep-Together-2.prpt");
+//    PdfReportUtil.createPDF(master, "/tmp/KeepTogetherTest5.pdf");
 //    DebugReportRunner.createPDF(master);
     DebugReportRunner.createPDF(master);
   }

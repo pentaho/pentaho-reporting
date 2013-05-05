@@ -17,7 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-public final class PageBreakPositionList implements PageBreakPositions
+import java.util.Arrays;
+
+public class PageBreakPositionList implements PageBreakPositions
 {
   private static class PageBreakPositionBackend
   {
@@ -80,6 +82,43 @@ public final class PageBreakPositionList implements PageBreakPositions
         System.arraycopy(pageHeaderSizes, 0, newBreakPositions, 0, pageHeaderSizes.length);
         this.pageHeaderSizes = newBreakPositions;
       }
+    }
+
+    public boolean equals(final Object o)
+    {
+      if (this == o)
+      {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass())
+      {
+        return false;
+      }
+
+      final PageBreakPositionBackend that = (PageBreakPositionBackend) o;
+
+      if (!Arrays.equals(breakPositions, that.breakPositions))
+      {
+        return false;
+      }
+      if (!Arrays.equals(masterBreaks, that.masterBreaks))
+      {
+        return false;
+      }
+      if (!Arrays.equals(pageHeaderSizes, that.pageHeaderSizes))
+      {
+        return false;
+      }
+
+      return true;
+    }
+
+    public int hashCode()
+    {
+      int result = Arrays.hashCode(pageHeaderSizes);
+      result = 31 * result + Arrays.hashCode(masterBreaks);
+      result = 31 * result + Arrays.hashCode(breakPositions);
+      return result;
     }
   }
 
@@ -561,7 +600,7 @@ public final class PageBreakPositionList implements PageBreakPositions
     return pageStart + positionInPageContentArea;
   }
 
-  private long getPageHeaderHeight(final long position)
+  protected long getPageHeaderHeight(final long position)
   {
     final int majorBreak = findNextMajorBreak(position);
     if (isMasterBreak(position))
@@ -867,7 +906,8 @@ public final class PageBreakPositionList implements PageBreakPositions
     retval.append(", prevFoundIdx=");
     retval.append(prevFoundIdx);
     retval.append(", masterBreaks={");
-    final int masterBreakCount = backend.masterBreaks.length;
+
+    final int masterBreakCount = masterSize;
     for (int i = 0; i < masterBreakCount; i++)
     {
       if (i > 0)
@@ -879,7 +919,7 @@ public final class PageBreakPositionList implements PageBreakPositions
     }
     retval.append("}, breakPositions={");
 
-    final int breakPosCount = backend.breakPositions.length;
+    final int breakPosCount = breakSize;
     for (int i = 0; i < breakPosCount; i++)
     {
       if (i > 0)
@@ -915,5 +955,42 @@ public final class PageBreakPositionList implements PageBreakPositions
   public boolean isPageStart(final long position)
   {
     return isMasterBreak(position);
+  }
+
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass())
+    {
+      return false;
+    }
+
+    final PageBreakPositionList that = (PageBreakPositionList) o;
+
+    if (breakSize != that.breakSize)
+    {
+      return false;
+    }
+    if (masterSize != that.masterSize)
+    {
+      return false;
+    }
+    if (!backend.equals(that.backend))
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  public int hashCode()
+  {
+    int result = breakSize;
+    result = 31 * result + masterSize;
+    result = 31 * result + backend.hashCode();
+    return result;
   }
 }

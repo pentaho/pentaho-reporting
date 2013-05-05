@@ -67,8 +67,7 @@ public class GoldSerializeTest extends GoldTestBase
 
   protected FilesystemFilter createReportFilter()
   {
-    //return new FilesystemFilter(new String[]{".prpt", ".report", ".xml"}, "Reports", false);
-    return new FilesystemFilter(new String[]{"Prd-3514.prpt"}, "Reports", false);
+    return new FilesystemFilter(new String[]{".prpt", ".report", ".xml"}, "Reports", false);
   }
 
   @Test

@@ -25,7 +25,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="1" row-count="3">
+  <table col-count="1" row-count="2">
     <cols>
       <column width="555"/>
     </cols>
@@ -40,9 +40,6 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@16511239"/>
       </empty-cell>
-    </row>
-    <row height="48">
-      <empty-cell/>
     </row>
   </table>
 </layout-output>

@@ -617,7 +617,7 @@
           <spacer width="2.77" height="0.0" preserve="true"/>
           <text x="268.615" y="0.0" width="2.77" height="10.0">/</text>
           <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="274.155" y="0.0" width="5.56" height="10.0">2</text>
+          <text x="274.155" y="0.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -630,48 +630,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-    </row>
-  </table>
-  <table col-count="1" row-count="2">
-    <cols>
-      <column width="540"/>
-    </cols>
-    <row height="15">
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="As of $(report.date) "/>
-        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="117.404" height="7.0" color="black" font-face="Ariel" font-size="7" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="0.0" width="8.162" height="7.0">As</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="10.101" y="0.0" width="5.831" height="7.0">of</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="17.871" y="0.0" width="12.054" height="7.0">Thu</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="31.864" y="0.0" width="10.885" height="7.0">Apr</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="44.688" y="0.0" width="7.784" height="7.0">07</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="54.411" y="0.0" width="27.23" height="7.0">15:00:00</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="83.58" y="0.0" width="14.378" height="7.0">UTC</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-          <text x="99.897" y="0.0" width="15.568" height="7.0">2011</text>
-          <spacer width="1.939" height="0.0" preserve="true"/>
-        </line>
-      </cell>
-    </row>
-    <row height="236">
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(PageofPages)"/>
-        <line type="ParagraphPoolBox" x="260.285" y="0.0" width="19.43" height="10.0" color="black" font-face="Ariel" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="260.285" y="0.0" width="5.56" height="10.0">2</text>
-          <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="268.615" y="0.0" width="2.77" height="10.0">/</text>
-          <spacer width="2.77" height="0.0" preserve="true"/>
-          <text x="274.155" y="0.0" width="5.56" height="10.0">2</text>
-        </line>
-      </cell>
     </row>
   </table>
 </layout-output>

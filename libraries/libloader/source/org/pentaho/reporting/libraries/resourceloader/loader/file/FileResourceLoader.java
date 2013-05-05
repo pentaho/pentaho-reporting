@@ -129,7 +129,7 @@ public class FileResourceLoader implements ResourceLoader
         target = new File(parentFile, path);
         if (target.exists() == false || target.isFile() == false)
         {
-          throw new ResourceKeyCreationException("Malformed value: " + path + " (" + target + ')');
+          throw new ResourceKeyCreationException("Malformed value: " + path + " (" + target + "): File does not exist.");
         }
 
       }

@@ -2404,7 +2404,9 @@
       <column width="100"/>
     </cols>
     <row height="16">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
       <empty-cell/>
       <cell row-span="2" col-span="12">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -7582,7 +7584,9 @@
       <column width="100"/>
     </cols>
     <row height="22">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
       <empty-cell/>
       <cell row-span="1" col-span="22">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -7769,11 +7773,7 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REPORTED_DATE"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@15555939"/>
-      </empty-cell>
+      <empty-cell/>
       <empty-cell/>
       <cell row-span="2" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -7785,11 +7785,7 @@
       </cell>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REPORTED_BY"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@15555939"/>
-      </empty-cell>
+      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>

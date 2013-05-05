@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
@@ -27,11 +25,11 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
  * Removed finished block-boxes. The boxes have to be marked as 'finished' by the flow output target or nothing will be
@@ -42,26 +40,63 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 {
-  private HashMap<InstanceID, Boolean> finishContexts;
-  private InstanceID canvasProcessingId;
+  private static class BoxContext
+  {
+    private BoxContext parent;
+    private boolean finished;
+
+    private BoxContext(final BoxContext parent, final boolean finished)
+    {
+      this.parent = parent;
+      this.finished = finished;
+    }
+
+    public void markUnfinished()
+    {
+      this.finished = false;
+    }
+
+    public boolean isFinished()
+    {
+      return finished;
+    }
+
+    public BoxContext pop()
+    {
+      if (parent != null)
+      {
+        if (this.finished == false)
+        {
+          parent.markUnfinished();
+        }
+      }
+      return parent;
+    }
+  }
+
   private ReportStateKey lastSeenStateKey;
+  private BoxContext boxContext;
 
   public CleanFlowBoxesStep()
   {
-    finishContexts = new HashMap<InstanceID, Boolean>();
   }
 
   public void compute(final LogicalPageBox pageBox)
   {
-    this.canvasProcessingId = null;
-    finishContexts.clear();
-    if (startBlockBox(pageBox))
+    this.boxContext = new BoxContext(null, true);
+    try
     {
-      // not processing the header and footer area: they are 'out-of-context' bands
-      processBoxChilds(pageBox);
+      if (startBlockBox(pageBox))
+      {
+        // not processing the header and footer area: they are 'out-of-context' bands
+        processBoxChilds(pageBox);
+      }
+      finishBlockBox(pageBox);
     }
-    finishBlockBox(pageBox);
-    finishContexts.clear();
+    finally
+    {
+      this.boxContext = null;
+    }
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
@@ -74,19 +109,7 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
   protected boolean startRowBox(final RenderBox box)
   {
     // it is guaranteed that the finished flag is only set to true, if the box is closed.
-    if (box.isFinishedTable() == false || box.isCommited() == false)
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.FALSE);
-    }
-    else
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.TRUE);
-    }
-
-    if (canvasProcessingId == null)
-    {
-      canvasProcessingId = box.getInstanceId();
-    }
+    this.boxContext = new BoxContext(this.boxContext, box.isFinishedTable() && box.isCommited());
 
     final ReportStateKey stateKey = box.getStateKey();
     if (stateKey != null)
@@ -99,50 +122,13 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   protected void finishRowBox(final RenderBox box)
   {
-    if (canvasProcessingId == box.getInstanceId())
-    {
-      canvasProcessingId = null;
-    }
-
-    if (box.isFinishedTable() == false || box.isCommited() == false)
-    {
-      finishContexts.remove(box.getInstanceId());
-      return;
-    }
-
-    final Boolean finishedFlag = finishContexts.get(box.getInstanceId());
-    if (Boolean.FALSE.equals(finishedFlag))
-    {
-      if (box.getParent() != null)
-      {
-        finishContexts.put(box.getParent().getInstanceId(), Boolean.FALSE);
-      }
-    }
-    else
-    {
-      // The whole box and all childs are finished. We could now safely remove the box.
-      // (We only remove blocklevel boxes to avoid layouting-troubles, but *we could*.
-      box.setDeepFinished(true);
-    }
-    finishContexts.remove(box.getInstanceId());
+    box.setDeepFinished(boxContext.isFinished());
+    boxContext = boxContext.pop();
   }
 
   protected boolean startCanvasBox(final CanvasRenderBox box)
   {
-    // it is guaranteed that the finished flag is only set to true, if the box is closed.
-    if (box.isFinishedTable() == false || box.isCommited() == false)
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.FALSE);
-    }
-    else
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.TRUE);
-    }
-
-    if (canvasProcessingId == null)
-    {
-      canvasProcessingId = box.getInstanceId();
-    }
+    this.boxContext = new BoxContext(this.boxContext, box.isFinishedTable() && box.isCommited());
 
     final ReportStateKey stateKey = box.getStateKey();
     if (stateKey != null)
@@ -155,36 +141,11 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   protected void finishCanvasBox(final CanvasRenderBox box)
   {
-    if (canvasProcessingId == box.getInstanceId())
-    {
-      canvasProcessingId = null;
-    }
-
-    if (box.isFinishedTable() == false || box.isCommited() == false)
-    {
-      finishContexts.remove(box.getInstanceId());
-      return;
-    }
-
-    final Boolean finishedFlag = finishContexts.get(box.getInstanceId());
-    if (Boolean.FALSE.equals(finishedFlag))
-    {
-      if (box.getParent() != null)
-      {
-        finishContexts.put(box.getParent().getInstanceId(), Boolean.FALSE);
-      }
-    }
-    else
-    {
-      // The whole box and all childs are finished. We could now safely remove the box.
-      // (We only remove blocklevel boxes to avoid layouting-troubles, but *we could*.
-      box.setDeepFinished(true);
-    }
-    finishContexts.remove(box.getInstanceId());
+    box.setDeepFinished(boxContext.isFinished());
+    boxContext = boxContext.pop();
   }
 
   // We cannot clear the box until we have verified that all childs of that box have been cleared.
-
 
   protected boolean startBlockBox(final BlockRenderBox box)
   {
@@ -193,18 +154,7 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   private boolean startBlockStyleBox(final RenderBox box)
   {
-    if (box.isDeepFinished())
-    {
-      return false;
-    }
-    if (box.isFinishedTable() == false)
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.FALSE);
-    }
-    else
-    {
-      finishContexts.put(box.getInstanceId(), Boolean.TRUE);
-    }
+    this.boxContext = new BoxContext(this.boxContext, box.isFinishedTable() && box.isCommited());
 
     final ReportStateKey stateKey = box.getStateKey();
     if (stateKey != null)
@@ -222,45 +172,18 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   private void finishBlockStyleBox(final RenderBox box)
   {
-    final Boolean finishedFlag = finishContexts.get(box.getInstanceId());
-    if (Boolean.FALSE.equals(finishedFlag))
-    {
-      if (box.getParent() != null)
-      {
-        finishContexts.put(box.getParent().getInstanceId(), Boolean.FALSE);
-      }
-//      DebugLog.log("Not removing box " + box + " as this box is not finished.");
-      box.setDeepFinished(false);
-    }
-    else
-    {
-      box.setDeepFinished(true);
-    }
-
-    finishContexts.remove(box.getInstanceId());
-    if (canvasProcessingId != null)
-    {
-//      DebugLog.log("Canvas Processing ID is active. Wont delete");
-      return;
-    }
+    boolean finished = boxContext.isFinished();
+    box.setDeepFinished(finished);
+    boxContext = boxContext.pop();
 
     final RenderNode first = box.getFirstChild();
     if (first == null)
     {
       return;
     }
-    if (first.isFinishedTable() == false)
+    if (first.isDeepFinishedTable() == false)
     {
       return;
-    }
-    final int firstNodeType = first.getLayoutNodeType();
-    if ((firstNodeType & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      final RenderBox nextBox = (RenderBox) first;
-      if (nextBox.isDeepFinished() == false)
-      {
-        return;
-      }
     }
 
     RenderNode last = first;
@@ -271,25 +194,14 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
       {
         break;
       }
-      final int nodeType = next.getLayoutNodeType();
-      if ((nodeType & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX &&
-          (nodeType & LayoutNodeTypes.MASK_BOX_INLINE) != LayoutNodeTypes.MASK_BOX_INLINE)
-      {
-        final RenderBox nextBox = (RenderBox) next;
-        if (next.isFinishedTable() == false && nextBox.isDeepFinished() == false)
-        {
-          break;
-        }
-      }
-      if (next.isBreakAfter())
+      if (next.isDeepFinishedTable() == false)
       {
         break;
       }
       last = next;
     }
 
-    if (last == first &&
-        (firstNodeType == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE))
+    if (last == first && (first.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE))
     {
       // In this case, we can skip the replace-action below ..
       return;
@@ -341,7 +253,8 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startTableRowBox(final TableRowRenderBox box)
   {
-    return false;
+    this.boxContext = new BoxContext(this.boxContext, false);
+    return true;
   }
 
   protected boolean startTableSectionBox(final TableSectionRenderBox box)
@@ -374,16 +287,35 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
     }
   }
 
+  protected boolean startTableCellBox(final TableCellRenderBox box)
+  {
+    return startBlockStyleBox(box);
+  }
+
+  protected void finishTableCellBox(final TableCellRenderBox box)
+  {
+    finishBlockStyleBox(box);
+  }
+
   protected boolean startAutoBox(final RenderBox box)
   {
     final int layoutNodeType = box.getLayoutNodeType();
     final int filteredType = layoutNodeType & LayoutNodeTypes.MASK_BASIC_BOX_TYPE;
-    if (filteredType == LayoutNodeTypes.MASK_BOX_BLOCK ||
-        filteredType == LayoutNodeTypes.TYPE_BOX_TABLE)
+    if (filteredType == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       return startBlockStyleBox(box);
     }
     // todo: Cleaning within tables ...
-    return super.startAutoBox(box);
+    return false;
+  }
+
+  protected void finishAutoBox(final RenderBox box)
+  {
+    final int layoutNodeType = box.getLayoutNodeType();
+    final int filteredType = layoutNodeType & LayoutNodeTypes.MASK_BASIC_BOX_TYPE;
+    if (filteredType == LayoutNodeTypes.MASK_BOX_BLOCK)
+    {
+      finishBlockStyleBox(box);
+    }
   }
 }

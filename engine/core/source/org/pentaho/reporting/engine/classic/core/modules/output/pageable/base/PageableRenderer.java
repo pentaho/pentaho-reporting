@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class PageableRenderer extends AbstractRenderer
 {
   private static final Log logger = LogFactory.getLog(PageableRenderer.class);
@@ -149,7 +150,7 @@ public class PageableRenderer extends AbstractRenderer
       {
         // leave the debug-code in until all of these cases are solved.
         logger.debug("1: **** Start Printing Page: " + pageCount);
-        ModelPrinter.INSTANCE.print(clone);
+      //  ModelPrinter.INSTANCE.print(clone);
         logger.debug("1: **** Start Printing Page: " + pageCount);
         ModelPrinter.INSTANCE.print(pageBox);
       }

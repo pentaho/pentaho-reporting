@@ -1958,13 +1958,13 @@
                         <text x="380.862" y="179.0" width="61.138" height="11.0">$20,400,000</text>
                       </line>
                     </p>
-                    <p name="Variance Department Field" type="ParagraphRenderBox" x="442.0" y="179.0" width="98.0" height="14.0" color="red" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <p name="Variance Department Field" type="ParagraphRenderBox" x="442.0" y="179.0" width="98.0" height="14.0" color="black" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DepartmentVariance"/>
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Department Field"/>
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/html" autoGenNs:title="Now how do you explain these numbers? You can't? You're FIRED!"/>
-                      <line type="ParagraphPoolBox" x="494.141" y="179.0" width="45.859" height="11.0" color="red" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                      <line type="ParagraphPoolBox" x="494.141" y="179.0" width="45.859" height="11.0" color="black" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                         <text x="494.141" y="179.0" width="45.859" height="11.0">$331,961</text>
                       </line>
                     </p>
