@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="12">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="21">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Product Line"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTLINE"/>
+        <line type="ParagraphPoolBox" x="0.0" y="21.0" width="56.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="21.0" width="32.22" height="10.0">Classic</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="34.99" y="21.0" width="21.11" height="10.0">Cars</text>
+        </line>
+      </cell>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="41.0" width="402.8" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="41.0" width="111.2" height="50.0">1982</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="41.0" width="177.8" height="50.0">Camaro</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="316.7" y="41.0" width="86.1" height="50.0">Z28</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="91.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="91.0" width="111.2" height="50.0">1961</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="91.0" width="213.9" height="50.0">Chevrolet</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="141.0" width="150.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="141.0" width="150.0" height="50.0">Impala</text>
+        </line>
+      </cell>
+    </row>
+    <row height="150">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="191.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="191.0" width="111.2" height="50.0">1992</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="191.0" width="183.35" height="50.0">Porsche</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="241.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="241.0" width="200.1" height="50.0">Cayenne</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="213.95" y="241.0" width="130.55" height="50.0">Turbo</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="291.0" width="124.95" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="291.0" width="124.95" height="50.0">Silver</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="341.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="341.0" width="111.2" height="50.0">1956</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="341.0" width="183.35" height="50.0">Porsche</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="322.25" y="341.0" width="116.7" height="50.0">356A</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="391.0" width="147.3" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="391.0" width="147.3" height="50.0">Coupe</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="441.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="441.0" width="111.2" height="50.0">2002</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="441.0" width="141.7" height="50.0">Chevy</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="491.0" width="188.85" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="491.0" width="188.85" height="50.0">Corvette</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="541.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="541.0" width="111.2" height="50.0">1969</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="541.0" width="213.9" height="50.0">Chevrolet</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="591.0" width="277.75" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="591.0" width="177.8" height="50.0">Camaro</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="191.65" y="591.0" width="86.1" height="50.0">Z28</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="641.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="641.0" width="111.2" height="50.0">1971</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="641.0" width="138.9" height="50.0">Alpine</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="691.0" width="322.3" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="691.0" width="172.25" height="50.0">Renault</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="186.1" y="691.0" width="136.2" height="50.0">1600s</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="741.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="741.0" width="111.2" height="50.0">1982</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="741.0" width="275.1" height="50.0">Lamborghini</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="791.0" width="141.7" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="791.0" width="141.7" height="50.0">Diablo</text>
+        </line>
+      </cell>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="841.0" width="427.8" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="841.0" width="111.2" height="50.0">1952</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="841.0" width="302.75" height="50.0">Citroen-15CV</text>
+        </line>
+      </cell>
+    </row>
+    <row height="100">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+        <line type="ParagraphPoolBox" x="0.0" y="891.0" width="449.0" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="891.0" width="111.2" height="50.0">1949</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="125.05" y="891.0" width="152.85" height="50.0">Jaguar</text>
+          <spacer width="13.85" height="0.0" preserve="true"/>
+          <text x="291.75" y="891.0" width="66.6" height="50.0">XK</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="941.0" width="83.4" height="50.0" color="black" font-face="Serif" font-size="50" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="941.0" width="83.4" height="50.0">120</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>
