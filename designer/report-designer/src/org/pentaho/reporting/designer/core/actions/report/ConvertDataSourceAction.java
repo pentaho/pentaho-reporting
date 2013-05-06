@@ -30,28 +30,30 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCancellableProcessHelper;
 
 public class ConvertDataSourceAction extends AbstractElementSelectionAction
 {
-  private class ConvertDataSourceTask implements Runnable
+  public static class ConvertDataSourceTask implements Runnable
   {
-    private ConvertDataSourceTask()
+    private Object[] selectedElements;
+    private ReportRenderContext activeContext;
+
+    public ConvertDataSourceTask(final ReportRenderContext activeContext)
     {
+      this.activeContext = activeContext;
+      this.selectedElements = activeContext.getSelectionModel().getSelectedElements();
     }
 
     public void run()
     {
-      final Object[] selectedElements = getSelectionModel().getSelectedElements();
       for (int i = 0; i < selectedElements.length; i++)
       {
         final Object element = selectedElements[i];
@@ -61,7 +63,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
           {
             final ReportQueryNode queryNode = (ReportQueryNode) element;
             final DataFactory dataFactory = queryNode.getDataFactory().derive();
-            final MasterReport report = getActiveContext().getMasterReportElement();
+            final MasterReport report = activeContext.getMasterReportElement();
             dataFactory.initialize(new DesignTimeDataFactoryContext(report));
             if (dataFactory.isQueryExecutable(queryNode.getQueryName(), new StaticDataRow()) == false)
             {
@@ -72,15 +74,11 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
 
             final TableDataFactory tableDataFactory = new TableDataFactory();
             tableDataFactory.addTable(queryNode.getQueryName(), createModel(tableModel));
-            AddDataFactoryAction.addDataFactory(getActiveContext(), tableDataFactory, new DataFactoryChange[0]);
+            AddDataFactoryAction.addDataFactory(activeContext, tableDataFactory, new DataFactoryChange[0]);
           }
-          catch (ReportDataFactoryException e1)
+          catch (Exception e1)
           {
             UncaughtExceptionsModel.getInstance().addException(e1);
-          }
-          catch (ReportProcessingException e)
-          {
-            UncaughtExceptionsModel.getInstance().addException(e);
           }
           break;
         }
@@ -88,7 +86,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
     }
 
 
-    public TableModel createModel(final TableModel model)
+    public TableModel createModel(final TableModel model) throws BeanException
     {
       final TypedTableModel tableModel = new TypedTableModel();
       final int columnCount = model.getColumnCount();
@@ -102,11 +100,16 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
       {
         for (int col = 0; col < columnCount; col++)
         {
-          tableModel.setValueAt(model.getValueAt(r, col), r, col);
+          tableModel.setValueAt(process(model.getValueAt(r, col)), r, col);
         }
       }
 
       return tableModel;
+    }
+
+    protected Object process(final Object o) throws BeanException
+    {
+      return o;
     }
   }
 
@@ -137,15 +140,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
       }
       final ReportQueryNode queryNode = (ReportQueryNode) selectedObject;
       final DataFactory dataFactory = queryNode.getDataFactory();
-
-      if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-      {
-        setEnabled(false);
-        return;
-      }
-
-      final DataFactoryMetaData metadata =
-          dataFactory.getMetaData();
+      final DataFactoryMetaData metadata = dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
@@ -168,7 +163,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
       return;
     }
 
-    final Thread thread = new Thread(new ConvertDataSourceTask());
+    final Thread thread = new Thread(new ConvertDataSourceTask(activeContext));
     thread.setName("ConvertDataSource-Worker");
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,

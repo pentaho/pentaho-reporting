@@ -293,6 +293,8 @@
         <menuseparator/>
         <menuitem id="data-menu.convert-datasource"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
+        <menuitem id="data-menu.anoymize-datasource"
+                  pen:action="org.pentaho.reporting.designer.core.actions.report.AnonymizeDataAction"/>
         <menuseparator/>
         <menuitem id="data-menu.clear-datacache"
                   pen:action="org.pentaho.reporting.designer.core.actions.global.ClearDataCacheAction"/>
@@ -305,6 +307,8 @@
       <menupopup id="extra-menu-popup">
         <menuitem id="extra-menu.migrate-report"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.MigrateReportAction"/>
+        <menuitem id="extra-menu.anonymize-report"
+                  pen:action="org.pentaho.reporting.designer.core.actions.report.AnonymizeReportAction"/>
         <menuseparator/>
         <menuitem id="extra-menu.report-style-editor"
                   pen:action="org.pentaho.reporting.designer.core.actions.global.ShowExternalStyleDefinitionEditorAction"/>
@@ -429,6 +433,8 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.report.EditQueryAction"/>
       <menuitem id="popup-Query.convert-datasource"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
+      <menuitem id="popup-Query.anoymize-datasource"
+                pen:action="org.pentaho.reporting.designer.core.actions.report.AnonymizeDataAction"/>
     </popup>
 
     <popup id="popup-Inherited-Query">
@@ -436,6 +442,8 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ActivateQueryAction"/>
       <menuitem id="popup-Inherited-Query.convert-datasource"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ConvertDataSourceAction"/>
+      <menuitem id="popup-Inherited-Query.anonymize-datasource"
+                pen:action="org.pentaho.reporting.designer.core.actions.report.AnonymizeDataAction"/>
     </popup>
 
     <popup id="popup-RunAs">

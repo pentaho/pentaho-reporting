@@ -77,14 +77,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
       final ReportQueryNode queryNode = (ReportQueryNode) selectedObject;
       final DataFactory dataFactory = queryNode.getDataFactory();
 
-      if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-      {
-        setEnabled(false);
-        return;
-      }
-
-      final DataFactoryMetaData metadata =
-          dataFactory.getMetaData();
+      final DataFactoryMetaData metadata = dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
@@ -143,11 +136,6 @@ public class EditQueryAction extends AbstractElementSelectionAction
 
   public void performEdit(final DataFactory dataFactory, final String queryName) throws ReportDataFactoryException
   {
-    if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-    {
-      return;
-    }
-
     final DataFactoryMetaData metadata = dataFactory.getMetaData();
     if (metadata.isEditable() == false)
     {
