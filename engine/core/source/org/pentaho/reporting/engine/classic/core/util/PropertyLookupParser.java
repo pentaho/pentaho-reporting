@@ -303,7 +303,14 @@ public abstract class PropertyLookupParser implements Serializable
         continue;
       }
 
-      result.append(c);
+      if (state != PropertyLookupParser.EXPECT_DOLLAR)
+      {
+        result.append(postProcessCharacter(c));
+      }
+      else
+      {
+        result.append(c);
+      }
     }
 
     if (state != PropertyLookupParser.EXPECT_DOLLAR)
@@ -322,6 +329,11 @@ public abstract class PropertyLookupParser implements Serializable
       }
     }
     return result.toString();
+  }
+
+  protected char postProcessCharacter(final char c)
+  {
+    return c;
   }
 
   protected void handleVariableLookup(final StringBuilder result,
