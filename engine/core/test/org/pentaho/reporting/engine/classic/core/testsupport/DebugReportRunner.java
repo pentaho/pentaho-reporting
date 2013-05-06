@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.testsupport;
 
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -68,6 +69,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
+import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -80,6 +82,8 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
+import org.pentaho.reporting.libraries.resourceloader.ResourceException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /** @noinspection HardCodedStringLiteral*/
 public class DebugReportRunner
@@ -529,6 +533,19 @@ public class DebugReportRunner
   {
     final DebugReportRunner.StaticStyleResolver resolver = new DebugReportRunner.StaticStyleResolver();
     resolver.resolve(band);
+  }
+
+  public static MasterReport parseGoldenSampleReport(final String name) throws ResourceException
+  {
+    final File file = GoldTestBase.locateGoldenSampleReport(name);
+    if (file == null)
+    {
+      throw new ResourceException("Unable to locate report '" + name + "' in the golden samples.");
+    }
+
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    return (MasterReport) mgr.createDirectly(file, MasterReport.class).getResource();
   }
 
   public static void showDialog (final MasterReport report)

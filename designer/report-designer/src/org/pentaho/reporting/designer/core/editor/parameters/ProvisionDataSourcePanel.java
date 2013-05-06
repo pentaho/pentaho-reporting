@@ -134,13 +134,7 @@ public class ProvisionDataSourcePanel extends JPanel
       {
         return;
       }
-      if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-      {
-        return;
-      }
-
-      final DataFactoryMetaData metadata =
-              dataFactory.getMetaData();
+      final DataFactoryMetaData metadata = dataFactory.getMetaData();
       if (metadata.isEditable() == false)
       {
         return;

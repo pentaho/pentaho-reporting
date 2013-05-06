@@ -136,15 +136,7 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
 
   private boolean isFreeFormQueryDataFactory(final DataFactory dataFactory)
   {
-    final DataFactoryRegistry registry = DataFactoryRegistry.getInstance();
-    final String metaDataKey = dataFactory.getClass().getName();
-    if (registry.isRegistered(metaDataKey) == false)
-    {
-      // assume the worst ..
-      return true;
-    }
-
-    final DataFactoryMetaData metaData = registry.getMetaData(metaDataKey);
+    final DataFactoryMetaData metaData = dataFactory.getMetaData();
     if (metaData.isFreeFormQuery())
     {
       return true;

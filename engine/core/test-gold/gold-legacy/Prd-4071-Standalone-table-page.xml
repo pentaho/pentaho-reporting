@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="1" row-count="13">
+    <cols>
+      <column width="468"/>
+    </cols>
+    <row height="21">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Product Line"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTLINE"/>
+        <line type="ParagraphPoolBox" x="0.0" y="21.0" width="56.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="21.0" width="32.22" height="10.0">Classic</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="34.99" y="21.0" width="21.11" height="10.0">Cars</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTNAME"/>
+      </empty-cell>
+    </row>
+    <row height="407">
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

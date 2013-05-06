@@ -277,12 +277,6 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
       final String query = queries[i];
       if (dataSchemaModel.isSelectedDataSource(dataFactory, query))
       {
-        final String key = dataFactory.getClass().getName();
-        if (DataFactoryRegistry.getInstance().isRegistered(key) == false)
-        {
-          continue;
-        }
-
         final DataFactoryMetaData metaData = dataFactory.getMetaData();
         final String[] referencedFields = metaData.getReferencedFields(dataFactory, query, dataRow);
         if (referencedFields == null)

@@ -30,7 +30,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
+import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class Prd4434Test extends TestCase
@@ -46,15 +48,12 @@ public class Prd4434Test extends TestCase
 
   public void testExcelExport() throws Exception
   {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3625.prpt");
-    ResourceManager mgr = new ResourceManager();
-    mgr.registerDefaults();
-    final MasterReport report = (MasterReport) mgr.createDirectly(file, MasterReport.class).getResource();
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3625.prpt");
 
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     ExcelReportUtil.createXLS(report, bout);
 
-    HSSFWorkbook wb = new HSSFWorkbook(new ByteArrayInputStream(bout.toByteArray()));
+    final HSSFWorkbook wb = new HSSFWorkbook(new ByteArrayInputStream(bout.toByteArray()));
     final HSSFSheet sheetAt = wb.getSheetAt(0);
     final HSSFRow row = sheetAt.getRow(0);
     final HSSFCell cell0 = row.getCell(0);
@@ -64,4 +63,5 @@ public class Prd4434Test extends TestCase
     assertEquals(Cell.CELL_TYPE_NUMERIC, cell1.getCellType());
     assertEquals("#,###.00;(#,###.00)", cell1.getCellStyle().getDataFormatString());
   }
+
 }

@@ -64,14 +64,7 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
         continue;
       }
       final DataFactory dataFactory = (DataFactory) selectedObject;
-      if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-      {
-        setEnabled(false);
-        return;
-      }
-
-      final DataFactoryMetaData metadata =
-          dataFactory.getMetaData();
+      final DataFactoryMetaData metadata = dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
@@ -115,13 +108,7 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
 
   protected void performEdit(final DataFactory dataFactory) throws ReportDataFactoryException
   {
-    if (DataFactoryRegistry.getInstance().isRegistered(dataFactory.getClass().getName()) == false)
-    {
-      return;
-    }
-
-    final DataFactoryMetaData metadata =
-        dataFactory.getMetaData();
+    final DataFactoryMetaData metadata = dataFactory.getMetaData();
     if (metadata.isEditable() == false)
     {
       return;

@@ -185,12 +185,6 @@ public class DeprecatedUsagesInspection extends AbstractStructureInspection
                                    final String[] columnNames,
                                    final DataFactory dataFactory)
   {
-    final String key = dataFactory.getClass().getName();
-
-    if (DataFactoryRegistry.getInstance().isRegistered(key) == false)
-    {
-      return;
-    }
     final DataFactoryMetaData metaData = dataFactory.getMetaData();
     if (metaData.isDeprecated())
     {
