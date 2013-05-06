@@ -235,30 +235,23 @@ public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
     else if (value instanceof DataFactory)
     {
       final DataFactory dfac = (DataFactory) value;
-      if (DataFactoryRegistry.getInstance().isRegistered(dfac.getClass().getName()) == false)
+      final DataFactoryMetaData data = dfac.getMetaData();
+
+      final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
+      if (image != null)
       {
-        setText(dfac.getClass().getSimpleName());
+        setIcon(new ImageIcon(image));
+      }
+
+      final String connectionName = data.getDisplayConnectionName(dfac);
+      if (connectionName != null)
+      {
+        setText(Messages.getString("StructureTreeCellRenderer.NamedDataFactoryMessage",
+            data.getDisplayName(Locale.getDefault()), connectionName));
       }
       else
       {
-        final DataFactoryMetaData data = dfac.getMetaData();
-
-        final Image image = data.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
-        if (image != null)
-        {
-          setIcon(new ImageIcon(image));
-        }
-
-        final String connectionName = data.getDisplayConnectionName(dfac);
-        if (connectionName != null)
-        {
-          setText(Messages.getString("StructureTreeCellRenderer.NamedDataFactoryMessage",
-              data.getDisplayName(Locale.getDefault()), connectionName));
-        }
-        else
-        {
-          setText(data.getDisplayName(Locale.getDefault()));
-        }
+        setText(data.getDisplayName(Locale.getDefault()));
       }
     }
     else if (value instanceof ParentDataFactoryNode)
