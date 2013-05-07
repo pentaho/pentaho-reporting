@@ -336,7 +336,7 @@ public class RelationalGroup extends Group
    *
    * @return a clone of this element.
    */
-  public Object clone()
+  public RelationalGroup clone()
   {
     final RelationalGroup g = (RelationalGroup) super.clone();
     g.footer = (GroupFooter) footer.clone();
@@ -347,7 +347,7 @@ public class RelationalGroup extends Group
     return g;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public RelationalGroup derive(final boolean preserveElementInstanceIds)
   {
     final RelationalGroup g = (RelationalGroup) super.derive(preserveElementInstanceIds);
     g.footer = (GroupFooter) footer.derive(preserveElementInstanceIds);

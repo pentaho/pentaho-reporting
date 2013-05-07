@@ -213,7 +213,7 @@ public class CrosstabGroup extends Group
    *
    * @return a clone of this element.
    */
-  public Object clone()
+  public CrosstabGroup clone()
   {
     final CrosstabGroup g = (CrosstabGroup) super.clone();
     g.footer = (GroupFooter) footer.clone();
@@ -224,7 +224,7 @@ public class CrosstabGroup extends Group
     return g;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public CrosstabGroup derive(final boolean preserveElementInstanceIds)
   {
     final CrosstabGroup g = (CrosstabGroup) super.derive(preserveElementInstanceIds);
     g.footer = (GroupFooter) footer.derive(preserveElementInstanceIds);

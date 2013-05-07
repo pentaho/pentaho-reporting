@@ -362,7 +362,7 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the clone of this band.
    */
-  public Object clone()
+  public CrosstabCellBody clone()
   {
     final CrosstabCellBody b = (CrosstabCellBody) super.clone();
     b.detailsHeader = (DetailsHeader) detailsHeader.clone();

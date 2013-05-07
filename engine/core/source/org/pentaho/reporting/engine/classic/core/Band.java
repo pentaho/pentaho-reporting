@@ -391,7 +391,7 @@ public class Band extends Section
    *
    * @return the clone of this band.
    */
-  public Object clone()
+  public Band clone()
   {
     final Band b = (Band) super.clone();
     if (allElements != null)
@@ -431,7 +431,7 @@ public class Band extends Section
    *
    * @return the copy of the element.
    */
-  public Element derive(final boolean preserveElementInstanceIds)
+  public Band derive(final boolean preserveElementInstanceIds)
   {
     final Band b = (Band) super.derive(preserveElementInstanceIds);
     if (allElements != null)

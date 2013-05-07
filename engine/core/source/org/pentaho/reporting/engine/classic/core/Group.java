@@ -95,7 +95,7 @@ public abstract class Group extends Section
    *
    * @return a clone of this element.
    */
-  public Object clone()
+  public Group clone()
   {
     final Group g = (Group) super.clone();
     g.body = (GroupBody) body.clone();
@@ -104,7 +104,7 @@ public abstract class Group extends Section
     return g;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public Group derive(final boolean preserveElementInstanceIds)
   {
     final Group g = (Group) super.derive(preserveElementInstanceIds);
     g.body = (GroupBody) body.derive(preserveElementInstanceIds);

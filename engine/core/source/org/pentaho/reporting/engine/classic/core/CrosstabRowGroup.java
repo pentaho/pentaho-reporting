@@ -198,7 +198,7 @@ public class CrosstabRowGroup extends Group
     return false;
   }
 
-  public Object clone()
+  public CrosstabRowGroup clone()
   {
     final CrosstabRowGroup element = (CrosstabRowGroup) super.clone();
     element.summaryHeader = (CrosstabSummaryHeader) summaryHeader.clone();
@@ -210,7 +210,7 @@ public class CrosstabRowGroup extends Group
     return element;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public CrosstabRowGroup derive(final boolean preserveElementInstanceIds)
   {
     final CrosstabRowGroup element = (CrosstabRowGroup) super.derive(preserveElementInstanceIds);
     element.summaryHeader = (CrosstabSummaryHeader) summaryHeader.derive(preserveElementInstanceIds);

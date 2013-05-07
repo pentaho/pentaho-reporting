@@ -742,12 +742,14 @@ public abstract class AbstractRenderer implements Renderer
                                      final boolean print,
                                      final boolean rollback)
   {
-//    if (((state.getSequenceCounter() <= 14444 || state.getSequenceCounter() >= 14444)) ||
-//        (state.getSequenceCounter() % 1) != 0)
-//    {
-//      return;
-//    }
+    /*
+    if (((state.getSequenceCounter() <= 14440 || state.getSequenceCounter() >= 14445)) ||
+        (state.getSequenceCounter() % 1) != 0)
+    {
+      return;
+    }
 
+*/
     String fileName = "test-output/" + state.getSequenceCounter();
     fileName += print ? "-print" : "-paginate";
     fileName += rollback ? "-rb" : "";

@@ -1067,6 +1067,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
             logger.debug("Paginate: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName());
           }
 
+//          printLayoutStateToFile(state, false, isInRollBackMode);
+
           if (pagebreaksSupported && fallBackState != restoreState)
           {
             final DefaultOutputFunction commitableOutputFunction =
@@ -1084,6 +1086,18 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       throw new ReportProcessingException("Content-Processing failed.", e);
     }
   }
+
+  @SuppressWarnings("UnusedDeclaration")
+  private void printLayoutStateToFile(final ProcessState state,
+                                      final boolean print,
+                                      final boolean inRollBackMode)
+  {
+    final DefaultOutputFunction of =
+        (DefaultOutputFunction) state.getLayoutProcess().getOutputFunction();
+    final AbstractRenderer ar = (AbstractRenderer) of.getRenderer();
+    ar.printLayoutStateToFile(state, print, inRollBackMode);
+  }
+
 
   protected int calculatePageCount(final ProcessState state)
   {
@@ -1578,6 +1592,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
           {
             logger.debug("Print: Post Commit: " + state.getProcessKey() + " " + state.getAdvanceHandler().getClass().getName());
           }
+
+          // printLayoutStateToFile(state, true, isInRollBackMode);
 
           if (pagebreaksSupported && fallBackState != restoreState)
           {

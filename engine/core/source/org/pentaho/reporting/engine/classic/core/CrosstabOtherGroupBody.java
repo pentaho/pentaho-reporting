@@ -109,7 +109,7 @@ public class CrosstabOtherGroupBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public Object clone()
+  public CrosstabOtherGroupBody clone()
   {
     final CrosstabOtherGroupBody o = (CrosstabOtherGroupBody) super.clone();
     o.group = (CrosstabOtherGroup) group.clone();
@@ -122,7 +122,7 @@ public class CrosstabOtherGroupBody extends GroupBody
    *
    * @return the clone.
    */
-  public Element derive(final boolean preserveElementInstanceIds)
+  public CrosstabOtherGroupBody derive(final boolean preserveElementInstanceIds)
   {
     final CrosstabOtherGroupBody o = (CrosstabOtherGroupBody) super.derive(preserveElementInstanceIds);
     o.group = (CrosstabOtherGroup) group.derive(preserveElementInstanceIds);
