@@ -70,7 +70,7 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
       {
         this.elementChangeTracker = parentEntry.getElementChangeTracker() * 31 + e.getChangeTracker();
         this.styleChangeHash = parentEntry.getStyleChangeHash() * 31 + e.getStyle().getChangeTrackerHash();
-        this.elementChangeTracker = parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
+        this.styleModificationCount = parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
       }
     }
 
