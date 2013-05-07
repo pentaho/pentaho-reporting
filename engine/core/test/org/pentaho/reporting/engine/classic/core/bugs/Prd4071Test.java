@@ -13,6 +13,8 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 
 public class Prd4071Test extends TestCase
 {
+  private static boolean testDisabled = true;
+
   public Prd4071Test()
   {
   }
@@ -24,7 +26,26 @@ public class Prd4071Test extends TestCase
 
   public void testExcelExport() throws Exception
   {
+    if (testDisabled)
+      return;
+
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4071-Standalone.prpt");
+    report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, true);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+//    ModelPrinter.INSTANCE.print(logicalPageBox);
+    assertEquals(64800000, logicalPageBox.getPageEnd());
+    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);
+    assertEquals(7, elementsByElementType.length);
+    final RenderNode lastChild = elementsByElementType[6];
+    assertEquals(64100000, lastChild.getY() + lastChild.getHeight());
+  }
+
+  public void testPrd2087() throws Exception
+  {
+    if (testDisabled)
+      return;
+
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, true);
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     ModelPrinter.INSTANCE.print(logicalPageBox);
@@ -34,4 +55,5 @@ public class Prd4071Test extends TestCase
     final RenderNode lastChild = elementsByElementType[6];
     assertEquals(64100000, lastChild.getY() + lastChild.getHeight());
   }
+
 }

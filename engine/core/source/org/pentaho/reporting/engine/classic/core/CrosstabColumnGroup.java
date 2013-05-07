@@ -196,7 +196,7 @@ public class CrosstabColumnGroup extends Group
     return false;
   }
 
-  public Object clone()
+  public CrosstabColumnGroup clone()
   {
     final CrosstabColumnGroup element = (CrosstabColumnGroup) super.clone();
     element.titleHeader = (CrosstabTitleHeader) titleHeader.clone();
@@ -208,7 +208,7 @@ public class CrosstabColumnGroup extends Group
     return element;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public CrosstabColumnGroup derive(final boolean preserveElementInstanceIds)
   {
     final CrosstabColumnGroup element = (CrosstabColumnGroup) super.derive(preserveElementInstanceIds);
     element.titleHeader = (CrosstabTitleHeader) titleHeader.derive(preserveElementInstanceIds);

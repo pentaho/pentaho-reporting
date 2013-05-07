@@ -222,13 +222,13 @@
                 </p>
               </canvas>
             </block>
-            <block name="relational-group" type="BlockRenderBox" x="0.0" y="86.0" width="567.0" height="160.0" color="#003b79" font-face="Liberation Sans" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="BlockRenderBox" x="0.0" y="86.0" width="567.0" height="160.0" color="#003b79" font-face="Liberation Sans" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
               <block name="Section-0" type="SectionRenderBox" x="0.0" y="86.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <block type="ProgressMarkerRenderBox" x="0.0" y="86.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 </block>
               </block>
-              <block name="group-data-body" type="BlockRenderBox" x="0.0" y="86.0" width="567.0" height="160.0" color="#003b79" font-face="Liberation Sans" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <block type="BlockRenderBox" x="0.0" y="86.0" width="567.0" height="160.0" color="#003b79" font-face="Liberation Sans" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="86.0" width="567.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <canvas type="CanvasRenderBox" x="0.0" y="86.0" width="567.0" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1827,14 +1827,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -1860,13 +1860,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">1</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1879,10 +1879,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -1906,17 +1906,17 @@
                   <text x="71.62" y="44.5" width="22.24" height="10.0">page</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -2028,7 +2028,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2041,7 +2041,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-2257.0" width="567.0" height="3040.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2054,14 +2054,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -2087,17 +2087,17 @@
                   <text x="138.3" y="32.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -2221,14 +2221,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -2254,13 +2254,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">2</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2273,10 +2273,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -2302,7 +2302,7 @@
                   <text x="114.37" y="44.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -2432,14 +2432,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -2465,13 +2465,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">3</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2484,10 +2484,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -2513,7 +2513,7 @@
                   <text x="127.18" y="44.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -2631,7 +2631,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2644,7 +2644,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-4534.0" width="567.0" height="5317.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2657,14 +2657,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -2690,17 +2690,17 @@
                   <text x="127.18" y="32.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -2824,14 +2824,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -2857,13 +2857,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">4</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2876,10 +2876,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -2905,7 +2905,7 @@
                   <text x="127.18" y="44.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -3023,7 +3023,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3036,7 +3036,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-6048.0" width="567.0" height="6831.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3049,14 +3049,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -3082,17 +3082,17 @@
                   <text x="114.37" y="32.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -3204,7 +3204,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3217,7 +3217,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-6799.0" width="567.0" height="7582.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3230,14 +3230,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-1482.0" width="567.0" height="2265.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-1482.0" width="567.0" height="2265.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-1470.0" width="567.0" height="2253.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-1470.0" width="567.0" height="2253.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -3263,17 +3263,17 @@
                   <text x="138.3" y="32.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -3397,14 +3397,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -3430,13 +3430,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">5</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3449,10 +3449,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -3478,7 +3478,7 @@
                   <text x="114.37" y="44.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -3596,7 +3596,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3609,7 +3609,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-8313.0" width="567.0" height="9096.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3622,14 +3622,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -3655,17 +3655,17 @@
                   <text x="114.37" y="32.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -3789,14 +3789,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -3822,13 +3822,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">6</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3841,10 +3841,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -3870,7 +3870,7 @@
                   <text x="138.3" y="44.5" width="27.24" height="10.0">pages</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -3988,7 +3988,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4001,7 +4001,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-9827.0" width="567.0" height="10610.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4014,14 +4014,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-731.0" width="567.0" height="1514.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-719.0" width="567.0" height="1502.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -4047,17 +4047,17 @@
                   <text x="114.37" y="32.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -4169,7 +4169,7 @@
             </p>
           </canvas>
         </canvas>
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
           <p type="ParagraphRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4182,7 +4182,7 @@
               <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
             </line>
           </p>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-10578.0" width="567.0" height="11361.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4195,14 +4195,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="-1482.0" width="567.0" height="2265.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="-1482.0" width="567.0" height="2265.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="-1470.0" width="567.0" height="2253.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="-1470.0" width="567.0" height="2253.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -4228,17 +4228,17 @@
                   <text x="114.37" y="32.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
       <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="783.0" width="567.0" height="0.0" background-color="#6689af" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="783.0" width="567.0" height="30.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
@@ -4362,14 +4362,14 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="chapter" type="BlockRenderBox" x="0.0" y="20.0" width="567.0" height="763.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="chapter"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
-            <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="12.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="chapter"/>
@@ -4395,13 +4395,13 @@
                   <text x="92.81" y="20.0" width="5.56" height="10.0">7</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </canvas>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="32.0" width="567.0" height="751.0" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" background-color="#003b79" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
               <p type="ParagraphRenderBox" x="0.0" y="32.0" width="567.0" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4414,10 +4414,10 @@
                   <text x="0.0" y="32.0" width="31.32" height="12.0">String</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row name="Detail-Rows" type="RowRenderBox" x="0.0" y="44.0" width="567.0" height="11.0" background-color="#e7e7e7" color="#003b79" font-face="Liberation Sans" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Detail-Rows"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
@@ -4443,7 +4443,7 @@
                   <text x="114.37" y="44.5" width="52.79" height="10.0">consecutive</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
         </block>
       </block>
@@ -4574,7 +4574,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="false"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:enable="false"/>
       <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="132.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
           <block name="index" type="BlockRenderBox" x="0.0" y="20.0" width="396.9" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:data-field="String"/>
@@ -4588,16 +4588,16 @@
               <block type="ProgressMarkerRenderBox" x="0.0" y="20.0" width="396.9" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               </block>
             </block>
-            <block name="relational-group" type="BlockRenderBox" x="0.0" y="20.0" width="396.9" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="BlockRenderBox" x="0.0" y="20.0" width="396.9" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
               <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="396.9" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <block type="ProgressMarkerRenderBox" x="0.0" y="20.0" width="396.9" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 </block>
               </block>
-              <block name="group-data-body" type="BlockRenderBox" x="0.0" y="20.0" width="396.9" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <block type="BlockRenderBox" x="0.0" y="20.0" width="396.9" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="396.9" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="0.0" y="20.0" width="396.9" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="0.0" y="20.0" width="396.9" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                     <p type="ParagraphRenderBox" x="0.0" y="20.0" width="198.45" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -4615,10 +4615,10 @@
                         <text x="274.898" y="20.0" width="43.584" height="16.0">pages</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="40.0" width="396.9" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="0.0" y="40.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="0.0" y="40.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                     <p type="ParagraphRenderBox" x="0.0" y="40.0" width="198.45" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -4643,10 +4643,10 @@
                         <text x="198.45" y="40.0" width="168.896" height="16.0">5,8,9,11,12,13,14,15,16</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="72.0" width="396.9" height="16.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="0.0" y="72.0" width="396.9" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="0.0" y="72.0" width="396.9" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                     <p type="ParagraphRenderBox" x="0.0" y="72.0" width="198.45" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -4668,10 +4668,10 @@
                         <text x="198.45" y="72.0" width="8.896" height="16.0">3</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="88.0" width="396.9" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="0.0" y="88.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="0.0" y="88.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                     <p type="ParagraphRenderBox" x="0.0" y="88.0" width="198.45" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -4696,10 +4696,10 @@
                         <text x="198.45" y="88.0" width="35.552" height="16.0">6,7,8</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="120.0" width="396.9" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="0.0" y="120.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="0.0" y="120.0" width="396.9" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                     <p type="ParagraphRenderBox" x="0.0" y="120.0" width="198.45" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -4724,7 +4724,7 @@
                         <text x="198.45" y="120.0" width="80.0" height="16.0">3,4,9,10,13</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="152.0" width="396.9" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <block type="ProgressMarkerRenderBox" x="0.0" y="152.0" width="396.9" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4750,16 +4750,16 @@
               <block type="ProgressMarkerRenderBox" x="396.9" y="20.0" width="170.1" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               </block>
             </block>
-            <block name="relational-group" type="BlockRenderBox" x="396.9" y="20.0" width="170.1" height="84.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="BlockRenderBox" x="396.9" y="20.0" width="170.1" height="84.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
               <block name="Section-0" type="SectionRenderBox" x="396.9" y="20.0" width="170.1" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <block type="ProgressMarkerRenderBox" x="396.9" y="20.0" width="170.1" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 </block>
               </block>
-              <block name="group-data-body" type="BlockRenderBox" x="396.9" y="20.0" width="170.1" height="84.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <block type="BlockRenderBox" x="396.9" y="20.0" width="170.1" height="84.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
                 <block name="Section-0" type="SectionRenderBox" x="396.9" y="20.0" width="170.1" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <row-box type="RowRenderBox" x="396.9" y="20.0" width="170.1" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <row type="RowRenderBox" x="396.9" y="20.0" width="170.1" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                     <p type="ParagraphRenderBox" x="396.9" y="20.0" width="170.1" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -4770,7 +4770,7 @@
                         <text x="480.436" y="20.0" width="43.584" height="16.0">pages</text>
                       </line>
                     </p>
-                  </row-box>
+                  </row>
                 </block>
                 <block name="Section-0" type="SectionRenderBox" x="396.9" y="40.0" width="170.1" height="16.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <block type="BlockRenderBox" x="396.9" y="40.0" width="170.1" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4835,7 +4835,7 @@
               </block>
             </block>
           </block>
-        </row-box>
+        </row>
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="783.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
@@ -4947,12 +4947,12 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="::report:index-generator:1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-        <block name="relational-group" type="BlockRenderBox" x="0.0" y="0.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="0.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-          <block name="group-data-body" type="BlockRenderBox" x="0.0" y="0.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block type="BlockRenderBox" x="0.0" y="0.0" width="567.0" height="132.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="567.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <row-box type="RowRenderBox" x="0.0" y="0.0" width="567.0" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row type="RowRenderBox" x="0.0" y="0.0" width="567.0" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                 <p type="ParagraphRenderBox" x="0.0" y="0.0" width="226.8" height="20.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -4970,10 +4970,10 @@
                     <text x="303.248" y="0.0" width="43.584" height="16.0">pages</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="20.0" width="567.0" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <row-box type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row type="RowRenderBox" x="0.0" y="20.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                 <p type="ParagraphRenderBox" x="0.0" y="20.0" width="226.8" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -4998,10 +4998,10 @@
                     <text x="226.8" y="20.0" width="168.896" height="16.0">5,8,9,11,12,13,14,15,16</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="52.0" width="567.0" height="16.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <row-box type="RowRenderBox" x="0.0" y="52.0" width="567.0" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row type="RowRenderBox" x="0.0" y="52.0" width="567.0" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                 <p type="ParagraphRenderBox" x="0.0" y="52.0" width="226.8" height="16.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -5023,10 +5023,10 @@
                     <text x="226.8" y="52.0" width="8.896" height="16.0">3</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="68.0" width="567.0" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <row-box type="RowRenderBox" x="0.0" y="68.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row type="RowRenderBox" x="0.0" y="68.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                 <p type="ParagraphRenderBox" x="0.0" y="68.0" width="226.8" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -5051,10 +5051,10 @@
                     <text x="226.8" y="68.0" width="35.552" height="16.0">6,7,8</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="100.0" width="567.0" height="32.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <row-box type="RowRenderBox" x="0.0" y="100.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row type="RowRenderBox" x="0.0" y="100.0" width="567.0" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
                 <p type="ParagraphRenderBox" x="0.0" y="100.0" width="226.8" height="32.0" color="#003b79" font-face="Liberation Sans" font-size="16" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -5079,7 +5079,7 @@
                     <text x="226.8" y="100.0" width="80.0" height="16.0">3,4,9,10,13</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="132.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <block type="ProgressMarkerRenderBox" x="0.0" y="132.0" width="567.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

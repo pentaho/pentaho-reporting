@@ -71,9 +71,9 @@
                 </p>
               </canvas>
             </block>
-            <block name="relational-group" type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-              <block name="group-data-body" type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <block type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
                 <block name="Section-0" type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <canvas type="CanvasRenderBox" x="0.0" y="72.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1160,7 +1160,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
@@ -1258,7 +1258,7 @@
             </p>
           </canvas>
         </block>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2238,11 +2238,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="1126.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="1126.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="1016.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="1016.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -3398,11 +3398,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-1108.0" width="772.0" height="1680.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-1108.0" width="772.0" height="1680.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-998.0" width="772.0" height="1570.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-998.0" width="772.0" height="1570.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -4514,11 +4514,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-1662.0" width="772.0" height="2234.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-1662.0" width="772.0" height="2234.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-1552.0" width="772.0" height="2124.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-1552.0" width="772.0" height="2124.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -5601,11 +5601,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-2216.0" width="772.0" height="2788.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-2216.0" width="772.0" height="2788.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-2106.0" width="772.0" height="2678.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-2106.0" width="772.0" height="2678.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -6551,11 +6551,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-2770.0" width="772.0" height="3342.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-2770.0" width="772.0" height="3342.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-2660.0" width="772.0" height="3232.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-2660.0" width="772.0" height="3232.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7698,11 +7698,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-3324.0" width="772.0" height="3591.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-3324.0" width="772.0" height="3591.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-3214.0" width="772.0" height="3481.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-3214.0" width="772.0" height="3481.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -8243,7 +8243,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
@@ -8339,7 +8339,7 @@
             </p>
           </canvas>
         </block>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -9189,11 +9189,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="1126.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="1126.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="1016.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="1016.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -10096,11 +10096,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-1108.0" width="772.0" height="1209.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-1108.0" width="772.0" height="1209.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-998.0" width="772.0" height="1099.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-998.0" width="772.0" height="1099.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -10320,7 +10320,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="572.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
@@ -10416,7 +10416,7 @@
             </p>
           </canvas>
         </block>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="462.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -11560,11 +11560,11 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="904.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="-554.0" width="772.0" height="904.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="794.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-444.0" width="772.0" height="794.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="18.0" width="772.0" height="83.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -12307,7 +12307,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="SELECT&#x000a;     PRODUCTS.PRODUCTLINE,&#x000a;     PRODUCTS.PRODUCTVENDOR,&#x000a;     PRODUCTS.PRODUCTCODE,&#x000a;     PRODUCTS.PRODUCTNAME,&#x000a;     PRODUCTS.PRODUCTSCALE,&#x000a;     PRODUCTS.PRODUCTDESCRIPTION,&#x000a;     PRODUCTS.QUANTITYINSTOCK,&#x000a;     PRODUCTS.BUYPRICE,&#x000a;     PRODUCTS.MSRP&#x000a;FROM&#x000a;     PRODUCTS&#x000a;WHERE&#x000a;     PRODUCTS.PRODUCTLINE IN (${line})&#x000a;ORDER BY&#x000a;     PRODUCTLINE ASC,&#x000a;     PRODUCTVENDOR ASC,&#x000a;     PRODUCTCODE ASC"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="377.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="productLine" type="AutoRenderBox" x="0.0" y="0.0" width="772.0" height="377.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="PRODUCTLINE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="productLine"/>
@@ -12403,7 +12403,7 @@
             </p>
           </canvas>
         </block>
-        <block name="group-data-body" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="267.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="267.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="AutoRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <canvas type="CanvasRenderBox" x="0.0" y="110.0" width="772.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -13130,11 +13130,11 @@
             </p>
           </canvas>
         </block>
-        <block name="relational-group" type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
-            <block name="group-data-body" type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="84.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block name="Common-Section" type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="84.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <block name="Section-0" type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <canvas type="CanvasRenderBox" x="0.0" y="46.333" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
@@ -13804,7 +13804,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="::report:index-generator:0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-        <block name="relational-group" type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -14547,7 +14547,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="::report:index-generator:0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-        <block name="relational-group" type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>

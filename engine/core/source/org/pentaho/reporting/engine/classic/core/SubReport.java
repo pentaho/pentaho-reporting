@@ -100,7 +100,7 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public Element derive(final boolean preserveElementInstanceIds)
+  public SubReport derive(final boolean preserveElementInstanceIds)
   {
     final SubReport o = (SubReport) super.derive(preserveElementInstanceIds);
     o.exportParameters = (LinkedHashMap<String, String>) exportParameters.clone();
@@ -117,7 +117,7 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public Object clone()
+  public SubReport clone()
   {
     final SubReport o = (SubReport) super.clone();
     o.exportParameters = (LinkedHashMap<String, String>) exportParameters.clone();

@@ -452,8 +452,6 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
       this.context.getRenderBox().getStaticBoxLayoutProperties().setPlaceholderBox
           (StaticBoxLayoutProperties.PlaceholderType.SECTION);
     }
-    this.context.getRenderBox().setName(element.getElementType().getMetaData().getName());
-
     this.textProducer.startText();
   }
 

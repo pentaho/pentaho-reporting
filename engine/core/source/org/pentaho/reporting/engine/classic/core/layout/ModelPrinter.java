@@ -123,19 +123,29 @@ public class ModelPrinter
       }
     }
 
-    if (box instanceof LogicalPageBox)
+    if (isPrintPageHeader() && box instanceof LogicalPageBox)
     {
       final LogicalPageBox lbox = (LogicalPageBox) box;
       printBox(lbox.getHeaderArea(), level + 1);
       printBox(lbox.getWatermarkArea(), level + 1);
     }
     printChilds(box, level);
-    if (box instanceof LogicalPageBox)
+    if (isPrintPageFooter() && box instanceof LogicalPageBox)
     {
       final LogicalPageBox lbox = (LogicalPageBox) box;
       printBox(lbox.getRepeatFooterArea(), level + 1);
       printBox(lbox.getFooterArea(), level + 1);
     }
+  }
+
+  protected boolean isPrintPageHeader()
+  {
+    return true;
+  }
+
+  protected boolean isPrintPageFooter()
+  {
+    return true;
   }
 
   private void printBoxDetails(final RenderBox box, final int level)

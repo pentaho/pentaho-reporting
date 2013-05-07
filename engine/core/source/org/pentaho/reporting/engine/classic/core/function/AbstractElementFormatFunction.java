@@ -79,6 +79,14 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     {
       return changeTracker;
     }
+
+    public String toString()
+    {
+      return "NeedEvalResult{" +
+          "needToRun=" + needToRun +
+          ", changeTracker=" + changeTracker +
+          '}';
+    }
   }
 
   private static class PerformanceCollector implements Serializable

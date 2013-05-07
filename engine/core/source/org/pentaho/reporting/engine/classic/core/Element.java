@@ -533,7 +533,7 @@ public class Element implements DataTarget, ReportElement
    *
    * @return a clone of this Element.
    */
-  public Object clone()
+  public Element clone()
   {
     try
     {
@@ -565,6 +565,7 @@ public class Element implements DataTarget, ReportElement
         {
           e.attributes = attributes;
           e.copyOnWrite = true;
+          copyOnWrite = true;
         }
         else
         {
@@ -621,6 +622,7 @@ public class Element implements DataTarget, ReportElement
       e.parent = null;
       e.style.updateElementReference(e);
       e.attributes = attributes.clone();
+      e.copyOnWrite = false;
       final ElementMetaData metaData = e.getMetaData();
       final String[] namespaces = e.attributes.getNameSpaces();
       for (int i = 0; i < namespaces.length; i++)

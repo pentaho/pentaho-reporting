@@ -48,6 +48,22 @@ public class ElementTest extends TestCase
     assertNull(e.getParent());
   }
 
+  public void testElementAttributeCopyOnWrite()
+  {
+    final Element e = new Element();
+    final Element clone = e.clone();
+    e.setAttribute("namespace", "name", "value");
+    assertNull(clone.getAttribute("namespace", "name"));
+  }
+
+  public void testElementAttributeCopyOnWrite2()
+  {
+    final Element e = new Element();
+    final Element clone = e.clone();
+    clone.setAttribute("namespace", "name", "value");
+    assertNull(e.getAttribute("namespace", "name"));
+  }
+
   public void testElementClone()
       throws CloneNotSupportedException
   {

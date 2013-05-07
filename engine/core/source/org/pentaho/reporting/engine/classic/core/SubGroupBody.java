@@ -119,7 +119,7 @@ public class SubGroupBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public Object clone()
+  public SubGroupBody clone()
   {
     final SubGroupBody o = (SubGroupBody) super.clone();
     o.group = (Group) group.clone();
@@ -132,7 +132,7 @@ public class SubGroupBody extends GroupBody
    *
    * @return the clone.
    */
-  public Element derive(final boolean preserveElementInstanceIds)
+  public SubGroupBody derive(final boolean preserveElementInstanceIds)
   {
     final SubGroupBody o = (SubGroupBody) super.derive(preserveElementInstanceIds);
     o.group = (Group) group.derive(preserveElementInstanceIds);

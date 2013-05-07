@@ -234,7 +234,7 @@ public class GroupDataBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public Object clone()
+  public GroupDataBody clone()
   {
     final GroupDataBody dataBody = (GroupDataBody) super.clone();
     dataBody.itemBand = (ItemBand) itemBand.clone();
@@ -249,7 +249,7 @@ public class GroupDataBody extends GroupBody
     return dataBody;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public GroupDataBody derive(final boolean preserveElementInstanceIds)
   {
     final GroupDataBody dataBody = (GroupDataBody) super.derive(preserveElementInstanceIds);
     dataBody.itemBand = (ItemBand) itemBand.derive(preserveElementInstanceIds);
