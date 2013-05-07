@@ -740,7 +740,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   protected boolean startRowBox(final RenderBox box)
   {
-    return startBox(box, "row-box");
+    return startBox(box, "row");
   }
 
   protected void finishRowBox(final RenderBox box)
