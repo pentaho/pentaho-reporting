@@ -51,6 +51,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.RollbackStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
@@ -726,5 +727,32 @@ public abstract class AbstractRenderer implements Renderer
     pageBox.getRepeatFooterArea().clear();
     pageBox.getHeaderArea().clear();
     pageBox.getWatermarkArea().clear();
+  }
+
+  /**
+   * This is a debug helper function. It is not used in normal report runs. It helps debug layouter states
+   * and the roll-back system by dumping all layouts into a directory on the file system for automated diffs.
+   *
+   * @param state
+   * @param print
+   * @param rollback
+   */
+  @SuppressWarnings("UnusedDeclaration")
+  public void printLayoutStateToFile(final ProcessState state,
+                                     final boolean print,
+                                     final boolean rollback)
+  {
+//    if (((state.getSequenceCounter() <= 14444 || state.getSequenceCounter() >= 14444)) ||
+//        (state.getSequenceCounter() % 1) != 0)
+//    {
+//      return;
+//    }
+
+    String fileName = "test-output/" + state.getSequenceCounter();
+    fileName += print ? "-print" : "-paginate";
+    fileName += rollback ? "-rb" : "";
+    fileName += ".xml";
+
+    FileModelPrinter.print(fileName, getPageBox());
   }
 }

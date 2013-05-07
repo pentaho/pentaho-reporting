@@ -161,7 +161,7 @@ public class ReportStateKey
         ", subreport=" + subreport +
         ", stateCode=" + ReportEvent.translateStateCode(stateCode) +
         ", restoreState=" + restoreState +
-        ", stateCodeRaw=" + stateCode +
+        ", stateCodeRaw=0x" + Integer.toHexString(stateCode) +
         ", parent=" + parent +
         '}';
   }
