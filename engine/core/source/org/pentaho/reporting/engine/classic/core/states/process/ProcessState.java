@@ -1075,7 +1075,7 @@ public class ProcessState implements ReportState
   public final ProcessState commit() throws ReportProcessingException
   {
     final ProcessState commit = advanceHandler.commit(this);
-    commit.processKey = createKey();
+    commit.processKey = commit.createKey();
     return commit;
   }
 
