@@ -1323,7 +1323,7 @@ public class ReportDesignerFrame extends JFrame
 
   private void createMorphMenu()
   {
-    final JMenu morphMenu = context.getXulDesignerFrame().getMenuById("format-morph-menu");// NON-NLS
+    final JMenu morphMenu = context.getXulDesignerFrame().getMenuById("format-morph-menu");// NON-NLS     PRD-4452
     if (morphMenu != null)
     {
       final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
