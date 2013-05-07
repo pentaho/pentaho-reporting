@@ -3,9 +3,9 @@
   <physical-page page-x="0" page-y="0" page-width="841" page-height="595" margin-top="72" margin-left="72" margin-bottom="72" margin-right="72">
     <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="697.0" height="451.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
       <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="697.0" height="451.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row-box type="RowRenderBox" x="0.0" y="0.0" width="697.0" height="451.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <row type="RowRenderBox" x="0.0" y="0.0" width="697.0" height="451.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
-        </row-box>
+        </row>
       </block>
     </page-area>
     <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
@@ -24,20 +24,20 @@
         <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
-      <block name="relational-group" type="BlockRenderBox" x="0.0" y="0.0" width="697.0" height="28.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block type="BlockRenderBox" x="0.0" y="0.0" width="697.0" height="28.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           </block>
         </block>
-        <block name="group-data-body" type="BlockRenderBox" x="0.0" y="0.0" width="697.0" height="28.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="BlockRenderBox" x="0.0" y="0.0" width="697.0" height="28.0" color="#6a655b" font-face="Dustismo Roman" font-size="20" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             </block>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="697.0" height="14.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="0.0" width="697.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="0.0" width="697.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <p type="ParagraphRenderBox" padding-right="5.0" x="0.0" y="1.0" width="55.76" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -46,7 +46,7 @@
                   <text x="32.52" y="3.0" width="18.24" height="8.0">00001</text>
                 </line>
               </p>
-              <row-box name="test" type="RowRenderBox" border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid" x="55.76" y="1.0" width="326.32843" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row name="test" type="RowRenderBox" border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid" x="55.76" y="1.0" width="326.32843" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="test"/>
                 <p type="ParagraphRenderBox" padding-right="5.0" x="56.26" y="1.0" width="65.16569" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -63,7 +63,7 @@
                     <text x="168.82338" y="3.0" width="12.768" height="8.0">0.34</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
               <p type="ParagraphRenderBox" x="382.08843" y="0.0" width="100.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
@@ -71,10 +71,10 @@
                   <text x="466.04043" y="3.0" width="16.048" height="8.0">Label</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="14.0" width="697.0" height="14.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <row-box type="RowRenderBox" x="0.0" y="14.0" width="697.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <row type="RowRenderBox" x="0.0" y="14.0" width="697.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
               <p type="ParagraphRenderBox" padding-right="5.0" x="0.0" y="15.0" width="55.76" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
@@ -83,7 +83,7 @@
                   <text x="32.52" y="17.0" width="18.24" height="8.0">00002</text>
                 </line>
               </p>
-              <row-box name="test" type="RowRenderBox" border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid" x="55.76" y="15.0" width="326.32843" height="12.0" background-color="#e8e6e2" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <row name="test" type="RowRenderBox" border-left-color="#6a655b" border-left-width="0.5" border-left-style="solid" x="55.76" y="15.0" width="326.32843" height="12.0" background-color="#e8e6e2" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="test"/>
                 <p type="ParagraphRenderBox" padding-right="5.0" x="56.26" y="15.0" width="65.16569" height="12.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -100,7 +100,7 @@
                     <text x="170.64738" y="17.0" width="10.944" height="8.0">213</text>
                   </line>
                 </p>
-              </row-box>
+              </row>
               <p type="ParagraphRenderBox" x="382.08843" y="14.0" width="100.0" height="14.0" color="#6a655b" font-face="Arial Narrow" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
@@ -108,7 +108,7 @@
                   <text x="466.04043" y="17.0" width="16.048" height="8.0">Label</text>
                 </line>
               </p>
-            </row-box>
+            </row>
           </block>
           <block name="Section-0" type="SectionRenderBox" x="0.0" y="28.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <block type="ProgressMarkerRenderBox" x="0.0" y="28.0" width="697.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

@@ -455,7 +455,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
     return report;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public ReportDefinitionImpl derive(final boolean preserveElementInstanceIds)
   {
     final ReportDefinitionImpl report = (ReportDefinitionImpl) super.derive(preserveElementInstanceIds);
     report.rootGroup = (Group) rootGroup.derive(preserveElementInstanceIds);

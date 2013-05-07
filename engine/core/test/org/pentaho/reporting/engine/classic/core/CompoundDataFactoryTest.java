@@ -25,6 +25,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 
 public class CompoundDataFactoryTest extends TestCase
 {
@@ -72,12 +73,23 @@ public class CompoundDataFactoryTest extends TestCase
 
   public void testGetDataFactoryForName_no_metadata()
   {
-    final String queryName = "test"; //$NON-NLS-1$
-    final CompoundDataFactory cdf = new CompoundDataFactory();
-    cdf.add(new MockDataFactory(queryName));
+    try
+    {
+      final String queryName = "test"; //$NON-NLS-1$
+      final CompoundDataFactory cdf = new CompoundDataFactory();
+      cdf.add(new MockDataFactory(queryName));
 
-    assertEquals(1, cdf.getQueryNames().length);
-    assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
+      assertFalse(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
+      assertEquals(1, cdf.getQueryNames().length);
+      cdf.getDataFactoryForQuery(queryName);
+      fail();
+    }
+    catch (MetaDataLookupException e)
+    {
+      // we no longer allow data-factories without metadata in the system.
+      e.printStackTrace();
+    }
+
   }
 
   public void testGetDataFactoryForName_freeform()

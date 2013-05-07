@@ -898,8 +898,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
   {
     try
     {
-      // todo: Should be row, not row-box.
-      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-box", createBoxAttributeList(box), XmlWriter.OPEN);
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row", createBoxAttributeList(box), XmlWriter.OPEN);
       writeElementAttributes(box);
       return true;
     }

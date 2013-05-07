@@ -78,7 +78,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the clone of this band.
    */
-  public Object clone()
+  public AbstractRootLevelBand clone()
   {
     final AbstractRootLevelBand rootLevelBand = (AbstractRootLevelBand) super.clone();
     if (rootLevelBand.subReports != null)
@@ -101,7 +101,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the copy of the element.
    */
-  public Element derive(final boolean preserveElementInstanceIds)
+  public AbstractRootLevelBand derive(final boolean preserveElementInstanceIds)
   {
     final AbstractRootLevelBand rootLevelBand = (AbstractRootLevelBand) super.derive(preserveElementInstanceIds);
     if (rootLevelBand.subReports != null)

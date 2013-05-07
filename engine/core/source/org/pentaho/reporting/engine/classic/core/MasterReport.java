@@ -406,7 +406,7 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public Object clone()
+  public MasterReport clone()
   {
     final MasterReport report = (MasterReport) super.clone();
     report.reportConfiguration = (HierarchicalConfiguration) reportConfiguration.clone();
@@ -427,7 +427,7 @@ public class MasterReport extends AbstractReportDefinition
     return report;
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public MasterReport derive(final boolean preserveElementInstanceIds)
   {
     final MasterReport report = (MasterReport) super.derive(preserveElementInstanceIds);
     report.reportConfiguration = (HierarchicalConfiguration) reportConfiguration.clone();

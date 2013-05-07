@@ -4586,7 +4586,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DepartmentVariance"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="$#,##0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Variance Department Field"/>
-        <line type="ParagraphPoolBox" x="500.257" y="1857.0" width="39.743" height="11.0" color="red" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <line type="ParagraphPoolBox" x="500.257" y="1857.0" width="39.743" height="11.0" color="black" font-face="Arial" font-size="11" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="500.257" y="1857.0" width="39.743" height="11.0">$33,074</text>
         </line>
       </cell>

@@ -942,7 +942,7 @@ public abstract class AbstractReportDefinition extends Section
    *
    * @return the clone.
    */
-  public Object clone()
+  public AbstractReportDefinition clone()
   {
     try
     {
@@ -985,7 +985,7 @@ public abstract class AbstractReportDefinition extends Section
     }
   }
 
-  public Element derive(final boolean preserveElementInstanceIds)
+  public AbstractReportDefinition derive(final boolean preserveElementInstanceIds)
   {
     final AbstractReportDefinition report = (AbstractReportDefinition) super.derive(preserveElementInstanceIds);
     report.eventListeners = null;

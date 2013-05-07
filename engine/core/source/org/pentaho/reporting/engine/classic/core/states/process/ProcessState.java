@@ -104,6 +104,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class ProcessState implements ReportState
 {
   private static class InternalProcessHandle implements ProcessStateHandle
@@ -983,11 +984,9 @@ public class ProcessState implements ReportState
     try
     {
       final ProcessState processState = clone();
-      processState.sequenceCounter += 1;
       processState.flowController = flowController.derive();
       processState.report = report.clone();
       processState.layoutProcess = layoutProcess.deriveForPagebreak();
-      processState.processKey = processState.createKey();
       return processState;
     }
     catch (CloneNotSupportedException e)
@@ -1075,7 +1074,9 @@ public class ProcessState implements ReportState
 
   public final ProcessState commit() throws ReportProcessingException
   {
-    return advanceHandler.commit(this);
+    final ProcessState commit = advanceHandler.commit(this);
+    commit.processKey = commit.createKey();
+    return commit;
   }
 
   public int getCurrentRow()

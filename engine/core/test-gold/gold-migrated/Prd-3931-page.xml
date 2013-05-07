@@ -23,9 +23,9 @@
         <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="1155.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
-      <block name="crosstab" type="AutoRenderBox" x="0.0" y="0.0" width="1200.0" height="600.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block type="AutoRenderBox" x="0.0" y="0.0" width="1200.0" height="600.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab"/>
-        <block name="crosstab-row-group-body" type="AutoRenderBox" x="0.0" y="0.0" width="1200.0" height="600.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="0.0" width="1200.0" height="600.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-row-group-body"/>
           <table type="TableRenderBox" x="0.0" y="0.0" width="1200.0" height="600.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>

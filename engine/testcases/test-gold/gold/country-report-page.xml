@@ -65,11 +65,11 @@
           </p>
         </canvas>
       </block>
-      <block name="relational-group" type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-        <block name="sub-group-body" type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
-          <block name="relational-group" type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block name="Continent Group" type="AutoRenderBox" x="0.0" y="108.0" width="712.0" height="38.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="Continent"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Continent Group"/>
@@ -99,7 +99,7 @@
                 </replaced-content>
               </canvas>
             </block>
-            <block name="group-data-body" type="AutoRenderBox" x="0.0" y="126.0" width="712.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block type="AutoRenderBox" x="0.0" y="126.0" width="712.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
             </block>
             <block name="Section-0" type="AutoRenderBox" x="0.0" y="126.0" width="712.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

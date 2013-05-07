@@ -177,4 +177,14 @@ public abstract class Section extends Element implements Iterable<Element>
   {
     return new SectionIterator();
   }
+
+  public Section derive(final boolean preserveElementInstanceIds)
+  {
+    return (Section) super.derive(preserveElementInstanceIds);
+  }
+
+  public Section clone()
+  {
+    return (Section) super.clone();
+  }
 }
