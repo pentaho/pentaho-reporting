@@ -65,6 +65,15 @@ public class FilteringPageBreakPositions implements PageBreakPositions
     return backend.findPageStartPositionForPageEndPosition(pageOffset);
   }
 
+  public long findPageEndForPageStartPosition(final long pageOffset)
+  {
+    if (pageOffset <= pageStart)
+    {
+      return pageStart;
+    }
+    return backend.findPageEndForPageStartPosition(pageOffset);
+  }
+
   public boolean isCrossingPagebreak(final RenderBox box,
                                      final long pagebreakShift)
   {

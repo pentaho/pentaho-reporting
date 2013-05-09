@@ -934,6 +934,33 @@ public class PageBreakPositionList implements PageBreakPositions
     return retval.toString();
   }
 
+  public long findPageEndForPageStartPosition(final long pageOffset)
+  {
+    final int masterBreakSize = getMasterBreakSize();
+    if (masterBreakSize > 0)
+    {
+      final long lastBreak = getMasterBreak(masterBreakSize - 1);
+      if (pageOffset == lastBreak)
+      {
+        return lastBreak;
+      }
+
+      for (int i = masterBreakSize - 2; i >= 0; i -= 1)
+      {
+        final long masterBreak = getMasterBreak(i);
+        if (masterBreak == pageOffset)
+        {
+          return getMasterBreak(i + 1);
+        }
+        if (masterBreak < pageOffset)
+        {
+          break;
+        }
+      }
+    }
+    throw new IllegalStateException("Unable to locate proper page start for given offset " + pageOffset);
+  }
+
   public long findPageStartPositionForPageEndPosition(final long pageOffset)
   {
     final int masterBreakSize = getMasterBreakSize();

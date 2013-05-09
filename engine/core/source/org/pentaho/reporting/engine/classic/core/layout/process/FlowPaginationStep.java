@@ -598,25 +598,22 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       // break.
       // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
       // into account.
-      if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
+      if (logger.isDebugEnabled())
       {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
-          logger.debug("Automatic pagebreak                      : " + visualState);
-        }
-        final long nextShift = nextMinorBreak - boxY;
-        final long shiftDelta = nextShift - shift;
-        box.setY(boxY + nextShift);
-        BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-        boxContext.setShift(nextShift);
-        updateStateKey(box);
-        if (box.getY() < nextMinorBreak)
-        {
-          box.markPinned(nextMinorBreak);
-        }
-        return true;
+        logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
+        logger.debug("Automatic pagebreak                      : " + visualState);
       }
+      final long nextShift = nextMinorBreak - boxY;
+      final long shiftDelta = nextShift - shift;
+      box.setY(boxY + nextShift);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+      boxContext.setShift(nextShift);
+      updateStateKey(box);
+      if (box.getY() < nextMinorBreak)
+      {
+        box.markPinned(nextMinorBreak);
+      }
+      return true;
     }
 
     // OK, there *is* enough space available. Start the normal processing

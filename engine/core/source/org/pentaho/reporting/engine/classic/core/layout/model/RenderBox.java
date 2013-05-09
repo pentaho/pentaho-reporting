@@ -1535,10 +1535,18 @@ public abstract class RenderBox extends RenderNode
 
     this.restrictFinishClearOut = restrictFinishedClearOut;
     final RenderBox parent = getParent();
-    if (parent != null && restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED)
+    // only propagate across block-elements. Canvas, Inline or row-elements do not carry
+    // the pagebreak-restrictions upwards.
+    if (parent != null && parent.isBlockForPagebreakPurpose() &&
+        restrictFinishedClearOut != RestrictFinishClearOut.UNRESTRICTED)
     {
       parent.setRestrictFinishedClearOut(RestrictFinishClearOut.RESTRICTED);
     }
+  }
+
+  protected boolean isBlockForPagebreakPurpose()
+  {
+    return false;
   }
 
   public boolean isOrphanLeaf()

@@ -1,3 +1,20 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ */
+
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.apache.commons.logging.Log;
@@ -15,11 +32,11 @@ public class OrphanBlockContext implements OrphanContext
   private RenderBox contextBox;
   private int orphans;
   private int orphanCount;
-  private RingBuffer<Long> orphanSize;
+  private RingBuffer<RenderNode> orphanSize;
   private long orphanOverride;
 
   private RenderNode currentNode;
-  private boolean markWidowBoxes;
+  private boolean breakMarkerSeen;
 
   public OrphanBlockContext()
   {
@@ -30,19 +47,19 @@ public class OrphanBlockContext implements OrphanContext
                    final RenderBox contextBox,
                    final int orphans)
   {
+    this.breakMarkerSeen = false;
     this.pool = pool;
     this.parent = parent;
     this.contextBox = contextBox;
     this.orphans = orphans;
     this.orphanOverride = contextBox.getCachedY();
-    this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
     this.orphanCount = 0;
 
     if (orphans > 0)
     {
       if (this.orphanSize == null)
       {
-        this.orphanSize = new RingBuffer<Long>(orphans);
+        this.orphanSize = new RingBuffer<RenderNode>(orphans);
       }
       else
       {
@@ -68,8 +85,7 @@ public class OrphanBlockContext implements OrphanContext
     {
       if (orphanCount < orphans && orphans > 0)
       {
-        final long y2 = box.getCachedY() + box.getCachedHeight();
-        orphanSize.add(y2);
+        orphanSize.add(box);
         orphanCount += 1;
         box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
@@ -86,8 +102,7 @@ public class OrphanBlockContext implements OrphanContext
   {
     if (orphanCount < orphans && orphans > 0)
     {
-      final long y2 = box.getCachedY() + box.getCachedHeight();
-      orphanSize.add(y2);
+      orphanSize.add(box);
       box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
       orphanCount += 1;
     }
@@ -99,18 +114,27 @@ public class OrphanBlockContext implements OrphanContext
     }
   }
 
+  public void registerBreakMark(final RenderBox box)
+  {
+    breakMarkerSeen = true;
+    if (parent != null)
+    {
+      parent.registerBreakMark(box);
+    }
+  }
+
   public long getOrphanValue()
   {
     if (orphans == 0)
     {
       return orphanOverride;
     }
-    final Long lastValue = orphanSize.getLastValue();
+    final RenderNode lastValue = orphanSize.getLastValue();
     if (lastValue == null)
     {
       return orphanOverride;
     }
-    return Math.max(orphanOverride, lastValue.longValue());
+    return Math.max(orphanOverride, lastValue.getCachedY2());
   }
 
   public OrphanContext commit(final RenderBox box)
@@ -128,7 +152,7 @@ public class OrphanBlockContext implements OrphanContext
     box.setOrphanConstraintSize(Math.max(0, constraintSize - box.getCachedY()));
 
     final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
-    if (incomplete)
+    if (breakMarkerSeen == false && incomplete)
     {
       if (orphanCount < orphans || keepTogether)
       {

@@ -29,7 +29,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionL
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.BasePaginationTableState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftState;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
@@ -248,51 +247,4 @@ public final class PaginationStepLib
     }
     return retval;
   }
-
-  public static boolean isRestrictedKeepTogether(final RenderBox box,
-                                                 final long shift,
-                                                 final BasePaginationTableState paginationTableState)
-  {
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Testing whether box is inside restricted area: " + box.getName());
-    }
-    RenderBox parent = box.getParent();
-    while (parent != null)
-    {
-      if (parent.getOrphanConstraintSize() > 0)
-      {
-        final long restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
-
-        if (restrictedAreaBounds > box.getCachedY())
-        {
-          if (parent.getY() == paginationTableState.getPageOffset())
-          {
-            // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
-            // for all its direct childs. Nothing we can do now, ignore the constraints.
-            if (logger.isDebugEnabled())
-            {
-              logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
-              logger.debug("                      : Parent on page-offset -> " + parent);
-            }
-            return true;
-          }
-
-          if (paginationTableState.isOnPageStart(parent.getY() + shift))
-          {
-            if (logger.isDebugEnabled())
-            {
-              logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
-              logger.debug("                      : Parent on table-offset -> " + parent);
-            }
-            return true;
-          }
-        }
-      }
-
-      parent = parent.getParent();
-    }
-    return false;
-  }
-
 }

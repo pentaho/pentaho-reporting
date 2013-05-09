@@ -152,7 +152,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
   private boolean startCleanTableRowBoxesFromSection(final TableSectionRenderBox box)
   {
-    removeBreakMarker(box);
     if (box.isFinishedPaginate() == false)
     {
       return true;
@@ -212,13 +211,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     final int nodeType = box.getLayoutNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
-      return false;
-    }
-
-    if (removeBreakMarker(box))
-    {
-//      DebugLog.log("Removing: " + box.getInstanceId());
-      // breakmarker has been replaced by a finished node.
       return false;
     }
 
@@ -411,50 +403,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       shiftNode = box.getInstanceId();
     }
   }
-
-  private boolean removeBreakMarker(final RenderBox box)
-  {
-    final int nodeType = box.getLayoutNodeType();
-    if (nodeType != LayoutNodeTypes.TYPE_BOX_BREAKMARK)
-    {
-      return false;
-    }
-
-    final RenderBox parent = box.getParent();
-    if (parent == null)
-    {
-      // No parent? Unlikely and should not happen. Throw an assert-failure
-      throw new IllegalStateException("Encountered a render-node that has no parent. How can that be?");
-    }
-
-    final long width = box.getContentAreaX2() - box.getContentAreaX1();
-    final long pageOffset = allVerticalBreaks.findNextMajorBreakPosition(box.getY());
-
-    // A breakmark box must be translated into a finished node, so that we consume space without
-    // triggering yet another break. The finished node will consume all space up to the next pagebreak.
-    final RenderNode prevSilbling = box.getPrev();
-    if (prevSilbling == null)
-    {
-      // Node is first, so the parent's y is the next edge we take care of.
-      final StaticBoxLayoutProperties sblp = parent.getStaticBoxLayoutProperties();
-      final long insetsTop = sblp.getBorderTop() + parent.getBoxDefinition().getPaddingTop();
-      final long y = parent.getY() + insetsTop;
-      final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-      final FinishedRenderNode replacement =
-          new FinishedRenderNode(box.getContentAreaX1(), y, width, y2 - y, 0, 0, true, false);
-      parent.replaceChild(box, replacement);
-    }
-    else
-    {
-      final long y = prevSilbling.getY() + prevSilbling.getHeight();
-      final long y2 = Math.max(pageOffset, box.getY() + box.getHeight());
-      final FinishedRenderNode replacement = new FinishedRenderNode
-          (box.getContentAreaX1(), y, width, y2 - y, 0, 0, true, false);
-      parent.replaceChild(box, replacement);
-    }
-    return true;
-  }
-
 
   private boolean isBreakAfter(final RenderNode node)
   {

@@ -19,15 +19,11 @@ package org.pentaho.reporting.engine.classic.core.layout.style;
 
 import org.pentaho.reporting.engine.classic.core.style.AbstractStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-/**
- * Creation-Date: 05.08.2007, 13:23:36
- *
- * @author Thomas Morgner
- */
 public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet
 {
   private StyleSheet parentStyleSheet;
@@ -45,6 +41,11 @@ public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet
 
   public Object getStyleProperty(final StyleKey key, final Object defaultValue)
   {
+    if (ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals(key))
+    {
+      return Boolean.TRUE;
+    }
+
     if (key.isInheritable())
     {
       return parentStyleSheet.getStyleProperty(key, defaultValue);
@@ -74,7 +75,11 @@ public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet
     for (int i = 0; i < keys.length; i++)
     {
       final StyleKey key = keys[i];
-      if (key.isInheritable())
+      if (ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals(key))
+      {
+        objects[i] = Boolean.TRUE;
+      }
+      else if (key.isInheritable())
       {
         objects[i] = parentStyleSheet.getStyleProperty(key, null);
       }

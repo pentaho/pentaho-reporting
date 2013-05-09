@@ -16,6 +16,15 @@ public interface PageBreakPositions
   long findPageStartPositionForPageEndPosition(final long pageEndPosition);
 
   /**
+   * Locates the page-end for a given page-start position.
+   *
+   * @param pageStartPosition the current page-start for which to find the page-end.
+   * @return the end position for the page starting on <code>pageStartPosition</code>.
+   * @throws IllegalStateException if the given pageStartPosition does not correspond to a major break.
+   */
+  long findPageEndForPageStartPosition(final long pageStartPosition);
+
+  /**
    * Checks, whether the given box will cross a pagebreak. The box's y-position is shifted by the given amount before
    * testing the result. A box will cross a pagebreak if its shifted y position and its shifted y2 position (y + height)
    * are located on different pages. A box with a height of zero cannot cross a pagebreak by definition.

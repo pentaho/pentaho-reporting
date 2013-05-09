@@ -1,3 +1,20 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ */
+
 package org.pentaho.reporting.engine.classic.core.layout;
 
 import junit.framework.TestCase;
@@ -238,23 +255,23 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    DebugReportRunner.showDialog(report);
-
     final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
-    //ModelPrinter.INSTANCE.print(logicalPageBox1);
+    ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
     final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-outside");
     assertNotNull(grOut2);
     final RenderNode ib1 = MatchFactory.findElementByName(logicalPageBox1, "ib1");
     assertNotNull(ib1);
-    final RenderNode ib2_miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
-    assertNotNull(ib2_miss);
+    final RenderNode ib2 = MatchFactory.findElementByName(logicalPageBox1, "ib2");
+    assertNotNull(ib2);
+    final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
+    assertNull(ib3miss);
 
     final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
-  //  ModelPrinter.INSTANCE.print(logicalPageBox2);
-    final RenderNode ib2 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
-    assertNull(ib2);
+    ModelPrinter.INSTANCE.print(logicalPageBox2);
+    final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
+    assertNull(ib3);
   }
 
   private Band createBand(final String name)
