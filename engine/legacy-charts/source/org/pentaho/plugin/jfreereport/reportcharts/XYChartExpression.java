@@ -35,6 +35,7 @@ import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardXYItemLabelGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
@@ -714,6 +715,8 @@ public abstract class XYChartExpression extends AbstractChartExpression implemen
     {
       renderer.setURLGenerator(new FormulaXYZURLGenerator(getRuntime(), getUrlFormula()));
     }
+
+    renderer.setBaseItemLabelGenerator(new StandardXYItemLabelGenerator());
     renderer.setBaseItemLabelsVisible(Boolean.TRUE.equals(getItemsLabelVisible()));
     if (getItemLabelFont() != null)
     {
