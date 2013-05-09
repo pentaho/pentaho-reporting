@@ -5,24 +5,14 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.XYItemLabelGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportHeader;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -74,6 +64,7 @@ public class Prd4343Test extends TestCase
     final XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer)xyLinePlot.getRenderer();
     assertNotNull(renderer);
     assertTrue(renderer.getBaseLinesVisible());
+    assertNotNull(renderer.getBaseItemLabelGenerator());
     assertTrue(renderer.getBaseItemLabelGenerator() instanceof StandardXYItemLabelGenerator);
   }
 }
