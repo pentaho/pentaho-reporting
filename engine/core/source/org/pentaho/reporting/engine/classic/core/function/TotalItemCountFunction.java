@@ -20,6 +20,8 @@ package org.pentaho.reporting.engine.classic.core.function;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -168,16 +170,16 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   public Object clone() throws CloneNotSupportedException
   {
     final TotalItemCountFunction o = (TotalItemCountFunction) super.clone();
-    o.results =  new HashMap<ReportStateKey, Sequence<Integer>>();
+    o.results =  (HashMap<ReportStateKey, Sequence<Integer>>)results.clone();  
 
     // Clone saved group results.
     // The currently active result needs to be handled
     // separately from this loop, since the globalStateKey
     // and currentGroupKey both need to be mapped to it.
-    for (ReportStateKey key : results.keySet()) {
-      if (key != globalStateKey && key != currentGroupKey)
+    for (Map.Entry<ReportStateKey, Sequence<Integer>> entry : results.entrySet()) {
+      if (entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey)
       {
-         o.results.put(key, results.get(key).clone());
+         o.results.put(entry.getKey(), entry.getValue().clone());
       }
     }
 

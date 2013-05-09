@@ -23,6 +23,8 @@ import java.util.Map;
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
+import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 /**
  * A report function that counts the total number of items contained in groups in a report. Resets the
@@ -44,7 +46,7 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
   /**
    * holds the collection of values associated with pages and groups
    */
-  private PageGroupValues values = new PageGroupValues();
+  private transient PageGroupValues values = new PageGroupValues();
 
   private int pageIndex = 0;
   private int groupIndex = 0;
@@ -65,12 +67,18 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
   public void groupStarted(final ReportEvent event)
   {
     super.groupStarted(event);
-    groupIndex++;
+    if (getGroup() != null)
+    {
+      groupIndex++;
+    }
   }
 
   public void groupFinished(final ReportEvent event)
   {
-    storeValue(event);
+    if (getGroup() != null)
+    {
+      storeValue(event);
+    }
   }
 
   /**
@@ -85,6 +93,7 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
 
   /**
    * Handles the pageFinishedEvent.
+   * Stores the current page value and clears the counter.
    *
    * @param event the report event.
    */
@@ -104,6 +113,19 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
     {
       values.put(pageIndex, groupIndex, super.getValue());
     }
+  }
+
+  /**
+   * Return a completly separated copy of this function. The copy no longer shares any changeable objects with the
+   * original function.
+   *
+   * @return a copy of this function.
+   */
+  public Expression getInstance()
+  {
+    final TotalPageItemCountFunction function = (TotalPageItemCountFunction) super.getInstance();
+    function.values = new PageGroupValues();
+    return function;
   }
 
   /**
