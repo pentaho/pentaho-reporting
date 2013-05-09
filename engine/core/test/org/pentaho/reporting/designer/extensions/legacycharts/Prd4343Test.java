@@ -1,4 +1,4 @@
-package org.pentaho.reporting.engine.classic.core.bugs;
+package org.pentaho.reporting.designer.extensions.legacycharts;
 
 import java.net.URL;
 
