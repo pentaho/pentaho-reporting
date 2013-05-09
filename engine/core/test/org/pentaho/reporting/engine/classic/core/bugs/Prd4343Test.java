@@ -46,11 +46,10 @@ public class Prd4343Test extends TestCase
 
     try
     {
-      LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
+      LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
       final RenderNode xyChart = MatchFactory.findElementByName(logicalPageBox, "xy-chart");
-    } catch (ReportProcessingException ex) {
-
-    } catch (ContentProcessingException cpe) {
+      System.out.println("*******");
+    } catch (Exception ex) {
 
     }
 
