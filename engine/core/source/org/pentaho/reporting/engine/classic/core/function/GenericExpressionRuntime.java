@@ -64,6 +64,11 @@ public class GenericExpressionRuntime implements ExpressionRuntime
     this.dataFactory = new CompoundDataFactory();
   }
 
+  public GenericExpressionRuntime(final ExpressionRuntime runtime)
+  {
+       this(new StaticDataRow(runtime.getDataRow()),runtime.getData(),runtime.getCurrentRow(),runtime.getProcessingContext());
+  }
+
   public DataFactory getDataFactory()
   {
     return dataFactory;
@@ -152,4 +157,5 @@ public class GenericExpressionRuntime implements ExpressionRuntime
   {
     return false;
   }
+
 }
