@@ -3,6 +3,7 @@ package org.pentaho.reporting.ui.datasources.kettle;
 import java.beans.PropertyChangeListener;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
+
 import javax.swing.JComponent;
 
 import org.apache.commons.logging.Log;
@@ -24,6 +25,7 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Embedd
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.ui.xul.XulComponent;
+import org.pentaho.ui.xul.swing.tags.SwingDialog;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -58,7 +60,13 @@ public class EmbeddedHelper
 
 
     XulComponent root = dialog.getXulDomContainer().getDocumentRoot().getElementById("root");
-    JComponent panel = (JComponent) root.getParent().getManagedObject();
+    
+    // Without the following two lines of code, message boxes and prompts will freeze the dialog... 
+    // There must be a better way.
+    
+    JComponent panel = ((SwingDialog)root.getParent()).getContainer();
+    dialog.setModalParent(panel);
+
     return panel;
   }
 
