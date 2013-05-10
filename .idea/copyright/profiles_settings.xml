@@ -1,5 +1,7 @@
 <component name="CopyrightManager">
   <settings default="">
-    <module2copyright />
+    <module2copyright>
+      <element module="Pentaho-Sources" copyright="Pentaho Copyright" />
+    </module2copyright>
   </settings>
 </component>
