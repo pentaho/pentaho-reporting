@@ -131,6 +131,11 @@ public class JFreeChartReportDrawable implements ReportDrawable
 
   }
 
+  public JFreeChart getChart()
+  {
+    return chart;
+  }
+
   /**
    * Returns an optional image-map for the entry.
    *
