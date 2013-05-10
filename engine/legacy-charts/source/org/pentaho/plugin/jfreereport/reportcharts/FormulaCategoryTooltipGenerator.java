@@ -1,17 +1,22 @@
 package org.pentaho.plugin.jfreereport.reportcharts;
 
+import javax.swing.table.TableModel;
+
 import org.jfree.chart.labels.CategoryToolTipGenerator;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.util.Log;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 
 public class FormulaCategoryTooltipGenerator implements CategoryToolTipGenerator
 {
   private FormulaExpression formulaExpression;
-  private ExpressionRuntime runtime;
+  private GenericExpressionRuntime runtime;
   private static final String[] ADDITIONAL_COLUMN_KEYS = new String[]{
       "chart::series-key", "chart::category-key",
       "chart::series-index", "chart::category-index",
@@ -22,9 +27,14 @@ public class FormulaCategoryTooltipGenerator implements CategoryToolTipGenerator
   public FormulaCategoryTooltipGenerator(final ExpressionRuntime runtime,
                                          final String formula)
   {
-    this.runtime = runtime;
+    this.runtime = copyRuntimeValues(runtime);
     this.formulaExpression = new FormulaExpression();
     this.formulaExpression.setFormula(formula);
+  }
+
+  private GenericExpressionRuntime copyRuntimeValues(final ExpressionRuntime rtime) {
+    GenericExpressionRuntime gre = new GenericExpressionRuntime(rtime.getData(),rtime.getCurrentRow(),rtime.getProcessingContext());   
+    return gre;
   }
 
   /**
@@ -53,18 +63,22 @@ public class FormulaCategoryTooltipGenerator implements CategoryToolTipGenerator
           seriesKeys, categoryKeys,
           value
       };
-      formulaExpression.setRuntime(new WrapperExpressionRuntime
-          (new StaticDataRow(ADDITIONAL_COLUMN_KEYS, values), runtime));
+      final StaticDataRow datarow = new StaticDataRow(ADDITIONAL_COLUMN_KEYS, values);      
+      final WrapperExpressionRuntime wrapper = new WrapperExpressionRuntime(datarow , runtime);
+      formulaExpression.setRuntime(wrapper);
       final Object o = formulaExpression.getValue();
       if (o == null)
       {
         return null;
       }
       return String.valueOf(o);
+    } catch(Exception ex){
+      Log.error(ex.getMessage(),ex);      
     }
     finally
     {
       formulaExpression.setRuntime(null);
     }
+    return null;
   }
 }
