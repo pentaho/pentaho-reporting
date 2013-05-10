@@ -5,13 +5,14 @@ import org.jfree.data.general.PieDataset;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 
 public class FormulaPieTooltipGenerator implements PieToolTipGenerator
 {
   private FormulaExpression formulaExpression;
-  private ExpressionRuntime runtime;
+  private GenericExpressionRuntime runtime;
   private static final String[] ADDITIONAL_COLUMN_KEYS = new String[]{
       "chart::key", "chart::keys",
       "chart::item", "chart::items",
@@ -21,7 +22,7 @@ public class FormulaPieTooltipGenerator implements PieToolTipGenerator
   public FormulaPieTooltipGenerator(final ExpressionRuntime runtime,
                                     final String formula)
   {
-    this.runtime = runtime;
+    this.runtime = new GenericExpressionRuntime(runtime);
     this.formulaExpression = new FormulaExpression();
     this.formulaExpression.setFormula(formula);
   }
