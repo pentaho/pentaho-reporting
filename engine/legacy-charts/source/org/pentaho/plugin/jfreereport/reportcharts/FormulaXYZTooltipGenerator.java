@@ -6,6 +6,7 @@ import org.jfree.data.xy.XYZDataset;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 
@@ -22,7 +23,7 @@ public class FormulaXYZTooltipGenerator implements XYZToolTipGenerator
   public FormulaXYZTooltipGenerator(final ExpressionRuntime runtime,
                                     final String formula)
   {
-    this.runtime = runtime;
+    this.runtime = new GenericExpressionRuntime(runtime);
     this.formulaExpression = new FormulaExpression();
     this.formulaExpression.setFormula(formula);
   }
