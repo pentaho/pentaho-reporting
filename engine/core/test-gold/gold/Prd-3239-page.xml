@@ -85,10 +85,6 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PARA_1"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@18032083"/>
             </p>
-            <replaced-content x="700.0" y="884.0" width="300.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
-            </replaced-content>
             <p name="Element@22066738" type="ParagraphRenderBox" x="700.0" y="814.0" width="300.0" height="20.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
@@ -97,10 +93,6 @@
                 <text x="837.334" y="818.0" width="25.332" height="12.0">Date</text>
               </line>
             </p>
-            <replaced-content x="100.0" y="884.0" width="500.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
-            </replaced-content>
             <p name="Element@22066738" type="ParagraphRenderBox" x="100.0" y="814.0" width="500.0" height="20.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
@@ -1795,16 +1787,6 @@
         <block name="Section-0" type="AutoRenderBox" x="0.0" y="-629.0" width="1200.0" height="760.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="-629.0" width="1200.0" height="760.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
-            <p name="TextField@27124537" type="ParagraphRenderBox" x="100.0" y="-619.0" width="1100.0" height="16.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="COMPLETE_DATE"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
-            </p>
-            <p name="TextField@18032083" type="ParagraphRenderBox" x="100.0" y="-599.0" width="1100.0" height="16.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PARA_1"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@18032083"/>
-            </p>
             <replaced-content x="700.0" y="131.0" width="300.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
@@ -1813,16 +1795,6 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
             </replaced-content>
-            <p name="TextField@27124537" type="ParagraphRenderBox" x="600.0" y="-9.0" width="100.0" height="20.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SYS_CAL_FLAG"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
-            </p>
-            <p name="TextField@27124537" type="ParagraphRenderBox" x="600.0" y="16.0" width="100.0" height="20.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="WARNINGS_FLAG"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
-            </p>
           </canvas>
         </block>
         <block type="ProgressMarkerRenderBox" x="0.0" y="131.0" width="1200.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2419,10 +2391,6 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
             </canvas>
-            <replaced-content x="820.0" y="894.0" width="280.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
-            </replaced-content>
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="514.0" width="1002.0" height="22.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
@@ -3703,10 +3671,6 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=" by"/>
             </p>
-            <replaced-content x="650.0" y="894.0" width="150.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
-              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@3459142"/>
-            </replaced-content>
             <p name="Element@22066738" type="ParagraphRenderBox" x="100.0" y="874.0" width="550.0" height="20.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
