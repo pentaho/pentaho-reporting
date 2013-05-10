@@ -16,7 +16,12 @@
   </publications>
 
   <dependencies defaultconf="default_internal->default">
+
     <!-- reporting engine dependencies -->
+
+    <dependency org="pentaho" name="pentaho-xul-swing" rev="${dependency.pentaho-xul.revision}"
+                transitive="true" changing="true" conf="default_external->default"/>
+
 
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-kettle"
                 rev="${project.revision}" transitive="true"
