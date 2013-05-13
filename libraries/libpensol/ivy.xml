@@ -18,7 +18,6 @@
 	<dependencies defaultconf="default_internal->default">
 		<!--  internal dependencies -->
 		<dependency org="${ivy.artifact.group}" name="libbase" rev="${project.revision}" transitive="true" changing="true"/>
-		<dependency org="${ivy.artifact.group}" name="libswing" rev="${project.revision}" transitive="true" changing="true" />
 
 		<!--  external dependencies -->
 		<dependency org="commons-vfs" name="commons-vfs" rev="1.0" transitive="false" changing="false" conf="default_external->default"/>
