@@ -546,7 +546,9 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
   {
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
-    if (breakUtility.isCrossingPagebreak(box, shift) == false)
+    final long boxHeightAndWidowArea = Math.max
+        (box.getHeight(), PaginationStepLib.getWidowConstraint(box, shiftState, paginationTableState));
+    if (breakUtility.isCrossingPagebreak(box.getY(), boxHeightAndWidowArea, shift) == false)
     {
       // The whole box fits on the current page. No need to do anything fancy.
       final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
@@ -591,32 +593,29 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       return true;
     }
 
-    final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box, boxContext);
+    final long spaceConsumed = PaginationStepLib.computeNonBreakableBoxHeight(box, boxContext, paginationTableState);
     if (spaceAvailable < spaceConsumed)
     {
       // So we have not enough space to fulfill the layout-constraints. Be it so. Lets shift the box to the next
       // break.
       // check whether we can actually shift the box. We will have to take the previous widow/orphan operations
       // into account.
-      if (PaginationStepLib.isRestrictedKeepTogether(box, shift, paginationTableState) == false)
+      if (logger.isDebugEnabled())
       {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
-          logger.debug("Automatic pagebreak                      : " + visualState);
-        }
-        final long nextShift = nextMinorBreak - boxY;
-        final long shiftDelta = nextShift - shift;
-        box.setY(boxY + nextShift);
-        BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
-        boxContext.setShift(nextShift);
-        updateStateKey(box);
-        if (box.getY() < nextMinorBreak)
-        {
-          box.markPinned(nextMinorBreak);
-        }
-        return true;
+        logger.debug("Automatic pagebreak, after orphan-opt-out: " + box);
+        logger.debug("Automatic pagebreak                      : " + visualState);
       }
+      final long nextShift = nextMinorBreak - boxY;
+      final long shiftDelta = nextShift - shift;
+      box.setY(boxY + nextShift);
+      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
+      boxContext.setShift(nextShift);
+      updateStateKey(box);
+      if (box.getY() < nextMinorBreak)
+      {
+        box.markPinned(nextMinorBreak);
+      }
+      return true;
     }
 
     // OK, there *is* enough space available. Start the normal processing

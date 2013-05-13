@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class PageableRenderer extends AbstractRenderer
@@ -130,8 +131,7 @@ public class PageableRenderer extends AbstractRenderer
     final LogicalPageBox pageBox = getPageBox();
 
     //    final long sizeBeforePagination = pageBox.getHeight();
-    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
-    orphanStep.processOrphanAnnotation(pageBox);
+//    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
     if (pageBox.isOpen() && pageBreak.isOverflow() == false)
     {
@@ -146,7 +146,7 @@ public class PageableRenderer extends AbstractRenderer
     if (logger.isDebugEnabled())
     {
       logger.debug("Printing a page: " + pageCount);
-      if (pageCount == -2)
+      if (pageCount == -1)
       {
         // leave the debug-code in until all of these cases are solved.
         logger.debug("1: **** Start Printing Page: " + pageCount);

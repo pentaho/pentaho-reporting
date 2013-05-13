@@ -126,4 +126,14 @@ public class AutoRenderBox extends RenderBox
       extendHeightInBlockMode(child, heightOffset);
     }
   }
+
+  protected boolean isBlockForPagebreakPurpose()
+  {
+    final RenderBox parent = getParent();
+    if (parent == null)
+    {
+      return true;
+    }
+    return parent.isBlockForPagebreakPurpose();
+  }
 }

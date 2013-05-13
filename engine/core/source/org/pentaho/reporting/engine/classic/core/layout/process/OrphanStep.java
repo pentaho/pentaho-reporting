@@ -1,6 +1,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -79,6 +80,11 @@ public class OrphanStep extends IterateSimpleStructureProcessStep
     if (properties.isWidowOrphanOptOut() == false)
     {
       context.startChild(box);
+    }
+
+    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      context.registerBreakMark(box);
     }
 
     context = contextPool.create(box, context);

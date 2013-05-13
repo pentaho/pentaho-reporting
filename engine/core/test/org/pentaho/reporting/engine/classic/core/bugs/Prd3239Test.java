@@ -9,8 +9,10 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableReportUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -72,5 +74,18 @@ public class Prd3239Test extends TestCase
 
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlTableReportUtil.createFlowXML(report, bout);
+  }
+
+  public void testGoldenSample() throws Exception
+  {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3239.prpt");
+    final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 0);
+    assertNull(MatchFactory.findElementByName(page1, "Element@3459142"));
+    assertNotNull(MatchFactory.findElementByName(page1, "TextField@18032083"));
+
+    final LogicalPageBox page2 = DebugReportRunner.layoutPage(masterReport, 1);
+    assertNotNull(MatchFactory.findElementByName(page2, "Element@3459142"));
+    assertNull(MatchFactory.findElementByName(page2, "TextField@18032083"));
+
   }
 }

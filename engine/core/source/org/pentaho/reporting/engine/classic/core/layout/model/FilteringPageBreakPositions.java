@@ -1,3 +1,19 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ */
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
 public class FilteringPageBreakPositions implements PageBreakPositions
@@ -48,6 +64,11 @@ public class FilteringPageBreakPositions implements PageBreakPositions
     return backend.findNextMajorBreakPosition(position);
   }
 
+  public long findPreviousBreakPosition(final long position)
+  {
+    return Math.max (pageStart, backend.findPreviousBreakPosition(position));
+  }
+
   public long findPageStartPositionForPageEndPosition(final long pageOffset)
   {
     if (pageOffset == 0)
@@ -65,20 +86,30 @@ public class FilteringPageBreakPositions implements PageBreakPositions
     return backend.findPageStartPositionForPageEndPosition(pageOffset);
   }
 
-  public boolean isCrossingPagebreak(final RenderBox box,
+  public long findPageEndForPageStartPosition(final long pageOffset)
+  {
+    if (pageOffset <= pageStart)
+    {
+      return pageStart;
+    }
+    return backend.findPageEndForPageStartPosition(pageOffset);
+  }
+
+  public boolean isCrossingPagebreak(final long boxY,
+                                     final long boxHeight,
                                      final long pagebreakShift)
   {
-    final long shiftedYPos = box.getY() + pagebreakShift;
+    final long shiftedYPos = boxY + pagebreakShift;
     if (shiftedYPos <= pageStart)
     {
-      if (shiftedYPos + box.getHeight() >= pageStart)
+      if (shiftedYPos + boxHeight >= pageStart)
       {
         return true;
       }
       return false;
     }
 
-    return backend.isCrossingPagebreak(box, pagebreakShift);
+    return backend.isCrossingPagebreak(boxY, boxHeight, pagebreakShift);
   }
 
   public boolean isCrossingPagebreakWithFixedPosition(final long shiftedBoxPosition,

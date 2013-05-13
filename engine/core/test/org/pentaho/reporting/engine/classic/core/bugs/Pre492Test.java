@@ -25,7 +25,10 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
@@ -34,6 +37,9 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllIt
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.SingleRepositoryURLRewriter;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
@@ -127,4 +133,18 @@ public class Pre492Test extends TestCase
     }
   }
 
+  public void testPagebreakHonoredOnFirstPage() throws Exception
+  {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
+    final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
+    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
+    assertEquals(37, elementsByElementType.length);
+    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[36].getY());
+
+    final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 1);
+    final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
+    assertEquals(38, elementsPage1.length);
+    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[37].getY());
+    //  ModelPrinter.INSTANCE.print(page1);
+  }
 }

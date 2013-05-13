@@ -66,6 +66,11 @@ public class RenderableReplacedContentBox extends RenderBox
     return content;
   }
 
+  public boolean isEmpty()
+  {
+    return false;
+  }
+
   public int getNodeType()
   {
     return LayoutNodeTypes.TYPE_BOX_CONTENT;

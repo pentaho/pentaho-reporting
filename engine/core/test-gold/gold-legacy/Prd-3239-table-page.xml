@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="17" row-count="47">
+  <table col-count="16" row-count="46">
     <cols>
       <column width="95"/>
       <column width="5"/>
@@ -15,8 +15,7 @@
       <column width="100"/>
       <column width="97"/>
       <column width="3"/>
-      <column width="99"/>
-      <column width="1"/>
+      <column width="100"/>
       <column width="5"/>
       <column width="194"/>
     </cols>
@@ -25,7 +24,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
       </empty-cell>
       <empty-cell/>
-      <cell row-span="1" col-span="15">
+      <cell row-span="1" col-span="14">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32969709"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Virginia Department Of Education"/>
@@ -39,7 +38,6 @@
           <text x="647.96" y="3.0" width="71.12" height="16.0">Education</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -75,12 +73,11 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="48">
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="15">
+      <cell row-span="1" col-span="14">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32969709"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Superintendent's Verification Report"/>
@@ -92,7 +89,6 @@
           <text x="679.728" y="47.0" width="48.0" height="16.0">Report</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -128,14 +124,12 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="10">
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Sub1"/>
       </empty-cell>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -173,7 +167,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="30">
       <empty-cell/>
@@ -183,7 +176,6 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PARA_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@18032083"/>
       </empty-cell>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -274,7 +266,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="16">
       <empty-cell/>
@@ -306,7 +297,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="16">
       <empty-cell/>
@@ -326,7 +316,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -368,7 +357,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="16">
       <empty-cell/>
@@ -388,7 +376,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -419,7 +406,7 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="10">
+      <cell row-span="1" col-span="9">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="If you have any questions regarding this report, please contact (804) 225-2037."/>
@@ -457,7 +444,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <spanned-cell/>
     </row>
     <row height="20">
       <empty-cell/>
@@ -485,7 +471,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -493,8 +478,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -584,7 +567,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="% Variance"/>
@@ -594,7 +577,6 @@
           <text x="934.326" y="319.0" width="47.34" height="12.0">Variance</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -674,7 +656,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PUPIL_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -684,7 +666,6 @@
           <text x="994.328" y="339.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -764,7 +745,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_MILES_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -774,7 +755,6 @@
           <text x="994.328" y="359.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -858,7 +838,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_COST_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -868,7 +848,6 @@
           <text x="994.328" y="379.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -954,7 +933,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PER_MILE_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -964,7 +943,6 @@
           <text x="994.328" y="399.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -972,8 +950,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -1017,7 +993,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="20">
       <empty-cell/>
@@ -1045,7 +1020,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -1053,8 +1027,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -1144,7 +1116,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="% Variance"/>
@@ -1154,7 +1126,6 @@
           <text x="934.326" y="469.0" width="47.34" height="12.0">Variance</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1234,7 +1205,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="EXCL_PUPIL_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1244,7 +1215,6 @@
           <text x="994.328" y="489.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1324,7 +1294,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="EXCL_MILES_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1334,7 +1304,6 @@
           <text x="994.328" y="509.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1418,7 +1387,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="EXCL_COST_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1428,7 +1397,6 @@
           <text x="994.328" y="529.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1514,7 +1482,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="EXCL_PER_MILE_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1524,7 +1492,6 @@
           <text x="994.328" y="549.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1532,8 +1499,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -1577,7 +1542,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="20">
       <empty-cell/>
@@ -1605,7 +1569,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -1613,8 +1576,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -1704,7 +1665,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="% Variance"/>
@@ -1714,7 +1675,6 @@
           <text x="934.326" y="619.0" width="47.34" height="12.0">Variance</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1794,7 +1754,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SPL_PUPIL_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1804,7 +1764,6 @@
           <text x="994.328" y="639.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1884,7 +1843,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SPL_PER_MILE_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -1894,7 +1853,6 @@
           <text x="994.328" y="659.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -1978,7 +1936,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SPL_COST_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -1988,7 +1946,6 @@
           <text x="994.328" y="679.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -2074,7 +2031,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="2">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SPL_PER_MILE_VAR_PER"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00"/>
@@ -2084,7 +2041,6 @@
           <text x="994.328" y="699.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
@@ -2113,15 +2069,12 @@
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid">
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
     </row>
     <row height="28">
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -2191,7 +2144,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="45">
       <empty-cell/>
@@ -2245,7 +2197,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="63">
       <empty-cell/>
@@ -2280,7 +2231,6 @@
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="2">
       <empty-cell/>
@@ -2299,61 +2249,30 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
     </row>
-    <row height="5">
+    <row height="21">
       <empty-cell/>
       <empty-cell/>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="2" col-span="1">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageFunction2"/>
         <line type="ParagraphPoolBox" x="1006.0" y="879.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="1006.0" y="879.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
-    </row>
-    <row height="16">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <spanned-cell/>
     </row>
     <row height="20">
       <empty-cell/>
@@ -2368,7 +2287,7 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="5">
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageOfPagesFunction3"/>
         <line type="ParagraphPoolBox" x="898.0" y="900.0" width="19.43" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2382,10 +2301,9 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <spanned-cell/>
     </row>
   </table>
-  <table col-count="15" row-count="17">
+  <table col-count="15" row-count="16">
     <cols>
       <column width="95"/>
       <column width="5"/>
@@ -2403,12 +2321,12 @@
       <column width="94"/>
       <column width="100"/>
     </cols>
-    <row height="16">
+    <row height="22">
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
       </empty-cell>
       <empty-cell/>
-      <cell row-span="2" col-span="12">
+      <cell row-span="1" col-span="12">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32969709"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Virginia Department Of Education"/>
@@ -2422,23 +2340,6 @@
           <text x="647.96" y="3.0" width="71.12" height="16.0">Education</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <empty-cell/>
-    </row>
-    <row height="6">
-      <empty-cell/>
-      <empty-cell/>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -2854,7 +2755,7 @@
       <spanned-cell/>
     </row>
   </table>
-  <table col-count="38" row-count="56">
+  <table col-count="36" row-count="55">
     <cols>
       <column width="95"/>
       <column width="5"/>
@@ -2871,15 +2772,13 @@
       <column width="60"/>
       <column width="40"/>
       <column width="30"/>
-      <column width="19"/>
-      <column width="25"/>
+      <column width="44"/>
       <column width="16"/>
       <column width="10"/>
       <column width="50"/>
       <column width="49"/>
       <column width="1"/>
-      <column width="19"/>
-      <column width="1"/>
+      <column width="20"/>
       <column width="14"/>
       <column width="56"/>
       <column width="7"/>
@@ -2900,7 +2799,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
       </empty-cell>
       <empty-cell/>
-      <cell row-span="1" col-span="32">
+      <cell row-span="1" col-span="30">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32969709"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Virginia Department Of Education"/>
@@ -2914,8 +2813,6 @@
           <text x="647.96" y="3.0" width="71.12" height="16.0">Education</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -2991,13 +2888,11 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="48">
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="32">
+      <cell row-span="1" col-span="30">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32969709"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Superintendent's Verification Report"/>
@@ -3009,8 +2904,6 @@
           <text x="679.728" y="47.0" width="48.0" height="16.0">Report</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3086,8 +2979,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="30">
       <empty-cell>
@@ -3095,7 +2986,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Sub3"/>
       </empty-cell>
       <empty-cell/>
-      <cell row-span="1" col-span="36">
+      <cell row-span="1" col-span="34">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Calculation of Operational Expenditures"/>
@@ -3142,8 +3033,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -3151,10 +3040,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -3261,7 +3146,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Variance"/>
@@ -3269,7 +3154,6 @@
           <text x="627.33" y="159.0" width="47.34" height="12.0">Variance</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3285,7 +3169,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CURRENT_YEAR"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
@@ -3294,7 +3178,6 @@
           <text x="847.664" y="159.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3375,7 +3258,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TOTAL_EXPENDITURE_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3385,7 +3268,6 @@
           <text x="694.328" y="179.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3401,7 +3283,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TOAL_EXPENDITURE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3411,7 +3293,6 @@
           <text x="894.328" y="179.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3494,7 +3375,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="NON_PUB_EXPENDITURE_VAR1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3504,7 +3385,6 @@
           <text x="694.328" y="199.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3520,7 +3400,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="NON_PUB_EXPENDITURE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3530,7 +3410,6 @@
           <text x="894.328" y="199.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3617,7 +3496,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PUB_EXPENDITURE_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3627,7 +3506,6 @@
           <text x="694.328" y="219.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3643,7 +3521,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PUB_EXPENDITURE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -3653,7 +3531,6 @@
           <text x="894.328" y="219.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -3691,10 +3568,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -3796,8 +3669,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -3805,10 +3676,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -3911,8 +3778,6 @@
       </empty-cell>
       <empty-cell>
       </empty-cell>
-      <empty-cell>
-      </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
       </empty-cell>
       <empty-cell>
@@ -3920,8 +3785,6 @@
       <empty-cell>
       </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
       <empty-cell>
       </empty-cell>
@@ -3995,7 +3858,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PUBLIC_CARRIERS_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4005,7 +3868,6 @@
           <text x="694.328" y="279.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4021,7 +3883,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PUBLIC_CARRIERS_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4031,7 +3893,6 @@
           <text x="894.328" y="279.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4112,7 +3973,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRIVATE_CARRIERS_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4122,7 +3983,6 @@
           <text x="694.328" y="299.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4138,7 +3998,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRIVATE_CARRIERS_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4148,7 +4008,6 @@
           <text x="894.328" y="299.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4231,7 +4090,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TRANSP_CONTRACT_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4241,7 +4100,6 @@
           <text x="694.328" y="319.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4257,7 +4115,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TRANSP_CONTRACT_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4267,7 +4125,6 @@
           <text x="894.328" y="319.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4305,10 +4162,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -4410,8 +4263,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -4419,10 +4270,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -4531,8 +4378,6 @@
       </empty-cell>
       <empty-cell>
       </empty-cell>
-      <empty-cell>
-      </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
       </empty-cell>
       <empty-cell>
@@ -4540,8 +4385,6 @@
       <empty-cell>
       </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
       <empty-cell>
       </empty-cell>
@@ -4617,7 +4460,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="LEASES_RENTALS_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4627,7 +4470,6 @@
           <text x="694.328" y="379.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4643,7 +4485,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="LEASES_RENTALS"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4653,7 +4495,6 @@
           <text x="894.328" y="379.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4736,7 +4577,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CAP_OUTLAY_REPLCMNT_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4746,7 +4587,6 @@
           <text x="694.328" y="399.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4762,7 +4602,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CAPITAL_OUTLAY_REPLACEMENT"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4772,7 +4612,6 @@
           <text x="894.328" y="399.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4855,7 +4694,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CAP_OUTLAY_ADDITION_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4865,7 +4704,6 @@
           <text x="694.328" y="419.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4881,7 +4719,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CAPITAL_OUTLAY_ADDITIONS"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -4891,7 +4729,6 @@
           <text x="894.328" y="419.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -4929,10 +4766,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -5034,8 +4867,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -5043,10 +4874,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -5153,8 +4980,6 @@
       </empty-cell>
       <empty-cell>
       </empty-cell>
-      <empty-cell>
-      </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
       </empty-cell>
       <empty-cell>
@@ -5162,8 +4987,6 @@
       <empty-cell>
       </empty-cell>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
       <empty-cell>
       </empty-cell>
@@ -5241,7 +5064,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OTHER_USES_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5251,7 +5074,6 @@
           <text x="694.328" y="479.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5267,7 +5089,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OTHER_USES_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5277,7 +5099,6 @@
           <text x="894.328" y="479.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5315,10 +5136,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -5420,8 +5237,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="1">
       <empty-cell/>
@@ -5429,10 +5244,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -5542,7 +5353,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUB_ATTENDANT_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5552,7 +5363,6 @@
           <text x="694.328" y="519.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5568,7 +5378,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUB_ATTENDANT_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5578,7 +5388,6 @@
           <text x="894.328" y="519.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5616,10 +5425,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -5721,13 +5526,11 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="20">
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="32">
+      <cell row-span="1" col-span="30">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Summary"/>
@@ -5735,8 +5538,6 @@
           <text x="570.061" y="557.0" width="59.878" height="14.0">Summary</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5777,10 +5578,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -5888,7 +5685,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_COST_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5898,7 +5695,6 @@
           <text x="694.328" y="579.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -5914,7 +5710,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_COST"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -5924,7 +5720,6 @@
           <text x="894.328" y="579.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6001,7 +5796,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_MILES_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6011,7 +5806,6 @@
           <text x="694.328" y="599.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6027,7 +5821,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_MILES"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6037,7 +5831,6 @@
           <text x="894.328" y="599.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6116,7 +5909,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_PER_MILE_VAR_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.#####"/>
@@ -6126,7 +5919,6 @@
           <text x="694.328" y="619.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6142,7 +5934,7 @@
       </cell>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="6">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUMMARY_PER_MILE"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.#####"/>
@@ -6152,7 +5944,6 @@
           <text x="894.328" y="619.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6190,10 +5981,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
@@ -6295,13 +6082,11 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="20">
       <empty-cell/>
       <empty-cell/>
-      <cell row-span="1" col-span="34">
+      <cell row-span="1" col-span="32">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Ridership"/>
@@ -6309,8 +6094,6 @@
           <text x="595.439" y="657.0" width="59.122" height="14.0">Ridership</text>
         </line>
       </cell>
-      <spanned-cell/>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
@@ -6351,10 +6134,6 @@
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
-      </empty-cell>
-      <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
       <empty-cell border-top-color="black" border-top-width="1.0" border-top-style="solid">
       </empty-cell>
@@ -6458,7 +6237,7 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="5">
+      <cell border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="% Variance"/>
@@ -6471,13 +6250,10 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-      <spanned-cell/>
       <empty-cell border-left-color="black" border-left-width="1.0" border-left-style="solid">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CURRENT_YEAR"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
-      </empty-cell>
-      <empty-cell>
       </empty-cell>
       <empty-cell>
       </empty-cell>
@@ -6577,7 +6353,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32047360"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Regular"/>
@@ -6585,7 +6361,6 @@
           <text x="639.994" y="699.0" width="42.012" height="12.0">Regular</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
@@ -6596,7 +6371,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@32047360"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Regular"/>
@@ -6604,7 +6379,6 @@
           <text x="764.994" y="699.0" width="42.012" height="12.0">Regular</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
@@ -6744,7 +6518,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PUB_PUPIL_CNT_VAR_PER_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6754,7 +6528,6 @@
           <text x="684.328" y="726.5" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
@@ -6767,7 +6540,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PUB_PUPIL_CNT"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6777,7 +6550,6 @@
           <text x="814.328" y="726.5" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
@@ -6911,7 +6683,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PRIV_PUPIL_CNT_VAR_PER_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6921,7 +6693,6 @@
           <text x="684.328" y="761.5" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
@@ -6934,7 +6705,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_PRIV_PUPIL_CNT"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -6944,7 +6715,6 @@
           <text x="814.328" y="761.5" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
@@ -7099,7 +6869,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_CONTRCT_PUPIL_CNT_VAR_PER_1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -7109,7 +6879,6 @@
           <text x="684.328" y="804.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
@@ -7122,7 +6891,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="4">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REG_CONTRCT_PUPIL_CNT"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.###"/>
@@ -7132,7 +6901,6 @@
           <text x="814.328" y="804.0" width="6.672" height="12.0">0</text>
         </line>
       </cell>
-      <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
       <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" row-span="1" col-span="2">
@@ -7260,18 +7028,12 @@
       </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
       </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
       <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid">
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
     </row>
     <row height="38">
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -7330,7 +7092,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="REPORTED_DATE"/>
@@ -7344,7 +7105,6 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@22066738"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=" by"/>
       </empty-cell>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell>
@@ -7402,10 +7162,8 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
-    <row height="15">
+    <row height="21">
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -7422,35 +7180,20 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
       <empty-cell/>
       <empty-cell/>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <empty-cell border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid">
-      </empty-cell>
-      <cell row-span="2" col-span="7">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageFunction2"/>
         <line type="ParagraphPoolBox" x="1006.0" y="879.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -7464,49 +7207,7 @@
       <spanned-cell/>
       <spanned-cell/>
     </row>
-    <row height="6">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-    </row>
     <row height="20">
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>

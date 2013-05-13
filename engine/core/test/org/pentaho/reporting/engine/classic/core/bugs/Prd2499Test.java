@@ -7,6 +7,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -14,6 +15,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateVisualProcessStep;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugRenderer;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportProcessor;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -79,6 +83,7 @@ public class Prd2499Test extends TestCase
     processor.processReport();
 
   }
+
   private static class ValidateRunner extends IterateVisualProcessStep
   {
     private long lastEnd;
@@ -127,9 +132,20 @@ public class Prd2499Test extends TestCase
       if (box.getPrev() != null)
       {
         final RenderNode n = box.getPrev();
-        assertTrue("Box is aligned to previous silbling", box.getY() == (n.getY() + n.getHeight()));
+        assertTrue("Box is aligned to previous sibling", box.getY() == (n.getY() + n.getHeight()));
       }
       return true;
     }
+  }
+
+  public void testGoldenSample() throws Exception
+  {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-2499.prpt");
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(masterReport, 0);
+    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);
+
+    assertEquals(12, elementsByElementType.length);
+    assertEquals(StrictGeomUtility.toInternalValue(726), elementsByElementType[11].getY2());
+
   }
 }

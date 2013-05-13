@@ -54,6 +54,10 @@ public class BlockRenderBox extends RenderBox
 //    setMinorAxis(HORIZONTAL_AXIS);
   }
 
+  protected boolean isBlockForPagebreakPurpose()
+  {
+    return true;
+  }
 
   public int getNodeType()
   {

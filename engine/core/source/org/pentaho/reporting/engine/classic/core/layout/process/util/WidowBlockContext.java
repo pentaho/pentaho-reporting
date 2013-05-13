@@ -1,3 +1,20 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ */
+
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.apache.commons.logging.Log;
@@ -17,8 +34,9 @@ public class WidowBlockContext implements WidowContext
   private int widowCount;
   private RingBuffer<RenderNode> widowSize;
   private long widowOverride;
+  private long widowOverrideWithKeepTogether;
   private RenderNode currentNode;
-  private boolean markWidowBoxes;
+  private boolean breakMarkerSeen;
 
   public WidowBlockContext()
   {
@@ -27,16 +45,16 @@ public class WidowBlockContext implements WidowContext
   public void init(final StackedObjectPool<WidowBlockContext> pool,
                    final WidowContext parent,
                    final RenderBox contextBox,
-                   final int widows,
-                   final int orphans)
+                   final int widows)
   {
+    this.breakMarkerSeen = false;
     this.pool = pool;
     this.parent = parent;
     this.contextBox = contextBox;
     this.widows = widows;
-    this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
     this.widowCount = 0;
     this.widowOverride = contextBox.getCachedY2();
+    this.widowOverrideWithKeepTogether = contextBox.getCachedY2();
 
     if (widows > 0)
     {
@@ -98,6 +116,15 @@ public class WidowBlockContext implements WidowContext
     }
   }
 
+  public void registerBreakMark(final RenderBox box)
+  {
+    breakMarkerSeen = true;
+    if (parent != null)
+    {
+      parent.registerBreakMark(box);
+    }
+  }
+
   private long getWidowValue()
   {
     if (widows == 0)
@@ -115,9 +142,21 @@ public class WidowBlockContext implements WidowContext
 
   public WidowContext commit(final RenderBox box)
   {
-    box.setWidowConstraintSize(box.getCachedY2() - getWidowValue());
+    final boolean keepTogether = box.getStaticBoxLayoutProperties().isAvoidPagebreakInside();
+    final long constraintSize;
+    final long widowValue = getWidowValue();
+    if (keepTogether)
+    {
+      constraintSize = box.getCachedY2() - box.getCachedY();
+    }
+    else
+    {
+      constraintSize = box.getCachedY2() - widowValue;
+    }
+    box.setWidowConstraintSizeWithKeepTogether(constraintSize);
+    box.setWidowConstraintSize(box.getCachedY2() - widowValue);
 
-    if (box.isInvalidWidowOrphanNode() == false)
+    if (breakMarkerSeen == false && box.isInvalidWidowOrphanNode() == false)
     {
       final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
       if (incomplete)
@@ -139,7 +178,7 @@ public class WidowBlockContext implements WidowContext
       }
     }
 
-    if (markWidowBoxes && widowSize != null)
+    if (widowSize != null)
     {
       for (int i = 0; i < widowSize.size(); i += 1)
       {
@@ -172,6 +211,8 @@ public class WidowBlockContext implements WidowContext
         (cachedY2 == this.contextBox.getCachedY2() && cachedY2 == getWidowValue()))
     {
       widowOverride = Math.min(widowOverride, cachedY2 - contextBox.getWidowConstraintSize());
+      widowOverrideWithKeepTogether =
+          Math.min(widowOverrideWithKeepTogether, cachedY2 - contextBox.getWidowConstraintSizeWithKeepTogether());
     }
 
     if (parent != null)

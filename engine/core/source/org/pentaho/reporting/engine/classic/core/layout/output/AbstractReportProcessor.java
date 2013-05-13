@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.engine.classic.core.states.process.RestartOnNewPageHandler;
 import org.pentaho.reporting.engine.classic.core.util.IntList;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
@@ -862,7 +863,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
               lastVisibleStateKey != null &&
               renderer.isOpen())
           {
-            if (lastVisibleStateKey.equals(nextStateKey) == false)
+            if (lastVisibleStateKey.equals(nextStateKey) == false &&
+                lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter())
             {
               // Roll back to the last known to be good position and process the states up to, but not
               // including the current state. This way, we can fire the page-events *before* this band
@@ -887,6 +889,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                 {
                   AbstractReportProcessor.logger.debug(
                       "Paginate: Fall back to start of page              : " + globalState.getProcessKey());
+                }
+                if (lastVisibleStateKey.getSequenceCounter() <= globalState.getProcessKey().getSequenceCounter())
+                {
+                  throw new ReportProcessingException("Paginate: Error, fallback position is after last visible state.");
                 }
                 state = globalState.deriveForStorage();
               }
@@ -930,15 +936,15 @@ public abstract class AbstractReportProcessor implements ReportProcessor
             {
               if (isInRollBackMode)
               {
+                AbstractReportProcessor.logger.debug("Paginate: Encountered a roll-back break: " + isInRollBackMode);
                 if (assertExpectPagebreak == false)
                 {
-                  AbstractReportProcessor.logger.debug("X1: " + nextStateKey);
+                  AbstractReportProcessor.logger.debug("Paginate: next state:     " + nextStateKey);
                   if (nextStateKey.equals(rollbackPageState) == false)
                   {
-                    AbstractReportProcessor.logger.debug("X2: " + rollbackPageState);
+                    AbstractReportProcessor.logger.debug("Paginate: rollback state: " + rollbackPageState);
                   }
                 }
-                AbstractReportProcessor.logger.debug("Paginate: Encountered a roll-back break: " + isInRollBackMode);
               }
               else
               {
@@ -1410,7 +1416,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
               renderer.isOpen() &&
               lastVisibleStateKey != null)
           {
-            if (lastVisibleStateKey.equals(nextStateKey) == false)
+            if (lastVisibleStateKey.equals(nextStateKey) == false &&
+                lastVisibleStateKey.getSequenceCounter() > globalState.getProcessKey().getSequenceCounter())
             {
               // Roll back to the last known to be good position and process the states up to, but not
               // including the current state. This way, we can fire the page-events *before* this band
@@ -1436,6 +1443,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                 {
                   AbstractReportProcessor.logger.debug(
                       "Print: Fall back to start of page              : " + globalState.getProcessKey());
+                }
+                if (lastVisibleStateKey.getSequenceCounter() <= globalState.getProcessKey().getSequenceCounter())
+                {
+                  throw new ReportProcessingException("Print: Error, fallback position is after last visible state.");
                 }
                 state = globalState.deriveForStorage();
               }
@@ -1478,13 +1489,16 @@ public abstract class AbstractReportProcessor implements ReportProcessor
               {
                 if (assertExpectPagebreak == false)
                 {
-                  AbstractReportProcessor.logger.debug("X1: " + nextStateKey);
-                  if (nextStateKey.equals(rollbackPageState) == false)
+                  AbstractReportProcessor.logger.debug("Print: Encountered a roll-back break: " + isInRollBackMode);
+                  if (assertExpectPagebreak == false)
                   {
-                    AbstractReportProcessor.logger.debug("X2: " + rollbackPageState);
+                    AbstractReportProcessor.logger.debug("Print: next state:     " + nextStateKey);
+                    if (nextStateKey.equals(rollbackPageState) == false)
+                    {
+                      AbstractReportProcessor.logger.debug("Print: rollback state: " + rollbackPageState);
+                    }
                   }
                 }
-                AbstractReportProcessor.logger.debug("Print: Encountered a roll-back break: " + isInRollBackMode);
               }
               else
               {

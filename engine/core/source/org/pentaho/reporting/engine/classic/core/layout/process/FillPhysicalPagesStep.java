@@ -173,7 +173,8 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     RenderNode node = box.getFirstChild();
     while (node != null)
     {
-      if (node.isIgnorableForRendering())
+      if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX &&
+          node.isIgnorableForRendering())
       {
         node = node.getNext();
         continue;
@@ -181,7 +182,8 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
 
       final long y = node.getY();
       final long height = node.getOverflowAreaHeight();
-      if (pageContext.isFiltered(y, height))
+      if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK ||
+          pageContext.isFiltered(y, height))
       {
         final RenderNode next = node.getNext();
         box.remove(node);
@@ -235,6 +237,11 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     }
     // auto-boxes and sections are accepted as is ..
     return true;
+  }
+
+  protected boolean startInlineLevelBox(final RenderBox box)
+  {
+    return false;
   }
 
   protected boolean startTableSectionLevelBox(final RenderBox box)

@@ -1791,7 +1791,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="7" row-count="7">
+  <table col-count="7" row-count="8">
     <cols>
       <column width="56.7"/>
       <column width="85.05"/>
@@ -1839,6 +1839,24 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
+    </row>
+    <row height="12">
+      <cell background-color="#003b79" row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="String"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="String"/>
+        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="31.32" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="20.0" width="31.32" height="12.0">String</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="12">
       <cell row-span="1" col-span="1">

@@ -1,7 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.states.process;
 
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * This handler deferrs the event progression by one "advance" call, so that we can hopefully clean up the
@@ -46,7 +45,7 @@ public class RestartOnNewPageHandler implements AdvanceHandler
     return handler.getEventCode();
   }
 
-  public static ProcessState create (final ProcessState state) throws ReportProcessingException
+  public static ProcessState create(final ProcessState state) throws ReportProcessingException
   {
     if (state.isArtifcialState())
     {
