@@ -19,8 +19,9 @@ package org.pentaho.reporting.engine.classic.core.function;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -61,9 +62,13 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
    * The global state key is used to store the result for the whole report.
    */
   private transient ReportStateKey globalStateKey;
+
   /**
    * The current group key is used to store the result for the current group.
    */
+  private transient ReportStateKey currentGroupKey;
+
+
   private String crosstabFilterGroup;
 
   /**
@@ -110,18 +115,18 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   {
     if (FunctionUtilities.isDefinedGroup(getGroup(), event))
     {
-      final ReportStateKey groupStateKey = event.getState().getProcessKey();
+      currentGroupKey = event.getState().getProcessKey();
       if (isPrepareRunLevel(event))
       {
         clear();
 
         results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
+        results.put(currentGroupKey, result);
       }
       else
       {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(groupStateKey);
+        result = results.get(currentGroupKey);
       }
     }
 
@@ -161,6 +166,32 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
       result.set(lastGroupSequenceNumber, oldValue + 1);
     }
   }
+
+  public Object clone() throws CloneNotSupportedException
+  {
+    final TotalItemCountFunction o = (TotalItemCountFunction) super.clone();
+    o.results =  (HashMap<ReportStateKey, Sequence<Integer>>)results.clone();  
+
+    // Clone saved group results.
+    // The currently active result needs to be handled
+    // separately from this loop, since the globalStateKey
+    // and currentGroupKey both need to be mapped to it.
+    for (Map.Entry<ReportStateKey, Sequence<Integer>> entry : results.entrySet()) {
+      if (entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey)
+      {
+         o.results.put(entry.getKey(), entry.getValue().clone());
+      }
+    }
+
+    if (result != null) {
+      o.result = result.clone();
+      o.results.put(globalStateKey, o.result);
+      o.results.put(currentGroupKey, o.result);
+    }
+    return o;
+  }
+
+
 
   public void summaryRowSelection(final ReportEvent event)
   {
