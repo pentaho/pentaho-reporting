@@ -103,24 +103,30 @@ public class PublishToServerTask implements AuthenticatedServerTask
       reportDesignerContext.getActiveContext().getAuthenticationStore().add(loginData, storeUpdates);
 
       final byte[] data = PublishUtil.createBundleData(report);
-      PublishUtil.publish(data, selectedReport, loginData);
-
-      if (JOptionPane.showConfirmDialog(uiContext,
-          Messages.getInstance().getString("PublishToServerAction.Successful.LaunchNow"),
-          Messages.getInstance().getString("PublishToServerAction.Successful.LaunchTitle"),
-          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
-      {
-        PublishUtil.launchReportOnServer(loginData.getUrl(), selectedReport);
+      int responseCode = PublishUtil.publish(data, selectedReport, loginData);
+      
+      if (responseCode == 200) {
+        if (JOptionPane.showConfirmDialog(uiContext,
+            Messages.getInstance().getString("PublishToServerAction.Successful.LaunchNow"),
+            Messages.getInstance().getString("PublishToServerAction.Successful.LaunchTitle"),
+            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
+          PublishUtil.launchReportOnServer(loginData.getUrl(), selectedReport);
+        }
+      } else {
+        showErrorMessage();
       }
     }
     catch (Exception exception)
     {
-      ExceptionDialog.showExceptionDialog(uiContext,
-          Messages.getInstance().getString("PublishToServerAction.Error.Title"),
-          Messages.getInstance().formatMessage("PublishToServerAction.Error.Message",
-              exception.getMessage()), exception);
-      UncaughtExceptionsModel.getInstance().addException(exception);
+      showErrorMessage();
     }
   }
 
+  private void showErrorMessage() {
+    JOptionPane.showMessageDialog(uiContext, 
+        Messages.getInstance().getString("PublishToServerAction.Failed"),
+        Messages.getInstance().getString("PublishToServerAction.FailedTitle"),
+        JOptionPane.ERROR_MESSAGE);
+  }
 }
