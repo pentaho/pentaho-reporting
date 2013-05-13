@@ -4,10 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.swing.JOptionPane;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.designtime.swing.Messages;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -25,7 +27,6 @@ public class PublishRestUtil {
 	private static final Log logger = LogFactory.getLog(PublishRestUtil.class);
 	
 	public static final String REPO_FILES_IMPORT = "api/repo/publish/publishfile";
-	public static final int HTTP_RESPONSE_OK = 200;
 
 	private String baseUrl;
 	private String username;
@@ -58,9 +59,9 @@ public class PublishRestUtil {
 	 * @param filePath
 	 * @param data
 	 * @param overwriteIfExists
-	 * @return
+	 * @return http response code
 	 */
-	public void publishFile(String filePath, byte[] data, boolean overwriteIfExists) throws IOException {
+	public int publishFile(String filePath, byte[] data, boolean overwriteIfExists) throws IOException {
 		
 		if(filePath == null || data == null || data.length == 0){
 			throw new IOException("missing file path and/or data"); 
@@ -74,7 +75,7 @@ public class PublishRestUtil {
 		}
 		
 		try{
-			publishFile(filePath, fileName, new ByteArrayInputStream(data), true);
+			return publishFile(filePath, fileName, new ByteArrayInputStream(data), true);
 		}catch(Exception ex){
 			logger.error(ex);
 			throw new IOException(ex);
@@ -88,12 +89,14 @@ public class PublishRestUtil {
 	 * @param fileName
 	 * @param fileInputStream
 	 * @param overwriteIfExists
+	 * @return http response code
 	 */
-	public void publishFile(String repositoryPath, String fileName, InputStream fileInputStream, boolean overwriteIfExists) throws IOException {
+	public int publishFile(String repositoryPath, String fileName, InputStream fileInputStream, boolean overwriteIfExists) throws IOException {
 
 		String url = baseUrl.endsWith("/") ? (baseUrl + REPO_FILES_IMPORT) : (baseUrl + "/" + REPO_FILES_IMPORT);
 		
 		WebResource resource = client.resource(url);
+		int responseCode = 504;
 		try {
 			FormDataMultiPart part = new FormDataMultiPart();
 			part.field("importPath", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
@@ -105,18 +108,15 @@ public class PublishRestUtil {
       WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA).accept(MediaType.TEXT_PLAIN);
 			ClientResponse response =  builder.post(ClientResponse.class, part);
 
-
 			if(response != null){
 				String message = response.getEntity(String.class);
 				logger.info(message);
-				
-				if (HTTP_RESPONSE_OK != response.getStatus()) {
-					throw new IOException(message);
-				}	
+				responseCode = response.getStatus();
 			}			
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-			throw new IOException(ex);
+			//throw new IOException(ex);
 		}
+		return responseCode;
 	}
 }

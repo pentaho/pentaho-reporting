@@ -45,6 +45,8 @@ public class PublishUtil
   public static final int SERVER_VERSION_LEGACY = 4;
   private static final String SLASH = "/";
   private static final String COLON_SEP = ":";
+  private static final int HTTP_RESPONSE_FAIL = 504; //RepresentS an unknown rest failure as this code
+  private static final int HTTP_RESPONSE_OK = 200;
 
 
 
@@ -142,30 +144,34 @@ public class PublishUtil
     }
   }
 
-  public static void publish(final byte[] data,
+  public static int publish(final byte[] data,
                              final String path,
                              final AuthenticationData loginData)
       throws IOException
   {
-	  
+    int responseCode = HTTP_RESPONSE_FAIL;
     final String versionText = loginData.getOption(SERVER_VERSION);
     final int version = ParserUtil.parseInt(versionText, SERVER_VERSION_SUGAR);  
   
     if (SERVER_VERSION_SUGAR == version) {			
-      new PublishRestUtil(loginData.getUrl(), loginData.getUsername(), loginData.getPassword()).publishFile(path, data, true);		     
+      PublishRestUtil publishRestUtil = new PublishRestUtil(loginData.getUrl(), loginData.getUsername(), loginData.getPassword());
+      responseCode = publishRestUtil.publishFile(path, data, true);
+      
     } else {  
       final FileObject connection = createVFSConnection(loginData);
       final FileObject object = connection.resolveFile(path);
       final OutputStream out = object.getContent().getOutputStream(false);
       try
-      {
-        out.write(data);
-      }
+        {
+          out.write(data);
+          responseCode = HTTP_RESPONSE_OK;
+        }
       finally
-      {
-        out.close();
-      }
+        {
+          out.close();
+        }
     }
+    return responseCode;
   }
 
   public static boolean acceptFilter(final String[] filters, final String name)
