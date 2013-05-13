@@ -182,20 +182,17 @@ public final class PaginationStepLib
    * @return the height in micro-points.
    */
   public static long computeNonBreakableBoxHeight(final RenderBox box,
-                                                  final PaginationShiftState shiftState)
+                                                  final PaginationShiftState shiftState,
+                                                  final BasePaginationTableState tableState)
   {
     // must return the reserved space starting from box's y position.
-    final long widowSize = getWidowConstraint(box, shiftState);
+    final long widowSize = getWidowConstraint(box, shiftState, tableState);
 
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
-    if (sblp.isAvoidPagebreakInside() && box.isPinned() == false)
+    if (sblp.isAvoidPagebreakInside() &&
+        box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED)
     {
       return Math.max(widowSize, box.getHeight());
-    }
-
-    if (box.isPinned())
-    {
-      return 0;
     }
 
     final int nodeType = box.getLayoutNodeType();
@@ -215,9 +212,13 @@ public final class PaginationStepLib
       return widowSize;
     }
 
-    final long widowHeight = box.getWidowConstraintSize();
+    if (isOrphanConstraintNeeded(box, shiftState, tableState) == false)
+    {
+      return widowSize;
+    }
+
     final long orphanHeight = box.getOrphanConstraintSize();
-    if (widowHeight + orphanHeight > box.getHeight())
+    if (widowSize + orphanHeight > box.getHeight())
     {
       // if the widows and orphan areas overlap, then the box becomes non-breakable.
       return Math.max(widowSize, box.getHeight());
@@ -226,68 +227,69 @@ public final class PaginationStepLib
     return Math.max(orphanHeight, widowSize);
   }
 
-  private static long getWidowConstraint(final RenderBox box,
-                                         final PaginationShiftState shiftState)
+  /**
+   * Widow constraint evaluation is skipped if
+   * <p/>
+   * (a) the box has a widow/orphan-parent defining that sits on the current page's page-offset and
+   * (b) this parent's orphan-restricted pagebreak-exclusion zone includes this box.
+   *
+   * @param box
+   * @param shiftState
+   * @param tableState
+   * @return
+   */
+  private static boolean isOrphanConstraintNeeded(final RenderBox box,
+                                                  final PaginationShiftState shiftState,
+                                                  final BasePaginationTableState tableState)
   {
     final long boxY = box.getY() + shiftState.getShiftForNextChild();
-    long retval = 0;
-    RenderBox parent = box.getParent();
-    while (parent != null)
+    final long pageOffset = tableState.getPageOffset(boxY);
+    if (pageOffset == boxY)
     {
-      if (parent.getWidowConstraintSize() > 0)
-      {
-        final long y2 = parent.getY() + parent.getHeight();
-        final long constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
-        if (constraintBoundary == boxY)
-        {
-          retval = Math.max(retval, y2 - boxY);
-        }
-      }
-
-      parent = parent.getParent();
+      // no need to set a widow constraint, we are not shifting anyway ..
+      return false;
     }
-    return retval;
+    if (box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED)
+    {
+      return false;
+    }
+
+    if (isBoxInsideParentOrphanZoneOnThisPage(box, pageOffset, boxY))
+    {
+      return false;
+    }
+    return true;
   }
 
-  public static boolean isRestrictedKeepTogether(final RenderBox box,
-                                                 final long shift,
-                                                 final BasePaginationTableState paginationTableState)
+  private static boolean isBoxInsideParentOrphanZoneOnThisPage(final RenderBox box,
+                                                               final long pageOffset,
+                                                               final long boxYShifted)
   {
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Testing whether box is inside restricted area: " + box.getName());
-    }
     RenderBox parent = box.getParent();
     while (parent != null)
     {
-      if (parent.getOrphanConstraintSize() > 0)
+      if (parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
       {
-        final long restrictedAreaBounds = parent.getCachedY() + parent.getOrphanConstraintSize();
+        break;
+      }
 
-        if (restrictedAreaBounds > box.getCachedY())
-        {
-          if (parent.getY() == paginationTableState.getPageOffset())
-          {
-            // a parent that sits directly on a pagebreak has already tried to maintain the widow/orphan constraint
-            // for all its direct childs. Nothing we can do now, ignore the constraints.
-            if (logger.isDebugEnabled())
-            {
-              logger.debug("Inside restricted area: " + box.getName() + " -> " + parent.getName());
-              logger.debug("                      : Parent on page-offset -> " + parent);
-            }
-            return true;
-          }
+      if (parent.getY() < pageOffset)
+      {
+        // once the parent is sitting on the previous page, we no longer need to ask it ..
+        break;
+      }
 
-          if (paginationTableState.isOnPageStart(parent.getY() + shift))
-          {
-            if (logger.isDebugEnabled())
-            {
-              logger.debug("Inside restricted area: " + box.getName() + "  -> " + parent.getName());
-              logger.debug("                      : Parent on table-offset -> " + parent);
-            }
-            return true;
-          }
-        }
+      if (parent.getOrphanConstraintSize() == 0)
+      {
+        parent = parent.getParent();
+        continue;
+      }
+
+      final long constraintBoundary = parent.getY() + parent.getOrphanConstraintSize();
+      if (constraintBoundary > boxYShifted)
+      {
+        // this parent is not relevant.
+        return true;
       }
 
       parent = parent.getParent();
@@ -295,4 +297,57 @@ public final class PaginationStepLib
     return false;
   }
 
+
+  public static long getWidowConstraint(final RenderBox box,
+                                         final PaginationShiftState shiftState,
+                                         final BasePaginationTableState tableState)
+  {
+    if (box.isWidowBox() == false)
+    {
+      return 0;
+    }
+
+    final long boxY = box.getY() + shiftState.getShiftForNextChild();
+    long retval = 0;
+    RenderBox parent = box.getParent();
+
+    final long pageOffset = tableState.getPageOffset();
+    if (pageOffset == boxY)
+    {
+      // no need to set a widow constraint, we are not shifting anyway ..
+      return 0;
+    }
+
+    while (parent != null)
+    {
+      if (parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
+      {
+        break;
+      }
+
+      if (parent.getWidowConstraintSize() == 0)
+      {
+        parent = parent.getParent();
+        continue;
+      }
+
+      final long y2 = parent.getY2();
+      final long constraintBoundary;
+      if (parent.getY() < pageOffset)
+      {
+        constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
+      }
+      else
+      {
+        constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSizeWithKeepTogether());
+      }
+      if (constraintBoundary == boxY)
+      {
+        retval = Math.max(retval, y2 - boxY);
+      }
+
+      parent = parent.getParent();
+    }
+    return retval;
+  }
 }

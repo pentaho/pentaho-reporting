@@ -1,14 +1,15 @@
 <xsd:schema version="4.0"
+            elementFormDefault="qualified"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
             xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0"
             targetNamespace="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
 
   <xsd:element name="layout-output">
-    <xsd:complexType>
-      <xsd:sequence>
-        <xsd:element name="logical-page" type="logicalPageType" minOccurs="0" maxOccurs="unbounded"/>
-        <xsd:element name="physical-page" type="physicalPageType" minOccurs="0" maxOccurs="unbounded"/>
-      </xsd:sequence>
+    <xsd:complexType mixed="true">
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="logical-page" type="logicalPageType" />
+        <xsd:element name="physical-page" type="physicalPageType" />
+      </xsd:choice>
     </xsd:complexType>
   </xsd:element>
 

@@ -1700,7 +1700,8 @@
       <empty-cell/>
     </row>
     <row height="537">
-      <empty-cell/>
+      <empty-cell>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -1711,9 +1712,7 @@
       <empty-cell/>
     </row>
     <row height="20">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
-      </empty-cell>
+      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>

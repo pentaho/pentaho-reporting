@@ -259,6 +259,20 @@ public class PageBreakPositionList implements PageBreakPositions
     return backend.breakPositions[breakIndex];
   }
 
+  public long findPreviousBreakPosition(final long position)
+  {
+    final int breakIndex = findPreviousMajorBreak(position);
+    if (breakIndex < 0)
+    {
+      return backend.breakPositions[0];
+    }
+    if (breakIndex >= breakSize)
+    {
+      return backend.breakPositions[breakSize - 1];
+    }
+    return backend.breakPositions[breakIndex];
+  }
+
 
   /**
    * Returns the page-segment, where a box would be located that ends at the given position. If the position is located
@@ -510,16 +524,17 @@ public class PageBreakPositionList implements PageBreakPositions
    * testing the result. A box will cross a pagebreak if its shifted y position and its shifted y2 position (y + height)
    * are located on different pages. A box with a height of zero cannot cross a pagebreak by definition.
    *
-   * @param box the box, unshifted.
-   * @param shift the current shift that should be applied for the test
+   * @param boxY           the box Y, unshifted.
+   * @param boxHeight      the box height.
+   * @param pagebreakShift the current shift that should be applied for the test
    * @return true, if the box crosses a pagebreak, false otherwise.
    */
-  public boolean isCrossingPagebreak(final RenderBox box,
-                                     final long shift)
+  public boolean isCrossingPagebreak(final long boxY,
+                                     final long boxHeight,
+                                     final long pagebreakShift)
   {
     // A box does not cross the break, if both Y1 and Y2 are on the same page.
-    final long height = box.getHeight();
-    if (height == 0)
+    if (boxHeight == 0)
     {
       // A box without a height can appear on either side of the pagebreak.
       // But under no circumstances it can cross it.
@@ -527,9 +542,9 @@ public class PageBreakPositionList implements PageBreakPositions
     }
 
     // Simple case: No fixed position at all ..
-    final long shiftedStartPos = box.getY() + shift;
+    final long shiftedStartPos = boxY + pagebreakShift;
     final int y1 = findPreviousBreak(shiftedStartPos);
-    final int y2 = findNextBreak(shiftedStartPos + height);
+    final int y2 = findNextBreak(shiftedStartPos + boxHeight);
     return y1 != y2;
   }
 
@@ -932,6 +947,33 @@ public class PageBreakPositionList implements PageBreakPositions
     }
     retval.append("}}");
     return retval.toString();
+  }
+
+  public long findPageEndForPageStartPosition(final long pageOffset)
+  {
+    final int masterBreakSize = getMasterBreakSize();
+    if (masterBreakSize > 0)
+    {
+      final long lastBreak = getMasterBreak(masterBreakSize - 1);
+      if (pageOffset == lastBreak)
+      {
+        return lastBreak;
+      }
+
+      for (int i = masterBreakSize - 2; i >= 0; i -= 1)
+      {
+        final long masterBreak = getMasterBreak(i);
+        if (masterBreak == pageOffset)
+        {
+          return getMasterBreak(i + 1);
+        }
+        if (masterBreak < pageOffset)
+        {
+          break;
+        }
+      }
+    }
+    throw new IllegalStateException("Unable to locate proper page start for given offset " + pageOffset);
   }
 
   public long findPageStartPositionForPageEndPosition(final long pageOffset)

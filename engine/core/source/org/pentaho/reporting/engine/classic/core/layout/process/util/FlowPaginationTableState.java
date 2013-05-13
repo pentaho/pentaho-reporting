@@ -94,4 +94,9 @@ public class FlowPaginationTableState implements BasePaginationTableState
   {
     return breakPositions.isPageStart(offset);
   }
+
+  public long getPageOffset(final long position)
+  {
+    return breakPositions.findPreviousBreakPosition(position);
+  }
 }

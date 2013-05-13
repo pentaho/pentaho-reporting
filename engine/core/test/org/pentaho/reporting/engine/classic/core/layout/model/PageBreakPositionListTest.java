@@ -12,30 +12,26 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2009 Pentaho Corporation..  All rights reserved.
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.layout;
+package org.pentaho.reporting.engine.classic.core.layout.model;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class BreakUtilityTest extends TestCase
+public class PageBreakPositionListTest extends TestCase
 {
   private PageBreakPositionList tester;
 
-  public BreakUtilityTest(final String string)
+  public PageBreakPositionListTest()
   {
-    super(string);
   }
 
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
-    
+
     tester = new PageBreakPositionList();
     tester.addMajorBreak(0, 0);
     tester.addMinorBreak(5000);
@@ -44,14 +40,6 @@ public class BreakUtilityTest extends TestCase
     tester.addMajorBreak(20000, 0);
     tester.addMinorBreak(25000);
     tester.addMajorBreak(30000, 0);
-  }
-
-  private RenderBox createBox(final long y, final long height)
-  {
-    final RenderBox box = new BlockRenderBox();
-    box.setY(y);
-    box.setHeight(height);
-    return box;
   }
 
   public void testFindNextBreakPosition()
@@ -66,22 +54,22 @@ public class BreakUtilityTest extends TestCase
   public void testIsCrossingPagebreak()
   {
 
-    assertFalse("Y=-5000; Height=5000", tester.isCrossingPagebreak(createBox(-5000, 5000), 0));
-    assertFalse("Y=10; Height=500", tester.isCrossingPagebreak(createBox(10, 500), 0));
+    assertFalse("Y=-5000; Height=5000", tester.isCrossingPagebreak(-5000, 5000, 0));
+    assertFalse("Y=10; Height=500", tester.isCrossingPagebreak(10, 500, 0));
     // A box with height of zero does not cross the pagebreak.
-    assertFalse("Y=0; Height=0", tester.isCrossingPagebreak(createBox(0, 0), 0));
+    assertFalse("Y=0; Height=0", tester.isCrossingPagebreak(0, 0, 0));
     // A box with the height equal to the page height will not cross the pagebreak
-    assertFalse("Y=0; Height=5000", tester.isCrossingPagebreak(createBox(0, 5000), 0));
+    assertFalse("Y=0; Height=5000", tester.isCrossingPagebreak(0, 5000, 0));
     // This one will .
-    assertTrue("Y=2500; Height=5000", tester.isCrossingPagebreak(createBox(2500, 5000), 0));
+    assertTrue("Y=2500; Height=5000", tester.isCrossingPagebreak(2500, 5000, 0));
     // A box with height of zero does not cross the pagebreak.
-    assertFalse("Y=0; Height=0; shift=5000", tester.isCrossingPagebreak(createBox(0, 0), 5000));
+    assertFalse("Y=0; Height=0; shift=5000", tester.isCrossingPagebreak(0, 0, 5000));
     // A box with the height equal to the page height will not cross the pagebreak
-    assertFalse("Y=0; Height=5000; shift=5000", tester.isCrossingPagebreak(createBox(0, 5000), 5000));
+    assertFalse("Y=0; Height=5000; shift=5000", tester.isCrossingPagebreak(0, 5000, 5000));
     // This one will .
-    assertTrue("Y=2500; Height=5000; Shift=5000", tester.isCrossingPagebreak(createBox(2500, 5000), 5000));
+    assertTrue("Y=2500; Height=5000; Shift=5000", tester.isCrossingPagebreak(2500, 5000, 5000));
     // A box that sits after the last pagebreak will not cross a pagebreak.
-    assertFalse("Y=30500; Height=5000; Shift=5000", tester.isCrossingPagebreak(createBox(30500, 5000), 5000));
+    assertFalse("Y=30500; Height=5000; Shift=5000", tester.isCrossingPagebreak(30500, 5000, 5000));
   }
 
   public void testFindNextMajorBreakPosition()
@@ -92,4 +80,28 @@ public class BreakUtilityTest extends TestCase
     assertEquals("Sitting on the last pagebreak: ", 30000, tester.findNextMajorBreakPosition(30000));
     assertEquals("Sitting behind the last pagebreak: ", 30000, tester.findNextMajorBreakPosition(40000));
   }
+
+  public void testFindPageEndForPageStartPositionSmall()
+  {
+    PageBreakPositionList list = new PageBreakPositionList();
+    list.addMajorBreak(0, 0);
+    list.addMajorBreak(100000, 0);
+
+    assertEquals(100000, list.findPageEndForPageStartPosition(0));
+    assertEquals(100000, list.findPageEndForPageStartPosition(100000));
+  }
+
+  public void testFindPageEndForPageStartPositionLarge()
+  {
+    PageBreakPositionList list = new PageBreakPositionList();
+    list.addMajorBreak(0, 0);
+    list.addMajorBreak(100000, 0);
+    list.addMajorBreak(200000, 0);
+    list.addMajorBreak(300000, 0);
+
+    assertEquals(100000, list.findPageEndForPageStartPosition(0));
+    assertEquals(300000, list.findPageEndForPageStartPosition(200000));
+    assertEquals(300000, list.findPageEndForPageStartPosition(300000));
+  }
+
 }

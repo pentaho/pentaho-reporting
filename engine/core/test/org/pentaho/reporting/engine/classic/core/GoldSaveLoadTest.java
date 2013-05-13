@@ -69,6 +69,11 @@ public class GoldSaveLoadTest extends GoldTestBase
   @Test
   public void testParallelExecutionIsSafe() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final boolean[] error = { false };
     final ExecutorService threadPool = new ThreadPoolExecutor(3, 3,
                                   0L, TimeUnit.MILLISECONDS,
