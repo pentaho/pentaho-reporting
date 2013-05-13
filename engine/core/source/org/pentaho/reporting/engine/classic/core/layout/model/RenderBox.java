@@ -98,6 +98,7 @@ public abstract class RenderBox extends RenderNode
    * points to y2.
    */
   private long widowConstraintSize;
+  private long widowConstraintSizeWithKeepTogether;
   private RestrictFinishClearOut restrictFinishClearOut;
   private int parentWidowContexts;
 
@@ -162,6 +163,7 @@ public abstract class RenderBox extends RenderNode
     b.tableValidationAge = -1;
     b.orphanConstraintSize = 0;
     b.widowConstraintSize = 0;
+    b.widowConstraintSizeWithKeepTogether = 0;
     b.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
     b.parentWidowContexts = 0;
     return b;
@@ -1509,6 +1511,16 @@ public abstract class RenderBox extends RenderNode
   public void setWidowConstraintSize(final long widowConstraintSize)
   {
     this.widowConstraintSize = widowConstraintSize;
+  }
+
+  public long getWidowConstraintSizeWithKeepTogether()
+  {
+    return widowConstraintSizeWithKeepTogether;
+  }
+
+  public void setWidowConstraintSizeWithKeepTogether(final long widowConstraintSizeWithKeepTogether)
+  {
+    this.widowConstraintSizeWithKeepTogether = widowConstraintSizeWithKeepTogether;
   }
 
   public boolean isInvalidWidowOrphanNode()

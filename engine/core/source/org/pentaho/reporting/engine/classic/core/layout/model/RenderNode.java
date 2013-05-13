@@ -1089,5 +1089,8 @@ public abstract class RenderNode implements Cloneable
     this.cachedAge = cachedAge;
   }
 
-
+  public final long getY2()
+  {
+    return y + height;
+  }
 }

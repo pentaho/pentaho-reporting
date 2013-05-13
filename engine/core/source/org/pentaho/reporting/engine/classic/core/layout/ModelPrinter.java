@@ -214,6 +214,8 @@ public class ModelPrinter
     }
     b.append("- widow-size=");
     b.append(box.getWidowConstraintSize());
+    b.append("- widow-size-with-keep-together=");
+    b.append(box.getWidowConstraintSizeWithKeepTogether());
     b.append(", orphan-size=");
     b.append(box.getOrphanConstraintSize());
     b.append(", widows=");

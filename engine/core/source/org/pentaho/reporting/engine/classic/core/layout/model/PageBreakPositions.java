@@ -1,3 +1,19 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ */
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
 public interface PageBreakPositions
@@ -29,11 +45,14 @@ public interface PageBreakPositions
    * testing the result. A box will cross a pagebreak if its shifted y position and its shifted y2 position (y + height)
    * are located on different pages. A box with a height of zero cannot cross a pagebreak by definition.
    *
-   * @param box the box, unshifted.
-   * @param shift the current shift that should be applied for the test
+   * @param boxY           the box Y, unshifted.
+   * @param boxHeight      the box height.
+   * @param pagebreakShift the current shift that should be applied for the test
    * @return true, if the box crosses a pagebreak, false otherwise.
    */
-  boolean isCrossingPagebreak(RenderBox box, long shift);
+  public boolean isCrossingPagebreak(final long boxY,
+                                     final long boxHeight,
+                                     final long pagebreakShift);
 
   /**
    * Finds the closest break-position that is larger or equal to the given position.
@@ -48,7 +67,7 @@ public interface PageBreakPositions
   /**
    * Finds the closest master break-position that is larger or equal to the given position. A master pagebreak is the
    * boundary of a logical page, which in itself can consist of several physical pages.
-   *
+   * <p/>
    * This returns the next master pagebreak in the flow after the given position. If the position given is larger than the
    * largest posible page-break, then this returns the last pagebreak instead.
    *
@@ -56,6 +75,8 @@ public interface PageBreakPositions
    * @return the position.
    */
   long findNextMajorBreakPosition(long position);
+
+  long findPreviousBreakPosition(final long position);
 
   public boolean isPageStart(final long position);
 

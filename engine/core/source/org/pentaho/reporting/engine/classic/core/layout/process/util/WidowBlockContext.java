@@ -34,8 +34,8 @@ public class WidowBlockContext implements WidowContext
   private int widowCount;
   private RingBuffer<RenderNode> widowSize;
   private long widowOverride;
+  private long widowOverrideWithKeepTogether;
   private RenderNode currentNode;
-  private boolean markWidowBoxes;
   private boolean breakMarkerSeen;
 
   public WidowBlockContext()
@@ -52,9 +52,9 @@ public class WidowBlockContext implements WidowContext
     this.parent = parent;
     this.contextBox = contextBox;
     this.widows = widows;
-    this.markWidowBoxes = contextBox.isOpen() || contextBox.getContentRefCount() > 0;
     this.widowCount = 0;
     this.widowOverride = contextBox.getCachedY2();
+    this.widowOverrideWithKeepTogether = contextBox.getCachedY2();
 
     if (widows > 0)
     {
@@ -142,6 +142,20 @@ public class WidowBlockContext implements WidowContext
 
   public WidowContext commit(final RenderBox box)
   {
+    final boolean keepTogether = box.getStaticBoxLayoutProperties().isAvoidPagebreakInside();
+    final long constraintSize;
+    final long widowValue = getWidowValue();
+    if (keepTogether)
+    {
+      constraintSize = box.getCachedY2() - box.getCachedY();
+    }
+    else
+    {
+      constraintSize = box.getCachedY2() - widowValue;
+    }
+    box.setWidowConstraintSizeWithKeepTogether(constraintSize);
+    box.setWidowConstraintSize(box.getCachedY2() - widowValue);
+
     if (breakMarkerSeen == false && box.isInvalidWidowOrphanNode() == false)
     {
       final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
@@ -164,7 +178,7 @@ public class WidowBlockContext implements WidowContext
       }
     }
 
-    if (markWidowBoxes && widowSize != null)
+    if (widowSize != null)
     {
       for (int i = 0; i < widowSize.size(); i += 1)
       {
@@ -197,6 +211,8 @@ public class WidowBlockContext implements WidowContext
         (cachedY2 == this.contextBox.getCachedY2() && cachedY2 == getWidowValue()))
     {
       widowOverride = Math.min(widowOverride, cachedY2 - contextBox.getWidowConstraintSize());
+      widowOverrideWithKeepTogether =
+          Math.min(widowOverrideWithKeepTogether, cachedY2 - contextBox.getWidowConstraintSizeWithKeepTogether());
     }
 
     if (parent != null)

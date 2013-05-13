@@ -182,7 +182,8 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
 
       final long y = node.getY();
       final long height = node.getOverflowAreaHeight();
-      if (pageContext.isFiltered(y, height))
+      if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK ||
+          pageContext.isFiltered(y, height))
       {
         final RenderNode next = node.getNext();
         box.remove(node);

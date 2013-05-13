@@ -42,14 +42,6 @@ public class PageBreakPositionListTest extends TestCase
     tester.addMajorBreak(30000, 0);
   }
 
-  private RenderBox createBox(final long y, final long height)
-  {
-    final RenderBox box = new BlockRenderBox();
-    box.setY(y);
-    box.setHeight(height);
-    return box;
-  }
-
   public void testFindNextBreakPosition()
   {
     assertEquals("Sitting before the pagebreak: ", 0, tester.findNextBreakPosition(-1));
@@ -62,22 +54,22 @@ public class PageBreakPositionListTest extends TestCase
   public void testIsCrossingPagebreak()
   {
 
-    assertFalse("Y=-5000; Height=5000", tester.isCrossingPagebreak(createBox(-5000, 5000), 0));
-    assertFalse("Y=10; Height=500", tester.isCrossingPagebreak(createBox(10, 500), 0));
+    assertFalse("Y=-5000; Height=5000", tester.isCrossingPagebreak(-5000, 5000, 0));
+    assertFalse("Y=10; Height=500", tester.isCrossingPagebreak(10, 500, 0));
     // A box with height of zero does not cross the pagebreak.
-    assertFalse("Y=0; Height=0", tester.isCrossingPagebreak(createBox(0, 0), 0));
+    assertFalse("Y=0; Height=0", tester.isCrossingPagebreak(0, 0, 0));
     // A box with the height equal to the page height will not cross the pagebreak
-    assertFalse("Y=0; Height=5000", tester.isCrossingPagebreak(createBox(0, 5000), 0));
+    assertFalse("Y=0; Height=5000", tester.isCrossingPagebreak(0, 5000, 0));
     // This one will .
-    assertTrue("Y=2500; Height=5000", tester.isCrossingPagebreak(createBox(2500, 5000), 0));
+    assertTrue("Y=2500; Height=5000", tester.isCrossingPagebreak(2500, 5000, 0));
     // A box with height of zero does not cross the pagebreak.
-    assertFalse("Y=0; Height=0; shift=5000", tester.isCrossingPagebreak(createBox(0, 0), 5000));
+    assertFalse("Y=0; Height=0; shift=5000", tester.isCrossingPagebreak(0, 0, 5000));
     // A box with the height equal to the page height will not cross the pagebreak
-    assertFalse("Y=0; Height=5000; shift=5000", tester.isCrossingPagebreak(createBox(0, 5000), 5000));
+    assertFalse("Y=0; Height=5000; shift=5000", tester.isCrossingPagebreak(0, 5000, 5000));
     // This one will .
-    assertTrue("Y=2500; Height=5000; Shift=5000", tester.isCrossingPagebreak(createBox(2500, 5000), 5000));
+    assertTrue("Y=2500; Height=5000; Shift=5000", tester.isCrossingPagebreak(2500, 5000, 5000));
     // A box that sits after the last pagebreak will not cross a pagebreak.
-    assertFalse("Y=30500; Height=5000; Shift=5000", tester.isCrossingPagebreak(createBox(30500, 5000), 5000));
+    assertFalse("Y=30500; Height=5000; Shift=5000", tester.isCrossingPagebreak(30500, 5000, 5000));
   }
 
   public void testFindNextMajorBreakPosition()

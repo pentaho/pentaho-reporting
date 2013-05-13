@@ -59,7 +59,7 @@ public class WidowContextPool
   public WidowContext create(final RenderBox box,
                              final WidowContext context)
   {
-    if ((box.getNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
+    if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       final StaticBoxLayoutProperties properties = box.getStaticBoxLayoutProperties();
       final int widows = properties.getWidows();
