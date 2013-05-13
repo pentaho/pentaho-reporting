@@ -17,17 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
+import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 /**
- * A report function that counts the total number of items contained in groups in a report. If no groupname is given,
- * all items of the report are counted.
+ * A report function that counts the total number of items contained in groups in a report. Resets the
+ * counter with each new page, and with each new group if the optional group parameter is specified.
+ * The function will always reset with each new page, so if a group spans across a page break the
+ * counter will be still be reset.
  * <p/>
- * Like all Total-Functions, this function produces a precomputed grand total. The function's result is precomputed once
- * and will not change later. Printing the result of this function in a group header returns the same value as printed
- * in the group-footer.
+ * Like all Total-Functions, this function produces precomputed totals. The function's result is precomputed once
+ * and will not change later.
  * <p/>
  * The ItemCount can be used to produce a running row-count for a group or report.
  * <p/>
@@ -37,6 +43,14 @@ import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
  */
 public class TotalPageItemCountFunction extends TotalItemCountFunction implements PageEventListener
 {
+  /**
+   * holds the collection of values associated with pages and groups
+   */
+  private transient PageGroupValues values = new PageGroupValues();
+
+  private int pageIndex = 0;
+  private int groupIndex = 0;
+
   public TotalPageItemCountFunction()
   {
   }
@@ -50,6 +64,23 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
     return false;
   }
 
+  public void groupStarted(final ReportEvent event)
+  {
+    super.groupStarted(event);
+    if (getGroup() != null)
+    {
+      groupIndex++;
+    }
+  }
+
+  public void groupFinished(final ReportEvent event)
+  {
+    if (getGroup() != null)
+    {
+      storeValue(event);
+    }
+  }
+
   /**
    * Handles the pageStartedEvent.
    *
@@ -57,18 +88,79 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
    */
   public void pageStarted(final ReportEvent event)
   {
+    pageIndex++;
   }
 
   /**
    * Handles the pageFinishedEvent.
+   * Stores the current page value and clears the counter.
    *
    * @param event the report event.
    */
   public void pageFinished(final ReportEvent event)
   {
+    storeValue(event);
+    clear();
+  }
+
+  public Object getValue() {
+    return values.get(pageIndex, groupIndex);
+  }
+
+  private void storeValue(final ReportEvent event)
+  {
     if (isPrepareRunLevel(event))
     {
-      clear();
+      values.put(pageIndex, groupIndex, super.getValue());
     }
+  }
+
+  /**
+   * Return a completly separated copy of this function. The copy no longer shares any changeable objects with the
+   * original function.
+   *
+   * @return a copy of this function.
+   */
+  public Expression getInstance()
+  {
+    final TotalPageItemCountFunction function = (TotalPageItemCountFunction) super.getInstance();
+    function.values = new PageGroupValues();
+    return function;
+  }
+
+  /**
+   * Convenience class to manage getting and putting values stored
+   * by page and group.
+   */
+  private class PageGroupValues {
+    private Map<Integer, Map<Integer, Object>> pagedResults =
+        new HashMap<Integer, Map<Integer, Object>>();;
+
+    Object get(int page, int group) {
+      if (pagedResults.containsKey(page) &&
+          pagedResults.get(page).containsKey(group))
+      {
+        return pagedResults.get(page).get(group);
+      }
+      else
+      {
+        return 0;
+      }
+    }
+
+    void put(int page, int group, Object value) {
+      Map<Integer, Object> map;
+      if (pagedResults.containsKey(page))
+      {
+        map = pagedResults.get(page);
+      }
+      else
+      {
+        map = new HashMap<Integer, Object>();
+      }
+      map.put(group, value);
+      pagedResults.put(page, map);
+    }
+
   }
 }
