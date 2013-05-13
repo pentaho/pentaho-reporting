@@ -65,6 +65,7 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
 
 
     this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_MANUAL);
+    this.metaData.initialize(config);
     this.flowSelector = new DisplayAllFlowSelector();
 
     this.printer = new ExcelPrinter();
