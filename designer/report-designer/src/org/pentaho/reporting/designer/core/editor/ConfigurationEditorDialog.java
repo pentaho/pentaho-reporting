@@ -35,6 +35,7 @@ import org.pentaho.reporting.tools.configeditor.ConfigEditorPane;
 public class ConfigurationEditorDialog extends CommonDialog
 {
   private ConfigEditorPane editorPane;
+  private boolean defaultSize;
 
   public ConfigurationEditorDialog()
   {
@@ -92,6 +93,12 @@ public class ConfigurationEditorDialog extends CommonDialog
     }
     editorPane.updateConfiguration(hconf);
 
+    if (defaultSize)
+    {
+      performInitialResize();
+      defaultSize = false;
+    }
+
     if (performEdit() == false)
     {
       return false;
@@ -116,6 +123,11 @@ public class ConfigurationEditorDialog extends CommonDialog
     return true;
   }
 
+  protected void performInitialResize()
+  {
+    super.performInitialResize();
+    defaultSize = true;
+  }
   public static void main(final String[] args)
   {
     ClassicEngineBoot.getInstance().start();
