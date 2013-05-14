@@ -34,11 +34,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.int
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.internal.XmlPageOutputProcessorMetaData;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-/**
- * Creation-Date: 20.10.2007, 16:31:55
- *
- * @author Thomas Morgner
- */
 public class XmlPageOutputProcessor extends AbstractPageableOutputProcessor
 {
   private OutputProcessorMetaData metaData;
@@ -116,7 +111,6 @@ public class XmlPageOutputProcessor extends AbstractPageableOutputProcessor
                                      final PhysicalPageKey pageKey)
       throws ContentProcessingException
   {
-    int pageKeyPos = pageKey.getSequentialPageNumber();
     try
     {
       if (writer == null)
