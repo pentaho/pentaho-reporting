@@ -41,18 +41,24 @@ import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
 import org.pentaho.reporting.engine.classic.core.modules.output.csv.CSVDataReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.SinglePageFlowSelector;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.PhysicalPageDrawable;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.internal.XmlPageOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
@@ -71,10 +77,10 @@ import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResol
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
-import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
@@ -85,7 +91,9 @@ import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/** @noinspection HardCodedStringLiteral*/
+/**
+ * @noinspection HardCodedStringLiteral
+ */
 public class DebugReportRunner
 {
   private static class StaticStyleResolver extends AbstractStructureVisitor
@@ -379,31 +387,54 @@ public class DebugReportRunner
     }
   }
 
+  private static class InterceptingXmlPageOutputProcessor extends XmlPageOutputProcessor
+  {
+    private LogicalPageBox logicalPageBox;
+
+    private InterceptingXmlPageOutputProcessor(final OutputStream outputStream,
+                                               final OutputProcessorMetaData metaData)
+    {
+      super(outputStream, metaData);
+    }
+
+    protected void processPhysicalPage(final PageGrid pageGrid,
+                                       final LogicalPageBox logicalPage,
+                                       final int row,
+                                       final int col,
+                                       final PhysicalPageKey pageKey) throws ContentProcessingException
+    {
+      logicalPageBox = logicalPage.derive(true);
+    }
+
+    protected void processLogicalPage(final LogicalPageKey key,
+                                      final LogicalPageBox logicalPage) throws ContentProcessingException
+    {
+      logicalPageBox = logicalPage.derive(true);
+    }
+
+    public LogicalPageBox getLogicalPageBox()
+    {
+      return logicalPageBox;
+    }
+  }
+
   public static LogicalPageBox layoutPage(final MasterReport report, final int page) throws Exception
   {
-    final PrintReportProcessor proc = new PrintReportProcessor(report);
-    final int nop = proc.getNumberOfPages();
-    if (proc.isError())
+    final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+
+    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
+        (new NullOutputStream(), new XmlPageOutputProcessorMetaData(localFontRegistry));
+    outputProcessor.setFlowSelector(new SinglePageFlowSelector(page, false));
+    final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
+    proc.processReport();
+
+    if (outputProcessor.getLogicalPageBox() == null)
     {
-      if (proc.getErrorReason() instanceof ReportParameterValidationException)
-      {
-        return null;
-      }
-      if (proc.getErrorReason() != null)
-      {
-        proc.getErrorReason().printStackTrace();
-      }
-      Assert.fail();
-      return null;
+      Assert.fail("Did not find the requested page");
     }
 
-    if (nop == 0)
-    {
-      throw new EmptyReportException("Empty report");
-    }
-
-    final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) proc.getPageDrawable(page);
-    return pageDrawable.getPageDrawable().getLogicalPageBox();
+    return outputProcessor.getLogicalPageBox();
   }
 
   /**
@@ -484,7 +515,7 @@ public class DebugReportRunner
     resolveStyle(reportHeader);
 
     metaData.initialize(wrapForCompatibility(report));
-    
+
     final ProcessingContext processingContext = new DefaultProcessingContext(report, metaData);
     final DebugExpressionRuntime runtime = new DebugExpressionRuntime
         (new DefaultTableModel(), 0, processingContext);
@@ -548,7 +579,7 @@ public class DebugReportRunner
     return (MasterReport) mgr.createDirectly(file, MasterReport.class).getResource();
   }
 
-  public static void showDialog (final MasterReport report)
+  public static void showDialog(final MasterReport report)
   {
     if (GraphicsEnvironment.isHeadless())
     {

@@ -26,12 +26,13 @@ public class Prd4071Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4071-Standalone.prpt");
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, true);
+
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     ModelPrinter.INSTANCE.print(logicalPageBox);
     assertEquals(64800000, logicalPageBox.getPageEnd());
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);
-    assertEquals(7, elementsByElementType.length);
-    final RenderNode lastChild = elementsByElementType[6];
+    assertEquals(6, elementsByElementType.length);
+    final RenderNode lastChild = elementsByElementType[5];
     assertEquals(64100000, lastChild.getY() + lastChild.getHeight());
   }
 

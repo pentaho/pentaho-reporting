@@ -25,7 +25,7 @@ public class SinglePageFlowSelector implements PageFlowSelector
     {
       return false;
     }
-    return logicalPage && key.getSequentialPageNumber() == acceptedPage;
+    return logicalPage == false && key.getSequentialPageNumber() == acceptedPage;
   }
 
   public boolean isLogicalPageAccepted(final LogicalPageKey key)

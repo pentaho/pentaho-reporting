@@ -168,7 +168,7 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public RenderNode deriveFrozen(final boolean deepDerive)
+  public LogicalPageBox deriveFrozen(final boolean deepDerive)
   {
     final LogicalPageBox box = (LogicalPageBox) super.deriveFrozen(deepDerive);
     box.headerArea = (PageAreaBox) headerArea.deriveFrozen(deepDerive);
@@ -189,7 +189,7 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public RenderNode derive(final boolean deepDerive)
+  public LogicalPageBox derive(final boolean deepDerive)
   {
     final LogicalPageBox box = (LogicalPageBox) super.derive(deepDerive);
     box.headerArea = (PageAreaBox) headerArea.derive(deepDerive);
@@ -230,7 +230,7 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public Object clone()
+  public LogicalPageBox clone()
   {
     try
     {
