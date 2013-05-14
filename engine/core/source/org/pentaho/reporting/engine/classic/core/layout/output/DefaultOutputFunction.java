@@ -75,7 +75,7 @@ public class DefaultOutputFunction extends AbstractFunction
   private int printedRepeatingFooter;
   private int avoidedFooter;
   private int avoidedRepeatingFooter;
-
+  private RepeatingFooterValidator repeatingFooterValidator;
   private boolean clearedFooter;
 
   /**
@@ -84,6 +84,7 @@ public class DefaultOutputFunction extends AbstractFunction
    */
   public DefaultOutputFunction()
   {
+    this.repeatingFooterValidator = new RepeatingFooterValidator();
     this.pagebreakHandler = new DefaultLayoutPagebreakHandler();
     this.inlineSubreports = new ArrayList<InlineSubreportMarker>();
     this.outputHandlers = new FastStack<GroupOutputHandler>();
@@ -983,6 +984,11 @@ public class DefaultOutputFunction extends AbstractFunction
     final int levelCount = levels.length;
     final DataRow dataRow = event.getDataRow();
 
+    if (repeatingFooterValidator.isRepeatFooterValid(event, levels) == false)
+    {
+      return true;
+    }
+
     boolean needPrinting = clearedFooter;
     if (needPrinting == false && state.isInItemGroup())
     {
@@ -1058,9 +1064,9 @@ public class DefaultOutputFunction extends AbstractFunction
     return needPrinting;
   }
 
-  private boolean isGroupSectionPrintable(final Band b,
-                                          final boolean testSticky,
-                                          final boolean testRepeat)
+  public static boolean isGroupSectionPrintable(final Band b,
+                                                final boolean testSticky,
+                                                final boolean testRepeat)
   {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
     if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
@@ -1162,6 +1168,7 @@ public class DefaultOutputFunction extends AbstractFunction
   public final Object clone() throws CloneNotSupportedException
   {
     final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
+    sl.repeatingFooterValidator = repeatingFooterValidator.clone();
     sl.currentEvent = null;
     sl.inlineSubreports = (ArrayList<InlineSubreportMarker>) inlineSubreports.clone();
     sl.outputHandlers = outputHandlers.clone();
@@ -1195,6 +1202,7 @@ public class DefaultOutputFunction extends AbstractFunction
     try
     {
       final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
+      sl.repeatingFooterValidator = repeatingFooterValidator.clone();
       sl.renderer = renderer.deriveForStorage();
       sl.inlineSubreports = (ArrayList<InlineSubreportMarker>) inlineSubreports.clone();
       sl.currentEvent = null;
@@ -1231,6 +1239,7 @@ public class DefaultOutputFunction extends AbstractFunction
     try
     {
       final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
+      sl.repeatingFooterValidator = repeatingFooterValidator.clone();
       sl.renderer = renderer.deriveForPagebreak();
       sl.inlineSubreports = (ArrayList<InlineSubreportMarker>) inlineSubreports.clone();
       sl.currentEvent = null;
