@@ -152,8 +152,10 @@ public class ProvisionDataSourcePanel extends JPanel
       {
         throw new IllegalStateException("DataSource Model is out of sync with the GUI");
       }
-
-      availableDataSourcesModel.edit(idx, editQueryAction.getEditedDataFactory());
+      if(editQueryAction.getEditedDataFactory() != null)
+      {
+        availableDataSourcesModel.edit(idx, editQueryAction.getEditedDataFactory());
+      }
     }
   }
 
