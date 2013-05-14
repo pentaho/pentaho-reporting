@@ -110,6 +110,9 @@
   </xsd:complexType>
 
   <xsd:complexType name="replacedContentType" mixed="true">
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:element name="attribute" type="attributeType"/>
+    </xsd:choice>
     <xsd:attribute name="x" type="xsd:string"/>
     <xsd:attribute name="y" type="xsd:string"/>
     <xsd:attribute name="width" type="xsd:string"/>
