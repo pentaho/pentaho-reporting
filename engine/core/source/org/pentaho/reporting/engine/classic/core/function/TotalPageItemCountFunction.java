@@ -17,14 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
-import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 /**
  * A report function that counts the total number of items contained in groups in a report. Resets the
@@ -43,16 +41,17 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  */
 public class TotalPageItemCountFunction extends TotalItemCountFunction implements PageEventListener
 {
+
   /**
    * holds the collection of values associated with pages and groups
    */
-  private transient PageGroupValues values = new PageGroupValues();
+  private transient PageGroupValues values;
 
   private int pageIndex = 0;
-  private int groupIndex = 0;
 
   public TotalPageItemCountFunction()
   {
+    values = new PageGroupValues();
   }
 
   protected boolean isPrepareRunLevel(final ReportEvent event)
@@ -64,18 +63,14 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
     return false;
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    super.groupStarted(event);
-    if (getGroup() != null)
-    {
-      groupIndex++;
-    }
-  }
-
+  /**
+   * If this is the group associated with the function, store away
+   * the final value
+   * @param event the event.
+   */
   public void groupFinished(final ReportEvent event)
   {
-    if (getGroup() != null)
+    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
     {
       storeValue(event);
     }
@@ -89,29 +84,32 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
   public void pageStarted(final ReportEvent event)
   {
     pageIndex++;
+    clear();
   }
 
   /**
    * Handles the pageFinishedEvent.
    * Stores the current page value and clears the counter.
+   * pageFinished can be hit multiple times for a single
+   * page, but the stored value should be consistent.
    *
    * @param event the report event.
    */
   public void pageFinished(final ReportEvent event)
   {
     storeValue(event);
-    clear();
   }
 
-  public Object getValue() {
-    return values.get(pageIndex, groupIndex);
+  public Object getValue()
+  {
+    return values.get(pageIndex, currentGroupKey);
   }
 
   private void storeValue(final ReportEvent event)
   {
     if (isPrepareRunLevel(event))
     {
-      values.put(pageIndex, groupIndex, super.getValue());
+          values.put(pageIndex, currentGroupKey, super.getValue());
     }
   }
 
@@ -129,38 +127,16 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
   }
 
   /**
-   * Convenience class to manage getting and putting values stored
-   * by page and group.
+   * Helper function for the serialization.
+   *
+   * @param in the input stream.
+   * @throws java.io.IOException    if an IO error occured.
+   * @throws ClassNotFoundException if a required class could not be found.
    */
-  private class PageGroupValues {
-    private Map<Integer, Map<Integer, Object>> pagedResults =
-        new HashMap<Integer, Map<Integer, Object>>();;
-
-    Object get(int page, int group) {
-      if (pagedResults.containsKey(page) &&
-          pagedResults.get(page).containsKey(group))
-      {
-        return pagedResults.get(page).get(group);
-      }
-      else
-      {
-        return 0;
-      }
-    }
-
-    void put(int page, int group, Object value) {
-      Map<Integer, Object> map;
-      if (pagedResults.containsKey(page))
-      {
-        map = pagedResults.get(page);
-      }
-      else
-      {
-        map = new HashMap<Integer, Object>();
-      }
-      map.put(group, value);
-      pagedResults.put(page, map);
-    }
-
+  private void readObject(final ObjectInputStream in)
+      throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject();
+    values = new PageGroupValues();
   }
 }

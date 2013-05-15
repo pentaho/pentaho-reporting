@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -66,7 +65,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * The current group key is used to store the result for the current group.
    */
-  private transient ReportStateKey currentGroupKey;
+  protected transient ReportStateKey currentGroupKey;
 
 
   private String crosstabFilterGroup;
@@ -170,28 +169,28 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   public Object clone() throws CloneNotSupportedException
   {
     final TotalItemCountFunction o = (TotalItemCountFunction) super.clone();
-    o.results =  (HashMap<ReportStateKey, Sequence<Integer>>)results.clone();  
+    o.results = (HashMap<ReportStateKey, Sequence<Integer>>) results.clone();
 
     // Clone saved group results.
     // The currently active result needs to be handled
     // separately from this loop, since the globalStateKey
     // and currentGroupKey both need to be mapped to it.
-    for (Map.Entry<ReportStateKey, Sequence<Integer>> entry : results.entrySet()) {
+    for (final Map.Entry<ReportStateKey, Sequence<Integer>> entry : results.entrySet())
+    {
       if (entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey)
       {
-         o.results.put(entry.getKey(), entry.getValue().clone());
+        o.results.put(entry.getKey(), entry.getValue().clone());
       }
     }
 
-    if (result != null) {
+    if (result != null)
+    {
       o.result = result.clone();
       o.results.put(globalStateKey, o.result);
       o.results.put(currentGroupKey, o.result);
     }
     return o;
   }
-
-
 
   public void summaryRowSelection(final ReportEvent event)
   {
@@ -232,7 +231,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   {
     if (result == null)
     {
-      return 0;
+      return 0 ;
     }
 
     final Integer value = result.get(lastGroupSequenceNumber);
