@@ -1,0 +1,513 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="4" row-count="7">
+    <cols>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="151.332"/>
+    </cols>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="1.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="1.0" width="5.56" height="10.0">1</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="1.0" width="63.88" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="1.0" width="17.78" height="10.0">San</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="121.55" y="1.0" width="43.33" height="10.0">Francisco</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="1.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="1.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="1.0" width="16.68" height="10.0">650</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="1.0" width="16.68" height="10.0">219</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="1.0" width="22.24" height="10.0">4782</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="21.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="21.0" width="5.56" height="10.0">2</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="21.0" width="31.11" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="21.0" width="31.11" height="10.0">Boston</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="21.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="21.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="21.0" width="16.68" height="10.0">215</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="21.0" width="16.68" height="10.0">837</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="21.0" width="22.24" height="10.0">0825</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="41.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="41.0" width="5.56" height="10.0">3</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="41.0" width="21.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="41.0" width="21.1" height="10.0">NYC</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="41.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="41.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="41.0" width="16.68" height="10.0">212</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="41.0" width="16.68" height="10.0">555</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="41.0" width="22.24" height="10.0">3000</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="61.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="61.0" width="5.56" height="10.0">4</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="61.0" width="22.77" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="61.0" width="22.77" height="10.0">Paris</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="61.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="61.0" width="16.95" height="10.0">+33</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="61.0" width="11.12" height="10.0">14</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="61.0" width="16.68" height="10.0">723</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="61.0" width="22.24" height="10.0">4404</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="81.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="81.0" width="5.56" height="10.0">5</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="81.0" width="27.22" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="81.0" width="27.22" height="10.0">Tokyo</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="81.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="81.0" width="16.95" height="10.0">+81</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="81.0" width="11.12" height="10.0">33</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="81.0" width="16.68" height="10.0">224</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="81.0" width="22.24" height="10.0">5000</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="101.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="101.0" width="5.56" height="10.0">6</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="101.0" width="33.34" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="101.0" width="33.34" height="10.0">Sydney</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="101.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="101.0" width="16.95" height="10.0">+61</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="101.0" width="5.56" height="10.0">2</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="229.05" y="101.0" width="22.24" height="10.0">9264</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="101.0" width="22.24" height="10.0">2451</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="121.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="121.0" width="5.56" height="10.0">7</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="121.0" width="33.36" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="121.0" width="33.36" height="10.0">London</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ffff99" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="121.0" width="80.86" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="121.0" width="16.95" height="10.0">+44</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="121.0" width="11.12" height="10.0">20</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="121.0" width="22.24" height="10.0">7877</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="259.62" y="121.0" width="22.24" height="10.0">2041</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+  </table>
+  <table col-count="4" row-count="7">
+    <cols>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="151.332"/>
+    </cols>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="141.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="141.0" width="5.56" height="10.0">1</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="141.0" width="63.88" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="141.0" width="17.78" height="10.0">San</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="121.55" y="141.0" width="43.33" height="10.0">Francisco</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="141.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="141.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="141.0" width="16.68" height="10.0">650</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="141.0" width="16.68" height="10.0">219</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="141.0" width="22.24" height="10.0">4782</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="185.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="185.0" width="5.56" height="10.0">2</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="185.0" width="31.11" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="185.0" width="31.11" height="10.0">Boston</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="185.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="185.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="185.0" width="16.68" height="10.0">215</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="185.0" width="16.68" height="10.0">837</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="185.0" width="22.24" height="10.0">0825</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="229.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="229.0" width="5.56" height="10.0">3</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="229.0" width="21.1" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="229.0" width="21.1" height="10.0">NYC</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="229.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="229.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="229.0" width="16.68" height="10.0">212</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="229.0" width="16.68" height="10.0">555</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="229.0" width="22.24" height="10.0">3000</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="273.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="273.0" width="5.56" height="10.0">4</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="273.0" width="22.77" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="273.0" width="22.77" height="10.0">Paris</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="273.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="273.0" width="16.95" height="10.0">+33</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="273.0" width="11.12" height="10.0">14</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="273.0" width="16.68" height="10.0">723</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="273.0" width="22.24" height="10.0">4404</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="317.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="317.0" width="5.56" height="10.0">5</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="317.0" width="27.22" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="317.0" width="27.22" height="10.0">Tokyo</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="317.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="317.0" width="16.95" height="10.0">+81</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="317.0" width="11.12" height="10.0">33</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="317.0" width="16.68" height="10.0">224</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="317.0" width="22.24" height="10.0">5000</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="361.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="361.0" width="5.56" height="10.0">6</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="361.0" width="33.34" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="361.0" width="33.34" height="10.0">Sydney</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="361.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="361.0" width="16.95" height="10.0">+61</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="361.0" width="5.56" height="10.0">2</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="229.05" y="361.0" width="22.24" height="10.0">9264</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="361.0" width="22.24" height="10.0">2451</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="44">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="405.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="405.0" width="5.56" height="10.0">7</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="405.0" width="33.36" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="405.0" width="33.36" height="10.0">London</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#99ffff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="405.0" width="80.86" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="405.0" width="16.95" height="10.0">+44</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="220.72" y="405.0" width="11.12" height="10.0">20</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="405.0" width="22.24" height="10.0">7877</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="259.62" y="405.0" width="22.24" height="10.0">2041</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+  </table>
+  <table col-count="4" row-count="2">
+    <cols>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="100"/>
+      <column width="151.332"/>
+    </cols>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="449.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="449.0" width="5.56" height="10.0">1</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="449.0" width="63.88" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="449.0" width="17.78" height="10.0">San</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="121.55" y="449.0" width="43.33" height="10.0">Francisco</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="449.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="449.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="449.0" width="16.68" height="10.0">650</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="449.0" width="16.68" height="10.0">219</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="449.0" width="22.24" height="10.0">4782</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="OFFICECODE"/>
+        <line type="ParagraphPoolBox" x="1.0" y="469.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1.0" y="469.0" width="5.56" height="10.0">2</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="CITY"/>
+        <line type="ParagraphPoolBox" x="101.0" y="469.0" width="31.11" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="101.0" y="469.0" width="31.11" height="10.0">Boston</text>
+        </line>
+      </cell>
+      <cell border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" background-color="#ff99ff" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PHONE"/>
+        <line type="ParagraphPoolBox" x="201.0" y="469.0" width="75.3" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="201.0" y="469.0" width="11.39" height="10.0">+1</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.16" y="469.0" width="16.68" height="10.0">215</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="234.61" y="469.0" width="16.68" height="10.0">837</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="254.06" y="469.0" width="22.24" height="10.0">0825</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>
