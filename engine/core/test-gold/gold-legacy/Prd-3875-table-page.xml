@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="11" row-count="4">
+    <cols>
+      <column width="33.12"/>
+      <column width="131.04"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="42.12"/>
+      <column width="54.88"/>
+    </cols>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
+      </empty-cell>
+      <cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TOTAL CONSUMER EXPENDITURE"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+        <line type="ParagraphPoolBox" x="33.12" y="2.5" width="131.04" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="33.12" y="2.5" width="25.752" height="8.0">TOTAL</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="61.088" y="2.5" width="46.64" height="8.0">CONSUMER</text>
+        </line>
+        <line type="ParagraphPoolBox" x="33.12" y="10.5" width="56.84" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="33.12" y="10.5" width="56.84" height="8.0">EXPENDITURE</text>
+        </line>
+      </cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_3"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_4"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_5"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_6"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_7"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_8"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="DIFFERENCE VS CHEAPEST"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+        <line type="ParagraphPoolBox" x="44.028" y="25.5" width="109.224" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="44.028" y="25.5" width="51.064" height="8.0">DIFFERENCE</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="97.308" y="25.5" width="10.656" height="8.0">VS</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="110.18" y="25.5" width="43.072" height="8.0">CHEAPEST</text>
+        </line>
+      </cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_3"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_4"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_5"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_6"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_7"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_8"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="DIFFERENCE IN PERCENT"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+        <line type="ParagraphPoolBox" x="47.8" y="45.5" width="101.68" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="47.8" y="45.5" width="51.064" height="8.0">DIFFERENCE</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="101.08" y="45.5" width="7.992" height="8.0">IN</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="111.288" y="45.5" width="38.192" height="8.0">PERCENT</text>
+        </line>
+      </cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_3"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_4"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_5"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_6"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_7"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_8"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="588">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>
