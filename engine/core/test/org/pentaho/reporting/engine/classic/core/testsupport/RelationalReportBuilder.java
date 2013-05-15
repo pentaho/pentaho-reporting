@@ -17,9 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.apache.poi.xslf.model.geom.AbsExpression;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
@@ -33,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchema
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
+import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -85,17 +88,18 @@ public class RelationalReportBuilder
   {
     private String field;
     private Class aggregation;
-
-    public RelationalDetail(final String fieldName)
-    {
-      this.field = fieldName;
-      this.aggregation = ItemSumFunction.class;
-    }
+    private Color background;
 
     public RelationalDetail(final String field, final Class aggregation)
     {
+      this(field, aggregation, null);
+    }
+
+    public RelationalDetail(final String field, final Class aggregation, final Color background)
+    {
       this.field = field;
       this.aggregation = aggregation;
+      this.background = background;
     }
 
     public String getField()
@@ -116,6 +120,16 @@ public class RelationalReportBuilder
     public void setAggregation(final Class aggregation)
     {
       this.aggregation = aggregation;
+    }
+
+    public Color getBackground()
+    {
+      return background;
+    }
+
+    public void setBackground(final Color background)
+    {
+      this.background = background;
     }
   }
 
@@ -165,9 +179,9 @@ public class RelationalReportBuilder
     details.add(detail);
   }
 
-  public void addDetails(final String field, final Class aggregation)
+  public void addDetails(final String field, final Class aggregation, final Color background)
   {
-    details.add(new RelationalDetail(field, aggregation));
+    details.add(new RelationalDetail(field, aggregation, background));
   }
 
   public MasterReport createReport()
@@ -220,6 +234,8 @@ public class RelationalReportBuilder
     final GroupDataBody body = (GroupDataBody) innerGroup.getBody();
     final ItemBand band = body.getItemBand();
     band.setLayout("row");
+    band.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
+    band.addElement(createLabel("D: ", 120));
     if (headerPrinted)
     {
       band.addElement(createLabel("Details"));
@@ -227,7 +243,7 @@ public class RelationalReportBuilder
     for (int d = 0; d < details.size(); d += 1)
     {
       final RelationalDetail relationalDetail = details.get(d);
-      band.addElement(createFieldItem(relationalDetail.getField(), null));
+      band.addElement(createFieldItem(relationalDetail.getField(), null, relationalDetail.getBackground()));
     }
     return rootGroup;
   }
@@ -238,7 +254,9 @@ public class RelationalReportBuilder
   {
     final GroupFooter footer = g.getFooter();
     footer.setLayout("row");
+    footer.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
     footer.setRepeat(true);
+    footer.addElement(createLabel("F: " + groupDefinition.getGroupField(), 120));
     if (groupDefinition.isHeader())
     {
       footer.addElement(createFieldItem(groupDefinition.getGroupField()));
@@ -252,43 +270,63 @@ public class RelationalReportBuilder
       for (int d = 0; d < details.size(); d += 1)
       {
         final RelationalDetail relationalDetail = details.get(d);
-        footer.addElement(createFieldItem(relationalDetail.getField(), relationalDetail.getAggregation()));
+        footer.addElement(createFieldItem(relationalDetail.getField(),
+            relationalDetail.getAggregation(), relationalDetail.getBackground()));
       }
     }
   }
 
   private void configureGroupHeader(final GroupDefinition groupDefinition,
                                     final RelationalGroup g,
-                                    final boolean headerPrinted)
+                                    final boolean anyHeaderPrinted)
   {
     final GroupHeader header = g.getHeader();
     header.setLayout("row");
+    header.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
     header.setRepeat(true);
+    header.addElement(createLabel("H: " + groupDefinition.getGroupField(), 120));
     if (groupDefinition.isHeader())
     {
       header.addElement(createFieldItem(groupDefinition.getGroupField()));
     }
-    else if (headerPrinted)
+    else if (anyHeaderPrinted)
     {
-      header.addElement(createLabel("Header"));
+      header.addElement(createLabel(" "));
     }
     if (groupDefinition.isHeaderAggregation())
     {
       for (int d = 0; d < details.size(); d += 1)
       {
         final RelationalDetail relationalDetail = details.get(d);
-        header.addElement(createFieldItem(relationalDetail.getField(), relationalDetail.getAggregation()));
+        header.addElement(createFieldItem(relationalDetail.getField(),
+            relationalDetail.getAggregation(), relationalDetail.getBackground()));
       }
     }
   }
 
   private Element createFieldItem(final String text)
   {
-    return createFieldItem(text, null);
+    return createFieldItem(text, null, null);
+  }
+
+  private static class CopyValueAsTextExpression extends AbstractExpression
+  {
+    private String field;
+
+    private CopyValueAsTextExpression(final String field)
+    {
+      this.field = field;
+    }
+
+    public Object getValue()
+    {
+      return String.valueOf(getDataRow().get(field));
+    }
   }
 
   private Element createFieldItem(final String fieldName,
-                                  final Class aggregationType)
+                                  final Class aggregationType,
+                                  final Color background)
   {
     final ElementType targetType;
     if (dataSchemaModel != null)
@@ -303,8 +341,10 @@ public class RelationalReportBuilder
     }
 
     final Element element = new Element();
+    element.setAttributeExpression("test-run", "test-value", new CopyValueAsTextExpression(fieldName));
     element.setElementType(targetType);
     element.getElementType().configureDesignTimeDefaults(element, Locale.getDefault());
+    element.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, background);
 
     if (targetType instanceof NumberFieldType)
     {
@@ -315,18 +355,22 @@ public class RelationalReportBuilder
     element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
     element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.FALSE);
     return element;
   }
 
   private Element createLabel(final String text)
+  {
+    return createLabel(text, 80);
+  }
+  private Element createLabel(final String text, float width)
   {
     final Element element = new Element();
     element.setElementType(LabelType.INSTANCE);
     element.getElementType().configureDesignTimeDefaults(element, Locale.getDefault());
 
     element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, width);
     element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
     return element;
   }

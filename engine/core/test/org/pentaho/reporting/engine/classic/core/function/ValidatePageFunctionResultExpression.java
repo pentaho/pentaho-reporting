@@ -17,28 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import junit.framework.Assert;
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class ValidatePageFunctionResultExpression extends AbstractFunction implements PageEventListener
 {
-  private boolean failHard;
-  private int currentDataItem;
   private String crosstabFilterGroup;
+  private Object tableModelValue;
 
   public ValidatePageFunctionResultExpression()
   {
   }
 
   public ValidatePageFunctionResultExpression(final String name,
-                                              final boolean failHard,
                                               final String validateCrosstabFilter)
   {
     setName(name);
     this.crosstabFilterGroup = validateCrosstabFilter;
-    this.failHard = failHard;
   }
 
   public String getCrosstabFilterGroup()
@@ -51,19 +46,9 @@ public class ValidatePageFunctionResultExpression extends AbstractFunction imple
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 
-  public boolean isFailHard()
-  {
-    return failHard;
-  }
-
-  public void setFailHard(final boolean failHard)
-  {
-    this.failHard = failHard;
-  }
-
   public Object getValue()
   {
-    return null;
+    return tableModelValue;
   }
 
   public void summaryRowSelection(final ReportEvent event)
@@ -76,27 +61,57 @@ public class ValidatePageFunctionResultExpression extends AbstractFunction imple
     if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
     {
       final String targetName = getName().substring(1);
-      final Object expressionValue = getDataRow().get(targetName);
-      final Object tableModelValue = getDataRow().get("validate-" + targetName);
-
-      currentDataItem = event.getState().getCurrentDataItem();
-
-      if (!equalNumeric(expressionValue, tableModelValue))
-      {
-        if (failHard)
-        {
-          DebugLog.log("*" + currentDataItem + "! " + expressionValue + " - " + tableModelValue);
-          Assert.assertEquals(tableModelValue, expressionValue);
-        }
-        else
-        {
-          DebugLog.log("*" + currentDataItem + "! " + expressionValue + " - " + tableModelValue);
-        }
-      }
+      tableModelValue = getDataRow().get("validate-" + targetName);
     }
   }
 
+  public void reportStarted(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void reportInitialized(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void reportFinished(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void itemsStarted(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void itemsFinished(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void reportDone(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void groupFinished(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+  public void groupStarted(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
   public void itemsAdvanced(final ReportEvent event)
+  {
+    updateValue(event);
+  }
+
+
+  private void updateValue(final ReportEvent event)
   {
     if (event.getState().isPrepareRun())
     {
@@ -104,52 +119,16 @@ public class ValidatePageFunctionResultExpression extends AbstractFunction imple
     }
 
     final String targetName = getName().substring(1);
-    final Object expressionValue = getDataRow().get(targetName);
-    final Object tableModelValue = getDataRow().get("validate-" + targetName);
-
-    currentDataItem = event.getState().getCurrentDataItem();
-    long sequenceCounter = event.getState().getCrosstabColumnSequenceCounter(3);
-    if (!failHard)
-    {
-      DebugLog.log(currentDataItem + ":" + sequenceCounter + "# " + expressionValue + " - " + tableModelValue);
-    }
-
-    if (!equalNumeric(expressionValue, tableModelValue))
-    {
-      if (failHard)
-      {
-        DebugLog.log(currentDataItem + "!  " + expressionValue + " - " + tableModelValue);
-        Assert.assertEquals(tableModelValue, expressionValue);
-      }
-      else
-      {
-        DebugLog.log(currentDataItem + "! " + expressionValue + " - " + tableModelValue);
-      }
-    }
+    tableModelValue = getDataRow().get("validate-" + targetName);
   }
 
   public void pageStarted(final ReportEvent event)
   {
-
+    updateValue(event);
   }
 
   public void pageFinished(final ReportEvent event)
   {
-
-  }
-
-  private boolean equalNumeric(final Object o1, final Object o2)
-  {
-    if (o1 instanceof Number == false)
-    {
-      return false;
-    }
-    if (o2 instanceof Number == false)
-    {
-      return false;
-    }
-    final Number n1 = (Number) o1;
-    final Number n2 = (Number) o2;
-    return Math.abs(n1.doubleValue() - n2.doubleValue()) < 0.0000005;
+    updateValue(event);
   }
 }
