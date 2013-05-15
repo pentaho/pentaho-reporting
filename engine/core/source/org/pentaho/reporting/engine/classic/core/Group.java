@@ -157,7 +157,7 @@ public abstract class Group extends Section
   public String getName ()
   {
     final String name = super.getName();
-    if (name == null)
+    if (name == null || name.isEmpty())
     {
       return getGeneratedName();
     }

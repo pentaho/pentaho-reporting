@@ -65,7 +65,7 @@ public class TotalItemCountFunction extends AbstractFunction implements Aggregat
   /**
    * The current group key is used to store the result for the current group.
    */
-  private transient ReportStateKey currentGroupKey;
+  protected transient ReportStateKey currentGroupKey;
 
 
   private String crosstabFilterGroup;

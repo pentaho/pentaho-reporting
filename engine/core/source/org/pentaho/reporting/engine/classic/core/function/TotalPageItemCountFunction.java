@@ -19,8 +19,6 @@ package org.pentaho.reporting.engine.classic.core.function;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
@@ -45,54 +43,11 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
 {
 
   /**
-   * Convenience class to manage getting and putting values stored
-   * by page and group.
-   */
-  private class PageGroupValues
-  {
-    private Map<Integer, Map<Integer, Object>> pagedResults;
-
-    private PageGroupValues()
-    {
-      pagedResults = new HashMap<Integer, Map<Integer, Object>>();
-    }
-
-    public Object get(final int page, final int group)
-    {
-      if (pagedResults.containsKey(page) &&
-          pagedResults.get(page).containsKey(group))
-      {
-        return pagedResults.get(page).get(group);
-      }
-      else
-      {
-        return null;
-      }
-    }
-
-    public void put(final int page, final int group, final Object value)
-    {
-      final Map<Integer, Object> map;
-      if (pagedResults.containsKey(page))
-      {
-        map = pagedResults.get(page);
-      }
-      else
-      {
-        map = new HashMap<Integer, Object>();
-        pagedResults.put(page, map);
-      }
-      map.put(group, value);
-    }
-  }
-
-  /**
    * holds the collection of values associated with pages and groups
    */
   private transient PageGroupValues values;
 
   private int pageIndex = 0;
-  private int groupIndex = 0;
 
   public TotalPageItemCountFunction()
   {
@@ -108,15 +63,11 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
     return false;
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    super.groupStarted(event);
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
-      groupIndex++;
-    }
-  }
-
+  /**
+   * If this is the group associated with the function, store away
+   * the final value
+   * @param event the event.
+   */
   public void groupFinished(final ReportEvent event)
   {
     if (FunctionUtilities.isDefinedGroup(getGroup(), event))
@@ -133,31 +84,32 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
   public void pageStarted(final ReportEvent event)
   {
     pageIndex++;
+    clear();
   }
 
   /**
    * Handles the pageFinishedEvent.
    * Stores the current page value and clears the counter.
+   * pageFinished can be hit multiple times for a single
+   * page, but the stored value should be consistent.
    *
    * @param event the report event.
    */
   public void pageFinished(final ReportEvent event)
   {
     storeValue(event);
-    clear();
-  //  groupIndex = 0;
   }
 
   public Object getValue()
   {
-    return values.get(pageIndex, groupIndex);
+    return values.get(pageIndex, currentGroupKey);
   }
 
   private void storeValue(final ReportEvent event)
   {
     if (isPrepareRunLevel(event))
     {
-          values.put(pageIndex, groupIndex, super.getValue());
+          values.put(pageIndex, currentGroupKey, super.getValue());
     }
   }
 
@@ -187,5 +139,4 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
     in.defaultReadObject();
     values = new PageGroupValues();
   }
-
 }
