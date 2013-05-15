@@ -35,11 +35,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/**
- * Creation-Date: 09.05.2007, 14:36:28
- *
- * @author Thomas Morgner
- */
 public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
 {
   private OutputProcessorMetaData metaData;
@@ -65,11 +60,9 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
 
 
     this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_MANUAL);
-    this.metaData.initialize(config);
     this.flowSelector = new DisplayAllFlowSelector();
 
-    this.printer = new ExcelPrinter();
-    this.printer.init(config, metaData, outputStream, resourceManager);
+    this.printer = new ExcelPrinter(outputStream, resourceManager);
   }
 
   public boolean isUseXlsxFormat()
@@ -111,6 +104,11 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
                                      final LogicalPageBox logicalPage,
                                      final TableContentProducer contentProducer) throws ContentProcessingException
   {
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     printer.print(logicalPageKey, logicalPage, contentProducer, false);
   }
 
@@ -119,6 +117,11 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
                                     final TableContentProducer tableContentProducer,
                                     final boolean performOutput) throws ContentProcessingException
   {
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     printer.print(logicalPageKey, logicalPageBox, tableContentProducer, true);
   }
 
@@ -127,6 +130,10 @@ public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
     if (isContentGeneratable() == false)
     {
       return;
+    }
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
     }
 
     this.metaData.commit();

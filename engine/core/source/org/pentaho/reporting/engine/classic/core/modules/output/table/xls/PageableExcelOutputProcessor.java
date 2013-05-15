@@ -40,15 +40,10 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/**
- * Creation-Date: 09.05.2007, 14:36:28
- *
- * @author Thomas Morgner
- */
 public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
     implements PageableOutputProcessor
 {
-  private List physicalPages;
+  private List<PhysicalPageKey> physicalPages;
   private OutputProcessorMetaData metaData;
   private ExcelPrinter printer;
   private FlowSelector flowSelector;
@@ -70,12 +65,11 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
       throw new NullPointerException();
     }
 
-    this.physicalPages = new ArrayList();
+    this.physicalPages = new ArrayList<PhysicalPageKey>();
     this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_FULL);
     this.flowSelector = new DisplayAllFlowSelector();
 
-    this.printer = new ExcelPrinter();
-    this.printer.init(configuration, metaData, outputStream, resourceManager);
+    this.printer = new ExcelPrinter(outputStream, resourceManager);
   }
 
   public boolean isUseXlsxFormat()
@@ -154,6 +148,11 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
                                      final TableContentProducer contentProducer)
       throws ContentProcessingException
   {
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     printer.print(logicalPageKey, logicalPage, contentProducer, false);
   }
 
@@ -163,6 +162,11 @@ public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
     {
       return;
     }
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     this.metaData.commit();
     printer.close();
   }

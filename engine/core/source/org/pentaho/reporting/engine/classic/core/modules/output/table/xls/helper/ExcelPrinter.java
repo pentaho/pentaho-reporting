@@ -107,8 +107,18 @@ public class ExcelPrinter
   private int sheetFreezeTop;
   private int sheetFreezeLeft;
 
-  public ExcelPrinter()
+  public ExcelPrinter(final OutputStream outputStream, final ResourceManager resourceManager)
   {
+    if (outputStream == null)
+    {
+      throw new NullPointerException();
+    }
+    if (resourceManager == null)
+    {
+      throw new NullPointerException();
+    }
+    this.outputStream = outputStream;
+    this.resourceManager = resourceManager;
     this.sheetNamesCount = new HashMap<String,Integer>();
   }
 
@@ -122,32 +132,20 @@ public class ExcelPrinter
     this.useXlsxFormat = useXlsxFormat;
   }
 
-  public void init(final Configuration config,
-                   final OutputProcessorMetaData metaData,
-                   final OutputStream outputStream,
-                   final ResourceManager resourceManager)
+  public boolean isInitialized()
   {
-    if (config == null)
-    {
-      throw new NullPointerException();
-    }
+    return metaData != null;
+  }
+
+  public void init(final OutputProcessorMetaData metaData)
+  {
     if (metaData == null)
     {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
-      throw new NullPointerException();
-    }
-    if (resourceManager == null)
-    {
-      throw new NullPointerException();
-    }
 
-    this.outputStream = outputStream;
-    this.config = config;
     this.metaData = metaData;
-    this.resourceManager = resourceManager;
+    this.config = metaData.getConfiguration();
     this.cellBackgroundProducer = new CellBackgroundProducer
         (metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE),
             metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));

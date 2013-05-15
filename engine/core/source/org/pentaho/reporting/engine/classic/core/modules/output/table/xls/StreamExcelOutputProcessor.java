@@ -66,8 +66,7 @@ public class StreamExcelOutputProcessor extends AbstractTableOutputProcessor
     this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_NONE);
     this.flowSelector = new DisplayAllFlowSelector();
 
-    this.printer = new ExcelPrinter();
-    this.printer.init(config, metaData, outputStream, resourceManager);
+    this.printer = new ExcelPrinter(outputStream, resourceManager);
   }
 
   public boolean isUseXlsxFormat()
@@ -104,6 +103,11 @@ public class StreamExcelOutputProcessor extends AbstractTableOutputProcessor
                                      final LogicalPageBox logicalPage,
                                      final TableContentProducer contentProducer) throws ContentProcessingException
   {
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     printer.print(logicalPageKey, logicalPage, contentProducer, false);
   }
 
@@ -113,6 +117,11 @@ public class StreamExcelOutputProcessor extends AbstractTableOutputProcessor
                                     final TableContentProducer tableContentProducer,
                                     final boolean performOutput) throws ContentProcessingException
   {
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
+    }
+
     printer.print(logicalPageKey, logicalPageBox, tableContentProducer, true);
   }
 
@@ -121,6 +130,11 @@ public class StreamExcelOutputProcessor extends AbstractTableOutputProcessor
     if (isContentGeneratable() == false)
     {
       return;
+    }
+
+    if (!this.printer.isInitialized())
+    {
+      this.printer.init(metaData);
     }
 
     this.metaData.commit();
