@@ -70,7 +70,7 @@
           </p>
         </canvas>
       </block>
-      <block type="AutoRenderBox" x="0.0" y="39.0" width="592.0" height="695.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="39.0" width="592.0" height="695.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <block type="AutoRenderBox" x="0.0" y="39.0" width="592.0" height="695.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -2269,7 +2269,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="Sample Query"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block type="AutoRenderBox" x="0.0" y="-654.0" width="592.0" height="1388.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="-654.0" width="592.0" height="1388.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <block type="AutoRenderBox" x="0.0" y="-654.0" width="592.0" height="1388.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -4472,7 +4472,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="Sample Query"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block type="AutoRenderBox" x="0.0" y="-1347.0" width="592.0" height="2081.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="-1347.0" width="592.0" height="2081.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <block type="AutoRenderBox" x="0.0" y="-1347.0" width="592.0" height="2081.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -6675,7 +6675,7 @@
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="Sample Query"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-      <block type="AutoRenderBox" x="0.0" y="-2040.0" width="592.0" height="2281.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="-2040.0" width="592.0" height="2281.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
         <block type="AutoRenderBox" x="0.0" y="-2040.0" width="592.0" height="2281.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -7247,13 +7247,7 @@
         </canvas>
       </block>
     </block>
-    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="734.0" width="592.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
-      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="734.0" width="592.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <row type="RowRenderBox" x="0.0" y="734.0" width="592.0" height="20.0" color="black" font-face="Arial" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
-          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-        </row>
-      </auto>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="754.0" width="592.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="754.0" width="592.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="754.0" width="592.0" height="18.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

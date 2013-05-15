@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="6" row-count="119">
+  <table col-count="6" row-count="118">
     <cols>
       <column width="118.4"/>
       <column width="118.4"/>
@@ -5987,17 +5987,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-    </row>
-    <row height="20">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="3">
       <cell border-top-color="#9eaa36" border-top-width="1.0" border-top-style="solid" row-span="2" col-span="3">

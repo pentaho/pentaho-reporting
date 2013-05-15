@@ -71,7 +71,7 @@
                 </p>
               </canvas>
             </block>
-            <block type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block name="::group-0" type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
               <block type="AutoRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -8197,11 +8197,6 @@
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
-      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <canvas type="CanvasRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
-        </canvas>
-      </auto>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -9082,6 +9077,11 @@
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+        </canvas>
+      </auto>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -10274,11 +10274,6 @@
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
-      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <canvas type="CanvasRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
-        </canvas>
-      </auto>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -11453,6 +11448,11 @@
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+        </canvas>
+      </auto>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -12261,11 +12261,6 @@
       </block>
     </block>
     <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
-      <auto name="Repeat-Footer-3" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <canvas type="CanvasRenderBox" x="0.0" y="572.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
-        </canvas>
-      </auto>
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="572.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -13130,7 +13125,7 @@
             </p>
           </canvas>
         </block>
-        <block type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block name="::group-0" type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -13804,7 +13799,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="::report:index-generator:0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-        <block type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block name="::group-0" type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="-545.667" width="772.0" height="1137.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
@@ -14547,7 +14542,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="::report:index-generator:0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
-        <block type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block name="::group-0" type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="AutoRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>

@@ -5871,7 +5871,7 @@
       <spanned-cell/>
     </row>
   </table>
-  <table col-count="6" row-count="17">
+  <table col-count="6" row-count="16">
     <cols>
       <column width="118.4"/>
       <column width="118.4"/>
@@ -6464,7 +6464,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="493">
+    <row height="513">
       <cell row-span="1" col-span="6">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Report Footer"/>
@@ -6479,17 +6479,6 @@
       <spanned-cell/>
       <spanned-cell/>
       <spanned-cell/>
-    </row>
-    <row height="20">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:generated-content-marker="true"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="3">
       <cell border-top-color="#9eaa36" border-top-width="1.0" border-top-style="solid" row-span="2" col-span="3">
