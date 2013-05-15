@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
  * A report group.  Reports can contain any number of (nested) groups. The order of the fields is not important. If the
@@ -157,7 +158,7 @@ public abstract class Group extends Section
   public String getName ()
   {
     final String name = super.getName();
-    if (name == null)
+    if (StringUtils.isEmpty(name))
     {
       return getGeneratedName();
     }
