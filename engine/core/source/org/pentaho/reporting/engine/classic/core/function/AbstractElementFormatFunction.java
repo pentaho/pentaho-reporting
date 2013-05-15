@@ -488,12 +488,10 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
       performanceCollector = new PerformanceCollector();
     }
 
-    final Band b = event.getReport().getPageHeader();
-    processRootBand(b);
-
     final Band w = event.getReport().getWatermark();
     processRootBand(w);
 
+    processHeaderBands(event.getState());
     processFooterBands(event.getState());
   }
 
@@ -537,6 +535,45 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
 
   }
 
+  protected void processHeaderBands(ReportState state)
+  {
+    while (state != null)
+    {
+      final ReportDefinition reportDefinition = state.getReport();
+      processRootBand(reportDefinition.getPageHeader());
+      if (state.isInItemGroup())
+      {
+        processRootBand(reportDefinition.getDetailsHeader());
+      }
+      Group g = reportDefinition.getRootGroup();
+      int groupCounter = 0;
+      while (g != null && groupCounter <= state.getCurrentGroupIndex())
+      {
+        processGroupHeaders(g);
+
+        final GroupBody body = g.getBody();
+        if (body instanceof SubGroupBody)
+        {
+          groupCounter += 1;
+          final SubGroupBody sgb = (SubGroupBody) body;
+          g = sgb.getGroup();
+        }
+        else if (body instanceof CrosstabOtherGroupBody)
+        {
+          groupCounter += 1;
+          final CrosstabOtherGroupBody sgb = (CrosstabOtherGroupBody) body;
+          g = sgb.getGroup();
+        }
+        else
+        {
+          break;
+        }
+      }
+
+      state = state.getParentSubReportState();
+    }
+
+  }
   /**
    * Format-Functions usually are not expected to return anything.
    *
