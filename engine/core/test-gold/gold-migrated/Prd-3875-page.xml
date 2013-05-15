@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
+  <physical-page page-x="0" page-y="0" page-width="700" page-height="792" margin-top="72" margin-left="72" margin-bottom="72" margin-right="72">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="556.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="556.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="556.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="556.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="0.0" width="556.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <block type="AutoRenderBox" x="0.0" y="0.0" width="556.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="556.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="556.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
+              <row type="RowRenderBox" x="33.12" y="40.0" width="468.0" height="20.0" color="black" font-face="Futura LT Condensed" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                <p type="ParagraphRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="33.12" y="40.0" width="131.04" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="DIFFERENCE IN PERCENT"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+                  <line type="ParagraphPoolBox" x="47.8" y="45.5" width="101.68" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="47.8" y="45.5" width="51.064" height="8.0">DIFFERENCE</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="101.08" y="45.5" width="7.992" height="8.0">IN</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="111.288" y="45.5" width="38.192" height="8.0">PERCENT</text>
+                  </line>
+                </p>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="164.16" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_1"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="206.28" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_2"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="248.4" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_3"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="290.52" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_4"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="332.64" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_5"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="374.76" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_6"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="416.88" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_7"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="459.0" y="40.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMINPERC_column_8"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#.#%;(#.#%)"/>
+                </block>
+              </row>
+              <row type="RowRenderBox" x="33.12" y="20.0" width="468.0" height="20.0" color="black" font-face="Futura LT Condensed" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                <p type="ParagraphRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="33.12" y="20.0" width="131.04" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="DIFFERENCE VS CHEAPEST"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+                  <line type="ParagraphPoolBox" x="44.028" y="25.5" width="109.224" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="44.028" y="25.5" width="51.064" height="8.0">DIFFERENCE</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="97.308" y="25.5" width="10.656" height="8.0">VS</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="110.18" y="25.5" width="43.072" height="8.0">CHEAPEST</text>
+                  </line>
+                </p>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="164.16" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_1"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="206.28" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_2"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="248.4" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_3"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="290.52" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_4"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="332.64" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_5"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="374.76" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_6"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="416.88" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_7"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="459.0" y="20.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DIFFMIN_column_8"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+              </row>
+              <row type="RowRenderBox" x="33.12" y="0.0" width="468.0" height="20.0" color="black" font-face="Futura LT Condensed" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+                <p type="ParagraphRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="33.12" y="0.0" width="131.04" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TOTAL CONSUMER EXPENDITURE"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
+                  <line type="ParagraphPoolBox" x="33.12" y="2.5" width="131.04" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="33.12" y="2.5" width="25.752" height="8.0">TOTAL</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="61.088" y="2.5" width="46.64" height="8.0">CONSUMER</text>
+                  </line>
+                  <line type="ParagraphPoolBox" x="33.12" y="10.5" width="56.84" height="8.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="33.12" y="10.5" width="56.84" height="8.0">EXPENDITURE</text>
+                  </line>
+                </p>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="164.16" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_1"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="206.28" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_2"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="248.4" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_3"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="290.52" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_4"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="332.64" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_5"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="374.76" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_6"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="416.88" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_7"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+                <block type="BlockRenderBox" border-top-color="black" border-top-width="2.0" border-top-style="solid" border-bottom-color="#999999" border-bottom-width="1.0" border-bottom-style="solid" x="459.0" y="0.0" width="42.12" height="20.0" color="black" font-face="Futura LT Condensed" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="SUM_column_8"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#0.00"/>
+                </block>
+              </row>
+            </canvas>
+          </block>
+        </block>
+      </block>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="60.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="60.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="648.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="648.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="648.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="648.0" width="556.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+  </physical-page>
+</layout-output>

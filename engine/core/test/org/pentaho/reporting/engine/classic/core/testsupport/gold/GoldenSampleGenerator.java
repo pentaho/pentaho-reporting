@@ -57,10 +57,9 @@ public class GoldenSampleGenerator extends GoldTestBase
       throws Exception
   {
     new GoldenSampleGenerator().runAllGoldReports();
-    /*
-    new GoldenSampleGenerator().runSingleGoldReport("Prd-3889.prpt", ReportProcessingMode.legacy);
-    new GoldenSampleGenerator().runSingleGoldReport("Prd-3889.prpt", ReportProcessingMode.migration);
-    new GoldenSampleGenerator().runSingleGoldReport("Prd-3889.prpt", ReportProcessingMode.current);
-    */
+
+//    new GoldenSampleGenerator().runSingleGoldReport("Prd-3875.prpt", ReportProcessingMode.legacy);
+//    new GoldenSampleGenerator().runSingleGoldReport("Prd-3875.prpt", ReportProcessingMode.migration);
+//    new GoldenSampleGenerator().runSingleGoldReport("Prd-3875.prpt", ReportProcessingMode.current);
   }
 }
