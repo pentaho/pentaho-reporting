@@ -91,7 +91,9 @@ public class SQLDataFactoryWriteHandler implements BundleDataFactoryWriterHandle
     tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "password", true);
     tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "path", true);
     tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "property", true);
-    tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "query", true);
+    tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "static-query", true);
+    tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "script", true);
+    tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "global-script", true);
     tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "url", true);
     tagDescription.setElementHasCData(SQLDataFactoryModule.NAMESPACE, "username", true);
 
