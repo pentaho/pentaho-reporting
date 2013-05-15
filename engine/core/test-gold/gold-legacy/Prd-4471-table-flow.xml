@@ -30,7 +30,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="0.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="0.0" width="5.56" height="10.0">0</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -38,7 +38,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="0.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="0.0" width="5.56" height="10.0">0</text>
         </line>
       </cell>
     </row>
@@ -65,7 +65,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="20.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="20.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="20.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -73,7 +73,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="20.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="20.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="20.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
     </row>
@@ -98,7 +98,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="40.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="40.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="40.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -106,7 +106,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="40.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="40.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="40.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
     </row>
@@ -133,7 +133,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="60.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="60.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="60.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -141,7 +141,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="60.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="60.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="60.0" width="5.56" height="10.0">1</text>
         </line>
       </cell>
     </row>
@@ -168,7 +168,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="80.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="80.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="80.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -176,7 +176,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="80.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="80.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="80.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
     </row>
@@ -201,7 +201,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="100.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="100.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="100.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -209,7 +209,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="100.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="100.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="100.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
     </row>
@@ -236,7 +236,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="234.44" y="120.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="234.44" y="120.0" width="5.56" height="10.0">3</text>
+          <text x="234.44" y="120.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -244,7 +244,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <line type="ParagraphPoolBox" x="314.44" y="120.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="314.44" y="120.0" width="5.56" height="10.0">3</text>
+          <text x="314.44" y="120.0" width="5.56" height="10.0">2</text>
         </line>
       </cell>
     </row>
@@ -366,7 +366,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="Value"/>
         <line type="ParagraphPoolBox" x="80.0" y="200.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="80.0" y="200.0" width="5.56" height="10.0">1</text>
+          <text x="80.0" y="200.0" width="5.56" height="10.0">3</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
