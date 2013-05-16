@@ -133,7 +133,7 @@
       <xsd:element name="inline" type="contentBoxType"/>
       <xsd:element name="other-box" type="contentBoxType"/>
       <xsd:element name="canvas" type="contentBoxType"/>
-      <xsd:element name="row-box" type="contentBoxType"/>
+      <xsd:element name="row" type="contentBoxType"/>
       <xsd:element name="auto" type="contentBoxType"/>
       <xsd:element name="table" type="contentBoxType"/>
       <xsd:element name="table-section" type="contentBoxType"/>
