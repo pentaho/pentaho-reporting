@@ -55,7 +55,7 @@ public class TableRowModelTest extends TestCase
     updateTableRow(rowModel, 3, 1000);
     updateTableRow(rowModel, 4, 1000);
     
-    rowModel.validateActualSizes(createSection());
+    rowModel.validateActualSizes();
     rowModel.prune(5);
 
     assertEquals(1, rowModel.getRowCount());
@@ -89,7 +89,7 @@ public class TableRowModelTest extends TestCase
     updateTableRow(rowModel, 4, 1000);
     updateTableRow(rowModel, 5, 1000);
 
-    rowModel.validateActualSizes(createSection());
+    rowModel.validateActualSizes();
 
     assertEquals(3, rowModel.getRow(3).getMaximumRowSpan());
     assertEquals(1000, rowModel.getRow(3).getPreferredSize(1));
@@ -134,7 +134,7 @@ public class TableRowModelTest extends TestCase
     updateTableRow(rowModel, 2, 1000, 0, 2000);
     updateTableRow(rowModel, 3, 1000);
     updateTableRow(rowModel, 4, 1000);
-    rowModel.validateActualSizes(createSection());
+    rowModel.validateActualSizes();
     rowModel.prune(2);
 
     // assert that nothing has been done. This model is actually not breakable.

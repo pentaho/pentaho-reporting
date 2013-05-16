@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -28,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public abstract class RenderNode implements Cloneable
 {
@@ -233,7 +235,7 @@ public abstract class RenderNode implements Cloneable
     this.y += amount;
   }
 
-  public final void setY(final long y)
+  public void setY(final long y)
   {
     this.y = y;
   }
@@ -294,7 +296,7 @@ public abstract class RenderNode implements Cloneable
     return height;
   }
 
-  public final void setHeight(final long height)
+  public void setHeight(final long height)
   {
     if (height < 0)
     {
@@ -702,12 +704,12 @@ public abstract class RenderNode implements Cloneable
    *
    * @param cachedY the cached y position
    */
-  public final void setCachedY(final long cachedY)
+  public void setCachedY(final long cachedY)
   {
     this.cachedY = cachedY;
   }
 
-  public final void shiftCached(final long amount)
+  public void shiftCached(final long amount)
   {
     this.cachedY += amount;
   }

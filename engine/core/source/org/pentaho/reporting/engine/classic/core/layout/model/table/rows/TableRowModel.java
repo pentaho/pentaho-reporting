@@ -32,8 +32,8 @@ public interface TableRowModel
   
   public long getRowSpacing();
 
-  public void validateSizes(TableSectionRenderBox tableSection);
-  public void validateActualSizes(TableSectionRenderBox tableSection);
+  public void validateSizes();
+  public void validateActualSizes();
 
   public void initialize(TableRenderBox table);
   

@@ -376,7 +376,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
       currentTable.rowModel.addRow();
     }
 
-    box.getRowModel().validateSizes(box);
+    box.getRowModel().validateSizes();
     currentTable.setSectionRenderBox(null);
   }
 

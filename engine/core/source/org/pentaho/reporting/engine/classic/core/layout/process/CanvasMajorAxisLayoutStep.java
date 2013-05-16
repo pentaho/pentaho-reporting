@@ -859,11 +859,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     if (box instanceof TableRowRenderBox)
     {
       getTableRowHeightStep().startTableRow((TableRowRenderBox) box);
@@ -891,11 +886,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return;
-    }
-
     if (box instanceof TableRowRenderBox)
     {
       final long blockHeight = computeRowHeightAndAlign(box, 0, true);
