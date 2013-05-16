@@ -192,10 +192,11 @@ public class TableRowHeightCalculation
   /// todo: This can be split up into an incremental process on "finishTableRow"
   public void finishTableSection(final TableSectionRenderBox section)
   {
+    validateTableSection(section);
     // OK; a complete section is a coolness factor. Lets compute something.
     // Grab the model of all available rows ..
     final TableRowModel rowModel = section.getRowModel();
-    rowModel.validateActualSizes(section);
+    rowModel.validateActualSizes();
 
     // Second step: Apply the row heights to all cells.
     // + Align all cells.
@@ -209,13 +210,14 @@ public class TableRowHeightCalculation
     while (it.hasNext())
     {
       final RenderNode rowNode = it.next();
-      if (rowNode instanceof FinishedRenderNode)
-      {
-        final FinishedRenderNode node = (FinishedRenderNode) rowNode;
-        usedTableBodyHeight += node.getLayoutedHeight();
-      }
       if (rowNode instanceof TableRowRenderBox == false)
       {
+        validateAndPositionOtherNode(sectionPosY + usedTableBodyHeight, rowNode);
+        if (rowNode instanceof FinishedRenderNode)
+        {
+          final FinishedRenderNode node = (FinishedRenderNode) rowNode;
+          usedTableBodyHeight += node.getLayoutedHeight();
+        }
         continue;
       }
       final TableRowRenderBox rowBox = (TableRowRenderBox) rowNode;
@@ -240,6 +242,22 @@ public class TableRowHeightCalculation
     currentTable.setRowModel(null);
   }
 
+  private void validateTableSection(final TableSectionRenderBox section)
+  {
+    RenderNode c = section.getFirstChild();
+    long y = section.getCachedY();
+    while (c != null)
+    {
+      if (c.getCachedY() != y)
+      {
+        //throw new IllegalArgumentException();
+      }
+      y = c.getCachedY2();
+
+      c = c.getNext();
+    }
+  }
+
   private long validateAndPositionTableRow(final long position,
                                            final TableRowModel rows,
                                            final TableRowRenderBox rowBox)
@@ -257,6 +275,13 @@ public class TableRowHeightCalculation
     CacheBoxShifter.shiftBox(rowBox, shift);
     rowBox.setCachedHeight(validatedRowHeight);
     return validatedRowHeight;
+  }
+
+  private void validateAndPositionOtherNode(final long position, final RenderNode rowBox)
+  {
+    final long oldPosition = rowBox.getCachedY();
+    final long shift = position - oldPosition;
+    CacheBoxShifter.shiftBoxUnchecked(rowBox, shift);
   }
 
 }

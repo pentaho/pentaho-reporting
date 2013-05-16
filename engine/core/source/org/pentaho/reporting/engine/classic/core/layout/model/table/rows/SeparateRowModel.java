@@ -44,7 +44,7 @@ public class SeparateRowModel extends AbstractRowModel
     rowSpacing = table.getRowSpacing().resolve(0);
   }
 
-  public void validateSizes(final TableSectionRenderBox tableSection)
+  public void validateSizes()
   {
     if (validatedSize)
     {
@@ -88,9 +88,9 @@ public class SeparateRowModel extends AbstractRowModel
   }
 
 
-  public void validateActualSizes(final TableSectionRenderBox tableSection)
+  public void validateActualSizes()
   {
-    validateSizes(tableSection);
+    validateSizes();
 
     int maxRowSpan = 0;
     final TableRow[] rows = getRows();
