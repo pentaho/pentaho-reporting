@@ -44,7 +44,7 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="Value"/>
               <line type="ParagraphPoolBox" x="80.0" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="80.0" y="0.0" width="5.56" height="10.0">0</text>
+                <text x="80.0" y="0.0" width="5.56" height="10.0">3</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="160.0" y="0.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -52,7 +52,7 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
               <line type="ParagraphPoolBox" x="234.44" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="234.44" y="0.0" width="5.56" height="10.0">0</text>
+                <text x="234.44" y="0.0" width="5.56" height="10.0">3</text>
               </line>
             </p>
             <p type="ParagraphRenderBox" x="240.0" y="0.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -60,7 +60,7 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
               <line type="ParagraphPoolBox" x="314.44" y="0.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <text x="314.44" y="0.0" width="5.56" height="10.0">0</text>
+                <text x="314.44" y="0.0" width="5.56" height="10.0">3</text>
               </line>
             </p>
           </row>
@@ -95,7 +95,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="234.44" y="20.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="234.44" y="20.0" width="5.56" height="10.0">1</text>
+                    <text x="234.44" y="20.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
                 <p type="ParagraphRenderBox" x="240.0" y="20.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -103,7 +103,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="314.44" y="20.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="314.44" y="20.0" width="5.56" height="10.0">1</text>
+                    <text x="314.44" y="20.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
               </row>
@@ -137,7 +137,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                     <line type="ParagraphPoolBox" x="234.44" y="40.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="234.44" y="40.0" width="5.56" height="10.0">1</text>
+                      <text x="234.44" y="40.0" width="5.56" height="10.0">3</text>
                     </line>
                   </p>
                   <p type="ParagraphRenderBox" x="240.0" y="40.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -145,7 +145,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                     <line type="ParagraphPoolBox" x="314.44" y="40.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="314.44" y="40.0" width="5.56" height="10.0">1</text>
+                      <text x="314.44" y="40.0" width="5.56" height="10.0">3</text>
                     </line>
                   </p>
                 </row>
@@ -180,7 +180,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="234.44" y="60.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="234.44" y="60.0" width="5.56" height="10.0">1</text>
+                    <text x="234.44" y="60.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
                 <p type="ParagraphRenderBox" x="240.0" y="60.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -188,7 +188,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="314.44" y="60.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="314.44" y="60.0" width="5.56" height="10.0">1</text>
+                    <text x="314.44" y="60.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
               </row>
@@ -222,7 +222,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="234.44" y="80.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="234.44" y="80.0" width="5.56" height="10.0">2</text>
+                    <text x="234.44" y="80.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
                 <p type="ParagraphRenderBox" x="240.0" y="80.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -230,7 +230,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="314.44" y="80.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="314.44" y="80.0" width="5.56" height="10.0">2</text>
+                    <text x="314.44" y="80.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
               </row>
@@ -264,7 +264,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                     <line type="ParagraphPoolBox" x="234.44" y="100.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="234.44" y="100.0" width="5.56" height="10.0">2</text>
+                      <text x="234.44" y="100.0" width="5.56" height="10.0">3</text>
                     </line>
                   </p>
                   <p type="ParagraphRenderBox" x="240.0" y="100.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -272,7 +272,7 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                     <line type="ParagraphPoolBox" x="314.44" y="100.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="314.44" y="100.0" width="5.56" height="10.0">2</text>
+                      <text x="314.44" y="100.0" width="5.56" height="10.0">3</text>
                     </line>
                   </p>
                 </row>
@@ -307,7 +307,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-a-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="234.44" y="120.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="234.44" y="120.0" width="5.56" height="10.0">2</text>
+                    <text x="234.44" y="120.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
                 <p type="ParagraphRenderBox" x="240.0" y="120.0" width="80.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -315,7 +315,7 @@
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="row-b-sum"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
                   <line type="ParagraphPoolBox" x="314.44" y="120.0" width="5.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="314.44" y="120.0" width="5.56" height="10.0">2</text>
+                    <text x="314.44" y="120.0" width="5.56" height="10.0">3</text>
                   </line>
                 </p>
               </row>
