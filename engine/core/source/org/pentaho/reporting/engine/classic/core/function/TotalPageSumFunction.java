@@ -1,18 +1,20 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
  *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  * This program is free software; you can redistribute it and/or modify it under the
+ *  * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ *  * Foundation.
+ *  *
+ *  * You should have received a copy of the GNU Lesser General Public License along with this
+ *  * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ *  * or from the Free Software Foundation, Inc.,
+ *  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  *
+ *  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ *  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *  * See the GNU Lesser General Public License for more details.
+ *  *
+ *  * Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.function;
@@ -25,23 +27,15 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 
 /**
- * A report function that counts the total number of items contained in groups in a report. Resets the
- * counter with each new page, and with each new group if the optional group parameter is specified.
- * The function will always reset with each new page, so if a group spans across a page break the
- * counter will be still be reset.
- * <p/>
- * Like all Total-Functions, this function produces precomputed totals. The function's result is precomputed once
- * and will not change later.
- * <p/>
- * The ItemCount can be used to produce a running row-count for a group or report.
- * <p/>
- * To count the number of groups in a report, use the TotalGroupCountFunction.
+ * Calculates the sum of a field for an entire page.  The function will also reset by group if the
+ * optional <code>group</code> parameter is specified.  If the specified group spans a page break,
+ * the sum will be reset with the new page and sum only the items for the group from the subsequent page.
  *
  * @author Thomas Morgner
  */
-public class TotalPageItemCountFunction extends TotalItemCountFunction implements PageEventListener
+public class TotalPageSumFunction extends TotalGroupSumFunction
+    implements PageEventListener
 {
-
   /**
    * holds the collection of values associated with pages and groups
    */
@@ -49,7 +43,10 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
 
   private int pageIndex = 0;
 
-  public TotalPageItemCountFunction()
+/**
+   * Default Constructor.
+   */
+  public TotalPageSumFunction()
   {
     values = new PageGroupValues();
   }
@@ -121,7 +118,7 @@ public class TotalPageItemCountFunction extends TotalItemCountFunction implement
    */
   public Expression getInstance()
   {
-    final TotalPageItemCountFunction function = (TotalPageItemCountFunction) super.getInstance();
+    final TotalPageSumFunction function = (TotalPageSumFunction) super.getInstance();
     function.values = new PageGroupValues();
     return function;
   }
