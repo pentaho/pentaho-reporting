@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 
 @SuppressWarnings("HardCodedStringLiteral")
@@ -311,6 +312,19 @@ public class ModelPrinter
       print(b.toString());
     }
 
+    if (box instanceof TableRowRenderBox)
+    {
+      final TableRowRenderBox pageBox = (TableRowRenderBox) box;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- Row: ");
+      b.append(pageBox.getRowIndex());
+      print(b.toString());
+    }
+
     if (box instanceof TableCellRenderBox)
     {
       final TableCellRenderBox pageBox = (TableCellRenderBox) box;
@@ -387,6 +401,8 @@ public class ModelPrinter
 
   private void printChilds(final RenderBox box, final int level)
   {
+    if (box instanceof TableCellRenderBox)
+      return;
     RenderNode childs = box.getFirstChild();
     while (childs != null)
     {

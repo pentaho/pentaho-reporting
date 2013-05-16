@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
 public class CrosstabTest extends TestCase
@@ -49,5 +50,11 @@ public class CrosstabTest extends TestCase
     report.setQuery("default");
     report.setDataFactory(new TableDataFactory("default", new DefaultTableModel(1, 1)));
     DebugReportRunner.executeAll(report);
+  }
+
+  public void testBreaking1() throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
   }
 }
