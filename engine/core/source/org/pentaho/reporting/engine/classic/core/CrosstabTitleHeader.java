@@ -19,9 +19,7 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabTitleHeaderType;
 import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A details header is printed between the last group-header and the first detail band. The header is printed on the
@@ -75,48 +73,6 @@ public class CrosstabTitleHeader extends Band implements RootLevelBand
   public SubReport[] getSubReports()
   {
     return CrosstabTitleHeader.EMPTY_SUB_REPORTS;
-  }
-
-  /**
-   * Checks whether this group header should be repeated on new pages.
-   *
-   * @return true, if the header will be repeated, false otherwise
-   */
-  public boolean isRepeat()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER);
-  }
-
-  /**
-   * Defines, whether this group header should be repeated on new pages.
-   *
-   * @param repeat true, if the header will be repeated, false otherwise
-   */
-  public void setRepeat(final boolean repeat)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER, repeat);
-    notifyNodePropertiesChanged();
-  }
-
-  /**
-   * Returns true if the footer should be shown on all subreports.
-   *
-   * @return true or false.
-   */
-  public boolean isSticky()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.STICKY, false);
-  }
-
-  /**
-   * Defines whether the footer should be shown on all subreports.
-   *
-   * @param b a flag indicating whether or not the footer is shown on the first page.
-   */
-  public void setSticky(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
-    notifyNodePropertiesChanged();
   }
 
   public ElementStyleSheet getDefaultStyleSheet()

@@ -79,6 +79,8 @@
     <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
     <xs:attribute type="xs:boolean" name="container" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
+    <xs:attribute type="xs:string" name="type-classification" use="optional"/>
+    <xs:attribute type="xs:string" name="content-type" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="dataFactoryType">
@@ -95,6 +97,20 @@
     <xs:attribute type="xs:boolean" name="metadata-source" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:string" name="impl" use="optional"/>
+  </xs:complexType>
+
+  <xs:complexType name="reportPreProcessorType">
+    <xs:attribute type="xs:string" name="class" use="required"/>
+    <xs:attribute type="xs:string" name="bundle-name" use="required"/>
+    <xs:attribute type="xs:string" name="key-prefix" use="optional"/>
+    <xs:attribute type="xs:boolean" name="expert" use="optional"/>
+    <xs:attribute type="xs:boolean" name="hidden" use="optional"/>
+    <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
+    <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
+    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+    <xs:attribute type="xs:boolean" name="metadata-source" use="optional"/>
+    <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
+    <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="style-group-refType">
@@ -175,6 +191,7 @@
       <xs:element type="elementType" name="element" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element type="expressionType" name="expression" maxOccurs="unbounded" minOccurs="0"/>
       <xs:element type="dataFactoryType" name="data-factory" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="reportPreProcessorType" name="pre-processor" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
