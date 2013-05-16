@@ -104,6 +104,7 @@ import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResol
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
 /**
@@ -1315,7 +1316,14 @@ public abstract class AbstractRenderComponent extends JComponent
       final ElementRenderer rendererRoot = getElementRenderer();
       if (rendererRoot != null)
       {
-        rendererRoot.draw(logicalPageAreaG2);
+        if (rendererRoot.draw(logicalPageAreaG2) == false)
+        {
+          rendererRoot.handleError(designerContext, renderContext);
+
+          logicalPageAreaG2.scale(1f/scaleFactor, 1f/scaleFactor);
+          logicalPageAreaG2.setPaint(Color.WHITE);
+          logicalPageAreaG2.fill(area);
+        }
       }
     }
     catch (Exception e)

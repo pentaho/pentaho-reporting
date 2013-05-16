@@ -46,8 +46,6 @@ import org.pentaho.reporting.engine.classic.core.designtime.compat.Compatibility
 import org.pentaho.reporting.engine.classic.core.layout.richtext.RichTextConverterUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
-import org.pentaho.reporting.libraries.xmlns.writer.HtmlCharacterEntities;
 
 public class MigrationDialog extends CommonDialog
 {
@@ -102,7 +100,6 @@ public class MigrationDialog extends CommonDialog
 
   protected Document createDescriptionText() throws IOException, BadLocationException
   {
-    final CharacterEntityParser cep = HtmlCharacterEntities.getEntityParser();
     final StringBuilder sb = new StringBuilder(10000);
     sb.append("<html><head></head><body>\n");//NON-NLS
     final CompatibilityConverterRegistry registry = CompatibilityConverterRegistry.getInstance();
@@ -177,9 +174,9 @@ public class MigrationDialog extends CommonDialog
     if (fromVersion != toVersion)
     {
       if (JOptionPane.showConfirmDialog(this,
-              Messages.getString("MigrationDialog.ConfirmSave.Message"),
-              Messages.getString("MigrationDialog.ConfirmSave.Title"),
-              JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+          Messages.getString("MigrationDialog.Confirm.Message"),
+          Messages.getString("MigrationDialog.Confirm.Title"),
+          JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
       {
         return true;
       }
@@ -190,7 +187,7 @@ public class MigrationDialog extends CommonDialog
   private void setupFromReportVersion()
   {
     warningLabel.setText(Messages.getString("MigrationDialog.WarningLabel",
-            ClassicEngineBoot.printVersion(fromVersion), ClassicEngineBoot.printVersion(toVersion)));
+        ClassicEngineBoot.printVersion(fromVersion), ClassicEngineBoot.printVersion(toVersion)));
     try
     {
       textArea.setDocument(createDescriptionText());

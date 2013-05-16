@@ -18,7 +18,8 @@
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
 import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.IncompatibleFeatureException;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -182,8 +183,9 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
     {
       if (strictCompatibilityMode)
       {
-        throw new InvalidReportStateException("A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
-            "Migrate your report to version 4.0 or higher.");
+        throw new IncompatibleFeatureException("A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
+            "Migrate your report to version 4.0 or higher.",
+            ClassicEngineBoot.computeVersionId(4, 0, 0));
       }
       final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
       final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);

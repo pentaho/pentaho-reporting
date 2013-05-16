@@ -18,16 +18,19 @@
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
+import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.DesignerPageDrawable;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
@@ -46,6 +49,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingUtil;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -288,9 +292,15 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   private void refreshLayoutFromSharedRenderer()
   {
+    final LogicalPageBox pageBox = sharedRenderer.getPageBox();
+    if (pageBox == null)
+    {
+      computedBounds = sharedRenderer.getFallbackBounds();
+      return;
+    }
+
     elementsById.clear();
     sharedRenderer.transferLocalLayout(getElement(), elementsById, verticalEdgePositions);
-    final LogicalPageBox pageBox = sharedRenderer.getPageBox();
     final OutputProcessorMetaData outputProcessorMetaData = sharedRenderer.getLayouter().getOutputProcessorMetaData();
 
     logicalPageDrawable = new DesignerPageDrawable(pageBox, outputProcessorMetaData, resourceManager, element);
@@ -319,6 +329,16 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
     graphics.dispose();
     return true;
+  }
+
+  public void handleError(final ReportDesignerContext designerContext, final ReportRenderContext reportContext)
+  {
+    if (sharedRenderer.isMigrationError())
+    {
+      SwingUtilities.invokeLater
+          (new MigrateReportTask(designerContext, reportContext, sharedRenderer.getMinimumVersionNeeded()));
+      sharedRenderer.clearMigrationError();
+    }
   }
 
   public BreakPositionsList getHorizontalEdgePositions()
