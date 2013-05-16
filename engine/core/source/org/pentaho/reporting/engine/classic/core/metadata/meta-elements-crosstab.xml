@@ -16,7 +16,6 @@
         <style-group-ref ref="text"/>
         <style-group-ref ref="layout"/>
         <style-group-ref ref="bands"/>
-        <style-group-ref ref="group-bands"/>
     </element>
 
     <element name="crosstab-header" expert="false" hidden="true" preferred="false" container="true"
@@ -34,7 +33,6 @@
         <style-group-ref ref="text"/>
         <style-group-ref ref="layout"/>
         <style-group-ref ref="bands"/>
-        <style-group-ref ref="group-bands"/>
     </element>
 
 
@@ -53,7 +51,6 @@
         <style-group-ref ref="text"/>
         <style-group-ref ref="layout"/>
         <style-group-ref ref="bands"/>
-        <style-group-ref ref="group-bands"/>
     </element>
 
     <element name="crosstab" expert="true" hidden="true" preferred="false" container="true"
@@ -61,7 +58,11 @@
              implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType"
              type-classification="control">
 
-        <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+      <attribute-group-ref ref="root-level-band-attributes"/>
+      <attribute-group-ref ref="common-attributes"/>
+      <attribute-group-ref ref="interactivity"/>
+
+      <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
                    name="normalization-mode"
                    mandatory="false"
                    expert="false"
@@ -106,10 +107,6 @@
                    computed="true"
                    value-type="[Ljava.lang.String;"
                    value-role="Field"/>
-
-        <attribute-group-ref ref="root-level-band-attributes"/>
-        <attribute-group-ref ref="common-attributes"/>
-        <attribute-group-ref ref="interactivity"/>
 
         <style-group-ref ref="borders"/>
         <style-group-ref ref="common"/>

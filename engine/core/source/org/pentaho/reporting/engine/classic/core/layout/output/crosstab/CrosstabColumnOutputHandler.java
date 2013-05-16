@@ -111,7 +111,7 @@ public class CrosstabColumnOutputHandler implements GroupOutputHandler
   public void groupFinished(final DefaultOutputFunction outputFunction,
                             final ReportEvent event) throws ReportProcessingException
   {
-    if (CrosstabOutputHelper.isLastColumnGroup(outputFunction, event))
+    if (CrosstabOutputHelper.isLastColumnGroup(event))
     {
       return;
     }

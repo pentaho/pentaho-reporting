@@ -340,7 +340,7 @@ public class CombinedColorChooser extends AbstractColorChooserPanel
     gbc.gridy = 0;
     gbc.gridwidth = 1;
     gbc.gridheight = 1;
-    leftPanel.add(new JLabel("°"), gbc);
+    leftPanel.add(new JLabel("\u00b0"), gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;

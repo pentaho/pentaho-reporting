@@ -128,6 +128,11 @@ public class MigrateReportAction extends AbstractReportContextAction
   public void actionPerformed(final ActionEvent e)
   {
     final ReportDesignerContext context = getReportDesignerContext();
+    migrateReport(context);
+  }
+
+  public static void migrateReport(final ReportDesignerContext context)
+  {
     final Component parent = context.getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final MigrationDialog dialog;
@@ -144,6 +149,6 @@ public class MigrateReportAction extends AbstractReportContextAction
       dialog = new MigrationDialog();
     }
 
-    dialog.performMigration(getReportDesignerContext(), getReportDesignerContext().getActiveContext());
+    dialog.performMigration(context, context.getActiveContext());
   }
 }
