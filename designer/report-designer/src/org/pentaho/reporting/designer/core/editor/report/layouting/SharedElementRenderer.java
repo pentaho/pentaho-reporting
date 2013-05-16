@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,7 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.IncompatibleFeatureException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -44,6 +46,7 @@ public class SharedElementRenderer
 {
   private final ReportLayouter reportLayouter;
   private final MasterReport masterReport;
+  private long minimumVersionNeeded;
   private EventListenerList listenerList;
   private LogicalPageBox pageBox;
   private TransferGlobalLayoutProcessStep transferGlobalLayoutProcessor;
@@ -51,6 +54,7 @@ public class SharedElementRenderer
   private Map<InstanceID, Set<InstanceID>> conflicts;
   private long layoutAge;
   private boolean lastResult;
+  private boolean warnMigration;
 
   public SharedElementRenderer(final ReportRenderContext reportRenderContext)
   {
@@ -64,12 +68,14 @@ public class SharedElementRenderer
     {
       throw new NullPointerException();
     }
-    this.reportLayouter = new ReportLayouter(reportRenderContext);
 
+    this.warnMigration = true;
+    this.reportLayouter = new ReportLayouter(reportRenderContext);
     this.listenerList = new EventListenerList();
     this.transferGlobalLayoutProcessor = new TransferGlobalLayoutProcessStep();
     this.transferLayoutProcessor = new TransferLayoutProcessStep();
     this.conflicts = new HashMap<InstanceID, Set<InstanceID>>();
+    this.minimumVersionNeeded = -1;
   }
 
   public void addChangeListener(final ChangeListener changeListener)
@@ -114,6 +120,17 @@ public class SharedElementRenderer
       UncaughtExceptionsModel.getInstance().addException(new ReportProcessingException
           ("Fatal Layouter Error: This report cannot be processed due to a unrecoverable error in the reporting-engine. " +
               "Please file a bug-report.", e));
+
+      if (warnMigration)
+      {
+        @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+        final IncompatibleFeatureException ife = extractIncompatibleFeatureException(e);
+        if (ife != null)
+        {
+          minimumVersionNeeded = ife.getMinimumVersionNeeded();
+        }
+        warnMigration = false;
+      }
       pageBox = null;
     }
 
@@ -161,6 +178,38 @@ public class SharedElementRenderer
     }
   }
 
+  public long getMinimumVersionNeeded()
+  {
+    return minimumVersionNeeded;
+  }
+
+  public boolean isMigrationError()
+  {
+    return minimumVersionNeeded != -1;
+  }
+
+  public void clearMigrationError()
+  {
+    minimumVersionNeeded = -1;
+  }
+
+  private IncompatibleFeatureException extractIncompatibleFeatureException(Throwable e)
+  {
+    while (e != null)
+    {
+      if (e instanceof IncompatibleFeatureException)
+      {
+        return (IncompatibleFeatureException) e;
+      }
+      if (e == e.getCause())
+      {
+        return null;
+      }
+      e = e.getCause();
+    }
+    return null;
+  }
+
   public void transferLocalLayout(final Section section,
                                   final Map<InstanceID, Element> elementsById,
                                   final BreakPositionsList verticalEdgePositions)
@@ -196,5 +245,10 @@ public class SharedElementRenderer
   public LogicalPageBox getPageBox()
   {
     return pageBox;
+  }
+
+  public Rectangle2D getFallbackBounds()
+  {
+    return new Rectangle2D.Float(0, 0, masterReport.getPageDefinition().getWidth(), 0);
   }
 }
