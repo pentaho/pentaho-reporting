@@ -259,7 +259,7 @@ public abstract class CommonDialog extends JDialog
     return buttonsCarrierPanel;
   }
 
-  protected final Action getConfirmAction()
+  protected Action getConfirmAction()
   {
     return confirmAction;
   }
