@@ -38,7 +38,7 @@
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunctionBundle"
-              result="java.lang.Object" expert="true" hidden="false" preferred="false">
+              result="java.lang.Object" expert="true" hidden="true" preferred="false">
     <property name="deepTraversing" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
