@@ -156,13 +156,13 @@ public class ExceptionDialog extends JDialog
     init();
   }
 
-  public ExceptionDialog(Frame parent)
+  public ExceptionDialog(final Frame parent)
   {
     super(parent);
     init();
   }
 
-  public ExceptionDialog(Dialog parent)
+  public ExceptionDialog(final Dialog parent)
   {
     super(parent);
     init();
@@ -376,7 +376,7 @@ public class ExceptionDialog extends JDialog
       (final Component parent, final String title, final String message, final Exception e)
   {
     final Window window = LibSwingUtil.getWindowAncestor(parent);
-    ExceptionDialog defaultDialog;
+    final ExceptionDialog defaultDialog;
     if (window instanceof Frame)
     {
       defaultDialog = new ExceptionDialog((Frame) window);
