@@ -98,7 +98,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
     }
 
-    CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder);
+    CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder, 1, 1, group.getHeader());
     crosstabLayout.setRowHeader(gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
     outputFunction.getRenderer().add(group.getHeader(), outputFunction.getRuntime());
     layoutModelBuilder.finishBox();
@@ -249,7 +249,10 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
     }
 
-    CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder, crosstabLayout.getFirstColGroupIndex() - gidx, 1);
+    // An outer row-group's summary cell spans across all inner row-group header-columns up to the start
+    // of the data area.
+    final int colSpan = crosstabLayout.getFirstColGroupIndex() - gidx;
+    CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder, colSpan, 1, group.getSummaryHeader());
     crosstabLayout.setRowHeader(gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
     outputFunction.getRenderer().add(group.getSummaryHeader(), outputFunction.getRuntime());
     layoutModelBuilder.finishBox();
@@ -328,20 +331,26 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
     }
 
     final LayoutModelBuilder layoutModelBuilder = outputFunction.getRenderer().getNormalFlowLayoutModelBuilder();
-    CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder);
-    layoutModelBuilder.legacyFlagNotEmpty();
     final CrosstabCellBody dataBody = event.getReport().getCrosstabCellBody();
     final CrosstabCell element = dataBody.findElement(crosstabLayout.getSummaryRowField(), columnField);
+
     if (element != null)
     {
+      CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder);
+      layoutModelBuilder.legacyFlagNotEmpty();
       outputFunction.getRenderer().startSection(Renderer.SectionType.NORMALFLOW);
       outputFunction.getRenderer().add(element, outputFunction.getRuntime());
       outputFunction.addSubReportMarkers(outputFunction.getRenderer().endSection());
+      layoutModelBuilder.finishBox();
     }
     else
     {
-      logger.debug("Unable to find summary cell: " + crosstabLayout.getSummaryRowField() + " - " + columnField);
+      CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder);
+      layoutModelBuilder.legacyFlagNotEmpty();
+      logger.debug(String.format("Unable to find summary cell: %s - %s", // NON-NLS
+          crosstabLayout.getSummaryRowField(), columnField));
+      layoutModelBuilder.finishBox();
     }
-    layoutModelBuilder.finishBox();
+
   }
 }

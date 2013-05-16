@@ -112,10 +112,13 @@ public final class CrosstabOutputHelper
     return node.findNodeById(id);
   }
 
-  public static Element createTableCell(final int colSpan, final int rowSpan)
+  public static Element createTableCell(final int colSpan, final int rowSpan,
+                                        final boolean pagebreakBefore, final boolean pagebreakAfter)
   {
     final CrosstabTableCell b = new CrosstabTableCell(colSpan, rowSpan);
-    
+    b.getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, pagebreakBefore);
+    b.getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, pagebreakAfter);
+
     final StyleResolver resolver = new SimpleStyleResolver();
     final ResolverStyleSheet resolverTarget = new ResolverStyleSheet();
     resolver.resolve(b, resolverTarget);
@@ -123,11 +126,11 @@ public final class CrosstabOutputHelper
     return b;
   }
 
-  public static Band createTableRow ()
+  public static Band createTableRow()
   {
     return createTableBand(BandStyleKeys.LAYOUT_TABLE_ROW);
   }
-  
+
   public static Band createTable(final TableLayout tableLayout)
   {
     final Band b = new Band();
@@ -147,7 +150,7 @@ public final class CrosstabOutputHelper
     final Band b = new Band();
     b.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, layout);
     b.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
-    
+
     final StyleResolver resolver = new SimpleStyleResolver();
     final ResolverStyleSheet resolverTarget = new ResolverStyleSheet();
     resolver.resolve(b, resolverTarget);
@@ -155,7 +158,7 @@ public final class CrosstabOutputHelper
     return b;
   }
 
-  public static boolean isLastColumnGroup(final DefaultOutputFunction outputFunction, final ReportEvent event)
+  public static boolean isLastColumnGroup(final ReportEvent event)
   {
     final int gidx = event.getState().getCurrentGroupIndex();
     final Group group = event.getReport().getGroup(gidx);
@@ -305,16 +308,35 @@ public final class CrosstabOutputHelper
     layoutModelBuilder.finishBox();
   }
 
-  public static void createAutomaticCell(LayoutModelBuilder layoutModelBuilder)
+  public static void createAutomaticCell(final LayoutModelBuilder layoutModelBuilder,
+                                         final int colSpan,
+                                         final int rowSpan,
+                                         final Element element)
   {
-    createAutomaticCell(layoutModelBuilder, 1, 1);
+    final boolean pagebreakBefore = element.getComputedStyle().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE);
+    final boolean pagebreakAfter = element.getComputedStyle().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER);
+    createAutomaticCell(layoutModelBuilder, colSpan, rowSpan, pagebreakBefore, pagebreakAfter);
   }
-  
-  public static void createAutomaticCell(LayoutModelBuilder layoutModelBuilder,
+
+  public static void createAutomaticCell(final LayoutModelBuilder layoutModelBuilder)
+  {
+    createAutomaticCell(layoutModelBuilder, 1, 1, false, false);
+  }
+
+  public static void createAutomaticCell(final LayoutModelBuilder layoutModelBuilder,
                                          final int colSpan,
                                          final int rowSpan)
   {
-    Element tableCell = createTableCell(colSpan, rowSpan);
+    createAutomaticCell(layoutModelBuilder, colSpan, rowSpan, false, false);
+  }
+
+  private static void createAutomaticCell(final LayoutModelBuilder layoutModelBuilder,
+                                          final int colSpan,
+                                          final int rowSpan,
+                                          final boolean pagebreakBefore,
+                                          final boolean pagebreakAfter)
+  {
+    final Element tableCell = createTableCell(colSpan, rowSpan, pagebreakBefore, pagebreakAfter);
     layoutModelBuilder.startBox(tableCell);
 
   }
