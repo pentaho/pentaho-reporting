@@ -85,11 +85,13 @@ public class Prd2087Test extends TestCase
 
   public void testSeq1Crash2() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
-    // masterReport.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
     DebugReportRunner.createPDF(masterReport);
-
-//    DebugReportRunner.showDialog(masterReport);
 
   }
   /**
