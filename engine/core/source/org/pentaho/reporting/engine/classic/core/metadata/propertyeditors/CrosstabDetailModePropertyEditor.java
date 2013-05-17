@@ -23,6 +23,6 @@ public class CrosstabDetailModePropertyEditor extends EnumPropertyEditor
 {
   public CrosstabDetailModePropertyEditor()
   {
-    super(CrosstabDetailMode.class);
+    super(CrosstabDetailMode.class, true);
   }
 }

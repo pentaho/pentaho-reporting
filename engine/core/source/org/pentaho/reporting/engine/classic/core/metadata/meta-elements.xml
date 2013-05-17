@@ -523,6 +523,10 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType"
            type-classification="control">
+    <attribute-group-ref ref="common-attributes"/>
+
+    <style-group-ref ref="layout"/>
+    <style-group-ref ref="common"/>
   </element>
 
 

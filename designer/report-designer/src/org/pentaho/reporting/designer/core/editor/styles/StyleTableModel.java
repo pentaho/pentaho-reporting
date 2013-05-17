@@ -445,8 +445,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     switch (columnIndex)
     {
       case 0:
-        return new GroupedName(metaData,
-            metaData.getDisplayName(Locale.getDefault()), metaData.getGrouping(Locale.getDefault()));
+        return new GroupedName(metaData);
       case 1:
         return computeInheritValue(metaData, rowIndex);
       case 2:

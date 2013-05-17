@@ -17,10 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
-import org.pentaho.reporting.engine.classic.core.function.TotalGroupSumFunction;
+import java.io.Serializable;
 
-public class CrosstabDetail
+import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
+
+public class CrosstabDetail implements Serializable
 {
   private String field;
   private Class aggregation;

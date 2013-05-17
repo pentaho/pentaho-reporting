@@ -22,13 +22,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 
 public class DefaultElementMetaData extends AbstractMetaData implements ElementMetaData
 {
+  private static final Log logger = LogFactory.getLog(DefaultElementMetaData.class);
   private transient AttributeMetaData[] attributesAsArray;
-  private AttributeMap attributes;
+  private AttributeMap<AttributeMetaData> attributes;
   private HashMap<StyleKey, StyleMetaData> styles;
   private Class elementType;
   private TypeClassification reportElementType;
@@ -43,7 +46,7 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
                                 final boolean hidden,
                                 final boolean deprecated,
                                 final TypeClassification reportElementType,
-                                final AttributeMap attributes,
+                                final AttributeMap<AttributeMetaData> attributes,
                                 final HashMap<StyleKey, StyleMetaData> styles,
                                 final Class elementType,
                                 final Class contentType,
@@ -118,7 +121,13 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
       throw new NullPointerException();
     }
 
-    return (AttributeMetaData) attributes.getAttribute(namespace, name);
+    final AttributeMetaData attribute = attributes.getAttribute(namespace, name);
+    if (attribute == null)
+    {
+      logger.warn (String.format
+          ("No metadata defined for attribute [%s:%s] on element-type %s", namespace, name, getName()));
+    }
+    return attribute;
   }
 
   public StyleMetaData getStyleDescription(final StyleKey name)

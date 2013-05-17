@@ -17,12 +17,9 @@
 
 package org.pentaho.reporting.designer.core.util.table;
 
-/**
- * Todo: Document me!
- *
- * @author Thomas Morgner
- */
-public class GroupingHeader
+import java.io.Serializable;
+
+public class GroupingHeader implements Serializable
 {
   private String headerText;
   private boolean collapsed;

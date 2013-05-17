@@ -23,6 +23,6 @@ public class TableLayoutPropertyEditor extends EnumPropertyEditor
 {
   public TableLayoutPropertyEditor()
   {
-    super(TableLayout.class);
+    super(TableLayout.class, true);
   }
 }

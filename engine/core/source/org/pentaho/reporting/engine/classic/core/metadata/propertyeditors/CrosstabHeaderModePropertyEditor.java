@@ -23,6 +23,6 @@ public class CrosstabHeaderModePropertyEditor extends EnumPropertyEditor
 {
   public CrosstabHeaderModePropertyEditor()
   {
-    super(CrosstabHeaderMode.class);
+    super(CrosstabHeaderMode.class, true);
   }
 }

@@ -208,8 +208,7 @@ public class VisualAttributeTableModel extends AbstractAttributeTableModel imple
     switch (columnIndex)
     {
       case 0:
-        return new GroupedName(metaData,
-            metaData.getDisplayName(Locale.getDefault()), metaData.getGrouping(Locale.getDefault()));
+        return new GroupedName(metaData);
       case 1:
         return computeFullValue(metaData, rowIndex);
       case 2:

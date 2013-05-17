@@ -18,6 +18,7 @@
 package org.pentaho.reporting.libraries.designtime.swing.table;
 
 import java.awt.Paint;
+import java.awt.SystemColor;
 import java.beans.PropertyEditor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -64,7 +65,10 @@ public class PropertyTable extends JTable
   public PropertyTable()
   {
     putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-    
+    this.setShowHorizontalLines(true);
+    this.setShowVerticalLines(true);
+    this.setGridColor(SystemColor.controlShadow);
+
     taggedPropertyEditorCellEditor = new PropertyEditorCellEditor();
     propertyEditorCellEditor = new PropertyCellEditorWithEllipsis();
     propertyEditorCellRenderer = new PropertyEditorCellRenderer();

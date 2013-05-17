@@ -27,7 +27,6 @@ import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.Locale;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -40,6 +39,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
@@ -47,28 +47,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.CrosstabCell;
-import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
-import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
-import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroupBody;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
-import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
-import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
-import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
-import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.GroupBody;
-import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabBuilder;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDetail;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDimension;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -222,7 +208,7 @@ public class CreateCrosstabDialog extends CommonDialog
   private CrosstabDimensionTableModel rowsFieldsModel;
   private CrosstabDimensionTableModel columnsFieldsModel;
   private CrosstabDetailTableModel detailFieldsModel;
-  private ReportRenderContext reportRenderContext;
+  private CrosstabOptionsPane optionsPane;
 
   public CreateCrosstabDialog()
   {
@@ -245,6 +231,8 @@ public class CreateCrosstabDialog extends CommonDialog
   {
     setTitle(Messages.getString("CreateCrosstabDialog.Title"));
     setModal(true);
+
+    optionsPane = new CrosstabOptionsPane();
 
     availableFieldsModel = new DefaultBulkListModel();
 
@@ -293,16 +281,20 @@ public class CreateCrosstabDialog extends CommonDialog
 
   protected String getDialogId()
   {
-    return "ReportDesigner.Core.CreateCrosstab";
+    return "ReportDesigner.Core.CreateCrosstab"; // NON-NLS
   }
 
   protected Component createContentPane()
   {
+    final JTabbedPane pane = new JTabbedPane();
+    pane.addTab(Messages.getString("CreateCrosstabDialog.Fields"), createSelectionPane());
+    pane.addTab(Messages.getString("CreateCrosstabDialog.Options"), optionsPane);
+
     final JPanel contentPane = new JPanel();
     contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     contentPane.setLayout(new BorderLayout());
     contentPane.add(createTitlePanel(), BorderLayout.NORTH);
-    contentPane.add(createSelectionPane(), BorderLayout.CENTER);
+    contentPane.add(pane, BorderLayout.CENTER);
     return contentPane;
   }
 
@@ -327,12 +319,12 @@ public class CreateCrosstabDialog extends CommonDialog
 
     final JPanel tablesPane = new JPanel();
     tablesPane.setLayout(new GridBagLayout());
-    addList(tablesPane, 0, otherFields, "OtherFields");
-    addTable(tablesPane, 1, rowFields, "RowFields", new AddDimensionAction(availableFields, rowsFieldsModel));
-    addTable(tablesPane, 2, columnFields, "ColumnsFields", new AddDimensionAction(availableFields, columnsFieldsModel));
-    addTable(tablesPane, 3, detailFields, "Details", new AddDetailsAction(availableFields, detailFieldsModel));
+    addList(tablesPane, 0, otherFields, "CreateCrosstabDialog.OtherFields");
+    addTable(tablesPane, 1, rowFields, "CreateCrosstabDialog.RowFields", new AddDimensionAction(availableFields, rowsFieldsModel));
+    addTable(tablesPane, 2, columnFields, "CreateCrosstabDialog.ColumnsFields", new AddDimensionAction(availableFields, columnsFieldsModel));
+    addTable(tablesPane, 3, detailFields, "CreateCrosstabDialog.Details", new AddDetailsAction(availableFields, detailFieldsModel));
 
-    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidePane, tablesPane);
+    final JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidePane, tablesPane);
     splitPane.setBorder(null);
     return splitPane;
   }
@@ -342,7 +334,7 @@ public class CreateCrosstabDialog extends CommonDialog
   {
     final BulkDataProvider bulkListModel = (BulkDataProvider) list.getModel();
     final JButton otherAdd = new BorderlessButton(addAction);
-    final JLabel otherLabel = new JLabel(Messages.getString("CreateCrosstabDialog." + labelText));
+    final JLabel otherLabel = new JLabel(Messages.getString(labelText));
 
     final ListSelectionModel otherSelectionModel = list.getSelectionModel();
     final JButton otherSortUp = new BorderlessButton(new SortBulkUpAction(bulkListModel, otherSelectionModel));
@@ -352,7 +344,7 @@ public class CreateCrosstabDialog extends CommonDialog
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 2;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.weightx = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets(5, 5, 5, 5);
@@ -360,19 +352,19 @@ public class CreateCrosstabDialog extends CommonDialog
 
     gbc = new GridBagConstraints();
     gbc.gridx = 3;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherSortUp, gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 4;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherSortDown, gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 5;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherRemove, gbc);
 
@@ -397,7 +389,7 @@ public class CreateCrosstabDialog extends CommonDialog
   {
     final DefaultBulkListModel bulkListModel = (DefaultBulkListModel) list.getModel();
     final JButton otherAdd = new BorderlessButton(new AddListSelectionAction(availableFields, bulkListModel));
-    final JLabel otherLabel = new JLabel(Messages.getString("CreateCrosstabDialog." + labelText));
+    final JLabel otherLabel = new JLabel(Messages.getString(labelText));
 
     final ListSelectionModel otherSelectionModel = list.getSelectionModel();
     final JButton otherSortUp = new BorderlessButton(new SortBulkUpAction(bulkListModel, otherSelectionModel));
@@ -407,7 +399,7 @@ public class CreateCrosstabDialog extends CommonDialog
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.anchor = GridBagConstraints.WEST;
     gbc.gridx = 2;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.weightx = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets(5, 5, 5, 5);
@@ -415,19 +407,19 @@ public class CreateCrosstabDialog extends CommonDialog
 
     gbc = new GridBagConstraints();
     gbc.gridx = 3;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherSortUp, gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 4;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherSortDown, gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 5;
-    gbc.gridy = 0 + index * 2;
+    gbc.gridy = index * 2;
     gbc.insets = new Insets(5, 5, 5, 5);
     tablesPane.add(otherRemove, gbc);
 
@@ -453,170 +445,89 @@ public class CreateCrosstabDialog extends CommonDialog
     return availableFieldsModel;
   }
 
-  private Element createFieldItem(final String text)
+  public CrosstabGroup createCrosstab(final ReportDesignerContext designerContext,
+                                      final ReportRenderContext reportRenderContext)
   {
-    return createFieldItem(text, null, null);
-  }
-  
-  private Element createFieldItem(final String fieldName,
-                                         final String aggregationGroup,
-                                         final Class aggregationType)
-  {
-    final DataAttributeContext context = reportRenderContext.getReportDataSchemaModel().getDataAttributeContext();
-    final DataAttributes attributes = reportRenderContext.getReportDataSchemaModel().getDataSchema().getAttributes(fieldName);
-    final ElementType targetType = AutoGeneratorUtility.createFieldType(attributes, context);
-
-    final Element element = new Element();
-    element.setElementType(targetType);
-    element.getElementType().configureDesignTimeDefaults(element, Locale.getDefault());
-
-    if (targetType instanceof NumberFieldType)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, "0.00;-0.00");
-    }
-
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_GROUP, aggregationGroup);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE);
-    return element;
-  }
-
-  private static Element createLabel(final String text)
-  {
-    final Element label = new Element();
-    label.setElementType(LabelType.INSTANCE);
-    label.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
-    return label;
-  }
-
-  public CrosstabGroup createCrosstab(final ReportRenderContext reportRenderContext)
-  {
-    if (reportRenderContext == null)
+    if (designerContext == null)
     {
       throw new NullPointerException();
     }
-    this.reportRenderContext = reportRenderContext;
 
-    final String[] columnNames = reportRenderContext.getReportDataSchemaModel().getColumnNames();
-    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
-    availableFieldsModel.clear();
-    for (int i = 0; i < columnNames.length; i++)
+    this.optionsPane.setReportDesignerContext(designerContext);
+
+    try
     {
-      availableFieldsModel.addElement(columnNames[i]);
-    }
-
-    if (performEdit() == false)
-    {
-      return null;
-    }
-
-    if (columnsFieldsModel.size() < 1)
-    {
-      return null;
-    }
-    if (rowsFieldsModel.size() < 1)
-    {
-      return null;
-    }
-
-    final CrosstabCellBody cellBody = new CrosstabCellBody();
-    cellBody.addElement(createCell(null));
-
-    GroupBody body = cellBody;
-    for (int col = columnsFieldsModel.size() - 1; col >= 0; col -= 1)
-    {
-      final CrosstabDimension column = columnsFieldsModel.get(col);
-      final CrosstabColumnGroup columnGroup = new CrosstabColumnGroup(body);
-      columnGroup.setName("Group " + column.getField());
-      columnGroup.setField(column.getField());
-      columnGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getTitleHeader().addElement(createLabel(column.getTitle()));
-      columnGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getHeader().addElement(createFieldItem(column.getField()));
-      columnGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getSummaryHeader().addElement(createLabel(column.getSummaryTitle()));
-
-      if (column.isPrintSummary())
+      final String[] columnNames = reportRenderContext.getReportDataSchemaModel().getColumnNames();
+      final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
+      availableFieldsModel.clear();
+      for (int i = 0; i < columnNames.length; i++)
       {
-        final CrosstabCell cell = createCell("Group " + column.getField());
-        cell.setColumnField(column.getField());
-        cell.setName(column.getField());
-        cellBody.addElement(cell);
+        availableFieldsModel.addElement(columnNames[i]);
       }
-      body = new CrosstabColumnGroupBody(columnGroup);
-    }
 
-    for (int row = rowsFieldsModel.size() - 1; row >= 0; row -= 1)
-    {
-      final CrosstabDimension rowDimension = rowsFieldsModel.get(row);
-      final CrosstabRowGroup rowGroup = new CrosstabRowGroup(body);
-      rowGroup.setName("Group " + rowDimension.getField());
-      rowGroup.setField(rowDimension.getField());
-      rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle()));
-      rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
-      rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle()));
-
-      if (rowDimension.isPrintSummary())
+      if (performEdit() == false)
       {
-        final CrosstabCell cell = createCell("Group " + rowGroup.getField());
-        cell.setRowField(rowDimension.getField());
-        cell.setName(rowDimension.getField());
-        cellBody.addElement(cell);
-
-        for (int col = columnsFieldsModel.size() - 1; col >= 0; col -= 1)
-        {
-          final CrosstabDimension column = columnsFieldsModel.get(col);
-          if (column.isPrintSummary())
-          {
-            final CrosstabCell crosstabCell = createCell("Group " + rowGroup.getField());
-            crosstabCell.setColumnField(column.getField());
-            crosstabCell.setRowField(rowDimension.getField());
-            crosstabCell.setName(column.getField() + "," + rowGroup.getField());
-            cellBody.addElement(crosstabCell);
-          }
-        }
+        return null;
       }
-      body = new CrosstabRowGroupBody(rowGroup);
-    }
 
-    for (int other = otherFieldsModel.size() - 1; other >= 0; other -= 1)
+      if (columnsFieldsModel.size() < 1)
+      {
+        return null;
+      }
+      if (rowsFieldsModel.size() < 1)
+      {
+        return null;
+      }
+
+      final CrosstabBuilder builder = new CrosstabBuilder(reportRenderContext.getReportDataSchemaModel());
+      builder.setGroupNamePrefix("Group "); // NON-NLS
+      builder.setMinimumWidth(optionsPane.getMinWidth());
+      builder.setMinimumHeight(optionsPane.getMinHeight());
+      builder.setPrefWidth(optionsPane.getPrefWidth());
+      builder.setPrefHeight(optionsPane.getPrefHeight());
+      builder.setMaximumWidth(optionsPane.getMaxWidth());
+      builder.setMaximumHeight(optionsPane.getMaxHeight());
+      builder.setAllowMetaDataAttributes(optionsPane.getAllowMetaDataAttributes());
+      builder.setAllowMetaDataStyling(optionsPane.getAllowMetaDataStyling());
+      for (int i = 0; i < detailFieldsModel.size(); i += 1)
+      {
+        final CrosstabDetail crosstabDetail = detailFieldsModel.get(i);
+        builder.addDetails(crosstabDetail.getField(), crosstabDetail.getAggregation());
+      }
+
+      for (int col = 0; col < columnsFieldsModel.size(); col += 1)
+      {
+        final CrosstabDimension column = columnsFieldsModel.get(col);
+        builder.addColumnDimension(column);
+      }
+
+      for (int row = 0; row < rowsFieldsModel.size(); row += 1)
+      {
+        final CrosstabDimension rowDimension = rowsFieldsModel.get(row);
+        builder.addRowDimension(rowDimension);
+      }
+
+      for (int other = 0; other < otherFieldsModel.size(); other += 1)
+      {
+        final String column = (String) otherFieldsModel.get(other);
+        builder.addOtherDimension(column);
+      }
+
+      final CrosstabGroup crosstabGroup = builder.create();
+      optionsPane.setValuesOnGroup(crosstabGroup);
+      return crosstabGroup;
+    }
+    finally
     {
-      final String column = (String) otherFieldsModel.get(other);
-      final CrosstabOtherGroup columnGroup = new CrosstabOtherGroup(body);
-      columnGroup.setField(column);
-      columnGroup.getHeader().addElement(createFieldItem(column));
-
-      body = new CrosstabOtherGroupBody(columnGroup);
+      this.optionsPane.setReportDesignerContext(null);
     }
-
-    return new CrosstabGroup(body);
   }
 
-  private CrosstabCell createCell(final String group)
+  public static void main(final String[] args)
   {
-    final CrosstabCell cell = new CrosstabCell();
-    cell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-    cell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_ROW);
-    for (int i = 0; i < detailFieldsModel.size(); i += 1)
-    {
-      final CrosstabDetail crosstabDetail = detailFieldsModel.get(i);
-      cell.addElement(createFieldItem(crosstabDetail.getField(), group, crosstabDetail.getAggregation()));
-    }
-    return cell;
-  }
-
-  public static void main(String[] args)
-  {
+    ClassicEngineBoot.getInstance().start();
     final CreateCrosstabDialog d = new CreateCrosstabDialog();
-    d.getAvailableFieldsModel().addElement("Test");
+    d.getAvailableFieldsModel().addElement("Test"); // NON-NLS
     d.setModal(true);
     d.setVisible(true);
 

@@ -55,6 +55,7 @@ public class AttributeNames
     public static final String COLUMN_FIELD = "column-field";
     public static final String ROW_FIELD = "row-field";
     public static final String NORMALIZATION_MODE = "normalization-mode";
+
     public static final String HEADER_POSITION = "header-position"; // Int, count of group instance for butterfly header
     public static final String SUMMARY_POSITION = "summary-position"; // Begin; End - both row and col groups
 

@@ -52,6 +52,14 @@ public class CrosstabBuilder
   private ArrayList<CrosstabDetail> details;
   private DesignTimeDataSchemaModel dataSchemaModel;
   private String groupNamePrefix;
+  private Float minimumWidth;
+  private Float minimumHeight;
+  private Float maximumWidth;
+  private Float maximumHeight;
+  private Float prefWidth;
+  private Float prefHeight;
+  private Boolean allowMetaDataStyling;
+  private Boolean allowMetaDataAttributes;
 
   public CrosstabBuilder(final DesignTimeDataSchemaModel dataSchemaModel)
   {
@@ -61,6 +69,90 @@ public class CrosstabBuilder
     details = new ArrayList<CrosstabDetail>();
     this.dataSchemaModel = dataSchemaModel;
     this.groupNamePrefix = "";
+    this.minimumHeight = 20f;
+    this.maximumHeight = 20f;
+    this.maximumWidth = 80f;
+    this.minimumWidth = 80f;
+  }
+
+  public Float getMinimumWidth()
+  {
+    return minimumWidth;
+  }
+
+  public void setMinimumWidth(final Float minimumWidth)
+  {
+    this.minimumWidth = minimumWidth;
+  }
+
+  public Float getMinimumHeight()
+  {
+    return minimumHeight;
+  }
+
+  public void setMinimumHeight(final Float minimumHeight)
+  {
+    this.minimumHeight = minimumHeight;
+  }
+
+  public Float getMaximumWidth()
+  {
+    return maximumWidth;
+  }
+
+  public void setMaximumWidth(final Float maximumWidth)
+  {
+    this.maximumWidth = maximumWidth;
+  }
+
+  public Float getMaximumHeight()
+  {
+    return maximumHeight;
+  }
+
+  public void setMaximumHeight(final Float maximumHeight)
+  {
+    this.maximumHeight = maximumHeight;
+  }
+
+  public Float getPrefWidth()
+  {
+    return prefWidth;
+  }
+
+  public void setPrefWidth(final Float prefWidth)
+  {
+    this.prefWidth = prefWidth;
+  }
+
+  public Float getPrefHeight()
+  {
+    return prefHeight;
+  }
+
+  public void setPrefHeight(final Float prefHeight)
+  {
+    this.prefHeight = prefHeight;
+  }
+
+  public Boolean getAllowMetaDataStyling()
+  {
+    return allowMetaDataStyling;
+  }
+
+  public void setAllowMetaDataStyling(final Boolean allowMetaDataStyling)
+  {
+    this.allowMetaDataStyling = allowMetaDataStyling;
+  }
+
+  public Boolean getAllowMetaDataAttributes()
+  {
+    return allowMetaDataAttributes;
+  }
+
+  public void setAllowMetaDataAttributes(final Boolean allowMetaDataAttributes)
+  {
+    this.allowMetaDataAttributes = allowMetaDataAttributes;
   }
 
   public String getGroupNamePrefix()
@@ -137,7 +229,7 @@ public class CrosstabBuilder
     }
     
     final CrosstabCellBody cellBody = new CrosstabCellBody();
-    cellBody.addElement(createCell());
+    cellBody.addElement(createDetailsCell());
 
     GroupBody body = cellBody;
     for (int col = columns.size() - 1; col >= 0; col -= 1)
@@ -147,16 +239,16 @@ public class CrosstabBuilder
       columnGroup.setName(groupNamePrefix + column.getField());
       columnGroup.setField(column.getField());
       columnGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getTitleHeader().addElement(createLabel(column.getTitle()));
+      columnGroup.getTitleHeader().addElement(createLabel(column.getTitle(), column.getField()));
       columnGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
       columnGroup.getHeader().addElement(createFieldItem(column.getField()));
       columnGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getSummaryHeader().addElement(createLabel(column.getSummaryTitle()));
+      columnGroup.getSummaryHeader().addElement(createLabel(column.getSummaryTitle(), null));
       columnGroup.setPrintSummary(column.isPrintSummary());
 
       if (column.isPrintSummary())
       {
-        final CrosstabCell cell = createCell();
+        final CrosstabCell cell = createDetailsCell();
         cell.setColumnField(column.getField());
         cell.setName(column.getField());
         cellBody.addElement(cell);
@@ -171,16 +263,16 @@ public class CrosstabBuilder
       rowGroup.setName(groupNamePrefix + rowDimension.getField());
       rowGroup.setField(rowDimension.getField());
       rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle()));
+      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle(), rowDimension.getField()));
       rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
       rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
       rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle()));
+      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle(), null));
       rowGroup.setPrintSummary(rowDimension.isPrintSummary());
       
       if (rowDimension.isPrintSummary())
       {
-        final CrosstabCell cell = createCell();
+        final CrosstabCell cell = createDetailsCell();
         cell.setRowField(rowDimension.getField());
         cell.setName(rowDimension.getField());
         cellBody.addElement(cell);
@@ -190,7 +282,7 @@ public class CrosstabBuilder
           final CrosstabDimension column = columns.get(col);
           if (column.isPrintSummary())
           {
-            final CrosstabCell crosstabCell = createCell();
+            final CrosstabCell crosstabCell = createDetailsCell();
             crosstabCell.setColumnField(column.getField());
             crosstabCell.setRowField(rowDimension.getField());
             crosstabCell.setName(column.getField() + "," + rowGroup.getField());
@@ -214,7 +306,7 @@ public class CrosstabBuilder
     return new CrosstabGroup(body);
   }
 
-  private CrosstabCell createCell()
+  private CrosstabCell createDetailsCell()
   {
     final CrosstabCell cell = new CrosstabCell();
     cell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
@@ -257,20 +349,30 @@ public class CrosstabBuilder
     }
 
     element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
     return element;
   }
 
-  private static Element createLabel(final String text)
+  private Element createLabel(final String text, final String labelFor)
   {
-    final Element label = new Element();
-    label.setElementType(LabelType.INSTANCE);
-    label.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
-    return label;
+    final Element element = new Element();
+    element.setElementType(LabelType.INSTANCE);
+    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, labelFor);
+    return element;
   }
 }
