@@ -23,6 +23,6 @@ public class CrosstabNormalizationModePropertyEditor extends EnumPropertyEditor
 {
   public CrosstabNormalizationModePropertyEditor()
   {
-    super(CrosstabNormalizationMode.class);
+    super(CrosstabNormalizationMode.class, true);
   }
 }

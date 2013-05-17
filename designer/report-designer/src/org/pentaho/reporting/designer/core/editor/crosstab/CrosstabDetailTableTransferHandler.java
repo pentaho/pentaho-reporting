@@ -27,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDetail;
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 

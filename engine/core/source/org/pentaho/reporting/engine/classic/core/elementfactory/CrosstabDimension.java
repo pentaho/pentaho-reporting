@@ -17,7 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-public class CrosstabDimension
+import java.io.Serializable;
+
+public class CrosstabDimension implements Serializable
 {
   private String field;
   private String title;

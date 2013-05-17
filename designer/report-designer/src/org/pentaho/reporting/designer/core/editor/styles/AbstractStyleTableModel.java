@@ -18,7 +18,6 @@
 package org.pentaho.reporting.designer.core.editor.styles;
 
 import java.beans.PropertyEditor;
-import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
@@ -89,7 +88,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
 
   private static final Log logger = LogFactory.getLog(AbstractStyleTableModel.class);
   private static final String[] EXTRA_FIELDS = new String[0];
-  
+
   private TableStyle tableStyle;
   private T dataBackend;
 
@@ -157,7 +156,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
 
     for (int i = 0; i < groupings.length; i++)
     {
-      GroupingHeader header = groupings[i];
+      final GroupingHeader header = groupings[i];
       if (header == null)
       {
         DebugLog.log("Header null on " + i + " of " + groupings.length);
@@ -221,8 +220,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
     switch (columnIndex)
     {
       case 0:
-        return new GroupedName(metaData,
-            metaData.getDisplayName(Locale.getDefault()), metaData.getGrouping(Locale.getDefault()));
+        return new GroupedName(metaData);
       case 1:
         return computeInheritValue(metaData, rowIndex);
       case 2:
@@ -292,7 +290,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
   }
 
   protected abstract Object computeInheritValue(final StyleMetaData metaData,
-                                       final int rowIndex);
+                                                final int rowIndex);
 
   protected abstract boolean defineFullValue(final StyleMetaData metaData, final Object value);
 
@@ -368,7 +366,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
   }
 
   protected PropertyEditor computeEditor(final StyleMetaData metaData,
-                                       final int row)
+                                         final int row)
   {
     final Object[] propertyEditors = getDataBackend().getPropertyEditors();
     final Object o = propertyEditors[row];

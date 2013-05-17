@@ -10,14 +10,6 @@ import javax.swing.border.LineBorder;
 
 import org.pentaho.reporting.designer.core.Messages;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 17.06.2010
- * Time: 14:17:15
- *
- * @author Thomas Morgner.
- */
 public class GroupedNameCellEditor extends DefaultCellEditor
 {
   private transient GroupedName value;

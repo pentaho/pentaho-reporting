@@ -35229,6 +35229,8 @@
     </row>
     <row height="21.863">
       <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Bureau"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>

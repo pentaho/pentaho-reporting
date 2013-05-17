@@ -222,7 +222,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       }
 
 
-      final CrosstabGroup newGroup = dialog.createCrosstab(context.getActiveContext());
+      final CrosstabGroup newGroup = dialog.createCrosstab(context, context.getActiveContext());
       if (newGroup == null)
       {
         return;

@@ -331,6 +331,26 @@ public class CrosstabGroup extends Group
     return (CrosstabDetailMode) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE);
   }
 
+  public Boolean getPrintDetailsHeader()
+  {
+    return (Boolean) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER);
+  }
+
+  public void setPrintDetailsHeader(final Boolean printDetailsHeader)
+  {
+    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER, printDetailsHeader);
+  }
+
+  public Boolean getPrintColumnTitleHeader()
+  {
+    return (Boolean) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER);
+  }
+
+  public void setPrintColumnTitleHeader(final Boolean printColumnTitleHeader)
+  {
+    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER, printColumnTitleHeader);
+  }
+
   /**
    * Sets the fields for this group. The given list must contain Strings defining the needed fields from the DataRow.
    * Don't reference Function-Fields here, functions are not supported in th groupfield definition.

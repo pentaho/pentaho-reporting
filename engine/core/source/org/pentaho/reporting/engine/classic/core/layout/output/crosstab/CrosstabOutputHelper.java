@@ -251,9 +251,55 @@ public final class CrosstabOutputHelper
     {
       // Expand all parent group cell-spans by one.
 
-      final TableSectionRenderBox section = CrosstabOutputHelper.findTableHeaderSection(layoutModelBuilder.dangerousRawAccess());
+      expandColumnHeaderSpan(crosstabLayout, layoutModelBuilder, gidx);
 
-      for (int i = crosstabLayout.getFirstColGroupIndex(), count = 0; i < gidx; i += 1, count += 1)
+      // and finally print the title-header and the summary header
+      if (crosstabLayout.isGenerateColumnTitleHeaders())
+      {
+        layoutModelBuilder.startSubFlow(crosstabLayout.getColumnTitleHeaderSubflowId(gidx));
+        createAutomaticCell(layoutModelBuilder);
+        crosstabLayout.setColumnTitleHeaderCellId(gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
+        outputFunction.getRenderer().add(group.getTitleHeader(), outputFunction.getRuntime());
+        layoutModelBuilder.finishBox();
+        layoutModelBuilder.suspendSubFlow();
+      }
+
+      layoutModelBuilder.startSubFlow(crosstabLayout.getColumnHeaderSubflowId(gidx));
+      createAutomaticCell(layoutModelBuilder);
+      crosstabLayout.setColumnHeaderCellId(gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
+      outputFunction.getRenderer().add(group.getSummaryHeader(), outputFunction.getRuntime());
+      layoutModelBuilder.finishBox();
+      layoutModelBuilder.suspendSubFlow();
+
+      if (crosstabLayout.isGenerateMeasureHeaders())
+      {
+        layoutModelBuilder.startSubFlow(crosstabLayout.getMeasureHeaderSubflowId());
+        createAutomaticCell(layoutModelBuilder);
+        outputFunction.getRenderer().add(dataBody.getHeader(), outputFunction.getRuntime());
+        layoutModelBuilder.finishBox();
+        layoutModelBuilder.suspendSubFlow();
+      }
+    }
+
+    // now print the summary cell.
+    createAutomaticCell(layoutModelBuilder);
+    layoutModelBuilder.legacyFlagNotEmpty();
+
+    outputFunction.getRenderer().startSection(Renderer.SectionType.NORMALFLOW);
+    outputFunction.getRenderer().add(element, outputFunction.getRuntime());
+    outputFunction.addSubReportMarkers(outputFunction.getRenderer().endSection());
+
+    layoutModelBuilder.finishBox();
+  }
+
+  public static void expandColumnHeaderSpan(final RenderedCrosstabLayout crosstabLayout,
+                                            final LayoutModelBuilder layoutModelBuilder, final int gidx)
+  {
+    final TableSectionRenderBox section = CrosstabOutputHelper.findTableHeaderSection(layoutModelBuilder.dangerousRawAccess());
+
+    for (int i = crosstabLayout.getFirstColGroupIndex(), count = 0; i < gidx; i += 1, count += 1)
+    {
+      if (crosstabLayout.isGenerateColumnTitleHeaders())
       {
         final InstanceID columnTitleHeaderId = crosstabLayout.getColumnTitleHeaderCellId(i - crosstabLayout.getFirstColGroupIndex());
         final RenderNode columnTitleHeaderCell = CrosstabOutputHelper.findNode(section, columnTitleHeaderId);
@@ -266,46 +312,20 @@ public final class CrosstabOutputHelper
         {
           throw new IllegalStateException("Unable to find node for previous column title header. Aborting report processing.");
         }
-
-        final InstanceID columnHeaderId = crosstabLayout.getColumnHeaderCellId(i - crosstabLayout.getFirstColGroupIndex());
-        final RenderNode columnHeaderCell = CrosstabOutputHelper.findNode(section, columnHeaderId);
-        if (columnHeaderCell instanceof TableCellRenderBox)
-        {
-          final TableCellRenderBox cellBox = (TableCellRenderBox) columnHeaderCell;
-          cellBox.update(cellBox.getRowSpan(), cellBox.getColSpan() + 1);
-        }
-        else
-        {
-          throw new IllegalStateException("Unable to find node for previous column title header. Aborting report processing.");
-        }
       }
 
-      // and finally print the title-header and the summary header
-      layoutModelBuilder.startSubFlow(crosstabLayout.getColumnTitleHeaderSubflowId(gidx));
-      createAutomaticCell(layoutModelBuilder);
-      crosstabLayout.setColumnTitleHeaderCellId(gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
-      outputFunction.getRenderer().add(group.getTitleHeader(), outputFunction.getRuntime());
-      layoutModelBuilder.finishBox();
-      layoutModelBuilder.suspendSubFlow();
-
-      layoutModelBuilder.startSubFlow(crosstabLayout.getColumnHeaderSubflowId(gidx));
-      createAutomaticCell(layoutModelBuilder);
-      crosstabLayout.setColumnHeaderCellId(gidx - crosstabLayout.getFirstColGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
-      outputFunction.getRenderer().add(group.getSummaryHeader(), outputFunction.getRuntime());
-      layoutModelBuilder.finishBox();
-      layoutModelBuilder.suspendSubFlow();
-
+      final InstanceID columnHeaderId = crosstabLayout.getColumnHeaderCellId(i - crosstabLayout.getFirstColGroupIndex());
+      final RenderNode columnHeaderCell = CrosstabOutputHelper.findNode(section, columnHeaderId);
+      if (columnHeaderCell instanceof TableCellRenderBox)
+      {
+        final TableCellRenderBox cellBox = (TableCellRenderBox) columnHeaderCell;
+        cellBox.update(cellBox.getRowSpan(), cellBox.getColSpan() + 1);
+      }
+      else
+      {
+        throw new IllegalStateException("Unable to find node for previous column title header. Aborting report processing.");
+      }
     }
-
-    // now print the summary cell.
-    createAutomaticCell(layoutModelBuilder);
-    layoutModelBuilder.legacyFlagNotEmpty();
-
-    outputFunction.getRenderer().startSection(Renderer.SectionType.NORMALFLOW);
-    outputFunction.getRenderer().add(element, outputFunction.getRuntime());
-    outputFunction.addSubReportMarkers(outputFunction.getRenderer().endSection());
-
-    layoutModelBuilder.finishBox();
   }
 
   public static void createAutomaticCell(final LayoutModelBuilder layoutModelBuilder,

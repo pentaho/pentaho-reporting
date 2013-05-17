@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
 import java.util.ArrayList;
 
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabDetailMode;
@@ -28,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
@@ -38,6 +40,8 @@ public class RenderedCrosstabLayout implements Cloneable
   private boolean processingCrosstabHeader;
   private boolean crosstabHeaderOpen;
   private boolean detailsRendered;
+  private boolean generateMeasureHeaders;
+  private boolean generateColumnTitleHeaders;
   private boolean summaryRowPrintable;
   private int summaryRowGroupIndex;
   private String summaryRowField;
@@ -63,7 +67,6 @@ public class RenderedCrosstabLayout implements Cloneable
     firstColGroupIndex = -1;
   }
 
-  // todo: This is part of a quick hack until we have a safe way to compute colspans for rows.
   public int getFirstRowGroupIndex()
   {
     return firstRowGroupIndex;
@@ -72,6 +75,16 @@ public class RenderedCrosstabLayout implements Cloneable
   public void setFirstRowGroupIndex(final int firstRowGroupIndex)
   {
     this.firstRowGroupIndex = firstRowGroupIndex;
+  }
+
+  public boolean isGenerateMeasureHeaders()
+  {
+    return generateMeasureHeaders;
+  }
+
+  public boolean isGenerateColumnTitleHeaders()
+  {
+    return generateColumnTitleHeaders;
   }
 
   public boolean isDetailsRendered()
@@ -202,6 +215,10 @@ public class RenderedCrosstabLayout implements Cloneable
       detailMode = CrosstabDetailMode.last;
     }
     this.detailMode = detailMode;
+    this.generateMeasureHeaders = !(Boolean.FALSE.equals
+        (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER)));
+    this.generateColumnTitleHeaders = !(Boolean.FALSE.equals
+        (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER)));
   }
 
   private void computeGroupCounts(final CrosstabGroup crosstabGroup)
@@ -278,6 +295,10 @@ public class RenderedCrosstabLayout implements Cloneable
 
   public InstanceID getColumnTitleHeaderSubflowId(final int gidx)
   {
+    if (generateColumnTitleHeaders == false)
+    {
+      throw new InvalidReportStateException();
+    }
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
     return columnHeaderSubflows[offset * 2];
   }
@@ -285,7 +306,23 @@ public class RenderedCrosstabLayout implements Cloneable
   public InstanceID getColumnHeaderSubflowId(final int gidx)
   {
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
-    return columnHeaderSubflows[offset * 2 + 1];
+    if (generateColumnTitleHeaders)
+    {
+      return columnHeaderSubflows[offset * 2 + 1];
+    }
+    else
+    {
+      return columnHeaderSubflows[offset];
+    }
+  }
+
+  public InstanceID getMeasureHeaderSubflowId ()
+  {
+    if (generateMeasureHeaders == false)
+    {
+      throw new InvalidReportStateException();
+    }
+    return columnHeaderSubflows[columnHeaderSubflows.length - 1];
   }
 
   public void setRowHeader(final int index, final InstanceID instanceId)
@@ -333,9 +370,9 @@ public class RenderedCrosstabLayout implements Cloneable
     return detailMode;
   }
 
-  public void startSummaryRowProcessing (final boolean summaryRowPrintable,
-                                         final int summaryRowGroupIndex,
-                                         final String summaryRowField)
+  public void startSummaryRowProcessing(final boolean summaryRowPrintable,
+                                        final int summaryRowGroupIndex,
+                                        final String summaryRowField)
   {
     this.summaryRowPrintable = summaryRowPrintable;
     this.summaryRowGroupIndex = summaryRowGroupIndex;
