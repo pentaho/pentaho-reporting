@@ -23,6 +23,6 @@ public class SurveyScaleShapeTypePropertyEditor extends EnumPropertyEditor
 {
   public SurveyScaleShapeTypePropertyEditor()
   {
-    super(SurveyScaleShapeType.class);
+    super(SurveyScaleShapeType.class, true);
   }
 }

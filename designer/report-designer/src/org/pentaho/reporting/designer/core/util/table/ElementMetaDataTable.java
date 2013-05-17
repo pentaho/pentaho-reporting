@@ -161,6 +161,7 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     setDefaultEditor(Time.class, new TimeCellEditor(Time.class));
     setDefaultEditor(Timestamp.class, new DateCellEditor(Timestamp.class));
 
+    setDefaultRenderer(GroupingHeader.class, new GroupingHeaderCellRenderer());
     setDefaultRenderer(GroupedName.class, new GroupedNameCellRenderer());
     setDefaultRenderer(StructureFunction.class, expressionsCellRenderer);
     setDefaultRenderer(Expression.class, expressionsCellRenderer);

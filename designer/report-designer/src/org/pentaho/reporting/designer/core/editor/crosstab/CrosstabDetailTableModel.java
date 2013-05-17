@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.AbstractTableModel;
 
+import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDetail;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.AggregationTypePropertyEditor;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.BulkDataProvider;
 import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTableModel;
@@ -101,8 +103,8 @@ public class CrosstabDetailTableModel extends AbstractTableModel implements Bulk
   {
     switch (column)
     {
-      case 0: return "Field";
-      case 1: return "Aggregation";
+      case 0: return Messages.getString("CrosstabDetailTableModel.Field");
+      case 1: return Messages.getString("CrosstabDetailTableModel.Aggregation");
       default:
         throw new IllegalStateException();
     }

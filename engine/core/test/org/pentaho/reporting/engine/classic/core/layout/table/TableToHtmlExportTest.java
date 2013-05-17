@@ -23,7 +23,9 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -62,6 +64,13 @@ public class TableToHtmlExportTest extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     report.setCompatibilityLevel(null);
+
+    final Group rootGroup = report.getRootGroup();
+    assertTrue(rootGroup instanceof CrosstabGroup);
+
+    final CrosstabGroup ct = (CrosstabGroup) rootGroup;
+    ct.setPrintColumnTitleHeader(true);
+    ct.setPrintDetailsHeader(false);
 
     final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
     HtmlReportUtil.createStreamHTML(report, outputStream);

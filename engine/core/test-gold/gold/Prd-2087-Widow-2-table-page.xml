@@ -212,6 +212,7 @@
     <row height="20">
       <empty-cell/>
       <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
       </empty-cell>
     </row>
   </table>

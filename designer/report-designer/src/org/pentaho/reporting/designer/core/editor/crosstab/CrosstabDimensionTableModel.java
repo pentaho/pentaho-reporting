@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.table.AbstractTableModel;
 
+import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDimension;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.BulkDataProvider;
 
 public class CrosstabDimensionTableModel extends AbstractTableModel implements BulkDataProvider
@@ -127,13 +129,13 @@ public class CrosstabDimensionTableModel extends AbstractTableModel implements B
     switch (column)
     {
       case 0:
-        return "Field";
+        return Messages.getString("CrosstabDimensionTableModel.Field");
       case 1:
-        return "Title Header";
+        return Messages.getString("CrosstabDimensionTableModel.TitleHeader");
       case 2:
-        return "Print Summary";
+        return Messages.getString("CrosstabDimensionTableModel.PrintSummary");
       case 3:
-        return "Summary Header";
+        return Messages.getString("CrosstabDimensionTableModel.SummaryHeader");
       default:
         throw new IllegalStateException();
     }

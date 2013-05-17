@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
@@ -50,7 +51,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   private boolean preferred;
   private boolean deprecated;
   private ElementMetaData.TypeClassification reportElementType;
-  private AttributeMap<DefaultAttributeMetaData> attributes;
+  private AttributeMap<AttributeMetaData> attributes;
   private HashMap<StyleKey,StyleMetaData> styles;
   private String bundleName;
   private String prefix;
@@ -66,7 +67,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   public ElementReadHandler(final GlobalMetaDefinition globalMetaDefinition)
   {
     this.globalMetaDefinition = globalMetaDefinition;
-    this.attributes = new AttributeMap<DefaultAttributeMetaData>();
+    this.attributes = new AttributeMap<AttributeMetaData>();
     this.styles = new HashMap<StyleKey,StyleMetaData>();
 
     this.attributeHandlers = new ArrayList<AttributeReadHandler>();

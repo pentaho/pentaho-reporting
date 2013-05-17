@@ -26,13 +26,15 @@ import java.beans.PropertyEditor;
 
 public abstract class EnumPropertyEditor implements PropertyEditor
 {
+  private boolean allowNull;
   private Enum value;
   private PropertyChangeSupport propertyChangeSupport;
   private Class<? extends Enum> baseClass;
 
-  protected EnumPropertyEditor(Class<? extends Enum> baseClass)
+  protected EnumPropertyEditor(final Class<? extends Enum> baseClass, final boolean allowNull)
   {
     this.baseClass = baseClass;
+    this.allowNull = allowNull;
     this.propertyChangeSupport = new PropertyChangeSupport(this);
   }
 
@@ -81,11 +83,22 @@ public abstract class EnumPropertyEditor implements PropertyEditor
   public String[] getTags()
   {
     final Enum[] enumConstants = baseClass.getEnumConstants();
-    final String[] retval = new String[enumConstants.length];
+    final String[] retval;
+    final int offset;
+    if (allowNull)
+    {
+      offset = 1;
+      retval = new String[enumConstants.length + 1];
+    }
+    else
+    {
+      offset = 0;
+      retval = new String[enumConstants.length];
+    }
     for (int i = 0; i < enumConstants.length; i++)
     {
       final Enum enumConstant = enumConstants[i];
-      retval[i] = enumConstant.name();
+      retval[i + offset] = enumConstant.name();
     }
     return retval;
   }

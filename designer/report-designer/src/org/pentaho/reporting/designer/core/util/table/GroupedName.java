@@ -1,6 +1,7 @@
 package org.pentaho.reporting.designer.core.util.table;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 
@@ -9,6 +10,13 @@ public class GroupedName implements Serializable, Comparable
   private String name;
   private String groupName;
   private MetaData metaData;
+
+  public GroupedName(final MetaData metaData)
+  {
+    this.metaData = metaData;
+    this.name = metaData.getDisplayName(Locale.getDefault());
+    this.groupName = metaData.getGrouping(Locale.getDefault());
+  }
 
   public GroupedName(final MetaData metaData, final String name, final String groupName)
   {

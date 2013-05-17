@@ -95,7 +95,18 @@
                    design-time-value="true"
                    computed="true"
                    value-type="java.lang.Boolean"
-                   value-role="Field"/>
+                   value-role="Value"/>
+
+        <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+                   name="print-column-title-header"
+                   mandatory="false"
+                   expert="false"
+                   hidden="false"
+                   preferred="true"
+                   design-time-value="true"
+                   computed="true"
+                   value-type="java.lang.Boolean"
+                   value-role="Value"/>
 
         <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
                    name="padding-fields"

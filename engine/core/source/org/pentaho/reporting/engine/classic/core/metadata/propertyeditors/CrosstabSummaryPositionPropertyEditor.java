@@ -23,6 +23,6 @@ public class CrosstabSummaryPositionPropertyEditor extends EnumPropertyEditor
 {
   public CrosstabSummaryPositionPropertyEditor()
   {
-    super(CrosstabSummaryPosition.class);
+    super(CrosstabSummaryPosition.class, true);
   }
 }

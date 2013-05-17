@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
+import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -52,6 +53,14 @@ public class CrosstabBuilder
   private ArrayList<CrosstabDetail> details;
   private DesignTimeDataSchemaModel dataSchemaModel;
   private String groupNamePrefix;
+  private Float minimumWidth;
+  private Float minimumHeight;
+  private Float maximumWidth;
+  private Float maximumHeight;
+  private Float prefWidth;
+  private Float prefHeight;
+  private Boolean allowMetaDataStyling;
+  private Boolean allowMetaDataAttributes;
 
   public CrosstabBuilder(final DesignTimeDataSchemaModel dataSchemaModel)
   {
@@ -61,6 +70,90 @@ public class CrosstabBuilder
     details = new ArrayList<CrosstabDetail>();
     this.dataSchemaModel = dataSchemaModel;
     this.groupNamePrefix = "";
+    this.minimumHeight = 20f;
+    this.maximumHeight = 20f;
+    this.maximumWidth = 80f;
+    this.minimumWidth = 80f;
+  }
+
+  public Float getMinimumWidth()
+  {
+    return minimumWidth;
+  }
+
+  public void setMinimumWidth(final Float minimumWidth)
+  {
+    this.minimumWidth = minimumWidth;
+  }
+
+  public Float getMinimumHeight()
+  {
+    return minimumHeight;
+  }
+
+  public void setMinimumHeight(final Float minimumHeight)
+  {
+    this.minimumHeight = minimumHeight;
+  }
+
+  public Float getMaximumWidth()
+  {
+    return maximumWidth;
+  }
+
+  public void setMaximumWidth(final Float maximumWidth)
+  {
+    this.maximumWidth = maximumWidth;
+  }
+
+  public Float getMaximumHeight()
+  {
+    return maximumHeight;
+  }
+
+  public void setMaximumHeight(final Float maximumHeight)
+  {
+    this.maximumHeight = maximumHeight;
+  }
+
+  public Float getPrefWidth()
+  {
+    return prefWidth;
+  }
+
+  public void setPrefWidth(final Float prefWidth)
+  {
+    this.prefWidth = prefWidth;
+  }
+
+  public Float getPrefHeight()
+  {
+    return prefHeight;
+  }
+
+  public void setPrefHeight(final Float prefHeight)
+  {
+    this.prefHeight = prefHeight;
+  }
+
+  public Boolean getAllowMetaDataStyling()
+  {
+    return allowMetaDataStyling;
+  }
+
+  public void setAllowMetaDataStyling(final Boolean allowMetaDataStyling)
+  {
+    this.allowMetaDataStyling = allowMetaDataStyling;
+  }
+
+  public Boolean getAllowMetaDataAttributes()
+  {
+    return allowMetaDataAttributes;
+  }
+
+  public void setAllowMetaDataAttributes(final Boolean allowMetaDataAttributes)
+  {
+    this.allowMetaDataAttributes = allowMetaDataAttributes;
   }
 
   public String getGroupNamePrefix()
@@ -115,7 +208,7 @@ public class CrosstabBuilder
 
   public void addDetails(final String field, final Class aggregation)
   {
-    details.add(new CrosstabDetail(field, aggregation));
+    details.add(new CrosstabDetail(field, field, aggregation));
   }
 
   public MasterReport createReport()
@@ -137,70 +230,18 @@ public class CrosstabBuilder
     }
     
     final CrosstabCellBody cellBody = new CrosstabCellBody();
-    cellBody.addElement(createCell());
+    cellBody.addElement(createDetailsCell());
+    setupDetailsHeader(cellBody.getHeader());
 
-    GroupBody body = cellBody;
-    for (int col = columns.size() - 1; col >= 0; col -= 1)
-    {
-      final CrosstabDimension column = columns.get(col);
-      final CrosstabColumnGroup columnGroup = new CrosstabColumnGroup(body);
-      columnGroup.setName(groupNamePrefix + column.getField());
-      columnGroup.setField(column.getField());
-      columnGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getTitleHeader().addElement(createLabel(column.getTitle()));
-      columnGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getHeader().addElement(createFieldItem(column.getField()));
-      columnGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      columnGroup.getSummaryHeader().addElement(createLabel(column.getSummaryTitle()));
-      columnGroup.setPrintSummary(column.isPrintSummary());
+    GroupBody body = createColumnGroups(cellBody);
+    body = createRowGroups(cellBody, body);
+    body = createOtherGroups(body);
 
-      if (column.isPrintSummary())
-      {
-        final CrosstabCell cell = createCell();
-        cell.setColumnField(column.getField());
-        cell.setName(column.getField());
-        cellBody.addElement(cell);
-      }
-      body = new CrosstabColumnGroupBody(columnGroup);
-    }
+    return new CrosstabGroup(body);
+  }
 
-    for (int row = rows.size() - 1; row >= 0; row -= 1)
-    {
-      final CrosstabDimension rowDimension = rows.get(row);
-      final CrosstabRowGroup rowGroup = new CrosstabRowGroup(body);
-      rowGroup.setName(groupNamePrefix + rowDimension.getField());
-      rowGroup.setField(rowDimension.getField());
-      rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle()));
-      rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
-      rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle()));
-      rowGroup.setPrintSummary(rowDimension.isPrintSummary());
-      
-      if (rowDimension.isPrintSummary())
-      {
-        final CrosstabCell cell = createCell();
-        cell.setRowField(rowDimension.getField());
-        cell.setName(rowDimension.getField());
-        cellBody.addElement(cell);
-
-        for (int col = columns.size() - 1; col >= 0; col -= 1)
-        {
-          final CrosstabDimension column = columns.get(col);
-          if (column.isPrintSummary())
-          {
-            final CrosstabCell crosstabCell = createCell();
-            crosstabCell.setColumnField(column.getField());
-            crosstabCell.setRowField(rowDimension.getField());
-            crosstabCell.setName(column.getField() + "," + rowGroup.getField());
-            cellBody.addElement(crosstabCell);
-          }
-        }
-      }
-      body = new CrosstabRowGroupBody(rowGroup);
-    }
-
+  private GroupBody createOtherGroups(GroupBody body)
+  {
     for (int other = others.size() - 1; other >= 0; other -= 1)
     {
       final String column = others.get(other);
@@ -210,11 +251,80 @@ public class CrosstabBuilder
 
       body = new CrosstabOtherGroupBody(columnGroup);
     }
-
-    return new CrosstabGroup(body);
+    return body;
   }
 
-  private CrosstabCell createCell()
+  private GroupBody createRowGroups(final CrosstabCellBody cellBody, GroupBody body)
+  {
+    for (int row = rows.size() - 1; row >= 0; row -= 1)
+    {
+      final CrosstabDimension rowDimension = rows.get(row);
+      final CrosstabRowGroup rowGroup = new CrosstabRowGroup(body);
+      rowGroup.setName(groupNamePrefix + rowDimension.getField());
+      rowGroup.setField(rowDimension.getField());
+      rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle(), rowDimension.getField()));
+      rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
+      rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle(), null));
+      rowGroup.setPrintSummary(rowDimension.isPrintSummary());
+
+      if (rowDimension.isPrintSummary())
+      {
+        final CrosstabCell cell = createDetailsCell();
+        cell.setRowField(rowDimension.getField());
+        cell.setName(rowDimension.getField());
+        cellBody.addElement(cell);
+
+        for (int col = columns.size() - 1; col >= 0; col -= 1)
+        {
+          final CrosstabDimension column = columns.get(col);
+          if (column.isPrintSummary())
+          {
+            final CrosstabCell crosstabCell = createDetailsCell();
+            crosstabCell.setColumnField(column.getField());
+            crosstabCell.setRowField(rowDimension.getField());
+            crosstabCell.setName(column.getField() + "," + rowGroup.getField());
+            cellBody.addElement(crosstabCell);
+          }
+        }
+      }
+      body = new CrosstabRowGroupBody(rowGroup);
+    }
+    return body;
+  }
+
+  private GroupBody createColumnGroups(final CrosstabCellBody cellBody)
+  {
+    GroupBody body = cellBody;
+    for (int col = columns.size() - 1; col >= 0; col -= 1)
+    {
+      final CrosstabDimension column = columns.get(col);
+      final CrosstabColumnGroup columnGroup = new CrosstabColumnGroup(body);
+      columnGroup.setName(groupNamePrefix + column.getField());
+      columnGroup.setField(column.getField());
+      columnGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      columnGroup.getTitleHeader().addElement(createLabel(column.getTitle(), column.getField()));
+      columnGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      columnGroup.getHeader().addElement(createFieldItem(column.getField()));
+      columnGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      columnGroup.getSummaryHeader().addElement(createLabel(column.getSummaryTitle(), null));
+      columnGroup.setPrintSummary(column.isPrintSummary());
+
+      if (column.isPrintSummary())
+      {
+        final CrosstabCell cell = createDetailsCell();
+        cell.setColumnField(column.getField());
+        cell.setName(column.getField());
+        cellBody.addElement(cell);
+      }
+      body = new CrosstabColumnGroupBody(columnGroup);
+    }
+    return body;
+  }
+
+  private CrosstabCell createDetailsCell()
   {
     final CrosstabCell cell = new CrosstabCell();
     cell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
@@ -225,6 +335,17 @@ public class CrosstabBuilder
       cell.addElement(createFieldItem(crosstabDetail.getField(), crosstabDetail.getAggregation()));
     }
     return cell;
+  }
+
+  private void setupDetailsHeader(final DetailsHeader cell)
+  {
+    cell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+    cell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_ROW);
+    for (int i = 0; i < details.size(); i += 1)
+    {
+      final CrosstabDetail crosstabDetail = details.get(i);
+      cell.addElement(createLabel(crosstabDetail.getTitle(), crosstabDetail.getField()));
+    }
   }
 
   private Element createFieldItem(final String text)
@@ -257,20 +378,30 @@ public class CrosstabBuilder
     }
 
     element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, Boolean.TRUE);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
     return element;
   }
 
-  private static Element createLabel(final String text)
+  private Element createLabel(final String text, final String labelFor)
   {
-    final Element label = new Element();
-    label.setElementType(LabelType.INSTANCE);
-    label.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 80f);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
-    return label;
+    final Element element = new Element();
+    element.setElementType(LabelType.INSTANCE);
+    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, labelFor);
+    return element;
   }
 }

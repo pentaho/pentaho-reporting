@@ -55,10 +55,12 @@ public class AttributeNames
     public static final String COLUMN_FIELD = "column-field";
     public static final String ROW_FIELD = "row-field";
     public static final String NORMALIZATION_MODE = "normalization-mode";
+
     public static final String HEADER_POSITION = "header-position"; // Int, count of group instance for butterfly header
     public static final String SUMMARY_POSITION = "summary-position"; // Begin; End - both row and col groups
 
     public static final String PRINT_DETAIL_HEADER = "print-detail-header"; // boolean
+    public static final String PRINT_COLUMN_TITLE_HEADER = "print-column-title-header"; // boolean
     public static final String PRINT_SUMMARY = "print-summary"; // boolean
 
     public static final String HEADER_STYLE = "header-style"; // spanned, repeat

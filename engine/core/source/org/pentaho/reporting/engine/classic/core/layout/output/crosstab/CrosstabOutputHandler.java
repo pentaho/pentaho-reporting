@@ -41,10 +41,10 @@ public class CrosstabOutputHandler implements GroupOutputHandler
     final Band b = group.getHeader();
     final GroupBody groupBody = group.getBody();
 
-    outputFunction.startRenderedCrosstabLayout();
+    final RenderedCrosstabLayout renderedCrosstabLayout = outputFunction.startRenderedCrosstabLayout();
     final CrosstabSpecification crosstabSpecification =
         event.getState().getFlowController().getMasterRow().getCrosstabSpecification();
-    outputFunction.getCurrentRenderedCrosstabLayout().initialize (crosstabSpecification, group, gidx);
+    renderedCrosstabLayout.initialize (crosstabSpecification, group, gidx);
 
     outputFunction.updateFooterArea(event);
     final Renderer renderer = outputFunction.getRenderer();
