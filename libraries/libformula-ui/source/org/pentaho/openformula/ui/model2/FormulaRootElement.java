@@ -57,11 +57,15 @@ public class FormulaRootElement extends FormulaElement
     for (int i = 0; i < elements.size(); i++)
     {
       final FormulaElement node = elements.get(i);
-      if (offset >= node.getStartOffset() &&
-          (offset < node.getEndOffset() || node.getStartOffset() == node.getEndOffset()))
+      final int nodeStartOffset = node.getStartOffset();
+      final int nodeEndOffset = node.getEndOffset();
+
+      if ((nodeStartOffset > offset) &&
+          ((nodeEndOffset > offset) || (nodeStartOffset == nodeEndOffset)))
       {
         return i;
       }
+
     }
     return elements.size() - 1;
   }
@@ -206,13 +210,10 @@ public class FormulaRootElement extends FormulaElement
     final Element origElement = getElement(idx);
     if ((hasDummyParams) && (origElement instanceof FormulaTextElement))
     {
-      // Create a new FormulaTextElement that combines the text from the original element
-      // with the text from the new element.
-      final String updatedText = ((FormulaTextElement)origElement).getText();
-
+      // Replace the dummy parameter with the user specified parameter
       replacementElement = new FormulaTextElement((FormulaDocument)formulaTextElement.getDocument(),
                                                   (FormulaRootElement)origElement.getParentElement(),
-                                                  updatedText + formulaTextElement.getText());
+                                                  formulaTextElement.getText());
     } else {
       replacementElement = formulaTextElement;
     }
