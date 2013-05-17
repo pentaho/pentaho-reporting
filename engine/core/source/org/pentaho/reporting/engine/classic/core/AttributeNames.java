@@ -60,6 +60,7 @@ public class AttributeNames
     public static final String SUMMARY_POSITION = "summary-position"; // Begin; End - both row and col groups
 
     public static final String PRINT_DETAIL_HEADER = "print-detail-header"; // boolean
+    public static final String PRINT_COLUMN_TITLE_HEADER = "print-column-title-header"; // boolean
     public static final String PRINT_SUMMARY = "print-summary"; // boolean
 
     public static final String HEADER_STYLE = "header-style"; // spanned, repeat

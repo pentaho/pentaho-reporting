@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
 
 public class CrosstabDetail implements Serializable
 {
+  private String title;
   private String field;
   private Class aggregation;
 
@@ -32,10 +33,20 @@ public class CrosstabDetail implements Serializable
     this.aggregation = ItemSumFunction.class;
   }
 
-  public CrosstabDetail(final String field, final Class aggregation)
+  public CrosstabDetail(final String field, final String title, final Class aggregation)
   {
     this.field = field;
     this.aggregation = aggregation;
+  }
+
+  public String getTitle()
+  {
+    return title;
+  }
+
+  public void setTitle(final String title)
+  {
+    this.title = title;
   }
 
   public String getField()

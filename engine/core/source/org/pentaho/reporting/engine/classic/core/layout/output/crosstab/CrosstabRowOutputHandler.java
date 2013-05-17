@@ -146,7 +146,15 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
     layoutModelBuilder.startBox(CrosstabOutputHelper.createTableBand(BandStyleKeys.LAYOUT_TABLE_HEADER));
 
     // create column group placeholder rows. We subsequently add content as sub-flows into these groups.
-    final int columnGroupCount = crosstabLayout.getColumnGroups() * 2;
+    int columnGroupCount = crosstabLayout.getColumnGroups();
+    if (crosstabLayout.isGenerateColumnTitleHeaders())
+    {
+      columnGroupCount += crosstabLayout.getColumnGroups();
+    }
+    if (crosstabLayout.isGenerateMeasureHeaders())
+    {
+      columnGroupCount += 1;
+    }
     final InstanceID[] columnHeaders = new InstanceID[Math.max(1, columnGroupCount)];
     for (int i = 0; i < columnHeaders.length; i += 1)
     {

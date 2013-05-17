@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
+import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -207,7 +208,7 @@ public class CrosstabBuilder
 
   public void addDetails(final String field, final Class aggregation)
   {
-    details.add(new CrosstabDetail(field, aggregation));
+    details.add(new CrosstabDetail(field, field, aggregation));
   }
 
   public MasterReport createReport()
@@ -230,7 +231,72 @@ public class CrosstabBuilder
     
     final CrosstabCellBody cellBody = new CrosstabCellBody();
     cellBody.addElement(createDetailsCell());
+    setupDetailsHeader(cellBody.getHeader());
 
+    GroupBody body = createColumnGroups(cellBody);
+    body = createRowGroups(cellBody, body);
+    body = createOtherGroups(body);
+
+    return new CrosstabGroup(body);
+  }
+
+  private GroupBody createOtherGroups(GroupBody body)
+  {
+    for (int other = others.size() - 1; other >= 0; other -= 1)
+    {
+      final String column = others.get(other);
+      final CrosstabOtherGroup columnGroup = new CrosstabOtherGroup(body);
+      columnGroup.setField(column);
+      columnGroup.getHeader().addElement(createFieldItem(column));
+
+      body = new CrosstabOtherGroupBody(columnGroup);
+    }
+    return body;
+  }
+
+  private GroupBody createRowGroups(final CrosstabCellBody cellBody, GroupBody body)
+  {
+    for (int row = rows.size() - 1; row >= 0; row -= 1)
+    {
+      final CrosstabDimension rowDimension = rows.get(row);
+      final CrosstabRowGroup rowGroup = new CrosstabRowGroup(body);
+      rowGroup.setName(groupNamePrefix + rowDimension.getField());
+      rowGroup.setField(rowDimension.getField());
+      rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle(), rowDimension.getField()));
+      rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
+      rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle(), null));
+      rowGroup.setPrintSummary(rowDimension.isPrintSummary());
+
+      if (rowDimension.isPrintSummary())
+      {
+        final CrosstabCell cell = createDetailsCell();
+        cell.setRowField(rowDimension.getField());
+        cell.setName(rowDimension.getField());
+        cellBody.addElement(cell);
+
+        for (int col = columns.size() - 1; col >= 0; col -= 1)
+        {
+          final CrosstabDimension column = columns.get(col);
+          if (column.isPrintSummary())
+          {
+            final CrosstabCell crosstabCell = createDetailsCell();
+            crosstabCell.setColumnField(column.getField());
+            crosstabCell.setRowField(rowDimension.getField());
+            crosstabCell.setName(column.getField() + "," + rowGroup.getField());
+            cellBody.addElement(crosstabCell);
+          }
+        }
+      }
+      body = new CrosstabRowGroupBody(rowGroup);
+    }
+    return body;
+  }
+
+  private GroupBody createColumnGroups(final CrosstabCellBody cellBody)
+  {
     GroupBody body = cellBody;
     for (int col = columns.size() - 1; col >= 0; col -= 1)
     {
@@ -255,55 +321,7 @@ public class CrosstabBuilder
       }
       body = new CrosstabColumnGroupBody(columnGroup);
     }
-
-    for (int row = rows.size() - 1; row >= 0; row -= 1)
-    {
-      final CrosstabDimension rowDimension = rows.get(row);
-      final CrosstabRowGroup rowGroup = new CrosstabRowGroup(body);
-      rowGroup.setName(groupNamePrefix + rowDimension.getField());
-      rowGroup.setField(rowDimension.getField());
-      rowGroup.getTitleHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getTitleHeader().addElement(createLabel(rowDimension.getTitle(), rowDimension.getField()));
-      rowGroup.getHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getHeader().addElement(createFieldItem(rowDimension.getField()));
-      rowGroup.getSummaryHeader().getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
-      rowGroup.getSummaryHeader().addElement(createLabel(rowDimension.getSummaryTitle(), null));
-      rowGroup.setPrintSummary(rowDimension.isPrintSummary());
-      
-      if (rowDimension.isPrintSummary())
-      {
-        final CrosstabCell cell = createDetailsCell();
-        cell.setRowField(rowDimension.getField());
-        cell.setName(rowDimension.getField());
-        cellBody.addElement(cell);
-
-        for (int col = columns.size() - 1; col >= 0; col -= 1)
-        {
-          final CrosstabDimension column = columns.get(col);
-          if (column.isPrintSummary())
-          {
-            final CrosstabCell crosstabCell = createDetailsCell();
-            crosstabCell.setColumnField(column.getField());
-            crosstabCell.setRowField(rowDimension.getField());
-            crosstabCell.setName(column.getField() + "," + rowGroup.getField());
-            cellBody.addElement(crosstabCell);
-          }
-        }
-      }
-      body = new CrosstabRowGroupBody(rowGroup);
-    }
-
-    for (int other = others.size() - 1; other >= 0; other -= 1)
-    {
-      final String column = others.get(other);
-      final CrosstabOtherGroup columnGroup = new CrosstabOtherGroup(body);
-      columnGroup.setField(column);
-      columnGroup.getHeader().addElement(createFieldItem(column));
-
-      body = new CrosstabOtherGroupBody(columnGroup);
-    }
-
-    return new CrosstabGroup(body);
+    return body;
   }
 
   private CrosstabCell createDetailsCell()
@@ -317,6 +335,17 @@ public class CrosstabBuilder
       cell.addElement(createFieldItem(crosstabDetail.getField(), crosstabDetail.getAggregation()));
     }
     return cell;
+  }
+
+  private void setupDetailsHeader(final DetailsHeader cell)
+  {
+    cell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, -100f);
+    cell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_ROW);
+    for (int i = 0; i < details.size(); i += 1)
+    {
+      final CrosstabDetail crosstabDetail = details.get(i);
+      cell.addElement(createLabel(crosstabDetail.getTitle(), crosstabDetail.getField()));
+    }
   }
 
   private Element createFieldItem(final String text)
