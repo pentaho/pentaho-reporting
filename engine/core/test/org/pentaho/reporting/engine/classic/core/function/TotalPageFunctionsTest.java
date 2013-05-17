@@ -47,9 +47,13 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
+ * Tests the TotalPage* functions:
+ * <code>TotalPageSumFunction</code> and
+ * <code>TotalPageItemCountFunction</code>
+ *
  * @noinspection HardCodedStringLiteral
  */
-public class TotalPageItemCountFunctionTest extends TestCase
+public class TotalPageFunctionsTest extends TestCase
 {
 
   public static final String ROW_DIMENSION_A = "Row-Dimension-A";
@@ -64,7 +68,11 @@ public class TotalPageItemCountFunctionTest extends TestCase
   public static final Color ROWB_BACKGROUND = new Color(178, 255, 255);
   public static final Color ROWB_VALIDATE_BACKGROUND = new Color(208, 255, 255);
 
-  public TotalPageItemCountFunctionTest()
+  public static final Color ROWC_BACKGROUND = new Color(178, 178, 208);
+  public static final Color ROWC_VALIDATE_BACKGROUND = new Color(178, 208, 178);
+
+
+  public TotalPageFunctionsTest()
   {
   }
 
@@ -81,52 +89,79 @@ public class TotalPageItemCountFunctionTest extends TestCase
     model.addColumn(VALUE, String.class);
     model.addColumn("validate-row-b-sum", Integer.class);
     model.addColumn("validate-row-a-sum", Integer.class);
+    model.addColumn("validate-no-group", Integer.class);
 
-    model.addRow("RA", "r1", 1, 1, 5);
-    model.addRow("RA", "r2", 2, 1, 5);
-    model.addRow("RA", "r1", 1, 3, 5);
-    model.addRow("RA", "r1", 1, 3, 5);
-    model.addRow("RA", "r1", 2, 3, 5);   // page break
-    model.addRow("RA", "r2", 1, 3, 3);
-    model.addRow("RA", "r2", 1, 3, 3);
-    model.addRow("RA", "r2", 2, 3, 3);
-    model.addRow("RB", "r1", 1, 4, 4);
-    model.addRow("RB", "r1", 1, 4, 4);
-    model.addRow("RB", "r1", 1, 4, 4);
-    model.addRow("RB", "r1", 2, 4, 4);  // page break
-    model.addRow("RB", "r1", 1, 1, 8);
-    model.addRow("RB", "r2", 2, 7, 8);
-    model.addRow("RB", "r2", 1, 7, 8);
-    model.addRow("RB", "r2", 1, 7, 8);
-    model.addRow("RB", "r2", 1, 7, 8);
-    model.addRow("RB", "r2", 2, 7, 8);
-    model.addRow("RB", "r2", 2, 7, 8);
-    model.addRow("RB", "r2", 2, 7, 8);
+    model.addRow("RA", "r1", 1, 1, 5, 5);
+    model.addRow("RA", "r2", 1, 1, 5, 5);
+    model.addRow("RA", "r1", 1, 3, 5, 5);
+    model.addRow("RA", "r1", 1, 3, 5, 5);
+    model.addRow("RA", "r1", 1, 3, 5, 5);   // page break
+    model.addRow("RA", "r2", 1, 3, 3, 7);
+    model.addRow("RA", "r2", 1, 3, 3, 7);
+    model.addRow("RA", "r2", 1, 3, 3, 7);
+    model.addRow("RB", "r1", 1, 4, 4, 7);
+    model.addRow("RB", "r1", 1, 4, 4, 7);
+    model.addRow("RB", "r1", 1, 4, 4, 7);
+    model.addRow("RB", "r1", 1, 4, 4, 7);  // page break
+    model.addRow("RB", "r1", 1, 1, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
+    model.addRow("RB", "r2", 1, 7, 8, 8);
     return model;
   }
 
   private AggregationFunction create(final String name,
-                                     final String group)
+                                     final String group,
+                                     final Class aggFunction)
   {
-    final TotalPageItemCountFunction detailsSum = new TotalPageItemCountFunction();
+    AggregationFunction detailsSum = null;
+
+    if (aggFunction.equals(TotalPageItemCountFunction.class))
+    {
+      detailsSum = new TotalPageItemCountFunction();
+    }
+    else if (aggFunction.equals(TotalPageSumFunction.class))
+    {
+      detailsSum = new TotalPageSumFunction();
+      ((TotalPageSumFunction)detailsSum).setField(VALUE);
+    }
+
     detailsSum.setName(name);
     detailsSum.setGroup(group);
     detailsSum.setDependencyLevel(1);
+
     return detailsSum;
   }
 
+
+  public void testTotalPageItemCountRelational() throws Exception
+  {
+    // http://jira.pentaho.com/browse/PRD-4216
+    validateRelationalReport(TotalPageItemCountFunction.class);
+  }
+
   /**
-   * Disabled for now.  "Page" level functions recalculate values near the page
-   * break, which was causing the ValidatePageFunctionResultExpression checks to
-   * trigger a fail, even though subsequent computed values were correct.  Need
-   * to fine a better way to test Page functions.
-   *
+   * The VALUE field is defined with a '1' for each row in the model,
+   * so it's possible to use the same expected values for both the
+   * PageItemCount and PageSum functions.
    * @throws Exception
    */
-  public void testRelationalReport() throws Exception
+  public void testTotalPageSumRelational() throws Exception
+  {
+    // http://jira.pentaho.com/browse/PRD-4217
+    validateRelationalReport(TotalPageSumFunction.class);
+  }
+
+
+
+  private void validateRelationalReport(final Class aggFun) throws Exception
   {
     final TableModel tableModel = createRelationalTableModel();
-    final MasterReport report = createRelationalReport(tableModel);
+    final MasterReport report = createRelationalReport(tableModel, aggFun);
 
     // Null means the result is undefined.
     final Integer[][] rowAHeaderValues = {
@@ -139,6 +174,11 @@ public class TotalPageItemCountFunctionTest extends TestCase
         {null, 3, null, 4},         // page 1
         {1, 1, 7}           // page 2
     };
+    final Integer[][] noGrpHeaderValues = {
+        {5, 5, 5, 5, 5}, // page 0
+        {7 ,7 ,7 ,7},         // page 1
+        {8, 8, 8}           // page 2
+    };
     final Integer[][] rowAFooterValues = {
         {5, 5, 5, 5, 5}, // page 0
         {3, 3, 4, 4},         // page 1
@@ -149,15 +189,20 @@ public class TotalPageItemCountFunctionTest extends TestCase
         {3, null, 4, null},         // page 1
         {1, 7, null}           // page 2
     };
+    final Integer[][] noGrpFooterValues = {
+        {5, 5, 5, 5, 5}, // page 0
+        {7 ,7 ,7 ,7},         // page 1
+        {8, 8, 8}           // page 2
+    };
 
-
-    //report.addExpression(create("row-b-sum", ROW_DIMENSION_B));
-    report.addExpression(create("row-b-sum", "::group-1"));
+    report.addExpression(create("row-b-sum", "::group-1", aggFun));
     report.addExpression(new ValidatePageFunctionResultExpression("#row-b-sum", null));
 
-    //report.addExpression(create("row-a-sum", ROW_DIMENSION_A));
-    report.addExpression(create("row-a-sum", "::group-0"));
+    report.addExpression(create("row-a-sum", "::group-0", aggFun));
     report.addExpression(new ValidatePageFunctionResultExpression("#row-a-sum", null));
+
+    report.addExpression(create("no-group", null, aggFun));
+    report.addExpression(new ValidatePageFunctionResultExpression("#no-group", null));
 
     DebugReportRunner.showDialog(report);
 
@@ -165,8 +210,8 @@ public class TotalPageItemCountFunctionTest extends TestCase
     {
       final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, page);
       validateItemBands(logicalPageBox);
-      validateHeader(rowAHeaderValues[page], rowBHeaderValues[page], page, logicalPageBox);
-      validateFooter(rowAFooterValues[page], rowBFooterValues[page], page, logicalPageBox);
+      validateHeader(rowAHeaderValues[page], rowBHeaderValues[page], noGrpHeaderValues[page], page, logicalPageBox);
+      validateFooter(rowAFooterValues[page], rowBFooterValues[page], noGrpHeaderValues[page], page, logicalPageBox);
     }
 
 
@@ -182,12 +227,13 @@ public class TotalPageItemCountFunctionTest extends TestCase
    *
    * @param rowAHeaderValue
    * @param rowBHeaderValue
+   * @param noGrpValue
    * @param page
    * @param logicalPageBox
    */
   private void validateHeader(final Integer[] rowAHeaderValue,
                               final Integer[] rowBHeaderValue,
-                              final int page,
+                              final Integer[] noGrpValue, final int page,
                               final LogicalPageBox logicalPageBox)
   {
     final RenderNode[] groupHeaders =
@@ -197,12 +243,16 @@ public class TotalPageItemCountFunctionTest extends TestCase
       final RenderNode groupHeader = groupHeaders[i];
       final RenderNode rowASum = findTextFieldsWithField("row-a-sum", groupHeader);
       final RenderNode rowBSum = findTextFieldsWithField("row-b-sum", groupHeader);
+      final RenderNode noGrp = findTextFieldsWithField("no-group", groupHeader);
 
       final Integer expectedA = rowAHeaderValue[i];
       final Object valueA = rowASum.getAttributes().getAttribute("test-run", "test-value");
 
       final Integer expectedB = rowBHeaderValue[i];
       final Object valueB = rowBSum.getAttributes().getAttribute("test-run", "test-value");
+
+      final Integer expectedC = noGrpValue[i];
+      final Object valueC = noGrp.getAttributes().getAttribute("test-run", "test-value");
 
       try
       {
@@ -213,6 +263,10 @@ public class TotalPageItemCountFunctionTest extends TestCase
         if (expectedB != null)
         {
           assertEquals("Row-B", String.valueOf(expectedB), valueB);
+        }
+        if (expectedC != null)
+        {
+          assertEquals("No group", String.valueOf(expectedC), valueC);
         }
       }
       catch (AssertionFailedError afe)
@@ -233,12 +287,13 @@ public class TotalPageItemCountFunctionTest extends TestCase
    *
    * @param rowAHeaderValue
    * @param rowBHeaderValue
+   * @param noGrpValue
    * @param page
    * @param logicalPageBox
    */
   private void validateFooter(final Integer[] rowAHeaderValue,
                               final Integer[] rowBHeaderValue,
-                              final int page,
+                              final Integer[] noGrpValue, final int page,
                               final LogicalPageBox logicalPageBox)
   {
     final RenderNode[] groupFooters =
@@ -248,12 +303,17 @@ public class TotalPageItemCountFunctionTest extends TestCase
       final RenderNode groupFooter = groupFooters[i];
       final RenderNode rowASum = findTextFieldsWithField("row-a-sum", groupFooter);
       final RenderNode rowBSum = findTextFieldsWithField("row-b-sum", groupFooter);
+      final RenderNode noGrp = findTextFieldsWithField("no-group", groupFooter);
 
       final Integer expectedA = rowAHeaderValue[i];
       final Object valueA = rowASum.getAttributes().getAttribute("test-run", "test-value");
 
       final Integer expectedB = rowBHeaderValue[i];
       final Object valueB = rowBSum.getAttributes().getAttribute("test-run", "test-value");
+
+      final Integer expectedC = noGrpValue[i];
+      final Object valueC = noGrp.getAttributes().getAttribute("test-run", "test-value");
+
 
       try
       {
@@ -264,6 +324,10 @@ public class TotalPageItemCountFunctionTest extends TestCase
         if (expectedB != null)
         {
           assertEquals("Row-B", String.valueOf(expectedB), valueB);
+        }
+        if (expectedC != null)
+        {
+          assertEquals("No group", String.valueOf(expectedC), valueC);
         }
       }
       catch (AssertionFailedError afe)
@@ -289,13 +353,17 @@ public class TotalPageItemCountFunctionTest extends TestCase
       final RenderNode itemBand = itemBands[i];
       final RenderNode rowASum = findTextFieldsWithField("row-a-sum", itemBand);
       final RenderNode rowBSum = findTextFieldsWithField("row-b-sum", itemBand);
+      final RenderNode noGrp = findTextFieldsWithField("no-group", itemBand);
       final RenderNode rowAValidate = findTextFieldsWithField("#row-a-sum", itemBand);
       final RenderNode rowBValidate = findTextFieldsWithField("#row-b-sum", itemBand);
+      final RenderNode noGrpValidate = findTextFieldsWithField("#no-group", itemBand);
 
       assertEquals(rowAValidate.getAttributes().getAttribute("test-run", "test-value"),
           rowASum.getAttributes().getAttribute("test-run", "test-value"));
       assertEquals(rowBValidate.getAttributes().getAttribute("test-run", "test-value"),
           rowBSum.getAttributes().getAttribute("test-run", "test-value"));
+      assertEquals(noGrpValidate.getAttributes().getAttribute("test-run", "test-value"),
+          noGrp.getAttributes().getAttribute("test-run", "test-value"));
     }
   }
 
@@ -307,7 +375,7 @@ public class TotalPageItemCountFunctionTest extends TestCase
     return MatchFactory.match(itemBand, m);
   }
 
-  private MasterReport createRelationalReport(final TableModel tableModel)
+  private MasterReport createRelationalReport(final TableModel tableModel, final Class aggFun)
   {
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(new PageSize(800, 300)));
@@ -318,11 +386,14 @@ public class TotalPageItemCountFunctionTest extends TestCase
     final RelationalReportBuilder builder = new RelationalReportBuilder(dataSchemaModel);
     builder.addGroup(ROW_DIMENSION_A);
     builder.addGroup(ROW_DIMENSION_B);
-    builder.addDetails(VALUE, TotalPageItemCountFunction.class, VALUE_BACKGROUND);
+    builder.addDetails(VALUE, aggFun, VALUE_BACKGROUND);
     builder.addDetails("row-a-sum", null, ROWA_BACKGROUND);
     builder.addDetails("#row-a-sum", null, ROWA_VALIDATE_BACKGROUND);
     builder.addDetails("row-b-sum", null, ROWB_BACKGROUND);
     builder.addDetails("#row-b-sum", null, ROWB_VALIDATE_BACKGROUND);
+    builder.addDetails("no-group", null, ROWC_BACKGROUND);
+    builder.addDetails("#no-group", null, ROWC_VALIDATE_BACKGROUND);
+
 
     report.setRootGroup(builder.create());
 

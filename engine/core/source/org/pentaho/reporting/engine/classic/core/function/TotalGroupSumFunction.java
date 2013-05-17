@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -67,11 +68,18 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   /**
    * The currently computed result.
    */
-  private Sequence<BigDecimal> result;
+  private transient Sequence<BigDecimal> result;
   /**
    * The global state key is used to store the result for the whole report.
    */
   private transient ReportStateKey globalStateKey;
+
+  /**
+   * The current group key is used to store the result for the current group.
+   */
+  protected transient ReportStateKey currentGroupKey;
+
+
   private String crosstabFilterGroup;
 
   /**
@@ -91,7 +99,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   public void reportInitialized(final ReportEvent event)
   {
     globalStateKey = event.getState().getProcessKey();
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
+    if (isPrepareRunLevel(event))
     {
       result = new Sequence<BigDecimal>();
       results.clear();
@@ -105,6 +113,10 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
     }
   }
 
+  protected boolean isPrepareRunLevel(final ReportEvent event)
+  {
+    return FunctionUtilities.isDefinedPrepareRunLevel(this, event);
+  }
   /**
    * Receives notification that a group has started.
    *
@@ -114,19 +126,18 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
   {
     if (FunctionUtilities.isDefinedGroup(getGroup(), event))
     {
-      final ReportStateKey groupStateKey = event.getState().getProcessKey();
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
+      currentGroupKey = event.getState().getProcessKey();
+      if (isPrepareRunLevel(event))
       {
-        result = new Sequence<BigDecimal>();
-        lastGroupSequenceNumber = 0;
+        clear();
 
         results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
+        results.put(currentGroupKey, result);
       }
       else
       {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(groupStateKey);
+        result = results.get(currentGroupKey);
       }
     }
 
@@ -137,6 +148,11 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
     }
   }
 
+  protected void clear()
+  {
+    result = new Sequence<BigDecimal>();
+    lastGroupSequenceNumber = 0;
+  }
 
   /**
    * Receives notification that a row of data is being processed.
@@ -145,12 +161,12 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    */
   public void itemsAdvanced(final ReportEvent event)
   {
-    if (field == null)
+   if (field == null)
     {
       return;
     }
-
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event) == false)
+  
+    if (isPrepareRunLevel(event) == false)
     {
       return;
     }
@@ -171,6 +187,32 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
       result.set(lastGroupSequenceNumber, oldValue.add(value));
     }
   }
+
+  public Object clone() throws CloneNotSupportedException
+    {
+      final TotalGroupSumFunction o = (TotalGroupSumFunction) super.clone();
+      o.results = (HashMap<ReportStateKey, Sequence<BigDecimal>>) results.clone();
+
+      // Clone saved group results.
+      // The currently active result needs to be handled
+      // separately from this loop, since the globalStateKey
+      // and currentGroupKey both need to be mapped to it.
+      for (final Map.Entry<ReportStateKey, Sequence<BigDecimal>> entry : results.entrySet())
+      {
+        if (entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey)
+        {
+          o.results.put(entry.getKey(), entry.getValue().clone());
+        }
+      }
+
+      if (result != null)
+      {
+        o.result = result.clone();
+        o.results.put(globalStateKey, o.result);
+        o.results.put(currentGroupKey, o.result);
+      }
+      return o;
+    }
 
   public void summaryRowSelection(final ReportEvent event)
   {
