@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
+import java.util.ArrayList;
+
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
@@ -25,18 +27,21 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMappe
 public class DefaultTableMetaData
 {
   private DefaultDataAttributes tableAttributes;
-  private DefaultDataAttributes[] columnAttributes;
-  private EmptyDataAttributes emptyDataAttributes;
+  private ArrayList<DefaultDataAttributes> columnAttributes;
 
   public DefaultTableMetaData(final int colCount)
   {
-    this.emptyDataAttributes = EmptyDataAttributes.INSTANCE;
     this.tableAttributes = new DefaultDataAttributes();
-    this.columnAttributes = new DefaultDataAttributes[colCount];
-    for (int i = 0; i < columnAttributes.length; i++)
+    this.columnAttributes = new ArrayList<DefaultDataAttributes>(colCount);
+    for (int i = 0; i < colCount; i++)
     {
-      columnAttributes[i] = new DefaultDataAttributes();
+      addRow();
     }
+  }
+
+  public void addRow()
+  {
+    columnAttributes.add(new DefaultDataAttributes());
   }
 
   /**
@@ -53,7 +58,7 @@ public class DefaultTableMetaData
   public DataAttributes getCellDataAttribute(final int row,
                                              final int column)
   {
-    return emptyDataAttributes;
+    return EmptyDataAttributes.INSTANCE;
   }
 
   public boolean isCellDataAttributesSupported()
@@ -63,7 +68,7 @@ public class DefaultTableMetaData
 
   public DataAttributes getColumnAttribute(final int column)
   {
-    return columnAttributes[column];
+    return columnAttributes.get(column);
   }
 
   /**
@@ -82,7 +87,7 @@ public class DefaultTableMetaData
                                  final String metaAttributeId,
                                  final Object value)
   {
-    final DefaultDataAttributes colAtts = columnAttributes[column];
+    final DefaultDataAttributes colAtts = columnAttributes.get(column);
     colAtts.setMetaAttribute(metaAttributeDomain, metaAttributeId, DefaultConceptQueryMapper.INSTANCE, value);
   }
 
