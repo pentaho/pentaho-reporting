@@ -87,7 +87,9 @@ public class CrosstabTestSequence extends AbstractSequence
     }
     model.addColumn("value", Double.class);
 
-    final Random r = new Random();
+    final Long seed = getTypedParameter("random-seed", Long.class, System.currentTimeMillis());
+
+    final Random r = new Random(seed);
     final Object[] values = new Object[rowDims + colDims + 1];
     final int[] cards = new int[rowDims + colDims];
     Arrays.fill(cards, -1);

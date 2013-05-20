@@ -20,7 +20,6 @@ package org.pentaho.reporting.designer.core.editor.parameters;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -82,22 +81,22 @@ public class ProvisionDataSourcePanel extends JPanel
 
     public void valueChanged(final TreeSelectionEvent e)
     {
-      setEnabled(getSelectedDataSource() != null);
+      setEnabled(isDataSourceSelected());
     }
 
     public void actionPerformed(final ActionEvent e)
     {
-       final int result = JOptionPane.showConfirmDialog(ProvisionDataSourcePanel.this,
-                                                              Messages.getString("ParameterDialog.DeleteDataSourceWarningMessage"),
-                                                              Messages.getString("ParameterDialog.DeleteDataSourceWarningTitle"), JOptionPane.YES_NO_OPTION);
+      final int result = JOptionPane.showConfirmDialog(ProvisionDataSourcePanel.this,
+          Messages.getString("ParameterDialog.DeleteDataSourceWarningMessage"),
+          Messages.getString("ParameterDialog.DeleteDataSourceWarningTitle"), JOptionPane.YES_NO_OPTION);
       if (result == JOptionPane.YES_OPTION)
       {
         final DataFactory theSelectedDataFactory = getSelectedDataSource();
 
         // Delete data-source from structure panel
-        reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[] {theSelectedDataFactory});
+        reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[]{theSelectedDataFactory});
 
-        DeleteAction deleteAction = new DeleteAction();
+        final DeleteAction deleteAction = new DeleteAction();
         deleteAction.setReportDesignerContext(reportDesignerContext);
         deleteAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
 
@@ -141,9 +140,9 @@ public class ProvisionDataSourcePanel extends JPanel
       }
 
       // Edit data-source from structure panel
-      reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[] {dataFactory});
+      reportDesignerContext.getActiveContext().getSelectionModel().setSelectedElements(new Object[]{dataFactory});
 
-      EditQueryAction editQueryAction = new EditQueryAction();
+      final EditQueryAction editQueryAction = new EditQueryAction();
       editQueryAction.setReportDesignerContext(reportDesignerContext);
       editQueryAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
 
@@ -152,7 +151,7 @@ public class ProvisionDataSourcePanel extends JPanel
       {
         throw new IllegalStateException("DataSource Model is out of sync with the GUI");
       }
-      if(editQueryAction.getEditedDataFactory() != null)
+      if (editQueryAction.getEditedDataFactory() != null)
       {
         availableDataSourcesModel.edit(idx, editQueryAction.getEditedDataFactory());
       }
@@ -179,9 +178,19 @@ public class ProvisionDataSourcePanel extends JPanel
       }
       else
       {
-        menu.show(parentDialog, 0, 0);
+        menu.show(ProvisionDataSourcePanel.this, 0, 0);
       }
     }
+  }
+
+  public boolean isDataSourceSelected()
+  {
+    final TreePath selectionPath = availableDataSources.getSelectionPath();
+    if (selectionPath == null)
+    {
+      return false;
+    }
+    return selectionPath.getLastPathComponent() instanceof DataFactoryWrapper;
   }
 
   public DataFactory getSelectedDataSource()
@@ -196,7 +205,7 @@ public class ProvisionDataSourcePanel extends JPanel
     if (size >= 2)
     {
       final DataFactoryWrapper dataFactoryWrapper =
-              (DataFactoryWrapper) selectionPath.getPathComponent(1);
+          (DataFactoryWrapper) selectionPath.getPathComponent(1);
       return dataFactoryWrapper.getEditedDataFactory();
     }
     return null;
@@ -340,7 +349,7 @@ public class ProvisionDataSourcePanel extends JPanel
      */
     public Window getParentWindow()
     {
-      return LibSwingUtil.getWindowAncestor(parentDialog);
+      return LibSwingUtil.getWindowAncestor(ProvisionDataSourcePanel.this);
     }
 
     public DataSchemaModel getDataSchemaModel()
@@ -379,21 +388,18 @@ public class ProvisionDataSourcePanel extends JPanel
   private JTree availableDataSources;
   private DataFactoryTreeModel availableDataSourcesModel;
   private ReportDesignerContext reportDesignerContext;
-  private Component parentDialog;
 
-  public ProvisionDataSourcePanel(Component parent)
+  public ProvisionDataSourcePanel()
   {
-    this.parentDialog = parent;
-
     availableDataSourcesModel = new DataFactoryTreeModel();
 
     availableDataSources = new JTree(availableDataSourcesModel);
     availableDataSources.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     availableDataSources.setCellRenderer(new DataFactoryTreeCellRenderer());
     availableDataSources.setRootVisible(false);
+
+    init();
   }
-
-
 
   public ReportDesignerContext getReportDesignerContext()
   {
@@ -439,7 +445,7 @@ public class ProvisionDataSourcePanel extends JPanel
     }
   }
 
-  public JPanel createDataSourcePanel()
+  protected void init()
   {
     final RemoveDataSourceAction removeAction = new RemoveDataSourceAction();
     final EditDataSourceAction editDataSourceAction = new EditDataSourceAction();
@@ -466,8 +472,7 @@ public class ProvisionDataSourcePanel extends JPanel
     dataSetsPanel.add(theScrollPanel, BorderLayout.CENTER);
     dataSetsPanel.add(theControlsPanel, BorderLayout.NORTH);
 
-    final JPanel mainPanel = new JPanel(new GridLayout(1, 2));
-    mainPanel.add(dataSetsPanel);
-    return mainPanel;
+    setLayout(new BorderLayout());
+    add(dataSetsPanel, BorderLayout.CENTER);
   }
 }

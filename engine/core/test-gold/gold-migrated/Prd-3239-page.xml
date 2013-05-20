@@ -565,47 +565,47 @@
                   <text x="994.328" y="549.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="485.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="485.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="505.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="505.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="525.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="525.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="545.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="545.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="301.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="401.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="601.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="901.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="801.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="465.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -1008,51 +1008,51 @@
                   <text x="994.328" y="699.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="615.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="615.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="635.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="635.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="655.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="655.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="675.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="675.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="695.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="695.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="301.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="401.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="601.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="901.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="801.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="615.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -1465,51 +1465,51 @@
                   <text x="994.328" y="399.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="315.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="315.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="335.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="335.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="355.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="355.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="375.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="375.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="395.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="900.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="395.0" width="900.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="301.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="401.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="601.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="901.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="801.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="315.0" width="0.0" height="100.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -1868,19 +1868,19 @@
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PREV_YEAR"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TextField@27124537"/>
                   </p>
-                  <replaced-content x="251.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="251.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@30191647"/>
                   </replaced-content>
-                  <replaced-content x="351.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="351.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@30191647"/>
                   </replaced-content>
-                  <replaced-content x="451.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="451.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@30191647"/>
                   </replaced-content>
-                  <replaced-content x="801.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <replaced-content x="801.0" y="257.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@30191647"/>
                   </replaced-content>
@@ -2152,7 +2152,7 @@
                   <text x="1094.328" y="379.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="901.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2166,11 +2166,11 @@
                   <text x="694.328" y="399.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="501.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="395.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="395.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -2190,11 +2190,11 @@
                   <text x="238.34" y="379.0" width="44.664" height="12.0">Rentals)</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="375.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="375.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2284,7 +2284,7 @@
                   <text x="494.328" y="399.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="401.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2338,7 +2338,7 @@
                   <text x="494.328" y="379.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="801.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2358,11 +2358,11 @@
                   <text x="251.624" y="399.0" width="74.676" height="12.0">Replacement)</text>
                 </line>
               </p>
-              <replaced-content x="701.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="415.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="415.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -2386,7 +2386,7 @@
                   <text x="994.328" y="419.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="601.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="355.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2394,31 +2394,31 @@
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="514.0" width="1002.0" height="22.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-              <replaced-content x="901.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="401.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="801.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="601.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="515.0" width="0.0" height="20.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -2981,7 +2981,7 @@
                   <text x="944.328" y="804.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="1031.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1031.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
@@ -3025,35 +3025,35 @@
                   <text x="1144.328" y="726.5" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="211.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="211.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="211.0" y="695.0" width="940.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="940.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="211.0" y="695.0" width="940.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@9563676"/>
               </replaced-content>
-              <replaced-content x="101.0" y="715.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1050.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="715.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@9563676"/>
               </replaced-content>
-              <replaced-content x="351.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="351.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="491.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="491.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="631.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="631.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="751.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="751.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="891.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="891.0" y="675.0" width="0.0" height="160.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3183,39 +3183,39 @@
                   <text x="145.64" y="767.5" width="46.656" height="12.0">Carriers)</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="750.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1050.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="750.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@9563676"/>
               </replaced-content>
-              <replaced-content x="101.0" y="785.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1050.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="785.0" width="1050.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@9563676"/>
               </replaced-content>
-              <replaced-content x="1091.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1091.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="961.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="961.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="821.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="821.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="691.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="691.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="561.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="561.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="421.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="421.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
-              <replaced-content x="281.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="281.0" y="695.0" width="0.0" height="140.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@5004287"/>
               </replaced-content>
@@ -3247,11 +3247,11 @@
                   <text x="1094.328" y="479.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="901.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3273,11 +3273,11 @@
                   <text x="250.28" y="479.0" width="37.332" height="12.0">Funds)</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="475.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="475.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3291,7 +3291,7 @@
                   <text x="894.328" y="479.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="401.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3335,11 +3335,11 @@
                   <text x="494.328" y="479.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="801.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3353,7 +3353,7 @@
                   <text x="594.328" y="479.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="601.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="455.0" width="0.0" height="40.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3431,7 +3431,7 @@
                   <text x="1094.328" y="279.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="901.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3445,11 +3445,11 @@
                   <text x="694.328" y="299.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="501.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="295.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="295.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -3467,11 +3467,11 @@
                   <text x="208.976" y="279.0" width="46.656" height="12.0">Carriers)</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="275.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="275.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3561,7 +3561,7 @@
                   <text x="494.328" y="299.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="401.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3615,7 +3615,7 @@
                   <text x="494.328" y="279.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="801.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3633,11 +3633,11 @@
                   <text x="213.632" y="299.0" width="46.656" height="12.0">Carriers)</text>
                 </line>
               </p>
-              <replaced-content x="701.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="315.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="315.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -3661,7 +3661,7 @@
                   <text x="994.328" y="319.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="601.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="255.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -3687,39 +3687,39 @@
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="574.0" width="1002.0" height="62.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-              <replaced-content x="101.0" y="595.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="595.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="101.0" y="615.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="615.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="401.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="601.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="701.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="901.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="801.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="575.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4064,7 +4064,7 @@
                   <text x="627.33" y="159.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="901.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4078,11 +4078,11 @@
                   <text x="694.328" y="199.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="501.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="195.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="195.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -4111,11 +4111,11 @@
                   <text x="251.612" y="179.0" width="77.328" height="12.0">Transportation</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="175.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="175.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
-              <replaced-content x="1001.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1001.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4227,7 +4227,7 @@
                   <text x="494.328" y="199.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="401.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="401.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4290,7 +4290,7 @@
                   <text x="494.328" y="179.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="801.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="801.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4310,11 +4310,11 @@
                   <text x="288.956" y="199.0" width="42.672" height="12.0">Schools</text>
                 </line>
               </p>
-              <replaced-content x="701.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="215.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="215.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@4455172"/>
               </replaced-content>
@@ -4348,7 +4348,7 @@
                   <text x="1034.326" y="159.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="601.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="601.0" y="155.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4653,7 +4653,7 @@
                   <text x="294.328" y="226.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="211.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="211.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4685,11 +4685,11 @@
                   <text x="294.328" y="206.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="561.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="561.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="391.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="391.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4713,23 +4713,23 @@
                   <text x="589.326" y="186.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="202.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="202.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="222.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="222.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="242.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="242.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="471.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="471.0" y="182.0" width="0.0" height="80.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4917,7 +4917,7 @@
                   <text x="294.328" y="366.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="211.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="211.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4949,11 +4949,11 @@
                   <text x="294.328" y="346.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="561.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="561.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="391.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="391.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -4977,23 +4977,23 @@
                   <text x="589.326" y="326.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="342.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="342.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="362.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="362.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="382.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="382.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="471.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="471.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -5252,23 +5252,23 @@
                   <text x="554.328" y="466.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="402.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="402.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="422.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="422.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="442.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="442.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="462.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="462.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="482.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="482.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -5520,11 +5520,11 @@
                   <text x="733.328" y="346.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="1010.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1010.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="830.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="830.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -5548,23 +5548,23 @@
                   <text x="1038.326" y="326.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="740.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="740.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="920.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="920.0" y="322.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="650.0" y="342.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="342.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="362.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="362.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="382.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="382.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -5718,23 +5718,23 @@
                   <text x="986.66" y="486.0" width="23.34" height="12.0">0.00</text>
                 </line>
               </p>
-              <replaced-content x="650.0" y="402.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="402.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="422.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="422.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="442.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="442.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="462.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="462.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="482.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="482.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -6031,11 +6031,11 @@
                   <text x="733.328" y="206.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="1010.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1010.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="830.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="830.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6059,19 +6059,19 @@
                   <text x="1038.326" y="186.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="740.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="740.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="920.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="920.0" y="182.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="650.0" y="202.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="202.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="222.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="222.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -6099,7 +6099,7 @@
                   <text x="414.326" y="566.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="211.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="211.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6117,11 +6117,11 @@
                   <text x="294.328" y="586.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="561.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="561.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="391.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="391.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6135,23 +6135,23 @@
                   <text x="589.326" y="566.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="582.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="582.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="602.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="602.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="622.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="550.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="622.0" width="550.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="471.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="471.0" y="562.0" width="0.0" height="180.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6233,23 +6233,23 @@
                   <text x="164.692" y="706.0" width="27.996" height="12.0">Miles</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="642.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="548.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="642.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="662.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="548.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="662.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="682.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="548.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="682.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="702.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="548.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="702.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="722.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="548.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="722.0" width="548.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -6651,11 +6651,11 @@
                   <text x="733.328" y="586.0" width="6.672" height="12.0">0</text>
                 </line>
               </p>
-              <replaced-content x="1010.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="1010.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="830.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="830.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6678,19 +6678,19 @@
                   <text x="1038.326" y="566.0" width="47.34" height="12.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="740.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="740.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="920.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="920.0" y="562.0" width="0.0" height="60.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="650.0" y="582.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="582.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="650.0" y="602.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="450.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="650.0" y="602.0" width="450.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -6896,11 +6896,11 @@
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="214.0" width="1002.0" height="127.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-              <replaced-content x="901.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6912,23 +6912,23 @@
                   <text x="973.385" y="220.5" width="55.23" height="14.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="240.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="240.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="265.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="265.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="290.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="290.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="701.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="215.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -6952,7 +6952,7 @@
                   <text x="267.72" y="321.0" width="28.873" height="13.0">ADM</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="315.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="315.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -7251,11 +7251,11 @@
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="564.0" width="1002.0" height="127.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-              <replaced-content x="901.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -7267,23 +7267,23 @@
                   <text x="973.385" y="570.5" width="55.23" height="14.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="590.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="590.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="615.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="615.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="640.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="640.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="701.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="565.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -7307,7 +7307,7 @@
                   <text x="267.72" y="671.0" width="28.873" height="13.0">ADM</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="665.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="665.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
@@ -7521,11 +7521,11 @@
             <canvas name="Band27798600" type="CanvasRenderBox" border-top-color="black" border-top-width="1.0" border-top-style="solid" border-left-color="black" border-left-width="1.0" border-left-style="solid" border-bottom-color="black" border-bottom-width="1.0" border-bottom-style="solid" border-right-color="black" border-right-width="1.0" border-right-style="solid" x="100.0" y="389.0" width="1002.0" height="127.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Band27798600"/>
-              <replaced-content x="901.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="901.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="501.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="501.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -7537,23 +7537,23 @@
                   <text x="973.385" y="395.5" width="55.23" height="14.0">Variance</text>
                 </line>
               </p>
-              <replaced-content x="301.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="301.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
-              <replaced-content x="101.0" y="415.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="415.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="440.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="440.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="101.0" y="465.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="465.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>
-              <replaced-content x="701.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="0.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="701.0" y="390.0" width="0.0" height="125.0" source="null" content-width="0.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="vertical-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@33066895"/>
               </replaced-content>
@@ -7577,7 +7577,7 @@
                   <text x="267.72" y="496.0" width="28.873" height="13.0">ADM</text>
                 </line>
               </p>
-              <replaced-content x="101.0" y="490.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="1000.0" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <replaced-content x="101.0" y="490.0" width="1000.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Element@25852139"/>
               </replaced-content>

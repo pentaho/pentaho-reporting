@@ -606,7 +606,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
   protected void init()
   {
-    provisionDataSourcePanel = new ProvisionDataSourcePanel(reportDesignerContext.getParent());
+    provisionDataSourcePanel = new ProvisionDataSourcePanel();
     provisionDataSourcePanel.setReportDesignerContext(reportDesignerContext);
 
     parameterContext = new EditorParameterContext();
@@ -751,7 +751,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   {
     final JSplitPane mainPanel = new JSplitPane();
     mainPanel.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
-    mainPanel.setLeftComponent(provisionDataSourcePanel.createDataSourcePanel());
+    mainPanel.setLeftComponent(provisionDataSourcePanel);
     mainPanel.setRightComponent(createDetailsPanel());
     mainPanel.setDividerLocation(300);
     return mainPanel;
