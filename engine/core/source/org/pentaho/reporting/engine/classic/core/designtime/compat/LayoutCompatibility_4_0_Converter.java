@@ -17,16 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.compat;
 
-import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
-import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 
@@ -68,7 +66,7 @@ public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConv
 
   public void inspectElement(final ReportElement element)
   {
-    if (element instanceof Section && (element instanceof Band == false))
+    if (element.getMetaData().getReportElementType() == ElementMetaData.TypeClassification.CONTROL)
     {
       element.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, null);
       element.setStyleExpression(BandStyleKeys.LAYOUT, null);
@@ -87,8 +85,6 @@ public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConv
           {
             // In the old days, banded-subreports did not receive any style when computing the layout.
             // When migrating report, we at least remove the most offensive properties on subreports.
-            double minHeight = subReport.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 10);
-
             subReport.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, null);
             subReport.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, null);
             subReport.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, null);
@@ -99,24 +95,6 @@ public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConv
           }
         }
       }
-      return;
-    }
-
-    final ElementStyleSheet style = element.getStyle();
-    final Float prfWidth = (Float) style.getStyleProperty(ElementStyleKeys.WIDTH);
-    if (prfWidth == null)
-    {
-      final Float minWidth = (Float) style.getStyleProperty(ElementStyleKeys.MIN_WIDTH);
-      style.setStyleProperty(ElementStyleKeys.WIDTH, minWidth);
-      style.setStyleProperty(ElementStyleKeys.MIN_WIDTH, null);
-    }
-
-    final Expression width = element.getStyleExpression(ElementStyleKeys.WIDTH);
-    if (width == null)
-    {
-      final Expression minWidth = element.getStyleExpression(ElementStyleKeys.MIN_WIDTH);
-      element.setStyleExpression(ElementStyleKeys.WIDTH, minWidth);
-      element.setStyleExpression(ElementStyleKeys.MIN_WIDTH, null);
     }
   }
 }

@@ -43,5 +43,22 @@ public class LayoutCompatibility_3_9_Converter extends AbstractCompatibilityConv
     {
       element.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, null);
     }
+
+    if(element.getMetaData().getReportElementType() == ElementMetaData.TypeClassification.CONTROL)
+    {
+      element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, null);
+      element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, null);
+      element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, null);
+      element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, null);
+      element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, null);
+      element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, null);
+
+      element.setStyleExpression(ElementStyleKeys.MIN_WIDTH, null);
+      element.setStyleExpression(ElementStyleKeys.MIN_HEIGHT, null);
+      element.setStyleExpression(ElementStyleKeys.MAX_WIDTH, null);
+      element.setStyleExpression(ElementStyleKeys.MAX_HEIGHT, null);
+      element.setStyleExpression(ElementStyleKeys.WIDTH, null);
+      element.setStyleExpression(ElementStyleKeys.HEIGHT, null);
+    }
   }
 }

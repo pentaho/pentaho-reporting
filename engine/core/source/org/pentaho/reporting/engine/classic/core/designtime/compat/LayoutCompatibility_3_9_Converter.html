@@ -6,4 +6,9 @@
       report elements. The widow/orphan settings were not working on 3.8 version of Pentaho reporting.
       This migration also removes all keep-together flags from non-bands, like groups and report objects.
   </p>
+  <p>
+      Control elements, like groups, group-body and the master-report object, that have any of the width or
+      height properties defined, have these properties cleared during the migration. The old versions of
+      the reporting system ignored these properties, while newer versions honour those properties.
+  </p>
 </div>
