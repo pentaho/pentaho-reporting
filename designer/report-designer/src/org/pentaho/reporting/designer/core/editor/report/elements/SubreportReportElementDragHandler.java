@@ -17,10 +17,11 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.geom.Point2D;
 import java.util.Locale;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -175,7 +176,18 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog subreportDataSourceDialog;
-      subreportDataSourceDialog = new SubReportDataSourceDialog((JFrame) window);
+      if (window instanceof Dialog)
+      {
+        subreportDataSourceDialog = new SubReportDataSourceDialog((Dialog) window);
+      }
+      else if (window instanceof Frame)
+      {
+        subreportDataSourceDialog = new SubReportDataSourceDialog((Frame) window);
+      }
+      else
+      {
+        subreportDataSourceDialog = new SubReportDataSourceDialog();
+      }
 
       final String queryName = subreportDataSourceDialog.performSelection(designerContext);
       if (queryName != null)

@@ -18,7 +18,9 @@
 package org.pentaho.reporting.designer.core.editor.parameters;
 
 import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.HeadlessException;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -35,12 +37,20 @@ public class SubReportDataSourceDialog extends CommonDialog
 {
   private ProvisionDataSourcePanel provisionDataSourcePanel;
 
+  public SubReportDataSourceDialog(final Dialog owner) throws HeadlessException
+  {
+    super(owner);
+    init();
+  }
+
+  public SubReportDataSourceDialog()
+  {
+    init();
+  }
+
   public SubReportDataSourceDialog(final Frame aParent)
   {
     super(aParent);
-
-    provisionDataSourcePanel = new ProvisionDataSourcePanel(this);
-
     init();
   }
 
@@ -48,6 +58,8 @@ public class SubReportDataSourceDialog extends CommonDialog
   {
     setTitle(Messages.getString("SubreportDataSourceDialog.Title"));
     setSize(350, 250);
+
+    provisionDataSourcePanel = new ProvisionDataSourcePanel();
 
     super.init();
   }
@@ -89,6 +101,6 @@ public class SubReportDataSourceDialog extends CommonDialog
 
   protected Component createContentPane()
   {
-    return provisionDataSourcePanel.createDataSourcePanel();
+    return provisionDataSourcePanel;
   }
 }

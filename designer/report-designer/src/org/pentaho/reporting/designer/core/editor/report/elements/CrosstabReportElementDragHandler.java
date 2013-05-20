@@ -17,11 +17,12 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
+import java.awt.Dialog;
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Locale;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -187,7 +188,18 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
 
       // Prompt user to either create or use an existing data-source.
       final SubReportDataSourceDialog crosstabDataSourceDialog;
-      crosstabDataSourceDialog = new SubReportDataSourceDialog((JFrame) window);
+      if (window instanceof Dialog)
+      {
+        crosstabDataSourceDialog = new SubReportDataSourceDialog((Dialog) window);
+      }
+      else if (window instanceof Frame)
+      {
+        crosstabDataSourceDialog = new SubReportDataSourceDialog((Frame) window);
+      }
+      else
+      {
+        crosstabDataSourceDialog = new SubReportDataSourceDialog();
+      }
 
       // User has prompted to select a data-source.  Get the selected query
       final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
