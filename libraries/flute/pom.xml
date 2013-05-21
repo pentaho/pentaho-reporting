@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.pentaho</groupId>
+	<artifactId>pentaho-w3c-flute</artifactId>
+	<version>1.2.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
+	<parent>
+    	<groupId>org.pentaho</groupId>
+    	<artifactId>pentaho-parent-pom</artifactId>
+    	<version>1.0.1</version>
+	</parent>
+	
+	<name>Pentaho/W3C Flute library</name>
+	<description>
+		a derivative work of http://www.w3.org/Style/CSS/SAC/Overview.en.html
+	
+		The grammar of the parser has been changed to be a little bit more suitable
+		for CSS3.
+		
+		The @page-rule grammer given in the CSS3-Page module was funny, but unusable.
+		Therefore it has been replaced by a simplicistic approach. The margin-rules
+		now have to follow the property declarations - mixing margins and property
+		declarations is no longer valid.
+		
+		The margin-box rules get forwarded to the 'ignorableAtRule' method of the
+		Handler class - we have to maintain API level compatibility for BIRT and other
+		projects, which may depend on that parser.
+		
+		The selector syntax is also upgraded to CSS3 - especially the pseudo-elements
+		were not parsed and caused trouble here. As this did not work before,
+		stylesheets of other programms should not be affected by this change - if they
+		specified things which were known not to work and start dying if it works -
+		well, that's bad luck, I guess.
+	</description>
+
+	<organization>
+		<name>Pentaho Corporation</name>
+		<url>http://www.pentaho.com</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>W3C License</name>
+			<url>http://www.w3.org/Consortium/Legal/</url>
+			<distribution>repo</distribution>
+		</license>
+		<license>
+			<name>GNU Lesser General Public License, version 2.1</name>
+			<url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	
+	<scm>
+		<connection>scm:git:git@github.com:pentaho/pentaho-reporting.git</connection>
+		<url>scm:git:git@github.com:pentaho/pentaho-reporting.git</url>
+		<developerConnection>scm:git:git@github.com:pentaho/pentaho-reporting.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<build>
+		<sourceDirectory>source</sourceDirectory>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.w3c.css</groupId>
+			<artifactId>sac</artifactId>
+			<version>1.3</version>
+		</dependency>
+	</dependencies>
+	
+</project>
