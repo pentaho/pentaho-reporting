@@ -2,13 +2,13 @@ package org.pentaho.reporting.ui.datasources.kettle;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeListener;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.di.core.exception.KettleException;
-import org.pentaho.di.trans.TransMeta;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
@@ -31,23 +31,13 @@ public class KettleEmbeddedQueryEntry extends KettleQueryEntry {
     super(aName);
     this.pluginId = pluginId;
     this.raw = raw;
-    this.helper = new EmbeddedHelper(pluginId);
+    this.helper = new EmbeddedHelper(pluginId, this);
   }
 
   @Override
   public boolean validate() {
+    update();
     return helper.validate();
-  }
-
-  @Override
-  protected void loadTransformation(ResourceManager resourceManager, ResourceKey contextKey)
-      throws ReportDataFactoryException, KettleException 
-  {
-  
-    final EmbeddedKettleTransformationProducer producer = (EmbeddedKettleTransformationProducer)createProducer();
-    final TransMeta transMeta = producer.loadTransformation(contextKey);
-    setDeclaredParameters(transMeta.listParameters());
-  
   }
 
   @Override
@@ -75,6 +65,14 @@ public class KettleEmbeddedQueryEntry extends KettleQueryEntry {
     datasourcePanel.add(helper.getDialogPanel(createProducer(), designTimeContext, l), BorderLayout.CENTER);
     datasourcePanel.revalidate();
   }
+  
+  public String[] getDeclaredParameters(final ResourceManager resourceManager,
+      final ResourceKey contextKey) throws KettleException, ReportDataFactoryException{
+    
+    return helper.getCachedDeclaredParameters();
+    
+  }
+
 
   public void update()
   {
