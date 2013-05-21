@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.ui.datasources.kettle;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.pentaho.di.core.Const;
@@ -124,6 +126,15 @@ public class KettleQueryEntry
   {
     this.parameters = parameters.clone();
   }
+  
+  public void addParameters(final ParameterMapping[] newParams){
+    int originalLength = this.parameters.length;
+    this.parameters = Arrays.copyOf(this.parameters, originalLength + newParams.length);
+    for (int i = 0; i < newParams.length; i++) {
+      this.parameters[originalLength + i] = newParams[i];
+    }
+  }
+  
 
   public String toString()
   {
