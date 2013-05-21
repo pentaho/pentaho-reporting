@@ -361,11 +361,12 @@ public class FormulaEditorPanel extends JComponent
   protected void insertText(final String text)
   {
     final int start = functionTextArea.getCaretPosition();
-    final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
+    final String formulaTextOriginal = editorModel.getFormulaText();
+    final StringBuilder formulaText = new StringBuilder(formulaTextOriginal);
 
     // Ensure that only one equal sign in first cursor position exists.
     int textLength = text.length();
-    if ((formulaText.charAt(0) == '=') && (formulaText.length() == 1) && (text.startsWith("=")))
+    if ("=".equals(formulaTextOriginal) && text.startsWith("="))
     {
       formulaText.append(text.substring(1));
       textLength--;
