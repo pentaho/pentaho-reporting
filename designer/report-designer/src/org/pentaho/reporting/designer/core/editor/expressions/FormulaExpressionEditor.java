@@ -39,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class FormulaExpressionEditor implements ExpressionEditor
 {
@@ -71,6 +72,12 @@ public class FormulaExpressionEditor implements ExpressionEditor
       formulaFunction = (FormulaFunction) expression;
       editorPanel.setFormulaText(formulaFunction.getFormula());
     }
+
+    if (StringUtils.isEmpty(editorPanel.getFormulaText()))
+    {
+      editorPanel.setFormulaText("=");
+    }
+
     editorPanel.setFields(getFields());
 
     final Configuration configuration = ReportDesignerBoot.getInstance().getGlobalConfig();
@@ -133,13 +140,19 @@ public class FormulaExpressionEditor implements ExpressionEditor
 
   public void stopEditing()
   {
+    String formulaText = editorPanel.getFormulaText();
+    if (StringUtils.isEmpty(formulaText, true) || formulaText.trim().equals("="))
+    {
+      formulaText = null;
+    }
+
     if (formulaExpression != null)
     {
-      formulaExpression.setFormula(editorPanel.getFormulaText());
+      formulaExpression.setFormula(formulaText);
     }
     else if (formulaFunction != null)
     {
-      formulaFunction.setFormula(editorPanel.getFormulaText());
+      formulaFunction.setFormula(formulaText);
     }
   }
 
