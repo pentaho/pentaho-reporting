@@ -207,6 +207,7 @@ This is the build file for the collection of Shims modules to provide support
       <sequential>
         <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="longrun-cobertura">
           <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExeuteLongRunningTest" value="true"/>
+          <property name="basedir" value="${basedir}/@{module}"/>
         </ant>
       </sequential>
     </for>
