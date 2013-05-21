@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.designtime.compat;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -70,6 +71,14 @@ public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConv
     {
       element.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, null);
       element.setStyleExpression(BandStyleKeys.LAYOUT, null);
+    }
+
+    if (element instanceof CrosstabGroup)
+    {
+      // legacy crosstab reports did not have a notion of details headers, so they would be empty.
+      // make sure that they do not appear by default.
+      final CrosstabGroup g = (CrosstabGroup) element;
+      g.setPrintDetailsHeader(false);
     }
 
     final Section parentSection = element.getParentSection();
