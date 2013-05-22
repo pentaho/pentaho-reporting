@@ -3,6 +3,8 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.table.TableModel;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -13,6 +15,7 @@ import org.pentaho.di.core.exception.KettleXMLException;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.TransMeta;
+import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
@@ -23,6 +26,7 @@ import org.w3c.dom.Node;
 
 public class EmbeddedKettleTransformationProducer extends AbstractKettleTransformationProducer
 {
+
   private static final long serialVersionUID = 1900310938438244134L;
 
   private static final Log logger = LogFactory.getLog(EmbeddedKettleTransformationProducer.class);
@@ -68,7 +72,7 @@ public class EmbeddedKettleTransformationProducer extends AbstractKettleTransfor
     return loadTransformation(contextKey);
   }
 
-  public TransMeta loadTransformation(final ResourceKey contextKey) throws KettleMissingPluginsException,
+  private TransMeta loadTransformation(final ResourceKey contextKey) throws KettleMissingPluginsException,
       KettlePluginException, KettleXMLException
   {
     final Document document = DocumentHelper.loadDocumentFromBytes(getTransformationRaw());
