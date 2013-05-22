@@ -70,8 +70,8 @@ public class SimpleBarcodesModule extends AbstractModule
       throw new ModuleInitializeException("Unable to load Barbecue library class.", t);
     }
 
-    BundleElementRegistry.getInstance().register("sbarcodes", SimpleBarcodesElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "sbarcodes", SimpleBarcodesElementReadHandler.class);
+    BundleElementRegistry.getInstance().register("simple-barcode", SimpleBarcodesElementWriteHandler.class);
+    BundleElementRegistry.getInstance().register(NAMESPACE, "simple-barcode", SimpleBarcodesElementReadHandler.class);
     BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
 
     ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "sbarcodes");
