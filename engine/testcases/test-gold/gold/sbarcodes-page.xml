@@ -14,7 +14,7 @@
         </block>
       </auto>
     </page-area>
-    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="0"/>
@@ -23,14 +23,245 @@
         <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
-      <block name="::group-0" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-        <block type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="0.0" width="300.0" height="50.0" source="null" content-width="198.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="50.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="50.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="50.0" width="300.0" height="50.0" source="null" content-width="242.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="100.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="100.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="100.0" width="300.0" height="50.0" source="null" content-width="242.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="150.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="150.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="150.0" width="300.0" height="50.0" source="null" content-width="264.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="200.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="200.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="200.0" width="300.0" height="50.0" source="null" content-width="286.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="250.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="250.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="250.0" width="300.0" height="50.0" source="null" content-width="242.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="300.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="300.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="300.0" width="300.0" height="50.0" source="null" content-width="242.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="350.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="350.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="350.0" width="300.0" height="50.0" source="null" content-width="198.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="400.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="400.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="400.0" width="300.0" height="50.0" source="null" content-width="198.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="450.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="450.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="450.0" width="300.0" height="50.0" source="null" content-width="176.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="500.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="500.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="500.0" width="300.0" height="50.0" source="null" content-width="242.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="550.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="550.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="550.0" width="300.0" height="50.0" source="null" content-width="176.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="600.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="600.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="600.0" width="300.0" height="50.0" source="null" content-width="176.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
         </block>
       </block>
-      <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="698.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+  </physical-page>
+  <physical-page page-x="0" page-y="0" page-width="595" page-height="842" margin-top="72" margin-left="72" margin-bottom="72" margin-right="72">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="451.0" height="698.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="-698.0" width="451.0" height="748.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="0"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="-698.0" width="451.0" height="748.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <block type="AutoRenderBox" x="0.0" y="-698.0" width="451.0" height="748.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="0.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="451.0" height="50.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+              <replaced-content x="0.0" y="0.0" width="300.0" height="50.0" source="null" content-width="264.0" content-height="30.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
+            </canvas>
+          </block>
+        </block>
+      </block>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="50.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="50.0" width="451.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
     </block>
