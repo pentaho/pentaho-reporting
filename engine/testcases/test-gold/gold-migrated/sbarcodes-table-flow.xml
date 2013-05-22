@@ -1,8 +1,177 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="1" row-count="0">
+  <table col-count="2" row-count="14">
     <cols>
-      <column width="451"/>
+      <column width="300"/>
+      <column width="151"/>
     </cols>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="value"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-height="30"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:bar-width="2"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:checksum="false"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:show-text="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+      </cell>
+      <empty-cell/>
+    </row>
   </table>
 </layout-output>
