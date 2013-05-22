@@ -132,9 +132,9 @@ public class SequenceEditor extends JComponent
 
     final JPanel headerPanel = new JPanel();
     headerPanel.setLayout(new VerticalLayout(5, VerticalLayout.BOTH));
-    headerPanel.add(new JLabel("Group:"));
+    headerPanel.add(new JLabel(Messages.getString("SequenceEditor.Group")));
     headerPanel.add(sequenceGroupBox);
-    headerPanel.add(new JLabel("Sequence:"));
+    headerPanel.add(new JLabel(Messages.getString("SequenceEditor.Sequence")));
     headerPanel.add(sequenceNameBox);
 
     setLayout(new BorderLayout());
