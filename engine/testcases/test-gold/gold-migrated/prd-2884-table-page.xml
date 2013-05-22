@@ -1701,6 +1701,8 @@
     </row>
     <row height="537">
       <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="chapter"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>

@@ -1501,6 +1501,11 @@
                   <text x="19.6648" y="191.5" width="11.12" height="10.0">68</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="134.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="128.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -1690,6 +1695,11 @@
                   <text x="577.3142" y="274.5" width="25.01" height="10.0">8,197</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="217.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="211.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -1869,6 +1879,11 @@
                   <text x="189.3812" y="357.5" width="25.01" height="10.0">2,542</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="300.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="294.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -1997,6 +2012,11 @@
                   <text x="490.6724" y="440.5" width="25.01" height="10.0">6,934</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="383.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="377.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -2143,6 +2163,11 @@
                   <text x="516.123" y="523.5" width="25.01" height="10.0">7,305</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="466.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="460.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -2445,6 +2470,11 @@
                   <text x="635.2812" y="81.5" width="25.01" height="10.0">9,042</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -2608,6 +2638,11 @@
                   <text x="100.6814" y="164.5" width="25.01" height="10.0">1,249</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -2793,6 +2828,11 @@
                   <text x="176.21" y="247.5" width="25.01" height="10.0">2,350</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -2938,6 +2978,11 @@
                   <text x="467.76" y="330.5" width="25.01" height="10.0">6,600</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -3125,6 +3170,11 @@
                   <text x="554.8134" y="413.5" width="25.01" height="10.0">7,869</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -3304,6 +3354,11 @@
                   <text x="114.6072" y="496.5" width="25.01" height="10.0">1,452</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -3620,6 +3675,11 @@
                   <text x="337.077" y="81.5" width="25.01" height="10.0">4,695</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -3793,6 +3853,11 @@
                   <text x="466.5252" y="164.5" width="25.01" height="10.0">6,582</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -3972,6 +4037,11 @@
                   <text x="620.4636" y="247.5" width="25.01" height="10.0">8,826</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -4112,6 +4182,11 @@
                   <text x="339.0664" y="330.5" width="25.01" height="10.0">4,724</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -4258,6 +4333,11 @@
                   <text x="641.1122" y="413.5" width="25.01" height="10.0">9,127</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -4421,6 +4501,11 @@
                   <text x="631.714" y="496.5" width="25.01" height="10.0">8,990</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -4727,6 +4812,11 @@
                   <text x="662.9956" y="81.5" width="25.01" height="10.0">9,446</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -4882,6 +4972,11 @@
                   <text x="287.685" y="164.5" width="25.01" height="10.0">3,975</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5057,6 +5152,11 @@
                   <text x="545.4838" y="247.5" width="25.01" height="10.0">7,733</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5185,6 +5285,11 @@
                   <text x="294.4764" y="330.5" width="25.01" height="10.0">4,074</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5338,6 +5443,11 @@
                   <text x="685.3592" y="413.5" width="25.01" height="10.0">9,772</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5509,6 +5619,11 @@
                   <text x="146.5062" y="496.5" width="25.01" height="10.0">1,917</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5750,6 +5865,11 @@
                   <text x="395.387" y="81.5" width="25.01" height="10.0">5,545</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -5903,6 +6023,11 @@
                   <text x="238.0872" y="164.5" width="25.01" height="10.0">3,252</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6033,6 +6158,11 @@
                   <text x="575.0504" y="247.5" width="25.01" height="10.0">8,164</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6184,6 +6314,11 @@
                   <text x="480.8626" y="330.5" width="25.01" height="10.0">6,791</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6322,6 +6457,11 @@
                   <text x="263.2634" y="413.5" width="25.01" height="10.0">3,619</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6460,6 +6600,11 @@
                   <text x="86.9614" y="496.5" width="25.01" height="10.0">1,049</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6752,6 +6897,11 @@
                   <text x="544.7978" y="81.5" width="25.01" height="10.0">7,723</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -6949,6 +7099,11 @@
                   <text x="403.4818" y="164.5" width="25.01" height="10.0">5,663</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -7104,6 +7259,11 @@
                   <text x="235.1374" y="247.5" width="25.01" height="10.0">3,209</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -7283,6 +7443,11 @@
                   <text x="587.6042" y="330.5" width="25.01" height="10.0">8,347</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -7470,6 +7635,11 @@
                   <text x="83.943" y="413.5" width="25.01" height="10.0">1,005</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -7608,6 +7778,11 @@
                   <text x="488.7516" y="496.5" width="25.01" height="10.0">6,906</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -7892,6 +8067,11 @@
                   <text x="640.8378" y="81.5" width="25.01" height="10.0">9,123</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8036,6 +8216,11 @@
                   <text x="517.3578" y="164.5" width="25.01" height="10.0">7,323</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8215,6 +8400,11 @@
                   <text x="563.457" y="247.5" width="25.01" height="10.0">7,995</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8611,6 +8801,11 @@
                   <text x="422.6212" y="191.5" width="25.01" height="10.0">5,942</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="134.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="128.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8731,6 +8926,11 @@
                   <text x="263.8122" y="274.5" width="25.01" height="10.0">3,627</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="217.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="211.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8851,6 +9051,11 @@
                   <text x="83.0512" y="357.5" width="16.68" height="10.0">992</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="300.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="294.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -8979,6 +9184,11 @@
                   <text x="502.4716" y="440.5" width="25.01" height="10.0">7,106</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="383.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="377.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9107,6 +9317,11 @@
                   <text x="415.6926" y="523.5" width="25.01" height="10.0">5,841</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="466.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="460.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9362,6 +9577,11 @@
                   <text x="677.1958" y="81.5" width="25.01" height="10.0">9,653</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9482,6 +9702,11 @@
                   <text x="52.7986" y="164.5" width="16.68" height="10.0">551</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9600,6 +9825,11 @@
                   <text x="348.1902" y="247.5" width="25.01" height="10.0">4,857</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9753,6 +9983,11 @@
                   <text x="380.638" y="330.5" width="25.01" height="10.0">5,330</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -9889,6 +10124,11 @@
                   <text x="482.3032" y="413.5" width="25.01" height="10.0">6,812</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="356.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="350.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -10015,6 +10255,11 @@
                   <text x="620.052" y="496.5" width="25.01" height="10.0">8,820</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="439.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="433.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -10301,6 +10546,11 @@
                   <text x="204.0616" y="81.5" width="25.01" height="10.0">2,756</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -10772,6 +11022,11 @@
                   <text x="145.1342" y="191.5" width="25.01" height="10.0">1,897</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="134.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="128.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -10922,6 +11177,11 @@
                   <text x="145.2028" y="274.5" width="25.01" height="10.0">1,898</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="217.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="211.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -11064,6 +11324,11 @@
                   <text x="149.1816" y="357.5" width="25.01" height="10.0">1,956</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="300.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="294.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -11216,6 +11481,11 @@
                   <text x="307.1674" y="440.5" width="25.01" height="10.0">4,259</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="383.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="377.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -11486,6 +11756,11 @@
                   <text x="500.8938" y="523.5" width="25.01" height="10.0">7,083</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="466.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="460.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -11823,6 +12098,11 @@
                   <text x="65.5582" y="81.5" width="16.68" height="10.0">737</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="24.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="18.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -11990,6 +12270,11 @@
                   <text x="255.1686" y="164.5" width="25.01" height="10.0">3,501</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="107.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="101.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -12145,6 +12430,11 @@
                   <text x="43.4004" y="247.5" width="16.68" height="10.0">414</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="190.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="184.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -12295,6 +12585,11 @@
                   <text x="364.0368" y="330.5" width="25.01" height="10.0">5,088</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="273.649" width="129.0" height="15.053" source="null" content-width="143.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="267.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -12703,6 +12998,11 @@
                   <text x="457.47" y="191.5" width="25.01" height="10.0">6,450</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="134.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="128.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -12902,6 +13202,11 @@
                   <text x="127.847" y="274.5" width="25.01" height="10.0">1,645</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="217.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="211.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
@@ -13099,6 +13404,11 @@
                   <text x="605.0286" y="357.5" width="25.01" height="10.0">8,601</text>
                 </line>
               </p>
+              <replaced-content x="176.0" y="300.649" width="129.0" height="15.053" source="null" content-width="132.0" content-height="18.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="simple-barcodes"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PRODUCTCODE"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0" autoGenNs:type="code128"/>
+              </replaced-content>
               <replaced-content x="175.0" y="294.0" width="130.0" height="1.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
               </replaced-content>
