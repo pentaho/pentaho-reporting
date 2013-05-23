@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 
 /**
  * Fires a Kettle-Query by executing a Kettle-Transformation.
@@ -232,9 +233,16 @@ public class KettleDataFactory extends AbstractDataFactory
       KettleTransformationProducer defaultProducer = queries.values().iterator().next();
       if (defaultProducer instanceof EmbeddedKettleTransformationProducer)
       {
-        EmbeddedKettleTransformationProducer producer = (EmbeddedKettleTransformationProducer)defaultProducer;
-        metadata = DataFactoryRegistry.getInstance().getMetaData(producer.getPluginId());
-        return metadata;
+        try{
+
+          EmbeddedKettleTransformationProducer producer = (EmbeddedKettleTransformationProducer)defaultProducer;
+          metadata = DataFactoryRegistry.getInstance().getMetaData(producer.getPluginId());
+          return metadata;
+          
+        }catch(MetaDataLookupException e){
+          // we are on the server... plugin metadata instances are not registered
+          // Return the default Kettle datafactory metadata... 
+        }
       }
       
     }
