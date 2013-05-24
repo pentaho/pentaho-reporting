@@ -19,6 +19,7 @@ package org.pentaho.reporting.libraries.resourceloader.loader.raw;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
@@ -31,8 +32,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class RawResourceData implements ResourceData
-{
+public class RawResourceData implements ResourceData, Serializable
+{ 
+  private static final long serialVersionUID = 1L;
   private ResourceKey rawKey;
   private byte[] data;
   private transient volatile Long hashCode;
