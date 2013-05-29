@@ -86,6 +86,26 @@ public final class ElementTypeRegistry
     this.backend.put(metaData.getName(), new DefaultElementMetaData(metaData));
   }
 
+  public AttributeRegistry getAttributeRegistry (final ElementType identifier)
+  {
+    return getAttributeRegistry(identifier.getMetaData().getName());
+  }
+
+  public AttributeRegistry getAttributeRegistry (final String identifier)
+  {
+    if (identifier == null)
+    {
+      throw new NullPointerException();
+    }
+    final DefaultElementMetaData retval = backend.get(identifier);
+    if (retval == null)
+    {
+      throw new MetaDataLookupException("There is no meta-data defined for type '" + identifier + '\'');
+    }
+
+    return new DefaultAttributeRegistry(retval);
+  }
+
   public ElementMetaData[] getAllElementTypes()
   {
     return backend.values().toArray(new ElementMetaData[backend.size()]);
