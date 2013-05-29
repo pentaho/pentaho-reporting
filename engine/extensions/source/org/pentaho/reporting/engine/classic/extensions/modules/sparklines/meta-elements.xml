@@ -11,6 +11,7 @@
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="static-computed-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="bar-sparkline"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
                name="spacing"
@@ -39,6 +40,7 @@
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="static-computed-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="line-sparkline"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
                name="spacing"
@@ -65,6 +67,7 @@
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="static-computed-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="pie-sparkline"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0"
                name="start-angle"

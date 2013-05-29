@@ -68,7 +68,7 @@ public class DenormalizedOlap4JDriverTest extends DataSourceTestBase
     provider.setUrl("jdbc:mondrian:");
 
     final DenormalizedMDXDataFactory dataFactory = new DenormalizedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query);
+    dataFactory.setQuery("default", query, null, null);
     initializeDataFactory(dataFactory);
     return dataFactory;
   }

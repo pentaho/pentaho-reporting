@@ -77,7 +77,7 @@ public class SampleDataSourceReadHandler extends AbstractXmlReadHandler implemen
     for (int i = 0; i < queries.size(); i++)
     {
       final PropertyReadHandler handler = queries.get(i);
-      srdf.setQuery(handler.getName(), handler.getResult());
+      srdf.setQuery(handler.getName(), handler.getResult(), null, null);
     }
     dataFactory = srdf;
   }

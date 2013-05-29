@@ -5,12 +5,6 @@ import java.util.Locale;
 
 import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 
-/**
- * Todo: Document me!
- * <p/>
- *
- * @author Thomas Morgner.
- */
 public class DrillDownParameter implements MetaData, Serializable
 {
   public static enum Type
@@ -153,7 +147,7 @@ public class DrillDownParameter implements MetaData, Serializable
   /** @noinspection HardCodedStringLiteral*/
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append("DrillDownParameter");
     sb.append("{name='").append(name).append('\'');
     sb.append(", formulaFragment='").append(formulaFragment).append('\'');
@@ -163,7 +157,7 @@ public class DrillDownParameter implements MetaData, Serializable
     return sb.toString();
   }
 
-  public void setPreferred(boolean preferred)
+  public void setPreferred(final boolean preferred)
   {
     this.preferred = preferred;
   }
@@ -236,5 +230,15 @@ public class DrillDownParameter implements MetaData, Serializable
   public int getCompatibilityLevel()
   {
     return compatibilityLevel;
+  }
+
+  public String getKeyPrefix()
+  {
+    return null;
+  }
+
+  public String getBundleLocation()
+  {
+    return null;
   }
 }

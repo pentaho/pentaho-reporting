@@ -28,7 +28,7 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
   private String valueRole;
   private boolean bulk;
   private String namespace;
-  private Class targetClass;
+  private Class<?> targetClass;
   private boolean mandatory;
 
   /**
@@ -51,8 +51,20 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
                                   final String name,
                                   final String bundleLocation,
                                   final String keyPrefix,
+                                  final Class<?> targetClass,
+                                  final boolean designTimeValue,
+                                  final int compatibilityLevel)
+  {
+    this(namespace, name, bundleLocation, keyPrefix, null, targetClass, true, false, true, false, false, false, false,
+        VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), false, compatibilityLevel);
+  }
+
+  public DefaultAttributeMetaData(final String namespace,
+                                  final String name,
+                                  final String bundleLocation,
+                                  final String keyPrefix,
                                   final String propertyEditorClass,
-                                  final Class targetClass,
+                                  final Class<?> targetClass,
                                   final boolean expert,
                                   final boolean preferred,
                                   final boolean hidden,
@@ -134,7 +146,7 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     return namespace;
   }
 
-  public Class getTargetType()
+  public Class<?> getTargetType()
   {
     return targetClass;
   }
@@ -145,7 +157,7 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     {
       return null;
     }
-    return (PropertyEditor) ObjectUtilities.loadAndInstantiate
+    return ObjectUtilities.loadAndInstantiate
         (propertyEditorClass, DefaultAttributeMetaData.class, PropertyEditor.class);
   }
 

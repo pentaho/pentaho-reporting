@@ -9,6 +9,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="band-attributes"/>
+    <attribute-group-ref ref="band"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -24,6 +25,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="group-data-body"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -43,6 +45,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-footer-attributes"/>
+    <attribute-group-ref ref="group-footer"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -62,6 +65,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-header-attributes"/>
+    <attribute-group-ref ref="group-header"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -82,6 +86,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-header-attributes"/>
+    <attribute-group-ref ref="details-header"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -101,6 +106,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-footer-attributes"/>
+    <attribute-group-ref ref="details-footer"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -119,6 +125,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="itemband"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -135,6 +142,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="report-attributes"/>
+    <attribute-group-ref ref="master-report"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="bundle"
@@ -341,6 +349,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="relational-group"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="group-fields"
@@ -369,6 +378,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="no-data-band"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -387,6 +397,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-footer-attributes"/>
+    <attribute-group-ref ref="page-footer"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -406,6 +417,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="excel-header-attributes"/>
+    <attribute-group-ref ref="page-header"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -424,6 +436,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="report-footer"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -441,6 +454,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="report-header"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -456,6 +470,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="sub-group-body"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -472,27 +487,8 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="report-attributes"/>
-
-    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
-               name="subreport-active"
-               value-type="java.lang.Boolean"
-               value-role="Value"
-               computed="true"
-               design-time-value="false"
-               expert="false"
-               hidden="false"
-               mandatory="false"/>
-
-    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
-               name="data-cache"
-               mandatory="false"
-               expert="true"
-               hidden="false"
-               design-time-value="true"
-               computed="false"
-               transient="false"
-               value-type="java.lang.Boolean"
-               value-role="Value"/>
+    <attribute-group-ref ref="sub-report-attributes"/>
+    <attribute-group-ref ref="sub-report"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -510,6 +506,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="watermark"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -524,6 +521,7 @@
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType"
            type-classification="control">
     <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="auto-layout-box"/>
 
     <style-group-ref ref="layout"/>
     <style-group-ref ref="common"/>

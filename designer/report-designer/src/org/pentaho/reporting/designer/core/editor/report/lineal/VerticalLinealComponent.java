@@ -194,7 +194,8 @@ public class VerticalLinealComponent extends JComponent
       final GuideLine newGuideLine = new GuideLine(guideLine.getPosition(), false);
       final LinealModel linealModel = getLinealModel();
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new UpdateVerticalGuidelineUndoEntry(index, newGuideLine, guideLine, getInstanceID()));
+      undo.addChange(Messages.getString("LinealComponent.DeactivateGuideUndoEntry"),
+          new UpdateVerticalGuidelineUndoEntry(index, newGuideLine, guideLine, getInstanceID()));
       linealModel.updateGuideLine(index, newGuideLine);
     }
 
@@ -217,7 +218,8 @@ public class VerticalLinealComponent extends JComponent
       final GuideLine newGuideLine = new GuideLine(guideLine.getPosition(), true);
       final LinealModel linealModel = getLinealModel();
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new UpdateVerticalGuidelineUndoEntry(index, newGuideLine, guideLine, getInstanceID()));
+      undo.addChange(Messages.getString("LinealComponent.ActivateGuideUndoEntry"),
+          new UpdateVerticalGuidelineUndoEntry(index, newGuideLine, guideLine, getInstanceID()));
       linealModel.updateGuideLine(index, newGuideLine);
     }
   }
@@ -236,7 +238,8 @@ public class VerticalLinealComponent extends JComponent
     {
       final LinealModel linealModel = getLinealModel();
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new RemoveVerticalGuidelineUndoEntry(guideLine, getInstanceID()));
+      undo.addChange(Messages.getString("LinealComponent.DeleteGuideUndoName"),
+          new RemoveVerticalGuidelineUndoEntry(guideLine, getInstanceID()));
       linealModel.removeGuideLine(guideLine);
     }
   }
@@ -334,7 +337,8 @@ public class VerticalLinealComponent extends JComponent
       final GuideLine guideLine = new GuideLine(position, e.getButton() == MouseEvent.BUTTON1);
 
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new AddVerticalGuidelineUndoEntry(guideLine, getInstanceID()));
+      undo.addChange(Messages.getString("LinealComponent.AddGuideUndoName"),
+          new AddVerticalGuidelineUndoEntry(guideLine, getInstanceID()));
       linealModel.addGuidLine(guideLine);
     }
 
@@ -389,7 +393,8 @@ public class VerticalLinealComponent extends JComponent
       final double position = Math.min((double) pageHeight, Math.max((double) 0, scaledPos));
       final GuideLine newGuideLine = new GuideLine(position, dragged.isActive());
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new UpdateVerticalGuidelineUndoEntry(guideLineIndex, newGuideLine, dragged, getInstanceID()));
+      undo.addChange(Messages.getString("LinealComponent.ChangeGuideUndoName"),
+          new UpdateVerticalGuidelineUndoEntry(guideLineIndex, newGuideLine, dragged, getInstanceID()));
       linealModel.updateGuideLine(guideLineIndex, newGuideLine);
     }
 

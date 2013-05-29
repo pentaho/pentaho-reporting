@@ -26,6 +26,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -129,7 +131,8 @@ public class SplashScreen extends JWindow
     versionLabel.setBounds(XLOC, YLOC + 40, TEXT_WIDTH, versionLabel.getPreferredSize().height);
 
     // Overlay the license
-    final JTextArea copyrightArea = new JTextArea(Messages.getString("SplashScreen.Copyright", ""+((new Date()).getYear()+1900)));
+    final String year = new SimpleDateFormat("yyyy").format(new Date());
+    final JTextArea copyrightArea = new JTextArea(Messages.getString("SplashScreen.Copyright", year));
     copyrightArea.setEditable(false);
     copyrightArea.setBounds(XLOC, YLOC + 80, TEXT_WIDTH, LICENSE_HEIGHT);
     copyrightArea.setOpaque(false);

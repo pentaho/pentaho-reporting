@@ -62,7 +62,7 @@ public class BandedOlap4JJndiTest extends DataSourceTestBase
     provider.setConnectionPath("SampleOlap4J");
 
     final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query);
+    dataFactory.setQuery("default", query, null, null);
     initializeDataFactory(dataFactory);
     return dataFactory;
   }

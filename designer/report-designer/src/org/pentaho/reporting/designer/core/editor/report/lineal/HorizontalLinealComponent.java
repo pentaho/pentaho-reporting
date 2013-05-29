@@ -112,7 +112,8 @@ public class HorizontalLinealComponent extends JPanel
       final double position = Math.min(width, Math.max((double) 0, scaledPosition));
       final GuideLine newGuideLine = new GuideLine(position, dragged.isActive());
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new UpdateHorizontalGuidelineUndoEntry(draggedGuideLineIndex, newGuideLine, dragged));
+      undo.addChange(Messages.getString("LinealComponent.ChangeGuideUndoName"),
+          new UpdateHorizontalGuidelineUndoEntry(draggedGuideLineIndex, newGuideLine, dragged));
       linealModel.updateGuideLine(draggedGuideLineIndex, newGuideLine);
     }
 
@@ -148,7 +149,7 @@ public class HorizontalLinealComponent extends JPanel
       final GuideLine guideLine = new GuideLine(position, e.getButton() == MouseEvent.BUTTON1);
 
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new AddHorizontalGuidelinesUndoEntry(guideLine));
+      undo.addChange(Messages.getString("LinealComponent.AddGuideUndoName"), new AddHorizontalGuidelinesUndoEntry(guideLine));
       linealModel.addGuidLine(guideLine);
     }
 
@@ -239,7 +240,8 @@ public class HorizontalLinealComponent extends JPanel
       final GuideLine newGuideLine = new GuideLine(guideLine.getPosition(), false);
       final LinealModel linealModel = getLinealModel();
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new UpdateHorizontalGuidelineUndoEntry(index, newGuideLine, guideLine));
+      undo.addChange(Messages.getString("LinealComponent.DeactivateGuideUndoEntry"),
+          new UpdateHorizontalGuidelineUndoEntry(index, newGuideLine, guideLine));
       linealModel.updateGuideLine(index, newGuideLine);
     }
   }
@@ -261,7 +263,8 @@ public class HorizontalLinealComponent extends JPanel
       final GuideLine newGuideLine = new GuideLine(oldGuideLine.getPosition(), true);
       final UndoManager undo = getRenderContext().getUndo();
       final LinealModel linealModel = getLinealModel();
-      undo.addChange(new UpdateHorizontalGuidelineUndoEntry(index, newGuideLine, oldGuideLine));
+      undo.addChange(Messages.getString("LinealComponent.ActivateGuideUndoEntry"),
+          new UpdateHorizontalGuidelineUndoEntry(index, newGuideLine, oldGuideLine));
       linealModel.updateGuideLine(index, newGuideLine);
     }
   }
@@ -280,7 +283,8 @@ public class HorizontalLinealComponent extends JPanel
     {
       final LinealModel linealModel = getLinealModel();
       final UndoManager undo = getRenderContext().getUndo();
-      undo.addChange(new RemoveHorizontalGuidelineUndoEntry(guideLine));
+      undo.addChange(Messages.getString("LinealComponent.DeleteGuideUndoName"),
+          new RemoveHorizontalGuidelineUndoEntry(guideLine));
       linealModel.removeGuideLine(guideLine);
     }
   }
@@ -519,7 +523,7 @@ public class HorizontalLinealComponent extends JPanel
     g.drawLine(0, getHeight() - 1, (int) ((end - start) * scaleFactor), getHeight() - 1);
 
     
-    ImageIcon rightBorder = CanvasImageLoader.getInstance().getRightShadowImage();
+    final ImageIcon rightBorder = CanvasImageLoader.getInstance().getRightShadowImage();
     g.drawImage(rightBorder.getImage(), (int) ((end - start) * scaleFactor), 0, rightBorder.getIconWidth(), getHeight(), null);
     
     drawGuideLines(g);
@@ -727,7 +731,7 @@ public class HorizontalLinealComponent extends JPanel
     return showLeftBorder;
   }
 
-  public void setShowLeftBorder(boolean showLeftBorder)
+  public void setShowLeftBorder(final boolean showLeftBorder)
   {
     this.showLeftBorder = showLeftBorder;
     refresh();

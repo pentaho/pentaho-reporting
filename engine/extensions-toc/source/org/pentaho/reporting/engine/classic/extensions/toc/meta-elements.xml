@@ -14,16 +14,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="report-attributes"/>
-
-    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
-               name="subreport-active"
-               value-type="java.lang.Boolean"
-               value-role="value"
-               computed="true"
-               design-time-value="false"
-               expert="false"
-               hidden="false"
-               mandatory="false"/>
+    <attribute-group-ref ref="sub-report-attributes"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="group-fields"
@@ -91,16 +82,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="report-attributes"/>
-
-    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
-               name="subreport-active"
-               value-type="java.lang.Boolean"
-               value-role="value"
-               computed="true"
-               design-time-value="false"
-               expert="false"
-               hidden="false"
-               mandatory="false"/>
+    <attribute-group-ref ref="sub-report-attributes"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="index-separator"
