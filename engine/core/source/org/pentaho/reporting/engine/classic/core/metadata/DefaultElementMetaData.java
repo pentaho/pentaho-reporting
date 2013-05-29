@@ -78,6 +78,31 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     this.elementType = elementType;
   }
 
+  public DefaultElementMetaData(final ElementMetaData metaData)
+  {
+    super(metaData);
+    this.contentType = metaData.getContentType();
+    this.reportElementType = metaData.getReportElementType();
+    this.elementType = metaData.getElementType();
+
+    this.styles = new HashMap<StyleKey, StyleMetaData>();
+    final StyleMetaData[] styleDescriptions = metaData.getStyleDescriptions();
+    for (int i = 0; i < styleDescriptions.length; i++)
+    {
+      final StyleMetaData styleMetaData = styleDescriptions[i];
+      this.styles.put(styleMetaData.getStyleKey(), styleMetaData);
+    }
+
+    this.attributes = new AttributeMap<AttributeMetaData>();
+    final AttributeMetaData[] attributeDescriptions = metaData.getAttributeDescriptions();
+    for (int i = 0; i < attributeDescriptions.length; i++)
+    {
+      final AttributeMetaData attributeDescription = attributeDescriptions[i];
+      this.attributes.setAttribute
+          (attributeDescription.getNameSpace(), attributeDescription.getName(), attributeDescription);
+    }
+  }
+
   public AttributeMetaData[] getAttributeDescriptions()
   {
     if (attributesAsArray == null)
@@ -130,6 +155,24 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     return attribute;
   }
 
+  public void setAttributeDescription (final String namespace, final String name, final AttributeMetaData metaData)
+  {
+    if (namespace == null)
+    {
+      throw new NullPointerException();
+    }
+    if (name == null)
+    {
+      throw new NullPointerException();
+    }
+    if (metaData == null)
+    {
+      throw new NullPointerException();
+    }
+
+    attributes.setAttribute(namespace, name, metaData);
+  }
+
   public StyleMetaData getStyleDescription(final StyleKey name)
   {
     if (name == null)
@@ -165,5 +208,10 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   public Class getContentType()
   {
     return contentType;
+  }
+
+  public Class getElementType()
+  {
+    return elementType;
   }
 }

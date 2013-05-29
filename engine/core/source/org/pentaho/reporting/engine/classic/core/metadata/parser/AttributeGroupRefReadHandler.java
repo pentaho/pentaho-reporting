@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
@@ -30,14 +31,23 @@ import org.xml.sax.SAXException;
 public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
 {
   private static final Log logger = LogFactory.getLog(AttributeGroupRefReadHandler.class);
-  private AttributeMap attributes;
+  private AttributeMap<AttributeMetaData> attributes;
   private GlobalMetaDefinition attributeGroups;
   private String bundle;
 
-  public AttributeGroupRefReadHandler(final AttributeMap attributes,
+  public AttributeGroupRefReadHandler(final AttributeMap<AttributeMetaData> attributes,
                                       final GlobalMetaDefinition attributeGroups,
                                       final String bundle)
   {
+    if (attributes == null)
+    {
+      throw new NullPointerException();
+    }
+    if (attributeGroups == null)
+    {
+      throw new NullPointerException();
+    }
+
     this.attributes = attributes;
     this.attributeGroups = attributeGroups;
     this.bundle = bundle;
@@ -59,8 +69,8 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
     final AttributeGroup group = attributeGroups.getAttributeGroup(name);
     if (group == null)
     {
-      throw new ParseException
-          ("Attribute 'ref' is invalid. There is no attribute-group '" + name + "' defined.", getLocator());
+      logger.debug("There is no attribute-group '" + name + "' defined. Skipping. " + getLocator());
+      return;
     }
 
     final AttributeDefinition[] data = group.getMetaData();
@@ -72,8 +82,7 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
       final String namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(namespace);
       if (namespacePrefix == null)
       {
-        AttributeGroupRefReadHandler.logger.warn(
-            "Invalid namespace-prefix, skipping attribute " + namespace + ':' + attrName);
+        logger.warn("Invalid namespace-prefix, skipping attribute " + namespace + ':' + attrName);
         continue;
       }
 

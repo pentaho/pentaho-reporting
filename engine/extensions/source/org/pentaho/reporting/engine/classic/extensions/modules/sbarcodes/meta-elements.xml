@@ -11,6 +11,7 @@
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="static-text-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="simple-barcodes"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0"
                name="type"

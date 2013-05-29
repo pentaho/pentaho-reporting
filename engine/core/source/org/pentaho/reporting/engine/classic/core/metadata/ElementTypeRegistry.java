@@ -31,7 +31,7 @@ public final class ElementTypeRegistry
 {
   private static final Log logger = LogFactory.getLog(ElementTypeRegistry.class);
   private HashMap<String, String> namespaceMapping;
-  private HashMap<String, ElementMetaData> backend;
+  private HashMap<String, DefaultElementMetaData> backend;
   private static ElementTypeRegistry instance;
   private ResourceManager resourceManager;
 
@@ -48,7 +48,7 @@ public final class ElementTypeRegistry
   {
     this.resourceManager = new ResourceManager();
     this.resourceManager.registerDefaults();
-    this.backend = new HashMap<String, ElementMetaData>();
+    this.backend = new HashMap<String, DefaultElementMetaData>();
     this.namespaceMapping = new HashMap<String, String>();
   }
 
@@ -72,7 +72,7 @@ public final class ElementTypeRegistry
     }
     catch (Exception e)
     {
-      ElementTypeRegistry.logger.debug("Failed:", e);
+      logger.debug("Error: Could not parse the element meta-data description file: " + metaDataSource, e);
       throw new IOException("Error: Could not parse the element meta-data description file: " + metaDataSource);
     }
   }
@@ -83,7 +83,7 @@ public final class ElementTypeRegistry
     {
       throw new NullPointerException();
     }
-    this.backend.put(metaData.getName(), metaData);
+    this.backend.put(metaData.getName(), new DefaultElementMetaData(metaData));
   }
 
   public ElementMetaData[] getAllElementTypes()
