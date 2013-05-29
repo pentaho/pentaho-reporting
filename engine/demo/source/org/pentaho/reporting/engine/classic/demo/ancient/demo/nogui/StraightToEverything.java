@@ -38,9 +38,10 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Stream
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.RTFReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
 import org.pentaho.reporting.engine.classic.demo.ancient.demo.opensource.OpenSourceProjects;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 /**
@@ -95,10 +96,12 @@ public class StraightToEverything
   private MasterReport parseReport(final URL templateURL)
       throws ParseException
   {
-    final ReportGenerator generator = ReportGenerator.getInstance();
     try
     {
-      return generator.parseReport(templateURL);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+      final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
+      return (MasterReport) resource.getResource();
     }
     catch (Exception e)
     {

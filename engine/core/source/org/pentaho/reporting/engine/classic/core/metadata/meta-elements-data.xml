@@ -11,6 +11,7 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="static-text-value"/>
     <attribute-group-ref ref="rich-text-attributes"/>
+    <attribute-group-ref ref="label"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -29,6 +30,7 @@
     <attribute-group-ref ref="text-field-value"/>
     <attribute-group-ref ref="wizard-aggregation"/>
     <attribute-group-ref ref="rich-text-attributes"/>
+    <attribute-group-ref ref="text-field"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -46,7 +48,8 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="message-value"/>
     <attribute-group-ref ref="rich-text-attributes"/>
-    
+    <attribute-group-ref ref="message"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
@@ -63,6 +66,7 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="date-field-value"/>
     <attribute-group-ref ref="wizard-aggregation"/>
+    <attribute-group-ref ref="date-field"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -80,6 +84,7 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="number-field-value"/>
     <attribute-group-ref ref="wizard-aggregation"/>
+    <attribute-group-ref ref="number-field"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -95,9 +100,9 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
-    <attribute-group-ref ref="resource-label"/>
     <attribute-group-ref ref="translated-content"/>
     <attribute-group-ref ref="rich-text-attributes"/>
+    <attribute-group-ref ref="resource-label"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -113,10 +118,10 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
-    <attribute-group-ref ref="resource-field"/>
     <attribute-group-ref ref="translated-content"/>
     <attribute-group-ref ref="rich-text-attributes"/>
-    
+    <attribute-group-ref ref="resource-field"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
@@ -131,10 +136,10 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
-    <attribute-group-ref ref="resource-message"/>
     <attribute-group-ref ref="translated-content"/>
     <attribute-group-ref ref="rich-text-attributes"/>
-    
+    <attribute-group-ref ref="resource-message"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
@@ -150,6 +155,7 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="static-content-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="content"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -167,6 +173,7 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="replaced-content-attributes"/>
+    <attribute-group-ref ref="content-field"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -182,6 +189,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="legacy-element"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -198,7 +206,8 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
-    
+    <attribute-group-ref ref="rectangle"/>
+
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="arc-width"
                mandatory="false"
@@ -229,6 +238,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="ellipse"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -244,6 +254,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="horizontal-line"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -259,6 +270,7 @@
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="vertical-line"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -276,6 +288,7 @@
     <attribute-group-ref ref="band-attributes"/>
     <attribute-group-ref ref="field-value"/>
     <attribute-group-ref ref="static-content-value"/>
+    <attribute-group-ref ref="external-element-field"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="target-type"

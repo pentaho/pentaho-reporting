@@ -114,13 +114,13 @@ public class MultiDataSetReadHandler extends PropertiesReadHandler
       for (int i = 0; i < queries.size(); i++)
       {
         final QueryReadHandler handler = (QueryReadHandler) queries.get(i);
-        dataFactory.setQuery(handler.getQueryName(), handler.getQuery());
+        dataFactory.setQuery(handler.getQueryName(), handler.getQuery(), null, null);
       }
 
       final String queryNameProperty = result.getProperty("queryString");
       if (queryNameProperty != null)
       {
-        dataFactory.setQuery("default", queryNameProperty);
+        dataFactory.setQuery("default", queryNameProperty, null, null);
       }
       this.dataFactory = dataFactory;
     }
@@ -172,13 +172,13 @@ public class MultiDataSetReadHandler extends PropertiesReadHandler
         for (int i = 0; i < queries.size(); i++)
         {
           final QueryReadHandler handler = (QueryReadHandler) queries.get(i);
-          dataFactory.setQuery(handler.getQueryName(), handler.getQuery());
+          dataFactory.setQuery(handler.getQueryName(), handler.getQuery(), null, null);
         }
 
         final String queryNameProperty = result.getProperty("queryString");
         if (queryNameProperty != null)
         {
-          dataFactory.setQuery("default", queryNameProperty);
+          dataFactory.setQuery("default", queryNameProperty, null, null);
         }
         this.dataFactory = dataFactory;
       }
@@ -195,13 +195,13 @@ public class MultiDataSetReadHandler extends PropertiesReadHandler
         for (int i = 0; i < queries.size(); i++)
         {
           final QueryReadHandler handler = (QueryReadHandler) queries.get(i);
-          dataFactory.setQuery(handler.getQueryName(), handler.getQuery());
+          dataFactory.setQuery(handler.getQueryName(), handler.getQuery(), null, null);
         }
 
         final String queryNameProperty = result.getProperty("queryString");
         if (queryNameProperty != null)
         {
-          dataFactory.setQuery("default", queryNameProperty);
+          dataFactory.setQuery("default", queryNameProperty, null, null);
         }
         this.dataFactory = dataFactory;
       }

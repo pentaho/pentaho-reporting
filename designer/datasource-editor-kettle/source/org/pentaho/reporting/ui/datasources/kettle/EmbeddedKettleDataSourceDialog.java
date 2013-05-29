@@ -38,7 +38,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
-import org.pentaho.reporting.libraries.base.util.StackableRuntimeException;
 
 /**
  * @author Gretchen Moran
@@ -107,7 +106,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
       }
       catch (Throwable t1)
       {
-        designTimeContext.error(new StackableRuntimeException("Fatal error", t1));
+        designTimeContext.error(new RuntimeException("Fatal error", t1));
         editParameterAction.setEnabled(false);
       }
     }

@@ -57,7 +57,7 @@ public class ParameterTest extends TestCase
     mondrianDataFactory.setJdbcPassword("");
     try
     {
-      mondrianDataFactory.setQuery("default", query);
+      mondrianDataFactory.setQuery("default", query, null, null);
       mondrianDataFactory.initialize(new DesignTimeDataFactoryContext());
 
       final ParameterDataRow parameters = new ParameterDataRow(new String[]{"sLine"},

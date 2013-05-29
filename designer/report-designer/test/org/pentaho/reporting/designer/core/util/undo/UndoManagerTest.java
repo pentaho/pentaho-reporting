@@ -67,9 +67,9 @@ public class UndoManagerTest extends TestCase
     final ReportRenderContext rrc = new ReportRenderContext(report, report, null, new GlobalAuthenticationStore());
 
     final InstanceID id = report.getObjectID();
-    manager.addChange(new AttributeEditUndoEntry(id, "test-ns", "test", null, "new"));
-    manager.addChange(new AttributeEditUndoEntry(id, "test-ns", "test2", null, "groovy"));
-    manager.addChange(new AttributeEditUndoEntry(id, "test-ns", "test", "new", "other"));
+    manager.addChange("name1", new AttributeEditUndoEntry(id, "test-ns", "test", null, "new"));
+    manager.addChange("name2", new AttributeEditUndoEntry(id, "test-ns", "test2", null, "groovy"));
+    manager.addChange("name3", new AttributeEditUndoEntry(id, "test-ns", "test", "new", "other"));
 
     report.setAttribute("test-ns", "test", "other");
     report.setAttribute("test-ns", "test2", "groovy");

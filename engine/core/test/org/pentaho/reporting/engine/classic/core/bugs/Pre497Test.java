@@ -196,6 +196,16 @@ public class Pre497Test extends TestCase
     {
       return parent.getCompatibilityLevel();
     }
+
+    public String getBundleLocation()
+    {
+      return parent.getBundleLocation();
+    }
+
+    public String getKeyPrefix()
+    {
+      return parent.getKeyPrefix();
+    }
   }
 
   public static final String SUBREPORT_QUERY = "org.pentaho.reporting.engine.classic.core.bugs.Pre497Test#createSubReport(PA)";

@@ -48,10 +48,10 @@ public class Prd3828Test extends TestCase
         typedTableModel.addColumn(CdaQueryBackend.PARAM_DEFAULT_VALUE, String.class);
         typedTableModel.addColumn(CdaQueryBackend.PARAM_PATTERN, String.class);
 
-        typedTableModel.addRow(new String[]{"P1", "String", "DefaultString", null});
-        typedTableModel.addRow(new String[]{"P2", "Integer", "10", null});
-        typedTableModel.addRow(new String[]{"P3", "Date", "2010-12-30", "yyyy-MM-dd"});
-        typedTableModel.addRow(new String[]{"P4", "StringArray", "A;B;C", null});
+        typedTableModel.addRow("P1", "String", "DefaultString", null);
+        typedTableModel.addRow("P2", "Integer", "10", null);
+        typedTableModel.addRow("P3", "Date", "2010-12-30", "yyyy-MM-dd");
+        typedTableModel.addRow("P4", "StringArray", "A;B;C", null);
         return typedTableModel;
       }
       url = createURL(method, extraParameter);

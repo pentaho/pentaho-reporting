@@ -55,7 +55,7 @@ public class MondrianMetaDataTest extends TestCase
     mondrianDataFactory.setJdbcUser("sa");
     mondrianDataFactory.setJdbcPassword("");
     mondrianDataFactory.initialize(new DesignTimeDataFactoryContext());
-    mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY);
+    mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY, null, null);
 
 
     final DataFactoryMetaData metaData = mondrianDataFactory.getMetaData();
@@ -70,8 +70,8 @@ public class MondrianMetaDataTest extends TestCase
     mdxDataFactory.setJdbcUser("sa");
     mdxDataFactory.setJdbcPassword("");
     mdxDataFactory.initialize(new DesignTimeDataFactoryContext());
-    mdxDataFactory.setQuery("default", QUERY);
-    mdxDataFactory.setQuery("default2", PARAMETRIZED_QUERY);
+    mdxDataFactory.setQuery("default", QUERY, null, null);
+    mdxDataFactory.setQuery("default2", PARAMETRIZED_QUERY, null, null);
 
     assertNotEquals("Physical Query is not the same", queryHash, metaData.getQueryHash(mdxDataFactory, "default", new StaticDataRow()));
     assertEquals("Physical Query is the same", queryHash, metaData.getQueryHash(mdxDataFactory, "default2", new StaticDataRow()));
@@ -83,8 +83,8 @@ public class MondrianMetaDataTest extends TestCase
     mdxDataFactory2.setJdbcUser("sa");
     mdxDataFactory2.setJdbcPassword("");
     mdxDataFactory2.initialize(new DesignTimeDataFactoryContext());
-    mdxDataFactory2.setQuery("default", QUERY);
-    mdxDataFactory2.setQuery("default2", PARAMETRIZED_QUERY);
+    mdxDataFactory2.setQuery("default", QUERY, null, null);
+    mdxDataFactory2.setQuery("default2", PARAMETRIZED_QUERY, null, null);
 
     assertNotEquals("Physical Connection is not the same", queryHash, metaData.getQueryHash(mdxDataFactory, "default", new StaticDataRow()));
     assertNotEquals("Physical Connection is the same", queryHash, metaData.getQueryHash(mdxDataFactory2, "default2", new StaticDataRow()));
@@ -103,8 +103,8 @@ public class MondrianMetaDataTest extends TestCase
     mondrianDataFactory.setJdbcUser("sa");
     mondrianDataFactory.setJdbcPassword("");
     mondrianDataFactory.initialize(new DesignTimeDataFactoryContext());
-    mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY);
-    mondrianDataFactory.setQuery("default2", QUERY);
+    mondrianDataFactory.setQuery("default", PARAMETRIZED_QUERY, null, null);
+    mondrianDataFactory.setQuery("default2", QUERY, null, null);
 
     final DataFactoryMetaData metaData = mondrianDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(mondrianDataFactory, "default", new StaticDataRow());

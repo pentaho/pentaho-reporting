@@ -79,7 +79,7 @@ public class AutoTableAPIDemo extends AbstractDemoHandler
         "      FROM\n" +
         "           QUADRANT_ACTUALS\n" +
         "      ORDER BY\n" +
-        "          REGION, DEPARTMENT, POSITIONTITLE");
+        "          REGION, DEPARTMENT, POSITIONTITLE", null, null);
 
     final MasterReport report = new MasterReport();
     report.setDataFactory(sqlDataFactory);

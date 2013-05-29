@@ -34,7 +34,7 @@ public class SampleDataFactory extends SQLReportDataFactory
         "JOIN ORDER_ITEMS ON ORDER_ITEMS.ORDER_ID=ORDERS.ORDER_ID\n" +
         "JOIN PRODUCTS ON ORDER_ITEMS.PRODUCT_ID=PRODUCTS.PRODUCT_ID\n" +
         "ORDER BY\n" +
-        "CUSTOMERS.FIRST_NAME, CUSTOMERS.LAST_NAME, PRODUCTS.PRODUCT_NAME");
+        "CUSTOMERS.FIRST_NAME, CUSTOMERS.LAST_NAME, PRODUCTS.PRODUCT_NAME", null, null);
   }
 
   private static ConnectionProvider createDefaultProvider()

@@ -80,7 +80,7 @@ public class JdbcDataSetReadHandler extends AbstractXmlReadHandler
     connectionProvider.setProperty("user", userName);
     connectionProvider.setProperty("password", password);
     dataFactory = new SQLReportDataFactory(connectionProvider);
-    dataFactory.setQuery("default", sqlQuery);
+    dataFactory.setQuery("default", sqlQuery, null, null);
   }
 
   /**

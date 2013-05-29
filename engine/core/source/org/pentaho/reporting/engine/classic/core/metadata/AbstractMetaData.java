@@ -49,19 +49,39 @@ public abstract class AbstractMetaData implements Serializable, MetaData
   private String groupingOrdinalKey;
   private String itemOrdinalKey;
   private String keyPrefixAndName;
-  private final String deprecationKey;
+  private String deprecationKey;
   private boolean experimental;
   private int compatibilityLevel;
 
+  protected AbstractMetaData(final MetaData metaData)
+  {
+    if (metaData == null)
+    {
+      throw new NullPointerException();
+    }
+
+    this.name = metaData.getName();
+    this.keyPrefix = metaData.getKeyPrefix();
+    this.bundleLocation = metaData.getBundleLocation();
+    this.expert = metaData.isExpert();
+    this.preferred = metaData.isPreferred();
+    this.hidden = metaData.isHidden();
+    this.deprecated = metaData.isDeprecated();
+    this.experimental = metaData.isExperimental();
+    this.compatibilityLevel = metaData.getCompatibilityLevel();
+
+    computeBundleProperties();
+  }
+
   protected AbstractMetaData(final String name,
-                          final String bundleLocation,
-                          final String keyPrefix,
-                          final boolean expert,
-                          final boolean preferred,
-                          final boolean hidden,
-                          final boolean deprecated,
-                          final boolean experimental,
-                          final int compatibilityLevel)
+                             final String bundleLocation,
+                             final String keyPrefix,
+                             final boolean expert,
+                             final boolean preferred,
+                             final boolean hidden,
+                             final boolean deprecated,
+                             final boolean experimental,
+                             final int compatibilityLevel)
   {
     if (name == null)
     {
@@ -85,6 +105,11 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     this.hidden = hidden;
     this.deprecated = deprecated;
 
+    computeBundleProperties();
+  }
+
+  private void computeBundleProperties()
+  {
     keyPrefixAndName = computePrefix(this.keyPrefix, this.name);
     if (StringUtils.isEmpty(keyPrefixAndName, true))
     {

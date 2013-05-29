@@ -30,9 +30,10 @@ import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PageableTextOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver.TextFilePrinterDriver;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
 import org.pentaho.reporting.engine.classic.demo.ancient.demo.opensource.OpenSourceProjects;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 /**
@@ -73,10 +74,12 @@ public class StraightToPlainText
   private MasterReport parseReport(final URL templateURL)
       throws ParseException
   {
-    final ReportGenerator generator = ReportGenerator.getInstance();
     try
     {
-      final MasterReport report = generator.parseReport(templateURL);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+      final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
+      final MasterReport report = (MasterReport) resource.getResource();
       // plain text does not support images, so we do not care about the logo ..
       report.getParameterValues().put("logo", null);
       return report;

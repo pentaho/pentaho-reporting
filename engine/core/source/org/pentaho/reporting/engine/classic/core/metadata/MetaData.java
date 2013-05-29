@@ -62,4 +62,8 @@ public interface MetaData
   public boolean isExperimental();
 
   public int getCompatibilityLevel();
+
+  public String getKeyPrefix();
+
+  public String getBundleLocation();
 }
