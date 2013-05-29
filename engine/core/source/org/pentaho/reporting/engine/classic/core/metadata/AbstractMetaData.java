@@ -61,8 +61,8 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     }
 
     this.name = metaData.getName();
-    this.keyPrefix = null;
-    this.bundleLocation = null;
+    this.keyPrefix = metaData.getKeyPrefix();
+    this.bundleLocation = metaData.getBundleLocation();
     this.expert = metaData.isExpert();
     this.preferred = metaData.isPreferred();
     this.hidden = metaData.isHidden();
