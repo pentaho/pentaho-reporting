@@ -40,12 +40,13 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
 import org.pentaho.reporting.engine.classic.demo.ancient.demo.functions.PaintComponentTableModel;
 import org.pentaho.reporting.engine.classic.demo.ancient.demo.layouts.ComponentDrawingDemoHandler;
 import org.pentaho.reporting.engine.classic.demo.util.AbstractDemoFrame;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Creation-Date: 11.12.2005, 12:49:55
@@ -182,7 +183,6 @@ public class InternalFrameDemoFrame extends AbstractDemoFrame
 
   protected void previewReport(final JInternalFrame frame)
   {
-    final ReportGenerator generator = ReportGenerator.getInstance();
     try
     {
       final URL in = ObjectUtilities.getResourceRelative
@@ -191,7 +191,10 @@ public class InternalFrameDemoFrame extends AbstractDemoFrame
       {
         return;
       }
-      final MasterReport report = generator.parseReport(in);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+      final Resource resource = mgr.createDirectly(in, MasterReport.class);
+      final MasterReport report = (MasterReport) resource.getResource();
       report.getReportConfiguration().setConfigProperty
           ("org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable", "true");
       final PaintComponentTableModel tableModel = new PaintComponentTableModel();

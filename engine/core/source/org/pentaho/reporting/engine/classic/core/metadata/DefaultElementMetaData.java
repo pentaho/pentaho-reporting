@@ -33,9 +33,9 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   private transient AttributeMetaData[] attributesAsArray;
   private AttributeMap<AttributeMetaData> attributes;
   private HashMap<StyleKey, StyleMetaData> styles;
-  private Class elementType;
+  private Class<? extends ElementType> elementType;
   private TypeClassification reportElementType;
-  private Class contentType;
+  private Class<?> contentType;
   private transient StyleMetaData[] stylesArray;
 
   public DefaultElementMetaData(final String name,
@@ -48,8 +48,8 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
                                 final TypeClassification reportElementType,
                                 final AttributeMap<AttributeMetaData> attributes,
                                 final HashMap<StyleKey, StyleMetaData> styles,
-                                final Class elementType,
-                                final Class contentType,
+                                final Class<? extends ElementType> elementType,
+                                final Class<?> contentType,
                                 final boolean experimental,
                                 final int compatibilityLevel)
   {
@@ -112,12 +112,12 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
       for (int i = 0; i < namespaces.length; i++)
       {
         final String namespace = namespaces[i];
-        final Map attrsNs = attributes.getAttributes(namespace);
-        final Iterator it = attrsNs.entrySet().iterator();
+        final Map<String,AttributeMetaData> attrsNs = attributes.getAttributes(namespace);
+        final Iterator<Map.Entry<String, AttributeMetaData>> it = attrsNs.entrySet().iterator();
         while (it.hasNext())
         {
-          final Map.Entry entry = (Map.Entry) it.next();
-          final AttributeMetaData exp = (AttributeMetaData) entry.getValue();
+          final Map.Entry<String, AttributeMetaData> entry = it.next();
+          final AttributeMetaData exp = entry.getValue();
           buffer.add(exp);
         }
       }
@@ -187,7 +187,7 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   {
     try
     {
-      return (ElementType) elementType.newInstance();
+      return elementType.newInstance();
     }
     catch (IllegalAccessException e)
     {
@@ -205,12 +205,12 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     return reportElementType;
   }
 
-  public Class getContentType()
+  public Class<?> getContentType()
   {
     return contentType;
   }
 
-  public Class getElementType()
+  public Class<? extends ElementType> getElementType()
   {
     return elementType;
   }

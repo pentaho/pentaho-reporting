@@ -67,7 +67,7 @@ public class DenormalizedDataSourceDriverTest extends DataSourceTestBase
     mondrianDataFactory.setDataSourceProvider(provider);
     mondrianDataFactory.setJdbcUser("sa");
     mondrianDataFactory.setJdbcPassword("");
-    mondrianDataFactory.setQuery("default", query);
+    mondrianDataFactory.setQuery("default", query, null, null);
     initializeDataFactory(mondrianDataFactory);
     return mondrianDataFactory;
   }

@@ -68,7 +68,7 @@ public class BandedOlap4JDriverTest extends DataSourceTestBase
     provider.setUrl("jdbc:mondrian:");
 
     final BandedMDXDataFactory dataFactory = new BandedMDXDataFactory(provider);
-    dataFactory.setQuery("default", query);
+    dataFactory.setQuery("default", query, null, null);
     initializeDataFactory(dataFactory);
     return dataFactory;
   }

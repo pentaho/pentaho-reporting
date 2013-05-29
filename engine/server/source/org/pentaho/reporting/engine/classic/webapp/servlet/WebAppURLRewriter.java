@@ -100,7 +100,7 @@ public class WebAppURLRewriter implements URLRewriter
         return filename;
       }
 
-      return MessageFormat.format(pattern, new String[]{filename});
+      return MessageFormat.format(pattern, filename);
     }
     catch (ContentIOException cioe)
     {

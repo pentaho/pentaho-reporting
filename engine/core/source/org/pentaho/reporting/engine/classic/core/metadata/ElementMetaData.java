@@ -56,8 +56,8 @@ public interface ElementMetaData extends MetaData
    */
   public boolean isContainerElement();
 
-  public Class getContentType();
-  public Class getElementType();
+  public Class<?> getContentType();
+  public Class<? extends ElementType> getElementType();
 
   public TypeClassification getReportElementType();
 }

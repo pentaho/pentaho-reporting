@@ -38,11 +38,12 @@ import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
 import org.pentaho.reporting.engine.classic.demo.ancient.demo.opensource.OpenSourceProjects;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.PngEncoder;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 /**
@@ -84,10 +85,12 @@ public class StraightToPNG
   private MasterReport parseReport(final URL templateURL)
       throws ParseException
   {
-    final ReportGenerator generator = ReportGenerator.getInstance();
     try
     {
-      final MasterReport report = generator.parseReport(templateURL);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+      final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
+      final MasterReport report = (MasterReport) resource.getResource();
       // this demo adds the image at runtime just to show how this could be
       // done. Usually such images get referenced from the XML itself without
       // using manual coding.

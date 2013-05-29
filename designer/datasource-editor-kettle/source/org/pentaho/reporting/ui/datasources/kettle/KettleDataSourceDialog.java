@@ -68,7 +68,6 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.Kettle
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.StackableRuntimeException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
@@ -309,7 +308,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
       catch (Throwable t1)
       {
-        designTimeContext.error(new StackableRuntimeException("Fatal error", t1));
+        designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
       }
@@ -422,7 +421,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
       catch (Throwable t1)
       {
-        designTimeContext.error(new StackableRuntimeException("Fatal error", t1));
+        designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
       }
@@ -694,7 +693,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
       catch (Throwable t1)
       {
-        designTimeContext.error(new StackableRuntimeException("Fatal error", t1));
+        designTimeContext.error(new RuntimeException("Fatal error", t1));
       }
     }
   }

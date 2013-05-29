@@ -41,7 +41,6 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFa
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaQueryEntry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaResponseParser;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.HttpQueryBackend;
-import org.pentaho.reporting.libraries.base.util.StackableRuntimeException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
@@ -525,7 +524,7 @@ public class CdaDataSourceEditor extends CommonDialog
       }
       catch (Throwable t1)
       {
-        designTimeContext.error(new StackableRuntimeException("Fatal error", t1));
+        designTimeContext.error(new RuntimeException("Fatal error", t1));
       }
     }
   }

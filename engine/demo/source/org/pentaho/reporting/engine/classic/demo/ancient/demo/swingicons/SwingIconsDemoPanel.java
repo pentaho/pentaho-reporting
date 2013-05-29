@@ -80,7 +80,7 @@ public class SwingIconsDemoPanel extends JPanel
         {
           try
           {
-            loadData(selectedFile.toURL());
+            loadData(selectedFile.toURI().toURL());
           }
           catch (MalformedURLException ex)
           {
@@ -236,7 +236,7 @@ public class SwingIconsDemoPanel extends JPanel
     {
       try
       {
-        return localFile.toURL();
+        return localFile.toURI().toURL();
       }
       catch (MalformedURLException e)
       {
@@ -251,7 +251,7 @@ public class SwingIconsDemoPanel extends JPanel
       {
         try
         {
-          return classpathFile.toURL();
+          return classpathFile.toURI().toURL();
         }
         catch (MalformedURLException e)
         {

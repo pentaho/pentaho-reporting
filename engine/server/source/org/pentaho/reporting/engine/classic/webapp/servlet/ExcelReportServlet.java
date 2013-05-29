@@ -29,8 +29,9 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportGenerator;
+import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Processes a report.
@@ -61,7 +62,10 @@ public class ExcelReportServlet extends HttpServlet
 
     try
     {
-      final MasterReport report = ReportGenerator.getInstance().parseReport(reportUrl);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+      final Resource resource = mgr.createDirectly(reportUrl, MasterReport.class);
+      final MasterReport report = (MasterReport) resource.getResource();
       response.setContentType("application/vnd.ms-excel");
 
       final ServletOutputStream stream = response.getOutputStream();

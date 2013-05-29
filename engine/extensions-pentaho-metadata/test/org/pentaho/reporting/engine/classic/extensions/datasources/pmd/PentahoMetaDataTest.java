@@ -250,7 +250,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.setConnectionProvider(new PmdConnectionProvider());
     pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory.setDomainId("steel-wheels");
-    pmdDataFactory.setQuery("default", query);
+    pmdDataFactory.setQuery("default", query, null, null);
     initializeDataFactory(pmdDataFactory);
     return pmdDataFactory;
   }
@@ -266,7 +266,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
 
     try
     {
-      pmdDataFactory.setQuery("default", QUERY);
+      pmdDataFactory.setQuery("default", QUERY, null, null);
       final CloseableTableModel tableModel = (CloseableTableModel) pmdDataFactory.queryData("default", new ParameterDataRow());
       try
       {
@@ -340,7 +340,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory.setDomainId("steel-wheels");
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
-    pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY);
+    pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY, null, null);
 
     final DataFactoryMetaData metaData = pmdDataFactory.getMetaData();
     final Object queryHash = metaData.getQueryHash(pmdDataFactory, "default", new StaticDataRow());
@@ -351,8 +351,8 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory2.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory2.setDomainId("steel-wheels");
     pmdDataFactory2.initialize(new DesignTimeDataFactoryContext());
-    pmdDataFactory2.setQuery("default", QUERY);
-    pmdDataFactory2.setQuery("default2", PARAMETRIZED_QUERY);
+    pmdDataFactory2.setQuery("default", QUERY, null, null);
+    pmdDataFactory2.setQuery("default2", PARAMETRIZED_QUERY, null, null);
 
     assertNotEquals("Physical Query is not the same", queryHash, metaData.getQueryHash(pmdDataFactory2, "default", new StaticDataRow()));
     assertEquals("Physical Query is the same", queryHash, metaData.getQueryHash(pmdDataFactory2, "default2", new StaticDataRow()));
@@ -361,8 +361,8 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory3.setConnectionProvider(new PmdConnectionProvider());
     pmdDataFactory3.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory3.setDomainId("steel-wheels2");
-    pmdDataFactory3.setQuery("default", QUERY);
-    pmdDataFactory3.setQuery("default2", PARAMETRIZED_QUERY);
+    pmdDataFactory3.setQuery("default", QUERY, null, null);
+    pmdDataFactory3.setQuery("default2", PARAMETRIZED_QUERY, null, null);
 
     assertNotEquals("Physical Connection is not the same", queryHash, metaData.getQueryHash(pmdDataFactory3, "default", new StaticDataRow()));
     assertNotEquals("Physical Connection is the same", queryHash, metaData.getQueryHash(pmdDataFactory3, "default2", new StaticDataRow()));
@@ -371,8 +371,8 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory4.setConnectionProvider(new PmdConnectionProvider());
     pmdDataFactory4.setXmiFile("devresource/metadata/metadata2.xmi");
     pmdDataFactory4.setDomainId("steel-wheels");
-    pmdDataFactory4.setQuery("default", QUERY);
-    pmdDataFactory4.setQuery("default2", PARAMETRIZED_QUERY);
+    pmdDataFactory4.setQuery("default", QUERY, null, null);
+    pmdDataFactory4.setQuery("default2", PARAMETRIZED_QUERY, null, null);
 
     assertNotEquals("Physical Connection is not the same", queryHash, metaData.getQueryHash(pmdDataFactory4, "default", new StaticDataRow()));
     assertNotEquals("Physical Connection is the same", queryHash, metaData.getQueryHash(pmdDataFactory4, "default2", new StaticDataRow()));
@@ -387,7 +387,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
     try
     {
-      pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY);
+      pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY, null, null);
 
       final CloseableTableModel tableModel = (CloseableTableModel) pmdDataFactory.queryData("default", new ParameterDataRow());
       try
@@ -422,7 +422,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.setConnectionProvider(new MultipleAggregationTestConnectionProvider());
     pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory.setDomainId("steel-wheels");
-    pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY);
+    pmdDataFactory.setQuery("default", MULTIPLE_AGG_QUERY, null, null);
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
 
     generate(pmdDataFactory, "agg-query-results.txt");
@@ -435,8 +435,8 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.setXmiFile("devresource/metadata/metadata.xmi");
     pmdDataFactory.setDomainId("steel-wheels");
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
-    pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY);
-    pmdDataFactory.setQuery("default2", QUERY);
+    pmdDataFactory.setQuery("default", PARAMETRIZED_QUERY, null, null);
+    pmdDataFactory.setQuery("default2", QUERY, null, null);
 
     final DataFactoryMetaData metaData = pmdDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(pmdDataFactory, "default", new StaticDataRow());
