@@ -728,8 +728,10 @@ public class FormulaDocument implements Document
 
     // If there is no parameters then insert the new parameter, otherwise we
     // replace the element with the new text
-    if ((startElement instanceof FormulaOpenParenthesisElement) &&
-        (endElement instanceof FormulaClosingParenthesisElement))
+    if (((startElement instanceof FormulaOpenParenthesisElement) &&
+         (endElement instanceof FormulaClosingParenthesisElement)) ||
+        ((startElement instanceof FormulaClosingParenthesisElement) &&
+         (endElement instanceof FormulaClosingParenthesisElement)))
     {
       rootElement.insert(endElement, new FormulaTextElement(this, rootElement, newText));
     }
