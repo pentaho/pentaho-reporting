@@ -1253,8 +1253,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     } else {
       // multi-value parameter
       Class valueType = Array.newInstance(selectedType, 0).getClass();
-      parameter = new StaticListParameter(name, true,
-          strictValuesCheckBox.isSelected(), valueType);
+      parameter = new StaticListParameter(name, true, false, valueType);
     }
     if (type != null)
     {
