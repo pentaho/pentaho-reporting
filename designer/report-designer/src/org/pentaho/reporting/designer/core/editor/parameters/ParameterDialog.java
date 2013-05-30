@@ -86,6 +86,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNa
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
+import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -1009,7 +1010,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
 
     final boolean multiSelection;
-    if (p instanceof ListParameter)
+    if (p instanceof DefaultListParameter)
     {
       final DefaultListParameter parameter = (DefaultListParameter) p;
       final String queryName = parameter.getQueryName();
@@ -1038,13 +1039,18 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
           ParserUtil.parseInt(parameter.getParameterAttribute
               (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.VISIBLE_ITEMS), 0);
       visibleItemsTextField.setValue(visibleItems);
-      multiSelection = parameter.isAllowMultiSelection();
     }
     else
     {
       autofillSelectionCheckBox.setSelected(false);
       reevaluateOnInvalidStrictParamCheckBox.setSelected(false);
       strictValuesCheckBox.setSelected(true);
+    }
+
+    if (p instanceof ListParameter)
+    {
+      multiSelection = ((ListParameter)p).isAllowMultiSelection();
+    }  else {
       multiSelection = false;
     }
 
@@ -1131,40 +1137,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     final boolean isMandatory = mandatoryCheckBox.isSelected();
 
     final ParameterType type = (ParameterType) parameterTypeModel.getSelectedItem();
+
     if (query == null)
     {
-      final PlainParameter parameter = new PlainParameter(name);
-      if (type != null)
-      {
-        parameter.setParameterAttribute
-            (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE, type.getInternalName());
-      }
-      if (StringUtils.isEmpty(label) == false)
-      {
-        parameter.setParameterAttribute
-            (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label);
-      }
-      parameter.setDefaultValue(rawDefaultValue);
-      parameter.setValueType((Class) valueTypeComboBox.getSelectedItem());
-      parameter.setMandatory(isMandatory);
-      parameter.setParameterAttribute
-          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
-              String.valueOf(hiddenCheckBox.isSelected()));
-      if (StringUtils.isEmpty(dataFormat) == false)
-      {
-        parameter.setParameterAttribute
-            (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat);
-      }
-      parameter.setParameterAttribute
-          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
-              defaultValueFormulaField.getFormula());
-      parameter.setParameterAttribute
-          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
-              postProcessingFormulaField.getFormula());
-      parameter.setParameterAttribute
-          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
-              timeZoneModel.getSelectedKey());
-      return parameter;
+      return createQuerylessParameter(name, label, rawDefaultValue, dataFormat, isMandatory, type);
     }
 
 
@@ -1258,6 +1234,57 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
             timeZoneModel.getSelectedKey());
 
+    return parameter;
+  }
+
+  private ParameterDefinitionEntry createQuerylessParameter(final String name,
+                                                            final String label,
+                                                            final Object rawDefaultValue,
+                                                            final String dataFormat,
+                                                            final boolean mandatory,
+                                                            final ParameterType type)
+  {
+    final Class selectedType = (Class) valueTypeComboBox.getSelectedItem();
+    final AbstractParameter parameter;
+    if (type == null || !type.isMultiSelection()) {
+      // single value parameter
+      parameter = new PlainParameter(name);
+      parameter.setValueType(selectedType);
+    } else {
+      // multi-value parameter
+      Class valueType = Array.newInstance(selectedType, 0).getClass();
+      parameter = new StaticListParameter(name, true,
+          strictValuesCheckBox.isSelected(), valueType);
+    }
+    if (type != null)
+    {
+      parameter.setParameterAttribute
+          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TYPE, type.getInternalName());
+    }
+    if (StringUtils.isEmpty(label) == false)
+    {
+      parameter.setParameterAttribute
+          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.LABEL, label);
+    }
+    parameter.setDefaultValue(rawDefaultValue);
+    parameter.setMandatory(mandatory);
+    parameter.setParameterAttribute
+        (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.HIDDEN,
+            String.valueOf(hiddenCheckBox.isSelected()));
+    if (StringUtils.isEmpty(dataFormat) == false)
+    {
+      parameter.setParameterAttribute
+          (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DATA_FORMAT, dataFormat);
+    }
+    parameter.setParameterAttribute
+        (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.DEFAULT_VALUE_FORMULA,
+            defaultValueFormulaField.getFormula());
+    parameter.setParameterAttribute
+        (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.POST_PROCESSOR_FORMULA,
+            postProcessingFormulaField.getFormula());
+    parameter.setParameterAttribute
+        (ParameterAttributeNames.Core.NAMESPACE, ParameterAttributeNames.Core.TIMEZONE,
+            timeZoneModel.getSelectedKey());
     return parameter;
   }
 
