@@ -26,10 +26,13 @@ import java.util.Arrays;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportParameterValidationException;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
@@ -51,7 +54,6 @@ public class Prd3795Test extends TestCase
   public void setUp()
   {
     ClassicEngineBoot.getInstance().start();
-   // File("bin/test-tmp").mkdirs();
   }
 
   /**
@@ -62,16 +64,11 @@ public class Prd3795Test extends TestCase
    */
   public void testSaveAndLoadOfMultivalueParameterWithoutQuery() throws Exception
   {
-    final Class valueType = Array.newInstance(String.class,0 ).getClass();
-    final StaticListParameter listParameter = new StaticListParameter(
-        "name", true, true, valueType);
-    final String[] defaultValue = {"item 1", "item 2"};
-    listParameter.setDefaultValue(defaultValue);
-    final DefaultParameterDefinition parameterDefinition = new DefaultParameterDefinition();
-    parameterDefinition.addParameterDefinition(listParameter);
 
-    final MasterReport report = new MasterReport();
-    report.setParameterDefinition(parameterDefinition);
+    final String[] defaultValue = {"item 1", "item 2"};
+    final Class valueType = Array.newInstance(String.class,0 ).getClass();
+
+    MasterReport report = createMultiValueParamReport(valueType, defaultValue, false);
 
     final File testReport = File.createTempFile("prd-3795-", ".prpt");
     saveReport(report, testReport);
@@ -87,7 +84,106 @@ public class Prd3795Test extends TestCase
     testReport.delete();
   }
 
+  public void testValidationWithDifferentParameterValuesAndTypes() throws Exception
+  {
+    final Object[][] values = new Object[][]
+        {
+            {"item 1", "item 2"},
+            {1 , 2},
+            {1.1, 2.2},
+            {"item 1", 2},
+            {null},
+            {1, null},
+            {}
+        };
+    final Class[] types = new Class[] {
+        Array.newInstance(String.class,0 ).getClass(),
+        Array.newInstance(Integer.class,0 ).getClass()
+    };
+    for (Class type : types) {
+      for (Object[] value : values) {
+        for (boolean mandatory : new boolean[]{false, true})
+        {
+          MasterReport report = createMultiValueParamReport(type, value, mandatory);
+          if (typeMatchesValue(type, value, mandatory))
+          {
+            assertReportRuns(
+                "Valid parameters. Report should run.", report);
+          }
+          else
+          {
+            assertReportThrows(
+                "Invalid parameters.  Report should fail.",
+                report,
+                ReportParameterValidationException.class);
+          }
+        }
+      }
+    }
+    // verify single values cause validation failure
+    assertReportThrows("Single value should not be allowed with array type in param.",
+        createMultiValueParamReport(types[1], 1010, true),
+        ReportParameterValidationException.class);
+  }
 
+  /**
+   * Returns false if the type of any of the objects in values do not match
+   * type, or if mandatory==true and values is either null or empty.
+   */
+  private boolean typeMatchesValue(final Class type, final Object[] values,
+                                   final boolean mandatory)
+  {
+    if (mandatory && (values == null || values.length == 0))
+    {
+      return false;
+    }
+    for (Object value : values)
+    {
+      if (value != null &&
+          value.getClass() != type.getComponentType()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   *  Verifies report can run without an exception being thrown.
+   */
+  private void assertReportRuns(String message, MasterReport report) {
+    try
+    {
+      PlainTextReportUtil.createPlainText(report, new NullOutputStream(), 10, 15);
+    }
+    catch (Exception e)
+    {
+      fail(message + "\n" + e.getMessage());
+    }
+  }
+
+  /**
+   *  Will fail if the specified exception is not thrown while executing report.
+   */
+  private void assertReportThrows(String message,
+                                  MasterReport report,
+                                  final Class exceptionType) throws Exception
+  {
+    try
+    {
+      PlainTextReportUtil.createPlainText(report, new NullOutputStream(), 10, 15);
+    }
+    catch (Exception e)
+    {
+      if (!(e.getClass() == exceptionType))
+      {
+        fail( message + "\nExpected exception did not occur.  Expected: "
+            + exceptionType.toString() +  ",\n but got: " + e.getClass().toString()
+            + "\n" + e.getMessage());
+      }
+      return;
+    }
+    fail("Expected exception did not occur\n" + message);
+  }
 
   /**
    * This method does what the report designer does on save.
@@ -108,4 +204,27 @@ public class Prd3795Test extends TestCase
     report.setContentBase(mem.getBundleMainKey());
     report.setDefinitionSource(bundleKey);
   }
+
+  /**
+   *  Create a report with a StaticListParameter containing specified defaultValue.
+   *
+   */
+  private MasterReport createMultiValueParamReport(final Class valueType,
+                                                   final Object defaultValue,
+                                                   final boolean mandatory)
+  {
+    final StaticListParameter listParameter = new StaticListParameter(
+        "name", true, false, valueType);
+    listParameter.setMandatory(mandatory);
+    listParameter.setDefaultValue(defaultValue);
+    final DefaultParameterDefinition parameterDefinition =
+        new DefaultParameterDefinition();
+    parameterDefinition.addParameterDefinition(listParameter);
+
+    final MasterReport report = new MasterReport();
+    report.setParameterDefinition(parameterDefinition);
+
+    return report;
+  }
+
 }
