@@ -17,8 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 
+import org.pentaho.reporting.engine.classic.core.parameters.AbstractParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
+import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -41,13 +43,9 @@ public class ListParameterReadHandler extends AbstractParameterReadHandler
     super.startParsing(attrs);
 
     query = attrs.getValue(getUri(), "query");
-    if (query == null)
-    {
-      throw new ParseException("Required parameter 'query' is missing.", getLocator());
-    }
-
     keyColumnName = attrs.getValue(getUri(), "key-column");
-    if (keyColumnName == null)
+
+    if (query != null && keyColumnName == null)
     {
       throw new ParseException("Required parameter 'key-column' is missing.", getLocator());
     }
@@ -62,15 +60,29 @@ public class ListParameterReadHandler extends AbstractParameterReadHandler
     allowMultiSelection = "true".equals(attrs.getValue(getUri(), "allow-multi-selection"));
   }
 
-  protected void doneParsing() throws SAXException
+  /**
+   * Sets result to a DefaultListParameter if associated with a query,
+   * StaticListParameter otherwise.
+   */
+  protected void doneParsing()
   {
-    final DefaultListParameter result = new DefaultListParameter
+    final AbstractParameter result;
+    if (query != null)
+    {
+     result = new DefaultListParameter
         (query, keyColumnName, valueColumnName, getName(),
             allowMultiSelection, strictValueCheck, getType());
+    }
+    else
+    {
+     result = new StaticListParameter
+         (getName(), allowMultiSelection , strictValueCheck, getType());
+    }
+
     result.setMandatory(isMandatory());
     result.setDefaultValue(getDefaultValue());
     applyAttributes(result);
-    this.result = result;
+    this.result = (ListParameter)result;
   }
 
   /**

@@ -46,8 +46,8 @@
     <xs:attribute type="xs:boolean" name="mandatory"/>
     <xs:attribute type="xs:string" name="default-value"/>
 
-    <xs:attribute type="xs:string" name="query" use="required"/>
-    <xs:attribute type="xs:string" name="key-column" use="required"/>
+    <xs:attribute type="xs:string" name="query" use="optional"/>
+    <xs:attribute type="xs:string" name="key-column" use="optional"/>
     <!-- Either value-column or value-formula can be specified. -->
     <xs:attribute type="xs:string" name="value-column" use="optional"/>
     <xs:attribute type="xs:string" name="value-formula" use="optional"/>
