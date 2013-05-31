@@ -29,8 +29,10 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
+import org.pentaho.reporting.engine.classic.core.parameters.AbstractParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultReportParameterValidator;
+import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
@@ -194,9 +196,9 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
       {
         writePlainParameter(writer, (PlainParameter) entry);
       }
-      else if (entry instanceof DefaultListParameter)
+      else if (entry instanceof ListParameter)
       {
-        writeListSelectionParameter(writer, (DefaultListParameter) entry);
+        writeListSelectionParameter(writer, (ListParameter) entry);
       }
       parameters.add(entry.getName());
     }
@@ -268,7 +270,7 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
   }
 
   private static void writeListSelectionParameter(final XmlWriter writer,
-                                                  final DefaultListParameter parameter)
+                                                  final ListParameter parameter)
       throws BundleWriterException, IOException
   {
     if (StringUtils.isEmpty(parameter.getName()))
@@ -284,20 +286,22 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
         String.valueOf(parameter.isStrictValueCheck()));
     paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "mandatory", String.valueOf(parameter.isMandatory()));// NON-NLS
     paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "type", parameter.getValueType().getName());// NON-NLS
-    if (StringUtils.isEmpty(parameter.getQueryName()) == false)
-    {
-      paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "query", parameter.getQueryName());// NON-NLS
+    if (parameter instanceof DefaultListParameter) {
+      DefaultListParameter defaultListParameter = (DefaultListParameter)parameter;
+      if (StringUtils.isEmpty(defaultListParameter.getQueryName()) == false)
+      {
+        paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "query", defaultListParameter.getQueryName());// NON-NLS
+      }
+      if (StringUtils.isEmpty(defaultListParameter.getKeyColumn()) == false)
+      {
+        paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "key-column", defaultListParameter.getKeyColumn());// NON-NLS
+      }
+      if (StringUtils.isEmpty(defaultListParameter.getTextColumn()) == false)
+      {
+        paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "value-column", defaultListParameter.getTextColumn());// NON-NLS
+      }
     }
-    if (StringUtils.isEmpty(parameter.getKeyColumn()) == false)
-    {
-      paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "key-column", parameter.getKeyColumn());// NON-NLS
-    }
-    if (StringUtils.isEmpty(parameter.getTextColumn()) == false)
-    {
-      paramAttrs.setAttribute(BundleNamespaces.DATADEFINITION, "value-column", parameter.getTextColumn());// NON-NLS
-    }
-
-    final Object defaultValue = parameter.getDefaultValue();
+    final Object defaultValue = ((AbstractParameter)parameter).getDefaultValue();
     if (defaultValue != null)
     {
       try
@@ -329,7 +333,7 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
         for (int k = 0; k < names.length; k++)
         {
           final String name = names[k];
-          final String value = parameter.getParameterAttribute(namespace, name);
+          final String value = ((AbstractParameter)parameter).getParameterAttribute(namespace, name);
           if (StringUtils.isEmpty(value))
           {
             continue;
