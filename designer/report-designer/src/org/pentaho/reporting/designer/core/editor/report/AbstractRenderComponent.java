@@ -441,12 +441,15 @@ public abstract class AbstractRenderComponent extends JComponent
 
         return;
       }
-
       // No element found, clear the selection.
       if (e.isShiftDown() == false)
       {
         selectionModel.clearSelection();
       }
+      if(rendererRoot.getElement() instanceof RootLevelBand){
+            selectionModel.add(rendererRoot.getElement());
+      }
+
     }
   }
 
