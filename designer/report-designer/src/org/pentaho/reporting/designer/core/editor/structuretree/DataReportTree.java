@@ -75,13 +75,11 @@ public class DataReportTree extends AbstractReportTree
         if (event.isNodeDeleteEvent())
         {
           handleNodeRemoved(event, realModel);
-          return;
         }
 
         if (event.isNodeAddedEvent())
         {
           handleNodeAdded(event, realModel);
-          return;
         }
 
         if (event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
