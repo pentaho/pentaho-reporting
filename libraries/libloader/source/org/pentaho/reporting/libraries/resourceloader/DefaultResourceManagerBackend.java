@@ -441,10 +441,10 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
   public void registerDefaultLoaders()
   {
     final Configuration config = LibLoaderBoot.getInstance().getGlobalConfig();
-    final Iterator it = config.findPropertyKeys(ResourceManager.LOADER_PREFIX);
+    final Iterator<String> it = config.findPropertyKeys(ResourceManager.LOADER_PREFIX);
     while (it.hasNext())
     {
-      final String key = (String) it.next();
+      final String key = it.next();
       final String value = config.getConfigProperty(key);
       final ResourceLoader loader = ObjectUtilities.loadAndInstantiate(value, ResourceManager.class,
           ResourceLoader.class);
