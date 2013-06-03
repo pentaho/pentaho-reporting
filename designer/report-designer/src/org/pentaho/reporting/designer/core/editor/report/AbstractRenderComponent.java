@@ -441,12 +441,16 @@ public abstract class AbstractRenderComponent extends JComponent
 
         return;
       }
-
       // No element found, clear the selection.
       if (e.isShiftDown() == false)
       {
         selectionModel.clearSelection();
       }
+      //PRD-4466 select band (update tree) and allow insert menu to be enbaled
+      if(rendererRoot.getElement() instanceof RootLevelBand){
+            selectionModel.add(rendererRoot.getElement());
+      }
+
     }
   }
 
