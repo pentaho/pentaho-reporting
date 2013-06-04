@@ -18,17 +18,18 @@
 package org.pentaho.openformula.ui;
 
 import org.pentaho.openformula.ui.model2.FormulaDocument;
+import org.pentaho.openformula.ui.model2.FormulaElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
 
 public class FormulaEditorModel
 {
   private FormulaDocument document;
-  private int carretPosition;
+  private int caretPosition;
 
   public FormulaEditorModel()
   {
     document = new FormulaDocument();
-    carretPosition = 0;
+    caretPosition = 0;
   }
 
   public int getLength()
@@ -38,7 +39,7 @@ public class FormulaEditorModel
 
   public FunctionInformation getCurrentFunction()
   {
-    return document.getFunctionForPosition(carretPosition);
+    return document.getFunctionForPosition(caretPosition);
   }
 
   public String getFormulaText()
@@ -51,14 +52,19 @@ public class FormulaEditorModel
     document.setText(text);
   }
 
-  public int getCarretPosition()
+  public int getCaretPosition()
   {
-    return carretPosition;
+    return caretPosition;
   }
 
-  public void setCarretPosition(final int carretPosition)
+  public void setCaretPosition(final int carretPosition)
   {
-    this.carretPosition = carretPosition;
+    this.caretPosition = carretPosition;
+  }
+
+  public FormulaElement getFormulaElementAt(final int index)
+  {
+    return document.getElementAtPosition(index);
   }
 
   public void updateParameterText(final int start, final int end, final String newText, final boolean hasDummyParams)

@@ -10,18 +10,30 @@ public class FunctionParameterContext
   private FunctionDescription function;
   private String[] parameterValues;
   private FunctionInformation functionInformation;
+  private boolean switchParameterEditor;
+  private FormulaEditorModel editorModel;
 
   public FunctionParameterContext()
   {
+    switchParameterEditor = true;
   }
 
   public FunctionParameterContext(final FunctionDescription function,
                                   final String[] parameterValues,
-                                  final FunctionInformation fn)
+                                  final FunctionInformation fn,
+                                  final boolean switchParameterEditor,
+                                  final FormulaEditorModel editorModel)
   {
     this.function = function;
     this.parameterValues = parameterValues;
     this.functionInformation = fn;
+    this.switchParameterEditor = switchParameterEditor;
+    this.editorModel = editorModel;
+  }
+
+  public FormulaEditorModel getEditorModel()
+  {
+    return editorModel;
   }
 
   public FunctionInformation getFunctionInformation()
@@ -48,6 +60,15 @@ public class FunctionParameterContext
     return parameterValues;
   }
 
+  public boolean isSwitchParameterEditor()
+  {
+    return switchParameterEditor;
+  }
+
+  public void setSwitchParameterEditor(final boolean switchParameterEditor)
+  {
+    this.switchParameterEditor = switchParameterEditor;
+  }
 
   public static boolean isSameFunctionDescription(final FunctionDescription d1,
                                                    final FunctionDescription d2)

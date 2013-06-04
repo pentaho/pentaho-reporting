@@ -134,7 +134,7 @@ public class FormulaEditorDialog extends CommonDialog
     final String formulaText = panel.getFormulaText();
     if (StringUtils.isEmpty(formulaText, true) || formulaText.trim().equals("="))
     {
-      return null;
+      return "";
     }
     return formulaText;
   }
