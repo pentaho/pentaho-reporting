@@ -718,31 +718,70 @@ public class FormulaDocument implements Document
     fireInsertEvent(new FormulaDocumentEvent(this, DocumentEvent.EventType.INSERT, 0, text.length()));
   }
 
-  public void updateParameterText(final int start, final int end, final String newText, final boolean hasDummyParams)
+  public void insertFormulaOpenParenthesis(final int index)
+  {
+    rootElement.insertElement(index, new FormulaOpenParenthesisElement(this, rootElement));
+  }
+
+  public void insertFormulaClosingParenthesis(final int index)
+  {
+    rootElement.insertElement(index, new FormulaClosingParenthesisElement(this, rootElement));
+  }
+
+
+  public void updateParameterText(final int start, final int end, String parameterText, final boolean hasDummyParams)
   {
     final int startIndex = (start == 0) ? rootElement.getElementIndex(start) : rootElement.getElementIndex(start - 1);
     final int endIndex = rootElement.getElementIndex(end);
 
-    final FormulaElement startElement = (FormulaElement) rootElement.getElement(startIndex);
-    final FormulaElement endElement = (FormulaElement) rootElement.getElement(endIndex);
+    final FormulaElement startElement = (FormulaElement)rootElement.getElement(startIndex);
+    final FormulaElement endElement = (FormulaElement)rootElement.getElement(endIndex);
+
+    // If user enters a formula in the parameter field, we have to handle it specially by
+    // tokenizing the formula into formula, open parenthesis, close parenthesis
+    if (parameterText.endsWith("("))
+    {
+      // Replace '(' with FormulaOpenParenthesisElement.
+      insertFormulaOpenParenthesis(endIndex);
+
+      // After injecting the parenthesis operator, then strip off the parens from newText
+      parameterText = parameterText.substring(0, parameterText.length() - 1);
+    }
+    else if (parameterText.endsWith(")"))
+    {
+      // Replace ')' with FormulaEndParenthesisElement
+      // First, verify that we have not already added a closing paren before adding one.
+      final FormulaElement funcEndElement = (FormulaElement)rootElement.getElement(endIndex - 1);
+      if (!(funcEndElement instanceof FormulaClosingParenthesisElement))
+      {
+        insertFormulaClosingParenthesis(endIndex);
+      }
+
+      // Strip off everything after formula canonical name including parens.
+      parameterText = parameterText.substring(0, parameterText.indexOf("("));
+    }
 
     // If there is no parameters then insert the new parameter, otherwise we
     // replace the element with the new text
-    if (((startElement instanceof FormulaOpenParenthesisElement) &&
-         (endElement instanceof FormulaClosingParenthesisElement)) ||
-        ((startElement instanceof FormulaClosingParenthesisElement) &&
-         (endElement instanceof FormulaClosingParenthesisElement)))
+    if ((startElement instanceof FormulaOpenParenthesisElement) &&
+         (endElement instanceof FormulaClosingParenthesisElement))
     {
-      rootElement.insert(endElement, new FormulaTextElement(this, rootElement, newText));
+      rootElement.insert(endElement, new FormulaTextElement(this, rootElement, parameterText));
+    }
+    else if ((startElement instanceof FormulaClosingParenthesisElement) &&
+             (endElement instanceof FormulaClosingParenthesisElement))
+    {
+      // We get into this scenerio when start equals end so both start and end elements are closing parens.
+      rootElement.insert(startElement, new FormulaTextElement(this, rootElement, parameterText));
     }
     else
     {
-      rootElement.replace(startElement, new FormulaTextElement(this, rootElement, newText), hasDummyParams);
+      rootElement.replace(startElement, new FormulaTextElement(this, rootElement, parameterText), hasDummyParams);
     }
 
     // For functions that have dummy parameters (ie like DRILLDOWN), we are always recreating the whole
     // formula text.  So remove all elements from second position to last element.  We always remove
-    // elements from same position as the element list pops the eleent of the list causing all other elements
+    // elements from same position as the element list pops the element of the list causing all other elements
     // to shift down.
     if (hasDummyParams == false)
     {

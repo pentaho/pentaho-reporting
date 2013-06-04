@@ -408,7 +408,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   public void addParameterUpdateListener(final ParameterUpdateListener listener)
   {
-    listenerList.add(ParameterUpdateListener.class, listener);
+    if (listenerList.getListenerCount(ParameterUpdateListener.class) == 0)
+    {
+      listenerList.add(ParameterUpdateListener.class, listener);
+    }
   }
 
   public void removeParameterUpdateListener(final ParameterUpdateListener listener)

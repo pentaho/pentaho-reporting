@@ -218,8 +218,11 @@ public class FormulaEditorPanel extends JComponent
 
     public void parameterUpdated(final ParameterUpdateEvent event)
     {
-      final int parameterIndex = event.getParameter();
-      String text = event.getText();
+      // The parameter index corresponds to the individual parameter text-fields
+      final int globalParameterIndex = event.getParameter();
+
+      // The text entered in a parameter field
+      String parameterText = event.getText();
       final boolean catchAllParameter = event.isCatchAllParameter();
 
       if (ignoreTextEvents == true)
@@ -232,46 +235,56 @@ public class FormulaEditorPanel extends JComponent
       {
         return;
       }
-      if (fn.getParameterCount() == 0)
+
+      final int functionParameterCount = fn.getParameterCount();
+      if (functionParameterCount == 0)
       {
         return;
       }
 
       final int start;
       final int end;
-      if (parameterIndex == -1)
+      if (globalParameterIndex == -1)
       {
         start = fn.getFunctionOffset();
         end = fn.getFunctionParameterEnd();
       }
-      else if (parameterIndex >= fn.getParameterCount())
+      else if (parameterText.contains(fn.getCanonicalName()))
       {
-        text = ";" + text;
+        // We get here if user is entering a formula in the parameter field.
+        // Since the formula can have parameters we need to filter for the formula
+        // and handle it specially.
+        start = fn.getFunctionOffset();
+        end = fn.getFunctionParameterEnd() - 1;
+      }
+      else if (globalParameterIndex >= functionParameterCount)
+      {
+        parameterText = ";" + parameterText;
 
         // start & end should be the same as we don't want to delete
         // anything from formula text
-        start = fn.getParamEnd(fn.getParameterCount() - 1);
+        start = fn.getParamEnd(functionParameterCount - 1);
         end = start;
       }
       else if (catchAllParameter)
       {
-        start = fn.getParamStart(parameterIndex);
-        end = fn.getParamEnd(fn.getParameterCount() - 1);
+        start = fn.getParamStart(globalParameterIndex);
+        end = fn.getParamEnd(functionParameterCount - 1);
       }
       else
       {
-        start = fn.getParamStart(parameterIndex);
-        end = fn.getParamEnd(parameterIndex);
+        start = fn.getParamStart(globalParameterIndex);
+        end = fn.getParamEnd(globalParameterIndex);
       }
 
       final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
       formulaText.delete(start, end);
-      formulaText.insert(start, text);
+      formulaText.insert(start, parameterText);
 
       ignoreTextEvents = true;
-      editorModel.updateParameterText(start, end, text, (parameterIndex != -1));
+      editorModel.updateParameterText(start, end, parameterText, (globalParameterIndex != -1));
       functionTextArea.setText(formulaText.toString());
-      functionTextArea.setCaretPosition(text.length() + start);
+      functionTextArea.setCaretPosition(parameterText.length() + start);
       editorModel.setCarretPosition(functionTextArea.getCaretPosition());
       ignoreTextEvents = false;
 
