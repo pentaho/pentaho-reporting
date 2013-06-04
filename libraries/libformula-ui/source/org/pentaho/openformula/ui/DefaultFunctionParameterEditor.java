@@ -27,6 +27,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
@@ -41,6 +43,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.pentaho.openformula.ui.model2.FormulaElement;
+import org.pentaho.openformula.ui.model2.FormulaTextElement;
+import org.pentaho.openformula.ui.model2.FunctionInformation;
 import org.pentaho.openformula.ui.util.SelectFieldAction;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
@@ -67,7 +72,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     }
   }
 
-  private class FocusListenerHandler implements FocusListener, Runnable, DocumentListener
+  private class FocusListenerHandler implements FocusListener, Runnable, MouseListener
   {
     private JTextField paramTextField;
     private int parameterIndex;
@@ -80,58 +85,14 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       this.oldText = this.paramTextField.getText();
     }
 
-    /**
-     * Gives notification that there was an insert into the document.  The
-     * range given by the DocumentEvent bounds the freshly inserted region.
-     *
-     * @param e the document event
-     */
-    public void insertUpdate(final DocumentEvent e)
-    {
-      if (inSetupUpdate)
-      {
-        return;
-      }
-      SwingUtilities.invokeLater(this);
-    }
-
-    /**
-     * Gives notification that a portion of the document has been
-     * removed.  The range is given in terms of what the view last
-     * saw (that is, before updating sticky positions).
-     *
-     * @param e the document event
-     */
-    public void removeUpdate(final DocumentEvent e)
-    {
-      if (inSetupUpdate)
-      {
-        return;
-      }
-      SwingUtilities.invokeLater(this);
-    }
-
-    /**
-     * Gives notification that an attribute or set of attributes changed.
-     *
-     * @param e the document event
-     */
-    public void changedUpdate(final DocumentEvent e)
-    {
-      if (inSetupUpdate)
-      {
-        return;
-      }
-      SwingUtilities.invokeLater(this);
-    }
-
     public void focusGained(final FocusEvent e)
     {
       if (inSetupUpdate)
       {
         return;
       }
-      SwingUtilities.invokeLater(this);
+
+      parameterUpdateInProgress = true;
     }
 
     public void focusLost(final FocusEvent e)
@@ -140,7 +101,54 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       {
         return;
       }
-      SwingUtilities.invokeLater(this);
+
+      if (parameterUpdateInProgress)
+      {
+        parameterUpdateInProgress = false;
+
+        SwingUtilities.invokeLater(this);
+      }
+    }
+
+    /**
+     * Invoked when the mouse button has been clicked (pressed
+     * and released) on a component.
+     */
+    public void mouseClicked(final MouseEvent e)
+    {
+    }
+
+    /**
+     * Invoked when a mouse button has been pressed on a component.
+     */
+    public void mousePressed(final MouseEvent e)
+    {
+    }
+
+    /**
+     * Invoked when a mouse button has been released on a component.
+     */
+    public void mouseReleased(final MouseEvent e)
+    {
+    }
+
+    /**
+     * Invoked when the mouse enters a component.
+     */
+    public void mouseEntered(final MouseEvent e)
+    {
+    }
+
+    /**
+     * Invoked when the mouse exits a component.
+     */
+    public void mouseExited(final MouseEvent e)
+    {
+      if (parameterUpdateInProgress)
+      {
+        parameterUpdateInProgress = false;
+        SwingUtilities.invokeLater(this);
+      }
     }
 
     public void run()
@@ -185,6 +193,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   private boolean inParameterUpdate;
   private boolean inSetupUpdate;
+  private boolean parameterUpdateInProgress;
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
@@ -193,6 +202,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   {
     parameterPane = new JPanel();
     parameterPane.setLayout(new GridBagLayout());
+
+    this.inParameterUpdate = false;
+    this.inSetupUpdate = false;
+    this.parameterUpdateInProgress = false;
 
     this.textFields = EMPTY_FIELDS;
     this.selectFieldActions = EMPTY_ACTIONS;
@@ -222,6 +235,100 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     setSelectedFunction(new FunctionParameterContext());
   }
 
+
+  /**
+   * Determines whether the current context formula is the main one (the first
+   * formula following the '=').  So '=COUNT(1;SUM(1;2;3))', COUNT would be
+   * the main formula.  If context points to SUM then we return false.
+   * @param context
+   * @return - true if the context points to the left most outer formula.
+   */
+  public boolean isMainFormula(final FunctionParameterContext context)
+  {
+    final FormulaEditorModel editorModel = context.getEditorModel();
+    if ((editorModel == null) || (editorModel.getLength() < 1))
+    {
+      return true;
+    }
+
+    final FormulaElement mainFormulaElement = editorModel.getFormulaElementAt(1);
+    final FunctionInformation currentFunction = editorModel.getCurrentFunction();
+    if ((mainFormulaElement != null) && (currentFunction.getFunctionOffset() == 1) &&
+        (((FormulaTextElement)mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+
+  /**
+   * If user is typing in formula text-area, this method updates the appropriate parameter
+   * field.  Note that the parameter fields are not always visible so if they are not visible
+   * then return false.  Note that when user is typing in formula text-area and they are typing
+   * an embedded formula, the parameter fields for that embedded formula don't get displayed.
+   * They get displayed if user points cursor over the formula or arrows over the formula -
+   * just not when typing.
+   * @param context
+   * @return
+   */
+  private boolean updateCurrentParameterField(final FunctionParameterContext context)
+  {
+    final FunctionDescription selectedFunction = context.getFunction();
+    final String[] parameterValues = context.getParameterValues();
+
+    // Iterate over each parameter field looking to find the field associated with
+    // the embedded formula.  If we find it, build up the formula in parameter field
+    // to reflect what was typed into the formula text-area
+    for (int i = 0; i < textFields.length; i++)
+    {
+      final String parameterValue = textFields[i].getText();
+      if ((parameterValue != null) && (parameterValue.startsWith(selectedFunction.getCanonicalName()) == true))
+      {
+        String updatedFormula = selectedFunction.getCanonicalName() + "(";
+        for (int paramIndex = 0; paramIndex < parameterValues.length; paramIndex++) {
+          if (parameterValues[paramIndex] != null)
+          {
+            updatedFormula = updatedFormula + parameterValues[paramIndex];
+            updatedFormula += ";";
+          }
+        }
+
+        // Remove the trailing semicolon
+        if (updatedFormula.endsWith(";"))
+        {
+          updatedFormula = updatedFormula.substring(0, updatedFormula.length() - 1);
+        }
+
+        if (parameterValue.endsWith(")"))
+        {
+          updatedFormula += ")";
+        }
+
+        textFields[i].setText(updatedFormula);
+        return true;
+      }
+    }
+
+    // We did not find the corresponding parameter field as it is not being displayed
+    return false;
+  }
+
+  private void updateParameterFields(final String[] parameterValues)
+  {
+    if ((parameterValues != null) && (parameterValues.length == textFields.length))
+    {
+      for (int i = 0; i < parameterValues.length; i++)
+      {
+        final String string = parameterValues[i];
+        textFields[i].setText(string);
+      }
+    }
+  }
+
   public void setSelectedFunction(final FunctionParameterContext context)
   {
     if (inParameterUpdate)
@@ -236,23 +343,40 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       final int functionStart = context.getFunctionParameterStartPosition();
       final FunctionDescription selectedFunction = context.getFunction();
       final String[] parameterValues = context.getParameterValues();
-      final FunctionDescription old = this.selectedFunction;
-      if (this.functionStartIndex == functionStart &&
-          FunctionParameterContext.isSameFunctionDescription(old, selectedFunction))
+
+      if (isMainFormula(context) == true)
       {
-        if (parameterValues.length == textFields.length)
+        if ((parameterValues != null) && (parameterValues.length == textFields.length))
         {
-          for (int i = 0; i < parameterValues.length; i++)
-          {
-            final String string = parameterValues[i];
-            textFields[i].setText(string);
-          }
+          updateParameterFields(parameterValues);
           return;
+        }
+      }
+      else
+      {
+        // If we are in an embedded formula, update the main
+        // formula's parameter field that is associated with
+        // this embedded formula.
+        if (updateCurrentParameterField(context) == false)
+        {
+          // The parameter field is pointing to the embedded
+          // formula - update it
+          updateParameterFields(parameterValues);
         }
       }
 
       this.selectedFunction = selectedFunction;
       this.functionStartIndex = functionStart;
+
+      if (context.isSwitchParameterEditor() == false)
+      {
+        invalidate();
+        revalidate();
+        repaint();
+
+        return;
+      }
+
       parameterPane.removeAll();
 
       if (selectedFunction == null)
@@ -305,7 +429,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final FocusListenerHandler handler = new FocusListenerHandler(paramTextField, parameterPosition);
     paramTextField.addFocusListener(handler);
-    paramTextField.getDocument().addDocumentListener(handler);
+    paramTextField.addMouseListener(handler);
     final SelectFieldAction action = new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition));
     action.setFields(fields);
 
@@ -408,7 +532,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   public void addParameterUpdateListener(final ParameterUpdateListener listener)
   {
-    listenerList.add(ParameterUpdateListener.class, listener);
+    if (listenerList.getListenerCount(ParameterUpdateListener.class) == 0)
+    {
+      listenerList.add(ParameterUpdateListener.class, listener);
+    }
   }
 
   public void removeParameterUpdateListener(final ParameterUpdateListener listener)

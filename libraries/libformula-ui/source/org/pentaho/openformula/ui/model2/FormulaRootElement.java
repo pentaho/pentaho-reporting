@@ -85,11 +85,18 @@ public class FormulaRootElement extends FormulaElement
    * Fetches the child element at the given index.
    *
    * @param index the specified index >= 0
-   * @return the child element
+   * @return the child element.  If index is invalid, return null
    */
   public Element getElement(final int index)
   {
-    return elements.get(index);
+    if (index < elements.size())
+    {
+      return elements.get(index);
+    }
+    else
+    {
+      return null;
+    }
   }
 
   /**

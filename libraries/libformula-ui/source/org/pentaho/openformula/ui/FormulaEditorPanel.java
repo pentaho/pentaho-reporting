@@ -79,13 +79,14 @@ public class FormulaEditorPanel extends JComponent
      */
     public void caretUpdate(final CaretEvent e)
     {
-      if (ignoreTextEvents)
+      if ((ignoreTextEvents) ||
+          (editorModel.getCaretPosition() == functionTextArea.getCaretPosition()))
       {
         return;
       }
-      editorModel.setCarretPosition(functionTextArea.getCaretPosition());
+      editorModel.setCaretPosition(functionTextArea.getCaretPosition());
       refreshInformationPanel();
-      revalidateParameters();
+      revalidateParameters(true);
     }
 
   }
@@ -201,10 +202,10 @@ public class FormulaEditorPanel extends JComponent
     public void run()
     {
       editorModel.setFormulaText(functionTextArea.getText());
-      editorModel.setCarretPosition(functionTextArea.getCaretPosition());
+      editorModel.setCaretPosition(functionTextArea.getCaretPosition());
 
       ignoreTextEvents = false;
-      revalidateParameters();
+      revalidateParameters(false);
 
       revalidateFormulaSyntax();
     }
@@ -216,12 +217,16 @@ public class FormulaEditorPanel extends JComponent
     {
     }
 
-    public void parameterUpdated(final ParameterUpdateEvent event)
+    /**
+     * This method gets called after each parameter text has been entered in the
+     * parameter field.  If user is manually entering text in formula text-area,
+     * then this method is called for each character entered.  If user is entering
+     * a formula, the parameter field will not change to the corresponding embedded
+     * formula unless user puts their cursor on the formula.
+     * @param event
+     */
+    synchronized public void parameterUpdated(final ParameterUpdateEvent event)
     {
-      final int parameterIndex = event.getParameter();
-      String text = event.getText();
-      final boolean catchAllParameter = event.isCatchAllParameter();
-
       if (ignoreTextEvents == true)
       {
         return;
@@ -232,50 +237,78 @@ public class FormulaEditorPanel extends JComponent
       {
         return;
       }
-      if (fn.getParameterCount() == 0)
+
+      final int functionParameterCount = fn.getParameterCount();
+      if (functionParameterCount == 0)
       {
         return;
       }
 
+      // The parameter index corresponds to the individual parameter text-fields
+      final int globalParameterIndex = event.getParameter();
+
+      // The text entered in a parameter field
+      String parameterText = event.getText();
+      final boolean catchAllParameter = event.isCatchAllParameter();
+
+
+      // Determine the start and end positions.  These positions will be used
+      // to build the new formula text in formula text-area
       final int start;
       final int end;
-      if (parameterIndex == -1)
+      if (globalParameterIndex == -1)
       {
         start = fn.getFunctionOffset();
         end = fn.getFunctionParameterEnd();
       }
-      else if (parameterIndex >= fn.getParameterCount())
+      else if (parameterText.contains(fn.getCanonicalName()))
       {
-        text = ";" + text;
+        // We get here if user is entering a formula in the parameter field.
+        // Since the formula can have parameters we need to filter for the formula
+        // and handle it specially.
+        start = fn.getFunctionOffset();
+        end = fn.getParamEnd(globalParameterIndex - 1);
+      }
+      else if (globalParameterIndex >= functionParameterCount)
+      {
+        parameterText = ";" + parameterText;
 
         // start & end should be the same as we don't want to delete
         // anything from formula text
-        start = fn.getParamEnd(fn.getParameterCount() - 1);
+        start = fn.getParamEnd(functionParameterCount - 1);
         end = start;
       }
       else if (catchAllParameter)
       {
-        start = fn.getParamStart(parameterIndex);
-        end = fn.getParamEnd(fn.getParameterCount() - 1);
+        start = fn.getParamStart(globalParameterIndex);
+        end = fn.getParamEnd(functionParameterCount - 1);
       }
       else
       {
-        start = fn.getParamStart(parameterIndex);
-        end = fn.getParamEnd(parameterIndex);
+        start = fn.getParamStart(globalParameterIndex);
+        end = fn.getParamEnd(globalParameterIndex);
       }
 
+      // Build the formula text.  Remove the old text and inject the new text in it's place
       final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
       formulaText.delete(start, end);
-      formulaText.insert(start, text);
+      formulaText.insert(start, parameterText);
 
       ignoreTextEvents = true;
-      editorModel.updateParameterText(start, end, text, (parameterIndex != -1));
+      // The formula in the formula text-area represents the correct and updated formula text.
+      // Rebuild the element nodes based on this new representation.
+      editorModel.setFormulaText(formulaText.toString());
+
+      // Handle any dummy parameters
+      editorModel.updateParameterText(start, end, parameterText, (globalParameterIndex != -1));
+
+      // Update for formula text-area
       functionTextArea.setText(formulaText.toString());
-      functionTextArea.setCaretPosition(text.length() + start);
-      editorModel.setCarretPosition(functionTextArea.getCaretPosition());
+      functionTextArea.setCaretPosition(parameterText.length() + start);
+      editorModel.setCaretPosition(functionTextArea.getCaretPosition());
       ignoreTextEvents = false;
 
-      revalidateParameters();
+      revalidateParameters(false);
       revalidateFormulaSyntax();
     }
   }
@@ -358,6 +391,29 @@ public class FormulaEditorPanel extends JComponent
     init();
   }
 
+  /**
+   * Gets called when the formula editor dialog is first initialized and we want
+   * to display the corresponding parameter editor associated with formula in text-area
+   * @param formula
+   */
+  public void initFormulaTextArea(String formula)
+  {
+    if (formula.startsWith("=") == false)
+    {
+      formula = "=" + formula;
+    }
+
+    // Set formula in panel's formula text-area
+    this.setFormulaText(formula);
+
+    // Update model
+    editorModel.setFormulaText(formula);
+    editorModel.setCaretPosition(functionTextArea.getCaretPosition());
+
+    // Revalidate parameters and force refresh of parameter fields
+    revalidateParameters(true);
+  }
+
   protected void insertText(final String text)
   {
     final int start = functionTextArea.getCaretPosition();
@@ -384,7 +440,7 @@ public class FormulaEditorPanel extends JComponent
 
     functionTextArea.setCaretPosition(textLength + start);
     functionTextArea.requestFocus();
-    revalidateParameters();
+    revalidateParameters(false);
     revalidateFormulaSyntax();
   }
 
@@ -556,15 +612,14 @@ public class FormulaEditorPanel extends JComponent
   }
 
   /**
+   * Re-validate the parameters of the selected formula.
+   * @param switchParameterEditor - if true, then the parameter editor will adjust to correspond to
+   *                              formula in the formula text-area.  This prevents parameter editor from
+   *                              changing while user is entering an embedded formula.
    * @noinspection MagicCharacter
    */
-  protected void revalidateParameters()
+  protected void revalidateParameters(final boolean switchParameterEditor)
   {
-    if (ignoreTextEvents)
-    {
-      return;
-    }
-
     editorModel.revalidateStructure();
     if (formulaContext == null)
     {
@@ -614,8 +669,7 @@ public class FormulaEditorPanel extends JComponent
         parameterValues[lastParamIdx] = lastParamEatsAllBuffer.toString();
       }
 
-      functionParameterEditor.setSelectedFunction
-          (new FunctionParameterContext(function, parameterValues, fn));
+      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(function, parameterValues, fn, switchParameterEditor, editorModel));
     }
     finally
     {
