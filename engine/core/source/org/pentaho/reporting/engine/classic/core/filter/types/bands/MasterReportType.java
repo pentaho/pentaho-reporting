@@ -22,6 +22,8 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 
 public class MasterReportType extends AbstractSectionType
 {
+  public static final MasterReportType INSTANCE = new MasterReportType();
+
   public MasterReportType()
   {
     super("master-report", true);

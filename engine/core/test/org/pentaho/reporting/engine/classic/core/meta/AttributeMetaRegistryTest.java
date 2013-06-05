@@ -36,7 +36,7 @@ public class AttributeMetaRegistryTest extends TestCase
     final DefaultAttributeMetaData m = new DefaultAttributeMetaData
         ("namespace", "Name", BUNDLE_LOCATION, "prefix",
             String.class, false, ClassicEngineBoot.computeCurrentVersionId());
-    attributeRegistry.setAttributeDescription(m);
+    attributeRegistry.putAttributeDescription(m);
 
     final AttributeMetaData attributeDescription = metaData.getAttributeDescription("namespace", "Name");
     assertEquals("prefix", attributeDescription.getKeyPrefix());
