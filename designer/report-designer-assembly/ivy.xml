@@ -57,6 +57,9 @@
     <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-mongodb-plugin" type="zip"/>
     </dependency>
+    <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
+      <artifact name="pentaho-cassandra-plugin" type="zip"/>
+    </dependency>
 
 		<!-- JSON dependencies -->
 		<dependency org="com.googlecode.json-simple" name="json-simple" rev="${dependency.json.simple.revision}" transitive="false" conf="default->default" changing="false"/>
