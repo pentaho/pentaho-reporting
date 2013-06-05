@@ -62,7 +62,10 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
 
   public void addParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
   {
-    listeners.add(ParameterUpdateListener.class, parameterUpdateListener);
+    if (listeners.getListenerCount(ParameterUpdateListener.class) == 0)
+    {
+      listeners.add(ParameterUpdateListener.class, parameterUpdateListener);
+    }
   }
 
   public void removeParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
