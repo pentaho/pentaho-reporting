@@ -18,7 +18,6 @@
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
@@ -49,7 +48,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingUtil;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -102,7 +100,6 @@ public abstract class AbstractElementRenderer implements ElementRenderer
   private ReportRenderContext reportRenderContext;
   private EventListenerList listenerList;
   private Rectangle2D computedBounds;
-  private long lastLayoutedChangeState;
   private BreakPositionsList verticalEdgePositions;
   private DesignerPageDrawable logicalPageDrawable;
   private ResourceManager resourceManager;
@@ -239,9 +236,8 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   public double getLayoutHeight()
   {
-    if (computedBounds == null || lastLayoutedChangeState != element.getChangeTracker())
+    if (computedBounds == null || sharedRenderer.isLayoutValid() == false)
     {
-      lastLayoutedChangeState = element.getChangeTracker();
       computedBounds = performLayouting();
     }
     return Math.max(computedBounds.getHeight(), getVisualHeight());
@@ -255,9 +251,8 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   public Rectangle2D getBounds()
   {
-    if (computedBounds == null || lastLayoutedChangeState != element.getChangeTracker())
+    if (computedBounds == null || sharedRenderer.isLayoutValid() == false)
     {
-      lastLayoutedChangeState = element.getChangeTracker();
       computedBounds = performLayouting();
     }
     return new Rectangle2D.Double(0, 0, computedBounds.getWidth(),
