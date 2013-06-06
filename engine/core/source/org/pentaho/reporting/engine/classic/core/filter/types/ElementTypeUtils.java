@@ -280,7 +280,10 @@ public class ElementTypeUtils
     return defaultValue;
   }
 
-  public static int getIntAttribute(final ReportElement e, final String namespace, final String name, final int defaultValue)
+  public static int getIntAttribute(final ReportElement e,
+                                    final String namespace,
+                                    final String name,
+                                    final int defaultValue)
   {
     final Object val = e.getAttribute(namespace, name);
     if (val == null)
@@ -293,6 +296,19 @@ public class ElementTypeUtils
       return nval.intValue();
     }
     return ParserUtil.parseInt(String.valueOf(val), defaultValue);
+  }
+
+  public static String getStringAttribute(final ReportElement e,
+                                    final String namespace,
+                                    final String name,
+                                    final String defaultValue)
+  {
+    final Object val = e.getAttribute(namespace, name);
+    if (val == null)
+    {
+      return defaultValue;
+    }
+    return String.valueOf(val);
   }
 
   public static boolean getBooleanAttribute(final ReportElement e,
@@ -336,7 +352,7 @@ public class ElementTypeUtils
 
       if (o instanceof List)
       {
-        final List l = (List) o;
+        final List<?> l = (List<?>) o;
         for (int i = 0; i < l.size(); i++)
         {
           final Object value = l.get(i);

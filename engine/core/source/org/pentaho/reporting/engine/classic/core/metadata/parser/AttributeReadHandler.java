@@ -153,7 +153,7 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
+  public AttributeDefinition getObject() throws SAXException
   {
     return new AttributeDefinition(namespace, getName(), isPreferred(), mandatory,
         isExpert(), isHidden(), computed, transientFlag, valueType, valueRole, propertyEditor,

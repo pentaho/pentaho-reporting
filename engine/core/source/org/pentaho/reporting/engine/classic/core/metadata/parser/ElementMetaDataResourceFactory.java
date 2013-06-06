@@ -55,7 +55,7 @@ public class ElementMetaDataResourceFactory extends AbstractXmlResourceFactory
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
-  public Class getFactoryType()
+  public Class<?> getFactoryType()
   {
     return ElementTypeCollection.class;
   }

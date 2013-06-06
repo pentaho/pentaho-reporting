@@ -47,6 +47,19 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
   private boolean designTimeValue;
   private AttributeCore attributeCore;
 
+  /**
+   * Creates an expert, non-preferred, hidden, non-mandatory, non-computed and non-transient attribute.
+   * This is a suitable constructor to declare internal attributes that should not be edited by an end-user
+   * in the report-designer.
+   *
+   * @param namespace
+   * @param name
+   * @param bundleLocation
+   * @param keyPrefix
+   * @param targetClass
+   * @param designTimeValue
+   * @param compatibilityLevel
+   */
   public DefaultAttributeMetaData(final String namespace,
                                   final String name,
                                   final String bundleLocation,
