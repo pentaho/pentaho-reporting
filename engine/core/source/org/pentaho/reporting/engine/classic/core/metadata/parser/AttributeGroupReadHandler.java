@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 
 public class AttributeGroupReadHandler extends AbstractXmlReadHandler
 {
-  private ArrayList attributeHandlers;
+  private ArrayList<AttributeReadHandler> attributeHandlers;
   private String name;
   private GlobalMetaDefinition attributeGroups;
   private AttributeGroup attributeGroup;
@@ -36,7 +36,7 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
   public AttributeGroupReadHandler(final GlobalMetaDefinition attributeGroups)
   {
     this.attributeGroups = attributeGroups;
-    this.attributeHandlers = new ArrayList();
+    this.attributeHandlers = new ArrayList<AttributeReadHandler>();
   }
 
   /**
@@ -75,7 +75,7 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
     }
     if ("attribute".equals(tagName))
     {
-      final XmlReadHandler handler = new AttributeReadHandler(bundle);
+      final AttributeReadHandler handler = new AttributeReadHandler(bundle);
       attributeHandlers.add(handler);
       return handler;
     }
@@ -90,11 +90,11 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
   protected void doneParsing() throws SAXException
   {
     final AttributeReadHandler[] attributes =
-        (AttributeReadHandler[]) attributeHandlers.toArray(new AttributeReadHandler[attributeHandlers.size()]);
+        attributeHandlers.toArray(new AttributeReadHandler[attributeHandlers.size()]);
     final AttributeDefinition[] definitions = new AttributeDefinition[attributeHandlers.size()];
     for (int i = 0; i < attributes.length; i++)
     {
-      definitions[i] = (AttributeDefinition) attributes[i].getObject();
+      definitions[i] = attributes[i].getObject();
     }
     attributeGroup = new AttributeGroup(name, definitions);
     attributeGroups.addAttributeGroup(attributeGroup);
