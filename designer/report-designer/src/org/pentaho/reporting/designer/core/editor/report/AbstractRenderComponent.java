@@ -420,15 +420,8 @@ public abstract class AbstractRenderComponent extends JComponent
 
         if (e.isShiftDown())
         {
-          // toggle selection ..
-          if (selectionModel.isSelected(element))
-          {
-            selectionModel.remove(element);
-          }
-          else
-          {
-            selectionModel.add(element);
-          }
+          toggleSelection(selectionModel, element);
+
         }
         else
         {
@@ -442,19 +435,40 @@ public abstract class AbstractRenderComponent extends JComponent
         return;
       }
 
-      // No element found, clear the selection.
       if (e.isShiftDown() == false)
       {
         selectionModel.clearSelection();
       }
-      if(rendererRoot.getElement() instanceof RootLevelBand){
-        //PRD-4466 select band (update tree) and allow insert menu to be enbaled
-        selectionModel.clearSelection();
-        if (e.isShiftDown() == false && e.isControlDown() == false){
-          selectionModel.add(rendererRoot.getElement());
+      Element element = rendererRoot.getElement();
+      if (element instanceof RootLevelBand)
+      {
+        if (e.isShiftDown())
+        {
+          toggleSelection(selectionModel, element);
+
+        }
+        else
+        {
+          if (!selectionModel.isSelected(element))
+          {
+            selectionModel.clearSelection();
+            selectionModel.add(element);
+          }
         }
       }
+    }
 
+    private void toggleSelection(final ReportSelectionModel selectionModel, final Element element)
+    {
+      // toggle selection ..
+      if (selectionModel.isSelected(element))
+      {
+        selectionModel.remove(element);
+      }
+      else
+      {
+        selectionModel.add(element);
+      }
     }
   }
 
