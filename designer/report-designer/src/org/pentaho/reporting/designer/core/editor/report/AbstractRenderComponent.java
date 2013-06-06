@@ -1879,27 +1879,11 @@ public abstract class AbstractRenderComponent extends JComponent
       final MassElementStyleUndoEntry undoEntry = undoEntryBuilder.finish();
       getRenderContext().getUndo().addChange(Messages.getString("AbstractRenderComponent.ResizeUndoName"), undoEntry);
     }
-    reselectAfterDrag();
     operation = null;
     undoEntryBuilder = null;
     repaint();
   }
 
-  private void reselectAfterDrag()
-  {
-    final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
-    if (visualElements.length > 0) {
-      for(int i = 0; i <  visualElements.length; i++){
-        Element elem = visualElements[i];
-        if(elem.getParentSection() instanceof RootLevelBand){
-          Element[] band = new Element[]{elem.getParentSection()};
-          getRenderContext().getSelectionModel().setSelectedElements(band);
-          getRenderContext().getSelectionModel().setSelectedElements(visualElements);
-          break;
-        }
-      }
-     }
-  }
 
   protected boolean isMouseOperationInProgress()
   {
