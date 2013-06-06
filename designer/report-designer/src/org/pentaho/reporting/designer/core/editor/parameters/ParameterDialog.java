@@ -706,6 +706,7 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     super.init();
 
     timeZoneBox.setVisible(false);
+    timeZoneLabel.setVisible(false);
     displayFormulaField.setVisible(false);
     visibleItemsLabel.setVisible(false);
     visibleItemsTextField.setVisible(false);
