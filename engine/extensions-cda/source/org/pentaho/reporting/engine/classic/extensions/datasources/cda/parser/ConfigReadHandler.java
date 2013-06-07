@@ -33,6 +33,7 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
   private String path;
   private String solution;
   private boolean useLocalCall;
+  private boolean sugarMode;
 
   public ConfigReadHandler()
   {
@@ -54,7 +55,8 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
     solution = attrs.getValue(getUri(), "solution");
     username = attrs.getValue(getUri(), "username");
     password = PasswordEncryptionService.getInstance().decrypt(getRootHandler(), attrs.getValue(getUri(), "password"));
-    this.useLocalCall = ParserUtil.parseBoolean(attrs.getValue(getUri(), "use-local-call"), true);
+    useLocalCall = ParserUtil.parseBoolean(attrs.getValue(getUri(), "use-local-call"), true);
+    sugarMode = ParserUtil.parseBoolean(attrs.getValue(getUri(), "is-sugar-mode"), false);
   }
 
   public String getBaseUrl()
@@ -106,5 +108,9 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
   public boolean isUseLocalCall()
   {
     return useLocalCall;
+  }
+
+  public boolean isSugarMode() {
+    return sugarMode;
   }
 }

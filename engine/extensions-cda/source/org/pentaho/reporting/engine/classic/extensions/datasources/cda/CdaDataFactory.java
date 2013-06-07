@@ -22,6 +22,8 @@ public class CdaDataFactory extends AbstractDataFactory
   private String path;
   private String file;
 
+  private boolean sugarMode;
+
   private CdaQueryBackend backend;
   private transient CdaQueryBackend effectiveBackend;
 
@@ -120,6 +122,7 @@ public class CdaDataFactory extends AbstractDataFactory
     effectiveBackend.setPassword(getPassword());
     effectiveBackend.setBaseUrl(computeBaseUrl(parameters));
     effectiveBackend.initialize(getDataFactoryContext());
+    effectiveBackend.setSugarMode(isSugarMode());
     return effectiveBackend.queryData(realQuery, parameters);
   }
 
@@ -229,6 +232,14 @@ public class CdaDataFactory extends AbstractDataFactory
   public void setBaseUrlField(final String baseUrlField)
   {
     this.baseUrlField = baseUrlField;
+  }
+
+  public boolean isSugarMode() {
+    return sugarMode;
+  }
+
+  public void setSugarMode(boolean sugarMode) {
+    this.sugarMode = sugarMode;
   }
 
 }
