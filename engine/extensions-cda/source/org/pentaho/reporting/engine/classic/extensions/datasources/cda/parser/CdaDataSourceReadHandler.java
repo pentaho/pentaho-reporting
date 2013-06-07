@@ -94,6 +94,7 @@ public class CdaDataSourceReadHandler extends AbstractXmlReadHandler implements 
     srdf.setUsername(configReadHandler.getUsername());
     srdf.setPassword(configReadHandler.getPassword());
     srdf.setUseLocalCall(configReadHandler.isUseLocalCall());
+    srdf.setSugarMode(configReadHandler.isSugarMode());
 
     for (int i = 0; i < queries.size(); i++)
     {

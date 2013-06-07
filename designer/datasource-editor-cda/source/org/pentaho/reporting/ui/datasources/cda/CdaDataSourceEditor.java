@@ -6,8 +6,10 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractAction;
@@ -24,22 +26,16 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableModel;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.cookie.CookiePolicy;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DataFactoryEditorSupport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
-import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaQueryEntry;
-import org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaResponseParser;
 import org.pentaho.reporting.engine.classic.extensions.datasources.cda.HttpQueryBackend;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
@@ -48,7 +44,6 @@ import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 import org.pentaho.reporting.libraries.designtime.swing.background.CancelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
 
 public class CdaDataSourceEditor extends CommonDialog
 {
@@ -64,7 +59,7 @@ public class CdaDataSourceEditor extends CommonDialog
 
       try
       {
-        final TypedTableModel model = fetchData("listQueries", new HashMap<String, String>());
+        final TableModel model = fetchData("listQueries", new HashMap<String, String>());
 
         final QueriesTableModel clone = (QueriesTableModel) queriesTableModel.clone();
         queriesTableModel.clear();
@@ -75,7 +70,7 @@ public class CdaDataSourceEditor extends CommonDialog
 
           final HashMap<String,String> extraParameter = new HashMap<String, String>();
           extraParameter.put("dataAccessId", query);
-          final TypedTableModel param = fetchData("listParameters", extraParameter);
+          final TableModel param = fetchData("listParameters", extraParameter);
 
           final HashMap<String,String> oldParamMappings = new HashMap<String, String>();
           final QueriesTableModel.QueryData queryById = clone.getQueryById(query);
@@ -118,7 +113,7 @@ public class CdaDataSourceEditor extends CommonDialog
           extraParameter.clear();
         }
       }
-      catch (ReportDataFactoryException e1)
+      catch (ReportProcessingException e1)
       {
         designTimeContext.error(e1);
       }
@@ -238,12 +233,11 @@ public class CdaDataSourceEditor extends CommonDialog
   private JTextField solution;
   private JTextField path;
   private JTextField file;
+  private JCheckBox sugarMode;
   private JTextField username;
   private JTextField password;
   private JCheckBox useLocalCall;
   private QueriesTableModel queriesTableModel;
-  private GetMethod httpCall;
-  private HttpClient client;
   private DesignTimeContext designTimeContext;
   private JTable queriesTable;
   private Action editParameterAction;
@@ -275,6 +269,12 @@ public class CdaDataSourceEditor extends CommonDialog
     this.queriesTableModel = new QueriesTableModel();
     queriesTable = new JTable(queriesTableModel);
     baseUrl = new JTextField();
+    baseUrl.addFocusListener(new FocusListener() {
+      public void focusLost(FocusEvent e) {
+        checkBaseUrl();
+      }
+      public void focusGained(FocusEvent e) {}
+    });
     baseUrlField = new SmartComboBox();
     baseUrlField.setEditable(true);
     final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel(context.getDataSchemaModel().getColumnNames());
@@ -284,6 +284,12 @@ public class CdaDataSourceEditor extends CommonDialog
     solution = new JTextField();
     path = new JTextField();
     file = new JTextField();
+    sugarMode = new JCheckBox(Messages.getString("CdaDataSourceEditor.SugarMode"));
+    sugarMode.addItemListener(new ItemListener() {
+      public void itemStateChanged(ItemEvent e) {
+        changeSugarMode(sugarMode.isSelected());
+      }
+    });
     username = new JTextField();
     password = new JTextField();
     useLocalCall = new JCheckBox(Messages.getString("CdaDataSourceEditor.AllowLocalAPICalls"));
@@ -316,6 +322,7 @@ public class CdaDataSourceEditor extends CommonDialog
     panel.add(baseUrl);
     panel.add(new JLabel(Messages.getString("CdaDataSourceEditor.ServerURLField")));
     panel.add(baseUrlField);
+    panel.add(sugarMode);
     panel.add(new JLabel(Messages.getString("CdaDataSourceEditor.Username")));
     panel.add(username);
     panel.add(new JLabel(Messages.getString("CdaDataSourceEditor.Password")));
@@ -350,6 +357,7 @@ public class CdaDataSourceEditor extends CommonDialog
       solution.setText(input.getSolution());
       path.setText(input.getPath());
       useLocalCall.setSelected(input.isUseLocalCall());
+      sugarMode.setSelected(input.isSugarMode());
 
       queriesTableModel.clear();
       final String[] queryNames = input.getQueryNames();
@@ -384,6 +392,7 @@ public class CdaDataSourceEditor extends CommonDialog
     dataFactory.setPath(path.getText());
     dataFactory.setSolution(solution.getText());
     dataFactory.setUseLocalCall(useLocalCall.isSelected());
+    dataFactory.setSugarMode(sugarMode.isSelected());
     for (int i = 0; i < queriesTableModel.size(); i++)
     {
       final QueriesTableModel.QueryData queryData = queriesTableModel.get(i);
@@ -393,92 +402,65 @@ public class CdaDataSourceEditor extends CommonDialog
   }
 
 
-  private TypedTableModel fetchData(final String method,
-                                    final Map<String, String> extraParameter) throws ReportDataFactoryException
+  private TableModel fetchData(final String method,
+                               final Map<String, String> extraParameter) throws ReportProcessingException
   {
-    if (StringUtils.isEmpty(baseUrl.getText(), true))
-    {
-      throw new ReportDataFactoryException("Base URL is null");
+    // ugly but might still beat constructing the whole query
+    final CdaDataFactory dataFactory = produceDataFactory();
+    DataFactoryEditorSupport.configureDataFactoryForPreview(dataFactory, designTimeContext);
+
+    HttpQueryBackend httpQuery = getHttpQuery();
+    httpQuery.initialize(dataFactory.getDataFactoryContext());
+    return httpQuery.fetchData(null, method, extraParameter);
+  }
+
+  private HttpQueryBackend getHttpQuery() {
+    HttpQueryBackend query = new HttpQueryBackend();
+    query.setBaseUrl(baseUrl.getText());
+    query.setFile(file.getText());
+    query.setPath(path.getText());
+    query.setSolution(solution.getText());
+    query.setSugarMode(sugarMode.isSelected());
+    query.setUsername(username.getText());
+    query.setPassword(password.getText());
+    return query;
+  }
+
+  private void checkBaseUrl() {
+    if (baseUrl.getText().endsWith("/")) {
+      baseUrl.setText(baseUrl.getText().substring(0, baseUrl.getText().length() -1));
     }
-    try
-    {
-      final StringBuilder url = new StringBuilder();
-      url.append(baseUrl.getText());
-      url.append("/content/cda/");
-      url.append(method);
-      url.append("?");
-      url.append("outputType=xml");
-      url.append("&solution=");
-      url.append(encodeParameter(solution.getText()));
-      url.append("&path=");
-      url.append(encodeParameter(path.getText()));
-      url.append("&file=");
-      url.append(encodeParameter(file.getText()));
-      for (final Map.Entry<String, String> entry : extraParameter.entrySet())
-      {
-        final String key = encodeParameter(entry.getKey());
-        if (StringUtils.isEmpty(key))
-        {
-          continue;
-        }
-        url.append("&");
-        url.append(key);
-        url.append("=");
-        url.append(encodeParameter(entry.getValue()));
+  }
+
+  private void changeSugarMode(boolean sugarMode) {
+    if (sugarMode) {
+      // try a simple conversion if old path being used
+      if (!StringUtils.isEmpty(solution.getText())) {
+        String newPathPrefix = joinPathStrings("/public", solution.getText());
+        solution.setText("");
+        path.setText(joinPathStrings(newPathPrefix, path.getText()));
       }
-
-      httpCall = new GetMethod(url.toString());
-      final HttpClient client = getHttpClient();
-      final int status = client.executeMethod(httpCall);
-      if (status != 200)
-      {
-        throw new ReportDataFactoryException("Failed to retrieve data: " + httpCall.getStatusLine() + " Called: " + url);
+      if (!StringUtils.isEmpty(file.getText())) {
+        path.setText(joinPathStrings(path.getText(), file.getText()));
+        file.setText("");
       }
-
-      final InputStream responseBody = httpCall.getResponseBodyAsStream();
-      return CdaResponseParser.performParse(responseBody);
     }
-    catch (UnsupportedEncodingException use)
-    {
-      throw new ReportDataFactoryException("Failed to encode parameter", use);
-    }
-    catch (Exception e)
-    {
-      throw new ReportDataFactoryException("Failed to send request", e);
-    }
-    finally
-    {
-      httpCall = null;
-    }
+    file.setEnabled(!sugarMode);
+    solution.setEnabled(!sugarMode);
   }
 
-  private HttpClient getHttpClient()
-  {
-    if (client == null)
-    {
-      client = new HttpClient();
-      client.getParams().setCookiePolicy(CookiePolicy.BROWSER_COMPATIBILITY);
-      client.getParams().setAuthenticationPreemptive(true);
+  private String joinPathStrings(String first, String second) {
+    final String separator = "/";
+    boolean inFirst = first.endsWith(separator);
+    boolean inSecond = second.startsWith(separator);
+    if (inFirst && inSecond) {
+      return first + second.substring(1);
     }
-    client.getState().setCredentials(AuthScope.ANY, HttpQueryBackend.getCredentials(username.getText(), password.getText()));
-    return client;
-  }
-
-  private String getURLEncoding()
-  {
-    return ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.URLEncoding");
-  }
-
-  private String encodeParameter(final String value) throws UnsupportedEncodingException
-  {
-    if (StringUtils.isEmpty(value))
-    {
-      return "";
+    else if (!inFirst && !inSecond) {
+      return first + separator + second;
     }
-    return URLEncoder.encode(value, getURLEncoding());
+    return first + second;
   }
-
 
   private class EditParameterAction extends AbstractAction
   {

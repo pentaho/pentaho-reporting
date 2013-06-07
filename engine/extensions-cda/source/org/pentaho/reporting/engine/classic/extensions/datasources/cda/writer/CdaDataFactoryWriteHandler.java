@@ -92,6 +92,8 @@ public class CdaDataFactoryWriteHandler implements DataFactoryWriteHandler
     }
     
     configAttrs.setAttribute(CdaModule.NAMESPACE, "use-local-call", String.valueOf(dataFactory.isUseLocalCall()));
+    configAttrs.setAttribute(CdaModule.NAMESPACE, "is-sugar-mode", String.valueOf(dataFactory.isSugarMode()));
+
     xmlWriter.writeTag(CdaModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
 
     final String[] queryNames = dataFactory.getQueryNames();

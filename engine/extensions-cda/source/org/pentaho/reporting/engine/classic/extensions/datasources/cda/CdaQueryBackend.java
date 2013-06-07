@@ -63,6 +63,8 @@ public abstract class CdaQueryBackend implements Cloneable
   private String path;
   private String file;
 
+  private boolean sugarMode;
+
   private transient String baseUrl;
   private DataFactoryContext context;
 
@@ -167,23 +169,29 @@ public abstract class CdaQueryBackend implements Cloneable
     }
   }
 
-  protected String createURL(final String method,
+  public String createURL(final String method,
                            final Map<String, String> extraParameter)
   {
     final String baseURL = getBaseUrl();
+    final String basePath = isSugarMode() ? "/plugin/cda/api/" : "/content/cda/";
 
+    
     final StringBuilder url = new StringBuilder();
     url.append(baseURL);
-    url.append("/content/cda/");
+    url.append(basePath);
     url.append(method);
     url.append("?");
     url.append("outputType=xml");
-    url.append("&solution=");
-    url.append(encodeParameter(getSolution()));
     url.append("&path=");
     url.append(encodeParameter(getPath()));
-    url.append("&file=");
-    url.append(encodeParameter(getFile()));
+
+    
+    if (!isSugarMode()) {
+      url.append("&solution=");
+      url.append(encodeParameter(getSolution()));
+      url.append("&file=");
+      url.append(encodeParameter(getFile()));
+    }
     for (final Map.Entry<String, String> entry : extraParameter.entrySet())
     {
       final String key = encodeParameter(entry.getKey());
@@ -353,6 +361,14 @@ public abstract class CdaQueryBackend implements Cloneable
   public void setBaseUrl(final String baseUrl)
   {
     this.baseUrl = baseUrl;
+  }
+
+  public boolean isSugarMode() {
+    return sugarMode;
+  }
+
+  public void setSugarMode(boolean sugarMode) {
+    this.sugarMode = sugarMode;
   }
 
   public void cancelRunningQuery()
