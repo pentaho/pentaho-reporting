@@ -42,10 +42,10 @@ public class ElementMetaDataParser
   {
     final String namespaceRegistryPrefix = "org.pentaho.reporting.engine.classic.core.metadata.namespaces.";
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator keys = configuration.findPropertyKeys(namespaceRegistryPrefix);
+    final Iterator<String> keys = configuration.findPropertyKeys(namespaceRegistryPrefix);
     while (keys.hasNext())
     {
-      final String key = (String) keys.next();
+      final String key = keys.next();
       final String prefix = key.substring(namespaceRegistryPrefix.length());
       final String namespaceUri = configuration.getConfigProperty(key);
       if (prefix.length() == 0 || namespaceUri == null || namespaceUri.length() == 0)

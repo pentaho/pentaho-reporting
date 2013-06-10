@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeCore;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
@@ -27,10 +28,11 @@ import org.xml.sax.SAXException;
 public class AttributeReadHandler extends AbstractMetaDataReadHandler
 {
   private String namespace;
+  private String namespacePrefix;
   private boolean mandatory;
   private boolean computed;
   private boolean transientFlag;
-  private Class valueType;
+  private Class<?> valueType;
   private String valueRole;
   private boolean bulk;
   private String propertyEditor;
@@ -57,6 +59,11 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
       throw new ParseException("Attribute 'namespace' is undefined", getLocator());
     }
 
+    namespacePrefix = attrs.getValue(getUri(), "namespace-prefix"); // NON-NLS
+    if (namespacePrefix == null)
+    {
+      namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(namespace);
+    }
     mandatory = "true".equals(attrs.getValue(getUri(), "mandatory")); // NON-NLS
     computed = "true".equals(attrs.getValue(getUri(), "computed")); // NON-NLS
     transientFlag = "true".equals(attrs.getValue(getUri(), "transient")); // NON-NLS
@@ -155,7 +162,7 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
    */
   public AttributeDefinition getObject() throws SAXException
   {
-    return new AttributeDefinition(namespace, getName(), isPreferred(), mandatory,
+    return new AttributeDefinition(namespace, namespacePrefix, getName(), isPreferred(), mandatory,
         isExpert(), isHidden(), computed, transientFlag, valueType, valueRole, propertyEditor,
         isDeprecated(), bulk, designTimeValue, getBundle(), attributeCore, isExperimental(), getCompatibilityLevel());
   }
