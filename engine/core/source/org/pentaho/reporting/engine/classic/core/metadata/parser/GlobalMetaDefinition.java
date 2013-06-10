@@ -73,7 +73,9 @@ public class GlobalMetaDefinition implements Cloneable
   public Object clone() throws CloneNotSupportedException
   {
     final GlobalMetaDefinition definition = (GlobalMetaDefinition) super.clone();
+    //noinspection unchecked
     definition.styleGroups = (HashMap<String,StyleGroup>) styleGroups.clone();
+    //noinspection unchecked
     definition.attributeGroups = (HashMap<String,AttributeGroup>) attributeGroups.clone();
     return definition;
   }

@@ -21,7 +21,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -79,7 +78,7 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
       final AttributeDefinition handler = data[i];
       final String namespace = handler.getNamespace();
       final String attrName = handler.getName();
-      final String namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(namespace);
+      final String namespacePrefix = handler.getNamespacePrefix();
       if (namespacePrefix == null)
       {
         logger.warn("Invalid namespace-prefix, skipping attribute " + namespace + ':' + attrName);

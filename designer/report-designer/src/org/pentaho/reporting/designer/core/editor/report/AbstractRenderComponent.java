@@ -104,7 +104,6 @@ import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResol
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
 /**
@@ -439,7 +438,8 @@ public abstract class AbstractRenderComponent extends JComponent
       {
         selectionModel.clearSelection();
       }
-      Element element = rendererRoot.getElement();
+
+      final Element element = rendererRoot.getElement();
       if (element instanceof RootLevelBand)
       {
         if (e.isShiftDown())
@@ -1893,11 +1893,11 @@ public abstract class AbstractRenderComponent extends JComponent
       final MassElementStyleUndoEntry undoEntry = undoEntryBuilder.finish();
       getRenderContext().getUndo().addChange(Messages.getString("AbstractRenderComponent.ResizeUndoName"), undoEntry);
     }
+
     operation = null;
     undoEntryBuilder = null;
     repaint();
   }
-
 
   protected boolean isMouseOperationInProgress()
   {

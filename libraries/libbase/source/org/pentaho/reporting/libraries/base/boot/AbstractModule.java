@@ -150,11 +150,11 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
       readModuleInfo(props);
 
       final ArrayList<ModuleInfo> optionalModules = new ArrayList<ModuleInfo>();
-      final ArrayList<ModuleInfo> dependendModules = new ArrayList<ModuleInfo>();
-      final Iterator keys = props.findPropertyKeys("dependency.");
+      final ArrayList<ModuleInfo> dependentModules = new ArrayList<ModuleInfo>();
+      final Iterator<String> keys = props.findPropertyKeys("dependency.");
       while (keys.hasNext())
       {
-        final String key = (String) keys.next();
+        final String key = keys.next();
         if (key.endsWith(".dependency-type"))
         {
           final String moduleHandle = key.substring(0, key.length() - ".dependency-type".length());
@@ -165,14 +165,14 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
           }
           else
           {
-            dependendModules.add(module);
+            dependentModules.add(module);
           }
         }
 
       }
 
       this.optionalModules = optionalModules.toArray(new ModuleInfo[optionalModules.size()]);
-      this.requiredModules = dependendModules.toArray(new ModuleInfo[dependendModules.size()]);
+      this.requiredModules = dependentModules.toArray(new ModuleInfo[dependentModules.size()]);
     }
     catch (IOException ioe)
     {
@@ -388,7 +388,7 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
    * @param context the context class to get a classloader from.
    * @return true, if the class could be loaded, false otherwise.
    */
-  protected static boolean isClassLoadable(final String name, final Class context)
+  protected static boolean isClassLoadable(final String name, final Class<?> context)
   {
     try
     {
@@ -410,8 +410,7 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
    */
   public void configure(final SubSystem subSystem)
   {
-    final InputStream in = ObjectUtilities.getResourceRelativeAsStream
-        ("configuration.properties", getClass());
+    final InputStream in = ObjectUtilities.getResourceRelativeAsStream("configuration.properties", getClass());
     if (in == null)
     {
       return;
@@ -472,7 +471,7 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
    * @param context the class-loader context from where to load the module's classes.
    * @throws ModuleInitializeException if an error occured or the initializer could not be found.
    */
-  protected void performExternalInitialize(final String classname, final Class context)
+  protected void performExternalInitialize(final String classname, final Class<?> context)
       throws ModuleInitializeException
   {
     try
