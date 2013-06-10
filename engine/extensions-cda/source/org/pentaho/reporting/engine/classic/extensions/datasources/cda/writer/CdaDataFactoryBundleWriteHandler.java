@@ -72,7 +72,7 @@ public class CdaDataFactoryBundleWriteHandler implements BundleDataFactoryWriter
     {
       throw new IOException("Unable to generate unique name for cda-Data-Source");
     }
-
+    //TODO: refactor with CdaDataFactoryWriteHandler
     final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
     final DefaultTagDescription tagDescription =
         new DefaultTagDescription(ClassicEngineBoot.getInstance().getGlobalConfig(), CdaModule.TAG_DEF_PREFIX);
@@ -117,6 +117,8 @@ public class CdaDataFactoryBundleWriteHandler implements BundleDataFactoryWriter
     }
 
     configAttrs.setAttribute(CdaModule.NAMESPACE, "use-local-call", String.valueOf(dataFactory.isUseLocalCall()));
+    configAttrs.setAttribute(CdaModule.NAMESPACE, "is-sugar-mode", String.valueOf(dataFactory.isSugarMode()));
+
     xmlWriter.writeTag(CdaModule.NAMESPACE, "config", configAttrs, XmlWriterSupport.CLOSE);
 
     final String[] queryNames = dataFactory.getQueryNames();
