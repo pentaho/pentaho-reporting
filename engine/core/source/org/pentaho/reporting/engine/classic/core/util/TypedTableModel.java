@@ -25,8 +25,8 @@ import org.pentaho.reporting.libraries.base.util.GenericObjectTable;
 public class TypedTableModel extends AbstractTableModel
 {
   private ArrayList<String> columnNames;
-  private ArrayList<Class> columnClasses;
-  private GenericObjectTable data;
+  private ArrayList<Class<?>> columnClasses;
+  private GenericObjectTable<Object> data;
 
   public TypedTableModel()
   {
@@ -35,9 +35,9 @@ public class TypedTableModel extends AbstractTableModel
 
   public TypedTableModel(final int rowIncrement, final int columnIncrement)
   {
-    data = new GenericObjectTable(Math.max(1, rowIncrement), Math.max(1, columnIncrement));
+    data = new GenericObjectTable<Object>(Math.max(1, rowIncrement), Math.max(1, columnIncrement));
     columnNames = new ArrayList<String>(columnIncrement);
-    columnClasses = new ArrayList<Class>(columnIncrement);
+    columnClasses = new ArrayList<Class<?>>(columnIncrement);
   }
 
   public TypedTableModel(final String[] columnNames)
@@ -51,12 +51,12 @@ public class TypedTableModel extends AbstractTableModel
     }
   }
 
-  public TypedTableModel(final String[] columnNames, final Class[] columnClasses)
+  public TypedTableModel(final String[] columnNames, final Class<?>[] columnClasses)
   {
     this(columnNames, columnClasses, 10);
   }
 
-  public TypedTableModel(final String[] columnNames, final Class[] columnClasses, final int rowCount)
+  public TypedTableModel(final String[] columnNames, final Class<?>[] columnClasses, final int rowCount)
   {
     this(rowCount, columnNames.length);
     if (columnNames.length != columnClasses.length)
@@ -72,7 +72,7 @@ public class TypedTableModel extends AbstractTableModel
     }
   }
 
-  public void addColumn(final String name, final Class type)
+  public void addColumn(final String name, final Class<?> type)
   {
     if (name == null)
     {
@@ -124,7 +124,7 @@ public class TypedTableModel extends AbstractTableModel
    */
   public String getColumnName(final int columnIndex)
   {
-    return (String) columnNames.get(columnIndex);
+    return columnNames.get(columnIndex);
   }
 
   /**
@@ -135,7 +135,7 @@ public class TypedTableModel extends AbstractTableModel
    * @param columnIndex the index of the column
    * @return the common ancestor class of the object values in the model.
    */
-  public Class getColumnClass(final int columnIndex)
+  public Class<?> getColumnClass(final int columnIndex)
   {
     return (Class) columnClasses.get(columnIndex);
   }
@@ -182,7 +182,7 @@ public class TypedTableModel extends AbstractTableModel
     fireTableCellUpdated(rowIndex, columnIndex);
   }
 
-  public void setColumnType(final int colIndex, final Class type)
+  public void setColumnType(final int colIndex, final Class<?> type)
   {
     if (type == null)
     {
