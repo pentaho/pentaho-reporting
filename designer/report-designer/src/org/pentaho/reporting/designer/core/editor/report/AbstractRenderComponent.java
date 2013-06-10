@@ -104,7 +104,6 @@ import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResol
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
 /**
@@ -420,15 +419,8 @@ public abstract class AbstractRenderComponent extends JComponent
 
         if (e.isShiftDown())
         {
-          // toggle selection ..
-          if (selectionModel.isSelected(element))
-          {
-            selectionModel.remove(element);
-          }
-          else
-          {
-            selectionModel.add(element);
-          }
+          toggleSelection(selectionModel, element);
+
         }
         else
         {
@@ -442,15 +434,40 @@ public abstract class AbstractRenderComponent extends JComponent
         return;
       }
 
-      // No element found, clear the selection.
       if (e.isShiftDown() == false)
       {
         selectionModel.clearSelection();
       }
 
-      if(rendererRoot.getElement() instanceof RootLevelBand)
+      final Element element = rendererRoot.getElement();
+      if (element instanceof RootLevelBand)
       {
-        selectionModel.add(rendererRoot.getElement());
+        if (e.isShiftDown())
+        {
+          toggleSelection(selectionModel, element);
+
+        }
+        else
+        {
+          if (!selectionModel.isSelected(element))
+          {
+            selectionModel.clearSelection();
+            selectionModel.add(element);
+          }
+        }
+      }
+    }
+
+    private void toggleSelection(final ReportSelectionModel selectionModel, final Element element)
+    {
+      // toggle selection ..
+      if (selectionModel.isSelected(element))
+      {
+        selectionModel.remove(element);
+      }
+      else
+      {
+        selectionModel.add(element);
       }
     }
   }
