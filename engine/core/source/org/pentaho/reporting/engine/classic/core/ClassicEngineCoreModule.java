@@ -151,7 +151,7 @@ public class ClassicEngineCoreModule extends AbstractModule
 
     ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Core.NAMESPACE, "core");
     ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Crosstab.NAMESPACE, "crosstab");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Designtime.NAMESPACE, "designtime");
+    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Designtime.NAMESPACE, "report-designer");
     ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Excel.NAMESPACE, "excel");
     ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Html.NAMESPACE, "html");
     ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Internal.NAMESPACE, "internal");

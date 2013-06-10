@@ -125,6 +125,7 @@
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute type="xs:anyURI" name="namespace" use="optional"/>
+        <xs:attribute type="xs:string" name="namespace-prefix" use="optional"/>
         <xs:attribute type="xs:string" name="name" use="optional"/>
         <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
         <xs:attribute type="xs:boolean" name="mandatory" use="optional"/>

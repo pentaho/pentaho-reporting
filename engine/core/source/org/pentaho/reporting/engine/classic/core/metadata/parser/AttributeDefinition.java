@@ -24,13 +24,14 @@ public class AttributeDefinition
   private String bundleName;
   private String namespace;
   private String name;
+  private String namespacePrefix;
   private boolean preferred;
   private boolean mandatory;
   private boolean expert;
   private boolean hidden;
   private boolean computed;
   private boolean transientFlag;
-  private Class valueType;
+  private Class<?> valueType;
   private String valueRole;
   private boolean deprecated;
   private boolean bulk;
@@ -41,6 +42,7 @@ public class AttributeDefinition
   private int compatibilityLevel;
 
   public AttributeDefinition(final String namespace,
+                             final String namespacePrefix,
                              final String name,
                              final boolean preferred,
                              final boolean mandatory,
@@ -48,7 +50,7 @@ public class AttributeDefinition
                              final boolean hidden,
                              final boolean computed,
                              final boolean transientFlag,
-                             final Class valueType,
+                             final Class<?> valueType,
                              final String valueRole,
                              final String propertyEditor,
                              final boolean deprecated,
@@ -80,6 +82,7 @@ public class AttributeDefinition
       throw new NullPointerException();
     }
 
+    this.namespacePrefix = namespacePrefix;
     this.attributeCore = attributeCore;
     this.propertyEditor = propertyEditor;
     this.namespace = namespace;
@@ -155,7 +158,12 @@ public class AttributeDefinition
     return transientFlag;
   }
 
-  public Class getValueType()
+  public String getNamespacePrefix()
+  {
+    return namespacePrefix;
+  }
+
+  public Class<?> getValueType()
   {
     return valueType;
   }
