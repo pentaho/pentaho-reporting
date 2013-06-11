@@ -100,11 +100,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     public void focusLost(final FocusEvent e)
     {
-      if (inSetupUpdate)
-      {
-        return;
-      }
-
       if (parameterUpdateInProgress)
       {
         parameterUpdateInProgress = false;
@@ -119,6 +114,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
      */
     public void mouseClicked(final MouseEvent e)
     {
+      parameterUpdateInProgress = true;
     }
 
     /**
@@ -126,6 +122,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
      */
     public void mousePressed(final MouseEvent e)
     {
+      parameterUpdateInProgress = true;
     }
 
     /**
