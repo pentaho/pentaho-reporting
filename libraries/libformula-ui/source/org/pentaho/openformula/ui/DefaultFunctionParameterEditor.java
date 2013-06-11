@@ -67,8 +67,11 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     {
       final FieldDefinition value = (FieldDefinition) evt.getNewValue();
       //noinspection MagicCharacter,StringConcatenation
-      final String text = FormulaUtil.quoteReference(value.getName());
-      setParameterValue(paramIndex, text);
+      if (value != null)
+      {
+        final String text = FormulaUtil.quoteReference(value.getName());
+        setParameterValue(paramIndex, text);
+      }
     }
   }
 
@@ -515,9 +518,14 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     try
     {
       inParameterUpdate = true;
-//    changeHandlers[param].setIgnore(true);
       textFields[param].setText(value);
-//    changeHandlers[param].setIgnore(false);
+
+      // User entered a field for a particular parameter.  Update formula text-area
+      if (param < getParameterCount())
+      {
+        fireParameterUpdate(param, value);
+      }
+
     }
     finally
     {
