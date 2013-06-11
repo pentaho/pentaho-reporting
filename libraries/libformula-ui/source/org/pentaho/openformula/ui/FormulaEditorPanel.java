@@ -130,7 +130,7 @@ public class FormulaEditorPanel extends JComponent
       {
         if (i > 0)
         {
-          b.append("; ");
+          b.append(";");
         }
         final Type type = selectedFunction.getParameterType(i);
         b.append(TypeUtil.getParameterType(type, getLocale()));
