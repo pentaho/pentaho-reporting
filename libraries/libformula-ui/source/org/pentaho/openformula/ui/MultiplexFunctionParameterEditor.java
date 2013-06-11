@@ -113,7 +113,7 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
     // Ensure that the parameter field editor has been initialized. This can
     // happen if user manually types in the whole formula in text-area.
     final boolean switchParameterEditor;
-    if (this.functionStartIndex == 0)
+    if (this.selectedFunction == null)
     {
       switchParameterEditor = true;
       context.setSwitchParameterEditor(true);
