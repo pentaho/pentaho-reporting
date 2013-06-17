@@ -61,4 +61,5 @@
             <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
         </antcall>
     </target>
+
 </project>
