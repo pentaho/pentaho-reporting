@@ -80,6 +80,15 @@ public class DataFactoryRegistry
     }
   }
 
+  public void unregister(final DataFactoryMetaData metaData)
+  {
+    if (metaData == null)
+    {
+      throw new NullPointerException();
+    }
+    this.backend.remove(metaData.getName());
+  }
+
   public void register(final DataFactoryMetaData metaData)
   {
     if (metaData == null)
