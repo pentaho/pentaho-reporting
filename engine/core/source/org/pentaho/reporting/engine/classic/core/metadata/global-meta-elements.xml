@@ -548,6 +548,83 @@
                    bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="style-resolver-change-tracker"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="computed-style"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.AttributeExpressionsEvaluator"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.MetaDataStyleEvaluator"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.StyleExpressionsEvaluator"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.StyleResolvingEvaluator"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.WizardItemHideFunction"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="element-type"
                mandatory="true"

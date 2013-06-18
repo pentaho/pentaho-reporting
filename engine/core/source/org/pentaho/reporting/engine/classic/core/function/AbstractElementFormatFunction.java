@@ -110,7 +110,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    */
   protected AbstractElementFormatFunction()
   {
-    attrName = computeUniqueIdentifier(this);
+    attrName = computeUniqueIdentifier();
   }
 
   /**
@@ -697,19 +697,19 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
       throws IOException, ClassNotFoundException
   {
     in.defaultReadObject();
-    attrName = computeUniqueIdentifier(this);
+    attrName = computeUniqueIdentifier();
   }
 
   public AbstractElementFormatFunction getInstance()
   {
     final AbstractElementFormatFunction expression = (AbstractElementFormatFunction) super.getInstance();
-    expression.attrName = computeUniqueIdentifier(expression);
+    expression.attrName = computeUniqueIdentifier();
     return expression;
   }
 
-  private String computeUniqueIdentifier(final AbstractElementFormatFunction expression)
+  private String computeUniqueIdentifier()
   {
-    return "need-eval-result:" + getClass().getName() + "@" + System.identityHashCode(expression);
+    return "need-eval-result:" + getClass().getName();
   }
 
 }
