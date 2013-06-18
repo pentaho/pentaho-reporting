@@ -94,10 +94,6 @@ public class CompoundDataFactoryTest extends TestCase
 
   public void testGetDataFactoryForName_freeform()
   {
-    final String queryName = "test"; //$NON-NLS-1$
-    final CompoundDataFactory cdf = new CompoundDataFactory();
-    cdf.add(new MockDataFactory(queryName));
-
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
         MockDataFactory.class.getName(),
         "", //$NON-NLS-1$
@@ -112,19 +108,26 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         new DefaultDataFactoryCore(), -1);
 
-    DataFactoryRegistry.getInstance().register(metadata);
+    try
+    {
+      final String queryName = "test"; //$NON-NLS-1$
+      final CompoundDataFactory cdf = new CompoundDataFactory();
+      cdf.add(new MockDataFactory(queryName));
 
-    assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-    assertEquals(1, cdf.getQueryNames().length);
-    assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
+      DataFactoryRegistry.getInstance().register(metadata);
+
+      assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
+      assertEquals(1, cdf.getQueryNames().length);
+      assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
+    }
+    finally
+    {
+      DataFactoryRegistry.getInstance().unregister(metadata);
+    }
   }
 
   public void testGetDataFactoryForName_non_freeform()
   {
-    final String queryName = "test"; //$NON-NLS-1$
-    final CompoundDataFactory cdf = new CompoundDataFactory();
-    cdf.add(new MockDataFactory(queryName));
-
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
         MockDataFactory.class.getName(),
         "", //$NON-NLS-1$
@@ -139,11 +142,21 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         new DefaultDataFactoryCore(), -1);
 
+    try
+    {
+    final String queryName = "test"; //$NON-NLS-1$
+    final CompoundDataFactory cdf = new CompoundDataFactory();
+    cdf.add(new MockDataFactory(queryName));
     DataFactoryRegistry.getInstance().register(metadata);
 
     assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
     assertEquals(1, cdf.getQueryNames().length);
     assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
+    }
+    finally
+    {
+      DataFactoryRegistry.getInstance().unregister(metadata);
+    }
   }
 
 
