@@ -709,7 +709,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
 
   private String computeUniqueIdentifier()
   {
-    return "need-eval-result:" + getClass().getName();
+    return "need-eval-result:" + getClass().getName() + '@' + System.identityHashCode(this);
   }
 
 }
