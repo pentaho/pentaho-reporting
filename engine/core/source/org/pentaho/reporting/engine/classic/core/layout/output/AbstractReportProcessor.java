@@ -46,7 +46,6 @@ import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.engine.classic.core.states.process.RestartOnNewPageHandler;
 import org.pentaho.reporting.engine.classic.core.util.IntList;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
@@ -145,7 +144,7 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     }
 
     final boolean designtime = outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
-    this.report = (MasterReport) report.derive(designtime);
+    this.report = report.derive(designtime);
   }
 
   protected ProcessStateHandle getProcessStateHandle()

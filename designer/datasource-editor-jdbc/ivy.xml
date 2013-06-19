@@ -34,6 +34,8 @@
       <exclude org="hsqldb"/>
       <exclude org="commons-logging"/>
       <exclude org="xml-apis"/>
+      <exclude org="${library.group}"/>
+      <exclude org="${ivy.artifact.group}"/>
     </dependency>
 
     <!-- External dependencies -->
