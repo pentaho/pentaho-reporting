@@ -62,7 +62,10 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
 
   public void addParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
   {
-    listeners.add(ParameterUpdateListener.class, parameterUpdateListener);
+    if (listeners.getListenerCount(ParameterUpdateListener.class) == 0)
+    {
+      listeners.add(ParameterUpdateListener.class, parameterUpdateListener);
+    }
   }
 
   public void removeParameterUpdateListener(final ParameterUpdateListener parameterUpdateListener)
@@ -102,37 +105,52 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
     final FunctionDescription selectedFunction = context.getFunction();
     final int functionStart = context.getFunctionInformation().getFunctionOffset();
 
-    final FunctionDescription old = this.selectedFunction;
-    if (this.functionStartIndex == functionStart &&
-        FunctionParameterContext.isSameFunctionDescription(old, selectedFunction))
+    if (activeEditor != null)
     {
-      if (activeEditor != null)
-      {
-        activeEditor.setSelectedFunction(context);
-      }
-      return;
+      activeEditor.setSelectedFunction(context);
     }
-    
+
+    // Ensure that the parameter field editor has been initialized. This can
+    // happen if user manually types in the whole formula in text-area.
+    final boolean switchParameterEditor;
+    if (this.selectedFunction == null)
+    {
+      switchParameterEditor = true;
+      context.setSwitchParameterEditor(true);
+    }
+    else
+    {
+      switchParameterEditor = context.isSwitchParameterEditor();
+    }
+
     this.selectedFunction = selectedFunction;
     this.functionStartIndex = functionStart;
 
     final String name = selectedFunction.getCanonicalName();
+    if ((activeEditor != null) && (switchParameterEditor == true))
+    {
+      activeEditor.removeParameterUpdateListener(parameterUpdateHandler);
+    }
+
     activeEditor = getEditor(name);
     if (activeEditor == null)
     {
       activeEditor = defaultEditor;
     }
 
-    panel.removeAll();
-    panel.add(activeEditor.getEditorComponent());
+    if (switchParameterEditor)
+    {
+      panel.removeAll();
+      panel.add(activeEditor.getEditorComponent());
 
-    activeEditor.addParameterUpdateListener(parameterUpdateHandler);
-    activeEditor.setFields(fieldDefinitions.clone());
-    activeEditor.setSelectedFunction(context);
+      activeEditor.addParameterUpdateListener(parameterUpdateHandler);
+      activeEditor.setFields(fieldDefinitions.clone());
+      activeEditor.setSelectedFunction(context);
 
-    rootPanel.invalidate();
-    rootPanel.revalidate();
-    rootPanel.repaint();    
+      rootPanel.invalidate();
+      rootPanel.revalidate();
+      rootPanel.repaint();
+    }
   }
 
   public void setEditor(final String function, final FunctionParameterEditor editor)

@@ -714,46 +714,42 @@ public class FormulaDocument implements Document
       rootElement.insertElement(i, element);
     }
     rootElement.revalidateStructure();
+    rootElement.revalidateNodePositions();
     needRevalidateStructure = false;
     fireInsertEvent(new FormulaDocumentEvent(this, DocumentEvent.EventType.INSERT, 0, text.length()));
   }
 
-  public void updateParameterText(final int start, final int end, final String newText, final boolean hasDummyParams)
+  /**
+   * Retrieve the element at specified position.  Note, the index is not the cursor index
+   * but rather the tokenized element position.  So '=COUNT(1;2;3)' would contain 9 elements
+   * starting with element '=' at 0 index upto ')' at index 8.
+   * @param index
+   * @return FormulaElement specified at index.  If index is invalid then return null.
+   */
+  public FormulaElement getElementAtPosition(final int index)
   {
-    final int startIndex = (start == 0) ? rootElement.getElementIndex(start) : rootElement.getElementIndex(start - 1);
-    final int endIndex = rootElement.getElementIndex(end);
+    return (FormulaElement)rootElement.getElement(index);
+  }
 
-    final FormulaElement startElement = (FormulaElement) rootElement.getElement(startIndex);
-    final FormulaElement endElement = (FormulaElement) rootElement.getElement(endIndex);
-
-    // If there is no parameters then insert the new parameter, otherwise we
-    // replace the element with the new text
-    if (((startElement instanceof FormulaOpenParenthesisElement) &&
-         (endElement instanceof FormulaClosingParenthesisElement)) ||
-        ((startElement instanceof FormulaClosingParenthesisElement) &&
-         (endElement instanceof FormulaClosingParenthesisElement)))
-    {
-      rootElement.insert(endElement, new FormulaTextElement(this, rootElement, newText));
-    }
-    else
-    {
-      rootElement.replace(startElement, new FormulaTextElement(this, rootElement, newText), hasDummyParams);
-    }
-
+  public void updateParameterText(final int start, final int end, String parameterText, final boolean hasDummyParams)
+  {
     // For functions that have dummy parameters (ie like DRILLDOWN), we are always recreating the whole
     // formula text.  So remove all elements from second position to last element.  We always remove
-    // elements from same position as the element list pops the eleent of the list causing all other elements
+    // elements from same position as the element list pops the element of the list causing all other elements
     // to shift down.
     if (hasDummyParams == false)
     {
+      final int startIndex = (start == 0) ? rootElement.getElementIndex(start) : rootElement.getElementIndex(start - 1);
+      final int endIndex = rootElement.getElementIndex(end);
+
       for (int i = startIndex + 1; i <= endIndex; i++)
       {
         rootElement.removeElement(startIndex + 1);
       }
-    }
 
-    rootElement.revalidateNodePositions();
-    needRevalidateStructure = true;
+      rootElement.revalidateNodePositions();
+      needRevalidateStructure = true;
+    }
   }
 
   public void revalidateStructure()
