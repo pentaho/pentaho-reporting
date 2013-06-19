@@ -23,7 +23,6 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 
 /**
  * Single-instance layouter for handling the layout computation for a single report.
@@ -36,52 +35,26 @@ public class ReportLayouter
   private ReportRenderContext reportRenderContext;
   private long lastModCount;
 
-  private DesignerExpressionRuntime runtime;
-
   public ReportLayouter(final ReportRenderContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
     this.lastModCount = 0;
   }
 
-  private DataSchema getDataSchema()
-  {
-    return this.reportRenderContext.getReportDataSchemaModel().getDataSchema();
-  }
-
   public LogicalPageBox layout() throws ReportProcessingException, ContentProcessingException
   {
-    try
+    final MasterReport report = reportRenderContext.getMasterReportElement();
+    if (logicalPageBox != null && lastModCount == report.getChangeTracker())
     {
-      final MasterReport report = reportRenderContext.getMasterReportElement();
-      if (logicalPageBox != null && lastModCount == report.getChangeTracker())
-      {
-        return logicalPageBox;
-      }
-
-      final MasterReport masterReport = (MasterReport) report.derive(true);
-      final DesignerOutputProcessor outputProcessor = initForReport(masterReport);
-
-      final DesignerReportProcessor reportProcessor = new DesignerReportProcessor(masterReport, outputProcessor);
-      reportProcessor.processReport();
-      this.logicalPageBox = outputProcessor.getLogicalPage();
-      lastModCount = report.getChangeTracker();
       return logicalPageBox;
     }
-    finally
-    {
-      this.runtime = null;
-    }
-  }
 
-  private DesignerOutputProcessor initForReport(final MasterReport masterReport)
-  {
-    final LayoutingContext context = new LayoutingContext(masterReport);
-    this.runtime = context.getRuntime();
-    this.runtime.setContentBase(masterReport.getContentBase());
-    this.runtime.setDataSchema(getDataSchema());
-
-    return context.getOutputProcessor();
+    final DesignerOutputProcessor outputProcessor = new DesignerOutputProcessor();
+    final DesignerReportProcessor reportProcessor = new DesignerReportProcessor(report, outputProcessor);
+    reportProcessor.processReport();
+    this.logicalPageBox = outputProcessor.getLogicalPage();
+    lastModCount = report.getChangeTracker();
+    return logicalPageBox;
   }
 
   public OutputProcessorMetaData getOutputProcessorMetaData()

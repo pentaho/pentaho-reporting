@@ -96,6 +96,10 @@ import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.designtime.AttributeExpressionChange;
+import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
+import org.pentaho.reporting.engine.classic.core.designtime.StyleExpressionChange;
+import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -170,26 +174,20 @@ public abstract class AbstractRenderComponent extends JComponent
         return;
       }
 
-      final ReportElement reportElement = (ReportElement) element;
-      final Section band = getElementRenderer().getElement();
-      if (ModelUtility.isDescendant(band, reportElement))
+      final Object parameter = event.getParameter();
+      if (parameter instanceof DataFactoryChange ||
+          parameter instanceof SubReportParameterChange ||
+          parameter instanceof AttributeExpressionChange ||
+          parameter instanceof StyleExpressionChange)
       {
-        getElementRenderer().invalidateLayout();
-        AbstractRenderComponent.this.revalidate();
-        AbstractRenderComponent.this.repaint();
+        // filter out known change events that cannot alter the layout.
+        // this saves us a few CPU cycles here and there
         return;
       }
 
-      if (reportElement instanceof Section)
-      {
-        final Section section = (Section) reportElement;
-        if (ModelUtility.isDescendant(section, band))
-        {
-          getElementRenderer().invalidateLayout();
-          AbstractRenderComponent.this.revalidate();
-          AbstractRenderComponent.this.repaint();
-        }
-      }
+      getElementRenderer().invalidateLayout();
+      AbstractRenderComponent.this.revalidate();
+      AbstractRenderComponent.this.repaint();
     }
 
     public void settingsChanged()
@@ -1989,7 +1987,9 @@ public abstract class AbstractRenderComponent extends JComponent
         topBorder = 0;
       }
 
-      return new Dimension((int) (zoom * (leftBorder + bounds.getWidth())), (int) (zoom * (topBorder + bounds.getHeight())));
+      final int width = (int) (zoom * (leftBorder + bounds.getWidth()));
+      final int height = (int) (zoom * (topBorder + bounds.getHeight()));
+      return new Dimension(width, height);
     }
     catch (Exception e)
     {
