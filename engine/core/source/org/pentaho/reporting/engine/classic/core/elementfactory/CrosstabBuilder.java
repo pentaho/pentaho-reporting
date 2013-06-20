@@ -44,6 +44,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class CrosstabBuilder
 {
@@ -228,7 +229,7 @@ public class CrosstabBuilder
     {
       throw new IllegalStateException();
     }
-    
+
     final CrosstabCellBody cellBody = new CrosstabCellBody();
     cellBody.addElement(createDetailsCell());
     setupDetailsHeader(cellBody.getHeader());
@@ -332,7 +333,7 @@ public class CrosstabBuilder
     for (int i = 0; i < details.size(); i += 1)
     {
       final CrosstabDetail crosstabDetail = details.get(i);
-      cell.addElement(createFieldItem(crosstabDetail.getField(), crosstabDetail.getAggregation()));
+      cell.addElement(createFieldItem(crosstabDetail.getField(), crosstabDetail.getAggregation(), true));
     }
     return cell;
   }
@@ -344,17 +345,23 @@ public class CrosstabBuilder
     for (int i = 0; i < details.size(); i += 1)
     {
       final CrosstabDetail crosstabDetail = details.get(i);
-      cell.addElement(createLabel(crosstabDetail.getTitle(), crosstabDetail.getField()));
+      String title = crosstabDetail.getTitle();
+      if (StringUtils.isEmpty(title))
+      {
+        title = crosstabDetail.getField();
+      }
+      cell.addElement(createLabel(title, crosstabDetail.getField(), true));
     }
   }
 
   private Element createFieldItem(final String text)
   {
-    return createFieldItem(text, null);
+    return createFieldItem(text, null, false);
   }
 
   private Element createFieldItem(final String fieldName,
-                                  final Class aggregationType)
+                                  final Class aggregationType,
+                                  final boolean split)
   {
     final ElementType targetType;
     if (dataSchemaModel != null)
@@ -378,11 +385,11 @@ public class CrosstabBuilder
     }
 
     element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, fieldName);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, split(split, minimumWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
-    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, split(split, prefWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, split(split, maximumWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.AGGREGATION_TYPE, aggregationType);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
@@ -391,17 +398,39 @@ public class CrosstabBuilder
 
   private Element createLabel(final String text, final String labelFor)
   {
+    return createLabel(text, labelFor, false);
+  }
+
+  private Element createLabel(final String text, final String labelFor, final boolean splitArea)
+  {
     final Element element = new Element();
     element.setElementType(LabelType.INSTANCE);
     element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, minimumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, split(splitArea, minimumWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, minimumHeight);
-    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, prefWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.WIDTH, split(splitArea, prefWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.HEIGHT, prefHeight);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, maximumWidth);
+    element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, split(splitArea, maximumWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
+    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES,
+        StringUtils.isEmpty(labelFor) == false || allowMetaDataAttributes);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, labelFor);
     return element;
+  }
+
+  private Float split(final boolean split, final Float value)
+  {
+    if (split == false)
+    {
+      return value;
+    }
+
+    if (value == null)
+    {
+      return null;
+    }
+    final float f = value;
+    return f / Math.max(1, details.size());
   }
 }
