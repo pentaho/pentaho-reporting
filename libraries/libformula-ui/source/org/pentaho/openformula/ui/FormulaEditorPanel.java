@@ -150,7 +150,7 @@ public class FormulaEditorPanel extends JComponent
     }
   }
 
-  public class DocumentSyncHandler implements DocumentListener, Runnable
+  private class DocumentSyncHandler implements DocumentListener, Runnable
   {
     private DocumentSyncHandler()
     {
