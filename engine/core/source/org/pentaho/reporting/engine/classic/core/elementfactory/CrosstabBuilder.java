@@ -413,8 +413,14 @@ public class CrosstabBuilder
     element.getStyle().setStyleProperty(ElementStyleKeys.MAX_WIDTH, split(splitArea, maximumWidth));
     element.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, maximumHeight);
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
-    element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES,
-        StringUtils.isEmpty(labelFor) == false || allowMetaDataAttributes);
+    if (StringUtils.isEmpty(labelFor))
+    {
+      element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, allowMetaDataAttributes);
+    }
+    else
+    {
+      element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, true);
+    }
     element.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR, labelFor);
     return element;
   }
