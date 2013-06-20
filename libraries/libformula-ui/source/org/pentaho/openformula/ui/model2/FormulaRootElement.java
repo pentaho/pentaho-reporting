@@ -85,11 +85,18 @@ public class FormulaRootElement extends FormulaElement
    * Fetches the child element at the given index.
    *
    * @param index the specified index >= 0
-   * @return the child element
+   * @return the child element.  If index is invalid, return null
    */
   public Element getElement(final int index)
   {
-    return elements.get(index);
+    if (index < elements.size())
+    {
+      return elements.get(index);
+    }
+    else
+    {
+      return null;
+    }
   }
 
   /**
@@ -120,7 +127,7 @@ public class FormulaRootElement extends FormulaElement
     for (int i = 0; i < elements.length; i++)
     {
       final FormulaElement element = elements[i];
-      if (element.getParentElement() != this)
+      if ((element != null) && (element.getParentElement() != this))
       {
         throw new IllegalArgumentException();
       }
@@ -175,10 +182,13 @@ public class FormulaRootElement extends FormulaElement
     final int count = getElementCount();
     for (int i = 0; i < count; i++)
     {
-      final FormulaElement node = (FormulaElement) getElement(i);
-      node.setStartOffset(cursor);
-      cursor += node.getText().length();
-      node.setEndOffset(cursor);
+      final FormulaElement node = (FormulaElement)getElement(i);
+      if (node != null)
+      {
+        node.setStartOffset(cursor);
+        cursor += node.getText().length();
+        node.setEndOffset(cursor);
+      }
     }
     setEndOffset(cursor);
   }
