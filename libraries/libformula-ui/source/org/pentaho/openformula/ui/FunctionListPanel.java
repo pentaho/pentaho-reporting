@@ -151,7 +151,7 @@ public class FunctionListPanel extends JPanel
   protected void fireActionPerformed()
   {
     final ActionEvent event = new ActionEvent(this, -1, null);
-    final ActionListener[] listeners = (ActionListener[]) listenerList.getListeners(ActionListener.class);
+    final ActionListener[] listeners = listenerList.getListeners(ActionListener.class);
     for (int i = 0; i < listeners.length; i++)
     {
       final ActionListener listener = listeners[i];
