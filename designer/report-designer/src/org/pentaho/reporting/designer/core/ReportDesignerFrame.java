@@ -910,18 +910,25 @@ public class ReportDesignerFrame extends JFrame
       final JTabbedPane tabs = (JTabbedPane) e.getSource();
       if (tabs.getSelectedIndex() == 0)
       {
-        attributeEditorPanel.setAllowAttributeCard(true);
-        attributeEditorPanel.setAllowDataSourceCard(false);
-        attributeEditorPanel.setAllowExpressionCard(false);
-        attributeEditorPanel.reset(activeContext.getSelectionModel());
+        refreshTabPanel(attributeEditorPanel, activeContext, false, true, true);
       }
       else
       {
-        attributeEditorPanel.setAllowAttributeCard(false);
-        attributeEditorPanel.setAllowDataSourceCard(true);
-        attributeEditorPanel.setAllowExpressionCard(true);
-        attributeEditorPanel.reset(activeContext.getSelectionModel());
+        refreshTabPanel(attributeEditorPanel, activeContext, true, false, false);
       }
+    }
+
+
+    private void refreshTabPanel(final ElementPropertiesPanel attributeEditorPanel,
+                                         final ReportRenderContext activeContext,
+                                         final boolean attributeCard,
+                                         final boolean datasourceCard,
+                                         final boolean expressionCard)
+    {
+      attributeEditorPanel.setAllowAttributeCard(attributeCard);
+      attributeEditorPanel.setAllowDataSourceCard(datasourceCard);
+      attributeEditorPanel.setAllowExpressionCard(expressionCard);
+      attributeEditorPanel.reset(activeContext.getSelectionModel());
     }
   }
 
