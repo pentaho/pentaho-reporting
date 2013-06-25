@@ -37,7 +37,7 @@ public class PlainTextPage
   private PlaintextDataChunk[][] pageBuffer;
 
   /**
-   * The commandset that is used to finally print the content.
+   * The command-set that is used to finally print the content.
    */
   private PrinterDriver driver;
 
@@ -58,7 +58,7 @@ public class PlainTextPage
   /**
    * Creates a new PlainTextPage with the given dimensions and the specified PrinterCommandSet.
    *
-   * @param driver the commandset for printing and formating the text.
+   * @param driver the command-set for printing and formatting the text.
    */
   public PlainTextPage(final Paper pageFormat,
                        final PrinterDriver driver,
@@ -80,10 +80,10 @@ public class PlainTextPage
     final float characterWidthInPoint = (72.0f / driver.getCharactersPerInch());
     final float characterHeightInPoint = (72.0f / driver.getLinesPerInch());
 
-    final int currentPageHeight = PlainTextPage.correctedDivisionFloor
-        ((float) (pageFormat.getImageableHeight()), characterHeightInPoint);
-    final int currentPageWidth = PlainTextPage.correctedDivisionFloor
-        ((float) (pageFormat.getImageableWidth()), characterWidthInPoint);
+    final int currentPageHeight = PlainTextPage.correctedDivisionFloor(pageFormat.getImageableHeight(),
+                                                                       characterHeightInPoint);
+    final int currentPageWidth = PlainTextPage.correctedDivisionFloor(pageFormat.getImageableWidth(),
+                                                                      characterWidthInPoint);
 
     // Log.debug("Created page with " + currentPageWidth + ", " + currentPageHeight);
     pageBuffer = new PlaintextDataChunk[currentPageWidth][currentPageHeight];
@@ -98,10 +98,10 @@ public class PlainTextPage
    * Fixes some floating point errors when calculating positions.
    *
    * @param c the divisor
-   * @param d the divident
+   * @param d the dividend
    * @return the corrected division result.
    */
-  public static int correctedDivisionFloor(float c, float d)
+  public static int correctedDivisionFloor(double c, double d)
   {
     c = Math.round(c * 100.0f);
     d = Math.round(d * 100.0f);
@@ -135,7 +135,7 @@ public class PlainTextPage
    * @param y      the row where to print the text
    * @param w      the number of characters to print.
    * @param text   the text that should be printed.
-   * @param format the fontdefinition used to format the text.
+   * @param format the font definition used to format the text.
    */
   public void addTextChunk(final int x, final int y,
                            final int w, final String text,
@@ -173,6 +173,8 @@ public class PlainTextPage
 
     final PlaintextDataChunk chunk =
         new PlaintextDataChunk(text, font, bold, italic, underline, strikethrough, x, y, w);
+
+    // TODO: Why are we storing a chunk 'x' number of times where 'x' the width of the chunk
     for (int i = 0; i < w; i++)
     {
       if (pageBuffer[x + i][y] == null)
@@ -235,7 +237,7 @@ public class PlainTextPage
         }
       }
 
-      // end the page on the last line.
+      // end the page on the last line.  Note: overflow is ignored when ending page or line.
       if (y == (height - 1))
       {
         driver.endPage(overflow);
