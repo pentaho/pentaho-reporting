@@ -84,6 +84,7 @@ import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
+import org.pentaho.reporting.libraries.fonts.registry.FontStorage;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
@@ -498,19 +499,29 @@ public class DebugReportRunner
                                                 final boolean expectPageBreak)
       throws ReportProcessingException, ContentProcessingException
   {
-    final ReportStateKey stateKey = new ReportStateKey();
-
-    final DebugOutputProcessorMetaData metaData;
+    final FontStorage fontRegistry;
     if (monospaced)
     {
-      metaData = new DebugOutputProcessorMetaData(new DefaultFontStorage(new MonospaceFontRegistry(9, 18)));
+      fontRegistry = new DefaultFontStorage(new MonospaceFontRegistry(9, 18));
     }
     else
     {
-      metaData = new DebugOutputProcessorMetaData();
+      fontRegistry = DebugOutputProcessorMetaData.getLocalFontStorage();
     }
+    return layoutSingleBand(originalReport, reportHeader, fontRegistry, expectPageBreak);
+  }
 
-    final MasterReport report = (MasterReport) originalReport.derive(true);
+  public static LogicalPageBox layoutSingleBand(final MasterReport originalReport,
+                                                final Band reportHeader,
+                                                final FontStorage fontRegistry,
+                                                final boolean expectPageBreak)
+      throws ReportProcessingException, ContentProcessingException
+  {
+    final ReportStateKey stateKey = new ReportStateKey();
+
+    final DebugOutputProcessorMetaData metaData = new DebugOutputProcessorMetaData(fontRegistry);
+
+    final MasterReport report = originalReport.derive(true);
     resolveStyle(report);
     resolveStyle(reportHeader);
 

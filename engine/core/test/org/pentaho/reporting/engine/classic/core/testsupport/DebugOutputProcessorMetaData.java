@@ -66,7 +66,7 @@ public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
     return "pageable/debug";
   }
 
-  private static synchronized FontStorage getLocalFontStorage()
+  public static synchronized FontStorage getLocalFontStorage()
   {
     if (localFontRegistry == null)
     {
