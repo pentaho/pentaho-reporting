@@ -243,12 +243,12 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     final int maxLength = text.computeMaximumTextSize(contentX2);
     final String rawText = gs.getText(text.getOffset(), maxLength, codePointBuffer);
 
-    final int x = PlainTextPage.correctedDivisionFloor
-        ((float) (text.getX() - drawArea.getX()), characterWidthInMicroPoint);
-    final int y = PlainTextPage.correctedDivisionFloor
-        ((float) (text.getY() - drawArea.getY()), characterHeightInMicroPoint);
-    int w = Math.min(maxLength,
-        PlainTextPage.correctedDivisionFloor((float) text.getWidth(), characterWidthInMicroPoint));
+    final int x = PlainTextPage.correctedDivisionFloor((text.getX() - drawArea.getX()),
+                                                       characterWidthInMicroPoint);
+    final int y = PlainTextPage.correctedDivisionFloor((text.getY() - drawArea.getY()),
+                                                       characterHeightInMicroPoint);
+    int w = Math.min(maxLength,PlainTextPage.correctedDivisionFloor(text.getWidth(),
+                                                                    characterWidthInMicroPoint));
 
     // filter out results that do not belong to the current physical page
     if (x + w > plainTextPage.getWidth())
