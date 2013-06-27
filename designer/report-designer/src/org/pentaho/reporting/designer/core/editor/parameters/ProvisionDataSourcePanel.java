@@ -40,12 +40,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.pentaho.reporting.designer.core.ReportDesigner;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
@@ -318,11 +321,12 @@ public class ProvisionDataSourcePanel extends JPanel
       // Add data-source factory into Structure panel.
       // This happens after user adds a new data source from the Edit DataSource dialog
       AddDataFactoryAction.addDataFactory(reportDesignerContext.getActiveContext(), dataFactory, new DataFactoryChange[0]);
-
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
 
       expandAllNodes();
+      SwingUtilities.invokeLater(new ReportDesigner.DataTabSetVisible(reportDesignerContext.getActiveContext()));
     }
+
   }
 
 
