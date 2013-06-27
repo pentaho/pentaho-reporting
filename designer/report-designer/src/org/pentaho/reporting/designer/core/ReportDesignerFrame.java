@@ -105,6 +105,7 @@ import org.pentaho.reporting.designer.core.editor.structuretree.AbstractReportTr
 import org.pentaho.reporting.designer.core.editor.structuretree.LayoutReportTree;
 import org.pentaho.reporting.designer.core.editor.structuretree.StructureTreePanel;
 import org.pentaho.reporting.designer.core.inspections.InspectionSidePanePanel;
+import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.status.StatusBar;
@@ -910,18 +911,25 @@ public class ReportDesignerFrame extends JFrame
       final JTabbedPane tabs = (JTabbedPane) e.getSource();
       if (tabs.getSelectedIndex() == 0)
       {
-        attributeEditorPanel.setAllowAttributeCard(true);
-        attributeEditorPanel.setAllowDataSourceCard(false);
-        attributeEditorPanel.setAllowExpressionCard(false);
-        attributeEditorPanel.reset(activeContext.getSelectionModel());
+        refreshTabPanel(attributeEditorPanel, activeContext, false, true, true);
       }
       else
       {
-        attributeEditorPanel.setAllowAttributeCard(false);
-        attributeEditorPanel.setAllowDataSourceCard(true);
-        attributeEditorPanel.setAllowExpressionCard(true);
-        attributeEditorPanel.reset(activeContext.getSelectionModel());
+        refreshTabPanel(attributeEditorPanel, activeContext, true, false, false);
       }
+    }
+
+
+    protected void refreshTabPanel(final ElementPropertiesPanel attributeEditorPanel,
+                                         final ReportRenderContext activeContext,
+                                         final boolean attributeCard,
+                                         final boolean datasourceCard,
+                                         final boolean expressionCard)
+    {
+      attributeEditorPanel.setAllowAttributeCard(attributeCard);
+      attributeEditorPanel.setAllowDataSourceCard(datasourceCard);
+      attributeEditorPanel.setAllowExpressionCard(expressionCard);
+      attributeEditorPanel.reset(activeContext.getSelectionModel());
     }
   }
 
@@ -1006,6 +1014,7 @@ public class ReportDesignerFrame extends JFrame
   private ElementPropertiesPanel attributeEditorPanel;
   private WelcomePane welcomePane;
   private FieldSelectorPaletteDialog fieldSelectorPaletteDialog;
+  private  StructureAndDataTabChangeHandler structureAndDataTabChangeHandler;
 
   public ReportDesignerFrame() throws XulException
   {
@@ -1432,7 +1441,8 @@ public class ReportDesignerFrame extends JFrame
     dataPanel.add(dataTree, BorderLayout.CENTER);
 
     final JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);
-    tabs.addChangeListener(new StructureAndDataTabChangeHandler());
+    structureAndDataTabChangeHandler = new StructureAndDataTabChangeHandler();
+    tabs.addChangeListener(structureAndDataTabChangeHandler);
     tabs.add(Messages.getString("StructureView.Structure"), structurePanel);// NON-NLS
     tabs.add(Messages.getString("StructureView.Data"), dataPanel);// NON-NLS
 
@@ -1715,6 +1725,13 @@ public class ReportDesignerFrame extends JFrame
 
     updateFrameTitle();
   }
-
-
+  public void displayAndExpandDataSource(final ReportRenderContext activeContext)
+  {
+    if( getReportEditorPane().isVisible())
+    {
+      getReportEditorPane().setSelectedIndex(0);
+      getReportEditorPane().setSelectedIndex(1);
+      structureAndDataTabChangeHandler.refreshTabPanel(getAttributeEditorPanel(),activeContext,true,false,false);
+    }
+  }
 }
