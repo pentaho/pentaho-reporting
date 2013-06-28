@@ -604,16 +604,17 @@ public class FormulaEditorPanel extends JComponent
 
   public void setFormulaText(String formulaText)
   {
-    if (formulaText.startsWith("=") == false)
+    if ((formulaText == null) || (formulaText.length() == 0))
+    {
+      formulaText = "=";
+    }
+    else if (formulaText.startsWith("=") == false)
     {
       formulaText = "=" + formulaText;
     }
 
     this.functionTextArea.setText(formulaText);
-    if (formulaText != null)
-    {
-      this.functionTextArea.setCaretPosition(formulaText.length());
-    }
+    this.functionTextArea.setCaretPosition(formulaText.length());
 
     // Update model
     editorModel.setFormulaText(formulaText);
