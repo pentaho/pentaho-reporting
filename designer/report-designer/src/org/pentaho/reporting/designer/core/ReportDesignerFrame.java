@@ -1729,8 +1729,10 @@ public class ReportDesignerFrame extends JFrame
   {
     if( getReportEditorPane().isVisible())
     {
-      getReportEditorPane().setSelectedIndex(0);
-      getReportEditorPane().setSelectedIndex(1);
+      for(int index=0; index < getReportEditorPane().getTabCount(); index++)
+      {
+        getReportEditorPane().setSelectedIndex(index);
+      }
       structureAndDataTabChangeHandler.refreshTabPanel(getAttributeEditorPanel(),activeContext,true,false,false);
     }
   }
