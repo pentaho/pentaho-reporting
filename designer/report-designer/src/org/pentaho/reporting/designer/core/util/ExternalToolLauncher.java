@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -172,6 +173,7 @@ public class ExternalToolLauncher
   {
     // todo: Use a stream tokenizer (well, a custom one, as the builtin one messes up escaped quotes)
     // so that we can handle quoting gracefully ..
+    boolean exitValue = true;
     final ArrayList<String> command = new ArrayList<String>();
     command.add(executable);
     for (StringTokenizer tokenizer = new StringTokenizer(parameters); tokenizer.hasMoreTokens();)
@@ -192,16 +194,21 @@ public class ExternalToolLauncher
       }
     }
 
-    final Process process = Runtime.getRuntime().exec(command.toArray(new String[command.size()]));
+    final ProcessBuilder process = new ProcessBuilder(command.toArray(new String[command.size()]));
     try
     {
-      return (process.exitValue() == 0);
+      final Process p = process.start();
+      p.waitFor();
+      exitValue = p.exitValue() == 0;
+      // 0 == normal; 2 == permissions issue, 3 == no rules found in mimeType
     }
     catch (Exception e)
     {
-      // process still runs, so assume everything is fine.
-      return true;
+      logger.error("Error in Exec command "+command +" error: "+e.getMessage());
+      // process fails so redirect to openURL command to locate viewer
+      return false;
     }
+    return exitValue;
   }
 
   protected static String safeSystemGetProperty(final String name,
@@ -254,6 +261,7 @@ public class ExternalToolLauncher
       final File mailcapExe = new File("/usr/bin/run-mailcap"); // NON-NLS
       if (mailcapExe.exists())
       {
+        logger.debug("found /usr/bin/run=mailcap");
         if (execute("/usr/bin/run-mailcap", "{0}", file.getCanonicalPath()) == false) // NON-NLS
         {
           openURL(file.toURI().toURL().toString());
