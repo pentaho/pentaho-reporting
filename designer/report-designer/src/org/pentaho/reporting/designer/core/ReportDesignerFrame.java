@@ -911,11 +911,11 @@ public class ReportDesignerFrame extends JFrame
       final JTabbedPane tabs = (JTabbedPane) e.getSource();
       if (tabs.getSelectedIndex() == 0)
       {
-        refreshTabPanel(attributeEditorPanel, activeContext, false, true, true);
+        refreshTabPanel(attributeEditorPanel, activeContext, true, false, false);
       }
       else
       {
-        refreshTabPanel(attributeEditorPanel, activeContext, true, false, false);
+        refreshTabPanel(attributeEditorPanel, activeContext, false, true, true);
       }
     }
 
@@ -1733,7 +1733,7 @@ public class ReportDesignerFrame extends JFrame
       {
         getReportEditorPane().setSelectedIndex(index);
       }
-      structureAndDataTabChangeHandler.refreshTabPanel(getAttributeEditorPanel(),activeContext,true,false,false);
+      structureAndDataTabChangeHandler.refreshTabPanel(getAttributeEditorPanel(),activeContext,false,true,true);
     }
   }
 }
