@@ -69,6 +69,10 @@ public class WizardSpecificationWriteHandler implements BundleWriterHandler
       }
 
       final BundleWriterState wizardFileState = new BundleWriterState(state, "wizard-specification.xml");
+      if(bundle.isEntryExists(wizardFileState.getFileName())){
+    	  // if already exists, remove the old one, enabling node creation of the most recent
+    	  bundle.removeEntry(wizardFileState.getFileName());  
+      }
       final OutputStream outputStream = new BufferedOutputStream(bundle.createEntry(wizardFileState.getFileName(), "text/xml"));
       bundle.getWriteableDocumentMetaData().setEntryAttribute(wizardFileState.getFileName(), BundleUtilities.STICKY_FLAG, "true");
       bundle.getWriteableDocumentMetaData().setEntryAttribute(wizardFileState.getFileName(), BundleUtilities.HIDDEN_FLAG, "true");
