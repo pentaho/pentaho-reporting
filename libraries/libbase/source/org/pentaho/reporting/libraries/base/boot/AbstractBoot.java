@@ -135,7 +135,7 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return true, if the booting is complete, false otherwise.
    */
-  public final synchronized boolean isBootDone()
+  public synchronized boolean isBootDone()
   {
     return this.bootDone;
   }
