@@ -55,6 +55,13 @@
         </antcall>
     </target>
 
+    <target name="continuous-performance" depends="clean-all,resolve">
+        <antcall target="test">
+            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest" value="true"/>
+            <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
+        </antcall>
+    </target>
+
     <target name="longrun-cobertura" depends="clean-all,resolve">
         <antcall target="cobertura">
             <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
