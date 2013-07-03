@@ -40,12 +40,13 @@ public class PerfBenchmarkingTest
   public ContiPerfRule i = new ContiPerfRule();
 
   private boolean isExecutePerformanceTest;
+  final public static int MAX_INVOCATIONS = 10;
+  final public static int MAX_THREADS = 1;
 
   public PerfBenchmarkingTest()
   {
-//    isExecutePerformanceTest = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-//        ("org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest")));
-    isExecutePerformanceTest = true;
+    isExecutePerformanceTest = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest")));
   }
 
   @Before
@@ -141,7 +142,7 @@ public class PerfBenchmarkingTest
   }
 
 
-  @PerfTest(invocations = 10, threads = 1)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
   @Required(max = 130000, average = 15000)
   @Test
   public void perfSubReportsWithManyLabelElements() throws Exception
@@ -174,9 +175,6 @@ public class PerfBenchmarkingTest
 
     // Layout the master report's page header
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(master, master.getPageHeader());
-
-    // Tests iterating thru the model's logical page box
-//    ModelPrinter.INSTANCE.print(pageBox);
 
     // Search for the master reports first element
     final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName(pageBox, "LabelElement-Label-00");
@@ -211,7 +209,7 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(master);
   }
 
-  @PerfTest(invocations = 10, threads = 1)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
   @Required(max = 45000, average = 55000)
   @Test
   public void perfMultipleEmbeddedSubReports() throws Exception
@@ -233,7 +231,7 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(report);
   }
 
-  @PerfTest(invocations = 10, threads = 1)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
   @Test
   public void perfCascadingBandedProperties()
   {
@@ -277,7 +275,7 @@ public class PerfBenchmarkingTest
     DebugReportRunner.resolveStyle(subReport2.getReportHeader());
   }
 
-  @PerfTest(invocations = 1, threads = 1)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
   @Test
   public void perfDataSource() throws Exception
   {
@@ -307,7 +305,7 @@ public class PerfBenchmarkingTest
 //    assertTrue(ccdf.isQueryExecutable("Query Fruit", new StaticDataRow()));
   }
 
-  @PerfTest(invocations = 10, threads = 1)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
   @Test
   public void perfClassicBootStart()
   {
