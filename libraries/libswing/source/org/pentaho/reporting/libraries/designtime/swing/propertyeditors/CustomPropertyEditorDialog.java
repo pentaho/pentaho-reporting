@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.HeadlessException;
 import java.beans.PropertyChangeEvent;
@@ -87,7 +88,7 @@ public class CustomPropertyEditorDialog extends CommonDialog
 
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     setTitle(Messages.getInstance().getString("CustomPropertyEditorDialog.Title"));
-
+    setPreferredSize(new Dimension(500,550));
     super.init();
   }
 
