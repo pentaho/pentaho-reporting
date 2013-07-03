@@ -20,7 +20,6 @@ package org.pentaho.reporting.designer.core.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.StringTokenizer;
 
 import edu.stanford.ejalbert.BrowserLauncher;
@@ -66,8 +65,11 @@ public class ExternalToolLauncher
     }
     else
     {
-      execute(instance.getCustomBrowserExecutable(),
-          instance.getCustomBrowserParameters(), url);
+      if(execute(instance.getCustomBrowserExecutable(),
+          instance.getCustomBrowserParameters(), url) == false)
+      {
+        throw new IOException(UtilMessages.getInstance().getString("ExternalToolLauncher.errorMessage",instance.getCustomBrowserExecutable()));
+      }
     }
   }
 
@@ -87,10 +89,13 @@ public class ExternalToolLauncher
     }
     else
     {
-      execute
+      if(execute
           (toolSettings.getCustomPDFViewerExecutable(),
               toolSettings.getCustomPDFViewerParameters(),
-              file.getCanonicalPath());
+              file.getCanonicalPath()) == false)
+      {
+        throw new IOException(UtilMessages.getInstance().getString("ExternalToolLauncher.errorMessage", toolSettings.getCustomPDFViewerExecutable()));
+      }
     }
   }
 
@@ -117,10 +122,13 @@ public class ExternalToolLauncher
     }
     else
     {
-      execute(
+      if(execute(
           toolSettings.getCustomXLSViewerExecutable(),
           toolSettings.getCustomXLSViewerParameters(),
-          file.getCanonicalPath());
+          file.getCanonicalPath()) == false)
+      {
+        throw new IOException(UtilMessages.getInstance().getString("ExternalToolLauncher.errorMessage",toolSettings.getCustomXLSViewerExecutable()));
+      }
     }
   }
 
@@ -140,10 +148,13 @@ public class ExternalToolLauncher
     }
     else
     {
-      execute(
+      if(execute(
           toolSettings.getCustomRTFViewerExecutable(),
           toolSettings.getCustomRTFViewerParameters(),
-          file.getCanonicalPath());
+          file.getCanonicalPath()) == false)
+      {
+        throw new IOException(UtilMessages.getInstance().getString("ExternalToolLauncher.errorMessage",toolSettings.getCustomRTFViewerExecutable()));
+      }
     }
   }
 
@@ -163,9 +174,12 @@ public class ExternalToolLauncher
     }
     else
     {
-      execute(toolSettings.getCustomCSVViewerExecutable(),
+      if(execute(toolSettings.getCustomCSVViewerExecutable(),
           toolSettings.getCustomCSVViewerParameters(),
-          file.getCanonicalPath());
+          file.getCanonicalPath()) == false)
+      {
+        throw new IOException(UtilMessages.getInstance().getString("ExternalToolLauncher.errorMessage",toolSettings.getCustomCSVViewerExecutable()));
+      }
     }
   }
 
@@ -174,7 +188,7 @@ public class ExternalToolLauncher
   {
     // todo: Use a stream tokenizer (well, a custom one, as the builtin one messes up escaped quotes)
     // so that we can handle quoting gracefully ..
-    boolean exitValue = true;
+    boolean exitValue = false;
     final ArrayList<String> command = new ArrayList<String>();
     command.add(executable);
     for (StringTokenizer tokenizer = new StringTokenizer(parameters); tokenizer.hasMoreTokens();)
@@ -197,17 +211,11 @@ public class ExternalToolLauncher
 
     final ProcessBuilder processBuilder = new ProcessBuilder(command.toArray(new String[command.size()]));
     Process process = null;
-    try
-    {
-      process = processBuilder.start();
-    }catch(IOException ioex){
-
-    }
     ProcessWrapper processWrapper = null;
     try{
+      process = processBuilder.start();
       processWrapper = new ProcessWrapper(process);
       processWrapper.start();
-
       processWrapper.join(timeout);
       if (processWrapper.getfExitCode() != null) {
         exitValue = processWrapper.getfExitCode() == 0;
@@ -220,7 +228,7 @@ public class ExternalToolLauncher
       //p.waitFor();
       //exitValue = p.exitValue() == 0;
       // 0 == normal; 2 == permissions issue, 3 == no rules found in mimeType
-      System.out.print("exitCode = " + processWrapper.getfExitCode());
+      logger.debug("ProcessWrapper exitCode = " + processWrapper.getfExitCode());
     }
     catch(InterruptedException ie){
       processWrapper.interrupt();
@@ -230,7 +238,7 @@ public class ExternalToolLauncher
     }
     catch (Exception e)
     {
-      logger.error("Error in Exec command "+command +" error: "+e.getMessage());
+      logger.error("Error in execute shell command "+command +" error: "+e.getMessage());
       // process fails so redirect to openURL command to locate viewer
       exitValue = false;
     }
@@ -346,6 +354,9 @@ public class ExternalToolLauncher
       try {
         fExitCode = fProcess.waitFor();
       } catch (InterruptedException e) {
+        fExitCode = 0;
+      }  catch(Exception ex){
+        fExitCode = -1;
       }
     }
   }
