@@ -40,8 +40,28 @@ public class PerfBenchmarkingTest
   public ContiPerfRule i = new ContiPerfRule();
 
   private boolean isExecutePerformanceTest;
-  final public static int MAX_INVOCATIONS = 10;
+
+  /**
+   * The total number of invocations to perform
+   */
+  final public static int MAX_INVOCATIONS = 100;
+
+  /**
+   * The number of threads which concurrently invoke the test.
+   */
   final public static int MAX_THREADS = 1;
+
+  /**
+   * The number of milliseconds to wait before each thread is added to the currently active threads.
+   */
+  final public static int MAX_RAMPUP = 0;
+
+  /**
+   *  The number of milliseconds to wait before the actual measurement and requirements monitoring is activated.
+   *  Use this to exclude ramp-up times from measurement or wait some minutes before dynamic optimizations are
+   *  applied (like code optimization or cache population).
+   */
+  final public static int MAX_WARMUP = 1;
 
   public PerfBenchmarkingTest()
   {
@@ -142,7 +162,10 @@ public class PerfBenchmarkingTest
   }
 
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+            threads = PerfBenchmarkingTest.MAX_THREADS,
+            rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
+            warmUp = PerfBenchmarkingTest.MAX_WARMUP)
   @Required(max = 130000, average = 15000)
   @Test
   public void perfSubReportsWithManyLabelElements() throws Exception
@@ -209,7 +232,10 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(master);
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+            threads = PerfBenchmarkingTest.MAX_THREADS,
+            rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
+            warmUp = PerfBenchmarkingTest.MAX_WARMUP)
   @Required(max = 45000, average = 55000)
   @Test
   public void perfMultipleEmbeddedSubReports() throws Exception
@@ -231,7 +257,10 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(report);
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+            threads = PerfBenchmarkingTest.MAX_THREADS,
+            rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
+            warmUp = PerfBenchmarkingTest.MAX_WARMUP)
   @Test
   public void perfCascadingBandedProperties()
   {
@@ -275,7 +304,10 @@ public class PerfBenchmarkingTest
     DebugReportRunner.resolveStyle(subReport2.getReportHeader());
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+            threads = PerfBenchmarkingTest.MAX_THREADS,
+            rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
+            warmUp = PerfBenchmarkingTest.MAX_WARMUP)
   @Test
   public void perfDataSource() throws Exception
   {
@@ -305,7 +337,10 @@ public class PerfBenchmarkingTest
 //    assertTrue(ccdf.isQueryExecutable("Query Fruit", new StaticDataRow()));
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS, threads = PerfBenchmarkingTest.MAX_THREADS)
+  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+            threads = PerfBenchmarkingTest.MAX_THREADS,
+            rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
+            warmUp = PerfBenchmarkingTest.MAX_WARMUP)
   @Test
   public void perfClassicBootStart()
   {
