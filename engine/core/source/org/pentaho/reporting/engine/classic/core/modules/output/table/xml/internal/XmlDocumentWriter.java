@@ -74,7 +74,6 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 import org.pentaho.reporting.libraries.formatting.FastDecimalFormat;
@@ -226,10 +225,6 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
           throw new InvalidReportStateException("Uncommited content encountered");
         }
 
-        if ("Sub report header for $(value) subreport 1.2".equals(content.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE)))
-        {
-          DebugLog.logHere();
-        }
         final long contentOffset = contentProducer.getContentOffset(row, col);
         final TableRectangle rectangle = sheetLayout.getTableBounds
             (content.getX(), content.getY() + contentOffset, content.getWidth(), content.getHeight(), null);

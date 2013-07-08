@@ -27,7 +27,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A table section box does not much rendering or layouting at all. It
@@ -128,19 +127,11 @@ public class TableRowRenderBox extends RenderBox
   public void setCachedY(final long cachedY)
   {
     super.setCachedY(cachedY);
-    if (rowIndex == 22 && getCachedY() == 8000000)
-    {
-      DebugLog.logHere();
-    }
   }
 
   public void shiftCached(final long amount)
   {
     super.shiftCached(amount);
-    if (rowIndex == 22 && getCachedY() == 8000000)
-    {
-      DebugLog.logHere();
-    }
   }
 
   public void extendHeight(final RenderNode child, final long heightOffset)

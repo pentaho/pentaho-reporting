@@ -669,7 +669,10 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     else if (recordedPageBreakPosition == 0)
     {
-      logger.warn("Breaking on box " + box);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Breaking on box " + box);
+      }
       recordedPageBreakPosition = box.getY();
     }
 

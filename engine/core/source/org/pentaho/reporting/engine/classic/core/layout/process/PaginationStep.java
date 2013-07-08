@@ -20,10 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsHeaderType;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
@@ -41,7 +38,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationS
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
@@ -633,11 +629,6 @@ public final class PaginationStep extends IterateVisualProcessStep
   private boolean handleAutomaticPagebreak(final RenderBox box,
                                            final PaginationShiftState boxContext)
   {
-
-    if (box instanceof CanvasRenderBox &&
-        box.getCachedY() == 23382500)
-      DebugLog.logHere();
-
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long boxHeightAndWidowArea = Math.max
