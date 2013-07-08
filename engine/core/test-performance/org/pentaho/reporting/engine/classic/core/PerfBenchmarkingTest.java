@@ -14,7 +14,6 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertSame;
 import static junit.framework.Assert.assertTrue;
 import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.Required;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,6 +45,13 @@ public class PerfBenchmarkingTest
    */
   final public static int MAX_INVOCATIONS = 100;
 
+
+  /**
+   * The number of milliseconds to run and repeat the test with the full number of configured threads.
+   * When using a rampUp(), the ramp-up times add to the duration.
+   */
+  final public static int MAX_DURATION = 10000;
+
   /**
    * The number of threads which concurrently invoke the test.
    */
@@ -61,7 +67,8 @@ public class PerfBenchmarkingTest
    *  Use this to exclude ramp-up times from measurement or wait some minutes before dynamic optimizations are
    *  applied (like code optimization or cache population).
    */
-  final public static int MAX_WARMUP = 1;
+  final public static int MAX_WARMUP = 1000;
+
 
   public PerfBenchmarkingTest()
   {
@@ -162,11 +169,11 @@ public class PerfBenchmarkingTest
   }
 
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+  @PerfTest(duration = PerfBenchmarkingTest.MAX_DURATION,
             threads = PerfBenchmarkingTest.MAX_THREADS,
             rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
             warmUp = PerfBenchmarkingTest.MAX_WARMUP)
-  @Required(max = 130000, average = 15000)
+//  @Required(max = 130000, average = 15000)
   @Test
   public void perfSubReportsWithManyLabelElements() throws Exception
   {
@@ -232,11 +239,11 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(master);
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+  @PerfTest(duration = PerfBenchmarkingTest.MAX_DURATION,
             threads = PerfBenchmarkingTest.MAX_THREADS,
             rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
             warmUp = PerfBenchmarkingTest.MAX_WARMUP)
-  @Required(max = 45000, average = 55000)
+//  @Required(max = 45000, average = 55000)
   @Test
   public void perfMultipleEmbeddedSubReports() throws Exception
   {
@@ -257,7 +264,7 @@ public class PerfBenchmarkingTest
     DebugReportRunner.executeAll(report);
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+  @PerfTest(duration = PerfBenchmarkingTest.MAX_DURATION,
             threads = PerfBenchmarkingTest.MAX_THREADS,
             rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
             warmUp = PerfBenchmarkingTest.MAX_WARMUP)
@@ -304,7 +311,7 @@ public class PerfBenchmarkingTest
     DebugReportRunner.resolveStyle(subReport2.getReportHeader());
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+  @PerfTest(duration = PerfBenchmarkingTest.MAX_DURATION,
             threads = PerfBenchmarkingTest.MAX_THREADS,
             rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
             warmUp = PerfBenchmarkingTest.MAX_WARMUP)
@@ -337,7 +344,7 @@ public class PerfBenchmarkingTest
 //    assertTrue(ccdf.isQueryExecutable("Query Fruit", new StaticDataRow()));
   }
 
-  @PerfTest(invocations = PerfBenchmarkingTest.MAX_INVOCATIONS,
+  @PerfTest(duration = PerfBenchmarkingTest.MAX_DURATION,
             threads = PerfBenchmarkingTest.MAX_THREADS,
             rampUp = PerfBenchmarkingTest.MAX_RAMPUP,
             warmUp = PerfBenchmarkingTest.MAX_WARMUP)
