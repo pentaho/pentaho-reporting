@@ -112,7 +112,7 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
       for (int i = 0; i < namespaces.length; i++)
       {
         final String namespace = namespaces[i];
-        final Map<String,AttributeMetaData> attrsNs = attributes.getAttributes(namespace);
+        final Map<String, AttributeMetaData> attrsNs = attributes.getAttributes(namespace);
         final Iterator<Map.Entry<String, AttributeMetaData>> it = attrsNs.entrySet().iterator();
         while (it.hasNext())
         {
@@ -149,13 +149,16 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     final AttributeMetaData attribute = attributes.getAttribute(namespace, name);
     if (attribute == null)
     {
-      logger.warn (String.format
-          ("No metadata defined for attribute [%s:%s] on element-type %s", namespace, name, getName()));
+      if (logger.isDebugEnabled())
+      {
+        logger.debug(String.format
+            ("No metadata defined for attribute [%s:%s] on element-type %s", namespace, name, getName()));
+      }
     }
     return attribute;
   }
 
-  public void setAttributeDescription (final String namespace, final String name, final AttributeMetaData metaData)
+  public void setAttributeDescription(final String namespace, final String name, final AttributeMetaData metaData)
   {
     if (namespace == null)
     {

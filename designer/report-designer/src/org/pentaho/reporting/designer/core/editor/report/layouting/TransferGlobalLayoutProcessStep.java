@@ -29,13 +29,11 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Computes the mapping between elements and their layouted position.
@@ -110,10 +108,6 @@ public class TransferGlobalLayoutProcessStep extends IterateSimpleStructureProce
 
   public boolean startBox(final RenderBox box)
   {
-    if (box.getElementType() instanceof SubReportType)
-    {
-      DebugLog.logHere();
-    }
     final InstanceID id = box.getNodeLayoutProperties().getInstanceId();
     final Element element = elementsById.get(id);
     if (element == null)
