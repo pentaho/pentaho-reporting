@@ -414,12 +414,13 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     {
       final Element e = group.getElement(i);
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if (reportElementType != ElementMetaData.TypeClassification.HEADER)
+      if ((reportElementType != ElementMetaData.TypeClassification.RELATIONAL_HEADER) &&
+          (reportElementType != ElementMetaData.TypeClassification.HEADER))
       {
         continue;
       }
 
-      final Band b = (Band) e;
+      final Band b = (Band)e;
       processRootBand(b);
     }
   }
@@ -432,12 +433,13 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     {
       final Element e = group.getElement(i);
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if (reportElementType != ElementMetaData.TypeClassification.FOOTER)
+      if ((reportElementType != ElementMetaData.TypeClassification.RELATIONAL_FOOTER) &&
+          (reportElementType != ElementMetaData.TypeClassification.FOOTER))
       {
         continue;
       }
 
-      final Band b = (Band) e;
+      final Band b = (Band)e;
       processRootBand(b);
     }
   }
