@@ -28,17 +28,9 @@
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-olap4j"
                 rev="${project.revision}" transitive="true" changing="true"/>
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-mondrian"
-                rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-kettle"
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-toc"
-                rev="${project.revision}" transitive="true" changing="true"/>
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-xpath"
-                rev="${project.revision}" transitive="true" changing="true"/>
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions-scripting"
-                rev="${project.revision}" transitive="true" changing="true"/>
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-legacy-charts"
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-wizard-core"
                 rev="${project.revision}" transitive="true" changing="true"/>
