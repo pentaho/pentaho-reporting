@@ -30,6 +30,7 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
  * @author Thomas Morgner
  * @deprecated use single properties instead.
  */
+@SuppressWarnings("deprecation")
 public class FontDefinition implements Serializable, Cloneable
 {
   /**
@@ -294,6 +295,7 @@ public class FontDefinition implements Serializable, Cloneable
   {
     if (font == null)
     {
+      //noinspection MagicConstant
       font = new Font(getFontName(), getFontStyle(), getFontSize());
     }
     return font;
@@ -325,7 +327,7 @@ public class FontDefinition implements Serializable, Cloneable
    */
   public String toString()
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append("FontDefinition='fontname=\"");
     buffer.append(fontName);
     buffer.append("\"; fontSize=");
@@ -433,9 +435,9 @@ public class FontDefinition implements Serializable, Cloneable
    */
   public boolean isSansSerif()
   {
-    return StringUtils.startsWithIgnoreCase(fontName, "SansSerif")
-        || StringUtils.startsWithIgnoreCase(fontName, "Dialog")
-        || StringUtils.startsWithIgnoreCase(fontName, "SanSerif");
+    return StringUtils.startsWithIgnoreCase(fontName, "SansSerif") // NON-NLS
+        || StringUtils.startsWithIgnoreCase(fontName, "Dialog") // NON-NLS
+        || StringUtils.startsWithIgnoreCase(fontName, "SanSerif"); // NON-NLS
     // is it a bug? Somewhere in the JDK this name is used (typo, but heck, we accept it anyway).
   }
 
@@ -446,8 +448,8 @@ public class FontDefinition implements Serializable, Cloneable
    */
   public boolean isCourier()
   {
-    return (StringUtils.startsWithIgnoreCase(fontName, "dialoginput")
-        || StringUtils.startsWithIgnoreCase(fontName, "monospaced"));
+    return (StringUtils.startsWithIgnoreCase(fontName, "dialoginput")// NON-NLS
+        || StringUtils.startsWithIgnoreCase(fontName, "monospaced"));// NON-NLS
   }
 
   /**
@@ -457,7 +459,7 @@ public class FontDefinition implements Serializable, Cloneable
    */
   public boolean isSerif()
   {
-    return (StringUtils.startsWithIgnoreCase(fontName, "serif"));
+    return (StringUtils.startsWithIgnoreCase(fontName, "serif"));// NON-NLS
   }
 
 

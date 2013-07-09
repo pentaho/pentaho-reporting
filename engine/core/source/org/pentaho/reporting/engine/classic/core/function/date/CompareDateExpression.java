@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated This can be solved easier using the Inline-Expression language.
  */
+@SuppressWarnings("deprecation")
 public class CompareDateExpression extends AbstractCompareExpression
 {
   /**

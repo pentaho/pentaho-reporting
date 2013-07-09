@@ -23,6 +23,7 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Thomas Morgner
  * @deprecated Use a formula instead.
  */
+@SuppressWarnings("deprecation")
 public class CompareFieldsExpression extends AbstractCompareExpression
 {
   /**

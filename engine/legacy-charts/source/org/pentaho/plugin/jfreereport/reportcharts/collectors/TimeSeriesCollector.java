@@ -259,8 +259,8 @@ public class TimeSeriesCollector extends AbstractCollectorFunction
   public Expression getInstance()
   {
     final TimeSeriesCollector expression = (TimeSeriesCollector) super.getInstance();
-    expression.valueColumns = (ArrayList) valueColumns.clone();
-    expression.timeValueColumns = (ArrayList) timeValueColumns.clone();
+    expression.valueColumns = (ArrayList<String>) valueColumns.clone();
+    expression.timeValueColumns = (ArrayList<String>) timeValueColumns.clone();
     expression.seriesSequenceMap = new HashMap<ReportStateKey, Sequence<HashMap<Comparable, TimeSeries>>>();
     return expression;
   }

@@ -73,6 +73,7 @@ public class LegacyElementWriteHandler extends AbstractElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
+  @SuppressWarnings("deprecation")
   public void writeElement(final WriteableDocumentBundle bundle,
                            final BundleWriterState state,
                            final XmlWriter xmlWriter,

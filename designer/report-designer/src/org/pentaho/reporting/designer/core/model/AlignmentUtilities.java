@@ -21,6 +21,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
@@ -142,7 +143,7 @@ public class AlignmentUtilities
   private void registerChanges()
   {
     final MassElementStyleUndoEntry massElementStyleUndoEntry = builder.finish();
-    context.getUndo().addChange(massElementStyleUndoEntry);
+    context.getUndo().addChange(Messages.getString("AlignmentUtilities.Undo"), massElementStyleUndoEntry);
   }
 
   private long computeFarRightPostion()

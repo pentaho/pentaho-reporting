@@ -31,6 +31,7 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Heiko Evermann
  * @deprecated Use PercentageExpression instead, it's name is much clearer
  */
+@SuppressWarnings("deprecation")
 public class ItemColumnQuotientExpression extends PercentageExpression
 {
   /**

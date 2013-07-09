@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated This can be done a lot easier using a simple formula.
  */
+@SuppressWarnings("deprecation")
 public class CompareStringExpression extends AbstractCompareExpression
 {
   /**

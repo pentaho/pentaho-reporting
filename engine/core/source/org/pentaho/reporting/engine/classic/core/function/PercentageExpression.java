@@ -42,6 +42,7 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated The same can be achieved using a simple ValueExpression.
  */
+@SuppressWarnings("deprecation")
 public class PercentageExpression extends AbstractExpression
 {
   /**

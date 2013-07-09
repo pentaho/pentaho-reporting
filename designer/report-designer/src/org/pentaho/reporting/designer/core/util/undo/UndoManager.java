@@ -98,7 +98,7 @@ public class UndoManager implements Serializable
     addChange(entry.getClass().getSimpleName(), entry);
   }
 
-  public void addChange(String undoName, final UndoEntry entry)
+  public void addChange(final String undoName, final UndoEntry entry)
   {
     while (offset < undos.size())
     {

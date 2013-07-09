@@ -177,7 +177,7 @@ public class DirectoryResourceLoader implements ResourceLoader
     final File file = (File) key.getIdentifier();
     try
     {
-      return file.toURL();
+      return file.toURI().toURL();
     }
     catch (MalformedURLException e)
     {

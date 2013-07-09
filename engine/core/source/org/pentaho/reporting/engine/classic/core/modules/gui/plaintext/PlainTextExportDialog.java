@@ -992,7 +992,7 @@ public class PlainTextExportDialog extends AbstractExportDialog
 
   protected String getResourceBaseName()
   {
-    return PlainTextExportPlugin.BASE_RESOURCE_CLASS;
+    return PlainTextExportGUIModule.BUNDLE_NAME;
   }
 
   /**

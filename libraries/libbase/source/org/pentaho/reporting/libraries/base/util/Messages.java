@@ -73,60 +73,6 @@ public class Messages extends ResourceBundleSupport
   }
 
   /**
-   * Creates a new Messages-collection. The locale and baseName will be used to create the resource-bundle that backs up
-   * this implementation.
-   *
-   * @param locale         the locale.
-   * @param resourceBundle a predefined resource-bundle.
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public Messages(final Locale locale, final ResourceBundle resourceBundle)
-  {
-    super(locale, resourceBundle);
-  }
-
-  /**
-   * Creates a new Messages-collection. The default locale and baseName will be used to create the resource-bundle that
-   * backs up this implementation.
-   *
-   * @param baseName the baseName of the resource-bundle.
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public Messages(final String baseName)
-  {
-    this(Locale.getDefault(), baseName, ObjectUtilities.getClassLoader(Messages.class));
-  }
-
-  /**
-   * Creates a new Messages-collection. The default locale and baseName will be used to create the resource-bundle that
-   * backs up this implementation.
-   *
-   * @param baseName       the baseName of the resource-bundle.
-   * @param resourceBundle a predefined resource-bundle.
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public Messages(final ResourceBundle resourceBundle, final String baseName)
-  {
-    super(resourceBundle, baseName);
-  }
-
-  /**
-   * Creates a new Messages-collection. The default locale and baseName will be used to create the resource-bundle that
-   * backs up this implementation.
-   *
-   * @param resourceBundle a predefined resource-bundle.
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public Messages(final ResourceBundle resourceBundle)
-  {
-    super(resourceBundle);
-  }
-
-  /**
    * Formats the message stored in the resource bundle (using a MessageFormat).
    *
    * @param key    the resourcebundle key

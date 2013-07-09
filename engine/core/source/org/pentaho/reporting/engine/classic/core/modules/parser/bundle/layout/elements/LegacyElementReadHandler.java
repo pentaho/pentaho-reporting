@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.DataSource;
 import org.pentaho.reporting.engine.classic.core.filter.types.LegacyType;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.ExtParserModule;
@@ -71,6 +70,7 @@ public class LegacyElementReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
+  @SuppressWarnings("deprecation")
   protected void doneParsing() throws SAXException
   {
     super.doneParsing();
