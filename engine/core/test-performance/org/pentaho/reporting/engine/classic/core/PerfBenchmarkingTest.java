@@ -34,14 +34,15 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class PerfBenchmarkingTest
 {
   @Rule
   public ContiPerfRule i = new ContiPerfRule();
 
   private boolean isExecutePerformanceTest;
-  final public static int MAX_INVOCATIONS = 10;
-  final public static int MAX_THREADS = 1;
+  public static final int MAX_INVOCATIONS = 10;
+  public static final int MAX_THREADS = 1;
 
   public PerfBenchmarkingTest()
   {
