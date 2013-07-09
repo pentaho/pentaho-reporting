@@ -142,8 +142,16 @@ public class PdfDocumentWriter
         {
           ownerpasswordbytes = PdfDocumentWriter.PDF_PASSWORD_PAD;
         }
-        writer.setEncryption(userpasswordbytes, ownerpasswordbytes, getPermissions(),
-            encrypt.equals(PdfPageableModule.SECURITY_ENCRYPTION_128BIT));
+        final int encryptionType;
+        if (encrypt.equals(PdfPageableModule.SECURITY_ENCRYPTION_128BIT))
+        {
+          encryptionType = PdfWriter.STANDARD_ENCRYPTION_128;
+        }
+        else
+        {
+          encryptionType = PdfWriter.STANDARD_ENCRYPTION_40;
+        }
+        writer.setEncryption(userpasswordbytes, ownerpasswordbytes, getPermissions(), encryptionType);
       }
     }
 
@@ -491,35 +499,35 @@ public class PdfDocumentWriter
     int permissions = 0;
     if (allowPrinting)
     {
-      permissions |= PdfWriter.AllowPrinting;
+      permissions |= PdfWriter.ALLOW_PRINTING;
     }
     if (allowModifyContents)
     {
-      permissions |= PdfWriter.AllowModifyContents;
+      permissions |= PdfWriter.ALLOW_MODIFY_CONTENTS;
     }
     if (allowModifyAnn)
     {
-      permissions |= PdfWriter.AllowModifyAnnotations;
+      permissions |= PdfWriter.ALLOW_MODIFY_ANNOTATIONS;
     }
     if (allowCopy)
     {
-      permissions |= PdfWriter.AllowCopy;
+      permissions |= PdfWriter.ALLOW_COPY;
     }
     if (allowFillIn)
     {
-      permissions |= PdfWriter.AllowFillIn;
+      permissions |= PdfWriter.ALLOW_FILL_IN;
     }
     if (allowScreenReaders)
     {
-      permissions |= PdfWriter.AllowScreenReaders;
+      permissions |= PdfWriter.ALLOW_SCREENREADERS;
     }
     if (allowAssembly)
     {
-      permissions |= PdfWriter.AllowAssembly;
+      permissions |= PdfWriter.ALLOW_ASSEMBLY;
     }
     if (allowDegradedPrinting)
     {
-      permissions |= PdfWriter.AllowDegradedPrinting;
+      permissions |= PdfWriter.ALLOW_DEGRADED_PRINTING;
     }
     return permissions;
   }

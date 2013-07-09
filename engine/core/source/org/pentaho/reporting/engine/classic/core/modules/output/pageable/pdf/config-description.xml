@@ -42,14 +42,15 @@
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowPrinting" global="false" hidden="false">
-    <description>Defines, whether the PDF Security setting allows printing of the document&apos;s contents by default</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PrintLevel" global="false" hidden="false">
+    <description>Defines, whether the PDF Security setting allows printing of the document&apos;s contents by default. Set to 'none' for disallowing printing altogether, 'degraded' for a low resolution print-out or 'full' for full printing.</description>
     <enum>
-      <text>true</text>
-      <text>false</text>
+      <text>none</text>
+      <text>degraded</text>
+      <text>full</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowScreenReaders" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.AllowScreenReader" global="false" hidden="false">
     <description>Defines, whether the PDF Security setting allows access for screenreaders by default. Although this could make it easier to grab the contents your PDF document, enabling this property will allow blind people to access your content. It is usually a good idea to always enable this property.</description>
     <enum>
       <text>true</text>
