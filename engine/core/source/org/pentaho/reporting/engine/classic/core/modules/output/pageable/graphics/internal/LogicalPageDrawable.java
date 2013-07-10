@@ -630,6 +630,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     {
       if (box.isBoxVisible(drawArea) == false)
       {
+        box.isBoxVisible(drawArea);
         return false;
       }
     }
@@ -653,8 +654,12 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       if (bounds.getHeight() != 0)
       {
         // clip the printable area to an infinite large area below the header.
-        final StrictBounds clipBounds =
-            new StrictBounds(bounds.getX(), bounds.getY() + bounds.getHeight(), StrictGeomUtility.MAX_AUTO, StrictGeomUtility.MAX_AUTO);
+        // Pdf output has a limit of 32768 for its floating point numbers (16-bit),
+        // any larger value yields an invalid clipping area.
+        final StrictBounds clipBounds = new StrictBounds
+            (bounds.getX(), bounds.getY() + bounds.getHeight(),
+                StrictGeomUtility.toInternalValue(Short.MAX_VALUE),
+                StrictGeomUtility.toInternalValue(Short.MAX_VALUE));
         clip(clipBounds);
         tableContext.getDrawArea().setRect(drawArea);
         drawArea.setRect(drawArea.createIntersection(clipBounds));
@@ -1544,10 +1549,10 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   public void clearClipping ()
   {
-    final Graphics2D graphics2D = graphicsContexts.pop();
     graphics.dispose();
-    graphics = graphics2D;
+    graphics = graphicsContexts.pop();
   }
+
   public Graphics2D getGraphics()
   {
     return graphics;

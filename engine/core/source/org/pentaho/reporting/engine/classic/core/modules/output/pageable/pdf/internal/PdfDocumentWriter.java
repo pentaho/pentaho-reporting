@@ -41,14 +41,11 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Pdf
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 
-/**
- * Creation-Date: 02.12.2006, 17:49:47
- *
- * @author Thomas Morgner
- */
+@SuppressWarnings("HardCodedStringLiteral")
 public class PdfDocumentWriter
 {
   private static final Log logger = LogFactory.getLog(PdfDocumentWriter.class);
@@ -78,7 +75,7 @@ public class PdfDocumentWriter
   private boolean awaitOpenDocument;
   private Configuration config;
   private ResourceManager resourceManager;
-  private LFUMap imageCache;
+  private LFUMap<ResourceKey,com.lowagie.text.Image> imageCache;
   private char version;
 
   public PdfDocumentWriter(final PdfOutputProcessorMetaData metaData,
@@ -98,7 +95,7 @@ public class PdfDocumentWriter
       throw new NullPointerException();
     }
 
-    this.imageCache = new LFUMap(50);
+    this.imageCache = new LFUMap<ResourceKey,com.lowagie.text.Image>(50);
     this.resourceManager = resourceManager;
     this.metaData = metaData;
     this.out = out;

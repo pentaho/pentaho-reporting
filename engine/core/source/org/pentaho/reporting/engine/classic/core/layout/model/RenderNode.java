@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -29,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public abstract class RenderNode implements Cloneable
 {
@@ -996,6 +994,15 @@ public abstract class RenderNode implements Cloneable
       {
         return false;
       }
+    }
+
+    final int layoutNodeType = getLayoutNodeType();
+    if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
+        layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    {
+      // we cannot perform an overflow test for table-rows or table-cells based on the parent node.
+      // With col and row-spanning, this can be non-deterministic.
+      return true;
     }
 
     if (parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
