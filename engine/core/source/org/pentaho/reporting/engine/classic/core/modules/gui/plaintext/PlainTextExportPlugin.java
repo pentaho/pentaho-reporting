@@ -44,12 +44,6 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
   private final ResourceBundleSupport resources;
 
   /**
-   * The base resource class.
-   * @deprecated
-   */
-  public static final String BASE_RESOURCE_CLASS = PlainTextExportGUIModule.BUNDLE_NAME;
-
-  /**
    * DefaultConstructor.
    */
   public PlainTextExportPlugin()

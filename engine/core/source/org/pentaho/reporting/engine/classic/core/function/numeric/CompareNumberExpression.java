@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated like all compare functions, using the formula support is easier.
  */
+@SuppressWarnings("deprecation")
 public class CompareNumberExpression extends AbstractCompareExpression
 {
   /**

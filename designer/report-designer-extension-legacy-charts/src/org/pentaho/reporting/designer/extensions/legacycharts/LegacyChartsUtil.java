@@ -102,7 +102,7 @@ public class LegacyChartsUtil
             editResult.getOriginalSecondaryDataSource(), editResult.getSecondaryDataSource()));
 
         final CompoundUndoEntry ue = new CompoundUndoEntry(undoEntries.toArray(new UndoEntry[undoEntries.size()]));
-        activeContext.getUndo().addChange(ue);
+        activeContext.getUndo().addChange(Messages.getInstance().getString("EditLegacyChartAction.Undo"), ue);
         ue.redo(context.getActiveContext());
       }
     }

@@ -27,10 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 
-/**
- * User: Martin Date: 24.01.2006 Time: 11:01:55
- */
-
 public class UndoManager implements Serializable
 {
   private static class UndoRecord implements Serializable
@@ -89,16 +85,7 @@ public class UndoManager implements Serializable
     undoNames = new ArrayList<String>(MAXIMUM_UNDO_SIZE);
   }
 
-  /**
-   * @deprecated
-   * @param entry
-   */
-  public void addChange(final UndoEntry entry)
-  {
-    addChange(entry.getClass().getSimpleName(), entry);
-  }
-
-  public void addChange(String undoName, final UndoEntry entry)
+  public void addChange(final String undoName, final UndoEntry entry)
   {
     while (offset < undos.size())
     {
@@ -133,8 +120,6 @@ public class UndoManager implements Serializable
     fireChangeEvent();
   }
 
-  
-  
   private void fireChangeEvent()
   {
     final ChangeListener[] changeListeners = undoListeners.getListeners(ChangeListener.class);

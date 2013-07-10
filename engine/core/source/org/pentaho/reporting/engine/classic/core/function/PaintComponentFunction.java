@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
  *             much better. This method does no longer work, as it depended on implementation details that are no longer
  *             in use.
  */
+@SuppressWarnings("deprecation")
 public class PaintComponentFunction extends AbstractFunction
 {
   private static final Log logger = LogFactory.getLog(PaintComponentFunction.class);

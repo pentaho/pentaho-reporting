@@ -140,7 +140,7 @@ public class PlainTextExportTask implements Runnable
     if (swingGuiContext != null)
     {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages(swingGuiContext.getLocale(), PlainTextExportPlugin.BASE_RESOURCE_CLASS,
+      this.messages = new Messages(swingGuiContext.getLocale(), PlainTextExportGUIModule.BUNDLE_NAME,
           ObjectUtilities.getClassLoader(PlainTextExportPlugin.class));
     }
   }

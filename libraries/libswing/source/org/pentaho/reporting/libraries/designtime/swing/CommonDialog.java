@@ -264,6 +264,7 @@ public abstract class CommonDialog extends JDialog
     return confirmAction;
   }
 
+  @SuppressWarnings("deprecation")
   public void hide()
   {
     // called from dispose() ...
