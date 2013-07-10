@@ -58,6 +58,7 @@ import org.pentaho.reporting.libraries.formula.util.URLEncoder;
  * @author Thomas Morgner
  * @deprecated Use the MessageFormatExpression instead.
  */
+@SuppressWarnings("deprecation")
 public class TextFormatExpression extends AbstractExpression
 {
   private static final Log logger = LogFactory.getLog(TextFormatExpression.class);

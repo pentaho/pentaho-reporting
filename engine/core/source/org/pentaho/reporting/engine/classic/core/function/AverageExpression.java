@@ -27,6 +27,7 @@ import java.util.Arrays;
  * @author Thomas Morgner
  * @deprecated this has been replaced by the ColumnAverageExpression.
  */
+@SuppressWarnings("deprecation")
 public class AverageExpression extends AbstractExpression
 {
   /**

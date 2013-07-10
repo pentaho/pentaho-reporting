@@ -31,6 +31,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated This can be done easier using style-expressions
  */
+@SuppressWarnings("deprecation")
 public class ShowElementByNameFunction extends AbstractElementFormatFunction
 {
   /**

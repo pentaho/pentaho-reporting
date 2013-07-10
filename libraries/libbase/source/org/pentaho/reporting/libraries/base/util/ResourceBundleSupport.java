@@ -95,19 +95,6 @@ public class ResourceBundleSupport
   /**
    * Creates a new instance.
    *
-   * @param locale   the locale that should be used to load the resource-bundle.
-   * @param baseName the base name of the resource bundle, a fully qualified
-   *                 class name
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups
-   */
-  public ResourceBundleSupport(final Locale locale, final String baseName)
-  {
-    this(locale, baseName, ObjectUtilities.getClassLoader(ResourceBundleSupport.class));
-  }
-
-  /**
-   * Creates a new instance.
-   *
    * @param locale      the locale that should be used to load the resource-bundle.
    * @param baseName    the base name of the resource bundle, a fully qualified
    *                    class name
@@ -163,21 +150,6 @@ public class ResourceBundleSupport
    * @param locale         the locale for which the resource bundle is
    *                       created.
    * @param resourceBundle the resourcebundle
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public ResourceBundleSupport(final Locale locale,
-                               final ResourceBundle resourceBundle)
-  {
-    this(locale, resourceBundle, resourceBundle.toString(), ObjectUtilities.getClassLoader(ResourceBundleSupport.class));
-  }
-
-  /**
-   * Creates a new instance.
-   *
-   * @param locale         the locale for which the resource bundle is
-   *                       created.
-   * @param resourceBundle the resourcebundle
    * @param classLoader    the class-loader from where to load resources.
    */
   public ResourceBundleSupport(final Locale locale,
@@ -185,46 +157,6 @@ public class ResourceBundleSupport
                                final ClassLoader classLoader)
   {
     this(locale, resourceBundle, resourceBundle.toString(), classLoader);
-  }
-
-  /**
-   * Creates a new instance.
-   *
-   * @param baseName the base name of the resource bundle, a fully qualified
-   *                 class name
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public ResourceBundleSupport(final String baseName)
-  {
-    this(Locale.getDefault(), baseName);
-  }
-
-  /**
-   * Creates a new instance.
-   *
-   * @param resourceBundle the resourcebundle
-   * @param baseName       the base name of the resource bundle, a fully
-   *                       qualified class name
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  protected ResourceBundleSupport(final ResourceBundle resourceBundle,
-                                  final String baseName)
-  {
-    this(Locale.getDefault(), resourceBundle, baseName, ObjectUtilities.getClassLoader(ResourceBundleSupport.class));
-  }
-
-  /**
-   * Creates a new instance.
-   *
-   * @param resourceBundle the resourcebundle
-   * @deprecated Always provide the classloader to be safe when deployed in weird setups. This method will be removed
-   *             after the next release.
-   */
-  public ResourceBundleSupport(final ResourceBundle resourceBundle)
-  {
-    this(resourceBundle, resourceBundle.toString());
   }
 
   /**

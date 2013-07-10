@@ -43,6 +43,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  * @deprecated Use the new Component-Element instead. It uses drawables for this job, and therefore the result looks
  *             much better.
  */
+@SuppressWarnings("deprecation")
 public class PaintDynamicComponentFunction extends AbstractFunction implements PageEventListener
 {
   private static final Log logger = LogFactory.getLog(PaintDynamicComponentFunction.class);

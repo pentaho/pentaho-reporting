@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
  * @deprecated This way of defining a sheetname for elements is deprecated. Sheetnames should be declared or computed directly on
  *             the bands by specifiing a sheetname using the "computed-sheetname" style-property.
  */
+@SuppressWarnings("deprecation")
 public class SheetNameFunction extends AbstractElementFormatFunction implements StructureFunction
 {
   private static final Log logger = LogFactory.getLog(SheetNameFunction.class);

@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.extensions.modules.rhino;
 
 import java.io.Serializable;
 
+import org.mozilla.javascript.ContextFactory;
 import org.mozilla.javascript.NativeJavaObject;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
@@ -57,7 +58,7 @@ public class RhinoExpression extends AbstractExpression implements Serializable
     final LegacyDataRowWrapper dataRowWrapper = new LegacyDataRowWrapper();
     dataRowWrapper.setParent(getRuntime().getDataRow());
     final Object wrappedDataRow = Context.javaToJS(dataRowWrapper, scope);
-    ScriptableObject.putProperty(scope, "dataRow", wrappedDataRow);
+    ScriptableObject.putProperty(scope, "dataRow", wrappedDataRow); // NON-NLS
     return dataRowWrapper;
   }
 
@@ -83,7 +84,8 @@ public class RhinoExpression extends AbstractExpression implements Serializable
     LegacyDataRowWrapper wrapper = null;
     try
     {
-      final Context context = Context.enter();
+      final ContextFactory contextFactory = new ContextFactory();
+      final Context context = contextFactory.enterContext();
       final Scriptable scope = context.initStandardObjects();
       wrapper = initializeScope(scope);
 
@@ -105,11 +107,13 @@ public class RhinoExpression extends AbstractExpression implements Serializable
     }
   }
 
+  @SuppressWarnings("UnusedDeclaration")
   public String getExpression ()
   {
     return expression;
   }
 
+  @SuppressWarnings("UnusedDeclaration")
   public void setExpression (final String expression)
   {
     this.expression = expression;

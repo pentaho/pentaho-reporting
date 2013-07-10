@@ -43,6 +43,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Michael D'Amour
  * @deprecated This function can be safely replaced by a formula.
  */
+@SuppressWarnings("deprecation")
 public class ElementTrafficLightFunction extends AbstractElementFormatFunction
 {
   /**

@@ -24,10 +24,9 @@ import java.util.Map;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.PageDefinition;
-import org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
+import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
+import org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor;
 
 /**
  * Generates a report in the following scenario:

@@ -21,13 +21,25 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyEditor;
 import java.beans.PropertyChangeSupport;
+import java.beans.PropertyEditor;
 
-import org.pentaho.plugin.jfreereport.reportcharts.TimeSeriesCollectorFunction;
-
+/**
+ * A property editor for the deprecated  
+ */
 public class TimePeriodStringPropertyEditor implements PropertyEditor
 {
+  public static final String DAY_PERIOD_TYPE_STR = "Day"; //$NON-NLS-1$
+  public static final String FIXEDMILLISECOND_PERIOD_TYPE_STR = "FixedMillisecond"; //$NON-NLS-1$
+  public static final String HOUR_PERIOD_TYPE_STR = "Hour"; //$NON-NLS-1$
+  public static final String MILLISECOND_PERIOD_TYPE_STR = "Millisecond"; //$NON-NLS-1$
+  public static final String MINUTE_PERIOD_TYPE_STR = "Minute"; //$NON-NLS-1$
+  public static final String MONTH_PERIOD_TYPE_STR = "Month"; //$NON-NLS-1$
+  public static final String QUARTER_PERIOD_TYPE_STR = "Quarter"; //$NON-NLS-1$
+  public static final String SECOND_PERIOD_TYPE_STR = "Second"; //$NON-NLS-1$
+  public static final String WEEK_PERIOD_TYPE_STR = "Week"; //$NON-NLS-1$
+  public static final String YEAR_PERIOD_TYPE_STR = "Year"; //$NON-NLS-1$
+
   private String value;
   private PropertyChangeSupport propertyChangeSupport;
 
@@ -57,41 +69,41 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
     {
       final String timePeriodStr = (String) value;
 
-      if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.MILLISECOND_PERIOD_TYPE_STR))
+      if (timePeriodStr.equalsIgnoreCase(MILLISECOND_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.MILLISECOND_PERIOD_TYPE_STR;
+        this.value = MILLISECOND_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.SECOND_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(SECOND_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.SECOND_PERIOD_TYPE_STR;
+        this.value = SECOND_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.MINUTE_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(MINUTE_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.MINUTE_PERIOD_TYPE_STR;
+        this.value = MINUTE_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.HOUR_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(HOUR_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.HOUR_PERIOD_TYPE_STR;
+        this.value = HOUR_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.DAY_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(DAY_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.DAY_PERIOD_TYPE_STR;
+        this.value = DAY_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.WEEK_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(WEEK_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.WEEK_PERIOD_TYPE_STR;
+        this.value = WEEK_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.MONTH_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(MONTH_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.MONTH_PERIOD_TYPE_STR;
+        this.value = MONTH_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.QUARTER_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(QUARTER_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.QUARTER_PERIOD_TYPE_STR;
+        this.value = QUARTER_PERIOD_TYPE_STR;
       }
-      else if (timePeriodStr.equalsIgnoreCase(TimeSeriesCollectorFunction.YEAR_PERIOD_TYPE_STR))
+      else if (timePeriodStr.equalsIgnoreCase(YEAR_PERIOD_TYPE_STR))
       {
-        this.value = TimeSeriesCollectorFunction.YEAR_PERIOD_TYPE_STR;
+        this.value = YEAR_PERIOD_TYPE_STR;
       }
       else
       {
@@ -218,15 +230,15 @@ public class TimePeriodStringPropertyEditor implements PropertyEditor
   public String[] getTags()
   {
     return new String[] {
-        TimeSeriesCollectorFunction.MILLISECOND_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.SECOND_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.MINUTE_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.HOUR_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.DAY_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.WEEK_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.MONTH_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.QUARTER_PERIOD_TYPE_STR,
-        TimeSeriesCollectorFunction.YEAR_PERIOD_TYPE_STR, 
+        MILLISECOND_PERIOD_TYPE_STR,
+        SECOND_PERIOD_TYPE_STR,
+        MINUTE_PERIOD_TYPE_STR,
+        HOUR_PERIOD_TYPE_STR,
+        DAY_PERIOD_TYPE_STR,
+        WEEK_PERIOD_TYPE_STR,
+        MONTH_PERIOD_TYPE_STR,
+        QUARTER_PERIOD_TYPE_STR,
+        YEAR_PERIOD_TYPE_STR, 
     };
   }
 

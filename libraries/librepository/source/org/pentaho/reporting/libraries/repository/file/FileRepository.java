@@ -104,6 +104,6 @@ public class FileRepository implements UrlRepository, Serializable
    */
   public URL getURL() throws MalformedURLException
   {
-    return root.getBackend().toURL();
+    return root.getBackend().toURI().toURL();
   }
 }

@@ -58,10 +58,10 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory
   }
 
   /**
-   * @deprecated use the full version instead. Use "removeQuery" to remove an existing query instead of setting the
-   * query string to null.
-   * @param name
-   * @param queryString
+   * Sets a query that uses no scripting for customization.
+   *
+   * @param name the logical name
+   * @param queryString the SQL string that will be executed.
    */
   public void setQuery(final String name, final String queryString)
   {

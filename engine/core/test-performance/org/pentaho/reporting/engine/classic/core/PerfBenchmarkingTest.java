@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class PerfBenchmarkingTest
 {
   @Rule

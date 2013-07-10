@@ -326,6 +326,7 @@ public class ReportRendererComponent extends JComponent
     }
   }
 
+  @SuppressWarnings("deprecation")
   private static class NoKeysScrollPane extends JScrollPane
   {
     protected void processKeyEvent(final KeyEvent e)

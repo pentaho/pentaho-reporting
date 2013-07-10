@@ -41,14 +41,11 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Pdf
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 
-/**
- * Creation-Date: 02.12.2006, 17:49:47
- *
- * @author Thomas Morgner
- */
+@SuppressWarnings("HardCodedStringLiteral")
 public class PdfDocumentWriter
 {
   private static final Log logger = LogFactory.getLog(PdfDocumentWriter.class);
@@ -78,7 +75,7 @@ public class PdfDocumentWriter
   private boolean awaitOpenDocument;
   private Configuration config;
   private ResourceManager resourceManager;
-  private LFUMap imageCache;
+  private LFUMap<ResourceKey,com.lowagie.text.Image> imageCache;
   private char version;
 
   public PdfDocumentWriter(final PdfOutputProcessorMetaData metaData,
@@ -98,7 +95,7 @@ public class PdfDocumentWriter
       throw new NullPointerException();
     }
 
-    this.imageCache = new LFUMap(50);
+    this.imageCache = new LFUMap<ResourceKey,com.lowagie.text.Image>(50);
     this.resourceManager = resourceManager;
     this.metaData = metaData;
     this.out = out;
@@ -142,8 +139,16 @@ public class PdfDocumentWriter
         {
           ownerpasswordbytes = PdfDocumentWriter.PDF_PASSWORD_PAD;
         }
-        writer.setEncryption(userpasswordbytes, ownerpasswordbytes, getPermissions(),
-            encrypt.equals(PdfPageableModule.SECURITY_ENCRYPTION_128BIT));
+        final int encryptionType;
+        if (encrypt.equals(PdfPageableModule.SECURITY_ENCRYPTION_128BIT))
+        {
+          encryptionType = PdfWriter.STANDARD_ENCRYPTION_128;
+        }
+        else
+        {
+          encryptionType = PdfWriter.STANDARD_ENCRYPTION_40;
+        }
+        writer.setEncryption(userpasswordbytes, ownerpasswordbytes, getPermissions(), encryptionType);
       }
     }
 
@@ -491,35 +496,35 @@ public class PdfDocumentWriter
     int permissions = 0;
     if (allowPrinting)
     {
-      permissions |= PdfWriter.AllowPrinting;
+      permissions |= PdfWriter.ALLOW_PRINTING;
     }
     if (allowModifyContents)
     {
-      permissions |= PdfWriter.AllowModifyContents;
+      permissions |= PdfWriter.ALLOW_MODIFY_CONTENTS;
     }
     if (allowModifyAnn)
     {
-      permissions |= PdfWriter.AllowModifyAnnotations;
+      permissions |= PdfWriter.ALLOW_MODIFY_ANNOTATIONS;
     }
     if (allowCopy)
     {
-      permissions |= PdfWriter.AllowCopy;
+      permissions |= PdfWriter.ALLOW_COPY;
     }
     if (allowFillIn)
     {
-      permissions |= PdfWriter.AllowFillIn;
+      permissions |= PdfWriter.ALLOW_FILL_IN;
     }
     if (allowScreenReaders)
     {
-      permissions |= PdfWriter.AllowScreenReaders;
+      permissions |= PdfWriter.ALLOW_SCREENREADERS;
     }
     if (allowAssembly)
     {
-      permissions |= PdfWriter.AllowAssembly;
+      permissions |= PdfWriter.ALLOW_ASSEMBLY;
     }
     if (allowDegradedPrinting)
     {
-      permissions |= PdfWriter.AllowDegradedPrinting;
+      permissions |= PdfWriter.ALLOW_DEGRADED_PRINTING;
     }
     return permissions;
   }
