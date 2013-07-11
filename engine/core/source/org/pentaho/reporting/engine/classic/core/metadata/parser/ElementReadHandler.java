@@ -121,9 +121,17 @@ public class ElementReadHandler extends AbstractXmlReadHandler
     {
       reportElementType = ElementMetaData.TypeClassification.FOOTER;
     }
+    else if ("group-footer".equals(eType))
+    {
+      reportElementType = ElementMetaData.TypeClassification.RELATIONAL_FOOTER;
+    }
     else if ("header".equals(eType))
     {
       reportElementType = ElementMetaData.TypeClassification.HEADER;
+    }
+    else if ("group-header".equals(eType))
+    {
+      reportElementType = ElementMetaData.TypeClassification.RELATIONAL_HEADER;
     }
     else if ("subreport".equals(eType))
     {

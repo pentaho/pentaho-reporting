@@ -420,15 +420,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    */
   public void groupStarted(final ReportEvent event)
   {
-    if (event.getState().isPrepareRun())
-    {
-      final int currentIndex = event.getState().getCurrentGroupIndex();
-      final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.HEADER);
-      return;
-    }
-
-    if (isEnableGroupHeader() == false)
+    if ((event.getState().isPrepareRun()) || (isEnableGroupHeader() == false))
     {
       final int currentIndex = event.getState().getCurrentGroupIndex();
       final Group g = event.getReport().getGroup(currentIndex);
@@ -452,7 +444,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
       row.write(getWriter());
 
       final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.HEADER);
+
+      collectSubReports(g, ElementMetaData.TypeClassification.RELATIONAL_HEADER);
     }
     catch (IOException ioe)
     {
@@ -467,15 +460,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    */
   public void groupFinished(final ReportEvent event)
   {
-    if (event.getState().isPrepareRun())
-    {
-      final int currentIndex = event.getState().getCurrentGroupIndex();
-      final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.FOOTER);
-      return;
-    }
-
-    if (isEnableGroupFooter() == false)
+    if ((event.getState().isPrepareRun()) || (isEnableGroupFooter() == false))
     {
       final int currentIndex = event.getState().getCurrentGroupIndex();
       final Group g = event.getReport().getGroup(currentIndex);
@@ -498,7 +483,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
       writeDataRow(event.getDataRow(), row);
       row.write(getWriter());
       final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.FOOTER);
+      collectSubReports(g, ElementMetaData.TypeClassification.RELATIONAL_FOOTER);
     }
     catch (IOException ioe)
     {

@@ -83,11 +83,11 @@ public class GroupDefinitionReadHandler extends AbstractXmlReadHandler
     }
 
 
-    if ("footer".equals(tagName))
+    if (("footer".equals(tagName)) || ("group-footer".equals(tagName)))
     {
       return new RootBandDefinitionReadHandler(groupDefinition.getFooter());
     }
-    if ("header".equals(tagName))
+    if (("header".equals(tagName) || ("group-header".equals(tagName))))
     {
       return new RootBandDefinitionReadHandler(groupDefinition.getHeader());
     }

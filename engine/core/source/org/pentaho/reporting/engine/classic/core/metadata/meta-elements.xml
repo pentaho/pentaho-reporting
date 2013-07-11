@@ -38,7 +38,7 @@
   <element name="group-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupFooterType"
-           type-classification="footer">
+           type-classification="group-footer">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -58,7 +58,7 @@
   <element name="group-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupHeaderType"
-           type-classification="header">
+           type-classification="group-header">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>

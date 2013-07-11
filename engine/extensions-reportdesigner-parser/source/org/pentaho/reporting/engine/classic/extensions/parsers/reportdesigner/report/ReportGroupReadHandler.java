@@ -18,10 +18,10 @@
 package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.report;
 
 import org.pentaho.reporting.engine.classic.core.Group;
+import org.pentaho.reporting.engine.classic.core.GroupDataBody;
 import org.pentaho.reporting.engine.classic.core.GroupFooter;
 import org.pentaho.reporting.engine.classic.core.GroupHeader;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
-import org.pentaho.reporting.engine.classic.core.GroupDataBody;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.elements.BandTopLevelElementReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
