@@ -174,6 +174,11 @@ public class MinorAxisNodeContext
     return x2 - x1;
   }
 
+  public boolean isOverflowX()
+  {
+    return overflowX;
+  }
+
   public long getResolvedPreferredSize()
   {
     if (parent == null)
@@ -194,6 +199,16 @@ public class MinorAxisNodeContext
       return 0;
     }
     return blockContext.getContentAreaWidth();
+  }
+
+  public long getParentX2()
+  {
+    if (parent == null)
+    {
+      return 0;
+    }
+
+    return parent.getX() + parent.getWidth();
   }
 
 }
