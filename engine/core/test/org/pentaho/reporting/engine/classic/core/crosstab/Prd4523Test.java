@@ -19,14 +19,13 @@
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
-import java.io.ByteArrayOutputStream;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 
 public class Prd4523Test extends TestCase
@@ -43,8 +42,8 @@ public class Prd4523Test extends TestCase
   public void testComplexCrosstab() throws ResourceException, ReportProcessingException
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4523.prpt");
-    final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    HtmlReportUtil.createStreamHTML(report, bout);
-
+    report.getReportConfiguration().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts", "true");
+    HtmlReportUtil.createStreamHTML(report, new NullOutputStream());
   }
 }

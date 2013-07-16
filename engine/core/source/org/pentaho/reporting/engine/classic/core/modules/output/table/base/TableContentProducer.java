@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -65,6 +66,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
   private int verboseCellMarkersThreshold;
   private boolean debugReportLayout;
   private boolean reportCellConflicts;
+  private boolean failOnCellConflicts;
   private int sectionDepth;
   private int sectionType;
   private OutputProcessorMetaData metaData;
@@ -98,6 +100,8 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold"), 5000);
     this.reportCellConflicts = "true".equals(config.getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts"));
+    this.failOnCellConflicts = "true".equals(config.getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts"));
   }
 
   public boolean isProcessWatermark()
@@ -564,12 +568,26 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     return lookupRectangle;
   }
 
+  protected boolean isFailOnCellConflicts()
+  {
+    return failOnCellConflicts;
+  }
+
+  protected void setFailOnCellConflicts(final boolean failOnCellConflicts)
+  {
+    this.failOnCellConflicts = failOnCellConflicts;
+  }
+
   protected void handleContentConflict(final RenderBox box)
   {
     if (reportCellConflicts)
     {
       logger.debug("LayoutShift: Offending Content: " + box);
       logger.debug("LayoutShift: Offending Content: " + box.isFinishedTable());
+    }
+    if (failOnCellConflicts)
+    {
+      throw new InvalidReportStateException("Cannot export content, discovered overlapping cells.");
     }
   }
 
