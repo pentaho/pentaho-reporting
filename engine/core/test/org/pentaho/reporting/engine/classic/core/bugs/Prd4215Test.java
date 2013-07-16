@@ -175,6 +175,15 @@ public class Prd4215Test extends TestCase
       result = 31 * result + text.hashCode();
       return result;
     }
+
+    public String toString()
+    {
+      return "TextTraceRecord{" +
+          "text='" + text + '\'' +
+          ", x=" + x +
+          ", y=" + y +
+          '}';
+    }
   }
 
   private static class TracingGraphics extends TestGraphics2D
@@ -188,7 +197,7 @@ public class Prd4215Test extends TestCase
 
     public void drawString(final String str, final float x, final float y)
     {
-      records.add(new TextTraceRecord(Math.round(x), Math.round(y), str));
+      records.add(new TextTraceRecord(StrictMath.round(x), StrictMath.round(y), str));
     }
   }
 
