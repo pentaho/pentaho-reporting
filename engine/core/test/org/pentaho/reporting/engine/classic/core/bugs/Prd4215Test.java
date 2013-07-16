@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -76,7 +77,8 @@ public class Prd4215Test extends TestCase
     logicalPageBox.getRepeatFooterArea().setY(logicalPageBox.getContentArea().getHeight());
     logicalPageBox.getFooterArea().setY(logicalPageBox.getContentArea().getHeight());
 
-    // ModelPrinter.INSTANCE.print(logicalPageBox);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
     assertEquals(17, elementsByNodeType.length); // quick and easy way to see that all elements are there.
 
