@@ -29,6 +29,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.pentaho.reporting.engine.classic.core.metadata.AttributeRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -43,6 +47,19 @@ public class TestSetupModule extends AbstractModule
 
   public void initialize(final SubSystem subSystem) throws ModuleInitializeException
   {
+    final String bundleLocation = "org.pentaho.reporting.engine.classic.core.testsupport.metadata";
+    final String keyPrefix = "attribute.test-run.";
+    final DefaultAttributeMetaData metaData =
+        new DefaultAttributeMetaData("test-run", "test-value", bundleLocation, keyPrefix, Object.class, false, 0);
+
+    final ElementMetaData[] types = ElementTypeRegistry.getInstance().getAllElementTypes();
+    for (int i = 0; i < types.length; i++)
+    {
+      final ElementMetaData type = types[i];
+      final AttributeRegistry attributeRegistry = ElementTypeRegistry.getInstance().getAttributeRegistry(type.getName());
+      attributeRegistry.putAttributeDescription(metaData);
+    }
+
     try
     {
       Class.forName("org.hsqldb.jdbcDriver");
