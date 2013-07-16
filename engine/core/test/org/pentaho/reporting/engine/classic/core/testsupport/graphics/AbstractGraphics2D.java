@@ -1017,7 +1017,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    */
   public FontMetrics getFontMetrics(final Font f)
   {
-    return dg2.getFontMetrics(f);
+    final Font font = f.deriveFont(getTransform());
+    return new TestFontMetrics(font);
   }
 
   /**
