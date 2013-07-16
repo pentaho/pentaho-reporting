@@ -66,6 +66,11 @@ public class Prd4069Test extends TestCase
 
   public void testFlowTableExport () throws ReportProcessingException
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final MasterReport report = createTestReport();
     final FlowExcelOutputProcessor target = new ValidatingFlowExcelOutputProcessor
         (report.getConfiguration(), new NullOutputStream(), report.getResourceManager());
@@ -122,6 +127,11 @@ public class Prd4069Test extends TestCase
 
   public void testStreamTableExport() throws ReportProcessingException
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final MasterReport report = createTestReport();
     final StreamRepository targetRepository = new StreamRepository(new NullOutputStream());
     final ContentLocation targetRoot = targetRepository.getRoot();
