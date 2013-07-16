@@ -62,14 +62,12 @@ public class PerformanceTestSequence extends AbstractSequence
     final long millis = baseDate.getTimeInMillis();
     for (int i = 0; i < limit; i++)
     {
-      model.addRow(new Object[]{
-          i,
+      model.addRow(i,
           (int) (random.nextDouble() * Integer.MAX_VALUE) - (Integer.MAX_VALUE / 2),
           random.nextDouble() * Integer.MAX_VALUE,
           "Some Text with breaks " + i,
           "SomeTextWithoutBreaks" + i,
-          new Date(millis + (long) (200 * Math.random() * Integer.MAX_VALUE))
-      });
+          new Date(millis + (long) (200 * Math.random() * Integer.MAX_VALUE)));
     }
     
     return model;

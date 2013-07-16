@@ -29,6 +29,15 @@ Due to the high costs, this property should be disabled in production environmen
       <text>false</text>
     </enum>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts" global="false" hidden="false">
+    <description>Defines whether table exports will report an hard error (and abort the report processing) when cells overlap. This property is useful when loosing content is not an option.
+
+This defaults to false to not break existing reports that may now fail otherwise.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" global="false" hidden="false">
     <description>Defines whether a stricter, but more accurate layout algorithm should be applied. Setting this property to false will greatly reduce the table complexity.</description>
     <enum>

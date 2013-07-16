@@ -296,7 +296,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final long x = nodeContext.getParentX1();
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
 
     assert width >= 0;
 
@@ -380,11 +380,11 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final long width;
     if (isStrictLegacyMode() && box.useMinimumChunkWidth() == false)
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy(box, nodeContext, x);
     }
     else
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     }
 
     assert width >= 0;
@@ -484,7 +484,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final long x = computeRowPosition(box);
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     assert width >= 0;
 
     nodeContext.setArea(x, left, right, width);
@@ -521,7 +521,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       box.setContentAreaX2(nodeContext.getX2());
       if (finishTableContext(box) == false)
       {
-        box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
+        final long cachedWidth = MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode());
+        box.setCachedWidth(cachedWidth);
       }
       nodeContext.updateParentX2(box.getCachedX2());
 
@@ -652,7 +653,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     }
     else
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     }
     nodeContext.setArea(x, 0, 0, width);
   }
