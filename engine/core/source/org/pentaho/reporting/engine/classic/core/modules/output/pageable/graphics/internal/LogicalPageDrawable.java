@@ -481,7 +481,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         (repeatFooterArea.getX(), repeatFooterArea.getY(), repeatFooterArea.getWidth(), repeatFooterArea.getHeight());
     final StrictBounds contentBounds = new StrictBounds
         (rootBox.getX(), headerArea.getY() + headerArea.getHeight(),
-            rootBox.getWidth(), footerArea.getY() - headerArea.getHeight());
+            rootBox.getWidth(), repeatFooterArea.getY() - headerArea.getHeight());
 
     final double headerHeight = StrictGeomUtility.toExternalValue(drawArea.getHeight());
 
