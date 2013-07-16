@@ -32,14 +32,41 @@ public class MinorAxisLayoutStepUtil
   {
   }
 
+  public static long resolveNodeWidthOnStart(final RenderBox box,
+                                             final MinorAxisNodeContext nodeContext,
+                                             final long x)
+  {
+    final long width = resolveNodeWidthOnStartInternal(box, nodeContext);
+    return correctForRoundingErrors(nodeContext, x, width);
+  }
+
+  private static long correctForRoundingErrors(final MinorAxisNodeContext nodeContext, final long x, final long width)
+  {
+    final long parentX2 = nodeContext.getParentX2();
+    if (parentX2 == 0)
+    {
+      return width;
+    }
+
+    final long currentX2 = width + x;
+    final long delta = Math.abs(parentX2 - currentX2);
+    if (delta != 0 && delta < 10)
+    {
+      // prefer the parent's edge over the calculated edge. We only do that when the edges are close by,
+      // usually after a rounding error.
+      return parentX2 - x;
+    }
+    return width;
+  }
+
   /**
    * Resolves the current element against the parent's content-area.
    *
    * @param box
    * @return
    */
-  public static long resolveNodeWidthOnStart(final RenderBox box,
-                                             final MinorAxisNodeContext nodeContext)
+  private static long resolveNodeWidthOnStartInternal(final RenderBox box,
+                                                      final MinorAxisNodeContext nodeContext)
   {
     final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
@@ -68,14 +95,22 @@ public class MinorAxisLayoutStepUtil
     }
   }
 
+  public static long resolveNodeWidthOnStartForCanvasLegacy(final RenderBox box,
+                                                            final MinorAxisNodeContext nodeContext,
+                                                            final long x)
+  {
+    final long width = resolveNodeWidthOnStartForCanvasLegacyInternal(box, nodeContext);
+    return correctForRoundingErrors(nodeContext, x, width);
+  }
+
   /**
    * Resolves the current element against the parent's content-area.
    *
    * @param box
    * @return
    */
-  public static long resolveNodeWidthOnStartForCanvasLegacy(final RenderBox box,
-                                                            final MinorAxisNodeContext nodeContext)
+  private static long resolveNodeWidthOnStartForCanvasLegacyInternal(final RenderBox box,
+                                                                     final MinorAxisNodeContext nodeContext)
   {
     final long minChunkWidth = 0;
     final BoxDefinition boxDef = box.getBoxDefinition();
@@ -117,6 +152,14 @@ public class MinorAxisLayoutStepUtil
     }
   }
 
+  public static long resolveNodeWidthOnFinish(final RenderBox box,
+                                              final MinorAxisNodeContext nodeContext,
+                                              final boolean strictLegacyMode)
+  {
+    final long width = resolveNodeWidthOnFinishInternal(box, nodeContext, strictLegacyMode);
+    return correctForRoundingErrors(nodeContext, nodeContext.getX(), width);
+  }
+
   /**
    * If the element has no preferred size, apply the current element's constraints against the box children's used
    * area.
@@ -124,9 +167,9 @@ public class MinorAxisLayoutStepUtil
    * @param box
    * @return
    */
-  public static long resolveNodeWidthOnFinish(final RenderBox box,
-                                              final MinorAxisNodeContext nodeContext,
-                                              final boolean strictLegacyMode)
+  private static long resolveNodeWidthOnFinishInternal(final RenderBox box,
+                                                       final MinorAxisNodeContext nodeContext,
+                                                       final boolean strictLegacyMode)
   {
     final BoxDefinition boxDef = box.getBoxDefinition();
     if (RenderLength.AUTO.equals(boxDef.getPreferredWidth()) == false)

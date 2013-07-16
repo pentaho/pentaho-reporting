@@ -85,7 +85,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     final long x = nodeContext.getParentX1();
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
 
     assert width >= 0;
 
@@ -153,11 +153,11 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     final long width;
     if (isStrictLegacyMode() && box.useMinimumChunkWidth() == false)
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy(box, nodeContext, x);
     }
     else
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     }
 
     assert width >= 0;
@@ -241,7 +241,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     final long x = computeRowPosition(box);
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     assert width >= 0;
 
     nodeContext.setArea(x, left, right, width);
@@ -325,7 +325,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     }
     else
     {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext);
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
     }
     nodeContext.setArea(x, 0, 0, width);
   }
