@@ -37,7 +37,6 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 
@@ -481,7 +480,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     for (int i = 0; i < openContexts; i++)
     {
       final RenderBox renderBox = contexts.get(i);
-      renderBox.setCachedWidth(getEndOfLine() - box.getCachedX());
+      final long cachedWidth = getEndOfLine() - renderBox.getCachedX();
+      renderBox.setCachedWidth(cachedWidth);
 
       final InlineRenderBox rightBox = (InlineRenderBox) renderBox.split(RenderNode.HORIZONTAL_AXIS);
       sequenceElements[i] = StartSequenceElement.INSTANCE;
