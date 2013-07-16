@@ -77,6 +77,7 @@ public class Prd4215Test extends TestCase
     logicalPageBox.getFooterArea().setY(logicalPageBox.getContentArea().getHeight());
 
     // ModelPrinter.INSTANCE.print(logicalPageBox);
+
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
     assertEquals(17, elementsByNodeType.length); // quick and easy way to see that all elements are there.
 
