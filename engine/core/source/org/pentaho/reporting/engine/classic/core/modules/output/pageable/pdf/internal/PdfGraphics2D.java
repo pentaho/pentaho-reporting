@@ -1096,6 +1096,11 @@ public class PdfGraphics2D extends Graphics2D
    */
   public Shape getClip()
   {
+    if (clip == null)
+    {
+      return null;
+    }
+
     try
     {
       return transform.createInverse().createTransformedShape(clip);
