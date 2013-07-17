@@ -24,6 +24,21 @@
     <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
     <import file="${common.build.file}"/>
 
+    <!-- Setup the classpath used for testing -->
+    <path id="performance.classpath">
+      <pathelement path="${performance.classes.dir}" />
+      <pathelement path="${testclasses.dir}" />
+      <pathelement path="${classes.dir}" />
+      <fileset dir="${devlib.dir}">
+        <include name="**/*.jar" />
+      </fileset>
+      <fileset dir="${testlib.dir}">
+        <include name="**/*.jar" />
+      </fileset>
+      <fileset dir="${lib.dir}">
+        <include name="**/*.jar" />
+      </fileset>
+    </path>
     <!--=======================================================================
         continuous
 
@@ -55,8 +70,17 @@
         </antcall>
     </target>
 
-    <target name="continuous-performance" depends="clean-all,resolve">
+    <target name="continuous-performance" depends="compile">
+        <!-- first create the normal tests, as we clean-all,resolve, reference them -->
+        <antcall target="compile-tests"/>
+        <!-- then create and compile the performance tests and execute only them -->
         <antcall target="test">
+            <reference refid="performance.classpath" torefid="test.classpath"/>
+            <param name="testclasses.dir" value="${performance.classes.dir}"/>
+            <param name="testbin.dir" value="${performance.bin.dir}"/>
+            <param name="testsrc.dir" value="${performance.src.dir}"/>
+            <param name="testreports.xml.dir" value="${performance.reports.xml.dir}"/>
+            <param name="testreports.html.dir" value="${performance.reports.html.dir}"/>
             <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecutePerformanceTest" value="true"/>
             <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
         </antcall>

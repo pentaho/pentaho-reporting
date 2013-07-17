@@ -61,7 +61,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
@@ -416,7 +415,6 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       cb.setTextMatrix(x1 + translateX, y);
     }
 
-    DebugLog.log("PDFText: x=" + (x1 + translateX) + " y= " + y + " TX " + translateY);
     final OutputProcessorMetaData metaData = getMetaData();
     final GlyphList gs = renderableText.getGlyphs();
     final int offset = renderableText.getOffset();
