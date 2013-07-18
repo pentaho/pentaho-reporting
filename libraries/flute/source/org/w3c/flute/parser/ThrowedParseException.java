@@ -1,4 +1,12 @@
 /*
+ * (c) COPYRIGHT 1999 World Wide Web Consortium
+ * (Massachusetts Institute of Technology, Institut National de Recherche
+ *  en Informatique et en Automatique, Keio University).
+ * All Rights Reserved. http://www.w3.org/Consortium/Legal/
+ *
+ * $Id: ThrowedParseException.java 1830 2006-04-23 14:51:03Z taqua $
+ */
+/*
  * This program is free software; you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
  * Foundation.
