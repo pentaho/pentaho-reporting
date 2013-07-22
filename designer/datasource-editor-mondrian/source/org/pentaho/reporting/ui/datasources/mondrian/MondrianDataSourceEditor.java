@@ -23,6 +23,8 @@ import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -39,7 +41,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -199,7 +200,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     {
       // Enable Preview button since we have a schema file
       if ((dialogModel.isConnectionSelected() &&
-           dialogModel.isQuerySelected()) && (dialogModel.isPreviewPossible() == false))
+          dialogModel.isQuerySelected()) && (dialogModel.isPreviewPossible() == false))
       {
         dialogModel.setPreviewPossible(true);
       }
@@ -218,7 +219,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     {
       // Disable Preview button if no schema file has been specified
       if ((dialogModel.getSchemaFileNameField().getText().isEmpty()) &&
-           dialogModel.isPreviewPossible())
+          dialogModel.isPreviewPossible())
       {
         dialogModel.setPreviewPossible(false);
       }
@@ -693,6 +694,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
   private JList queryNameList;
   private JTextField queryNameTextField;
   private JTextField filenameField;
+  private JTextField cubeConnectionNameField;
   private JTextArea queryTextArea;
   private NamedDataSourceDialogModel dialogModel;
   private JSpinner maxPreviewRowsSpinner;
@@ -755,6 +757,10 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     dialogModel.addPropertyChangeListener(confirmAction);
 
     maxPreviewRowsSpinner = new JSpinner(new SpinnerNumberModel(10000, 1, Integer.MAX_VALUE, 1));
+
+    cubeConnectionNameField = new JTextField(null, 0);
+    cubeConnectionNameField.setColumns(30);
+    cubeConnectionNameField.getDocument().addDocumentListener(confirmAction);
 
     filenameField = new JTextField(null, 0);
     filenameField.setColumns(30);
@@ -870,25 +876,12 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     queryContentPanel.add(BorderLayout.NORTH, createQueryListPanel());
     queryContentPanel.add(BorderLayout.CENTER, createQueryDetailsPanel());
 
-    final JPanel filePanel = new JPanel();
-    filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.X_AXIS));
-    filePanel.add(filenameField);
-    filePanel.add(new JButton(new BrowseAction()));
-    filePanel.add(Box.createHorizontalStrut(20));
-    filePanel.add(Box.createHorizontalGlue());
-    filePanel.add(new JButton(new EditSecurityAction()));
-
-    final JPanel fileCarrier = new JPanel();
-    fileCarrier.setLayout(new BorderLayout());
-    fileCarrier.add(new JLabel(Messages.getString("MondrianDataSourceEditor.SchemaFileLabel")), BorderLayout.CENTER);
-    fileCarrier.add(filePanel, BorderLayout.SOUTH);
-
     final JdbcConnectionPanel connectionPanel = new JdbcConnectionPanel(dialogModel, context);
     connectionPanel.setSecurityConfigurationAvailable(false);
 
     // Create the content panel
     final JPanel dialogContent = new JPanel(new BorderLayout());
-    dialogContent.add(BorderLayout.NORTH, fileCarrier);
+    dialogContent.add(BorderLayout.NORTH, createConnectionTopPanel());
     dialogContent.add(BorderLayout.WEST, connectionPanel);
     dialogContent.add(BorderLayout.CENTER, queryContentPanel);
 
@@ -901,6 +894,67 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     contentPane.add(BorderLayout.CENTER, tabbedPane);
     contentPane.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
     return contentPane;
+  }
+
+  private JPanel createConnectionTopPanel()
+  {
+    final JPanel masterPanel = new JPanel();
+    masterPanel.setLayout(new GridBagLayout());
+
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 4;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.SchemaFileLabel")), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.weightx = 1;
+    masterPanel.add(filenameField, gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JButton(new BrowseAction()), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 2;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(Box.createHorizontalStrut(20), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 3;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JButton(new EditSecurityAction()), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.gridwidth = 4;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.CubeConnectionName")), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.gridwidth = 4;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.weightx = 1;
+    masterPanel.add(cubeConnectionNameField, gbc);
+
+    return masterPanel;
   }
 
   private JPanel createQueryListPanel()
@@ -995,10 +1049,12 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       if (fileProvider != null)
       {
         setSchemaFileName(fileProvider.getDesignTimeFile());
+        cubeConnectionNameField.setText(fileProvider.getCubeConnectionName());
       }
       else
       {
         setSchemaFileName("");
+        cubeConnectionNameField.setText("");
       }
 
       final String[] queryNames = dataFactory.getQueryNames();
@@ -1130,7 +1186,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
   protected void configureConnection(final AbstractMDXDataFactory dataFactory)
   {
-    dataFactory.setCubeFileProvider(new DefaultCubeFileProvider(getSchemaFileName()));
+    dataFactory.setCubeFileProvider(new DefaultCubeFileProvider(getSchemaFileName(), cubeConnectionNameField.getText()));
     dataFactory.setRole(roleText);
     dataFactory.setRoleField(roleField);
     dataFactory.setJdbcUser(jdbcUserText);
