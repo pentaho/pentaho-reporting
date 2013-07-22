@@ -9,6 +9,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.Report
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryModule;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
@@ -48,9 +49,12 @@ public class DefaultCubeFileProviderWriteHandler
     writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-filename", XmlWriter.OPEN);
     writer.writeTextNormalized(provider.getMondrianCubeFile(), false);
     writer.writeCloseTag();
-    writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-connection-name", XmlWriter.OPEN);
-    writer.writeTextNormalized(provider.getCubeConnectionName(), false);
-    writer.writeCloseTag();
+    if (StringUtils.isEmpty(provider.getCubeConnectionName()) == false)
+    {
+      writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-connection-name", XmlWriter.OPEN);
+      writer.writeTextNormalized(provider.getCubeConnectionName(), false);
+      writer.writeCloseTag();
+    }
     writer.writeCloseTag();
   }
 

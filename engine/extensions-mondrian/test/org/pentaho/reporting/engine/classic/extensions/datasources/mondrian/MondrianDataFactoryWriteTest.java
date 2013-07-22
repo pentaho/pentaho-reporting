@@ -32,6 +32,31 @@ public class MondrianDataFactoryWriteTest extends TestCase
     return (MasterReport) reportRes.getResource();
   }
 
+
+  public void testWriteBandedNullCubeName() throws Exception
+  {
+    final BandedMDXDataFactory df = new BandedMDXDataFactory();
+    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml", null));
+    df.setDataSourceProvider(new JndiDataSourceProvider("dummy"));
+
+    df.setGlobalScript("GlobalScript");
+    df.setGlobalScriptLanguage("GlobalScriptLanguage");
+    df.setQuery("QueryName", "QueryText", "ScriptLanguage", "Script");
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(df);
+
+    final MasterReport masterReport = postProcess(report);
+    final BandedMDXDataFactory dataFactory = (BandedMDXDataFactory) masterReport.getDataFactory();
+    assertEquals("QueryName", dataFactory.getQueryNames()[0]);
+    assertEquals("QueryText", dataFactory.getQuery("QueryName"));
+    assertEquals("ScriptLanguage", dataFactory.getScriptingLanguage("QueryName"));
+    assertEquals("Script", dataFactory.getScript("QueryName"));
+    assertEquals("GlobalScript", dataFactory.getGlobalScript());
+    assertEquals("GlobalScriptLanguage", dataFactory.getGlobalScriptLanguage());
+    assertEquals("", dataFactory.getCubeFileProvider().getCubeConnectionName());
+    assertEquals("path/to/cube.xml", dataFactory.getCubeFileProvider().getDesignTimeFile());
+  }
+
   public void testWriteBanded() throws Exception
   {
     final BandedMDXDataFactory df = new BandedMDXDataFactory();
