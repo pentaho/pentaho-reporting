@@ -35,7 +35,7 @@ public class MondrianDataFactoryWriteTest extends TestCase
   public void testWriteBanded() throws Exception
   {
     final BandedMDXDataFactory df = new BandedMDXDataFactory();
-    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml"));
+    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml", "test-connection"));
     df.setDataSourceProvider(new JndiDataSourceProvider("dummy"));
 
     df.setGlobalScript("GlobalScript");
@@ -52,13 +52,15 @@ public class MondrianDataFactoryWriteTest extends TestCase
     assertEquals("Script", dataFactory.getScript("QueryName"));
     assertEquals("GlobalScript", dataFactory.getGlobalScript());
     assertEquals("GlobalScriptLanguage", dataFactory.getGlobalScriptLanguage());
+    assertEquals("test-connection", dataFactory.getCubeFileProvider().getCubeConnectionName());
+    assertEquals("path/to/cube.xml", dataFactory.getCubeFileProvider().getDesignTimeFile());
   }
 
 
   public void testWriteDenormalized() throws Exception
   {
     final DenormalizedMDXDataFactory df = new DenormalizedMDXDataFactory();
-    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml"));
+    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml", "test-connection"));
     df.setDataSourceProvider(new JndiDataSourceProvider("dummy"));
 
     df.setGlobalScript("GlobalScript");
@@ -75,12 +77,14 @@ public class MondrianDataFactoryWriteTest extends TestCase
     assertEquals("Script", dataFactory.getScript("QueryName"));
     assertEquals("GlobalScript", dataFactory.getGlobalScript());
     assertEquals("GlobalScriptLanguage", dataFactory.getGlobalScriptLanguage());
+    assertEquals("test-connection", dataFactory.getCubeFileProvider().getCubeConnectionName());
+    assertEquals("path/to/cube.xml", dataFactory.getCubeFileProvider().getDesignTimeFile());
   }
 
   public void testWriteLegacy() throws Exception
   {
     final LegacyBandedMDXDataFactory df = new LegacyBandedMDXDataFactory();
-    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml"));
+    df.setCubeFileProvider(new DefaultCubeFileProvider("path/to/cube.xml", "test-connection"));
     df.setDataSourceProvider(new JndiDataSourceProvider("dummy"));
 
     df.setGlobalScript("GlobalScript");
@@ -97,5 +101,7 @@ public class MondrianDataFactoryWriteTest extends TestCase
     assertEquals("Script", dataFactory.getScript("QueryName"));
     assertEquals("GlobalScript", dataFactory.getGlobalScript());
     assertEquals("GlobalScriptLanguage", dataFactory.getGlobalScriptLanguage());
+    assertEquals("test-connection", dataFactory.getCubeFileProvider().getCubeConnectionName());
+    assertEquals("path/to/cube.xml", dataFactory.getCubeFileProvider().getDesignTimeFile());
   }
 }
