@@ -1,14 +1,14 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
-import org.xml.sax.SAXException;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler implements CubeFileProviderReadHandler
 {
@@ -76,11 +76,19 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
 
   protected String getPath()
   {
+    if (pathReadHandler == null)
+    {
+      return null;
+    }
     return pathReadHandler.getResult();
   }
 
   protected String getCubeConnectionName()
   {
+    if (connectionNameReadHandler == null)
+    {
+      return null;
+    }
     return connectionNameReadHandler.getResult();
   }
 
@@ -88,8 +96,14 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
   {
     final DefaultCubeFileProvider fileProvider =
         ClassicEngineBoot.getInstance().getObjectFactory().get(DefaultCubeFileProvider.class);
-    fileProvider.setMondrianCubeFile(pathReadHandler.getResult());
-    fileProvider.setCubeConnectionName(connectionNameReadHandler.getResult());
+    if (pathReadHandler != null)
+    {
+      fileProvider.setMondrianCubeFile(pathReadHandler.getResult());
+    }
+    if (connectionNameReadHandler != null)
+    {
+      fileProvider.setCubeConnectionName(connectionNameReadHandler.getResult());
+    }
     return fileProvider;
   }
 }
