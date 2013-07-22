@@ -10,6 +10,7 @@ public interface CubeFileProvider extends Serializable
 {
   public String getDesignTimeFile();
   public String getCubeFile(final ResourceManager resourceManager, final ResourceKey contextKey) throws ReportDataFactoryException;
+  public String getCubeConnectionName();
 
   public Object getConnectionHash();
 }
