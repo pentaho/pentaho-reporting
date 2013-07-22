@@ -53,7 +53,7 @@ public class MondrianDataFactoryWriteTest extends TestCase
     assertEquals("Script", dataFactory.getScript("QueryName"));
     assertEquals("GlobalScript", dataFactory.getGlobalScript());
     assertEquals("GlobalScriptLanguage", dataFactory.getGlobalScriptLanguage());
-    assertEquals("", dataFactory.getCubeFileProvider().getCubeConnectionName());
+    assertEquals(null, dataFactory.getCubeFileProvider().getCubeConnectionName());
     assertEquals("path/to/cube.xml", dataFactory.getCubeFileProvider().getDesignTimeFile());
   }
 
