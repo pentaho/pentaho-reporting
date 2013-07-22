@@ -13,6 +13,7 @@ import org.xml.sax.Attributes;
 public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler implements CubeFileProviderReadHandler
 {
   private StringReadHandler pathReadHandler;
+  private StringReadHandler connectionNameReadHandler;
 
   public DefaultCubeFileProviderReadHandler()
   {
@@ -39,6 +40,11 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
     {
       pathReadHandler = new StringReadHandler();
       return pathReadHandler;
+    }
+    if ("cube-connection-name".equals(tagName))
+    {
+      connectionNameReadHandler = new StringReadHandler();
+      return connectionNameReadHandler;
     }
     return null;
   }
@@ -73,11 +79,17 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
     return pathReadHandler.getResult();
   }
 
+  protected String getCubeConnectionName()
+  {
+    return connectionNameReadHandler.getResult();
+  }
+
   public CubeFileProvider getProvider()
   {
     final DefaultCubeFileProvider fileProvider =
         ClassicEngineBoot.getInstance().getObjectFactory().get(DefaultCubeFileProvider.class);
     fileProvider.setMondrianCubeFile(pathReadHandler.getResult());
+    fileProvider.setCubeConnectionName(connectionNameReadHandler.getResult());
     return fileProvider;
   }
 }

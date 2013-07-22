@@ -11,6 +11,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 public class DefaultCubeFileProvider implements CubeFileProvider
 {
   private String mondrianCubeFile;
+  private String cubeConnectionName;
 
   public DefaultCubeFileProvider()
   {
@@ -18,7 +19,14 @@ public class DefaultCubeFileProvider implements CubeFileProvider
 
   public DefaultCubeFileProvider(final String mondrianCubeFile)
   {
+    this(mondrianCubeFile, null);
+  }
+
+  public DefaultCubeFileProvider(final String mondrianCubeFile,
+                                 final String cubeConnectionName)
+  {
     this.mondrianCubeFile = mondrianCubeFile;
+    this.cubeConnectionName = cubeConnectionName;
   }
 
   public String getDesignTimeFile()
@@ -58,11 +66,22 @@ public class DefaultCubeFileProvider implements CubeFileProvider
     }
   }
 
+  public String getCubeConnectionName()
+  {
+    return cubeConnectionName;
+  }
+
+  public void setCubeConnectionName(final String cubeConnectionName)
+  {
+    this.cubeConnectionName = cubeConnectionName;
+  }
+
   public Object getConnectionHash()
   {
     final ArrayList<Object> hash = new ArrayList<Object>();
     hash.add(getClass().getName());
     hash.add(getMondrianCubeFile());
+    hash.add(getCubeConnectionName());
     return hash;
   }
 }

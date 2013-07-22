@@ -186,6 +186,7 @@ public abstract class AbstractMDXDataFactoryBundleWriteHandler
     tagDescription.setElementHasCData(MondrianDataFactoryModule.NAMESPACE, "static-query", true);
     tagDescription.setElementHasCData(MondrianDataFactoryModule.NAMESPACE, "script", true);
     tagDescription.setElementHasCData(MondrianDataFactoryModule.NAMESPACE, "cube-filename", true);
+    tagDescription.setElementHasCData(MondrianDataFactoryModule.NAMESPACE, "cube-connection-name", true);
     return tagDescription;
   }
 

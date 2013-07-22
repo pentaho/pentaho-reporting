@@ -12,14 +12,6 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Mond
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 25.08.2009
- * Time: 19:20:40
- *
- * @author Thomas Morgner.
- */
 public class DefaultCubeFileProviderWriteHandler
     implements CubeFileProviderBundleWriteHandler, CubeFileProviderWriteHandler
 {
@@ -55,6 +47,9 @@ public class DefaultCubeFileProviderWriteHandler
     writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-file", XmlWriter.OPEN);
     writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-filename", XmlWriter.OPEN);
     writer.writeTextNormalized(provider.getMondrianCubeFile(), false);
+    writer.writeCloseTag();
+    writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-connection-name", XmlWriter.OPEN);
+    writer.writeTextNormalized(provider.getCubeConnectionName(), false);
     writer.writeCloseTag();
     writer.writeCloseTag();
   }
