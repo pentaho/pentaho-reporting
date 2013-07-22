@@ -7,6 +7,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class MondrianDataFactoryCore extends DefaultDataFactoryCore
 {
@@ -22,17 +23,39 @@ public class MondrianDataFactoryCore extends DefaultDataFactoryCore
     final AbstractMDXDataFactory mdxDataFactory = (AbstractMDXDataFactory) dataFactory;
     final String designTimeName = mdxDataFactory.getDesignTimeName();
     final CubeFileProvider cubeFileProvider = mdxDataFactory.getCubeFileProvider();
-    if (designTimeName != null && cubeFileProvider != null)
+
+    final StringBuilder b = new StringBuilder();
+    if (StringUtils.isEmpty(designTimeName) == false)
     {
-      return designTimeName + " " + cubeFileProvider.getDesignTimeFile();
+      b.append(designTimeName);
     }
-    if (designTimeName != null)
+
+    if (cubeFileProvider != null)
     {
-      return designTimeName;
+      final String cubeName = cubeFileProvider.getCubeConnectionName();
+      final String fileName = cubeFileProvider.getDesignTimeFile();
+      if (StringUtils.isEmpty(cubeName) == false)
+      {
+        if (b.length() != 0)
+        {
+          b.append(" - ");
+        }
+        b.append(cubeName);
+      }
+      if (StringUtils.isEmpty(fileName) == false)
+      {
+        if (b.length() != 0)
+        {
+          b.append(" ");
+        }
+        b.append("(");
+        b.append(fileName);
+        b.append(")");
+      }
     }
-    else if (cubeFileProvider != null)
+    if (b.length() != 0)
     {
-      return cubeFileProvider.getDesignTimeFile();
+      return b.toString();
     }
     return null;
   }
