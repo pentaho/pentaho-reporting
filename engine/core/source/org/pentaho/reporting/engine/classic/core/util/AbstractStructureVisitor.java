@@ -42,7 +42,6 @@ public abstract class AbstractStructureVisitor
   {
   }
 
-
   protected void inspect(final AbstractReportDefinition reportDefinition)
   {
     if (reportDefinition instanceof MasterReport)
@@ -61,7 +60,7 @@ public abstract class AbstractStructureVisitor
     final int size = dataFactory.size();
     for (int i = 0; i < size; i++)
     {
-      inspectDataSource(reportDefinition, dataFactory);
+      inspectDataSource(reportDefinition, dataFactory.getReference(i));
     }
 
     final ExpressionCollection expressions = reportDefinition.getExpressions();
@@ -76,7 +75,7 @@ public abstract class AbstractStructureVisitor
     traverseSection(reportDefinition);
   }
 
-  public void traverseSection(final Section section)
+  protected void traverseSection(final Section section)
   {
     final int count = section.getElementCount();
     for (int i = 0; i < count; i++)
