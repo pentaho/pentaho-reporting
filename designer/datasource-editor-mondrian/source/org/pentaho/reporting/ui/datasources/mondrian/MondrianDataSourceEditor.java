@@ -31,6 +31,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -66,13 +67,19 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
+import mondrian.olap.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
@@ -99,6 +106,11 @@ import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDi
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.CommonFileChooser;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserService;
+import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+import org.pentaho.reporting.libraries.xmlns.parser.LoggingErrorHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.DriverConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JdbcConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefinition;
@@ -106,6 +118,10 @@ import org.pentaho.reporting.ui.datasources.jdbc.ui.JdbcConnectionPanel;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.LimitRowsCheckBoxActionListener;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.NamedDataSourceDialogModel;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.QueryLanguageListCellRenderer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * @author Michael D'Amour
@@ -140,11 +156,11 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
         initiallySelectedFile = null;
       }
 
-      final FileFilter[] fileFilters = new FileFilter[]{new FilesystemFilter(new String[]{".xml"},
-          Messages.getString("MondrianDataSourceEditor.FileName") + " (*.xml)", true)};
+      final FileFilter[] fileFilters = new FileFilter[]{new FilesystemFilter(new String[]{".xml"}, // NON-NLS
+          Messages.getString("MondrianDataSourceEditor.FileName") + " (*.xml)", true)}; // NON-NLS
 
 
-      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("mondrian");
+      final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("mondrian"); // NON-NLS
       fileChooser.setSelectedFile(initiallySelectedFile);
       fileChooser.setFilters(fileFilters);
       if (fileChooser.showDialog(MondrianDataSourceEditor.this, JFileChooser.OPEN_DIALOG) == false)
@@ -167,6 +183,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
         path = file.getPath();
       }
       setFileName(path);
+      autoRefreshSchemaName();
     }
   }
 
@@ -243,16 +260,16 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     protected AddQueryAction()
     {
       final URL resource = MondrianDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/mondrian/resources/Add.png");
+          ("/org/pentaho/reporting/ui/datasources/mondrian/resources/Add.png");// NON-NLS
       if (resource != null)
       {
         putValue(Action.SMALL_ICON, new ImageIcon(resource));
       }
       else
       {
-        putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.AddQuery.Name"));
+        putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.AddQuery.Name"));// NON-NLS
       }
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("MondrianDataSourceEditor.AddQuery.Description"));
+      putValue(Action.SHORT_DESCRIPTION, Messages.getString("MondrianDataSourceEditor.AddQuery.Description"));// NON-NLS
     }
 
     public void actionPerformed(final ActionEvent e)
@@ -270,16 +287,16 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     protected RemoveQueryAction()
     {
       final URL resource = MondrianDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/mondrian/resources/Remove.png");
+          ("/org/pentaho/reporting/ui/datasources/mondrian/resources/Remove.png");// NON-NLS
       if (resource != null)
       {
         putValue(Action.SMALL_ICON, new ImageIcon(resource));
       }
       else
       {
-        putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.RemoveQuery.Name"));
+        putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.RemoveQuery.Name"));// NON-NLS
       }
-      putValue(Action.SHORT_DESCRIPTION, Messages.getString("MondrianDataSourceEditor.RemoveQuery.Description"));
+      putValue(Action.SHORT_DESCRIPTION, Messages.getString("MondrianDataSourceEditor.RemoveQuery.Description"));// NON-NLS
       final NamedDataSourceDialogModel dialogModel = getDialogModel();
       setEnabled(dialogModel.isQuerySelected());
     }
@@ -561,19 +578,19 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       }
       catch (IOException ex)
       {
-        logger.warn("Unable to read template.", ex);
+        logger.warn("Unable to read template.", ex);// NON-NLS
       }
     }
 
     public void update()
     {
       String key = globalScriptTextArea.getSyntaxEditingStyle();
-      if (key.startsWith("text/"))
+      if (key.startsWith("text/"))// NON-NLS
       {
         key = key.substring(5);
       }
       resource = MondrianDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/global-template-" + key + ".txt");
+          ("/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/global-template-" + key + ".txt");// NON-NLS
       setEnabled(resource != null);
     }
   }
@@ -621,19 +638,19 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       }
       catch (IOException ex)
       {
-        logger.warn("Unable to read template.", ex);
+        logger.warn("Unable to read template.", ex);// NON-NLS
       }
     }
 
     public void update()
     {
       String key = queryScriptTextArea.getSyntaxEditingStyle();
-      if (key.startsWith("text/"))
+      if (key.startsWith("text/"))// NON-NLS
       {
         key = key.substring(5);
       }
       resource = MondrianDataSourceEditor.class.getResource
-          ("/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/query-template-" + key + ".txt");
+          ("/org/pentaho/reporting/engine/classic/core/designtime/datafactory/scripts/query-template-" + key + ".txt");// NON-NLS
       setEnabled(resource != null);
     }
   }
@@ -686,6 +703,25 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       {
         query.setScript(queryScriptTextArea.getText());
       }
+    }
+  }
+
+  private class RefreshSchemaNameAction extends AbstractAction
+  {
+    /**
+     * Creates an {@code Action}.
+     */
+    private RefreshSchemaNameAction()
+    {
+      putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.UpdateSchema.Name"));
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      refreshSchemaName();
     }
   }
 
@@ -948,11 +984,19 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 3;
-    gbc.gridwidth = 4;
+    gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.weightx = 1;
+    gbc.weightx = 5;
     masterPanel.add(cubeConnectionNameField, gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 1;
+    gbc.gridy = 3;
+    gbc.gridwidth = 3;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    masterPanel.add(new JButton(new RefreshSchemaNameAction()), gbc);
 
     return masterPanel;
   }
@@ -1019,7 +1063,8 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
   protected abstract AbstractMDXDataFactory createDataFactory();
 
-  public DataFactory performConfiguration(final AbstractNamedMDXDataFactory dataFactory, final String selectedQueryName)
+  public DataFactory performConfiguration(final AbstractNamedMDXDataFactory dataFactory,
+                                          final String selectedQueryName)
   {
     // Reset the ok / cancel flag
     getDialogModel().clear();
@@ -1129,10 +1174,10 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
       return new DriverConnectionDefinition
           (customName, dcp.getDriver(), dcp.getUrl(), null, null,
-              dcp.getProperty("::pentaho-reporting::hostname"),
-              dcp.getProperty("::pentaho-reporting::database-name"),
-              dcp.getProperty("::pentaho-reporting::database-type"),
-              dcp.getProperty("::pentaho-reporting::port"),
+              dcp.getProperty("::pentaho-reporting::hostname"),// NON-NLS
+              dcp.getProperty("::pentaho-reporting::database-name"),// NON-NLS
+              dcp.getProperty("::pentaho-reporting::database-type"),// NON-NLS
+              dcp.getProperty("::pentaho-reporting::port"),// NON-NLS
               p);
     }
     else if (provider instanceof JndiDataSourceProvider)
@@ -1300,5 +1345,93 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     }
 
     return true;
+  }
+
+  protected void autoRefreshSchemaName()
+  {
+    if (StringUtils.isEmpty(cubeConnectionNameField.getText()) == false)
+    {
+      return;
+    }
+
+    cubeConnectionNameField.setText(lookupSchemaName());
+  }
+
+  private String lookupSchemaName()
+  {
+    try
+    {
+      final AbstractReportDefinition report = context.getReport();
+      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+
+      final ResourceManager resourceManager = masterReport.getResourceManager();
+      final ResourceKey contextKey = masterReport.getContentBase();
+
+      final DefaultCubeFileProvider cubeFileProvider = new DefaultCubeFileProvider();
+      cubeFileProvider.setDesignTimeFile(filenameField.getText());
+      final InputStream inputStream = Util.readVirtualFile(cubeFileProvider.getCubeFile(resourceManager, contextKey));
+      try
+      {
+        return parseXmlDocument(inputStream);
+      }
+      finally
+      {
+        inputStream.close();
+      }
+    }
+    catch (ResourceCreationException e)
+    {
+      e.printStackTrace();
+    }
+    catch (ReportDataFactoryException e)
+    {
+      e.printStackTrace();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  protected String parseXmlDocument(final InputStream stream) throws ResourceCreationException
+  {
+    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    dbf.setNamespaceAware(true);
+    dbf.setValidating(false);
+
+    try
+    {
+      final DocumentBuilder db = dbf.newDocumentBuilder();
+      db.setEntityResolver(ParserEntityResolver.getDefaultResolver());
+      db.setErrorHandler(new LoggingErrorHandler());
+      final InputSource input = new InputSource(stream);
+      final Document document = db.parse(input);
+      final Element documentElement = document.getDocumentElement();
+      if ("Schema".equals(documentElement.getTagName()))// NON-NLS
+      {
+        return documentElement.getAttribute("name");
+      }
+      return null;
+    }
+    catch (ParserConfigurationException e)
+    {
+      throw new ResourceCreationException("Unable to initialize the XML-Parser", e);
+    }
+    catch (SAXException e)
+    {
+      throw new ResourceCreationException("Unable to parse the document.", e);
+    }
+    catch (IOException e)
+    {
+      throw new ResourceCreationException("Unable to parse the document.", e);
+    }
+  }
+
+  protected void refreshSchemaName()
+  {
+    cubeConnectionNameField.setText("");
+    autoRefreshSchemaName();
   }
 }
