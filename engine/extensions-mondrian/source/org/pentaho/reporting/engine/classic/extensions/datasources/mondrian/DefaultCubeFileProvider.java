@@ -34,6 +34,11 @@ public class DefaultCubeFileProvider implements CubeFileProvider
     return mondrianCubeFile;
   }
 
+  public void setDesignTimeFile (final String name)
+  {
+    this.mondrianCubeFile = mondrianCubeFile;
+  }
+
   public String getMondrianCubeFile()
   {
     return mondrianCubeFile;
