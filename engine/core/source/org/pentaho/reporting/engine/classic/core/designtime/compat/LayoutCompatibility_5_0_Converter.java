@@ -29,12 +29,12 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 
-public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConverter
+public class LayoutCompatibility_5_0_Converter extends AbstractCompatibilityConverter
 {
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolverStyleSheet;
 
-  public LayoutCompatibility_4_0_Converter()
+  public LayoutCompatibility_5_0_Converter()
   {
     this.styleResolver = new SimpleStyleResolver(true);
     this.resolverStyleSheet = new ResolverStyleSheet();
@@ -42,7 +42,7 @@ public class LayoutCompatibility_4_0_Converter extends AbstractCompatibilityConv
 
   public int getTargetVersion()
   {
-    return ClassicEngineBoot.computeVersionId(4, 0, 0);
+    return ClassicEngineBoot.computeVersionId(5, 0, 0);
   }
 
   private boolean isBlockLevelBox(final Section s)
