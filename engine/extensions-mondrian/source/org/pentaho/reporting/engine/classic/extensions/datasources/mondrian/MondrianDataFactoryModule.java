@@ -17,9 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
+import org.pentaho.reporting.engine.classic.core.designtime.compat.CompatibilityConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryXmlResourceFactory;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.compat.MondrianDataSource_50_CompatibilityConverter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser.BandedMDXDataSourceReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser.BandedMDXDataSourceXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.parser.CubeFileProviderReadHandlerFactory;
@@ -90,6 +92,8 @@ public class MondrianDataFactoryModule extends AbstractModule
     
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
         ("org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/meta-datafactory.xml");
+
+    CompatibilityConverterRegistry.getInstance().register(MondrianDataSource_50_CompatibilityConverter.class);
   }
 
 }

@@ -2,7 +2,6 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.par
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
@@ -94,11 +93,11 @@ public class DefaultCubeFileProviderReadHandler extends AbstractXmlReadHandler i
 
   public CubeFileProvider getProvider()
   {
-    final DefaultCubeFileProvider fileProvider =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(DefaultCubeFileProvider.class);
+    final CubeFileProvider fileProvider =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
     if (pathReadHandler != null)
     {
-      fileProvider.setMondrianCubeFile(pathReadHandler.getResult());
+      fileProvider.setDesignTimeFile(pathReadHandler.getResult());
     }
     if (connectionNameReadHandler != null)
     {

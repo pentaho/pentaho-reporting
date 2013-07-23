@@ -34,7 +34,7 @@ public class CompatibilityConverterRegistry
   {
     this.converters = new ArrayList<Class<? extends CompatibilityConverter>>();
     this.converters.add(LayoutCompatibility_3_9_Converter.class);
-    this.converters.add(LayoutCompatibility_4_0_Converter.class);
+    this.converters.add(LayoutCompatibility_5_0_Converter.class);
   }
 
   public void register(final Class<? extends CompatibilityConverter> converter)
