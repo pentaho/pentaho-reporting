@@ -31,12 +31,12 @@ public class DefaultCubeFileProvider implements CubeFileProvider
 
   public String getDesignTimeFile()
   {
-    return mondrianCubeFile;
+    return getMondrianCubeFile();
   }
 
   public void setDesignTimeFile (final String name)
   {
-    this.mondrianCubeFile = mondrianCubeFile;
+    setMondrianCubeFile(name);
   }
 
   public String getMondrianCubeFile()
