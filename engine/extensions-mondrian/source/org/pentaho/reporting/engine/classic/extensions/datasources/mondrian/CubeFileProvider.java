@@ -9,8 +9,12 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 public interface CubeFileProvider extends Serializable
 {
   public String getDesignTimeFile();
-  public String getCubeFile(final ResourceManager resourceManager, final ResourceKey contextKey) throws ReportDataFactoryException;
+  public void setDesignTimeFile(String file);
+
   public String getCubeConnectionName();
+  public void setCubeConnectionName(String cubeConnectionName);
+  
+  public String getCubeFile(final ResourceManager resourceManager, final ResourceKey contextKey) throws ReportDataFactoryException;
 
   public Object getConnectionHash();
 }
