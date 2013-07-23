@@ -20,12 +20,13 @@ package org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.d
 import java.util.ArrayList;
 import java.util.Properties;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.LegacyBandedMDXDataFactory;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.LegacyBandedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory;
 import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
@@ -160,7 +161,12 @@ public class MultiDataSetReadHandler extends PropertiesReadHandler
         }
 
         final LegacyBandedMDXDataFactory dataFactory = new LegacyBandedMDXDataFactory();
-        dataFactory.setCubeFileProvider(new DefaultCubeFileProvider(mondrianCubeDefinition));
+
+        // legacy report usecase
+        final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
+        cubeFileProvider.setDesignTimeFile(mondrianCubeDefinition);
+
+        dataFactory.setCubeFileProvider(cubeFileProvider);
         dataFactory.setJdbcUser(selectedJNDIDataSourceReadHandler.getUsername());
         dataFactory.setJdbcPassword(selectedJNDIDataSourceReadHandler.getPassword());
         dataFactory.setDesignTimeName(selectedJNDIDataSourceReadHandler.getJndiName());

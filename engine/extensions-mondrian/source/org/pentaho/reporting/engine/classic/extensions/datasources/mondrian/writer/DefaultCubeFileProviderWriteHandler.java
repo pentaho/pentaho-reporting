@@ -7,7 +7,6 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterException;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianDataFactoryModule;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
@@ -25,29 +24,21 @@ public class DefaultCubeFileProviderWriteHandler
                     final XmlWriter xmlWriter,
                     final CubeFileProvider cubeFileProvider) throws IOException, BundleWriterException
   {
-    if (cubeFileProvider instanceof DefaultCubeFileProvider == false)
-    {
-      throw new BundleWriterException("This is not a DefaultCubeFileProvider");
-    }
-    write(xmlWriter, (DefaultCubeFileProvider) cubeFileProvider);
+    write(xmlWriter, cubeFileProvider);
   }
 
   public void write(final ReportWriterContext reportWriter,
                     final XmlWriter xmlWriter,
                     final CubeFileProvider cubeFileProvider) throws IOException, ReportWriterException
   {
-    if (cubeFileProvider instanceof DefaultCubeFileProvider == false)
-    {
-      throw new ReportWriterException("This is not a DefaultCubeFileProvider");
-    }
-    write(xmlWriter, (DefaultCubeFileProvider) cubeFileProvider);
+    write(xmlWriter, cubeFileProvider);
   }
 
-  protected void write(XmlWriter writer, final DefaultCubeFileProvider provider) throws IOException
+  protected void write(final XmlWriter writer, final CubeFileProvider provider) throws IOException
   {
     writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-file", XmlWriter.OPEN);
     writer.writeTag(MondrianDataFactoryModule.NAMESPACE, "cube-filename", XmlWriter.OPEN);
-    writer.writeTextNormalized(provider.getMondrianCubeFile(), false);
+    writer.writeTextNormalized(provider.getDesignTimeFile(), false);
     writer.writeCloseTag();
     if (StringUtils.isEmpty(provider.getCubeConnectionName()) == false)
     {

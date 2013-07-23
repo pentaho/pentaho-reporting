@@ -22,6 +22,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,7 +34,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -43,15 +44,18 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileFilter;
 
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DataSourceProvider;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianUtil;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -59,6 +63,8 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.CommonFileChooser;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserService;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.DriverConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JdbcConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefinition;
@@ -125,6 +131,7 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
         path = file.getPath();
       }
       setFileName(path);
+      autoRefreshSchemaName();
     }
   }
 
@@ -214,7 +221,27 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     }
   }
 
+  private class RefreshSchemaNameAction extends AbstractAction
+  {
+    /**
+     * Creates an {@code Action}.
+     */
+    private RefreshSchemaNameAction()
+    {
+      putValue(Action.NAME, Messages.getString("MondrianDataSourceEditor.UpdateSchema.Name"));
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      refreshSchemaName();
+    }
+  }
+
   private JTextField filenameField;
+  private JTextField cubeConnectionNameField;
   private SimpleDataSourceDialogModel dialogModel;
   private DesignTimeContext context;
   private MondrianSecurityDialog securityDialog;
@@ -260,6 +287,10 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
     final ConfirmEnableHandler confirmAction = new ConfirmEnableHandler();
     dialogModel.addPropertyChangeListener(confirmAction);
 
+    cubeConnectionNameField = new JTextField(null, 0);
+    cubeConnectionNameField.setColumns(30);
+    cubeConnectionNameField.getDocument().addDocumentListener(confirmAction);
+
     filenameField = new JTextField(null, 0);
     filenameField.setColumns(30);
     filenameField.getDocument().addDocumentListener(confirmAction);
@@ -269,28 +300,82 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
 
   protected Component createContentPane()
   {
-
-    final JPanel filePanel = new JPanel();
-    filePanel.setLayout(new BoxLayout(filePanel, BoxLayout.X_AXIS));
-    filePanel.add(filenameField);
-    filePanel.add(new JButton(new BrowseAction()));
-    filePanel.add(Box.createHorizontalStrut(20));
-    filePanel.add(Box.createHorizontalGlue());
-    filePanel.add(new JButton(new EditSecurityAction()));
-
-
-    final JPanel fileCarrier = new JPanel();
-    fileCarrier.setLayout(new BorderLayout());
-    fileCarrier.add(new JLabel(Messages.getString("MondrianDataSourceEditor.SchemaFileLabel")), BorderLayout.CENTER);
-    fileCarrier.add(filePanel, BorderLayout.SOUTH);
-
     // Create the content panel
     final JPanel contentPanel = new JPanel(new BorderLayout());
-    contentPanel.add(BorderLayout.NORTH, fileCarrier);
+    contentPanel.add(BorderLayout.NORTH, createConnectionTopPanel());
     contentPanel.add(BorderLayout.CENTER, new JdbcConnectionPanel(dialogModel, context));
     contentPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
     return contentPanel;
+  }
+
+  private JPanel createConnectionTopPanel()
+  {
+    final JPanel masterPanel = new JPanel();
+    masterPanel.setLayout(new GridBagLayout());
+
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    gbc.gridwidth = 4;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.SchemaFileLabel")), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.weightx = 1;
+    masterPanel.add(filenameField, gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 1;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JButton(new BrowseAction()), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 2;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(Box.createHorizontalStrut(20), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 3;
+    gbc.gridy = 1;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JButton(new EditSecurityAction()), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    gbc.gridwidth = 4;
+    gbc.anchor = GridBagConstraints.WEST;
+    masterPanel.add(new JLabel(Messages.getString("MondrianDataSourceEditor.CubeConnectionName")), gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    gbc.gridwidth = 1;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    gbc.weightx = 5;
+    masterPanel.add(cubeConnectionNameField, gbc);
+
+    gbc = new GridBagConstraints();
+    gbc.gridx = 1;
+    gbc.gridy = 3;
+    gbc.gridwidth = 3;
+    gbc.anchor = GridBagConstraints.WEST;
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+    masterPanel.add(new JButton(new RefreshSchemaNameAction()), gbc);
+
+    return masterPanel;
   }
 
   protected abstract AbstractMDXDataFactory createDataFactory();
@@ -452,7 +537,11 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
 
   protected void configureConnection(final AbstractMDXDataFactory dataFactory)
   {
-    dataFactory.setCubeFileProvider(new DefaultCubeFileProvider(getSchemaFileName()));
+    final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
+    cubeFileProvider.setDesignTimeFile(getSchemaFileName());
+    cubeFileProvider.setCubeConnectionName(cubeConnectionNameField.getText());
+
+    dataFactory.setCubeFileProvider(cubeFileProvider);
     dataFactory.setRole(roleText);
     dataFactory.setRoleField(roleField);
     dataFactory.setJdbcUser(jdbcUserText);
@@ -493,5 +582,32 @@ public abstract class SimpleMondrianDataSourceEditor extends CommonDialog
       dataFactory.setJdbcUser(jcd.getUsername());
       dataFactory.setJdbcPassword(jcd.getPassword());
     }
+  }
+
+  protected void autoRefreshSchemaName()
+  {
+    if (StringUtils.isEmpty(cubeConnectionNameField.getText()) == false)
+    {
+      return;
+    }
+
+    cubeConnectionNameField.setText(lookupSchemaName());
+  }
+
+  private String lookupSchemaName()
+  {
+    final AbstractReportDefinition report = context.getReport();
+    final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+
+    final ResourceManager resourceManager = masterReport.getResourceManager();
+    final ResourceKey contextKey = masterReport.getContentBase();
+    final String designTimeFile = filenameField.getText();
+    return MondrianUtil.parseSchemaName(resourceManager, contextKey, designTimeFile);
+  }
+
+  protected void refreshSchemaName()
+  {
+    cubeConnectionNameField.setText("");
+    autoRefreshSchemaName();
   }
 }
