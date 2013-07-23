@@ -31,7 +31,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URL;
@@ -67,17 +66,14 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import mondrian.olap.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -91,9 +87,9 @@ import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.Abst
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractNamedMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DataSourceProvider;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MondrianUtil;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -106,11 +102,8 @@ import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDi
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.CommonFileChooser;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserService;
-import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-import org.pentaho.reporting.libraries.xmlns.parser.LoggingErrorHandler;
-import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.DriverConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JdbcConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefinition;
@@ -118,10 +111,6 @@ import org.pentaho.reporting.ui.datasources.jdbc.ui.JdbcConnectionPanel;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.LimitRowsCheckBoxActionListener;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.NamedDataSourceDialogModel;
 import org.pentaho.reporting.ui.datasources.jdbc.ui.QueryLanguageListCellRenderer;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * @author Michael D'Amour
@@ -1231,7 +1220,11 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
   protected void configureConnection(final AbstractMDXDataFactory dataFactory)
   {
-    dataFactory.setCubeFileProvider(new DefaultCubeFileProvider(getSchemaFileName(), cubeConnectionNameField.getText()));
+    final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
+    cubeFileProvider.setDesignTimeFile(getSchemaFileName());
+    cubeFileProvider.setCubeConnectionName(cubeConnectionNameField.getText());
+
+    dataFactory.setCubeFileProvider(cubeFileProvider);
     dataFactory.setRole(roleText);
     dataFactory.setRoleField(roleField);
     dataFactory.setJdbcUser(jdbcUserText);
@@ -1359,74 +1352,13 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
   private String lookupSchemaName()
   {
-    try
-    {
-      final AbstractReportDefinition report = context.getReport();
-      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+    final AbstractReportDefinition report = context.getReport();
+    final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
 
-      final ResourceManager resourceManager = masterReport.getResourceManager();
-      final ResourceKey contextKey = masterReport.getContentBase();
-
-      final DefaultCubeFileProvider cubeFileProvider = new DefaultCubeFileProvider();
-      cubeFileProvider.setDesignTimeFile(filenameField.getText());
-      final InputStream inputStream = Util.readVirtualFile(cubeFileProvider.getCubeFile(resourceManager, contextKey));
-      try
-      {
-        return parseXmlDocument(inputStream);
-      }
-      finally
-      {
-        inputStream.close();
-      }
-    }
-    catch (ResourceCreationException e)
-    {
-      e.printStackTrace();
-    }
-    catch (ReportDataFactoryException e)
-    {
-      e.printStackTrace();
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
-
-    return null;
-  }
-
-  protected String parseXmlDocument(final InputStream stream) throws ResourceCreationException
-  {
-    final DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-    dbf.setNamespaceAware(true);
-    dbf.setValidating(false);
-
-    try
-    {
-      final DocumentBuilder db = dbf.newDocumentBuilder();
-      db.setEntityResolver(ParserEntityResolver.getDefaultResolver());
-      db.setErrorHandler(new LoggingErrorHandler());
-      final InputSource input = new InputSource(stream);
-      final Document document = db.parse(input);
-      final Element documentElement = document.getDocumentElement();
-      if ("Schema".equals(documentElement.getTagName()))// NON-NLS
-      {
-        return documentElement.getAttribute("name");
-      }
-      return null;
-    }
-    catch (ParserConfigurationException e)
-    {
-      throw new ResourceCreationException("Unable to initialize the XML-Parser", e);
-    }
-    catch (SAXException e)
-    {
-      throw new ResourceCreationException("Unable to parse the document.", e);
-    }
-    catch (IOException e)
-    {
-      throw new ResourceCreationException("Unable to parse the document.", e);
-    }
+    final ResourceManager resourceManager = masterReport.getResourceManager();
+    final ResourceKey contextKey = masterReport.getContentBase();
+    final String designTimeFile = filenameField.getText();
+    return MondrianUtil.parseSchemaName(resourceManager, contextKey, designTimeFile);
   }
 
   protected void refreshSchemaName()

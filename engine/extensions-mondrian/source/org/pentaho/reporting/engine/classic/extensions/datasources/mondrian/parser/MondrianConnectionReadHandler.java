@@ -23,11 +23,11 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DataSourceProvider;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DefaultCubeFileProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DriverDataSourceProvider;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.JndiDataSourceProvider;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
@@ -37,11 +37,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/**
- * Creation-Date: 07.04.2006, 18:35:57
- *
- * @author Thomas Morgner
- */
 public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
 {
   private static final Log logger = LogFactory.getLog(MondrianConnectionReadHandler.class);
@@ -101,7 +96,10 @@ public class MondrianConnectionReadHandler extends AbstractXmlReadHandler
 
     if (mondrianCubeDefinitionFile != null)
     {
-      return new DefaultCubeFileProvider(mondrianCubeDefinitionFile);
+      // legacy report usecase
+      final CubeFileProvider cubeFileProvider = ClassicEngineBoot.getInstance().getObjectFactory().get(CubeFileProvider.class);
+      cubeFileProvider.setDesignTimeFile(mondrianCubeDefinitionFile);
+      return cubeFileProvider;
     }
     return null;
   }
