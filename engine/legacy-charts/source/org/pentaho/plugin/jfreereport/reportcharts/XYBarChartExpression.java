@@ -17,8 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Color;
-
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -54,6 +52,36 @@ public class XYBarChartExpression extends XYChartExpression
 
   public XYBarChartExpression()
   {
+  }
+
+  public boolean isShadowVisible()
+  {
+    return shadowVisible;
+  }
+
+  public void setShadowVisible(final boolean shadowVisible)
+  {
+    this.shadowVisible = shadowVisible;
+  }
+
+  public int getShadowXOffset()
+  {
+    return shadowXOffset;
+  }
+
+  public void setShadowXOffset(final int shadowXOffset)
+  {
+    this.shadowXOffset = shadowXOffset;
+  }
+
+  public int getShadowYOffset()
+  {
+    return shadowYOffset;
+  }
+
+  public void setShadowYOffset(final int shadowYOffset)
+  {
+    this.shadowYOffset = shadowYOffset;
   }
 
   public Double getMargin()
