@@ -61,10 +61,13 @@ public class DefaultCubeFileProvider implements CubeFileProvider
     }
 
     final CatalogLocator locator = ClassicEngineBoot.getInstance().getObjectFactory().get(CatalogLocator.class);
-    final String mappedCatalog = locator.locate(mondrianCubeFile);
-    if (StringUtils.isEmpty(mappedCatalog) == false)
+    if (locator != null)
     {
-      return mappedCatalog;
+      final String mappedCatalog = locator.locate(mondrianCubeFile);
+      if (StringUtils.isEmpty(mappedCatalog) == false)
+      {
+        return mappedCatalog;
+      }
     }
 
     final File cubeAsFile = new File(mondrianCubeFile);
