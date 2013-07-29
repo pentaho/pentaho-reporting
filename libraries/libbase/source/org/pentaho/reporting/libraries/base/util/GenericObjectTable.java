@@ -42,7 +42,7 @@ public class GenericObjectTable<T> extends ObjectTable<T>
    */
   public GenericObjectTable(final int increment)
   {
-    super(increment);
+    super(Math.max(1, increment));
   }
 
   /**
@@ -53,7 +53,7 @@ public class GenericObjectTable<T> extends ObjectTable<T>
    */
   public GenericObjectTable(final int rowIncrement, final int colIncrement)
   {
-    super(rowIncrement, colIncrement);
+    super(Math.max(1, rowIncrement), Math.max(1, colIncrement));
   }
 
   /**
