@@ -58,6 +58,31 @@ public class ElementStyleDefinition implements Serializable, Cloneable
     this.rules.remove(rule);
   }
 
+
+  /**
+   * Iterate over the rules looking for a match based on the
+   * style sheet id.  If found, we remove the old style sheet
+   * and insert the new one in the same location.
+   * @param rule
+   * @return true if the update happened.
+   */
+  public boolean updateRule(final ElementStyleSheet rule)
+  {
+    for (int index = 0; index < getRuleCount(); index++)
+    {
+      final ElementStyleSheet styleDefinition = getRule(index);
+      if ((styleDefinition != null) && (styleDefinition.getId() == rule.getId()))
+      {
+        removeRule(index);
+        addRule(index, rule);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public void clearRules()
   {
     this.rules.clear();

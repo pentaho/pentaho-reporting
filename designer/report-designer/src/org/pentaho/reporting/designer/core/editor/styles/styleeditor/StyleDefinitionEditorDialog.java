@@ -298,7 +298,7 @@ public class StyleDefinitionEditorDialog extends CommonDialog
     pane.add(new RemoveStyleRuleAction(editorContext, rule));
     pane.add(selector);
 
-    final SimpleStyleEditorPanel comp = new SimpleStyleEditorPanel();
+    final SimpleStyleEditorPanel comp = new SimpleStyleEditorPanel(editorContext);
     comp.setReportDesignerContext(editorContext.getDesignerContext());
     comp.setData(rule);
     pane.add(comp);
