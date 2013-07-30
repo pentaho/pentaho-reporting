@@ -342,7 +342,8 @@ public final class BeanUtility
       }
       catch (Exception e)
       {
-        throw BeanException.getInstance("InvokationError", e);
+        throw BeanException.getInstance("InvokationError on property '" +
+            name + "' on bean type " + bean.getClass(), e);
       }
     }
   }

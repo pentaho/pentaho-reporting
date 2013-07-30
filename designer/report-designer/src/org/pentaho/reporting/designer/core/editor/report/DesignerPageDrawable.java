@@ -72,7 +72,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
                               final ResourceManager resourceManager,
                               final Section section)
   {
-    super(rootBox, metaData, resourceManager);
+    init(rootBox, metaData, resourceManager);
     setDrawPageBackground(false);
     
     rootElementIds = new HashSet<InstanceID>();

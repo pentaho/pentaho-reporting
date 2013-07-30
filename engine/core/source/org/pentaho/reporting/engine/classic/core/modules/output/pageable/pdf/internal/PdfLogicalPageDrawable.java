@@ -133,21 +133,14 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
   private PdfWriter writer;
   private float globalHeight;
-  private PdfOutputProcessorMetaData outputProcessorMetaData;
   private boolean globalEmbed;
   private LFUMap<ResourceKey,com.lowagie.text.Image> imageCache;
   private char version;
 
-  public PdfLogicalPageDrawable(final LogicalPageBox rootBox,
-                                final PdfOutputProcessorMetaData metaData,
-                                final PdfWriter writer,
-                                final PhysicalPageBox page,
-                                final ResourceManager resourceManager,
+  public PdfLogicalPageDrawable(final PdfWriter writer,
                                 final LFUMap<ResourceKey,com.lowagie.text.Image> imageCache,
                                 final char version)
   {
-    super(rootBox, metaData, resourceManager);
-    this.version = version;
     if (writer == null)
     {
       throw new NullPointerException();
@@ -156,6 +149,24 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     {
       throw new NullPointerException();
     }
+    this.writer = writer;
+    this.imageCache = imageCache;
+    this.version = version;
+  }
+
+  public void init(final LogicalPageBox rootBox,
+                   final OutputProcessorMetaData metaData,
+                   final ResourceManager resourceManager)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void init(final LogicalPageBox rootBox,
+                   final PdfOutputProcessorMetaData metaData,
+                   final ResourceManager resourceManager,
+                   final PhysicalPageBox page)
+  {
+    super.init(rootBox, metaData, resourceManager);
 
     if (page != null)
     {
@@ -165,10 +176,23 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     {
       this.globalHeight = rootBox.getPageHeight();
     }
-    this.writer = writer;
-    this.outputProcessorMetaData = metaData;
-    this.globalEmbed = outputProcessorMetaData.isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS);
-    this.imageCache = imageCache;
+    this.globalEmbed = getMetaData().isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS);
+  }
+
+  public PdfOutputProcessorMetaData getMetaData()
+  {
+    return (PdfOutputProcessorMetaData) super.getMetaData();
+  }
+
+  /**
+   * Draws the object.
+   *
+   * @param graphics the graphics device.
+   * @param area     the area inside which the object should be drawn.
+   */
+  public void draw(final Graphics2D graphics, final Rectangle2D area)
+  {
+    super.draw(graphics, area);
   }
 
   protected void processLinksAndAnchors(final RenderNode box)
@@ -341,7 +365,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       final boolean bold = layoutContext.getBooleanStyleProperty(TextStyleKeys.BOLD);
       final boolean italics = layoutContext.getBooleanStyleProperty(TextStyleKeys.ITALIC);
 
-      final BaseFontFontMetrics fontMetrics = outputProcessorMetaData.getBaseFontFontMetrics
+      final BaseFontFontMetrics fontMetrics = getMetaData().getBaseFontFontMetrics
           (fontName, fontSize, bold, italics, encoding, embed, false);
 
       final PdfGraphics2D g2 = (PdfGraphics2D) getGraphics();
@@ -353,8 +377,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
       cb = g2.getRawContentByte();
 
-      textSpec = new PdfTextSpec(layoutContext, outputProcessorMetaData,
-          g2, fontMetrics, cb);
+      textSpec = new PdfTextSpec(layoutContext, getMetaData(), g2, fontMetrics, cb);
       setTextSpec(textSpec);
 
       cb.beginText();
@@ -463,6 +486,16 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
   protected boolean startInlineBox(final InlineRenderBox box)
   {
+    if (box.getStaticBoxLayoutProperties().isVisible() == false)
+    {
+      return false;
+    }
+
+    if (box.isBoxVisible(getDrawArea()) == false)
+    {
+      return false;
+    }
+
     final PdfTextSpec textSpec = (PdfTextSpec) getTextSpec();
     if (textSpec != null)
     {
@@ -473,6 +506,16 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
   protected void finishInlineBox(final InlineRenderBox box)
   {
+    if (box.getStaticBoxLayoutProperties().isVisible())
+    {
+      return;
+    }
+
+    if (box.isBoxVisible(getDrawArea()) == false)
+    {
+      return;
+    }
+
     final PdfTextSpec textSpec = (PdfTextSpec) getTextSpec();
     if (textSpec != null)
     {
