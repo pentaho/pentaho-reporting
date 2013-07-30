@@ -29,7 +29,7 @@
     <dependency org="avalon-framework" name="avalon-framework" rev="4.1.5" transitive="false" conf="default_external->default"/>
 
     <!--  external dependencies -->
-    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false"/>
+    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false"/>
     <dependency org="javax.mail" name="mail" rev="1.4.1" transitive="false" conf="default_external->default"/>
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
 	</dependencies>
