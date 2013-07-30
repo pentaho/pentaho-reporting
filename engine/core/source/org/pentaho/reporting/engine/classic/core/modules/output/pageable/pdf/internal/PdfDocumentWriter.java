@@ -25,6 +25,7 @@ import java.io.OutputStream;
 import com.lowagie.text.DocWriter;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfWriter;
@@ -75,7 +76,7 @@ public class PdfDocumentWriter
   private boolean awaitOpenDocument;
   private Configuration config;
   private ResourceManager resourceManager;
-  private LFUMap<ResourceKey,com.lowagie.text.Image> imageCache;
+  private LFUMap<ResourceKey, com.lowagie.text.Image> imageCache;
   private char version;
 
   public PdfDocumentWriter(final PdfOutputProcessorMetaData metaData,
@@ -95,7 +96,7 @@ public class PdfDocumentWriter
       throw new NullPointerException();
     }
 
-    this.imageCache = new LFUMap<ResourceKey,com.lowagie.text.Image>(50);
+    this.imageCache = new LFUMap<ResourceKey, com.lowagie.text.Image>(50);
     this.resourceManager = resourceManager;
     this.metaData = metaData;
     this.out = out;
@@ -331,7 +332,7 @@ public class PdfDocumentWriter
     {
       viewerPreferences |= PdfWriter.DirectionR2L;
     }
-    
+
     if (logger.isDebugEnabled())
     {
       logger.debug("viewerPreferences = 0b" + Integer.toBinaryString(viewerPreferences));
@@ -376,14 +377,19 @@ public class PdfDocumentWriter
 
     final PdfContentByte directContent = writer.getDirectContent();
     final Graphics2D graphics = new PdfGraphics2D(directContent, width, height, metaData);
-    final PdfLogicalPageDrawable logicalPageDrawable =
-        new PdfLogicalPageDrawable(logicalPage, metaData, writer, page, resourceManager, imageCache, version);
-    final PhysicalPageDrawable drawable = new PhysicalPageDrawable(logicalPageDrawable, page);
+    final PdfLogicalPageDrawable logicalPageDrawable = createLogicalPageDrawable(logicalPage, page);
+    final PhysicalPageDrawable drawable = createPhysicalPageDrawable(logicalPageDrawable, page);
     drawable.draw(graphics, new Rectangle2D.Double(0, 0, width, height));
 
     graphics.dispose();
 
     document.newPage();
+  }
+
+  protected PhysicalPageDrawable createPhysicalPageDrawable(final PdfLogicalPageDrawable logicalPageDrawable,
+                                                            final PhysicalPageBox page)
+  {
+    return new PhysicalPageDrawable(logicalPageDrawable, page);
   }
 
   public void processLogicalPage(final LogicalPageKey key,
@@ -408,13 +414,40 @@ public class PdfDocumentWriter
 
     final Graphics2D graphics = new PdfGraphics2D(writer.getDirectContent(), width, height, metaData);
     // and now process the box ..
-    final PdfLogicalPageDrawable logicalPageDrawable =
-        new PdfLogicalPageDrawable(logicalPage, metaData, writer, null, resourceManager, imageCache, version);
+    final PdfLogicalPageDrawable logicalPageDrawable = createLogicalPageDrawable(logicalPage, null);
     logicalPageDrawable.draw(graphics, new Rectangle2D.Double(0, 0, width, height));
 
     graphics.dispose();
 
     document.newPage();
+  }
+
+  protected PdfOutputProcessorMetaData getMetaData()
+  {
+    return metaData;
+  }
+
+  protected PdfWriter getWriter()
+  {
+    return writer;
+  }
+
+  public ResourceManager getResourceManager()
+  {
+    return resourceManager;
+  }
+
+  public LFUMap<ResourceKey, Image> getImageCache()
+  {
+    return imageCache;
+  }
+
+  protected PdfLogicalPageDrawable createLogicalPageDrawable(final LogicalPageBox logicalPage,
+                                                             final PhysicalPageBox page)
+  {
+    final PdfLogicalPageDrawable drawable = new PdfLogicalPageDrawable(getWriter(), getImageCache(), getVersion());
+    drawable.init(logicalPage, getMetaData(), getResourceManager(), page);
+    return drawable;
   }
 
   /**
@@ -441,7 +474,7 @@ public class PdfDocumentWriter
    *
    * @return the itext character defining the version.
    */
-  private char getVersion()
+  protected char getVersion()
   {
     final String version = config.getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Version");
