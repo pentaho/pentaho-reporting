@@ -28,6 +28,7 @@
       <entry name="?*.script" />
       <entry name="?*.groovy" />
       <entry name="?*.csv" />
+      <entry name="?*.prptstyle" />
     </wildcardResourcePatterns>
     <annotationProcessing>
       <profile default="true" name="Default" enabled="false">

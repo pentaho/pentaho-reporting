@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.styles.styleeditor.StyleDefinitionEditorContext;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
 import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
@@ -33,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleChangeListener;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import org.pentaho.reporting.engine.classic.core.style.css.ElementStyleDefinition;
 import org.pentaho.reporting.libraries.designtime.swing.DefaultTableHeaderRenderer;
 
 public class SimpleStyleEditorPanel extends SidePanel
@@ -41,13 +43,19 @@ public class SimpleStyleEditorPanel extends SidePanel
 
   private class ReportModelChangeHandler implements StyleChangeListener
   {
-    private ReportModelChangeHandler()
+    private StyleDefinitionEditorContext editorContext;
+
+    private ReportModelChangeHandler(StyleDefinitionEditorContext editorContext)
     {
+      this.editorContext = editorContext;
     }
 
     public void styleChanged(final ElementStyleSheet source, final StyleKey key, final Object value)
     {
       dataModel.setData(source);
+
+      final ElementStyleDefinition editorStyleDefinition = editorContext.getStyleDefinition();
+      editorStyleDefinition.updateRule(source);
     }
 
     public void styleRemoved(final ElementStyleSheet source, final StyleKey key)
@@ -60,10 +68,13 @@ public class SimpleStyleEditorPanel extends SidePanel
   private ElementMetaDataTable table;
   private ReportModelChangeHandler changeHandler;
   private SortHeaderPanel headerPanel;
+  private StyleDefinitionEditorContext editorContext;
 
-  public SimpleStyleEditorPanel()
+  public SimpleStyleEditorPanel(StyleDefinitionEditorContext editorContext)
   {
     setLayout(new BorderLayout());
+
+    this.editorContext = editorContext;
 
     dataModel = new SimpleStyleTableModel();
 
@@ -73,7 +84,7 @@ public class SimpleStyleEditorPanel extends SidePanel
     table.getColumnModel().getColumn(0).setCellRenderer(new GroupedNameCellRenderer());
     applyHeaderSize(table.getColumnModel().getColumn(1));
 
-    changeHandler = new ReportModelChangeHandler();
+    changeHandler = new ReportModelChangeHandler(editorContext);
     headerPanel = new SortHeaderPanel(dataModel);
 
     add(headerPanel, BorderLayout.NORTH);
