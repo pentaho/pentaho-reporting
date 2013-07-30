@@ -299,10 +299,29 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   private boolean unalignedPageBands;
   private TableContext tableContext;
   private FastStack<Graphics2D> graphicsContexts;
+  private StrictBounds pageArea;
 
+  public LogicalPageDrawable()
+  {
+    this.graphicsContexts = new FastStack<Graphics2D>();
+    this.borderRenderer = new BorderRenderer();
+    this.codePointBuffer = new CodePointBuffer(400);
+    this.boxArea = new Rectangle2D.Double();
+    this.drawPageBackground = true;
+  }
+
+  @Deprecated
   public LogicalPageDrawable(final LogicalPageBox rootBox,
-                             final OutputProcessorMetaData metaData,
-                             final ResourceManager resourceManager)
+                   final OutputProcessorMetaData metaData,
+                   final ResourceManager resourceManager)
+  {
+    this();
+    init(rootBox, metaData, resourceManager);
+  }
+
+  public void init(final LogicalPageBox rootBox,
+                   final OutputProcessorMetaData metaData,
+                   final ResourceManager resourceManager)
   {
     if (rootBox == null)
     {
@@ -317,16 +336,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       throw new NullPointerException();
     }
 
-    this.graphicsContexts = new FastStack<Graphics2D>();
-    this.borderRenderer = new BorderRenderer();
-    this.codePointBuffer = new CodePointBuffer(400);
     this.resourceManager = resourceManager;
-    this.boxArea = new Rectangle2D.Double();
-    this.rootBox = rootBox;
     this.metaData = metaData;
+    this.rootBox = rootBox;
     this.width = StrictGeomUtility.toExternalValue(rootBox.getPageWidth());
     this.height = StrictGeomUtility.toExternalValue(rootBox.getPageHeight());
-    this.drawPageBackground = true;
 
     final Paper paper = new Paper();
     paper.setImageableArea(0, 0, width, height);
@@ -447,8 +461,9 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     try
     {
-      final StrictBounds pageBounds = StrictGeomUtility.createBounds(area.getX(), area.getY(), area.getWidth(),
-          area.getHeight());
+      final StrictBounds pageBounds =
+          StrictGeomUtility.createBounds(area.getX(), area.getY(), area.getWidth(), area.getHeight());
+      this.pageArea = pageBounds;
       this.drawArea = pageBounds;
       this.graphics = g2;
 
@@ -486,7 +501,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final double headerHeight = StrictGeomUtility.toExternalValue(drawArea.getHeight());
 
     final Shape clip = this.graphics.getClip();
-    this.drawArea = headerBounds;
+    setDrawArea(headerBounds);
     this.graphics.clip(createClipRect(drawArea));
     startProcessing(headerArea);
 
@@ -495,7 +510,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       this.graphics.translate(0, headerHeight);
     }
 
-    this.drawArea = contentBounds;
+    setDrawArea(contentBounds);
     this.graphics.setClip(clip);
     this.graphics.clip(createClipRect(drawArea));
     processBoxChilds(rootBox);
@@ -507,7 +522,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
           height - StrictGeomUtility.toExternalValue(footerBounds.getHeight() + repeatFooterBounds.getHeight()));
     }
 
-    this.drawArea = repeatFooterBounds;
+    setDrawArea(repeatFooterBounds);
     this.graphics.setClip(clip);
     this.graphics.clip(createClipRect(drawArea));
     startProcessing(repeatFooterArea);
@@ -516,12 +531,12 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     {
       this.graphics.translate(0, StrictGeomUtility.toExternalValue(repeatFooterBounds.getHeight()));
     }
-    this.drawArea = footerBounds;
+    setDrawArea(footerBounds);
     this.graphics.setClip(clip);
     this.graphics.clip(createClipRect(drawArea));
     startProcessing(footerArea);
 
-    this.drawArea = pageBounds;
+    setDrawArea(pageBounds);
   }
 
   protected Rectangle2D createClipRect(final StrictBounds bounds)
@@ -537,7 +552,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   protected void setDrawArea(final StrictBounds drawArea)
   {
-    this.drawArea = drawArea;
+    this.drawArea = pageArea.createIntersection(drawArea);
   }
 
   protected void drawOutlineBox(final Graphics2D g2, final RenderBox box)
@@ -748,7 +763,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     return true;
   }
 
-  protected boolean isIgnoreBorderWhenDrawingOutline ()
+  protected boolean isIgnoreBorderWhenDrawingOutline()
   {
     return false;
   }
@@ -918,8 +933,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
 
     final boolean overflowProperty = lineBox.getParent().getStaticBoxLayoutProperties().isOverflowX();
-    this.textLineOverflow =
-        ((lineBox.getX() + lineBox.getWidth()) > contentAreaX2) && overflowProperty == false;
+    this.textLineOverflow = ((lineBox.getX() + lineBox.getWidth()) > contentAreaX2) && overflowProperty == false;
 
     this.ellipseDrawn = false;
     if (textLineOverflow)
@@ -966,14 +980,14 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   protected void processOtherNode(final RenderNode node)
   {
+    if (node.isNodeVisible(drawArea) == false)
+    {
+      return;
+    }
+
     final int type = node.getNodeType();
     if (isTextLineOverflow())
     {
-      if (node.isNodeVisible(drawArea) == false)
-      {
-        return;
-      }
-
       if (node.isVirtualNode())
       {
         if (ellipseDrawn == false)
@@ -1035,11 +1049,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
       if (isTextLineOverflow())
       {
-        if (node.isNodeVisible(drawArea) == false)
-        {
-          return;
-        }
-
         final long ellipseSize = extractEllipseSize(node);
         final long x1 = text.getX();
         final long x2 = x1 + text.getWidth();
@@ -1547,7 +1556,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     graphics.clip(StrictGeomUtility.createAWTRectangle(bounds));
   }
 
-  public void clearClipping ()
+  public void clearClipping()
   {
     graphics.dispose();
     graphics = graphicsContexts.pop();

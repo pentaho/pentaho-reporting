@@ -110,7 +110,8 @@ public class GraphicsOutputProcessor extends AbstractPageableOutputProcessor
     final PhysicalPageBox page = pageGrid.getPage(row, col);
     if (page != null)
     {
-      final LogicalPageDrawable drawable = new LogicalPageDrawable(logicalPage, metaData, resourceManager);
+      final LogicalPageDrawable drawable = new LogicalPageDrawable();
+      drawable.init(logicalPage, metaData, resourceManager);
       final PhysicalPageDrawable pageDrawable = new PhysicalPageDrawable(drawable, page);
       interceptor.processPhysicalPage(pageKey, pageDrawable);
     }
@@ -118,7 +119,8 @@ public class GraphicsOutputProcessor extends AbstractPageableOutputProcessor
 
   protected void processLogicalPage(final LogicalPageKey key, final LogicalPageBox logicalPage)
   {
-    final LogicalPageDrawable drawable = new LogicalPageDrawable(logicalPage, metaData, resourceManager);
+    final LogicalPageDrawable drawable = new LogicalPageDrawable();
+    drawable.init(logicalPage, metaData, resourceManager);
     interceptor.processLogicalPage(key, drawable);
   }
 

@@ -141,7 +141,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor
     {
       if (writer == null)
       {
-        writer = new PdfDocumentWriter(metaData, outputStream, resourceManager);
+        writer = createPdfDocumentWriter();
         writer.open();
       }
       writer.processPhysicalPage(pageGrid, logicalPage, row, col, pageKey);
@@ -160,7 +160,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor
     {
       if (writer == null)
       {
-        writer = new PdfDocumentWriter(metaData, outputStream, resourceManager);
+        writer = createPdfDocumentWriter();
         writer.open();
       }
       writer.processLogicalPage(key, logicalPage);
@@ -169,6 +169,26 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor
     {
       throw new ContentProcessingException("Failed to generate PDF document", e);
     }
+  }
+
+  protected OutputStream getOutputStream()
+  {
+    return outputStream;
+  }
+
+  protected ResourceManager getResourceManager()
+  {
+    return resourceManager;
+  }
+
+  protected PdfDocumentWriter getWriter()
+  {
+    return writer;
+  }
+
+  protected PdfDocumentWriter createPdfDocumentWriter()
+  {
+    return new PdfDocumentWriter((PdfOutputProcessorMetaData) getMetaData(), getOutputStream(), getResourceManager());
   }
 
 }
