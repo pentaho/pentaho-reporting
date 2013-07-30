@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor;
 
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.IOException;
 import java.util.Enumeration;
@@ -59,6 +60,7 @@ public class ConfigurationEditorDialog extends CommonDialog
     setTitle(Messages.getString("ConfigurationEditorDialog.Title"));
 
     editorPane = new ConfigEditorPane(ClassicEngineBoot.getInstance(), false);
+    editorPane.setPreferredSize(new Dimension(800,400));
     try
     {
       editorPane.load(false);
