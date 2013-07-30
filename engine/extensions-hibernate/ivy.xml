@@ -26,7 +26,7 @@
 		<dependency org="asm"                 name="asm-attrs"           rev="2.2.3"  transitive="false"  conf="default_external->default"/>
 		<dependency org="cglib"               name="cglib-nodep"         rev="2.2"  transitive="false"  conf="default_external->default"/>
 		<dependency org="commons-collections" name="commons-collections" rev="2.1.1"  transitive="false"  conf="default_external->default"/>
-		<dependency org="commons-logging"     name="commons-logging"     rev="1.0.4"  transitive="false"  conf="default_external->default"/>
+		<dependency org="commons-logging"     name="commons-logging"     rev="1.1.1"  transitive="false"  conf="default_external->default"/>
 		<dependency org="dom4j"               name="dom4j"               rev="1.6.1"  transitive="false"  conf="default_external->default"/>
 		<dependency org="javax.transaction"   name="jta"                 rev="1.1" transitive="false"  conf="default_external->default"/>
 
