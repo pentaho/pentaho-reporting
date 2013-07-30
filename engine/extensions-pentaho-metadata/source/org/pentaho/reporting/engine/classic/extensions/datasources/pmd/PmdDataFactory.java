@@ -59,8 +59,6 @@ public class PmdDataFactory extends SimplePmdDataFactory
   }
 
   /**
-   * @deprecated use the full version instead. Use "removeQuery" to remove an existing query instead of setting the
-   * query string to null.
    * @param name
    * @param queryString
    */

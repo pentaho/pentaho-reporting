@@ -34,8 +34,6 @@ public abstract class AbstractNamedMDXDataFactory extends AbstractMDXDataFactory
   }
 
   /**
-   * @deprecated use the full version instead. Use "removeQuery" to remove an existing query instead of setting the
-   * query string to null.
    * @param name
    * @param queryString
    */
