@@ -30,6 +30,7 @@
       <exclude org="org.eclipse.core"/>
       <exclude org="org.eclipse"/>
       <exclude org="org.eclipse.equinox"/>
+      <exclude org="org.eclipse.jdt"/>
       <exclude org="mysql"/>
       <exclude org="hsqldb"/>
       <exclude org="commons-logging"/>
