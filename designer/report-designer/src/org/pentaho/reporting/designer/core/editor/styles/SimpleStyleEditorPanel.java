@@ -45,7 +45,7 @@ public class SimpleStyleEditorPanel extends SidePanel
   {
     private StyleDefinitionEditorContext editorContext;
 
-    private ReportModelChangeHandler(StyleDefinitionEditorContext editorContext)
+    private ReportModelChangeHandler(final StyleDefinitionEditorContext editorContext)
     {
       this.editorContext = editorContext;
     }
@@ -70,7 +70,7 @@ public class SimpleStyleEditorPanel extends SidePanel
   private SortHeaderPanel headerPanel;
   private StyleDefinitionEditorContext editorContext;
 
-  public SimpleStyleEditorPanel(StyleDefinitionEditorContext editorContext)
+  public SimpleStyleEditorPanel(final StyleDefinitionEditorContext editorContext)
   {
     setLayout(new BorderLayout());
 
