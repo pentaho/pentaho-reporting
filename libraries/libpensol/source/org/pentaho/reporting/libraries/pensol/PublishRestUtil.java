@@ -22,7 +22,7 @@ public class PublishRestUtil {
 
 	private static final Log logger = LogFactory.getLog(PublishRestUtil.class);
 	
-	public static final String REPO_FILES_IMPORT = "api/repo/publish/publishfile";
+	public static final String REPO_FILES_IMPORT = "api/repo/files/import";
 
 	private String baseUrl;
 	private String username;
@@ -62,16 +62,17 @@ public class PublishRestUtil {
 		if(filePath == null || data == null || data.length == 0){
 			throw new IOException("missing file path and/or data"); 
 		}
-		
+		String path = filePath;
 		String fileName = null;
 		
 		int fileNameIdx = filePath.lastIndexOf("/");
 		if(fileNameIdx >= 0){
 			fileName = filePath.substring(fileNameIdx + 1);
+      path = filePath.substring(0,fileNameIdx);
 		}
 		
 		try{
-			return publishFile(filePath, fileName, new ByteArrayInputStream(data), true);
+			return publishFile(path, fileName, new ByteArrayInputStream(data), true);
 		}catch(Exception ex){
 			logger.error(ex);
 			throw new IOException(ex);
@@ -95,13 +96,13 @@ public class PublishRestUtil {
 		int responseCode = 504;
 		try {
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.field("importPath", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
+			part.field("importDir", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("overwriteFile", String.valueOf(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
 
 			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName(fileName).build());
 
-      WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA).accept(MediaType.TEXT_PLAIN);
+      WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA);
 			ClientResponse response =  builder.post(ClientResponse.class, part);
 
 			if(response != null){
