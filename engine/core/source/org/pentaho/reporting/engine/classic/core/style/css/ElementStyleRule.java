@@ -85,4 +85,30 @@ public class ElementStyleRule extends ElementStyleSheet
   {
     selectorList.clear();
   }
+
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (!(o instanceof ElementStyleRule))
+    {
+      return false;
+    }
+
+    final ElementStyleRule that = (ElementStyleRule) o;
+
+    if (selectorList != null ? !selectorList.equals(that.selectorList) : that.selectorList != null)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  public int hashCode()
+  {
+    return selectorList != null ? selectorList.hashCode() : 0;
+  }
 }
