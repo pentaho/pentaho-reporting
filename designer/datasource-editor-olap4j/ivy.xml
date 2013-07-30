@@ -23,7 +23,7 @@
                 changing="true"/>
 
 		<!--  external dependencies -->
-	    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false" conf="default_external->default"/>
+	    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="default_external->default"/>
 
 	</dependencies>
 </ivy-module>
