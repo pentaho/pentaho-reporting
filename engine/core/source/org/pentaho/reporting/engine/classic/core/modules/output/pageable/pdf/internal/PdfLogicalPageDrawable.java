@@ -170,7 +170,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
     if (page != null)
     {
-      this.globalHeight = (float) StrictGeomUtility.toExternalValue(page.getHeight() - page.getImageableY());
+      this.globalHeight = (float)
+          StrictGeomUtility.toExternalValue(page.getHeight() - page.getImageableY() + page.getGlobalY());
     }
     else
     {
@@ -394,10 +395,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     final float y2 = (float) (StrictGeomUtility.toExternalValue(posY) + ascent);
     final float y = globalHeight - y2;
 
-
     final AffineTransform affineTransform = textSpec.getGraphics().getTransform();
     final float translateX = (float) affineTransform.getTranslateX();
-    final float translateY = (float) affineTransform.getTranslateY();
 
     final FontNativeContext nativeContext = baseFontRecord.getNativeContext();
     if (baseFontRecord.isTrueTypeFont() && textSpec.isBold() && nativeContext.isNativeBold() == false)
