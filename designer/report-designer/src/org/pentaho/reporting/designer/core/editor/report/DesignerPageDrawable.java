@@ -50,6 +50,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphic
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DesignerPageDrawable extends LogicalPageDrawable
@@ -132,7 +133,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
    * Draws the object.
    *
    * @param g2   the graphics device.
-   * @param area the area inside which the object should be drawn.
+   * @param area the area inside which the object should be drawn. This is the clipping area for the page.
    */
   public void draw(final Graphics2D g2, final Rectangle2D area)
   {
@@ -140,8 +141,9 @@ public class DesignerPageDrawable extends LogicalPageDrawable
     final Graphics2D graphics = (Graphics2D) g2.create();
     try
     {
-      graphics.translate(0, -StrictGeomUtility.toExternalValue(rootElementBounds.getY()));
-      graphics.clip(StrictGeomUtility.createAWTRectangle(rootElementBounds));
+      // the graphics2d we get is already positioned at the origin, and thus we just need to clip the width/height.
+      graphics.clip(StrictGeomUtility.createAWTRectangle
+          (0, 0, rootElementBounds.getWidth(), rootElementBounds.getHeight()));
       super.draw(graphics, area);
     }
     finally
@@ -156,7 +158,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
     {
       final WatermarkAreaBox box = getRootBox().getWatermarkArea();
       setDrawArea(new StrictBounds(box.getX(), box.getY(), box.getWidth(), box.getHeight()));
-      getGraphics().setClip(createClipRect(getDrawArea()));
+      getGraphics().clip(createClipRect(getDrawArea()));
       startProcessing(box);
     }
     else if (subType == SectionSubType.HEADER)
@@ -171,6 +173,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
       final BlockRenderBox box = getRootBox().getFooterArea();
       setDrawArea(new StrictBounds(box.getX(), box.getY(), box.getWidth(), box.getHeight()));
       getGraphics().clip(createClipRect(getDrawArea()));
+      DebugLog.log(getGraphics().getClipBounds());
       startProcessing(box);
     }
     else
