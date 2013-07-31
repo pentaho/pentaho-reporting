@@ -27,6 +27,7 @@
                 transitive="true" changing="true" conf="default_external->default">
       <exclude org="org.eclipse.swt"/>
       <exclude org="pentaho" module="pentaho-xul-swt"/>
+      <exclude org="pentaho-kettle" module="kettle-ui-swt"/>
       <exclude org="org.eclipse.core"/>
       <exclude org="org.eclipse"/>
       <exclude org="org.eclipse.equinox"/>
