@@ -313,6 +313,7 @@ public class ReportDesigner
 
   private static void setLookAndFeel()
   {
+    int indent = 0;
     try
     {
       final String lnfName = WorkspaceSettings.getInstance().getLNF();
@@ -330,6 +331,7 @@ public class ReportDesigner
       }
 
       UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      indent = 5; //PRD-4583
     }
     catch (Throwable t)
     {
@@ -338,7 +340,7 @@ public class ReportDesigner
 
     final UIDefaults uiDefaults = UIManager.getDefaults();
     uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
-    uiDefaults.put("Tree.leftChildIndent" , 0 );//PRD-4419
+    uiDefaults.put("Tree.leftChildIndent" , indent );//PRD-4419
   }
 
   public static void preloadFonts()
