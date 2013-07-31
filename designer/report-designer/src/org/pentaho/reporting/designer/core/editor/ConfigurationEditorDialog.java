@@ -60,7 +60,7 @@ public class ConfigurationEditorDialog extends CommonDialog
     setTitle(Messages.getString("ConfigurationEditorDialog.Title"));
 
     editorPane = new ConfigEditorPane(ClassicEngineBoot.getInstance(), false);
-    editorPane.setPreferredSize(new Dimension(800,400));
+    editorPane.setPreferredSize(new Dimension(825,425));
     try
     {
       editorPane.load(false);
