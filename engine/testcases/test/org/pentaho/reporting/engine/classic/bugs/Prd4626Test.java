@@ -35,7 +35,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -85,15 +84,17 @@ public class Prd4626Test extends TestCase
     final int numberOfPages = pr.getNumberOfPages();
     assertEquals(4, numberOfPages);
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
-
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     PdfReportUtil.createPDF(report, out);
   }
 
   public void testPerformance() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL resource = getClass().getResource("Prd-4626.prpt");
     assertNotNull(resource);
 
@@ -130,9 +131,6 @@ public class Prd4626Test extends TestCase
     bottomLabel.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 500f);
     report.getReportHeader().addElement(topLabel);
     report.getReportHeader().addElement(bottomLabel);
-
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
 
     final PdfOutputProcessor outputProcessor =
         new TestPdfOutputProcessor(report.getConfiguration(), new NullOutputStream());
