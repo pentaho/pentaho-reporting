@@ -1,5 +1,5 @@
 <!--===========================================================================
-  This is the build file for the pentaho-reporting-designer-datasources-hibernate project.
+  This is the build file for the pentaho-reporting-engine-datasource-editor-scriptable project.
   
   This build file will use the build-res/subfloor.xml file as the default build
   process and should only override the tasks that need to differ from

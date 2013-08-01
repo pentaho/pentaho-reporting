@@ -17,7 +17,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="report-designer" exported="" />
     <orderEntry type="module" module-name="datasource-editor-external" exported="" />
-    <orderEntry type="module" module-name="datasource-editor-hibernate" exported="" />
     <orderEntry type="module" module-name="datasource-editor-jdbc" exported="" />
     <orderEntry type="module" module-name="datasource-editor-mondrian" exported="" />
     <orderEntry type="module" module-name="datasource-editor-olap4j" exported="" />
