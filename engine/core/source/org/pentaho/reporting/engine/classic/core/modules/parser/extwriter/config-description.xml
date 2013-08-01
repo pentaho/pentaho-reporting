@@ -44,10 +44,6 @@
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.HQLDataFactory" global="true" hidden="true">
-    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
-    <text/>
-  </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory" global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
@@ -89,10 +85,6 @@
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory" global="true" hidden="true">
-    <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
-    <text/>
-  </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.org.pentaho.reporting.engine.classic.extensions.modules.hibernate.HQLDataFactory" global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>

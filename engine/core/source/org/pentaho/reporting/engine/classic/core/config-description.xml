@@ -442,10 +442,6 @@ Possible values are &quot;strict&quot;, &quot;all&quot; or &quot;none&quot;.</de
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.hibernate.Module" global="true" hidden="true">
-    <description>A module definition. Please do not edit this entry.</description>
-    <text/>
-  </key>
 
   <key name="org.pentaho.reporting.engine.classic.extensions.modules.report-designer-parser.Module" global="true" hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
@@ -472,10 +468,6 @@ Possible values are &quot;strict&quot;, &quot;all&quot; or &quot;none&quot;.</de
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory" global="true" hidden="true">
-    <description>Internal DataFactory-Editor configuration. Do not modify.</description>
-    <text/>
-  </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.hibernate.HQLDataFactory" global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>

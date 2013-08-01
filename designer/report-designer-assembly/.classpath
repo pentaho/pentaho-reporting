@@ -4,7 +4,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/legacy-charts"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/report-designer"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/datasource-editor-external"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/datasource-editor-hibernate"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/datasource-editor-jdbc"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/datasource-editor-kettle"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/datasource-editor-mondrian"/>
@@ -17,7 +16,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/engine-core"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extensions"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extensions-charting"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/extensions-hibernate"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extensions-kettle"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extensions-mondrian"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/extensions-olap4j"/>

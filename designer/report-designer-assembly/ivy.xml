@@ -20,7 +20,6 @@
 		<!-- report designer dependencies -->
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-cda" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-external" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-hibernate" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-jdbc" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-table" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-kettle" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
