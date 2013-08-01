@@ -416,8 +416,19 @@ public class JdbcDataSourceDialog extends CommonDialog
       final NamedDataSourceDialogModel dialogModel = getDialogModel();
       final DefaultComboBoxModel queries = dialogModel.getQueries();
       queries.removeElement(queries.getSelectedItem());
-      queries.setSelectedItem(null);
-      queryNameList.clearSelection();
+      if(queryNameList.getLastVisibleIndex() != -1)
+      {
+        queryNameList.setSelectedValue(dialogModel.getQueries().getQuery(queryNameList.getLastVisibleIndex()), true);
+        queryNameList.setSelectedIndex(queryNameList.getLastVisibleIndex());
+        queries.setSelectedItem(dialogModel.getQueries().getQuery(queryNameList.getLastVisibleIndex()));
+        queryTextArea.setEnabled(true);
+      }
+      else
+      {
+        queries.setSelectedItem(null);
+        queryNameList.clearSelection();
+        queryTextArea.setEnabled(false);
+      }
     }
   }
 
@@ -458,12 +469,14 @@ public class JdbcDataSourceDialog extends CommonDialog
         {
           setQueryName(null);
           queryTextArea.setText(null);
+          queryTextArea.setEnabled(false);
           queryScriptTextArea.setText(null);
           queryLanguageField.setSelectedItem(null);
           return;
         }
 
         setQueryName(selectedQuery.getQueryName());
+        setEnabled(true);
         queryTextArea.setText(selectedQuery.getQuery());
         setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
         queryScriptTextArea.setText(selectedQuery.getScript());
@@ -510,7 +523,7 @@ public class JdbcDataSourceDialog extends CommonDialog
       {
         return;
       }
-
+      //this is where we should set the selected item
       item.setQuery(queryTextArea.getText());
       dialogModel.getQueries().fireItemChanged(item);
     }
@@ -751,14 +764,22 @@ public class JdbcDataSourceDialog extends CommonDialog
         final String scriptLanguage = dataFactory.getScriptingLanguage(queryName);
         final String script = dataFactory.getScript(queryName);
         dialogModel.addQuery(queryName, query, scriptLanguage, script);
+       {
+          queryNameList.setSelectedValue(queryName, true);
+          queryNameList.setSelectedIndex(i);
+        }
       }
-
-      dialogModel.setSelectedQuery(selectedQueryName);
 
       final ConnectionProvider currentConnectionProvider = dataFactory.getConnectionProvider();
       final JdbcConnectionDefinition definition = connectionComponent.createConnectionDefinition(currentConnectionProvider);
       dialogModel.addConnection(definition);
       dialogModel.getConnections().setSelectedItem(definition);
+      String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
+      if(quernNameForSelection != null)
+      {
+        dialogModel.setSelectedQuery(quernNameForSelection);
+        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(quernNameForSelection));
+      }
     }
 
     // Enable the dialog
@@ -889,6 +910,11 @@ public class JdbcDataSourceDialog extends CommonDialog
     final QueryNameTextFieldDocumentListener updateHandler = new QueryNameTextFieldDocumentListener();
     dialogModel.getQueries().addListDataListener(updateHandler);
 
+    queryNameList = new JList(dialogModel.getQueries());
+    queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    queryNameList.setVisibleRowCount(5);
+    queryNameList.addListSelectionListener(new QuerySelectedHandler());
+
     queryNameTextField = new JTextField();
     queryNameTextField.setColumns(35);
     queryNameTextField.setEnabled(dialogModel.isQuerySelected());
@@ -898,11 +924,6 @@ public class JdbcDataSourceDialog extends CommonDialog
     queryTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
     queryTextArea.setEnabled(dialogModel.isQuerySelected());
     queryTextArea.getDocument().addDocumentListener(new QueryDocumentListener());
-
-    queryNameList = new JList(dialogModel.getQueries());
-    queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    queryNameList.setVisibleRowCount(5);
-    queryNameList.addListSelectionListener(new QuerySelectedHandler());
 
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
