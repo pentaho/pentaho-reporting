@@ -235,6 +235,7 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
 
   public void addQuery(final String queryName, final String query, final String scriptLanguage, final String script)
   {
+
     queries.addElement(new DataSetQuery<String>(queryName, query, scriptLanguage, script));
   }
 
@@ -279,9 +280,16 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
 
   public void setSelectedQuery(final String selectedQueryName)
   {
+
+    if(queries == null || queries.getSize() == 0)
+    {
+      return;
+    }
     if (selectedQueryName == null)
     {
-      queries.setSelectedItem(null);
+      queries.setSelectedItem(getFirstQueryName());
+      setQuerySelected(getFirstQueryName() != null);
+      setPreviewPossible(getFirstQueryName() != null);
       return;
     }
     
@@ -291,11 +299,21 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
       if (selectedQueryName.equals(q.getQueryName()))
       {
         queries.setSelectedItem(q);
+        setQuerySelected(true);
+        setPreviewPossible(true);
         return;
       }
     }
   }
 
+  public DataSetQuery getFirstQueryName()
+  {
+    if(getQueries() != null && getQueries().getSize() > 0)
+    {
+        return getQueries().getQuery(0);
+    }
+    return null;
+  }
   public String generateQueryName()
   {
     final String queryName = Messages.getString("JdbcDataSourceDialog.Query");
