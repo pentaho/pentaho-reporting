@@ -76,7 +76,6 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
       dialog = new ConfigurationEditorDialog();
     }
 
-    dialog.pack();
     final HierarchicalConfiguration config =
         (HierarchicalConfiguration) activeContext.getMasterReportElement().getReportConfiguration();
     final HashMap oldConfig = copyConfig(config);
