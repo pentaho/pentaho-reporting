@@ -526,12 +526,14 @@ public class ProcessState implements ReportState
     if (subReportStorage.contains(functionStorageKey))
     {
       initialSubReport = subReportStorage.restore(functionStorageKey);
+      initialSubReport.reconnectParent(subreportFromMarker.getParentSection());
       applyCurrentStyleAndAttributes(subreportFromMarker, initialSubReport);
       needPreProcessing = false;
     }
     else
     {
-      initialSubReport = subreportFromMarker;
+      initialSubReport = subreportFromMarker.derive(true);
+      initialSubReport.reconnectParent(subreportFromMarker.getParentSection());
       needPreProcessing = true;
     }
 
