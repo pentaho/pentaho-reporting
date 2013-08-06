@@ -112,6 +112,11 @@ public class SubReport extends AbstractReportDefinition
     return o;
   }
 
+  public void reconnectParent (final Section parentSection)
+  {
+    parentSection.registerAsChild(this);
+  }
+
   /**
    * Clones the report.
    *
