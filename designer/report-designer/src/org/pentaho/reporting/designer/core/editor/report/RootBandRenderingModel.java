@@ -200,9 +200,12 @@ public class RootBandRenderingModel
     }
 
     final ArrayList<ElementRenderer> rootBandComponents = new ArrayList<ElementRenderer>(20);
-    if (ModelUtility.isHideInLayoutGui(report.getPageHeader()) == false)
+    if (renderContext.isBandedContext())
     {
-      rootBandComponents.add(new RootBandRenderer(report.getPageHeader(), renderContext));
+      if (ModelUtility.isHideInLayoutGui(report.getPageHeader()) == false)
+      {
+        rootBandComponents.add(new RootBandRenderer(report.getPageHeader(), renderContext));
+      }
     }
     if (ModelUtility.isHideInLayoutGui(report.getReportHeader()) == false)
     {
@@ -268,13 +271,16 @@ public class RootBandRenderingModel
     {
       rootBandComponents.add(new RootBandRenderer(report.getReportFooter(), renderContext));
     }
-    if (ModelUtility.isHideInLayoutGui(report.getPageFooter()) == false)
+    if (renderContext.isBandedContext())
     {
-      rootBandComponents.add(new RootBandRenderer(report.getPageFooter(), renderContext));
-    }
-    if (ModelUtility.isHideInLayoutGui(report.getWatermark()) == false)
-    {
-      rootBandComponents.add(new RootBandRenderer(report.getWatermark(), renderContext));
+      if (ModelUtility.isHideInLayoutGui(report.getPageFooter()) == false)
+      {
+        rootBandComponents.add(new RootBandRenderer(report.getPageFooter(), renderContext));
+      }
+      if (ModelUtility.isHideInLayoutGui(report.getWatermark()) == false)
+      {
+        rootBandComponents.add(new RootBandRenderer(report.getWatermark(), renderContext));
+      }
     }
 
     if (isChange(rootBandComponents))
