@@ -61,6 +61,7 @@ public class Prd4625Test extends TestCase
   {
     final URL source = getClass().getResource("Prd-4625.prpt");
     final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
     final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
@@ -77,6 +78,7 @@ public class Prd4625Test extends TestCase
   {
     final URL source = getClass().getResource("Prd-4625.prpt");
     final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
     final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
 
     final ItemBand itemBand = report.getItemBand();
@@ -148,6 +150,7 @@ public class Prd4625Test extends TestCase
   {
     final URL source = getClass().getResource("Prd-4625.prpt");
     final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
     final MasterReport report = (MasterReport) mgr.createDirectly(source, MasterReport.class).getResource();
 
     final ItemBand itemBand = report.getItemBand();
