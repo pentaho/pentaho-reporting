@@ -93,6 +93,11 @@ public class DefaultOutputFunction extends AbstractFunction
     this.elementChangeChecker = new ElementChangeChecker();
   }
 
+  protected OutputProcessorMetaData getMetaData()
+  {
+    return getRenderer().getOutputProcessor().getMetaData();
+  }
+
   /**
    * Return the current expression value. <P> The value depends (obviously) on the expression implementation.
    *
@@ -647,24 +652,7 @@ public class DefaultOutputFunction extends AbstractFunction
       // Check the subreport for sticky watermarks ...
       levels = DefaultOutputFunction.collectSubReportStates(state, processingContext);
 
-      for (int i = levels.length - 1; i >= 0; i -= 1)
-      {
-        final LayouterLevel level = levels[i];
-        final ReportDefinition def = level.getReportDefinition();
-        final Watermark watermark = def.getWatermark();
-        if (isPageHeaderPrinting(watermark, true))
-        {
-          print(level.getRuntime(), watermark);
-        }
-      }
-
-      // and finally print the watermark of the subreport itself ..
-      final Band watermark = report.getWatermark();
-      if (isPageHeaderPrinting(watermark, false))
-      {
-        runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
-        print(runtime, watermark);
-      }
+      runtime = updateWatermark(state, processingContext, report, levels, runtime);
       addSubReportMarkers(renderer.endSection());
     }
 
@@ -678,99 +666,155 @@ public class DefaultOutputFunction extends AbstractFunction
         levels = DefaultOutputFunction.collectSubReportStates(state, processingContext);
       }
 
-      for (int i = levels.length - 1; i >= 0; i -= 1)
-      {
-        // This is propably wrong (or at least incomplete) in case a subreport uses header or footer which should
-        // not be printed with the report-footer or header ..
-        final LayouterLevel level = levels[i];
-        final ReportDefinition def = level.getReportDefinition();
-        final PageHeader header = def.getPageHeader();
+      runtime = updatePageHeader(state, processingContext, report, levels, runtime);
+      runtime = updateRepeatingGroupHeader(state, processingContext, report, levels, runtime);
+      updateDetailsHeader(state, processingContext, report, runtime);
 
-        if (isPageHeaderPrinting(header, true))
-        {
-          print(level.getRuntime(), header);
-        }
+      addSubReportMarkers(renderer.endSection());
+    }
+    // mark the current position to calculate the maxBand-Height
+  }
+
+  protected ExpressionRuntime updateWatermark(final ReportState state,
+                                            final ProcessingContext processingContext,
+                                            final ReportDefinition report,
+                                            final LayouterLevel[] levels,
+                                            ExpressionRuntime runtime) throws ReportProcessingException
+  {
+    for (int i = levels.length - 1; i >= 0; i -= 1)
+    {
+      final LayouterLevel level = levels[i];
+      final ReportDefinition def = level.getReportDefinition();
+      final Watermark watermark = def.getWatermark();
+      if (isPageHeaderPrinting(watermark, true))
+      {
+        print(level.getRuntime(), watermark);
       }
+    }
 
-      // and print the ordinary page header ..
-      final Band b = report.getPageHeader();
-      if (isPageHeaderPrinting(b, false))
+    // and finally print the watermark of the subreport itself ..
+    final Band watermark = report.getWatermark();
+    if (isPageHeaderPrinting(watermark, false))
+    {
+      runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
+      print(runtime, watermark);
+    }
+    return runtime;
+  }
+
+  protected ExpressionRuntime updatePageHeader(final ReportState state,
+                                             final ProcessingContext processingContext,
+                                             final ReportDefinition report,
+                                             final LayouterLevel[] levels,
+                                             ExpressionRuntime runtime) throws ReportProcessingException
+  {
+    for (int i = levels.length - 1; i >= 0; i -= 1)
+    {
+      // This is propably wrong (or at least incomplete) in case a subreport uses header or footer which should
+      // not be printed with the report-footer or header ..
+      final LayouterLevel level = levels[i];
+      final ReportDefinition def = level.getReportDefinition();
+      final PageHeader header = def.getPageHeader();
+
+      if (isPageHeaderPrinting(header, true))
       {
-        if (runtime == null)
-        {
-          runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
-        }
-        print(runtime, b);
+        print(level.getRuntime(), header);
       }
+    }
 
-      /**
-       * Dive into the pending group to print the group header ...
-       */
-
-      for (int i = levels.length - 1; i >= 0; i -= 1)
+    // and print the ordinary page header ..
+    final Band b = report.getPageHeader();
+    if (isPageHeaderPrinting(b, false))
+    {
+      if (runtime == null)
       {
-        final LayouterLevel level = levels[i];
-        final ReportDefinition def = level.getReportDefinition();
-
-        for (int gidx = 0; gidx <= level.getGroupIndex(); gidx++)
-        {
-          final Group g = def.getGroup(gidx);
-          if (g instanceof RelationalGroup)
-          {
-            final RelationalGroup rg = (RelationalGroup) g;
-            final GroupHeader header = rg.getHeader();
-            if (isGroupSectionPrintable(header, true, true))
-            {
-              print(level.getRuntime(), header);
-            }
-          }
-        }
-
-        if (level.isInItemGroup())
-        {
-          final DetailsHeader detailsHeader = def.getDetailsHeader();
-          if (detailsHeader != null && isGroupSectionPrintable(detailsHeader, true, true))
-          {
-            print(level.getRuntime(), detailsHeader);
-          }
-        }
+        runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
       }
+      print(runtime, b);
+    }
+    return runtime;
+  }
 
-      final int groupsPrinted = state.getPresentationGroupIndex();
-      for (int gidx = 0; gidx <= groupsPrinted; gidx++)
+  // todo: return immediately in designmode
+  protected ExpressionRuntime updateRepeatingGroupHeader(final ReportState state,
+                                                       final ProcessingContext processingContext,
+                                                       final ReportDefinition report,
+                                                       final LayouterLevel[] levels,
+                                                       ExpressionRuntime runtime) throws ReportProcessingException
+  {
+    /**
+     * Dive into the pending group to print the group header ...
+     */
+
+    for (int i = levels.length - 1; i >= 0; i -= 1)
+    {
+      final LayouterLevel level = levels[i];
+      final ReportDefinition def = level.getReportDefinition();
+
+      for (int gidx = 0; gidx <= level.getGroupIndex(); gidx++)
       {
-        final Group g = report.getGroup(gidx);
+        final Group g = def.getGroup(gidx);
         if (g instanceof RelationalGroup)
         {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupHeader header = rg.getHeader();
-          if (isGroupSectionPrintable(header, false, true))
+          if (isGroupSectionPrintableInternal(header, true, true))
           {
-            if (runtime == null)
-            {
-              runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
-            }
-            print(runtime, header);
+            print(level.getRuntime(), header);
           }
         }
       }
 
-      if (state.isInItemGroup())
+      if (level.isInItemGroup())
       {
-        final DetailsHeader detailsHeader = report.getDetailsHeader();
-        if (detailsHeader != null && isGroupSectionPrintable(detailsHeader, false, true))
+        final DetailsHeader detailsHeader = def.getDetailsHeader();
+        if (detailsHeader != null && isGroupSectionPrintableInternal(detailsHeader, true, true))
+        {
+          print(level.getRuntime(), detailsHeader);
+        }
+      }
+    }
+
+    final int groupsPrinted = state.getPresentationGroupIndex();
+    for (int gidx = 0; gidx <= groupsPrinted; gidx++)
+    {
+      final Group g = report.getGroup(gidx);
+      if (g instanceof RelationalGroup)
+      {
+        final RelationalGroup rg = (RelationalGroup) g;
+        final GroupHeader header = rg.getHeader();
+        if (isGroupSectionPrintableInternal(header, false, true))
         {
           if (runtime == null)
           {
             runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
           }
-          print(runtime, detailsHeader);
+          print(runtime, header);
         }
       }
-
-      addSubReportMarkers(renderer.endSection());
     }
-    // mark the current position to calculate the maxBand-Height
+    return runtime;
+  }
+
+  // todo: Return immediately in designmode
+  protected ExpressionRuntime updateDetailsHeader(final ReportState state,
+                                   final ProcessingContext processingContext,
+                                   final ReportDefinition report,
+                                   ExpressionRuntime runtime) throws ReportProcessingException
+  {
+    if (state.isInItemGroup())
+    {
+      final DetailsHeader detailsHeader = report.getDetailsHeader();
+      if (detailsHeader != null && isGroupSectionPrintableInternal(detailsHeader, false, true))
+      {
+        if (runtime == null)
+        {
+          runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
+        }
+        print(runtime, detailsHeader);
+      }
+    }
+    return runtime;
   }
 
   /**
@@ -823,7 +867,7 @@ public class DefaultOutputFunction extends AbstractFunction
     clearedFooter = false;
   }
 
-  private boolean updatePageFooter(final ReportEvent event,
+  protected boolean updatePageFooter(final ReportEvent event,
                                    final LayouterLevel[] levels) throws ReportProcessingException
   {
     final ReportDefinition report = event.getReport();
@@ -893,7 +937,7 @@ public class DefaultOutputFunction extends AbstractFunction
     return true;
   }
 
-  private boolean updateRepeatingFooters(final ReportEvent event,
+  protected boolean updateRepeatingFooters(final ReportEvent event,
                                          final LayouterLevel[] levels) throws ReportProcessingException
   {
     final ReportDefinition report = event.getReport();
@@ -914,7 +958,7 @@ public class DefaultOutputFunction extends AbstractFunction
     if (state.isInItemGroup())
     {
       final DetailsFooter footer = report.getDetailsFooter();
-      if (isGroupSectionPrintable(footer, false, true))
+      if (isGroupSectionPrintableInternal(footer, false, true))
       {
         print(getRuntime(), footer);
       }
@@ -931,7 +975,7 @@ public class DefaultOutputFunction extends AbstractFunction
       {
         final RelationalGroup rg = (RelationalGroup) g;
         final GroupFooter footer = rg.getFooter();
-        if (isGroupSectionPrintable(footer, false, true))
+        if (isGroupSectionPrintableInternal(footer, false, true))
         {
           print(getRuntime(), footer);
         }
@@ -948,7 +992,7 @@ public class DefaultOutputFunction extends AbstractFunction
         final DetailsFooter detailsFooter = def.getDetailsFooter();
         if (detailsFooter != null)
         {
-          if (isGroupSectionPrintable(detailsFooter, true, true))
+          if (isGroupSectionPrintableInternal(detailsFooter, true, true))
           {
             print(level.getRuntime(), detailsFooter);
           }
@@ -962,7 +1006,7 @@ public class DefaultOutputFunction extends AbstractFunction
         {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupFooter footer = rg.getFooter();
-          if (isGroupSectionPrintable(footer, true, true))
+          if (isGroupSectionPrintableInternal(footer, true, true))
           {
             print(level.getRuntime(), footer);
           }
@@ -975,7 +1019,7 @@ public class DefaultOutputFunction extends AbstractFunction
     return true;
   }
 
-  private boolean isNeedPrintRepeatingFooter(final ReportEvent event,
+  protected boolean isNeedPrintRepeatingFooter(final ReportEvent event,
                                              final LayouterLevel[] levels)
   {
     final ReportDefinition report = event.getReport();
@@ -993,7 +1037,7 @@ public class DefaultOutputFunction extends AbstractFunction
     if (needPrinting == false && state.isInItemGroup())
     {
       final DetailsFooter footer = report.getDetailsFooter();
-      if (isGroupSectionPrintable(footer, false, true) &&
+      if (isGroupSectionPrintableInternal(footer, false, true) &&
           elementChangeChecker.isBandChanged(footer, dataRow))
       {
         needPrinting = true;
@@ -1013,7 +1057,7 @@ public class DefaultOutputFunction extends AbstractFunction
         {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupFooter footer = rg.getFooter();
-          if (isGroupSectionPrintable(footer, false, true) &&
+          if (isGroupSectionPrintableInternal(footer, false, true) &&
               elementChangeChecker.isBandChanged(footer, dataRow))
           {
             needPrinting = true;
@@ -1034,7 +1078,7 @@ public class DefaultOutputFunction extends AbstractFunction
           final DetailsFooter detailsFooter = def.getDetailsFooter();
           if (detailsFooter != null)
           {
-            if (isGroupSectionPrintable(detailsFooter, true, true) &&
+            if (isGroupSectionPrintableInternal(detailsFooter, true, true) &&
                 elementChangeChecker.isBandChanged(detailsFooter, dataRow))
             {
               needPrinting = true;
@@ -1051,7 +1095,7 @@ public class DefaultOutputFunction extends AbstractFunction
             {
               final RelationalGroup rg = (RelationalGroup) g;
               final GroupFooter footer = rg.getFooter();
-              if (isGroupSectionPrintable(footer, true, true) &&
+              if (isGroupSectionPrintableInternal(footer, true, true) &&
                   elementChangeChecker.isBandChanged(footer, dataRow))
               {
                 needPrinting = true;
@@ -1062,6 +1106,13 @@ public class DefaultOutputFunction extends AbstractFunction
       }
     }
     return needPrinting;
+  }
+
+  protected boolean isGroupSectionPrintableInternal (final Band b,
+                                                  final boolean testSticky,
+                                                  final boolean testRepeat)
+  {
+    return isGroupSectionPrintable(b, testSticky, testRepeat);
   }
 
   public static boolean isGroupSectionPrintable(final Band b,
@@ -1081,7 +1132,7 @@ public class DefaultOutputFunction extends AbstractFunction
     return true;
   }
 
-  private boolean isPageFooterPrintable(final Band b,
+  protected boolean isPageFooterPrintable(final Band b,
                                         final boolean testSticky)
   {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
