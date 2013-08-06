@@ -59,7 +59,7 @@ import java.util.Map;
 
 public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
 {
-  private Graphics2D dg2 = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB).createGraphics();
+  private Graphics2D dg2;
   private float alpha;
   private Composite composite;
   private Paint paint;
@@ -69,8 +69,9 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
   private ArrayList<AbstractGraphics2D> childs;
   private AbstractGraphics2D parent;
 
-  protected AbstractGraphics2D()
+  protected AbstractGraphics2D(final int width, final int height)
   {
+    dg2 = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB).createGraphics();
     setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
     childs = new ArrayList<AbstractGraphics2D>();
   }
@@ -900,6 +901,8 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
     {
       final AbstractGraphics2D clone = (AbstractGraphics2D) super.clone();
       clone.dg2 = (Graphics2D) dg2.create();
+      clone.childs = (ArrayList<AbstractGraphics2D>) childs.clone();
+      clone.childs.clear();
       return clone;
     }
     catch (CloneNotSupportedException cne)
@@ -1919,6 +1922,12 @@ public abstract class AbstractGraphics2D extends Graphics2D implements Cloneable
    */
   public void dispose()
   {
+    for (int i = 0; i < childs.size(); i++)
+    {
+      final AbstractGraphics2D graphics2D = childs.get(i);
+      graphics2D.dispose();
+    }
+
     if (parent != null)
     {
       parent.childs.remove(this);
