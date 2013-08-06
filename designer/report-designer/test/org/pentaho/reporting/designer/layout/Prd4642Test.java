@@ -19,8 +19,6 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
@@ -31,7 +29,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.testsupport.graphics.TestGraphics2D;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class Prd4642Test extends TestCase
@@ -64,35 +61,10 @@ public class Prd4642Test extends TestCase
     final Rectangle2D bounds = r.getBounds();
     assertEquals(new Rectangle2D.Double(0, 21, 468, 108), bounds);
 
-    final TestGraphics2D graphics2D = new ValidateGraphics(468, 108);
+    final TestGraphics2D graphics2D = new ValidateTextGraphics(468, 108);
     assertTrue(graphics2D.hitClip(10, 10, 1, 1));
     r.draw(graphics2D);
   }
 
-  public static class ValidateGraphics extends TestGraphics2D
-  {
-    public ValidateGraphics(final int width, final int height)
-    {
-      super(width, height);
-    }
-
-    public void clipRect(final int x, final int y, final int width, final int height)
-    {
-      DebugLog.log("Clip: Rect " + new Rectangle(x, y, width, height));
-      super.clipRect(x, y, width, height);
-    }
-
-    public void clip(final Shape s)
-    {
-      DebugLog.log("Clip: " + s);
-      super.clip(s);
-
-    }
-
-    public void drawString(final String str, final float x, final float y)
-    {
-      assertTrue("Text '" + str + "' outside of clipping area", hitClip((int) x, (int) y, 1, 1));
-    }
-  }
 
 }
