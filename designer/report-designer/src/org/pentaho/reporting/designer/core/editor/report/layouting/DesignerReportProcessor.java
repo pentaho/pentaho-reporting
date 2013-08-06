@@ -37,7 +37,7 @@ public class DesignerReportProcessor extends StreamReportProcessor
 
   protected OutputFunction createLayoutManager()
   {
-    final DefaultOutputFunction outputFunction = new DefaultOutputFunction();
+    final DefaultOutputFunction outputFunction = new DesignerOutputFunction();
     outputFunction.setRenderer(new DesignerRenderer(outputProcessor));
     return outputFunction;
   }
