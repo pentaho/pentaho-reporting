@@ -19,16 +19,15 @@
 
 package org.pentaho.reporting.designer.layout;
 
-import java.awt.geom.Rectangle2D;
 import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.SubReport;
-import org.pentaho.reporting.engine.classic.core.testsupport.graphics.TestGraphics2D;
+import org.pentaho.reporting.engine.classic.core.ReportFooter;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class Prd4634Test extends TestCase
@@ -42,7 +41,7 @@ public class Prd4634Test extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBug () throws Exception
+  public void testReportHeader () throws Exception
   {
     final URL resource = getClass().getResource("Prd-4634.prpt");
     assertNotNull(resource);
@@ -52,31 +51,55 @@ public class Prd4634Test extends TestCase
     final MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
 
     final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
-    final ReportRenderContext masterContext =
+    final ReportRenderContext reportContext =
         new ReportRenderContext(report, report, null, globalAuthenticationStore);
-    final SubReport subReport = (SubReport) report.getReportHeader().getElement(1);
-    final ReportRenderContext subContext =
-        new ReportRenderContext(report, subReport, masterContext, globalAuthenticationStore);
-    final TestRootBandRenderer r = new TestRootBandRenderer(subReport.getReportHeader(), subContext);
-    final Rectangle2D bounds = r.getBounds();
-    assertEquals(new Rectangle2D.Double(0, 21, 468, 108), bounds);
+    final TestRootBandRenderer r = new TestRootBandRenderer(report.getReportHeader(), reportContext);
 
-    final TestGraphics2D graphics2D = new ValidateGraphics(468, 108);
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
+    graphics2D.expect("Interactive", "Report");
     assertTrue(graphics2D.hitClip(10, 10, 1, 1));
     r.draw(graphics2D);
   }
 
-  public static class ValidateGraphics extends TestGraphics2D
+  public void testReportFooter () throws Exception
   {
-    public ValidateGraphics(final int width, final int height)
-    {
-      super(width, height);
-    }
+    final URL resource = getClass().getResource("Prd-4634.prpt");
+    assertNotNull(resource);
 
-    public void drawString(final String str, final float x, final float y)
-    {
-      assertTrue("Text " + str + " outside of clipping area", hitClip((int) x, (int) y, 1, 1));
-    }
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    final MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+
+    final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
+    final ReportRenderContext reportContext =
+        new ReportRenderContext(report, report, null, globalAuthenticationStore);
+    final ReportFooter reportFooter = report.getReportFooter();
+    final TestRootBandRenderer r = new TestRootBandRenderer(reportFooter, reportContext);
+
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
+    graphics2D.expectSentence((String) reportFooter.getElement(0).getAttribute
+        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE));
+    assertTrue(graphics2D.hitClip(10, 10, 1, 1));
+    r.draw(graphics2D);
+  }
+
+  public void testPageFooter () throws Exception
+  {
+    final URL resource = getClass().getResource("Prd-4634.prpt");
+    assertNotNull(resource);
+
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    final MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+
+    final GlobalAuthenticationStore globalAuthenticationStore = new GlobalAuthenticationStore();
+    final ReportRenderContext reportContext =
+        new ReportRenderContext(report, report, null, globalAuthenticationStore);
+    final TestRootBandRenderer r = new TestRootBandRenderer(report.getPageFooter(), reportContext);
+
+    final ValidateTextGraphics graphics2D = new ValidateTextGraphics(468, 108);
+    assertTrue(graphics2D.hitClip(10, 10, 1, 1));
+    r.draw(graphics2D);
   }
 
 }
