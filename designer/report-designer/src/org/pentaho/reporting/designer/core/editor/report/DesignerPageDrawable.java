@@ -138,18 +138,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
   public void draw(final Graphics2D g2, final Rectangle2D area)
   {
     setOutlineMode(WorkspaceSettings.getInstance().isAlwaysDrawElementFrames());
-    final Graphics2D graphics = (Graphics2D) g2.create();
-    try
-    {
-      // the graphics2d we get is already positioned at the origin, and thus we just need to clip the width/height.
-      graphics.clip(StrictGeomUtility.createAWTRectangle
-          (0, 0, rootElementBounds.getWidth(), rootElementBounds.getHeight()));
-      super.draw(graphics, area);
-    }
-    finally
-    {
-      graphics.dispose();
-    }
+    super.draw(g2, area);
   }
 
   protected void processRootBand(final StrictBounds pageBounds)

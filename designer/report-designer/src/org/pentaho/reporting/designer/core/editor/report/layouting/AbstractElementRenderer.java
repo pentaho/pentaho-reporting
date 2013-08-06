@@ -283,8 +283,6 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     }
   }
 
-
-
   private void refreshLayoutFromSharedRenderer()
   {
     final LogicalPageBox pageBox = sharedRenderer.getPageBox();
@@ -401,5 +399,10 @@ public abstract class AbstractElementRenderer implements ElementRenderer
       }
     }
     return elements.toArray(new Element[elements.size()]);
+  }
+
+  protected DesignerPageDrawable getLogicalPageDrawable()
+  {
+    return logicalPageDrawable;
   }
 }
