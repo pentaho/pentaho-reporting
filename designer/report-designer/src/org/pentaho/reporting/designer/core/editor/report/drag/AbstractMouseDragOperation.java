@@ -31,11 +31,6 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public abstract class AbstractMouseDragOperation implements MouseDragOperation
 {
   private Element[] selectedVisualElements;
@@ -54,7 +49,7 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
                                        final SnapPositionsModel horizontalSnapModel,
                                        final SnapPositionsModel verticalSnapModel)
   {
-    final ArrayList nonDescendants = new ArrayList(selectedVisualElements.length);
+    final ArrayList<Element> nonDescendants = new ArrayList<Element>(selectedVisualElements.length);
     for (int i = 0; i < selectedVisualElements.length; i++)
     {
       final Element element = selectedVisualElements[i];
@@ -64,8 +59,7 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
       }
     }
 
-    this.selectedVisualElements = (Element[])
-        nonDescendants.toArray(new Element[nonDescendants.size()]);
+    this.selectedVisualElements = nonDescendants.toArray(new Element[nonDescendants.size()]);
 
     this.originPointX = StrictGeomUtility.toInternalValue(originPoint.getX());
     this.originPointY = StrictGeomUtility.toInternalValue(originPoint.getY());
@@ -97,7 +91,7 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
    */
   protected boolean isDescendant(final Element element, final Element[] elements)
   {
-    final HashSet parents = new HashSet();
+    final HashSet<Element> parents = new HashSet<Element>();
     Element parent = element.getParentSection();
     while (parent != null)
     {

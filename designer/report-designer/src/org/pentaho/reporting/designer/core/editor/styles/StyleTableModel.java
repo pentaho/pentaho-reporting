@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 
@@ -110,6 +110,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
     public void resetCache()
     {
+      super.resetCache();
       Arrays.fill(inheritValues, null);
       Arrays.fill(expressionValues, null);
 
@@ -154,9 +155,12 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
   private class UpdateDataTask implements Runnable
   {
     private Element[] elements;
+    private boolean synchronous;
 
-    private UpdateDataTask(final Element[] elements)
+    private UpdateDataTask(final Element[] elements,
+                           final boolean synchronous)
     {
+      this.synchronous = synchronous;
       this.elements = elements.clone();
     }
 
@@ -165,7 +169,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
       try
       {
         final DefaultStyleDataBackend dataBackend = updateData(elements);
-        if (SwingUtilities.isEventDispatchThread())
+        if (synchronous || SwingUtilities.isEventDispatchThread())
         {
           setDataBackend(dataBackend);
           fireTableDataChanged();
@@ -182,20 +186,30 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     }
   }
 
-  private ExecutorService pool;
+  private Executor pool;
   private DefaultStyleDataBackend oldDataBackend;
   private ReportRenderContext reportRenderContext;
 
   public StyleTableModel()
   {
-    pool = Executors.newSingleThreadExecutor();
+    this(Executors.newSingleThreadExecutor());
+  }
+
+  public StyleTableModel(final Executor pool)
+  {
+    if (pool == null)
+    {
+      throw new NullPointerException();
+    }
+    this.pool = pool;
     super.setDataBackend(new DefaultStyleDataBackend());
+
   }
 
   public void setTableStyle(final TableStyle tableStyle)
   {
     super.setTableStyle(tableStyle);
-    pool.submit(new UpdateDataTask(getData()));
+    pool.execute(new UpdateDataTask(getData(), isSynchronous()));
   }
 
   public synchronized void setDataBackend(final DefaultStyleDataBackend dataBackend)
@@ -401,11 +415,11 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     final DefaultStyleDataBackend backend = this.getDataBackend();
     if (isSameElements(elements, backend.getElementTypes(), backend.getData()))
     {
-      pool.submit(new SameElementsUpdateDataTask(backend));
+      pool.execute(new SameElementsUpdateDataTask(backend, isSynchronous()));
       return;
     }
 
-    pool.submit(new UpdateDataTask(elements));
+    pool.execute(new UpdateDataTask(elements, isSynchronous()));
   }
 
   public Element[] getData()
