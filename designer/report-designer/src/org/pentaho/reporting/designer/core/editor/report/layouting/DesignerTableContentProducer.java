@@ -42,6 +42,7 @@ public class DesignerTableContentProducer extends TableContentProducer
     super(sheetLayout, metaData);
     conflicts = new HashMap<InstanceID, Set<InstanceID>>();
     conflictsPerCell = new LinkedHashSet<InstanceID>();
+    setProcessWatermark(false);
   }
 
   protected boolean startBox(final RenderBox box)
@@ -96,8 +97,8 @@ public class DesignerTableContentProducer extends TableContentProducer
     return collectedConflicts;
   }
 
-  public Map<InstanceID, Set<InstanceID>> computeBoxConflicts(final LogicalPageBox box,
-                                                              final Map<InstanceID, Set<InstanceID>> collectedConflicts)
+  public Map<InstanceID, Set<InstanceID>> computeWatermarkConflics(final LogicalPageBox box,
+                                                                   final Map<InstanceID, Set<InstanceID>> collectedConflicts)
   {
     if (collectedConflicts == null)
     {
@@ -105,7 +106,7 @@ public class DesignerTableContentProducer extends TableContentProducer
     }
 
     conflicts.clear();
-    this.computeDesigntimeConflicts(box);
+    this.computeDesigntimeConflicts(box.getWatermarkArea());
     collectedConflicts.putAll(conflicts);
     return collectedConflicts;
   }

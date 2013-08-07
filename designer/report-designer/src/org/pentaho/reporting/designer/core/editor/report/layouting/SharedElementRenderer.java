@@ -161,7 +161,7 @@ public class SharedElementRenderer
         final SheetLayout watermarkLayout = tableLayoutProducer.getLayout();
         final DesignerTableContentProducer watermarkContentProducer =
             new DesignerTableContentProducer(watermarkLayout, outputProcessorMetaData);
-        conflicts = watermarkContentProducer.computeBoxConflicts(pageBox, conflicts);
+        conflicts = watermarkContentProducer.computeWatermarkConflics(pageBox, conflicts);
 
 
         transferGlobalLayoutProcessor.performTransfer(pageBox, conflicts, masterReport);
