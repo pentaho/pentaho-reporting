@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 
@@ -84,10 +84,13 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
   private class UpdateDataTask implements Runnable
   {
     private ElementStyleSheet elements;
+    private boolean synchronous;
 
-    private UpdateDataTask(final ElementStyleSheet elements)
+    private UpdateDataTask(final ElementStyleSheet elements,
+                           final boolean synchronous)
     {
       this.elements = elements;
+      this.synchronous = synchronous;
     }
 
     public void run()
@@ -95,7 +98,7 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
       try
       {
         final SimpleStyleDataBackend dataBackend = updateData(elements);
-        if (SwingUtilities.isEventDispatchThread())
+        if (synchronous || SwingUtilities.isEventDispatchThread())
         {
           setDataBackend(dataBackend);
           fireTableDataChanged();
@@ -113,7 +116,7 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
   }
 
   private SimpleStyleDataBackend oldDataBackend;
-  private ExecutorService pool;
+  private Executor pool;
 
   public SimpleStyleTableModel()
   {
@@ -124,7 +127,7 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
   public void setTableStyle(final TableStyle tableStyle)
   {
     super.setTableStyle(tableStyle);
-    pool.submit(new UpdateDataTask(getData()));
+    pool.execute(new UpdateDataTask(getData(), isSynchronous()));
   }
 
   public void setData(final ElementStyleSheet elements)
@@ -132,11 +135,11 @@ public class SimpleStyleTableModel extends AbstractStyleTableModel<SimpleStyleTa
     final SimpleStyleDataBackend backend = this.getDataBackend();
     if (isSameStyleSheet(elements, backend.getStyleSheet()))
     {
-      pool.submit(new SameElementsUpdateDataTask(backend));
+      pool.execute(new SameElementsUpdateDataTask(backend, isSynchronous()));
       return;
     }
 
-    pool.submit(new UpdateDataTask(elements));
+    pool.execute(new UpdateDataTask(elements, isSynchronous()));
   }
 
   private boolean isSameStyleSheet(final ElementStyleSheet elements, final ElementStyleSheet styleSheet)
