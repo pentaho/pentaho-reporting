@@ -63,7 +63,7 @@ public class StyleEditorPanel extends SidePanel
         {
           // refresh, but one time is enough
           // refresh, dont call stopCellEditing ..
-          dataModel.setData(data);
+          refreshData();
           return;
         }
       }
@@ -80,8 +80,7 @@ public class StyleEditorPanel extends SidePanel
   {
     setLayout(new BorderLayout());
 
-    dataModel = new StyleTableModel();
-
+    dataModel = createDataModel();
 
     table = new ElementMetaDataTable();
     table.setModel(new GroupedMetaTableModel(dataModel));
@@ -94,6 +93,11 @@ public class StyleEditorPanel extends SidePanel
 
     add(headerPanel, BorderLayout.NORTH);
     add(new JScrollPane(table), BorderLayout.CENTER);
+  }
+
+  protected StyleTableModel createDataModel()
+  {
+    return new StyleTableModel();
   }
 
   private void applyHeaderSize(final TableColumn col)
@@ -110,6 +114,11 @@ public class StyleEditorPanel extends SidePanel
   public Element[] getData()
   {
     return dataModel.getData();
+  }
+
+  protected void refreshData()
+  {
+    dataModel.setData(dataModel.getData());
   }
 
   public void setData(final Element[] elements)
@@ -157,5 +166,10 @@ public class StyleEditorPanel extends SidePanel
   {
     super.updateDesignerContext(oldContext, newContext);
     table.setReportDesignerContext(newContext);
+  }
+
+  protected StyleTableModel getDataModel()
+  {
+    return dataModel;
   }
 }

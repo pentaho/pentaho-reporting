@@ -20,18 +20,13 @@ package org.pentaho.reporting.designer.core.editor.report.drag;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class CompoundDragOperation implements MouseDragOperation
 {
   private ArrayList<MouseDragOperation> operations;
 
   public CompoundDragOperation()
   {
-    operations = new ArrayList();
+    operations = new ArrayList<MouseDragOperation>();
   }
 
   public void add(final MouseDragOperation operation)

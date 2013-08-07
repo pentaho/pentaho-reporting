@@ -42,10 +42,13 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
   protected class SameElementsUpdateDataTask implements Runnable
   {
     private T dataBackend;
+    private boolean synchronous;
 
-    protected SameElementsUpdateDataTask(final T elements)
+    protected SameElementsUpdateDataTask(final T elements,
+                                         final boolean synchronous)
     {
       this.dataBackend = elements;
+      this.synchronous = synchronous;
     }
 
     public void run()
@@ -53,7 +56,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
       dataBackend.resetCache();
       try
       {
-        if (SwingUtilities.isEventDispatchThread())
+        if (synchronous || SwingUtilities.isEventDispatchThread())
         {
           setDataBackend(dataBackend);
           fireTableDataChanged();
@@ -91,10 +94,21 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
 
   private TableStyle tableStyle;
   private T dataBackend;
+  private boolean synchronous;
 
   public AbstractStyleTableModel()
   {
     tableStyle = TableStyle.GROUPED;
+  }
+
+  public boolean isSynchronous()
+  {
+    return synchronous;
+  }
+
+  public void setSynchronous(final boolean synchronous)
+  {
+    this.synchronous = synchronous;
   }
 
   protected synchronized T getDataBackend()
