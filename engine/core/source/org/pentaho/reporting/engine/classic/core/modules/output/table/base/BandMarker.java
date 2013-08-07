@@ -22,11 +22,11 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 public class BandMarker implements CellMarker
 {
   private RenderBox bandBox;
-  private int sectionType;
+  private SectionType sectionType;
   private int sectionDepth;
 
   public BandMarker(final RenderBox bandBox,
-                     final int sectionType,
+                     final SectionType sectionType,
                      final int sectionDepth)
   {
     this.bandBox = bandBox;
@@ -59,7 +59,7 @@ public class BandMarker implements CellMarker
     return null;
   }
 
-  public int getSectionType()
+  public SectionType getSectionType()
   {
     return sectionType;
   }

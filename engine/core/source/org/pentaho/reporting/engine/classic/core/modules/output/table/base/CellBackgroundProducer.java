@@ -92,7 +92,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
                                         final int gridX,
                                         final int gridY,
                                         final boolean computeAttributes,
-                                        final int sectionType)
+                                        final CellMarker.SectionType sectionType)
   {
     return computeBackground(pageBox, sheetLayout, gridX, gridY, 1, 1, computeAttributes, sectionType);
   }
@@ -105,7 +105,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
                                            final int gridWidth,
                                            final int gridHeight,
                                            final boolean collectAttributes,
-                                           final int sectionType)
+                                           final CellMarker.SectionType sectionType)
   {
     if (logicalPageBox == null)
     {
@@ -135,13 +135,13 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
 
     switch (sectionType)
     {
-      case CellMarker.TYPE_HEADER:
+      case TYPE_HEADER:
       {
         contentShift = 0;
         startProcessing(headerArea);
         return retval;
       }
-      case CellMarker.TYPE_NORMALFLOW:
+      case TYPE_NORMALFLOW:
       {
         final BlockRenderBox contentArea = logicalPageBox.getContentArea();
         final long contentStart = headerArea.getHeight() + contentArea.getY();
@@ -149,7 +149,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
         startProcessing(contentArea);
         return retval;
       }
-      case CellMarker.TYPE_REPEAT_FOOTER:
+      case TYPE_REPEAT_FOOTER:
       {
         final BlockRenderBox contentArea = logicalPageBox.getContentArea();
         final long contentStart = headerArea.getHeight() + contentArea.getY();
@@ -158,7 +158,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
         startProcessing(footerArea);
         return retval;
       }
-      case CellMarker.TYPE_FOOTER:
+      case TYPE_FOOTER:
       {
         final BlockRenderBox contentArea = logicalPageBox.getContentArea();
         final long contentStart = headerArea.getHeight() + contentArea.getY();
@@ -168,7 +168,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
         startProcessing(footerArea);
         return retval;
       }
-      case CellMarker.TYPE_INVALID:
+      case TYPE_INVALID:
         return null;
       default:
       {
@@ -184,7 +184,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
                                             final int gridWidth,
                                             final int gridHeight,
                                             final boolean collectAttributes,
-                                            final int sectionType,
+                                            final CellMarker.SectionType sectionType,
                                             final RenderBox contentBox)
   {
     if (fastCellBackgroundProducerMode == false)
@@ -216,26 +216,26 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
     {
       switch (sectionType)
       {
-        case CellMarker.TYPE_HEADER:
+        case TYPE_HEADER:
         {
           contentShift = 0;
           break;
         }
-        case CellMarker.TYPE_NORMALFLOW:
+        case TYPE_NORMALFLOW:
         {
           final BlockRenderBox contentArea = logicalPageBox.getContentArea();
           final long contentStart = headerArea.getHeight() + contentArea.getY();
           contentShift = contentStart - logicalPageBox.getPageOffset();
           break;
         }
-        case CellMarker.TYPE_REPEAT_FOOTER:
+        case TYPE_REPEAT_FOOTER:
         {
           final BlockRenderBox contentArea = logicalPageBox.getContentArea();
           final long contentStart = headerArea.getHeight() + contentArea.getY();
           contentShift = contentStart + contentArea.getHeight();
           break;
         }
-        case CellMarker.TYPE_FOOTER:
+        case TYPE_FOOTER:
         {
           final BlockRenderBox contentArea = logicalPageBox.getContentArea();
           final long contentStart = headerArea.getHeight() + contentArea.getY();
@@ -243,7 +243,7 @@ public class CellBackgroundProducer extends IterateStructuralProcessStep
           contentShift = contentStart + contentArea.getHeight() + repeatFooterArea.getHeight();
           break;
         }
-        case CellMarker.TYPE_INVALID:
+        case TYPE_INVALID:
           return null;
         default:
         {

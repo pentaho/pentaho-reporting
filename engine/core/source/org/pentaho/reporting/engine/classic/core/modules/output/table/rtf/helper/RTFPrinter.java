@@ -45,6 +45,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
@@ -189,7 +190,7 @@ public class RTFPrinter
         for (short col = 0; col < columnCount; col++)
         {
           final RenderBox content = contentProducer.getContent(row, col);
-          final int sectionType = contentProducer.getSectionType(row, col);
+          final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
 
           if (content == null)
           {

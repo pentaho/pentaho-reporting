@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.libraries.base.util.ObjectTable;
@@ -79,7 +80,7 @@ public class ResultTable extends ObjectTable
         for (col = 0; col < getColumnCount(); col++)
         {
           final ResultCell resultCell = getResultCell(row, col);
-          final int sectionType = tableContentProducer.getSectionType(row, col);
+          final CellMarker.SectionType sectionType = tableContentProducer.getSectionType(row, col);
           final CellBackground backgroundAt =
               cellBackgroundProducer.getBackgroundAt(logicalPageBox, sheetLayout, col, row, true, sectionType);
           if (resultCell == null)
