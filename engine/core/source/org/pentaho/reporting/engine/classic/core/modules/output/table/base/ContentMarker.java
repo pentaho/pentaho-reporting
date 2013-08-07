@@ -28,11 +28,11 @@ public class ContentMarker implements CellMarker
 {
   private RenderBox content;
   private long effectiveShift;
-  private int sectionType;
+  private SectionType sectionType;
 
   public ContentMarker(final RenderBox content,
                        final long effectiveShift,
-                       final int sectionType)
+                       final SectionType sectionType)
   {
     if (content == null)
     {
@@ -64,7 +64,7 @@ public class ContentMarker implements CellMarker
     return content.isFinishedTable();
   }
 
-  public int getSectionType()
+  public SectionType getSectionType()
   {
     return sectionType;
   }

@@ -19,11 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-/**
- * Creation-Date: 04.10.2007, 14:54:24
- *
- * @author Thomas Morgner
- */
 public class FinishedMarker implements CellMarker
 {
   public static final FinishedMarker INSTANCE = new FinishedMarker();
@@ -58,9 +53,9 @@ public class FinishedMarker implements CellMarker
     return 0;
   }
 
-  public int getSectionType()
+  public SectionType getSectionType()
   {
-    return TYPE_INVALID;
+    return SectionType.TYPE_INVALID;
   }
 
   public String toString()

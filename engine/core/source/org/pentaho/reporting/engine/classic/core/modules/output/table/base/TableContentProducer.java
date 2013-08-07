@@ -68,7 +68,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
   private boolean reportCellConflicts;
   private boolean failOnCellConflicts;
   private int sectionDepth;
-  private int sectionType;
+  private CellMarker.SectionType sectionType;
   private OutputProcessorMetaData metaData;
 
   public TableContentProducer(final SheetLayout sheetLayout,
@@ -134,6 +134,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     return sheetName;
   }
 
+  public CellMarker.SectionType getSectionType()
+  {
+    return sectionType;
+  }
+
   public void compute(final LogicalPageBox logicalPage,
                       final boolean iterativeUpdate)
   {
@@ -149,12 +154,12 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       effectiveHeaderSize = 0;
       pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
-      sectionType = CellMarker.TYPE_INVALID;
+      sectionType = CellMarker.SectionType.TYPE_INVALID;
       if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
-          sectionType = CellMarker.TYPE_HEADER;
+          sectionType = CellMarker.SectionType.TYPE_HEADER;
           if (isProcessWatermark())
           {
             startProcessing(logicalPage.getWatermarkArea());
@@ -164,20 +169,20 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
           headerProcessed = true;
         }
 
-        sectionType = CellMarker.TYPE_NORMALFLOW;
+        sectionType = CellMarker.SectionType.TYPE_NORMALFLOW;
         processBoxChilds(logicalPage);
         if (iterativeUpdate == false)
         {
-          sectionType = CellMarker.TYPE_REPEAT_FOOTER;
+          sectionType = CellMarker.SectionType.TYPE_REPEAT_FOOTER;
           final BlockRenderBox repeatFooterBox = logicalPage.getRepeatFooterArea();
           startProcessing(repeatFooterBox);
 
-          sectionType = CellMarker.TYPE_FOOTER;
+          sectionType = CellMarker.SectionType.TYPE_FOOTER;
           final BlockRenderBox pageFooterBox = logicalPage.getFooterArea();
           startProcessing(pageFooterBox);
         }
       }
-      sectionType = CellMarker.TYPE_INVALID;
+      sectionType = CellMarker.SectionType.TYPE_INVALID;
       finishBox(logicalPage);
       //ModelPrinter.print(logicalPage);
     }
@@ -191,12 +196,12 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       effectiveHeaderSize = 0;
       pageOffset = logicalPage.getPageOffset();
       pageEndPosition = (logicalPage.getPageEnd());
-      sectionType = CellMarker.TYPE_INVALID;
+      sectionType = CellMarker.SectionType.TYPE_INVALID;
       if (startBox(logicalPage))
       {
         if (headerProcessed == false)
         {
-          sectionType = CellMarker.TYPE_HEADER;
+          sectionType = CellMarker.SectionType.TYPE_HEADER;
           pageOffset = 0;
           contentOffset = 0;
           effectiveHeaderSize = 0;
@@ -214,7 +219,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
           headerProcessed = true;
         }
 
-        sectionType = CellMarker.TYPE_NORMALFLOW;
+        sectionType = CellMarker.SectionType.TYPE_NORMALFLOW;
         pageOffset = logicalPage.getPageOffset();
         pageEndPosition = logicalPage.getPageEnd();
         effectiveHeaderSize = contentOffset;
@@ -224,7 +229,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
         {
           pageOffset = 0;
 
-          sectionType = CellMarker.TYPE_REPEAT_FOOTER;
+          sectionType = CellMarker.SectionType.TYPE_REPEAT_FOOTER;
           final BlockRenderBox repeatFooterArea = logicalPage.getRepeatFooterArea();
           final long repeatFooterOffset = contentOffset + (logicalPage.getPageEnd() - logicalPage.getPageOffset());
           final long repeatFooterPageEnd = repeatFooterOffset + repeatFooterArea.getHeight();
@@ -233,14 +238,14 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
           startProcessing(repeatFooterArea);
 
           final BlockRenderBox footerArea = logicalPage.getFooterArea();
-          sectionType = CellMarker.TYPE_FOOTER;
+          sectionType = CellMarker.SectionType.TYPE_FOOTER;
           final long footerPageEnd = repeatFooterPageEnd + footerArea.getHeight();
           effectiveHeaderSize = repeatFooterPageEnd;
           pageEndPosition = footerPageEnd;
           startProcessing(footerArea);
         }
       }
-      sectionType = CellMarker.TYPE_INVALID;
+      sectionType = CellMarker.SectionType.TYPE_INVALID;
       finishBox(logicalPage);
       //ModelPrinter.print(logicalPage);
     }
@@ -314,20 +319,20 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     return null;
   }
 
-  public int getSectionType(final int row, final int column)
+  public CellMarker.SectionType getSectionType(final int row, final int column)
   {
     if (verboseCellMarkers == false || row > verboseCellMarkersThreshold)
     {
       if (row < finishedRows)
       {
-        return -1;
+        return CellMarker.SectionType.TYPE_INVALID;
       }
     }
 
     final CellMarker marker = contentBackend.getObject(row, column);
     if (marker == null)
     {
-      return -1;
+      return CellMarker.SectionType.TYPE_INVALID;
     }
     return marker.getSectionType();
   }
@@ -548,7 +553,7 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     {
       return true;
     }
-    if (oldMarker.getSectionType() == CellMarker.TYPE_INVALID)
+    if (oldMarker.getSectionType() == CellMarker.SectionType.TYPE_INVALID)
     {
       return true;
     }
