@@ -63,6 +63,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
@@ -379,7 +380,7 @@ public class ExcelPrinter
 
       for (int col = 0; col < colCount; col++)
       {
-        final int sectionType = contentProducer.getSectionType(row, col);
+        final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
         final RenderBox content = contentProducer.getContent(row, col);
         if (content == null)
         {
@@ -488,7 +489,7 @@ public class ExcelPrinter
     {
       for (int spannedCol = 0; spannedCol < columnSpan; spannedCol += 1)
       {
-        final int sectionType = contentProducer.getSectionType(row, col);
+        final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
         final CellBackground bg = cellBackgroundProducer.getBackgroundForBox
             (logicalPage, sheetLayout, rectX + spannedCol, rectY + spannedRow, 1, 1, false, sectionType, content);
         final Cell regionCell = getCellAt((col + spannedCol), row + spannedRow);

@@ -64,6 +64,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
@@ -193,7 +194,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
         if (content == null)
         {
-          final int sectionType = contentProducer.getSectionType(row, col);
+          final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
           final RenderBox backgroundBox = contentProducer.getBackground(row, col);
           final CellBackground background;
           if (backgroundBox != null)
@@ -235,7 +236,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
           continue;
         }
 
-        final int sectionType = contentProducer.getSectionType(row, col);
+        final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
         final CellBackground realBackground = cellBackgroundProducer.getBackgroundForBox
             (logicalPageBox, sheetLayout, rectangle.getX1(), rectangle.getY1(), rectangle.getColumnSpan(),
                 rectangle.getRowSpan(), false, sectionType, content);

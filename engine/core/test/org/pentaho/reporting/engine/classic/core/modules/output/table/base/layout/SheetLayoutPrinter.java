@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
@@ -73,7 +74,7 @@ public class SheetLayoutPrinter
         for (int col = 0; col < cols; col++)
         {
           final RenderBox content = contentProducer.getContent(row, col);
-          final int sectionType = contentProducer.getSectionType(row, col);
+          final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
           if (content == null)
           {
             final CellBackground bg =

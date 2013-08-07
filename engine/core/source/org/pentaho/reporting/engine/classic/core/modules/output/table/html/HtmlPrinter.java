@@ -58,6 +58,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
@@ -1012,7 +1013,7 @@ public abstract class HtmlPrinter implements HtmlContentGenerator
     final int columnCount = sheetLayout.getColumnCount();
     for (int col = 0; col < columnCount; col += 1)
     {
-      final int sectionType = tableContentProducer.getSectionType(row, col);
+      final CellMarker.SectionType sectionType = tableContentProducer.getSectionType(row, col);
       final RenderBox content = tableContentProducer.getContent(row, col);
       final CellBackground backgroundAt;
       if (content == null)
@@ -1474,7 +1475,7 @@ public abstract class HtmlPrinter implements HtmlContentGenerator
         for (int col = 0; col < colCount; col++)
         {
           final RenderBox content = contentProducer.getContent(row, col);
-          final int sectionType = contentProducer.getSectionType(row, col);
+          final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
           if (content == null)
           {
             final RenderBox backgroundBox = contentProducer.getBackground(row, col);
