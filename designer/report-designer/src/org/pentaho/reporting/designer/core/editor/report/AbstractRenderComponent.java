@@ -1758,10 +1758,26 @@ public abstract class AbstractRenderComponent extends JComponent
     return getElementRenderer().getVerticalEdgePositions();
   }
 
+  protected Element[] filterLocalElements(final Element[] originalElements)
+  {
+    final ArrayList<Element> result = new ArrayList<Element>(originalElements.length);
+    for (int i = 0; i < originalElements.length; i++)
+    {
+      final Element element = originalElements[i];
+      if (isLocalElement(element) == false)
+      {
+        continue;
+      }
+      result.add(element);
+    }
+    return result.toArray(new Element[result.size()]);
+  }
+
   protected void initializeDragOperation(final Point2D originPoint,
                                          final SelectionOverlayInformation.InRangeIndicator currentIndicator)
   {
-    final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
+    final Element[] visualElements =
+        filterLocalElements(getRenderContext().getSelectionModel().getSelectedVisualElements());
     if (visualElements.length == 0)
     {
       return;
