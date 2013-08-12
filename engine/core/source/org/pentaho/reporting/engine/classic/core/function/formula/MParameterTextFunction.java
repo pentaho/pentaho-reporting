@@ -67,14 +67,14 @@ public class MParameterTextFunction implements Function
       else
       {
         encodingResult = context.getConfiguration().getConfigProperty
-            ("org.pentaho.reporting.libraries.formula.URLEncoding", "ISO-8859-1");
+            ("org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8");
       }
     }
     else
     {
       urlEncode = true;
       encodingResult = context.getConfiguration().getConfigProperty
-          ("org.pentaho.reporting.libraries.formula.URLEncoding", "ISO-8859-1");
+          ("org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8");
     }
 
     try
