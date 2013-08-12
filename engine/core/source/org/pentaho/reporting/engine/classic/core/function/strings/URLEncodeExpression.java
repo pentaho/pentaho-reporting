@@ -45,7 +45,7 @@ public class URLEncodeExpression extends AbstractExpression
    */
   public URLEncodeExpression()
   {
-    encoding = "ISO-8859-1";
+    encoding = "UTF-8";
   }
 
   /**

@@ -42,7 +42,7 @@ public class PatternLinkCustomizer implements LinkCustomizer
       throws UnsupportedEncodingException, BeanException
   {
     final String encoding = formulaContext.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.libraries.formula.URLEncoding", "ISO-8859-1");
+        ("org.pentaho.reporting.libraries.formula.URLEncoding", "UTF-8");
     final StringBuilder parameter = new StringBuilder(1000);
     for (int i = 0; i < entries.length; i++)
     {
