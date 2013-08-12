@@ -127,7 +127,7 @@ public abstract class AbstractModule extends DefaultModuleInfo implements Module
   }
 
   /**
-   * Loads the module descriptiong from the given input stream. The module description
+   * Loads the module description from the given input stream. The module description
    * must conform to the rules define in the class description. The file must be encoded
    * with "ISO-8859-1" (like property files).
    *
