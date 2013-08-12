@@ -31,11 +31,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
-/**
- * Todo: Document me
- *
- * @author Thomas Morgner
- */
 public class DefaultReportElementInlineEditor extends StringValueCellEditor implements ReportElementInlineEditor
 {
   private AttributeMetaData selectedMetaData;
