@@ -118,6 +118,9 @@ import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 public abstract class AbstractRenderComponent extends JComponent
     implements ReportElementEditorContext, CellEditorListener
 {
+  // 50 fps max
+  private static final long REPAINT_INTERVAL = 1000 / 50;
+
   protected class AsyncChangeNotifier implements Runnable
   {
     public void run()
@@ -153,7 +156,7 @@ public abstract class AbstractRenderComponent extends JComponent
       if (oldFocused != focused)
       {
         setFocused(focused);
-        repaint();
+        repaint(REPAINT_INTERVAL);
       }
       SwingUtilities.invokeLater(new AsyncChangeNotifier());
     }
@@ -186,8 +189,8 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       getElementRenderer().invalidateLayout();
-      AbstractRenderComponent.this.revalidate();
-      AbstractRenderComponent.this.repaint();
+      revalidate();
+      repaint(REPAINT_INTERVAL);
     }
 
     public void settingsChanged()
@@ -195,8 +198,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       // this is cheap, just repaint and we will be happy
-      AbstractRenderComponent.this.revalidate();
-      AbstractRenderComponent.this.repaint();
+      repaint(REPAINT_INTERVAL);
 
     }
   }
@@ -225,7 +227,7 @@ public abstract class AbstractRenderComponent extends JComponent
       selectionRectangleOrigin = null;
       selectionRectangleTarget = null;
       newlySelectedElements.clear();
-      repaint();
+      repaint(REPAINT_INTERVAL);
     }
 
     /**
@@ -316,7 +318,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       }
 
-      AbstractRenderComponent.this.repaint();
+      repaint(REPAINT_INTERVAL);
     }
 
     public Point getSelectionRectangleOrigin()
@@ -495,7 +497,7 @@ public abstract class AbstractRenderComponent extends JComponent
           final SelectionOverlayInformation renderer = new SelectionOverlayInformation(velement);
           renderer.validate(zoomModel.getZoomAsPercentage());
           velement.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, renderer, false);
-          AbstractRenderComponent.this.repaint();
+          repaint(REPAINT_INTERVAL);
           return;
         }
         parentSearch = parentSearch.getParentSection();
@@ -508,14 +510,9 @@ public abstract class AbstractRenderComponent extends JComponent
       if (element instanceof Element)
       {
         final Element e = (Element) element;
-        final Object o = e.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION);
         e.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, null, false);
-        if (o != null)
-        {
-          AbstractRenderComponent.this.repaint();
-        }
       }
-      AbstractRenderComponent.this.repaint();
+      repaint(REPAINT_INTERVAL);
     }
 
     public void leadSelectionChanged(final ReportSelectionEvent event)
@@ -539,13 +536,13 @@ public abstract class AbstractRenderComponent extends JComponent
       if (e == getRootBand())
       {
         setFocused(true);
-        repaint();
+        repaint(REPAINT_INTERVAL);
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
       else
       {
         setFocused(false);
-        repaint();
+        repaint(REPAINT_INTERVAL);
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
     }
@@ -564,19 +561,19 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       // this is cheap, just repaint and we will be happy
       component.revalidate();
-      component.repaint();
+      component.repaint(REPAINT_INTERVAL);
     }
 
     public void modelChanged(final LinealModelEvent event)
     {
       component.revalidate();
-      component.repaint();
+      component.repaint(REPAINT_INTERVAL);
     }
 
     public void zoomFactorChanged()
     {
       component.revalidate();
-      component.repaint();
+      component.repaint(REPAINT_INTERVAL);
       component.stopCellEditing();
     }
 
@@ -593,7 +590,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       revalidate();
-      repaint();
+      repaint(REPAINT_INTERVAL);
     }
   }
 
@@ -1911,7 +1908,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
     operation = null;
     undoEntryBuilder = null;
-    repaint();
+    repaint(REPAINT_INTERVAL);
   }
 
   protected boolean isMouseOperationInProgress()
