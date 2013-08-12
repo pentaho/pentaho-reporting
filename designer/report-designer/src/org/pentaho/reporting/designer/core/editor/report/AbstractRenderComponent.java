@@ -1649,8 +1649,9 @@ public abstract class AbstractRenderComponent extends JComponent
 
     final float zoomFactor = getRenderContext().getZoomModel().getZoomAsPercentage();
 
+    final Rectangle2D bounds = getElementRenderer().getBounds();
     final int x = (int) ((getLeftBorder() + StrictGeomUtility.toExternalValue(data.getX())) * zoomFactor);
-    final int y = (int) ((getTopBorder() + StrictGeomUtility.toExternalValue(data.getY())) * zoomFactor);
+    final int y = (int) ((getTopBorder() + (StrictGeomUtility.toExternalValue(data.getY()) - bounds.getY()) * zoomFactor));
     final int width = (int) (StrictGeomUtility.toExternalValue(data.getWidth()) * zoomFactor);
     final int height = (int) (StrictGeomUtility.toExternalValue(data.getHeight()) * zoomFactor);
     editorComponent.setBounds(x, y, width, height);
