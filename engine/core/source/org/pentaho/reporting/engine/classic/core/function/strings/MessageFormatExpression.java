@@ -198,7 +198,7 @@ public class MessageFormatExpression extends AbstractExpression
   public MessageFormatExpression()
   {
     messageFormatSupport = new MessageFormatSupport();
-    encoding = "ISO-8859-1";
+    encoding = "UTF-8";
   }
 
 

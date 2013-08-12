@@ -1304,7 +1304,7 @@ public class ConfigDescriptionEditor extends JFrame
       try
       {
         out = new BufferedOutputStream(new FileOutputStream(fileChooser.getSelectedFile()));
-        model.save(out, "ISO-8859-1"); //$NON-NLS-1$
+        model.save(out, "UTF-8"); //$NON-NLS-1$
         out.close();
         setStatusText(resources.getString("config-description-editor.save-complete")); //$NON-NLS-1$
       }
