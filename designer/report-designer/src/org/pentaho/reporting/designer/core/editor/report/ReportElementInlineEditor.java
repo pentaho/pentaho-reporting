@@ -22,11 +22,6 @@ import javax.swing.CellEditor;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface ReportElementInlineEditor extends CellEditor
 {
   public Component getElementCellEditorComponent(ReportElementEditorContext rootBandRenderComponent,
