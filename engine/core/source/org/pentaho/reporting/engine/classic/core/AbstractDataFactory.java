@@ -36,8 +36,6 @@ public abstract class AbstractDataFactory implements DataFactory, Cloneable
 
   public AbstractDataFactory()
   {
-    resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     locale = Locale.getDefault();
   }
 
@@ -103,6 +101,10 @@ public abstract class AbstractDataFactory implements DataFactory, Cloneable
 
   public ResourceManager getResourceManager()
   {
+    if (resourceManager == null)
+    {
+      resourceManager = new ResourceManager();
+    }
     return resourceManager;
   }
 

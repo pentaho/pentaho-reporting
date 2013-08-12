@@ -219,8 +219,6 @@ public abstract class AbstractFontFileRegistry implements FontRegistry
   protected void loadFromCache(final String encoding, final String filename)
   {
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final File location = createStorageLocation();
     if (location == null)
     {

@@ -103,10 +103,12 @@ public class SharedElementRenderer
   {
     return reportLayouter.getOutputProcessorMetaData();
   }
+
   public boolean isLayoutValid()
   {
-      return (this.layoutAge == masterReport.getChangeTracker());
+    return (this.layoutAge == masterReport.getChangeTracker());
   }
+
   public boolean performLayouting()
   {
     if (this.isLayoutValid())

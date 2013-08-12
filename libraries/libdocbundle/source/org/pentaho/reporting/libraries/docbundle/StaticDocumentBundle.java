@@ -71,9 +71,7 @@ public class StaticDocumentBundle implements DocumentBundle
 
   private static ResourceManager createDefaultResourceManager()
   {
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    return resourceManager;
+    return new ResourceManager();
   }
 
   public DocumentMetaData getMetaData()

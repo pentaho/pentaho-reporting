@@ -19,11 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import java.util.Arrays;
 
-/**
- * Creation-Date: 26.08.2007, 15:06:45
- *
- * @author Thomas Morgner
- */
 public class TableCutList
 {
   private static final Boolean[] EMPTY_ENTRIES = new Boolean[0];

@@ -57,10 +57,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor
 
   private static ResourceManager createResourceManager()
   {
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    return resourceManager;
-
+    return new ResourceManager();
   }
 
   public PdfOutputProcessor(final Configuration configuration,

@@ -226,7 +226,6 @@ public class LibLoaderResourceBundleFactory implements ExtendedResourceBundleFac
     if (manager == null)
     {
       manager = new ResourceManager();
-      manager.registerDefaults();
     }
 
     if (baseKey != null)

@@ -307,7 +307,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     private EditorParameterContext()
     {
       resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       resourceBundleFactory = new DefaultResourceBundleFactory();
       defaultEnvironment = new DefaultReportEnvironment(ClassicEngineBoot.getInstance().getGlobalConfig());
       defaultDocumentMetaData = new MemoryDocumentMetaData();

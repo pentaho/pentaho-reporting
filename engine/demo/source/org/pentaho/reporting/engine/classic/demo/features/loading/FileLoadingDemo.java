@@ -124,7 +124,6 @@ public class FileLoadingDemo extends AbstractDemoHandler
     try
     {
       ResourceManager manager = new ResourceManager();
-      manager.registerDefaults();
       Resource res = manager.createDirectly(file, MasterReport.class);
       return (MasterReport) res.getResource();
     }

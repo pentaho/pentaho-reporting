@@ -160,8 +160,6 @@ public class ReportGenerator
       throws ResourceException
   {
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final ResourceKey contextKey = resourceManager.createKey(contentBase);
 
     // Build the main key. That key also contains all context/parse-time
@@ -242,8 +240,6 @@ public class ReportGenerator
     }
     final File contentBase = file.getCanonicalFile().getParentFile();
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final ResourceKey contextKey = resourceManager.createKey(contentBase);
 
     // Build the main key. That key also contains all context/parse-time
@@ -285,8 +281,6 @@ public class ReportGenerator
 
     final byte[] bytes = extractData(input);
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final ResourceKey contextKey;
     if (contentBase != null)
     {
@@ -314,8 +308,6 @@ public class ReportGenerator
       throws ResourceKeyCreationException, ResourceCreationException, ResourceLoadingException
   {
     final ResourceManager manager = new ResourceManager();
-    manager.registerDefaults();
-
     final HashMap map = new HashMap();
 
     final Iterator it = this.helperObjects.keySet().iterator();
@@ -354,7 +346,6 @@ public class ReportGenerator
     if (manager == null)
     {
       manager = new ResourceManager();
-      manager.registerDefaults();
     }
 
     final HashMap map = new HashMap(input.getFactoryParameters());

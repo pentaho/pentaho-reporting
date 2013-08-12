@@ -99,8 +99,6 @@ public class PublishUtil
       throw new NullPointerException();
     }
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final MasterReport resource = OpenReportAction.loadReport(data, resourceManager);
     resource.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path", fileName); // NON-NLS
     return resource;

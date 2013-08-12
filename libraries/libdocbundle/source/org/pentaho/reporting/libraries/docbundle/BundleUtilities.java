@@ -721,7 +721,6 @@ public class BundleUtilities
     }
 
     final ResourceManager resManager = new ResourceManager();
-    resManager.registerDefaults();
     final Resource directly = resManager.createDirectly(file, DocumentBundle.class);
     return (DocumentBundle) directly.getResource();
   }

@@ -146,7 +146,6 @@ public class HtmlServlet extends HttpServlet
     }
 
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
     final MasterReport report = (MasterReport) resource.getResource();
 

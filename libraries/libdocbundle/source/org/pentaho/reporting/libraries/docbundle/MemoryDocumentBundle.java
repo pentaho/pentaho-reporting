@@ -59,8 +59,6 @@ public class MemoryDocumentBundle implements WriteableDocumentBundle
     this.metaData = new MemoryDocumentMetaData();
 
     final ResourceManager defaultResourceManager = new ResourceManager();
-    defaultResourceManager.registerDefaults();
-
     final BundleResourceManagerBackend backend =
         new BundleResourceManagerBackend(zipRepository, defaultResourceManager.getBackend(), parent);
     this.bundleKey = backend.getBundleMainKey();

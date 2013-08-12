@@ -63,7 +63,6 @@ public class ExcelReportServlet extends HttpServlet
     try
     {
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(reportUrl, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       response.setContentType("application/vnd.ms-excel");

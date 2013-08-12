@@ -485,7 +485,6 @@ public class MasterReport extends AbstractReportDefinition
     if (resourceManager == null)
     {
       resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       updateResourceBundleFactory();
     }
     return resourceManager;

@@ -208,7 +208,8 @@ public class DataSchemaCompiler
 
     public void setup(final ParameterDefinitionEntry parameter,
                       final DataAttributes globalAttributes,
-                      final ReportEnvironment reportEnvironment) throws ReportDataFactoryException
+                      final ReportEnvironment reportEnvironment,
+                      final ResourceManager resourceManager) throws ReportDataFactoryException
     {
       if (globalAttributes == null)
       {
@@ -221,8 +222,6 @@ public class DataSchemaCompiler
       this.globalAttributes = globalAttributes;
       this.entry = parameter;
 
-      final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       this.parameterContext = new DefaultParameterContext(new CompoundDataFactory(), new StaticDataRow(),
           ClassicEngineBoot.getInstance().getGlobalConfig(), new DefaultResourceBundleFactory(),
           resourceManager, null, reportEnvironment);
@@ -480,9 +479,7 @@ public class DataSchemaCompiler
 
   private static ResourceManager createDefaultResourceManager()
   {
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    return resourceManager;
+    return new ResourceManager();
   }
 
   public DataSchemaCompiler(final DataSchemaDefinition reportSchemaDefinition,
@@ -750,7 +747,7 @@ public class DataSchemaCompiler
     for (final Map.Entry<String, ParameterDefinitionEntry> entry : map.entrySet())
     {
       final ParameterDefinitionEntry parameter = entry.getValue();
-      parameterDataAttributes.setup(parameter, globalAttributes, reportEnvironment);
+      parameterDataAttributes.setup(parameter, globalAttributes, reportEnvironment, resourceManager);
 
       final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
       computedParameterDataAttributes.merge(this.parameterDataAttributes, context);

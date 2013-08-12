@@ -40,7 +40,6 @@ public class DesignTimeDataFactoryContext implements DataFactoryContext
   {
     configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     resourceBundleFactory = new DefaultResourceBundleFactory();
   }
 
