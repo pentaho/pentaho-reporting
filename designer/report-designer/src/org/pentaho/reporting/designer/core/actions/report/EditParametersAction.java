@@ -43,13 +43,13 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class EditParametersAction extends AbstractElementSelectionAction
 {
-
   public EditParametersAction()
   {
     configureForMaster();
@@ -71,6 +71,10 @@ public class EditParametersAction extends AbstractElementSelectionAction
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditParametersAction.MasterReport.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditParametersAction.MasterReport.Accelerator"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getParameterIcon());
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)

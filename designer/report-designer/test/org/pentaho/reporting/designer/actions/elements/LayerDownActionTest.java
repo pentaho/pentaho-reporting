@@ -21,18 +21,12 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.actions.elements.LayerUpAction;
 import org.pentaho.reporting.designer.core.actions.elements.LayerDownAction;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.PageHeader;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class LayerDownActionTest extends TestCase
 {
   private class TestLayerDownAction extends LayerDownAction

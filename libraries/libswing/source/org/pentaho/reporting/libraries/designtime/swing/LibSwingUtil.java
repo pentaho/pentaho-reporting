@@ -27,7 +27,8 @@ import java.awt.Rectangle;
 import java.awt.Window;
 import java.util.StringTokenizer;
 
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Utility classes for swing. This is an exact copy of SwingUtil found in the Engine Core ... but this project
@@ -36,6 +37,8 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
  */
 public class LibSwingUtil
 {
+  private static final Log logger = LogFactory.getLog(LibSwingUtil.class);
+
   private LibSwingUtil()
   {
   }
@@ -170,7 +173,7 @@ public class LibSwingUtil
       final Rectangle rectangle = device.getDefaultConfiguration().getBounds();
       if (rectangle.contains(bounds) || rectangle.equals(bounds))
       {
-        DebugLog.log("Found a usable screen-configuration: Restoring frame to " + bounds);
+        logger.info("Found a usable screen-configuration: Restoring frame to " + bounds);
         frame.setBounds(bounds);
         return true;
       }
@@ -180,7 +183,7 @@ public class LibSwingUtil
 
   public static String rectangleToString(final Rectangle rectangle)
   {
-    final StringBuffer buffer = new StringBuffer();
+    final StringBuilder buffer = new StringBuilder();
     buffer.append(rectangle.getX());
     buffer.append(",");
     buffer.append(rectangle.getY());
@@ -211,7 +214,7 @@ public class LibSwingUtil
     }
     catch (Exception e)
     {
-      DebugLog.log("Error while getting initial frame bounds.", e); // NON-NLS
+      logger.warn("Error while getting initial frame bounds.", e); // NON-NLS
       return null;
     }
   }

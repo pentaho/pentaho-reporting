@@ -41,7 +41,6 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -50,11 +49,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportPara
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class LayerTopAction extends AbstractLayerAction
 {
   public LayerTopAction()
@@ -77,7 +71,7 @@ public final class LayerTopAction extends AbstractLayerAction
 
     final AbstractReportDefinition reportDefinition = getActiveContext().getReportDefinition();
     final GroupDataEntry[] entries = EditGroupsUndoEntry.buildGroupData(reportDefinition);
-    final ArrayList list = new ArrayList(entries.length);
+    final ArrayList<GroupDataEntry> list = new ArrayList<GroupDataEntry>(entries.length);
     int index = -1;
     for (int i = 0; i < entries.length; i++)
     {
@@ -94,11 +88,11 @@ public final class LayerTopAction extends AbstractLayerAction
       return null;
     }
 
-    final Object o = list.get(index);
+    final GroupDataEntry o = list.get(index);
     list.remove(index);
     list.add(0, o);
 
-    final GroupDataEntry[] changedEntries = (GroupDataEntry[]) list.toArray(new GroupDataEntry[list.size()]);
+    final GroupDataEntry[] changedEntries = list.toArray(new GroupDataEntry[list.size()]);
     EditGroupsUndoEntry.applyGroupData(reportDefinition, changedEntries);
 
     return new EditGroupsUndoEntry(entries, changedEntries);
@@ -106,8 +100,8 @@ public final class LayerTopAction extends AbstractLayerAction
 
   protected UndoEntry moveVisualElement(final AbstractReportDefinition report, final Element element)
   {
-    final ReportElement reportElement = element.getParent();
-    if (reportElement instanceof Band == false)
+    final Band reportElement = element.getParent();
+    if (reportElement == null)
     {
       return null;
     }
@@ -131,19 +125,18 @@ public final class LayerTopAction extends AbstractLayerAction
       }
     }
 
-    final Band parentBand = (Band) reportElement;
-    final int count = parentBand.getElementCount() - 1;
+    final int count = reportElement.getElementCount() - 1;
     for (int i = 0; i < count; i++)
     {
-      final Element visualReportElement = (Element) parentBand.getElement(i);
+      final Element visualReportElement = reportElement.getElement(i);
       if (element == visualReportElement)
       {
-        parentBand.removeElement(visualReportElement);
-        parentBand.addElement(visualReportElement);
+        reportElement.removeElement(visualReportElement);
+        reportElement.addElement(visualReportElement);
 
         return new CompoundUndoEntry
-            (new ElementEditUndoEntry(parentBand.getObjectID(), i, visualReportElement, null),
-                new ElementEditUndoEntry(parentBand.getObjectID(), parentBand.getElementCount() - 1, null, visualReportElement));
+            (new ElementEditUndoEntry(reportElement.getObjectID(), i, visualReportElement, null),
+                new ElementEditUndoEntry(reportElement.getObjectID(), reportElement.getElementCount() - 1, null, visualReportElement));
       }
     }
     return null;

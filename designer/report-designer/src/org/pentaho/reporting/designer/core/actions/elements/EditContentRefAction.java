@@ -28,17 +28,33 @@ import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.util.table.ResourcePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.CustomPropertyEditorDialog;
 
 public class EditContentRefAction extends AbstractElementSelectionAction
 {
+  private ReportModelEventFilter eventFilter;
+
   public EditContentRefAction()
   {
     putValue(Action.NAME, ActionMessages.getString("EditContentRefAction.Text"));
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditContentRefAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditContentRefAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditContentRefAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createAttributeFilter
+        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   protected void updateSelection()

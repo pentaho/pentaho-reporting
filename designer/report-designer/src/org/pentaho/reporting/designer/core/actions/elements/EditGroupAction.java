@@ -33,13 +33,9 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class EditGroupAction extends AbstractElementSelectionAction
 {
   public EditGroupAction()
@@ -49,6 +45,10 @@ public final class EditGroupAction extends AbstractElementSelectionAction
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditGroupAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditGroupAction.Accelerator"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getGroupIcon());
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**

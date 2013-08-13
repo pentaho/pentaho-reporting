@@ -34,13 +34,9 @@ import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class DistributeHorizontalJustifyAction extends AbstractElementSelectionAction
 {
   private static class ElementPositionComparator implements Comparator<Element>
@@ -72,6 +68,9 @@ public final class DistributeHorizontalJustifyAction extends AbstractElementSele
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getString("DistributeHorizontalJustifyAction.Accelerator"));
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
 
   /**
    * Invoked when an action occurs.

@@ -29,12 +29,8 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class EditSubReportAction extends AbstractElementSelectionAction
 {
   public EditSubReportAction()
@@ -43,6 +39,10 @@ public class EditSubReportAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditSubReportAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditSubReportAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditSubReportAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   public void actionPerformed(final ActionEvent e)

@@ -31,17 +31,17 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public abstract class AbstractLayerAction extends AbstractElementSelectionAction
 {
   protected AbstractLayerAction()
+  {
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
   {
   }
 

@@ -37,6 +37,7 @@ import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
@@ -113,6 +114,9 @@ public class InsertTableAction extends AbstractElementSelectionAction implements
     setVisible(true);
   }
 
+  protected void selectedElementPropertiesChanged(ReportModelEvent event)
+  {
+  }
 
   protected void updateSelection()
   {

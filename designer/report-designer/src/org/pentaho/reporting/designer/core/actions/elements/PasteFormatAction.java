@@ -38,6 +38,7 @@ import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
@@ -53,20 +54,20 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
   private static class PasteFormatUndoEntry implements UndoEntry
   {
     private InstanceID element;
-    private ReportAttributeMap oldAttributes;
-    private ReportAttributeMap newAttributes;
+    private ReportAttributeMap<Object> oldAttributes;
+    private ReportAttributeMap<Object> newAttributes;
     private Object[] oldStyleData;
     private Object[] newStyleData;
 
     private PasteFormatUndoEntry(final InstanceID element,
-                                 final ReportAttributeMap oldAttributes,
-                                 final ReportAttributeMap newAttributes,
+                                 final ReportAttributeMap<Object> oldAttributes,
+                                 final ReportAttributeMap<Object> newAttributes,
                                  final Object[] oldStyleData,
                                  final Object[] newStyleData)
     {
       this.element = element;
-      this.oldAttributes = (ReportAttributeMap) oldAttributes.clone();
-      this.newAttributes = (ReportAttributeMap) newAttributes.clone();
+      this.oldAttributes = oldAttributes.clone();
+      this.newAttributes = newAttributes.clone();
       this.oldStyleData = oldStyleData.clone();
       this.newStyleData = newStyleData.clone();
     }
@@ -164,6 +165,9 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
     stateChanged(null);
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
 
   protected void updateSelection()
   {
@@ -305,8 +309,8 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
           elementStyleSheet.setStyleProperty(styleKey, newValue);
         }
 
-        final ReportAttributeMap oldAttributes = new ReportAttributeMap();
-        final ReportAttributeMap newAttributes = new ReportAttributeMap();
+        final ReportAttributeMap<Object> oldAttributes = new ReportAttributeMap<Object>();
+        final ReportAttributeMap<Object> newAttributes = new ReportAttributeMap<Object>();
         if (ObjectUtilities.equal(elementType, element.getElementTypeName()))
         {
           final Object attribute =

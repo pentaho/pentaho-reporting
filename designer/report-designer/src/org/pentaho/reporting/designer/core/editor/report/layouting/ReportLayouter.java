@@ -22,7 +22,6 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
 /**
  * Single-instance layouter for handling the layout computation for a single report.
@@ -34,6 +33,7 @@ public class ReportLayouter
   private LogicalPageBox logicalPageBox;
   private ReportRenderContext reportRenderContext;
   private long lastModCount;
+  private DesignerOutputProcessorMetaData metaData;
 
   public ReportLayouter(final ReportRenderContext reportRenderContext)
   {
@@ -49,7 +49,7 @@ public class ReportLayouter
       return logicalPageBox;
     }
 
-    final DesignerOutputProcessor outputProcessor = new DesignerOutputProcessor();
+    final DesignerOutputProcessor outputProcessor = new DesignerOutputProcessor(getOutputProcessorMetaData());
     final DesignerReportProcessor reportProcessor = new DesignerReportProcessor(report, outputProcessor);
     reportProcessor.processReport();
     this.logicalPageBox = outputProcessor.getLogicalPage();
@@ -57,10 +57,14 @@ public class ReportLayouter
     return logicalPageBox;
   }
 
-  public OutputProcessorMetaData getOutputProcessorMetaData()
+  public synchronized DesignerOutputProcessorMetaData getOutputProcessorMetaData()
   {
-    final DesignerOutputProcessorMetaData designerOutputProcessorMetaData = new DesignerOutputProcessorMetaData();
-    designerOutputProcessorMetaData.initialize(reportRenderContext.getMasterReportElement().getConfiguration());
-    return designerOutputProcessorMetaData;
+    if (metaData == null)
+    {
+      final DesignerOutputProcessorMetaData designerOutputProcessorMetaData = new DesignerOutputProcessorMetaData();
+      designerOutputProcessorMetaData.initialize(reportRenderContext.getMasterReportElement().getConfiguration());
+      metaData = designerOutputProcessorMetaData;
+    }
+    return metaData;
   }
 }

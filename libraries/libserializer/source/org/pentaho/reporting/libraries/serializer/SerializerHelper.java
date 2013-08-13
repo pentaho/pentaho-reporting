@@ -250,7 +250,7 @@ public class SerializerHelper
     }
     catch (NotSerializableException nse)
     {
-      DebugLog.log("Unable to serialize object: " + o);
+      logger.warn("Unable to serialize object: " + o);
       throw nse;
     }
   }

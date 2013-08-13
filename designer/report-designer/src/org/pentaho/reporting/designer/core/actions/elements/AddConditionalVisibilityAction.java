@@ -29,6 +29,7 @@ import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.format.ConditionalVisibilityDialog;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -48,6 +49,9 @@ public class AddConditionalVisibilityAction extends AbstractElementSelectionActi
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("AddConditionalVisibilityAction.Accelerator"));
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
 
   protected void updateSelection()
   {

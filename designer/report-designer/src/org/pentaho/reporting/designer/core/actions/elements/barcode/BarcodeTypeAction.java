@@ -25,22 +25,20 @@ import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionActio
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesAttributeNames;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class BarcodeTypeAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
+  private ReportModelEventFilter eventFilter;
   private String type;
 
   public BarcodeTypeAction(final String type)
@@ -51,6 +49,17 @@ public class BarcodeTypeAction extends AbstractElementSelectionAction implements
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("BarcodeTypeAction.Description", type));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("BarcodeTypeAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("BarcodeTypeAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createAttributeFilter
+        (SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   public boolean isSelected()
@@ -131,9 +140,8 @@ public class BarcodeTypeAction extends AbstractElementSelectionAction implements
   }
 
 
-  private Element[] filterBarcodeElements(final Element[] visualElements)
+  private Element[] filterBarcodeElements(final Element[] elements)
   {
-    final Element[] elements = ModelUtility.filterParents(visualElements);
     final ArrayList<Element> retval = new ArrayList<Element>();
     for (int i = 0; i < elements.length; i++)
     {

@@ -33,7 +33,6 @@ import org.pentaho.reporting.designer.core.util.table.TableStyle;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
@@ -60,7 +59,6 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
         {
           setDataBackend(dataBackend);
           fireTableDataChanged();
-          DebugLog.log("DataTask: " + System.currentTimeMillis());
         }
         else
         {
@@ -174,7 +172,6 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
       final GroupingHeader header = groupings[i];
       if (header == null)
       {
-        DebugLog.log("Header null on " + i + " of " + groupings.length);
         continue;
       }
 

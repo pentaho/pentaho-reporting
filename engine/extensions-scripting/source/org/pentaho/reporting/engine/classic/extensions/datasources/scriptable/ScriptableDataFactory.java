@@ -22,6 +22,8 @@ import javax.swing.table.TableModel;
 
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -29,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -40,6 +41,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  */
 public class ScriptableDataFactory extends AbstractDataFactory
 {
+  private static final Log logger = LogFactory.getLog(ScriptableDataFactory.class);
   private LinkedHashMap<String,String> queries;
   private String language;
   private transient BSFManager interpreter;
@@ -225,7 +227,7 @@ public class ScriptableDataFactory extends AbstractDataFactory
       }
       catch (BSFException e)
       {
-        DebugLog.log("Failed to evaluate shutdown-script", e);
+        logger.warn("Failed to evaluate shutdown-script", e);
       }
     }
     this.dataRowWrapper = null;

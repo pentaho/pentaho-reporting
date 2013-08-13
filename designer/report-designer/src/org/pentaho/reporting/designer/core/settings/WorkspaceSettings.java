@@ -25,11 +25,11 @@ import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 import org.pentaho.reporting.designer.core.util.DrawSelectionType;
-import org.pentaho.reporting.designer.core.util.GUIUtils;
 import org.pentaho.reporting.designer.core.util.Unit;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.WeakEventListenerList;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
@@ -304,26 +304,26 @@ public class WorkspaceSettings implements LocaleSettings
 
   public void setBounds(final Rectangle rectangle)
   {
-    final String value = GUIUtils.rectangleToString(rectangle);
+    final String value = LibSwingUtil.rectangleToString(rectangle);
     properties.put(REPORT_DESIGNER_BOUNDS_KEY, value);
   }
 
   public Rectangle getBounds()
   {
     final String boundsAsText = properties.get(REPORT_DESIGNER_BOUNDS_KEY, "");
-    return GUIUtils.parseRectangle(boundsAsText);
+    return LibSwingUtil.parseRectangle(boundsAsText);
   }
 
   public void setFieldPaletteBounds(final Rectangle rectangle)
   {
-    final String value = GUIUtils.rectangleToString(rectangle);
+    final String value = LibSwingUtil.rectangleToString(rectangle);
     properties.put(FIELD_PALETTE_BOUNDS_KEY, value);
   }
 
   public Rectangle getFieldPaletteBounds()
   {
     final String theReportDesignerBounds = properties.get(FIELD_PALETTE_BOUNDS_KEY, "");
-    return GUIUtils.parseRectangle(theReportDesignerBounds);
+    return LibSwingUtil.parseRectangle(theReportDesignerBounds);
   }
 
   public void setLNF(final String lnf)

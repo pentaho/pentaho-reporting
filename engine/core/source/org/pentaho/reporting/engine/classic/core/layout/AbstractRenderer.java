@@ -204,7 +204,8 @@ public abstract class AbstractRenderer implements Renderer
   protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
   {
     this.paranoidChecks = "true".equals(metaData.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks"));
+        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks")) &&
+        processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false;
     this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
     staticPropertiesStep.initialize(metaData, processingContext);

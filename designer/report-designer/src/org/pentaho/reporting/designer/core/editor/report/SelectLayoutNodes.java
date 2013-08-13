@@ -19,6 +19,8 @@ package org.pentaho.reporting.designer.core.editor.report;
 
 import java.util.HashSet;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -26,10 +28,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class SelectLayoutNodes extends IterateSimpleStructureProcessStep
 {
+  private static final Log logger = LogFactory.getLog(SelectLayoutNodes.class);
   private HashSet<InstanceID> ids;
   private StrictBounds bounds;
 
@@ -72,12 +74,12 @@ public class SelectLayoutNodes extends IterateSimpleStructureProcessStep
       startProcessing(box);
       if (this.bounds == null)
       {
-        DebugLog.log("Failed to collect bounds for report of section " + section);
+        logger.debug("Failed to collect bounds for report of section " + section);
         recurse(box, section.getParentSection());
         return;
       }
 
-      DebugLog.log("Generating bounds for empty section " + section);
+      logger.debug("Generating bounds for empty section " + section);
       this.bounds.setRect(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), 0);
     }
   }

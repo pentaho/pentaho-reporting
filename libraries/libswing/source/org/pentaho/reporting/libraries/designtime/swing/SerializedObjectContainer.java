@@ -28,7 +28,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 
 public class SerializedObjectContainer implements Serializable
@@ -141,7 +142,7 @@ public class SerializedObjectContainer implements Serializable
     }
   }
 
-
+  private static final Log logger = LogFactory.getLog(SerializedObjectContainer.class);
   private transient Object[] data;
 
   public SerializedObjectContainer(final Object[] data)
@@ -162,7 +163,7 @@ public class SerializedObjectContainer implements Serializable
       }
       catch (NotSerializableException nse)
       {
-        DebugLog.log("Path: " + objectOutputStream.getStack()); // NON-NLS
+        logger.debug("Non-Serializable object found @Path: " + objectOutputStream.getStack()); // NON-NLS
         throw nse;
       }
     }

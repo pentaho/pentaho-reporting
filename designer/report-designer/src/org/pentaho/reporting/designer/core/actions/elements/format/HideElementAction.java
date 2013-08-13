@@ -31,15 +31,15 @@ import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class HideElementAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
+  private final ReportModelEventFilter eventFilter;
+
   public HideElementAction()
   {
     putValue(Action.SELECTED_KEY, Boolean.FALSE);
@@ -47,6 +47,9 @@ public final class HideElementAction extends AbstractElementSelectionAction impl
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("HideElementAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("HideElementAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("HideElementAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createAttributeFilter
+        (ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE);
   }
 
   public boolean isSelected()
@@ -57,6 +60,14 @@ public final class HideElementAction extends AbstractElementSelectionAction impl
   public void setSelected(final boolean selected)
   {
     putValue(Action.SELECTED_KEY, selected);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   protected void updateSelection()

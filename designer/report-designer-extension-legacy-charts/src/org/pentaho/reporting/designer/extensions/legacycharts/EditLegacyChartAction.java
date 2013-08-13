@@ -22,18 +22,35 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType;
 
 public class EditLegacyChartAction extends AbstractElementSelectionAction
 {
+  private ReportModelEventFilter eventFilter;
+
   public EditLegacyChartAction()
   {
     putValue(Action.NAME, Messages.getInstance().getString("EditLegacyChartAction.Text"));
     putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("EditLegacyChartAction.Description"));
     putValue(Action.MNEMONIC_KEY, Messages.getInstance().getOptionalMnemonic("EditLegacyChartAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, Messages.getInstance().getOptionalKeyStroke("EditLegacyChartAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createAttributeFilter
+        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   protected void updateSelection()
