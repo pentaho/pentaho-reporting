@@ -157,7 +157,7 @@ public abstract class AbstractRenderComponent extends JComponent
       if (oldFocused != focused)
       {
         setFocused(focused);
-        repaint(REPAINT_INTERVAL);
+        repaintConditionally();
       }
       SwingUtilities.invokeLater(new AsyncChangeNotifier());
     }
@@ -191,7 +191,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       getElementRenderer().invalidateLayout();
       revalidate();
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
     }
 
     public void settingsChanged()
@@ -199,7 +199,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       // this is cheap, just repaint and we will be happy
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
 
     }
   }
@@ -228,7 +228,7 @@ public abstract class AbstractRenderComponent extends JComponent
       selectionRectangleOrigin = null;
       selectionRectangleTarget = null;
       newlySelectedElements.clear();
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
     }
 
     /**
@@ -319,7 +319,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       }
 
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
     }
 
     public Point getSelectionRectangleOrigin()
@@ -498,7 +498,7 @@ public abstract class AbstractRenderComponent extends JComponent
           final SelectionOverlayInformation renderer = new SelectionOverlayInformation(velement);
           renderer.validate(zoomModel.getZoomAsPercentage());
           velement.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, renderer, false);
-          repaint(REPAINT_INTERVAL);
+          repaintConditionally();
           return;
         }
         parentSearch = parentSearch.getParentSection();
@@ -513,7 +513,7 @@ public abstract class AbstractRenderComponent extends JComponent
         final Element e = (Element) element;
         e.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, null, false);
       }
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
     }
 
     public void leadSelectionChanged(final ReportSelectionEvent event)
@@ -537,13 +537,13 @@ public abstract class AbstractRenderComponent extends JComponent
       if (e == getRootBand())
       {
         setFocused(true);
-        repaint(REPAINT_INTERVAL);
+        repaintConditionally();
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
       else
       {
         setFocused(false);
-        repaint(REPAINT_INTERVAL);
+        repaintConditionally();
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
     }
@@ -562,19 +562,19 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       // this is cheap, just repaint and we will be happy
       component.revalidate();
-      component.repaint(REPAINT_INTERVAL);
+      component.repaintConditionally();
     }
 
     public void modelChanged(final LinealModelEvent event)
     {
       component.revalidate();
-      component.repaint(REPAINT_INTERVAL);
+      component.repaintConditionally();
     }
 
     public void zoomFactorChanged()
     {
       component.revalidate();
-      component.repaint(REPAINT_INTERVAL);
+      component.repaintConditionally();
       component.stopCellEditing();
     }
 
@@ -591,7 +591,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       revalidate();
-      repaint(REPAINT_INTERVAL);
+      repaintConditionally();
     }
   }
 
@@ -1926,9 +1926,21 @@ public abstract class AbstractRenderComponent extends JComponent
 
     operation = null;
     undoEntryBuilder = null;
-    repaint(REPAINT_INTERVAL);
+    repaintConditionally();
 
     fpsCalculator.setActive(false);
+  }
+
+  public void repaintConditionally()
+  {
+    if (operation != null)
+    {
+      paintImmediately(0, 0, getWidth(), getHeight());
+    }
+    else
+    {
+      repaint(REPAINT_INTERVAL);
+    }
   }
 
   protected boolean isMouseOperationInProgress()

@@ -60,8 +60,17 @@ public class Prd4313Test extends TestCase
     final int idx = designerContext.addMasterReport(report);
     final ReportRenderContext masterContext = designerContext.getReportRenderContext(idx);
 
-    final StopWatch w = StopWatch.startNew();
     final SharedElementRenderer sharedRenderer = masterContext.getSharedRenderer();
+    run(mrLabel2, sharedRenderer);
+
+    final StopWatch w = StopWatch.startNew();
+    run(mrLabel2, sharedRenderer);
+
+    DebugLog.log(w);
+  }
+
+  private void run(final Element mrLabel2, final SharedElementRenderer sharedRenderer)
+  {
     for (int i = 0; i < 1000; i += 1)
     {
       mrLabel2.getStyle().setStyleProperty(ElementStyleKeys.ANCHOR_NAME, String.valueOf(Math.random()));
@@ -69,7 +78,5 @@ public class Prd4313Test extends TestCase
    //   mrLabel2.getStyle().setStyleProperty(ElementStyleKeys.POS_X, new Float(100f * Math.random()));
       assertTrue(sharedRenderer.performLayouting());
     }
-
-    DebugLog.log(w);
   }
 }
