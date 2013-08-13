@@ -34,6 +34,7 @@ public class ReportLayouter
   private ReportRenderContext reportRenderContext;
   private long lastModCount;
   private DesignerOutputProcessorMetaData metaData;
+  private DesignerRenderComponentFactory componentFactory;
 
   public ReportLayouter(final ReportRenderContext reportRenderContext)
   {
@@ -49,8 +50,13 @@ public class ReportLayouter
       return logicalPageBox;
     }
 
+    if (componentFactory == null)
+    {
+      componentFactory = new DesignerRenderComponentFactory(getOutputProcessorMetaData());
+    }
+
     final DesignerOutputProcessor outputProcessor = new DesignerOutputProcessor(getOutputProcessorMetaData());
-    final DesignerReportProcessor reportProcessor = new DesignerReportProcessor(report, outputProcessor);
+    final DesignerReportProcessor reportProcessor = new DesignerReportProcessor(report, outputProcessor, componentFactory);
     reportProcessor.processReport();
     this.logicalPageBox = outputProcessor.getLogicalPage();
     lastModCount = report.getChangeTracker();

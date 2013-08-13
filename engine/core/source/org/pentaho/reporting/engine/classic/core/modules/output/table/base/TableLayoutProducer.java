@@ -33,8 +33,9 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
   private boolean headerProcessed;
   private long contentOffset;
   private long effectiveHeaderSize;
-  private boolean unalignedPagebands;
   private long pageEndPosition;
+
+  private boolean unalignedPagebands;
   private boolean strictLayout;
   private boolean ellipseAsRectangle;
   private boolean processWatermark;
@@ -253,14 +254,21 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
    */
   public void computeDesigntimeConflicts(final RenderBox box)
   {
-    this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
+    clear();
+    pageEndPosition = box.getHeight();
+
+    startProcessing(box);
+  }
+
+  public void clear()
+  {
+    this.layout.clear();
 
     effectiveHeaderSize = 0;
     pageOffset = 0;
-    pageEndPosition = box.getHeight();
+    pageEndPosition = 0;
     contentOffset = 0;
-
-    startProcessing(box);
+    headerProcessed = false;
   }
 
 }

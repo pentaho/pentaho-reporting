@@ -92,16 +92,20 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
 
 //    DebugLog.log("Table-Size: " +  sheetLayout.getRowCount() + " " + sheetLayout.getColumnCount());
     final Configuration config = metaData.getConfiguration();
-    this.debugReportLayout = "true".equals(config.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.DebugReportLayout"));
-    this.verboseCellMarkers = "true".equals(config.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers"));
-    this.verboseCellMarkersThreshold = ParserUtil.parseInt(config.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold"), 5000);
-    this.reportCellConflicts = "true".equals(config.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts"));
-    this.failOnCellConflicts = "true".equals(config.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts"));
+    final boolean designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    if (designTime == false)
+    {
+      this.debugReportLayout = "true".equals(config.getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.DebugReportLayout"));
+      this.verboseCellMarkers = "true".equals(config.getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkers"));
+      this.verboseCellMarkersThreshold = ParserUtil.parseInt(config.getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.VerboseCellMarkerThreshold"), 5000);
+      this.reportCellConflicts = "true".equals(config.getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts"));
+      this.failOnCellConflicts = "true".equals(config.getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.FailOnCellConflicts"));
+    }
   }
 
   public boolean isProcessWatermark()
@@ -124,8 +128,11 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     this.sheetLayout = sheetLayout;
     this.maximumHeight = sheetLayout.getMaxHeight();
     this.maximumWidth = sheetLayout.getMaxWidth();
-    this.contentBackend = new GenericObjectTable<CellMarker>(Math.max(1, sheetLayout.getRowCount()), Math.max(1,
-        sheetLayout.getColumnCount()));
+    if (this.contentBackend == null)
+    {
+      this.contentBackend = new GenericObjectTable<CellMarker>
+          (Math.max(1, sheetLayout.getRowCount()), Math.max(1, sheetLayout.getColumnCount()));
+    }
     this.contentBackend.ensureCapacity(sheetLayout.getRowCount(), sheetLayout.getColumnCount());
   }
 
@@ -845,5 +852,17 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       return;
     }
     super.processBoxChilds(box);
+  }
+
+  public void reset(final SheetLayout layout)
+  {
+    updateSheetLayout(layout);
+    contentBackend.clear();
+    pageOffset = 0;
+    effectiveHeaderSize = 0;
+    contentOffset = 0;
+    pageEndPosition = 0;
+    contentOffset = 0;
+    filledRows = 0;
   }
 }

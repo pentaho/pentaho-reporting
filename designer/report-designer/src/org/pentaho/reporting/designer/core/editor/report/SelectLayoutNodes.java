@@ -74,12 +74,12 @@ public class SelectLayoutNodes extends IterateSimpleStructureProcessStep
       startProcessing(box);
       if (this.bounds == null)
       {
-        logger.debug("Failed to collect bounds for report of section " + section);
+        //logger.debug("Failed to collect bounds for report of section " + section);
         recurse(box, section.getParentSection());
         return;
       }
 
-      logger.debug("Generating bounds for empty section " + section);
+      //logger.debug("Generating bounds for empty section " + section);
       this.bounds.setRect(this.bounds.getX(), this.bounds.getY(), this.bounds.getWidth(), 0);
     }
   }

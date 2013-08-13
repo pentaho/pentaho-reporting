@@ -752,4 +752,12 @@ public final class SheetLayout
     return yBounds.getKeyAt(row);
   }
 
+  public void clear()
+  {
+    xBounds.clear();
+    xMaxBounds = 0;
+
+    yBounds.clear();
+    yMaxBounds = 0;
+  }
 }

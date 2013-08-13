@@ -26,13 +26,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
+import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironmentMapping;
 import org.pentaho.reporting.engine.classic.core.DefaultResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
-import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
@@ -45,7 +45,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.states.datarow.ProcessingDataSchemaCompiler;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
-import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -708,12 +707,12 @@ public class DataSchemaCompiler
                                           final DataSchemaRule[] directRules,
                                           final DefaultDataSchema schema)
   {
-    final LinkedMap names = ReportEnvironmentDataRow.createEnvironmentMapping();
-    final String[] parameterNames = (String[]) names.keys(new String[names.size()]);
+    final Map<String,String> names = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
+    final String[] parameterNames = names.keySet().toArray(new String[names.size()]);
     for (int i = 0; i < parameterNames.length; i++)
     {
       final String envName = parameterNames[i];
-      final String name = (String) names.get(envName);
+      final String name = names.get(envName);
       if (envName.endsWith("-array"))
       {
         environmentDataAttributes.setup

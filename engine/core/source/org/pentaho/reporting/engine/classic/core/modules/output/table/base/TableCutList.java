@@ -44,7 +44,11 @@ public class TableCutList
     this.enableQuickLookup = enableQuickLookup;
   }
 
-  //
+  public void clear()
+  {
+    this.size = 0;
+    this.scaleFactor = 0;
+  }
 
   public boolean isEnableQuickLookup()
   {
