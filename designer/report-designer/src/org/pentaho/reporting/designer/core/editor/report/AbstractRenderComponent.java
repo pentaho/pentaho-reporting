@@ -83,6 +83,7 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
+import org.pentaho.reporting.designer.core.util.FpsCalculator;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
@@ -1087,6 +1088,7 @@ public abstract class AbstractRenderComponent extends JComponent
   private RootBandChangeHandler changeHandler;
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolvedStyle;
+  private FpsCalculator fpsCalculator;
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
@@ -1108,6 +1110,7 @@ public abstract class AbstractRenderComponent extends JComponent
     setFocusTraversalKeysEnabled(false);
     setLayout(null);
 
+    this.fpsCalculator = new FpsCalculator();
     this.showLeftBorder = true;
     this.showTopBorder = false;
     this.repaintHandler = new RepaintHandler(this);
@@ -1291,6 +1294,11 @@ public abstract class AbstractRenderComponent extends JComponent
 
   protected void paintComponent(final Graphics g)
   {
+    if (fpsCalculator.isActive())
+    {
+      fpsCalculator.tick();
+    }
+
     final Graphics2D g2 = (Graphics2D) g.create();
 
     g2.setColor(new Color(224, 224, 224));
@@ -1338,7 +1346,7 @@ public abstract class AbstractRenderComponent extends JComponent
         {
           rendererRoot.handleError(designerContext, renderContext);
 
-          logicalPageAreaG2.scale(1f/scaleFactor, 1f/scaleFactor);
+          logicalPageAreaG2.scale(1f / scaleFactor, 1f / scaleFactor);
           logicalPageAreaG2.setPaint(Color.WHITE);
           logicalPageAreaG2.fill(area);
         }
@@ -1369,6 +1377,13 @@ public abstract class AbstractRenderComponent extends JComponent
       renderer.validate(getRenderContext(), scaleFactor);
       renderer.draw(selectionG2, new Rectangle2D.Double(getLeftBorder(), getTopBorder(), getWidth(), getHeight()), this);
       selectionG2.dispose();
+    }
+
+    if (fpsCalculator.isActive())
+    {
+      final Graphics graphics = g.create();
+      graphics.drawString("FPS: " + fpsCalculator.getFps(), 0, 30);
+      graphics.dispose();
     }
   }
 
@@ -1773,6 +1788,9 @@ public abstract class AbstractRenderComponent extends JComponent
   protected void initializeDragOperation(final Point2D originPoint,
                                          final SelectionOverlayInformation.InRangeIndicator currentIndicator)
   {
+    fpsCalculator.reset();
+    fpsCalculator.setActive(true);
+
     final Element[] visualElements =
         filterLocalElements(getRenderContext().getSelectionModel().getSelectedVisualElements());
     if (visualElements.length == 0)
@@ -1909,6 +1927,8 @@ public abstract class AbstractRenderComponent extends JComponent
     operation = null;
     undoEntryBuilder = null;
     repaint(REPAINT_INTERVAL);
+
+    fpsCalculator.setActive(false);
   }
 
   protected boolean isMouseOperationInProgress()

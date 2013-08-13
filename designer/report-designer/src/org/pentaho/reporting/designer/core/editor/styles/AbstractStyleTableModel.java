@@ -60,6 +60,7 @@ public abstract class AbstractStyleTableModel<T extends StyleDataBackend>
         {
           setDataBackend(dataBackend);
           fireTableDataChanged();
+          DebugLog.log("DataTask: " + System.currentTimeMillis());
         }
         else
         {
