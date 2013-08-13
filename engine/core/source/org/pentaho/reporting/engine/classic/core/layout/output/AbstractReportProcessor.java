@@ -644,18 +644,18 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       state.setErrorHandler(errorHandler);
       validate(state);
 
-      int pageEventCount = 0;
-      // First and last derive of a page must be a storage derivate - this clones everything and does
-      // not rely on the more complicated transactional layouting ..
-      ProcessState fallBackState = state.deriveForPagebreak();
-      ProcessState globalState = state.deriveForStorage();
-
-      ReportStateKey rollbackPageState = null;
-      boolean isInRollBackMode = false;
-
       final OutputProcessorMetaData metaData =
           state.getFlowController().getReportContext().getOutputProcessorMetaData();
       pagebreaksSupported = metaData.isFeatureSupported(OutputProcessorFeature.PAGEBREAKS);
+
+      int pageEventCount = 0;
+      // First and last derive of a page must be a storage derivate - this clones everything and does
+      // not rely on the more complicated transactional layouting ..
+      ProcessState fallBackState = pagebreaksSupported ? state.deriveForPagebreak() : null;
+      ProcessState globalState = pagebreaksSupported ? state.deriveForStorage() : null;
+
+      ReportStateKey rollbackPageState = null;
+      boolean isInRollBackMode = false;
 
       int eventCount = 0;
       int lastRow = -1;
@@ -1221,8 +1221,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       ReportStateKey rollbackPageState = null;
 
       ProcessState state = startState.deriveForStorage();
-      ProcessState fallBackState = state.deriveForPagebreak();
-      final ProcessState globalState = state.deriveForStorage();
+      ProcessState fallBackState = pagebreaksSupported ? state.deriveForPagebreak(): null;
+      final ProcessState globalState = pagebreaksSupported ? state.deriveForStorage(): null;
       state.setErrorHandler(errorHandler);
 
       boolean isInRollBackMode = false;
