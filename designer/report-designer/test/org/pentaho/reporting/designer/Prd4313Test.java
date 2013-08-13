@@ -23,6 +23,7 @@ public class Prd4313Test extends TestCase
     ClassicEngineBoot.getInstance().start();
     System.setOut(out);
     System.setErr(err);
+    runPerformanceTestInternal();
   }
 
   public void testEventNotification()
@@ -47,6 +48,11 @@ public class Prd4313Test extends TestCase
 
   public void testPerformance()
   {
+    runPerformanceTestInternal();
+  }
+
+  private void runPerformanceTestInternal()
+  {
     final MasterReport report = new MasterReport();
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.ReportCellConflicts", "false");
@@ -61,11 +67,8 @@ public class Prd4313Test extends TestCase
     final ReportRenderContext masterContext = designerContext.getReportRenderContext(idx);
 
     final SharedElementRenderer sharedRenderer = masterContext.getSharedRenderer();
-    run(mrLabel2, sharedRenderer);
-
     final StopWatch w = StopWatch.startNew();
     run(mrLabel2, sharedRenderer);
-
     DebugLog.log(w);
   }
 
