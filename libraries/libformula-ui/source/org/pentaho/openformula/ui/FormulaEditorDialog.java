@@ -117,6 +117,7 @@ public class FormulaEditorDialog extends CommonDialog
       throw new NullPointerException();
     }
 
+    panel.setFields(fields);
     if (StringUtils.isEmpty(formula, true))
     {
       panel.setFormulaText("=");
@@ -125,7 +126,6 @@ public class FormulaEditorDialog extends CommonDialog
     {
       panel.setFormulaText(formula);
     }
-    panel.setFields(fields);
     if (!super.performEdit())
     {
       return null;
