@@ -51,6 +51,8 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -119,9 +121,6 @@ import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 public abstract class AbstractRenderComponent extends JComponent
     implements ReportElementEditorContext, CellEditorListener
 {
-  // 50 fps max
-  private static final long REPAINT_INTERVAL = 1000 / 50;
-
   protected class AsyncChangeNotifier implements Runnable
   {
     public void run()
@@ -1057,6 +1056,9 @@ public abstract class AbstractRenderComponent extends JComponent
     }
   }
 
+  // 50 fps max
+  private static final long REPAINT_INTERVAL = 1000 / 50;
+  private static final Log logger = LogFactory.getLog(AbstractRenderComponent.class);
   private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
 
   private CellEditorRemover editorRemover;
@@ -1377,13 +1379,6 @@ public abstract class AbstractRenderComponent extends JComponent
       renderer.validate(getRenderContext(), scaleFactor);
       renderer.draw(selectionG2, new Rectangle2D.Double(getLeftBorder(), getTopBorder(), getWidth(), getHeight()), this);
       selectionG2.dispose();
-    }
-
-    if (fpsCalculator.isActive())
-    {
-      final Graphics graphics = g.create();
-      graphics.drawString("FPS: " + fpsCalculator.getFps(), 0, 30);
-      graphics.dispose();
     }
   }
 
@@ -1929,6 +1924,7 @@ public abstract class AbstractRenderComponent extends JComponent
     repaintConditionally();
 
     fpsCalculator.setActive(false);
+    logger.debug ("MoveOperation-performance: " + fpsCalculator.getFps());
   }
 
   public void repaintConditionally()
