@@ -66,7 +66,17 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if (value != null)
       {
         final String text = FormulaUtil.quoteReference(value.getName());
-        setParameterValue(paramIndex, text);
+        final String parameterValue = getParameterValue(paramIndex);
+        final JTextField field = getParameterField(paramIndex);
+
+        final StringBuilder b = new StringBuilder(parameterValue);
+        // remove the selected content, if any
+        b.delete(field.getSelectionStart(), field.getSelectionEnd());
+        // then insert the new content at the cursor position
+        final int caretPosition = field.getCaretPosition();
+        b.insert(caretPosition, text);
+        setParameterValue(paramIndex, b.toString());
+        field.setCaretPosition(caretPosition + text.length());
       }
     }
   }
@@ -142,8 +152,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   private JTextField[] textFields;
   private SelectFieldAction[] selectFieldActions;
   private FieldDefinition[] fields;
-  private int functionStartIndex;
-//  private boolean performingUpdate;
 
   private boolean inParameterUpdate;
   private boolean inSetupUpdate;
@@ -266,6 +274,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         }
 
         textFields[i].setText(updatedFormula);
+        textFields[i].setCaretPosition(updatedFormula.length());
         return true;
       }
     }
@@ -284,6 +293,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         if (textFields[i] != null)
         {
           textFields[i].setText(string);
+          textFields[i].setCaretPosition(string.length());
         }
       }
     }
@@ -300,7 +310,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     {
       inSetupUpdate = true;
 
-      final int functionStart = context.getFunctionParameterStartPosition();
       final FunctionDescription selectedFunction = context.getFunction();
       final String[] parameterValues = context.getParameterValues();
 
@@ -326,7 +335,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       }
 
       this.selectedFunction = selectedFunction;
-      this.functionStartIndex = functionStart;
 
       if (context.isSwitchParameterEditor() == false)
       {
@@ -384,6 +392,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final JLabel paramNameLabel = new JLabel(displayName);
     final JTextField paramTextField = new JTextField();
     paramTextField.setText(parameterValue);
+    paramTextField.setCaretPosition(parameterValue.length());
     paramTextField.setFont
         (new Font(Font.MONOSPACED, paramTextField.getFont().getStyle(), paramTextField.getFont().getSize()));
 
@@ -487,6 +496,11 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     {
       inParameterUpdate = false;
     }
+  }
+
+  protected JTextField getParameterField(final int field)
+  {
+    return textFields[field];
   }
 
   public String getParameterValue(final int param)

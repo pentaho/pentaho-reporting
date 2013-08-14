@@ -18,6 +18,9 @@
 package org.pentaho.openformula.ui;
 
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -28,6 +31,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class FormulaDialogTest
 {
@@ -68,13 +72,20 @@ public class FormulaDialogTest
   }
 
   @Test
-  public void testRunFormulaDialog()
+  public void testRunFormulaDialog() throws IOException
   {
     if (GraphicsEnvironment.isHeadless())
     {
       return;
     }
 
+    final Enumeration<URL> resources = getClass().getClassLoader().getResources("simplelog.properties");
+    while (resources.hasMoreElements())
+    {
+      URL url = resources.nextElement();
+      System.out.println(url);
+    }
+    DebugLog.logHere();
     final FormulaEditorDialog d = new FormulaEditorDialog();
     d.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[] { new TestFieldDefinition("test")});
   }
