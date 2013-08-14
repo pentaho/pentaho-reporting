@@ -10,6 +10,7 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.extensions.toc.TocElement;
 
 public class EditTocAction extends AbstractElementSelectionAction
@@ -26,6 +27,9 @@ public class EditTocAction extends AbstractElementSelectionAction
     putValue(Action.ACCELERATOR_KEY, Messages.getInstance().getOptionalKeyStroke("EditTocAction.Accelerator"));
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
 
   protected void updateSelection()
   {

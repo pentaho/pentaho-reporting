@@ -47,7 +47,6 @@ public final class ElementTypeRegistry
   private ElementTypeRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.backend = new HashMap<String, DefaultElementMetaData>();
     this.namespaceMapping = new HashMap<String, String>();
   }

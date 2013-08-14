@@ -166,6 +166,11 @@ public class ModelUtility
 
   public static Element[] filterParents(final Element[] elements)
   {
+    if (elements.length == 1)
+    {
+      return elements;
+    }
+
     final ArrayList<Element> retval = new ArrayList<Element>(elements.length);
     for (int i = 0; i < elements.length; i++)
     {

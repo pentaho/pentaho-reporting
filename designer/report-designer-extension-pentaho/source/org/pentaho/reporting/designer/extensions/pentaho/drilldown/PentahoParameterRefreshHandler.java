@@ -274,7 +274,6 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
 
         final byte[] responseBody = method.getResponseBody();
         final ResourceManager manager = new ResourceManager();
-        manager.registerDefaults();
         final Resource resource = manager.createDirectly(responseBody, ParameterDocument.class);
         final ParameterDocument o = (ParameterDocument) resource.getResource();
         parameters = o.getParameter();

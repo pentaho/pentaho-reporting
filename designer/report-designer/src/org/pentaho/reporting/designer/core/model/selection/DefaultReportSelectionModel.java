@@ -24,21 +24,17 @@ import java.util.LinkedHashMap;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.libraries.designtime.swing.WeakEventListenerList;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class DefaultReportSelectionModel implements ReportSelectionModel
 {
   private WeakEventListenerList listenerList;
-  private LinkedHashMap<Object,Object> backend;
+  private LinkedHashMap<Object, Object> backend;
   private Object[] valuesCached;
+  private Element[] visualElementsCached;
 
   public DefaultReportSelectionModel()
   {
     listenerList = new WeakEventListenerList();
-    backend = new LinkedHashMap<Object,Object>();
+    backend = new LinkedHashMap<Object, Object>();
   }
 
   public void addReportSelectionListener(final ReportSelectionListener listener)
@@ -58,10 +54,7 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
 
   public Object getSelectedElement(final int index)
   {
-    if (valuesCached == null)
-    {
-      valuesCached = backend.values().toArray();
-    }
+    fillCaches();
     return valuesCached[index];
   }
 
@@ -108,6 +101,7 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
       {
         iterator.remove();
         valuesCached = null;
+        visualElementsCached = null;
         fireSelectionRemoved(elementFromOldSelection);
       }
     }
@@ -120,6 +114,7 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
       if (backend.containsKey(key) == false)
       {
         backend.put(key, element);
+        visualElementsCached = null;
         valuesCached = null;
         fireSelectionAdded(element);
       }
@@ -182,6 +177,7 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
     if (backend.containsKey(key) == false)
     {
       backend.put(key, element);
+      visualElementsCached = null;
       valuesCached = null;
       fireSelectionAdded(element);
       return true;
@@ -195,6 +191,7 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
     if (backend.containsKey(key))
     {
       backend.remove(key);
+      visualElementsCached = null;
       valuesCached = null;
       fireSelectionRemoved(element);
     }
@@ -207,24 +204,25 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
 
   public Element[] getSelectedVisualElements()
   {
-    final ArrayList<Element> selection = new ArrayList<Element>();
-    for (Iterator iterator = backend.values().iterator(); iterator.hasNext();)
+    if (visualElementsCached == null)
     {
-      final Object o = iterator.next();
-      if (o instanceof Element)
+      final ArrayList<Element> selection = new ArrayList<Element>();
+      for (Iterator iterator = backend.values().iterator(); iterator.hasNext(); )
       {
-        selection.add((Element) o);
+        final Object o = iterator.next();
+        if (o instanceof Element)
+        {
+          selection.add((Element) o);
+        }
       }
+      visualElementsCached = selection.toArray(new Element[selection.size()]);
     }
-    return selection.toArray(new Element[selection.size()]);
+    return visualElementsCached;
   }
 
   public Object[] getSelectedElements()
   {
-    if (valuesCached == null)
-    {
-      valuesCached = backend.values().toArray();
-    }
+    fillCaches();
     return valuesCached.clone();
   }
 
@@ -235,11 +233,16 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
       return null;
     }
 
+    fillCaches();
+    return valuesCached[valuesCached.length - 1];
+  }
+
+  private void fillCaches()
+  {
     if (valuesCached == null)
     {
       valuesCached = backend.values().toArray();
     }
-    return valuesCached[valuesCached.length - 1];
   }
 
 }

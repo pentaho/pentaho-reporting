@@ -50,7 +50,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphic
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DesignerPageDrawable extends LogicalPageDrawable
@@ -162,7 +161,6 @@ public class DesignerPageDrawable extends LogicalPageDrawable
       final BlockRenderBox box = getRootBox().getFooterArea();
       setDrawArea(new StrictBounds(box.getX(), box.getY(), box.getWidth(), box.getHeight()));
       getGraphics().clip(createClipRect(getDrawArea()));
-      DebugLog.log(getGraphics().getClipBounds());
       startProcessing(box);
     }
     else

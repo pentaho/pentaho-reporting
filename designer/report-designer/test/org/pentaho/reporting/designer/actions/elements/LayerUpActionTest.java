@@ -27,11 +27,6 @@ import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class LayerUpActionTest extends TestCase
 {
   private class TestLayerUpAction extends LayerUpAction

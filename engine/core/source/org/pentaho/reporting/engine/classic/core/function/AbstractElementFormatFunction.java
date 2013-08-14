@@ -42,6 +42,8 @@ import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
@@ -391,7 +393,11 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
       return;
     }
 
-    reportCachePerformance();
+    final OutputProcessorMetaData outputProcessorMetaData = getRuntime().getProcessingContext().getOutputProcessorMetaData();
+    if (outputProcessorMetaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false)
+    {
+      reportCachePerformance();
+    }
   }
 
   protected void reportCachePerformance()
@@ -420,7 +426,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
         continue;
       }
 
-      final Band b = (Band)e;
+      final Band b = (Band) e;
       processRootBand(b);
     }
   }
@@ -439,7 +445,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
         continue;
       }
 
-      final Band b = (Band)e;
+      final Band b = (Band) e;
       processRootBand(b);
     }
   }
@@ -576,6 +582,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     }
 
   }
+
   /**
    * Format-Functions usually are not expected to return anything.
    *

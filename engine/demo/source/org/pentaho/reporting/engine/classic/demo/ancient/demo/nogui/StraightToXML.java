@@ -76,7 +76,6 @@ public class StraightToXML
     try
     {
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
       return (MasterReport) resource.getResource();
     }

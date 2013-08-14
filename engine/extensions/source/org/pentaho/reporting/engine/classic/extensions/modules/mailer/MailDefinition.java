@@ -63,7 +63,6 @@ public class MailDefinition implements Serializable, Cloneable
     this.parameterDefinition = new DefaultParameterDefinition();
     this.resourceBundleFactory = new DefaultResourceBundleFactory();
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.parameterValues = new ReportParameterValues();
     this.dataFactory = new CompoundDataFactory();
     this.headers = new ArrayList();
@@ -110,7 +109,6 @@ public class MailDefinition implements Serializable, Cloneable
     if (this.resourceManager == null)
     {
       this.resourceManager = new ResourceManager();
-      this.resourceManager.registerDefaults();
     }
   }
 

@@ -46,7 +46,6 @@ public abstract class AbstractXmlDemoHandler extends AbstractDemoHandler
     try
     {
       ResourceManager manager = new ResourceManager();
-      manager.registerDefaults();
       Resource res = manager.createDirectly(in, MasterReport.class);
       return (MasterReport) res.getResource();
     }

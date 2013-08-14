@@ -408,9 +408,7 @@ public class SubReport extends AbstractReportDefinition
       parent = parent.getParentSection();
     }
 
-    final ResourceManager manager = new ResourceManager();
-    manager.registerDefaults();
-    return manager;
+    return new ResourceManager();
   }
 
   public ResourceBundleFactory getResourceBundleFactory()

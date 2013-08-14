@@ -30,7 +30,16 @@ public class DesignerOutputProcessor extends AbstractOutputProcessor
 
   public DesignerOutputProcessor()
   {
-    this.metadata = new DesignerOutputProcessorMetaData();
+    this(new DesignerOutputProcessorMetaData());
+  }
+
+  public DesignerOutputProcessor(final DesignerOutputProcessorMetaData metaData)
+  {
+    if (metaData == null)
+    {
+      throw new NullPointerException();
+    }
+    this.metadata = metaData;
   }
 
   public boolean isNeedAlignedPage()

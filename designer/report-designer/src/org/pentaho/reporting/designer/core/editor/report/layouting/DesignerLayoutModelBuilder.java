@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.report.layouting;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
+import org.pentaho.reporting.engine.classic.core.layout.TextProducer;
 import org.pentaho.reporting.engine.classic.core.layout.build.DefaultLayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -85,13 +86,18 @@ public class DesignerLayoutModelBuilder extends DefaultLayoutModelBuilder
     }
   }
 
-  public DesignerLayoutModelBuilder()
-  {
-  }
+  private DesignerRenderComponentFactory renderComponentFactory;
 
-  public DesignerLayoutModelBuilder(final String legacySectionName)
+  public DesignerLayoutModelBuilder(final String legacySectionName,
+                                    final DesignerRenderComponentFactory renderComponentFactory)
   {
     super(legacySectionName);
+    this.renderComponentFactory = renderComponentFactory;
+  }
+
+  protected TextProducer createTextProducer()
+  {
+    return renderComponentFactory.createTextProducer();
   }
 
   public void startSubFlow(final ReportElement element)

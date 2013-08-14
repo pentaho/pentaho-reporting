@@ -192,7 +192,6 @@ public class InternalFrameDemoFrame extends AbstractDemoFrame
         return;
       }
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(in, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       report.getReportConfiguration().setConfigProperty

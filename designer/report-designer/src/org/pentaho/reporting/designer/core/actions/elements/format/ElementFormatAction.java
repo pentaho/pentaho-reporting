@@ -32,15 +32,11 @@ import org.pentaho.reporting.designer.core.editor.format.ElementFormatDialog;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.ElementFormatUndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ElementFormatAction extends AbstractElementSelectionAction
 {
   public ElementFormatAction()
@@ -49,6 +45,10 @@ public class ElementFormatAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ElementFormatAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ElementFormatAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ElementFormatAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   public void actionPerformed(final ActionEvent e)

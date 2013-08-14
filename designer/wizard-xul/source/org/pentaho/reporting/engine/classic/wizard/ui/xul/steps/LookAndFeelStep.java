@@ -232,7 +232,6 @@ public class LookAndFeelStep extends AbstractWizardStep
   {
     super();
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     loadTemplates();
   }
 

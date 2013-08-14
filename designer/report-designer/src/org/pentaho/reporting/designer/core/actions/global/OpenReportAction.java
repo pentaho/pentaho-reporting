@@ -232,7 +232,6 @@ public final class OpenReportAction extends AbstractDesignerContextAction
       throws ResourceException, IOException
   {
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     final MasterReport reportDefinition = loadReport(selectedFile, resourceManager);
     try
     {

@@ -32,17 +32,15 @@ import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class TextAlignmentRightAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
-  private boolean selected;
+  private final ReportModelEventFilter eventFilter;
 
   public TextAlignmentRightAction()
   {
@@ -52,6 +50,16 @@ public final class TextAlignmentRightAction extends AbstractElementSelectionActi
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getTextAlignRightCommand());
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("TextAlignmentRightAction.Accelerator"));
     putValue(Action.SELECTED_KEY, Boolean.FALSE);
+
+    eventFilter = new ReportModelEventFilterFactory().createStyleFilter(ElementStyleKeys.ALIGNMENT);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   public boolean isSelected()

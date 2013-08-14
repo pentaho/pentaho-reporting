@@ -68,8 +68,6 @@ public class TransformationDatasourceMetadata
   {
 
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final URL templateLocation = TransformationDatasourceMetadata.class.getClassLoader().getResource(DATASOURCE_DIRECTORY);
     if (templateLocation != null)
     {

@@ -43,6 +43,7 @@ import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.Watermark;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -128,6 +129,9 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
     setVisible(true);
   }
 
+  protected void selectedElementPropertiesChanged(ReportModelEvent event)
+  {
+  }
 
   protected void updateSelection()
   {

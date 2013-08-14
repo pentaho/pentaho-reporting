@@ -45,7 +45,6 @@ public class ReportProcessTaskRegistry
   private ReportProcessTaskRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.exportTypes = new ConcurrentHashMap<String, ReportProcessTaskMetaData>();
   }
 
