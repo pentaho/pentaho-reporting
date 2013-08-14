@@ -20,17 +20,14 @@ package org.pentaho.reporting.designer.core.util;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
-import java.awt.Rectangle;
 import java.awt.Window;
 import java.util.Iterator;
-import java.util.StringTokenizer;
 
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.openformula.ui.FunctionParameterEditor;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -89,44 +86,6 @@ public class GUIUtils
   {
     ensureMaximumDialogWidth(dialog, maxWidth);
     ensureMaximumDialogHeight(dialog, maxHeight);
-  }
-
-  public static String rectangleToString(final Rectangle rectangle)
-  {
-    final StringBuffer buffer = new StringBuffer();
-    buffer.append(rectangle.getX());
-    buffer.append(",");
-    buffer.append(rectangle.getY());
-    buffer.append(",");
-    buffer.append(rectangle.getWidth());
-    buffer.append(",");
-    buffer.append(rectangle.getHeight());
-    return buffer.toString();
-  }
-
-  public static Rectangle parseRectangle(final String boundsAsText)
-  {
-    try
-    {
-      final StringTokenizer tokenizer = new StringTokenizer(boundsAsText, ",");
-      if (tokenizer.countTokens() == 4)
-      {
-        final double x = Double.parseDouble(tokenizer.nextToken());
-        final double y = Double.parseDouble(tokenizer.nextToken());
-        final double width = Double.parseDouble(tokenizer.nextToken());
-        final double height = Double.parseDouble(tokenizer.nextToken());
-
-        final Rectangle rectangle = new Rectangle();
-        rectangle.setRect(x, y, width, height);
-        return rectangle;
-      }
-      return null;
-    }
-    catch (Exception e)
-    {
-      DebugLog.log("Error while getting initial frame bounds.", e); // NON-NLS
-      return null;
-    }
   }
 
   public static FormulaEditorDialog createFormulaEditorDialog(final ReportDesignerContext context,

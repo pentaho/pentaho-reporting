@@ -276,7 +276,6 @@ public class DrillDownProfileEditor extends CommonDialog
     try
     {
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       final Resource resource = resourceManager.createDirectly(file, DrillDownProfileCollection.class);
       final DrillDownProfileCollection typeCollection = (DrillDownProfileCollection) resource.getResource();
       final DrillDownProfile[] types = typeCollection.getData();

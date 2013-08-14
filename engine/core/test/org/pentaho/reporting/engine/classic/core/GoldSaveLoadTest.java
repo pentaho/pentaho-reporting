@@ -50,7 +50,6 @@ public class GoldSaveLoadTest extends GoldTestBase
     outputStream.close();
 */
     final ResourceManager mgr = new ResourceManager();
-    mgr.registerDefaults();
     final Resource reportRes = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
     return (MasterReport) reportRes.getResource();
   }

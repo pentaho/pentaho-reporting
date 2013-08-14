@@ -84,8 +84,6 @@ public class ImageMapParser
       throws ResourceKeyCreationException, ResourceCreationException, ResourceLoadingException
   {
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-
     final ImageMapXmlResourceFactory resourceFactory = new ImageMapXmlResourceFactory();
     final InputSource source = new InputSource();
     source.setCharacterStream(new StringReader(imageMapXml));

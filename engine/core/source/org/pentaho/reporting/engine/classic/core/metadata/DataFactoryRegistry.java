@@ -47,7 +47,6 @@ public class DataFactoryRegistry
   private DataFactoryRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.backend = new HashMap();
   }
 

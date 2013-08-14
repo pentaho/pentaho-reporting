@@ -24,14 +24,22 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 
 public class DesignerRenderer extends StreamingRenderer
 {
-  public DesignerRenderer(final DesignerOutputProcessor outputProcessor)
+  private DesignerRenderComponentFactory designerRenderComponentFactory;
+
+  public DesignerRenderer(final DesignerOutputProcessor outputProcessor,
+                          final DesignerRenderComponentFactory designerRenderComponentFactory)
   {
     super(outputProcessor);
+    this.designerRenderComponentFactory = designerRenderComponentFactory;
   }
 
   protected RenderComponentFactory createComponentFactory()
   {
-    return new DesignerRenderComponentFactory();
+    if (designerRenderComponentFactory == null)
+    {
+      designerRenderComponentFactory = new DesignerRenderComponentFactory(getMetaData());
+    }
+    return designerRenderComponentFactory;
   }
 
   public LogicalPageBox getPageBox()

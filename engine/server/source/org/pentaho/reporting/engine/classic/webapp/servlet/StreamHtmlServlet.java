@@ -57,7 +57,6 @@ public class StreamHtmlServlet extends HttpServlet
     try
     {
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       response.setContentType("text/html");

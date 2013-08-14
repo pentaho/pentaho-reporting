@@ -43,6 +43,7 @@ import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
@@ -185,6 +186,10 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
 
     setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
     WorkspaceSettings.getInstance().addSettingsListener(this);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   public void actionPerformed(final ActionEvent e)

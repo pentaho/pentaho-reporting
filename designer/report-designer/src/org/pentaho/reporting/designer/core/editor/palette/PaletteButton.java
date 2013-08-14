@@ -34,6 +34,7 @@ import javax.swing.JButton;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertElementAction;
 import org.pentaho.reporting.designer.core.util.dnd.ElementMetaDataTransferable;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 
@@ -50,6 +51,10 @@ public class PaletteButton extends JButton implements DragGestureListener
     private AlwaysActiveInsertElementAction(final ElementMetaData metaData)
     {
       super(metaData);
+    }
+
+    protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+    {
     }
 
     protected void updateSelection()

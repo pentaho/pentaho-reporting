@@ -31,14 +31,10 @@ import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class ApplyFontColorAction extends AbstractElementSelectionAction
 {
   private JComboBox comboBox;
@@ -54,6 +50,10 @@ public final class ApplyFontColorAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ApplyFontColorAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ApplyFontColorAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ApplyFontColorAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**

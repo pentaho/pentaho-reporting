@@ -80,13 +80,12 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
 
   public DefaultLayoutModelBuilder()
   {
-    this.collapseProgressMarker = true;
-    this.legacySectionName = "Section-0";
+    this("Section-0");
   }
 
   public DefaultLayoutModelBuilder(final String legacySectionName)
   {
-    this();
+    this.collapseProgressMarker = true;
     this.legacySectionName = legacySectionName;
   }
 
@@ -112,13 +111,19 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     {
       this.processingContext = processingContext;
       this.metaData = processingContext.getOutputProcessorMetaData();
-      this.renderNodeFactory = renderNodeFactory;
-      this.textProducer = new TextProducer(metaData);
       this.strictLegacyMode = metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY);
       this.designtime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+
+      this.renderNodeFactory = renderNodeFactory;
+      this.textProducer = createTextProducer();
     }
 
     this.context = new DefaultLayoutModelBuilderContext(null, parentBox);
+  }
+
+  protected TextProducer createTextProducer()
+  {
+    return new TextProducer(metaData);
   }
 
   protected ProcessingContext getProcessingContext()

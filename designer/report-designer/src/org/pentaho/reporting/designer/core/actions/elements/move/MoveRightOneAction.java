@@ -28,12 +28,8 @@ import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class MoveRightOneAction extends AbstractElementSelectionAction
 {
   public MoveRightOneAction()
@@ -42,6 +38,10 @@ public final class MoveRightOneAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("MoveRightOneAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("MoveRightOneAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("MoveRightOneAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**

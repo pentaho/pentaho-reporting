@@ -92,7 +92,7 @@ public abstract class AbstractElementSelectionAction extends AbstractDesignerCon
       }
       if (activeContext.getSelectionModel().isSelected(event.getElement()))
       {
-        updateSelection();
+        selectedElementPropertiesChanged(event);
       }
     }
   }
@@ -169,6 +169,8 @@ public abstract class AbstractElementSelectionAction extends AbstractDesignerCon
       newContext.getReportDefinition().addReportModelListener(updateSelectionHandler);
     }
   }
+
+  protected abstract void selectedElementPropertiesChanged(final ReportModelEvent event);
 
   protected void updateSelection()
   {

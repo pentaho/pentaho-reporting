@@ -81,7 +81,6 @@ public class StraightToPDF
     try
     {
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       final URL imageURL = ObjectUtilities.getResource

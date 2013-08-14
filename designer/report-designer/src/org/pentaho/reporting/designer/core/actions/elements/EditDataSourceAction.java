@@ -33,8 +33,8 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.designtime.DefaultDataFactoryChangeRecorder;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 
 public class EditDataSourceAction extends AbstractElementSelectionAction
 {
@@ -44,6 +44,10 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditDataSourceAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditDataSourceAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditDataSourceAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   protected void updateSelection()

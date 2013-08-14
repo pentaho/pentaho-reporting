@@ -101,7 +101,6 @@ public class ParameterReportControllerPane extends JPanel
     private InternalParameterContext()
     {
       this.resourceManager = new ResourceManager();
-      this.resourceManager.registerDefaults();
 
       dataFactory = new TableDataFactory();
       resourceBundleFactory = new DefaultResourceBundleFactory();
@@ -175,7 +174,6 @@ public class ParameterReportControllerPane extends JPanel
       {
 
         this.resourceManager = new ResourceManager();
-        this.resourceManager.registerDefaults();
 
         dataFactory = new TableDataFactory();
         resourceBundleFactory = new DefaultResourceBundleFactory();

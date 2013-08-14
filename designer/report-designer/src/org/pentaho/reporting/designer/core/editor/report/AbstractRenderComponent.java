@@ -51,6 +51,8 @@ import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -83,6 +85,7 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
+import org.pentaho.reporting.designer.core.util.FpsCalculator;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
@@ -153,7 +156,7 @@ public abstract class AbstractRenderComponent extends JComponent
       if (oldFocused != focused)
       {
         setFocused(focused);
-        repaint();
+        repaintConditionally();
       }
       SwingUtilities.invokeLater(new AsyncChangeNotifier());
     }
@@ -186,8 +189,8 @@ public abstract class AbstractRenderComponent extends JComponent
       }
 
       getElementRenderer().invalidateLayout();
-      AbstractRenderComponent.this.revalidate();
-      AbstractRenderComponent.this.repaint();
+      revalidate();
+      repaintConditionally();
     }
 
     public void settingsChanged()
@@ -195,8 +198,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       // this is cheap, just repaint and we will be happy
-      AbstractRenderComponent.this.revalidate();
-      AbstractRenderComponent.this.repaint();
+      repaintConditionally();
 
     }
   }
@@ -225,7 +227,7 @@ public abstract class AbstractRenderComponent extends JComponent
       selectionRectangleOrigin = null;
       selectionRectangleTarget = null;
       newlySelectedElements.clear();
-      repaint();
+      repaintConditionally();
     }
 
     /**
@@ -316,7 +318,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
       }
 
-      AbstractRenderComponent.this.repaint();
+      repaintConditionally();
     }
 
     public Point getSelectionRectangleOrigin()
@@ -495,7 +497,7 @@ public abstract class AbstractRenderComponent extends JComponent
           final SelectionOverlayInformation renderer = new SelectionOverlayInformation(velement);
           renderer.validate(zoomModel.getZoomAsPercentage());
           velement.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, renderer, false);
-          AbstractRenderComponent.this.repaint();
+          repaintConditionally();
           return;
         }
         parentSearch = parentSearch.getParentSection();
@@ -508,14 +510,9 @@ public abstract class AbstractRenderComponent extends JComponent
       if (element instanceof Element)
       {
         final Element e = (Element) element;
-        final Object o = e.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION);
         e.setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.SELECTION_OVERLAY_INFORMATION, null, false);
-        if (o != null)
-        {
-          AbstractRenderComponent.this.repaint();
-        }
       }
-      AbstractRenderComponent.this.repaint();
+      repaintConditionally();
     }
 
     public void leadSelectionChanged(final ReportSelectionEvent event)
@@ -539,13 +536,13 @@ public abstract class AbstractRenderComponent extends JComponent
       if (e == getRootBand())
       {
         setFocused(true);
-        repaint();
+        repaintConditionally();
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
       else
       {
         setFocused(false);
-        repaint();
+        repaintConditionally();
         SwingUtilities.invokeLater(new AsyncChangeNotifier());
       }
     }
@@ -564,19 +561,19 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       // this is cheap, just repaint and we will be happy
       component.revalidate();
-      component.repaint();
+      component.repaintConditionally();
     }
 
     public void modelChanged(final LinealModelEvent event)
     {
       component.revalidate();
-      component.repaint();
+      component.repaintConditionally();
     }
 
     public void zoomFactorChanged()
     {
       component.revalidate();
-      component.repaint();
+      component.repaintConditionally();
       component.stopCellEditing();
     }
 
@@ -593,7 +590,7 @@ public abstract class AbstractRenderComponent extends JComponent
       updateGridSettings();
 
       revalidate();
-      repaint();
+      repaintConditionally();
     }
   }
 
@@ -1059,6 +1056,9 @@ public abstract class AbstractRenderComponent extends JComponent
     }
   }
 
+  // 50 fps max
+  private static final long REPAINT_INTERVAL = 1000 / 50;
+  private static final Log logger = LogFactory.getLog(AbstractRenderComponent.class);
   private static final BasicStroke SELECTION_STROKE = new BasicStroke(0.5f);
 
   private CellEditorRemover editorRemover;
@@ -1090,6 +1090,7 @@ public abstract class AbstractRenderComponent extends JComponent
   private RootBandChangeHandler changeHandler;
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolvedStyle;
+  private FpsCalculator fpsCalculator;
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
@@ -1111,6 +1112,7 @@ public abstract class AbstractRenderComponent extends JComponent
     setFocusTraversalKeysEnabled(false);
     setLayout(null);
 
+    this.fpsCalculator = new FpsCalculator();
     this.showLeftBorder = true;
     this.showTopBorder = false;
     this.repaintHandler = new RepaintHandler(this);
@@ -1294,6 +1296,11 @@ public abstract class AbstractRenderComponent extends JComponent
 
   protected void paintComponent(final Graphics g)
   {
+    if (fpsCalculator.isActive())
+    {
+      fpsCalculator.tick();
+    }
+
     final Graphics2D g2 = (Graphics2D) g.create();
 
     g2.setColor(new Color(224, 224, 224));
@@ -1341,7 +1348,7 @@ public abstract class AbstractRenderComponent extends JComponent
         {
           rendererRoot.handleError(designerContext, renderContext);
 
-          logicalPageAreaG2.scale(1f/scaleFactor, 1f/scaleFactor);
+          logicalPageAreaG2.scale(1f / scaleFactor, 1f / scaleFactor);
           logicalPageAreaG2.setPaint(Color.WHITE);
           logicalPageAreaG2.fill(area);
         }
@@ -1758,10 +1765,29 @@ public abstract class AbstractRenderComponent extends JComponent
     return getElementRenderer().getVerticalEdgePositions();
   }
 
+  protected Element[] filterLocalElements(final Element[] originalElements)
+  {
+    final ArrayList<Element> result = new ArrayList<Element>(originalElements.length);
+    for (int i = 0; i < originalElements.length; i++)
+    {
+      final Element element = originalElements[i];
+      if (isLocalElement(element) == false)
+      {
+        continue;
+      }
+      result.add(element);
+    }
+    return result.toArray(new Element[result.size()]);
+  }
+
   protected void initializeDragOperation(final Point2D originPoint,
                                          final SelectionOverlayInformation.InRangeIndicator currentIndicator)
   {
-    final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
+    fpsCalculator.reset();
+    fpsCalculator.setActive(true);
+
+    final Element[] visualElements =
+        filterLocalElements(getRenderContext().getSelectionModel().getSelectedVisualElements());
     if (visualElements.length == 0)
     {
       return;
@@ -1895,7 +1921,22 @@ public abstract class AbstractRenderComponent extends JComponent
 
     operation = null;
     undoEntryBuilder = null;
-    repaint();
+    repaintConditionally();
+
+    fpsCalculator.setActive(false);
+    logger.debug ("MoveOperation-performance: " + fpsCalculator.getFps());
+  }
+
+  public void repaintConditionally()
+  {
+    if (operation != null)
+    {
+      paintImmediately(0, 0, getWidth(), getHeight());
+    }
+    else
+    {
+      repaint(REPAINT_INTERVAL);
+    }
   }
 
   protected boolean isMouseOperationInProgress()

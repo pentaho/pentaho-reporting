@@ -307,7 +307,6 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     private EditorParameterContext()
     {
       resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       resourceBundleFactory = new DefaultResourceBundleFactory();
       defaultEnvironment = new DefaultReportEnvironment(ClassicEngineBoot.getInstance().getGlobalConfig());
       defaultDocumentMetaData = new MemoryDocumentMetaData();
@@ -720,9 +719,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
   protected String getDialogId()
   {
-    return "ReportDesigner.Core.Parameter";
+    return "ReportDesigner.Core.Parameter"; // NON-NLS
   }
 
+  @SuppressWarnings("HardCodedStringLiteral")
   private TimeZone getSelectedTimeZone()
   {
     final Object selectedItem = timeZoneModel.getSelectedKey();
@@ -965,21 +965,21 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
     theDetailsLayoutPanel.add(detailsPanel, BorderLayout.NORTH);
     return theDetailsLayoutPanel;
   }
-  
+
   private Box createPromptPanel()
   {
-    Box pane = Box.createHorizontalBox();
-    pane.setBorder(BorderFactory.createEmptyBorder(15,0,10,0));
-    
-    JLabel promptLabel = new JLabel(Messages.getString("ParameterDialog.Prompt"));
+    final Box pane = Box.createHorizontalBox();
+    pane.setBorder(BorderFactory.createEmptyBorder(15, 0, 10, 0));
+
+    final JLabel promptLabel = new JLabel(Messages.getString("ParameterDialog.Prompt"));
     pane.add(promptLabel);
-    
-    pane.add(Box.createRigidArea(new Dimension(10,0)));
-    
-    JSeparator horizontalSeparator = new JSeparator();
+
+    pane.add(Box.createRigidArea(new Dimension(10, 0)));
+
+    final JSeparator horizontalSeparator = new JSeparator();
     horizontalSeparator.setAlignmentY(TOP_ALIGNMENT);
     pane.add(horizontalSeparator);
-    
+
     return pane;
   }
 
@@ -1050,8 +1050,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     if (p instanceof ListParameter)
     {
-      multiSelection = ((ListParameter)p).isAllowMultiSelection();
-    }  else {
+      multiSelection = ((ListParameter) p).isAllowMultiSelection();
+    }
+    else
+    {
       multiSelection = false;
     }
 
@@ -1247,13 +1249,16 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   {
     final Class selectedType = (Class) valueTypeComboBox.getSelectedItem();
     final AbstractParameter parameter;
-    if (type == null || !type.isMultiSelection()) {
+    if (type == null || !type.isMultiSelection())
+    {
       // single value parameter
       parameter = new PlainParameter(name);
       parameter.setValueType(selectedType);
-    } else {
+    }
+    else
+    {
       // multi-value parameter
-      Class valueType = Array.newInstance(selectedType, 0).getClass();
+      final Class valueType = Array.newInstance(selectedType, 0).getClass();
       parameter = new StaticListParameter(name, true, false, valueType);
     }
     if (type != null)

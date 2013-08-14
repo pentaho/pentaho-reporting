@@ -88,7 +88,6 @@ public class StraightToPNG
     try
     {
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       // this demo adds the image at runtime just to show how this could be

@@ -31,6 +31,9 @@ import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
@@ -41,6 +44,8 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
  */
 public final class BoldAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
+  private ReportModelEventFilter eventFilter;
+
   public BoldAction()
   {
     putValue(Action.SELECTED_KEY, Boolean.FALSE);
@@ -49,6 +54,16 @@ public final class BoldAction extends AbstractElementSelectionAction implements 
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("BoldAction.Mnemonic"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getBoldCommand());
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("BoldAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createStyleFilter(TextStyleKeys.BOLD);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   public boolean isSelected()

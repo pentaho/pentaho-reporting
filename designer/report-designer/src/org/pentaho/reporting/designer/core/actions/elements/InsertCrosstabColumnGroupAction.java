@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroupBody;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
@@ -54,6 +55,10 @@ public final class InsertCrosstabColumnGroupAction extends AbstractElementSelect
 
     setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
     WorkspaceSettings.getInstance().addSettingsListener(this);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   public void actionPerformed(final ActionEvent e)

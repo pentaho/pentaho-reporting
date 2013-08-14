@@ -25,6 +25,7 @@ import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class ActivateQueryAction extends AbstractElementSelectionAction implements ToggleStateAction
@@ -47,6 +48,10 @@ public class ActivateQueryAction extends AbstractElementSelectionAction implemen
     putValue(Action.SELECTED_KEY, selected);
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
+
   protected void updateSelection()
   {
     final ReportSelectionModel reportSelectionModel = getSelectionModel();
@@ -55,7 +60,6 @@ public class ActivateQueryAction extends AbstractElementSelectionAction implemen
       setEnabled(false);
       return;
     }
-
 
     final Object[] selectedElements = reportSelectionModel.getSelectedElements();
     for (int i = 0; i < selectedElements.length; i++)

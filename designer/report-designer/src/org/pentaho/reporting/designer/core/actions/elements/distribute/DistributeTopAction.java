@@ -34,13 +34,9 @@ import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class DistributeTopAction extends AbstractElementSelectionAction
 {
   private static class ElementPositionComparator implements Comparator<Element>
@@ -70,6 +66,10 @@ public final class DistributeTopAction extends AbstractElementSelectionAction
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("DistributeTopAction.Mnemonic"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getDistributeTopIcon());
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("DistributeTopAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**

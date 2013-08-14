@@ -37,13 +37,9 @@ import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class DeleteAction extends AbstractElementSelectionAction
 {
   public DeleteAction()
@@ -111,9 +107,12 @@ public final class DeleteAction extends AbstractElementSelectionAction
     return false;
   }
 
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
+
   protected void updateSelection()
   {
-
     final ReportSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null || selectionModel1.getSelectionCount() == 0)
     {

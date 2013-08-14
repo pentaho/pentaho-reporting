@@ -50,7 +50,6 @@ public class GraphicsOutputProcessor extends AbstractPageableOutputProcessor
     final DefaultFontStorage fontStorage = new DefaultFontStorage(new AWTFontRegistry());
     metaData = new GraphicsOutputProcessorMetaData(fontStorage);
     resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
   }
 
   public GraphicsOutputProcessor(final Configuration configuration,

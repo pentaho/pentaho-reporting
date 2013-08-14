@@ -116,6 +116,7 @@ public final class ResourceManager
     this.bundleCache = parent.getBundleCache();
     this.dataCache = parent.getDataCache();
     this.factoryCache = parent.getFactoryCache();
+    registerDefaults();
   }
 
   public ResourceManagerBackend getBackend()

@@ -33,15 +33,11 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.ElementFormatUndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class EditHyperlinkAction extends AbstractElementSelectionAction
 {
   public EditHyperlinkAction()
@@ -51,6 +47,11 @@ public class EditHyperlinkAction extends AbstractElementSelectionAction
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("EditHyperlinkAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("EditHyperlinkAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditHyperlinkAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+
   }
 
   protected void updateSelection()

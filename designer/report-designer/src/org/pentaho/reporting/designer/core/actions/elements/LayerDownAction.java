@@ -71,7 +71,7 @@ public class LayerDownAction extends AbstractLayerAction
 
     final AbstractReportDefinition reportDefinition = getActiveContext().getReportDefinition();
     final GroupDataEntry[] entries = EditGroupsUndoEntry.buildGroupData(reportDefinition);
-    final ArrayList list = new ArrayList(entries.length);
+    final ArrayList<GroupDataEntry> list = new ArrayList<GroupDataEntry>(entries.length);
     int index = -1;
     for (int i = 0; i < entries.length; i++)
     {
@@ -88,11 +88,11 @@ public class LayerDownAction extends AbstractLayerAction
       return null;
     }
 
-    final Object o = list.get(index);
+    final GroupDataEntry o = list.get(index);
     list.remove(index);
     list.add(index - 1, o);
 
-    final GroupDataEntry[] changedEntries = (GroupDataEntry[]) list.toArray(new GroupDataEntry[list.size()]);
+    final GroupDataEntry[] changedEntries = list.toArray(new GroupDataEntry[list.size()]);
     EditGroupsUndoEntry.applyGroupData(reportDefinition, changedEntries);
 
     return new EditGroupsUndoEntry(entries, changedEntries);
@@ -130,7 +130,7 @@ public class LayerDownAction extends AbstractLayerAction
     final int count = parentBand.getElementCount();
     for (int i = 1; i < count; i++)
     {
-      final Element visualReportElement = (Element) parentBand.getElement(i);
+      final Element visualReportElement = parentBand.getElement(i);
       if (element == visualReportElement)
       {
         parentBand.removeElement(visualReportElement);

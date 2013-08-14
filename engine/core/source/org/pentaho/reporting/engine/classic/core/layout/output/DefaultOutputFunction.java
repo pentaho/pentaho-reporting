@@ -485,9 +485,13 @@ public class DefaultOutputFunction extends AbstractFunction
       renderer.endSubReport();
     }
 
-    elementChangeChecker.reportCachePerformance();
-    logger.info("Performance: footer-printed=" + printedFooter + " footer-avoided=" + avoidedFooter +
-        "repeating-footer-printed=" + printedRepeatingFooter + " repeating-footer-avoided=" + avoidedRepeatingFooter);
+    OutputProcessorMetaData metaData = getRuntime().getProcessingContext().getOutputProcessorMetaData();
+    if (metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false)
+    {
+      elementChangeChecker.reportCachePerformance();
+      logger.info("Performance: footer-printed=" + printedFooter + " footer-avoided=" + avoidedFooter +
+          "repeating-footer-printed=" + printedRepeatingFooter + " repeating-footer-avoided=" + avoidedRepeatingFooter);
+    }
   }
 
   private static LayoutExpressionRuntime createRuntime(final MasterDataRow masterRow,

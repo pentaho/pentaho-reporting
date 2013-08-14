@@ -51,7 +51,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
@@ -90,7 +89,6 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
     public void stateChanged(final ChangeEvent e)
     {
-      DebugLog.log("RefreshLayoutFromSharedRenderer");
       refreshLayoutFromSharedRenderer();
     }
   }
@@ -247,21 +245,12 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   public synchronized void invalidateLayout()
   {
-    if (SwingUtilities.isEventDispatchThread() == false)
-    {
-      DebugLog.log("Invalidate called from non-EDT:" + Thread.currentThread().getId());
-    }
     // Set computedBounds to null to allow performLayouting() to recalculate them.
     computedBounds = null;
   }
 
   public Rectangle2D getBounds()
   {
-    if (SwingUtilities.isEventDispatchThread() == false)
-    {
-      DebugLog.log("GetBounds called from non-EDT:" + Thread.currentThread().getId());
-    }
-
     if (computedBounds == null || sharedRenderer.isLayoutValid() == false)
     {
       computedBounds = performLayouting();

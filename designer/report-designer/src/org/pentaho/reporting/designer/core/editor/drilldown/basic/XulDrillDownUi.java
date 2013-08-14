@@ -82,7 +82,6 @@ public class XulDrillDownUi implements DrillDownUi
       // System.out.println("Loading " + xulDocument);
 
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       final Resource resource = resourceManager.createDirectly(xulDocument, Document.class);
       final Document document = (Document) resource.getResource();
       final DOMReader domReader = new DOMReader();

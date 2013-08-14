@@ -20,9 +20,10 @@ package org.pentaho.reporting.designer.core.editor.attributes;
 import java.beans.PropertyEditor;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -115,7 +116,7 @@ public class AttributeTableModel extends AbstractAttributeTableModel
     // thats fast, we only compare the ids ..
     if (isSameElements(elements, getData(), null))
     {
-      pool.submit(new SameElementsUpdateDataTask(getDataBackend()));
+      SwingUtilities.invokeLater(new SameElementsUpdateDataTask(getDataBackend()));
       return;
     }
 

@@ -57,6 +57,7 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.Watermark;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
@@ -109,6 +110,11 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
     // update from system clipboard status
     stateChanged(null);
     focusTracker = new FocusUpdateHandler();
+  }
+
+  protected void selectedElementPropertiesChanged(ReportModelEvent event)
+  {
+
   }
 
   protected void updateSelection()

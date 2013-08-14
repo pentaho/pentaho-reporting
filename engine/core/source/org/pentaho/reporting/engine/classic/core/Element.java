@@ -1175,9 +1175,7 @@ public class Element implements DataTarget, ReportElement
     final ReportDefinition reportDefinition = getReportDefinition();
     if (reportDefinition instanceof AbstractReportDefinition == false)
     {
-      final ResourceManager retval = new ResourceManager();
-      retval.registerDefaults();
-      return retval;
+      return new ResourceManager();
     }
 
     final AbstractReportDefinition abstractReportDefinition = (AbstractReportDefinition) reportDefinition;
