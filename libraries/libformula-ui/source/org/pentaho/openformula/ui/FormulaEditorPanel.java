@@ -68,7 +68,7 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeUtil;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
-public class FormulaEditorPanel extends JComponent
+public class FormulaEditorPanel extends JComponent implements FieldDefinitionSource
 {
   private class CaretHandler implements CaretListener
   {
@@ -224,7 +224,7 @@ public class FormulaEditorPanel extends JComponent
      * formula unless user puts their cursor on the formula.
      * @param event
      */
-    synchronized public void parameterUpdated(final ParameterUpdateEvent event)
+    public synchronized void parameterUpdated(final ParameterUpdateEvent event)
     {
       if (ignoreTextEvents == true)
       {
@@ -502,7 +502,7 @@ public class FormulaEditorPanel extends JComponent
     errorIconHolder = new JLabel();
     errorTextHolder = new JLabel();
 
-    selectFieldsAction = new SelectFieldAction(this, new FieldSelectorListener());
+    selectFieldsAction = new SelectFieldAction(this, new FieldSelectorListener(), this);
 
     final JSplitPane functionPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     functionPanel.setTopComponent(functionParameterEditor.getEditorComponent());
@@ -632,7 +632,6 @@ public class FormulaEditorPanel extends JComponent
     }
     this.fields = fields.clone();
     this.functionParameterEditor.setFields(fields);
-    this.selectFieldsAction.setFields(fields);
   }
 
   public FieldDefinition[] getFields()

@@ -17,6 +17,7 @@
 
 package org.pentaho.openformula.ui;
 
+import java.awt.GraphicsEnvironment;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -42,9 +43,15 @@ public class FormulaDialogTest
   {
   }
 
-  public static void main(final String[] args)
+  @Test
+  public void testDialogDefaultProperties()
       throws IllegalAccessException, UnsupportedLookAndFeelException, InstantiationException, ClassNotFoundException
   {
+    if (GraphicsEnvironment.isHeadless())
+    {
+      return;
+    }
+
     UIManager.setLookAndFeel(MetalLookAndFeel.class.getName());
     FieldDefinition mockFieldDefinition = mock(FieldDefinition.class);
 
@@ -58,8 +65,17 @@ public class FormulaDialogTest
     Assert.assertEquals("java.awt.Dimension[width=821,height=519]", dialog.getSize().toString());
 
     Assert.assertEquals(dialog.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[]{mockFieldDefinition}), "=IF(condition; TRUE; FALSE)");
-
-    System.exit(0);
   }
 
+  @Test
+  public void testRunFormulaDialog()
+  {
+    if (GraphicsEnvironment.isHeadless())
+    {
+      return;
+    }
+
+    final FormulaEditorDialog d = new FormulaEditorDialog();
+    d.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[] { new TestFieldDefinition("test")});
+  }
 }

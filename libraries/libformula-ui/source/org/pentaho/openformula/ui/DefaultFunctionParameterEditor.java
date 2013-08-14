@@ -27,8 +27,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
@@ -40,8 +38,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.pentaho.openformula.ui.model2.FormulaElement;
 import org.pentaho.openformula.ui.model2.FormulaTextElement;
@@ -52,7 +48,7 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
-public class DefaultFunctionParameterEditor extends JPanel implements FunctionParameterEditor
+public class DefaultFunctionParameterEditor extends JPanel implements FunctionParameterEditor, FieldDefinitionSource
 {
   private class FieldSelectorUpdateHandler implements PropertyChangeListener
   {
@@ -198,6 +194,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
    * Determines whether the current context formula is the main one (the first
    * formula following the '=').  So '=COUNT(1;SUM(1;2;3))', COUNT would be
    * the main formula.  If context points to SUM then we return false.
+   *
    * @param context
    * @return - true if the context points to the left most outer formula.
    */
@@ -212,7 +209,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final FormulaElement mainFormulaElement = editorModel.getFormulaElementAt(1);
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
     if ((mainFormulaElement != null) && (currentFunction.getFunctionOffset() == 1) &&
-        (((FormulaTextElement)mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
+        (((FormulaTextElement) mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
     {
       return true;
     }
@@ -230,6 +227,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
    * an embedded formula, the parameter fields for that embedded formula don't get displayed.
    * They get displayed if user points cursor over the formula or arrows over the formula -
    * just not when typing.
+   *
    * @param context
    * @return
    */
@@ -247,7 +245,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if ((parameterValue != null) && (parameterValue.startsWith(selectedFunction.getCanonicalName()) == true))
       {
         String updatedFormula = selectedFunction.getCanonicalName() + "(";
-        for (int paramIndex = 0; paramIndex < parameterValues.length; paramIndex++) {
+        for (int paramIndex = 0; paramIndex < parameterValues.length; paramIndex++)
+        {
           if (parameterValues[paramIndex] != null)
           {
             updatedFormula = updatedFormula + parameterValues[paramIndex];
@@ -390,8 +389,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final FocusListenerHandler handler = new FocusListenerHandler(paramTextField, parameterPosition);
     paramTextField.addFocusListener(handler);
-    final SelectFieldAction action = new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition));
-    action.setFields(fields);
+    final SelectFieldAction action =
+        new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition), this);
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -522,6 +521,15 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   public void setFields(final FieldDefinition[] fields)
   {
     this.fields = fields.clone();
+  }
+
+  public FieldDefinition[] getFields()
+  {
+    if (fields == null)
+    {
+      return new FieldDefinition[0];
+    }
+    return fields.clone();
   }
 
   public int getParameterCount()
