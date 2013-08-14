@@ -78,6 +78,18 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
   public void setFields(final FieldDefinition[] fieldDefinitions)
   {
     this.fieldDefinitions = fieldDefinitions.clone();
+    if (defaultEditor != null)
+    {
+      defaultEditor.setFields(fieldDefinitions);
+    }
+    if (activeEditor != null)
+    {
+      activeEditor.setFields(fieldDefinitions);
+    }
+    for (final FunctionParameterEditor functionParameterEditor : editors.values())
+    {
+      functionParameterEditor.setFields(fieldDefinitions);
+    }
   }
 
   public DefaultFunctionParameterEditor getDefaultEditor()
@@ -95,7 +107,7 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       activeEditor.setFields(EMPTY_FIELDS);
       activeEditor = null;
       selectedFunction = null;
-      
+
       rootPanel.invalidate();
       rootPanel.revalidate();
       rootPanel.repaint();

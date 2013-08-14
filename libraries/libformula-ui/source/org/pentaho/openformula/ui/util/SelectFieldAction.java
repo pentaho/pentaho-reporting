@@ -14,19 +14,32 @@ import javax.swing.ImageIcon;
 
 import org.pentaho.openformula.ui.DefaultFunctionParameterEditor;
 import org.pentaho.openformula.ui.FieldDefinition;
+import org.pentaho.openformula.ui.FieldDefinitionSource;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class SelectFieldAction extends AbstractAction
 {
   private PropertyChangeListener selectorUpdateHandler;
+  private FieldDefinitionSource fieldDefinitionSource;
   private FieldSelectorDialog fieldSelectorDialog;
   private Component parent;
-  private FieldDefinition[] fields;
 
-  public SelectFieldAction(final Component parent, final PropertyChangeListener selectorUpdateHandler)
+  public SelectFieldAction(final Component parent,
+                           final PropertyChangeListener selectorUpdateHandler,
+                           final FieldDefinitionSource fieldDefinitionSource)
   {
+    if (fieldDefinitionSource == null)
+    {
+      throw new NullPointerException();
+    }
+    if (selectorUpdateHandler == null)
+    {
+      throw new NullPointerException();
+    }
+
     this.parent = parent;
     this.selectorUpdateHandler = selectorUpdateHandler;
+    this.fieldDefinitionSource = fieldDefinitionSource;
     final URL resource = DefaultFunctionParameterEditor.class.getResource
         ("/org/pentaho/openformula/ui/images/field.gif");  //NON-NLS
     if (resource != null)
@@ -38,16 +51,6 @@ public class SelectFieldAction extends AbstractAction
     {
       putValue(Action.NAME, "..");
     }
-  }
-
-  public FieldDefinition[] getFields()
-  {
-    return fields.clone();
-  }
-
-  public void setFields(final FieldDefinition[] fields)
-  {
-    this.fields = fields.clone();
   }
 
   /**
@@ -75,6 +78,7 @@ public class SelectFieldAction extends AbstractAction
       }
     }
 
+    final FieldDefinition[] fields = fieldDefinitionSource.getFields();
     if (fields != null)
     {
       this.fieldSelectorDialog.setFields(fields);
