@@ -84,6 +84,9 @@ public class URLEncoder
    * 3 bytes, using the UTF-8 algorithm; secondly each of these bytes is encoded as "%xx".
    * </ul>
    *
+   * This method was adapted from http://www.w3.org/International/URLUTF8Encoder.java
+   * Licensed under http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+   *
    * @param s The string to be encoded
    * @return The encoded string
    */
