@@ -9,6 +9,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.URI;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -252,8 +253,10 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
       try
       {
         final HttpClient httpClient = createHttpClient(loginData);
+        URL url = new URL(paramServiceText);
+        URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 
-        final GetMethod method = new GetMethod(paramServiceText);
+        final GetMethod method = new GetMethod(uri.toString());
         method.setFollowRedirects(false);
 
         final int result = httpClient.executeMethod(method);
