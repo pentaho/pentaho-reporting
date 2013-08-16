@@ -392,7 +392,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final JLabel paramNameLabel = new JLabel(displayName);
     final JTextField paramTextField = new JTextField();
     paramTextField.setText(parameterValue);
-    paramTextField.setCaretPosition(parameterValue.length());
+    if (parameterValue != null)
+    {
+      paramTextField.setCaretPosition(parameterValue.length());
+    }
     paramTextField.setFont
         (new Font(Font.MONOSPACED, paramTextField.getFont().getStyle(), paramTextField.getFont().getSize()));
 
