@@ -256,7 +256,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     }
 
     final String restName = normalizePath(file.getPath());
-    return MessageFormat.format(urlService, restName);
+    return MessageFormat.format(urlService, URLEncoder.encodeUTF8(restName));
   }
 
   public String getUrl(final FileName file) throws FileSystemException
