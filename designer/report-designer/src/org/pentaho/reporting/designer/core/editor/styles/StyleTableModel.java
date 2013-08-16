@@ -415,7 +415,14 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     final DefaultStyleDataBackend backend = this.getDataBackend();
     if (isSameElements(elements, backend.getElementTypes(), backend.getData()))
     {
-      SwingUtilities.invokeLater(new SameElementsUpdateDataTask(backend, isSynchronous()));
+      if (isSynchronous())
+      {
+        new SameElementsUpdateDataTask(backend, isSynchronous()).run();
+      }
+      else
+      {
+        SwingUtilities.invokeLater(new SameElementsUpdateDataTask(backend, isSynchronous()));
+      }
       return;
     }
 
