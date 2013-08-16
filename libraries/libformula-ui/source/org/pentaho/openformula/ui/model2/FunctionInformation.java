@@ -100,6 +100,10 @@ public class FunctionInformation
 
   public int getParamEnd(final int i)
   {
+    if (i < 0)
+    {
+      return functionParameterStart;
+    }
     return paramEnd[i];
   }
 
