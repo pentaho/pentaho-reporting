@@ -293,7 +293,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         if (textFields[i] != null)
         {
           textFields[i].setText(string);
-          textFields[i].setCaretPosition(string.length());
+          if (string != null)
+          {
+            textFields[i].setCaretPosition(string.length());
+          }
         }
       }
     }
