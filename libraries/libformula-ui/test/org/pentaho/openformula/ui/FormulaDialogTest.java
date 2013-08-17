@@ -17,6 +17,7 @@
 
 package org.pentaho.openformula.ui;
 
+import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import java.net.URL;
@@ -57,16 +58,19 @@ public class FormulaDialogTest
     }
 
     UIManager.setLookAndFeel(MetalLookAndFeel.class.getName());
-    FieldDefinition mockFieldDefinition = mock(FieldDefinition.class);
+    final FieldDefinition mockFieldDefinition = mock(FieldDefinition.class);
 
     when(mockFieldDefinition.getName()).thenReturn("Name");
     when(mockFieldDefinition.getDisplayName()).thenReturn("Name");
     when(mockFieldDefinition.getIcon()).thenReturn(null);
 
     final FormulaEditorDialog dialog = new FormulaEditorDialog();
-    Assert.assertEquals("java.awt.Dimension[width=778,height=442]", dialog.getMinimumSize().toString());
-    Assert.assertEquals("java.awt.Dimension[width=821,height=519]", dialog.getPreferredSize().toString());
-    Assert.assertEquals("java.awt.Dimension[width=821,height=519]", dialog.getSize().toString());
+    final Dimension minimumSize = dialog.getMinimumSize();
+    Assert.assertTrue(minimumSize.getWidth() > 700);
+    Assert.assertTrue(minimumSize.getHeight() > 400);
+    final Dimension size = dialog.getPreferredSize();
+    Assert.assertTrue(size.getWidth() > 700);
+    Assert.assertTrue(size.getHeight() > 400);
 
     Assert.assertEquals(dialog.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[]{mockFieldDefinition}), "=IF(condition; TRUE; FALSE)");
   }
