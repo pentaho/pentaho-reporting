@@ -351,8 +351,8 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
         setQueryName(selectedQuery.getQueryName());
         queryTextArea.setText(selectedQuery.getQuery());
-        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
         queryScriptTextArea.setText(selectedQuery.getScript());
+        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
       }
       finally
       {
