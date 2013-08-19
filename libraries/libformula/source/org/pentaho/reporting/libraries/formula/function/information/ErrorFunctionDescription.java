@@ -42,7 +42,7 @@ public class ErrorFunctionDescription extends AbstractFunctionDescription
 
   public int getParameterCount()
   {
-    return 1;
+    return 2;
   }
 
   public Type getParameterType(final int position)
@@ -52,6 +52,6 @@ public class ErrorFunctionDescription extends AbstractFunctionDescription
 
   public boolean isParameterMandatory(final int position)
   {
-    return true;
+    return position == 0;
   }
 }

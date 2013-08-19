@@ -19,10 +19,13 @@ package org.pentaho.reporting.engine.classic.core.function;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.formula.ErrorValue;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
+import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 
 /**
  * The formula expression is used to evaluate a LibFormula/OpenFormula expression. There is generally no need to
@@ -56,11 +59,23 @@ public final class FormulaExpression extends AbstractExpression
    */
   private Exception formulaError;
 
+  private Boolean failOnError;
+
   /**
    * Default Constructor.
    */
   public FormulaExpression()
   {
+  }
+
+  public Boolean getFailOnError()
+  {
+    return failOnError;
+  }
+
+  public void setFailOnError(final Boolean failOnError)
+  {
+    this.failOnError = failOnError;
   }
 
   /**
@@ -165,7 +180,13 @@ public final class FormulaExpression extends AbstractExpression
   {
     if (formulaError != null)
     {
-      return null;
+      if (Boolean.TRUE.equals(failOnError))
+      {
+        throw new InvalidReportStateException(String.format
+            ("Previously failed to evaluate formula-expression with error %s",// NON-NLS
+                formulaError));
+      }
+      return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
 
     if (formulaExpression == null)
@@ -187,7 +208,17 @@ public final class FormulaExpression extends AbstractExpression
       try
       {
         compiledFormula.initialize(context);
-        return compiledFormula.evaluate();
+        final Object evaluate = compiledFormula.evaluate();
+        if (Boolean.TRUE.equals(failOnError))
+        {
+          if (evaluate instanceof ErrorValue)
+          {
+            throw new InvalidReportStateException(String.format
+                ("Failed to evaluate formula-expression with error %s",// NON-NLS
+                    evaluate));
+          }
+        }
+        return evaluate;
       }
       finally
       {
@@ -210,7 +241,13 @@ public final class FormulaExpression extends AbstractExpression
           FormulaExpression.logger.debug("Failed to compute the regular value [" + formulaExpression + ']');
         }
       }
-      return null;
+      if (Boolean.TRUE.equals(failOnError))
+      {
+        throw new InvalidReportStateException(String.format
+            ("Failed to evaluate formula-expression with error %s",// NON-NLS
+                e.getMessage()), e);
+      }
+      return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
   }
 
@@ -225,9 +262,9 @@ public final class FormulaExpression extends AbstractExpression
     {
       return computeRegularValue();
     }
-    catch (Exception e)
+    catch (InvalidReportStateException e)
     {
-      return null;
+      throw e;
     }
   }
 
@@ -251,6 +288,7 @@ public final class FormulaExpression extends AbstractExpression
   {
     final FormulaExpression o = (FormulaExpression) super.getInstance();
     o.compiledFormula = null;
+    o.formulaError = null;
     return o;
   }
 }

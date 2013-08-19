@@ -20,11 +20,6 @@ package org.pentaho.reporting.libraries.formula;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
-/**
- * Creation-Date: 31.10.2006, 13:07:37
- *
- * @author Thomas Morgner
- */
 public class LibFormulaErrorValue implements ErrorValue
 {
   public static final int ERROR_REFERENCE_NOT_RESOLVABLE = 499;

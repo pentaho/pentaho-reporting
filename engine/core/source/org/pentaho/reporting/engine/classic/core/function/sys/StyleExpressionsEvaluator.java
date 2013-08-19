@@ -17,11 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
@@ -46,6 +50,7 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
     implements StructureFunction
 {
   private static final Log logger = LogFactory.getLog(StyleExpressionsEvaluator.class);
+  private boolean failOnErrors;
 
   /**
    * Default Constructor.
@@ -62,6 +67,9 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
    */
   public void reportInitialized(final ReportEvent event)
   {
+    failOnErrors = "true".equals(getRuntime().getConfiguration().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors"));
+
     if (FunctionUtilities.isLayoutLevel(event) == false)
     {
       // dont do anything if there is no printing done ...
@@ -123,6 +131,13 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
         }
         else if (value instanceof ErrorValue)
         {
+          if (failOnErrors)
+          {
+            throw new InvalidReportStateException(String.format
+                ("Failed to evaluate style-expression for key %s on element [%s]",// NON-NLS
+                    key.getName(),
+                    FunctionUtilities.computeElementLocation(e)));
+          }
           style.setStyleProperty(key, null);
         }
         else
@@ -140,11 +155,24 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
           }
         }
       }
+      catch (InvalidReportStateException exception)
+      {
+        throw exception;
+      }
       catch (Exception exception)
       {
         if (logger.isDebugEnabled())
         {
-          logger.debug("Failed to evaluate style expression for element '" + e + "', style-key " + key, exception);
+          logger.debug(String.format
+              ("Failed to evaluate style expression for element '%s', style-key %s", // NON-NLS
+                  e, key), exception);
+        }
+        if (failOnErrors)
+        {
+          throw new InvalidReportStateException(String.format
+              ("Failed to evaluate style-expression for key %s on element [%s]",// NON-NLS
+                  key.getName(),
+                  FunctionUtilities.computeElementLocation(e)));
         }
         // ignored, but we clear the style as we have no valid value anymore.
         style.setStyleProperty(key, null);
@@ -157,19 +185,16 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
     return retval;
   }
 
-  private Object evaluate(final Expression ex)
+  private Object evaluate(final Expression ex) throws IOException, SQLException
   {
     final Object retval = ex.getValue();
     if (retval instanceof Clob)
     {
-      try
-      {
-        return IOUtils.getInstance().readClob((Clob) retval);
-      }
-      catch (Exception e)
-      {
-        return null;
-      }
+      return IOUtils.getInstance().readClob((Clob) retval);
+    }
+    if (retval instanceof Blob)
+    {
+      return IOUtils.getInstance().readBlob((Blob) retval);
     }
     return retval;
   }
