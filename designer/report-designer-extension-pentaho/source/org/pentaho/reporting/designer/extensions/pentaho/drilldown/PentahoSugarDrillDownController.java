@@ -37,21 +37,22 @@ public class PentahoSugarDrillDownController extends PentahoDrillDownController
     for (int i = 0; i < parameter.length; i++)
     {
       final DrillDownParameter drillDownParameter = parameter[i];
-      if ("::pentaho-path".equals(drillDownParameter.getName()))
+      if ("::pentaho-path".equals(drillDownParameter.getName()) && pathAdded == false)
       {
         list.add(new DrillDownParameter("::pentaho-path", FormulaUtil.quoteString(pentahoPathWrapper.getLocalPath())));
         pathAdded = true;
-      }
-      if ("solution".equals(drillDownParameter.getName()) ||
-          "path".equals(drillDownParameter.getName()) ||
-          "name".equals(drillDownParameter.getName()))
-      {
-        // ignore ..
-      }
-      else
-      {
-        list.add(drillDownParameter);
-      }
+      }  else {
+        if ("solution".equals(drillDownParameter.getName()) ||
+            "path".equals(drillDownParameter.getName()) ||
+            "name".equals(drillDownParameter.getName()))
+        {
+          // ignore ..
+        }
+        else
+        {
+          list.add(drillDownParameter);
+        }
+     }
     }
     if (pathAdded == false)
     {
