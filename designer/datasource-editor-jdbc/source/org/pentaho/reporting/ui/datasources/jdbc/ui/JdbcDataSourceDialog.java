@@ -470,16 +470,16 @@ public class JdbcDataSourceDialog extends CommonDialog
           setQueryName(null);
           queryTextArea.setText(null);
           queryTextArea.setEnabled(false);
-          queryScriptTextArea.setText(null);
           queryLanguageField.setSelectedItem(null);
+          queryScriptTextArea.setText(null);
           return;
         }
 
         setQueryName(selectedQuery.getQueryName());
         setEnabled(true);
         queryTextArea.setText(selectedQuery.getQuery());
-        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
         queryScriptTextArea.setText(selectedQuery.getScript());
+        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
       }
       finally
       {
@@ -774,7 +774,7 @@ public class JdbcDataSourceDialog extends CommonDialog
       final JdbcConnectionDefinition definition = connectionComponent.createConnectionDefinition(currentConnectionProvider);
       dialogModel.addConnection(definition);
       dialogModel.getConnections().setSelectedItem(definition);
-      String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
+      final String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
       if(quernNameForSelection != null)
       {
         dialogModel.setSelectedQuery(quernNameForSelection);
