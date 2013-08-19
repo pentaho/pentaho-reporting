@@ -18,10 +18,14 @@
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
 import java.beans.PropertyEditor;
+import java.io.IOException;
+import java.sql.Blob;
 import java.sql.Clob;
+import java.sql.SQLException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
@@ -31,8 +35,6 @@ import org.pentaho.reporting.engine.classic.core.function.FunctionUtilities;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
-import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
-import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.util.beans.ValueConverter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
@@ -49,6 +51,7 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
 {
   private static final Log logger = LogFactory.getLog(AttributeExpressionsEvaluator.class);
 
+  private boolean failOnErrors;
   /**
    * Default Constructor.
    */
@@ -64,6 +67,9 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
    */
   public void reportInitialized(final ReportEvent event)
   {
+    failOnErrors = "true".equals(getRuntime().getConfiguration().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors"));
+
     if (FunctionUtilities.isLayoutLevel(event) == false)
     {
       // dont do anything if there is no printing done ...
@@ -134,13 +140,20 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
           }
           else
           {
-            final Class type = attribute.getTargetType();
+            final Class<?> type = attribute.getTargetType();
             if (value == null || type.isAssignableFrom(value.getClass()))
             {
               e.setAttribute(namespace, name, value);
             }
             else if (value instanceof ErrorValue)
             {
+              if (failOnErrors)
+              {
+                throw new InvalidReportStateException(String.format
+                    ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                        namespace, name,
+                        FunctionUtilities.computeElementLocation(e)));
+              }
               e.setAttribute(namespace, name, null);
             }
             else
@@ -154,39 +167,39 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
               }
               else
               {
-                try
+                final ValueConverter valueConverter = instance.getValueConverter(type);
+                if (type.isAssignableFrom(String.class))
                 {
-                  final ValueConverter valueConverter = instance.getValueConverter(type);
-                  if (type.isAssignableFrom(String.class))
-                  {
-                    // the attribute would allow raw-string values, so copy the element ..
-                    e.setAttribute(namespace, name, value);
-                  }
-                  else if (valueConverter != null)
-                  {
-                    final Object o = ConverterRegistry.toPropertyValue(String.valueOf(value), type);
-                    e.setAttribute(namespace, name, o);
-                  }
-                  else
-                  {
-                    // undo any previous computation
-                    e.setAttribute(namespace, name, null);
-                  }
+                  // the attribute would allow raw-string values, so copy the element ..
+                  e.setAttribute(namespace, name, value);
                 }
-                catch (BeanException be)
+                else if (valueConverter != null)
                 {
-                  // ignore.
-//                  AttributeExpressionsEvaluator.logger.debug("Attribute '" + namespace + '|' + name +
-//                      "' is not convertible with the bean-methods for value " + value);
+                  final Object o = ConverterRegistry.toPropertyValue(String.valueOf(value), type);
+                  e.setAttribute(namespace, name, o);
+                }
+                else
+                {
+                  // undo any previous computation
                   e.setAttribute(namespace, name, null);
                 }
               }
             }
           }
         }
+        catch (InvalidReportStateException exception)
+        {
+          throw exception;
+        }
         catch (Exception exception)
         {
-          // ignored .. but we unset the attribute as we have no valid value anymore ..
+          if (failOnErrors)
+          {
+            throw new InvalidReportStateException(String.format
+                ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                    namespace, name,
+                    FunctionUtilities.computeElementLocation(e)));
+          }
           e.setAttribute(namespace, name, null);
         }
         finally
@@ -198,19 +211,16 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
     return retval;
   }
 
-  private Object evaluate(final Expression ex)
+  private Object evaluate(final Expression ex) throws IOException, SQLException
   {
     final Object retval = ex.getValue();
     if (retval instanceof Clob)
     {
-      try
-      {
-        return IOUtils.getInstance().readClob((Clob) retval);
-      }
-      catch (Exception e)
-      {
-        return null;
-      }
+      return IOUtils.getInstance().readClob((Clob) retval);
+    }
+    if (retval instanceof Blob)
+    {
+      return IOUtils.getInstance().readBlob((Blob) retval);
     }
     return retval;
   }

@@ -485,4 +485,39 @@ public final class FunctionUtilities
   {
     return event.getReport().getCrosstabCellBody() != null;
   }
+
+  public static String computeElementLocation(ReportElement e)
+  {
+    final StringBuilder b = new StringBuilder();
+    computeElementLocationInternal(e, b);
+    return b.toString();
+  }
+
+  private static void computeElementLocationInternal (final ReportElement e, final StringBuilder b)
+  {
+    final Section parentSection = e.getParentSection();
+    if (parentSection != null)
+    {
+      computeElementLocationInternal(parentSection, b);
+      b.append("->");
+    }
+
+    final String typeName = e.getElementType().getMetaData().getName();
+    b.append(typeName);
+
+    if (parentSection != null)
+    {
+      final int elementCount = parentSection.getElementCount();
+      for (int i = 0; i < elementCount; i+= 1)
+      {
+        if (parentSection.getElement(i) == e)
+        {
+          b.append("[");
+          b.append(i);
+          b.append("]");
+          break;
+        }
+      }
+    }
+  }
 }

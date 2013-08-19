@@ -115,7 +115,7 @@ public class MultiValueQueryFunction implements Function
                               final String query,
                               final String columnName,
                               final int queryTimeout,
-                              final int queryLimit)
+                              final int queryLimit) throws EvaluationException
   {
 
     try
@@ -146,11 +146,16 @@ public class MultiValueQueryFunction implements Function
           return values.toArray();
         }
       }
+      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+    }
+    catch (EvaluationException e)
+    {
+      throw e;
     }
     catch (Exception e)
     {
       logger.warn("SingleValueQueryFunction: Failed to perform query", e);
+      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
     }
-    return null;
   }
 }
