@@ -18,13 +18,24 @@
 package org.pentaho.reporting.libraries.formula;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
+
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class CustomErrorValue implements ErrorValue
 {
   private String errorMessage;
+  private int errorCode;
 
   public CustomErrorValue(final String errorMessage)
   {
+    this.errorMessage = errorMessage;
+    this.errorCode = -1;
+  }
+
+  public CustomErrorValue(final int errorCode, final String errorMessage)
+  {
+    this.errorCode = errorCode;
     this.errorMessage = errorMessage;
   }
 
@@ -35,11 +46,23 @@ public class CustomErrorValue implements ErrorValue
 
   public int getErrorCode()
   {
-    return -1;
+    return errorCode;
   }
 
   public String getErrorMessage(final Locale locale)
   {
+    if (StringUtils.isEmpty(errorMessage))
+    {
+      try
+      {
+        return new Messages(locale).strictString("ErrorValue." + errorCode);
+      }
+      catch (MissingResourceException mre)
+      {
+        return new Messages(locale).formatMessage("ErrorValue.Generic", new Integer(errorCode));
+      }
+    }
+
     return errorMessage;
   }
 }

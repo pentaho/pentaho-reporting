@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
+  <key name="org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors">
+    <description>Defines whether attribute-expression evaluation errors cause the report processing to fail with an error. Use this to prevent errors in calculated fields from producing invalid reporting results.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  
+  <key name="org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors">
+    <description>Defines whether style-expression evaluation errors cause the report processing to fail with an error. Use this to prevent errors in calculated fields from producing invalid reporting results.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+
   <key name="org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections">
     <description>Defines whether subreports share their datasource per instance or per declared subreport.</description>
     <enum>
@@ -7,7 +23,7 @@
       <text>false</text>
     </enum>
   </key>
-  
+
   <key name="org.pentaho.reporting.engine.classic.core.UseNativeScaling" global="false" hidden="false">
     <description>Defines whether image scaling in the reporting engine uses the built-in Graphics2D scaling or a slower but higher quality algorithm that scales images in several steps to reduce artifacts.
 

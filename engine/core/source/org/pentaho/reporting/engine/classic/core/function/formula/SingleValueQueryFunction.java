@@ -96,7 +96,7 @@ public class SingleValueQueryFunction implements Function
   private Object performQuery(final ReportFormulaContext context,
                               final String query,
                               final String column,
-                              final int queryTimeout)
+                              final int queryTimeout) throws EvaluationException
   {
 
     try
@@ -125,11 +125,16 @@ public class SingleValueQueryFunction implements Function
           return tableModel.getValueAt(0, i);
         }
       }
+      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+    }
+    catch (EvaluationException e)
+    {
+      throw e;
     }
     catch (Exception e)
     {
       SingleValueQueryFunction.logger.warn("SingleValueQueryFunction: Failed to perform query", e);
+      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
     }
-    return null;
   }
 }
