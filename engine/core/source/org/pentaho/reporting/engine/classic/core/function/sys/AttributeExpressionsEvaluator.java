@@ -193,12 +193,19 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
         }
         catch (Exception exception)
         {
+          if (logger.isDebugEnabled())
+          {
+            logger.debug(String.format
+                ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                    namespace, name,
+                    FunctionUtilities.computeElementLocation(e)), exception);
+          }
           if (failOnErrors)
           {
             throw new InvalidReportStateException(String.format
                 ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
                     namespace, name,
-                    FunctionUtilities.computeElementLocation(e)));
+                    FunctionUtilities.computeElementLocation(e)), exception);
           }
           e.setAttribute(namespace, name, null);
         }
