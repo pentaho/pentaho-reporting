@@ -172,7 +172,7 @@ public class StyleExpressionsEvaluator extends AbstractElementFormatFunction
           throw new InvalidReportStateException(String.format
               ("Failed to evaluate style-expression for key %s on element [%s]",// NON-NLS
                   key.getName(),
-                  FunctionUtilities.computeElementLocation(e)));
+                  FunctionUtilities.computeElementLocation(e)), exception);
         }
         // ignored, but we clear the style as we have no valid value anymore.
         style.setStyleProperty(key, null);

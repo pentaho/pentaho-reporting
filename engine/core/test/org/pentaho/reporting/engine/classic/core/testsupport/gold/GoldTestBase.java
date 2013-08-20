@@ -272,7 +272,7 @@ public class GoldTestBase
   {
     final MasterReport originalReport = parseReport(file);
     final MasterReport tunedReport = tuneForTesting(originalReport);
-    MasterReport report = postProcess(tunedReport);
+    MasterReport report = postProcess(tunedReport, file);
     if (mode == ReportProcessingMode.legacy)
     {
       report = tuneForLegacyMode(report);
@@ -291,6 +291,12 @@ public class GoldTestBase
     handleXmlContent(executeTableStream(report), new File(gold, fileName + "-table-stream.xml"));
     handleXmlContent(executeTableFlow(report), new File(gold, fileName + "-table-flow.xml"));
     handleXmlContent(executeTablePage(report), new File(gold, fileName + "-table-page.xml"));
+  }
+
+  protected MasterReport postProcess(final MasterReport originalReport,
+                                     final File file) throws Exception
+  {
+    return postProcess(originalReport);
   }
 
   protected MasterReport postProcess(final MasterReport originalReport) throws Exception
