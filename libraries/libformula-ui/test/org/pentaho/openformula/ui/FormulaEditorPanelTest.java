@@ -183,6 +183,25 @@ public class FormulaEditorPanelTest extends TestCase
     assertEquals("=IF(Logical;aa;bb)", panel.getFormulaText());
   }
 
+  /**
+   * <a href="http://jira.pentaho.com/browse/PRD-4552">PRD-4552:
+   * Entering embedded function that is same as main function with dummy variables causes issues</a>
+   **/
+  public void testReplaceDummyIFParamWithIF() {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=IF(Logical;Any;Any)");
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(1, "IF(1;2;3)");
+
+    assertEquals("=IF(Logical;IF(1;2;3);Any)", panel.getFormulaText());
+  }
+
+
   // Validates PRD-4521
   public void testValidateFieldSelector()
   {
