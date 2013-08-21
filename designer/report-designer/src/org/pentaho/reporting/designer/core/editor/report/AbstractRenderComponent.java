@@ -1091,6 +1091,7 @@ public abstract class AbstractRenderComponent extends JComponent
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolvedStyle;
   private FpsCalculator fpsCalculator;
+  private boolean paintingImmediately = false;
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
@@ -1929,9 +1930,13 @@ public abstract class AbstractRenderComponent extends JComponent
 
   public void repaintConditionally()
   {
-    if (operation != null)
+    if (!paintingImmediately && operation != null)
     {
+      // guard against paintImmediately being called again if we're
+      // already in the middle of repainting.
+      paintingImmediately = true;
       paintImmediately(0, 0, getWidth(), getHeight());
+      paintingImmediately = false;
     }
     else
     {
