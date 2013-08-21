@@ -34,21 +34,21 @@ public class MinorAxisNodeContextPool extends StackedObjectPool<MinorAxisNodeCon
   }
 
   private boolean isEstablishBlockContext(final int nodeType,
-                                          final boolean undefinedWidth)
+                                          final boolean definedWidth)
   {
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
-      return undefinedWidth == false;
+      return definedWidth;
     }
 
     if ((nodeType & LayoutNodeTypes.TYPE_BOX_CANVAS) == LayoutNodeTypes.TYPE_BOX_CANVAS)
     {
-      return undefinedWidth == false;
+      return definedWidth;
     }
 
     if ((nodeType & LayoutNodeTypes.TYPE_BOX_ROWBOX) == LayoutNodeTypes.TYPE_BOX_ROWBOX)
     {
-      return undefinedWidth == false;
+      return definedWidth;
     }
 
     if ((nodeType & LayoutNodeTypes.TYPE_BOX_TABLE) == LayoutNodeTypes.TYPE_BOX_TABLE)
@@ -99,7 +99,7 @@ public class MinorAxisNodeContextPool extends StackedObjectPool<MinorAxisNodeCon
     // auto-boxes do not establish an own block context.
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
     nodeContext.reuse(horizontal, blockLevelNode, box.isBoxOverflowX(),
-        isEstablishBlockContext(box.getNodeType(), sblp.isUndefinedWidth()));
+        isEstablishBlockContext(box.getNodeType(), sblp.isDefinedWidth()));
     return nodeContext;
   }
 }
