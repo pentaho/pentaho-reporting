@@ -3,6 +3,7 @@ package org.pentaho.reporting.designer.core.editor.drilldown.basic;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -71,9 +72,11 @@ public class GenericUrlDrillDownController extends DefaultXulDrillDownController
   {
   }
 
-  public void init(final ReportDesignerContext reportDesignerContext, final DrillDownModel model)
+  public void init(final ReportDesignerContext reportDesignerContext,
+                   final DrillDownModel model,
+                   final String[] fields)
   {
-    super.init(reportDesignerContext, model);
+    super.init(reportDesignerContext, model, fields);
     pathHandler = new PathChangeHandler();
     getModel().addPropertyChangeListener(DrillDownModel.DRILL_DOWN_PATH_PROPERTY, pathHandler);
     configureDisableTableOnEmptyFile();

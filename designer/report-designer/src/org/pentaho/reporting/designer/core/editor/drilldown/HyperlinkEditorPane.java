@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -129,7 +130,7 @@ public class HyperlinkEditorPane extends JPanel
     final String formula = computeFormula
         (styleExpressions.get(ElementStyleKeys.HREF_TARGET));
     final boolean initializedWithDrillDown =
-        drillDownEditor.initialize(designerContext, formula, tooltipFormula, targetFormula);
+        drillDownEditor.initialize(designerContext, formula, tooltipFormula, targetFormula, new String[0]);
     if (basicLinkPanel.isEmpty() == false && initializedWithDrillDown == false)
     {
       drillDownSelector.setSelectedProfile(null);

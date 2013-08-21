@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -15,6 +18,7 @@ import org.pentaho.openformula.ui.FunctionParameterContext;
 import org.pentaho.openformula.ui.ParameterUpdateEvent;
 import org.pentaho.openformula.ui.ParameterUpdateListener;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.ReportDesignerFunctionParameterEditor;
 
 public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionParameterEditor
@@ -110,6 +114,7 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
   private JPanel panel;
   private boolean inParameterUpdate;
   private boolean inSetupUpdate;
+  private FieldDefinition[] fieldDefinitions;
 
   public DrillDownFunctionParameterEditor()
   {
@@ -162,12 +167,41 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
 
   public void setFields(final FieldDefinition[] fieldDefinitions)
   {
-    // ignored.
+    this.fieldDefinitions = fieldDefinitions.clone();
   }
 
   public void clearSelectedFunction()
   {
     // clean-up
+  }
+
+  private String[] filterExtraFields()
+  {
+    if (fieldDefinitions == null)
+    {
+      return new String[0];
+    }
+    if (designerContext == null)
+    {
+      throw new IllegalStateException();
+    }
+    final ReportRenderContext activeContext = designerContext.getActiveContext();
+    if (activeContext == null)
+    {
+      return new String[0];
+    }
+    final HashSet<String> columnNames = new HashSet<String>
+        (Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
+    final ArrayList<String> retval = new ArrayList<String>();
+    for (int i = 0; i < fieldDefinitions.length; i++)
+    {
+      final FieldDefinition fieldDefinition = fieldDefinitions[i];
+      if (columnNames.contains(fieldDefinition.getName()) == false)
+      {
+        retval.add(fieldDefinition.getName());
+      }
+    }
+    return retval.toArray(new String[retval.size()]);
   }
 
   public void setSelectedFunction(final FunctionParameterContext context)
@@ -180,7 +214,8 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
     try
     {
       // Editor expects the formula to have a valid prefix, so we provide one ..
-      if (editor.initialize(designerContext, context.getFunctionInformation().getFunctionText(), null, null))
+      if (editor.initialize(designerContext, context.getFunctionInformation().getFunctionText(),
+          null, null, filterExtraFields()))
       {
         if (editor.getDrillDownUiProfile() == null)
         {

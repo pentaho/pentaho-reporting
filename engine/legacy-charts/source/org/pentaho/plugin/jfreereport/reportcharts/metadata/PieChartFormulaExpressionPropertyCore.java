@@ -17,6 +17,6 @@ public class PieChartFormulaExpressionPropertyCore extends DefaultExpressionProp
 
   public String[] getExtraCalculationFields(final ExpressionPropertyMetaData metaData)
   {
-    return ADDITIONAL_COLUMN_KEYS;
+    return ADDITIONAL_COLUMN_KEYS.clone();
   }
 }

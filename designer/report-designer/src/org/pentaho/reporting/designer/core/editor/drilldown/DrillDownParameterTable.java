@@ -384,7 +384,6 @@ public class DrillDownParameterTable extends JComponent
       tabbedPane.addTab(Messages.getString("DrillDownParameterTable.Tab.Manual"), manualTablePanel);
 
       add(tabbedPane, BorderLayout.CENTER);
-
     }
   }
 
@@ -472,6 +471,7 @@ public class DrillDownParameterTable extends JComponent
     return allInOneTable.getReportDesignerContext();
   }
 
+
   public void setDrillDownParameter(final DrillDownParameter[] parameter)
   {
     final DrillDownParameter[] oldParameter = parameterTableModel.getData();
@@ -480,6 +480,16 @@ public class DrillDownParameterTable extends JComponent
     {
       firePropertyChange(DrillDownModel.DRILL_DOWN_PARAMETER_PROPERTY, oldParameter, parameter);
     }
+  }
+
+  public String[] getExtraFields()
+  {
+    return parameterTableModel.getExtraFields();
+  }
+
+  public void setExtraFields(final String[] extraFields)
+  {
+    parameterTableModel.setExtraFields(extraFields);
   }
 
   public DrillDownParameter[] getDrillDownParameter()

@@ -185,10 +185,12 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
 
   protected abstract String getProfileName();
 
-  public void init(final ReportDesignerContext reportDesignerContext, final DrillDownModel model)
+  public void init(final ReportDesignerContext reportDesignerContext,
+                   final DrillDownModel model,
+                   final String[] fields)
   {
     this.reportDesignerContext = reportDesignerContext;
-    super.init(reportDesignerContext, model);
+    super.init(reportDesignerContext, model, fields);
 
     final DrillDownParameter[] drillDownParameter = model.getDrillDownParameter();
 
