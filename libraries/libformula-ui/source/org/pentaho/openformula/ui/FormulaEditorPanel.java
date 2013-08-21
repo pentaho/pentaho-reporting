@@ -260,6 +260,23 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
         start = fn.getFunctionOffset();
         end = fn.getFunctionParameterEnd();
       }
+      else if (parameterText.contains(fn.getCanonicalName()))
+      {
+        // We get here if user is entering a formula in the parameter field.
+        // Since the formula can have parameters we need to filter for the formula
+        // and handle it specially.
+        start = fn.getFunctionOffset();
+        if (catchAllParameter)
+        {
+          // We add an additional one so that delete removes the whole function
+          // including the close parenthesis
+          end = fn.getParamEnd(functionParameterCount - 1) + 1;
+        }
+        else
+        {
+          end = fn.getParamEnd(globalParameterIndex - 1);
+        }
+      }
       else if (globalParameterIndex >= functionParameterCount)
       {
         parameterText = ";" + parameterText;
