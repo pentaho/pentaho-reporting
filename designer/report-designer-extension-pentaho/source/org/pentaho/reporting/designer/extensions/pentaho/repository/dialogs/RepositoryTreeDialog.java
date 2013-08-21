@@ -33,6 +33,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,6 +56,33 @@ import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 
 public class RepositoryTreeDialog extends CommonDialog
 {
+  private class ShowHiddenFilesAction extends AbstractAction
+  {
+    private ShowHiddenFilesAction()
+    {
+      putValue(Action.NAME, Messages.getInstance().getString("ShowHiddenFilesAction.Name"));
+      setSelected(Boolean.FALSE);
+    }
+
+    private Boolean getSelected()
+    {
+      return (Boolean) this.getValue(Action.SELECTED_KEY);
+    }
+
+    private void setSelected(final Boolean selected)
+    {
+      this.putValue (Action.SELECTED_KEY, selected);
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      repositoryTreeModel.setShowHiddenFiles(Boolean.TRUE.equals(getSelected()));
+    }
+  }
+
   private class DoubleClickHandler extends MouseAdapter
   {
     private DoubleClickHandler()
@@ -307,13 +335,12 @@ public class RepositoryTreeDialog extends CommonDialog
 
 
     c = new GridBagConstraints();
+    c.anchor = GridBagConstraints.WEST;
     c.insets = new Insets(0, 10, 5, 10);
     c.gridx = 0;
     c.gridy = 2;
-    c.fill = GridBagConstraints.BOTH;
-    c.weightx = 1.0;
-    c.weighty = 1.0;
-
+    c.fill = GridBagConstraints.HORIZONTAL;
+    panel.add(new JCheckBox(new ShowHiddenFilesAction()));
     return panel;
   }
 

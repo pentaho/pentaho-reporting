@@ -39,6 +39,7 @@ public class RepositoryTreeModel implements TreeModel
   private String[] filters;
   private EventListenerList listenerList;
   private boolean showFoldersOnly;
+  private boolean showHiddenFiles;
   private RepositoryTreeRoot root;
   private static final String[] EMPTY_FILTER = new String[0];
 
@@ -69,6 +70,17 @@ public class RepositoryTreeModel implements TreeModel
   public boolean isShowFoldersOnly()
   {
     return showFoldersOnly;
+  }
+
+  public boolean isShowHiddenFiles()
+  {
+    return showHiddenFiles;
+  }
+
+  public void setShowHiddenFiles(final boolean showHiddenFiles)
+  {
+    this.showHiddenFiles = showHiddenFiles;
+    fireTreeDataChanged();
   }
 
   public String[] getFilters()
@@ -140,6 +152,10 @@ public class RepositoryTreeModel implements TreeModel
         {
           continue;
         }
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER &&
             PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
         {
@@ -196,6 +212,10 @@ public class RepositoryTreeModel implements TreeModel
       {
         final FileObject child = children[i];
         if (isShowFoldersOnly() && child.getType() != FileType.FOLDER)
+        {
+          continue;
+        }
+        if (isShowHiddenFiles() == false && child.isHidden())
         {
           continue;
         }
@@ -294,6 +314,10 @@ public class RepositoryTreeModel implements TreeModel
       {
         final FileObject child = childs[i];
         if (isShowFoldersOnly() && child.getType() != FileType.FOLDER)
+        {
+          continue;
+        }
+        if (isShowHiddenFiles() == false && child.isHidden())
         {
           continue;
         }
