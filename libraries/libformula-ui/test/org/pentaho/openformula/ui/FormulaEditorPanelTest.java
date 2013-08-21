@@ -37,23 +37,21 @@ public class FormulaEditorPanelTest extends TestCase
   }
 
 
-  // This test case does not work as the parameter 0 without closing
-  // parenthesis causes the parsing to be greedy.
-//  public void testNestedFunctionEditing()
-//  {
-//    FormulaEditorPanel panel = new FormulaEditorPanel();
-//    panel.setFormulaText("=COUNT(");
-//
-//    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
-//    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
-//
-//    activeEditor.fireParameterUpdate(0, "SUM(1)");
-//    activeEditor.fireParameterUpdate(1, "2");
-//    activeEditor.fireParameterUpdate(2, "3");
-//
-//    // you get =COUNT(SUM(1;2;3) instead.
-//    assertEquals("=COUNT(SUM(1);2;3)", panel.getFormulaText());
-//  }
+  public void testNestedFunctionEditing()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.setFormulaText("=COUNT()");
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(1)");
+    activeEditor.fireParameterUpdate(1, "2");
+    activeEditor.fireParameterUpdate(2, "3");
+
+    // you get =COUNT(SUM(1;2;3) instead.
+    assertEquals("=COUNT(SUM(1);2;3)", panel.getFormulaText());
+  }
 
   public void testCountWithFunctionInFirstParameterField()
   {
@@ -126,39 +124,136 @@ public class FormulaEditorPanelTest extends TestCase
 
 
   // TODO: Fix this test case.
-//  public void testValidateAddingAConstantToSumFunction()
-//  {
-//    FormulaEditorPanel panel = new FormulaEditorPanel();
-//    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
-//
-//    panel.setFormulaText("=(1 + SUM())");
-//    panel.getEditorModel().setCaretPosition(7);
-//
-//    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
-//    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
-//
-//    activeEditor.fireParameterUpdate(0, "SUM(1;2)");
-//
-//    assertEquals("=(1 + SUM(1;2))", panel.getFormulaText());
-//    // exception thrown here ..
-//  }
+  public void testValidateAddingAConstantToSumFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
-  // TODO: Fix this test case.
-//  public void testTwoSeparateFunctions()
-//  {
-//    FormulaEditorPanel panel = new FormulaEditorPanel();
-//    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
-//
-//    panel.setFormulaText("=SUM(1;2) + COUNT(1;2)");
-//    panel.getEditorModel().setCaretPosition(2);
-//
-//    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
-//    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
-//
-//    activeEditor.fireParameterUpdate(0, "SUM(1;2;3)");
-//
-//    assertEquals("=SUM(1;2;3) + COUNT(1;2)", panel.getFormulaText());
-//  }
+    panel.setFormulaText("=(1 + SUM())");
+    panel.getEditorModel().setCaretPosition(7);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(1;2)");
+
+    assertEquals("=(1 + SUM(1;2))", panel.getFormulaText());
+    // exception thrown here ..
+  }
+
+  public void testAddAdditionalParameterToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1;2)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(1;2;3)");
+
+    assertEquals("=SUM(1;2;3)", panel.getFormulaText());
+  }
+
+  public void testAddMultipleAdditionalParameterToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(1;2;3)");
+
+    assertEquals("=SUM(1;2;3)", panel.getFormulaText());
+  }
+
+  public void testReplaceSingleParameterToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(2)");
+
+    assertEquals("=SUM(2)", panel.getFormulaText());
+  }
+
+  public void testEmbeddedSingleParameterToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(SUM(1))");
+
+    assertEquals("=SUM(SUM(1))", panel.getFormulaText());
+  }
+
+  public void testEmbeddedFunctionWithMultipleParametersToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(SUM(1;2;3))");
+
+    assertEquals("=SUM(SUM(1;2;3))", panel.getFormulaText());
+  }
+
+  public void testEmbeddedMultipleFunctionWithMultipleParametersToSUMFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(SUM(1;2;3);COUNT(1;2;3);SUM(4;5;6)");
+
+    assertEquals("=SUM(SUM(1;2;3);COUNT(1;2;3);SUM(4;5;6)", panel.getFormulaText());
+  }
+
+
+
+  public void testTwoSeparateFunctions()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=SUM(1;2) + COUNT(1;2)");
+    panel.getEditorModel().setCaretPosition(2);
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "SUM(1;2;3)");
+
+    assertEquals("=SUM(1;2;3) + COUNT(1;2)", panel.getFormulaText());
+  }
 
   // Validates PRD-4503
   public void testReplacingDummyParametersInIFFunction()

@@ -529,7 +529,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   protected void fireParameterUpdate(final int param, final String text)
   {
-    final boolean catchAllParameter = (param == getParameterCount() - 1);
+    final boolean catchAllParameter = (text != null) && text.contains("(") && text.contains(")");
     final ParameterUpdateListener[] updateListeners = listenerList.getListeners(ParameterUpdateListener.class);
     for (int i = 0; i < updateListeners.length; i++)
     {
@@ -554,7 +554,17 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   public int getParameterCount()
   {
-    return textFields.length;
+    int paramCount = 0;
+    for (int index = 0; index < textFields.length; index++)
+    {
+      final String parameterValue = getParameterValue(index);
+      if ((parameterValue != null) && (parameterValue.length() > 0))
+      {
+        paramCount++;
+      }
+    }
+
+    return paramCount;
   }
 
   public Component getEditorComponent()
