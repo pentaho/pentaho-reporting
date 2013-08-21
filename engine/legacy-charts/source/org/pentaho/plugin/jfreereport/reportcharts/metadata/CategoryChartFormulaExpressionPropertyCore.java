@@ -18,6 +18,6 @@ public class CategoryChartFormulaExpressionPropertyCore extends DefaultExpressio
 
   public String[] getExtraCalculationFields(final ExpressionPropertyMetaData metaData)
   {
-    return ADDITIONAL_COLUMN_KEYS;
+    return ADDITIONAL_COLUMN_KEYS.clone();
   }
 }

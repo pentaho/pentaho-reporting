@@ -50,7 +50,7 @@ public final class StaticBoxLayoutProperties implements Serializable
   private static final int FLAG_BREAK_AFTER = 0x40;
   private static final int FLAG_SECTION_CONTEXT = 0x80;
   private static final int FLAG_WIDOW_ORPHAN_OPT_OUT = 0x100;
-  private static final int FLAG_UNDEFINED_WIDTH = 0x200;
+  private static final int FLAG_DEFINED_WIDTH = 0x200;
 
   private static final Log logger = LogFactory.getLog(StaticBoxLayoutProperties.class);
 
@@ -101,14 +101,19 @@ public final class StaticBoxLayoutProperties implements Serializable
     setFlag(FLAG_WIDOW_ORPHAN_OPT_OUT, widowOrphanOptOut);
   }
 
-  public boolean isUndefinedWidth()
+  public boolean isDefinedWidth()
   {
-    return isFlag(FLAG_UNDEFINED_WIDTH);
+    return isFlag(FLAG_DEFINED_WIDTH);
   }
 
-  public void setUndefinedWidth(final boolean undefinedWidth)
+  /**
+   * Indicates whether the box explicitly defines a width.
+   *
+   * @param definedWidth
+   */
+  public void setDefinedWidth(final boolean definedWidth)
   {
-    setFlag(FLAG_UNDEFINED_WIDTH, undefinedWidth);
+    setFlag(FLAG_DEFINED_WIDTH, definedWidth);
   }
 
   public boolean isSectionContext()
