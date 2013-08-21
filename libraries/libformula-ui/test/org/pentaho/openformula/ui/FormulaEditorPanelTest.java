@@ -124,24 +124,22 @@ public class FormulaEditorPanelTest extends TestCase
     assertEquals("=COUNT(1;2;3)", panel.getFormulaText());
   }
 
+  public void testValidateAddingAConstantToSumFunction()
+  {
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
-  // TODO: Fix this test case.
-//  public void testValidateAddingAConstantToSumFunction()
-//  {
-//    FormulaEditorPanel panel = new FormulaEditorPanel();
-//    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
-//
-//    panel.setFormulaText("=(1 + SUM())");
-//    panel.getEditorModel().setCaretPosition(7);
-//
-//    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
-//    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
-//
-//    activeEditor.fireParameterUpdate(0, "SUM(1;2)");
-//
-//    assertEquals("=(1 + SUM(1;2))", panel.getFormulaText());
-//    // exception thrown here ..
-//  }
+    panel.setFormulaText("=(1 + SUM())");
+    // select sum
+    panel.getFunctionTextArea().setCaretPosition(7);
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");
+    activeEditor.fireParameterUpdate(1, "2");
+
+    assertEquals("=(1 + SUM(1;2))", panel.getFormulaText());
+  }
 
   // TODO: Fix this test case.
 //  public void testTwoSeparateFunctions()
