@@ -95,7 +95,12 @@ public class FunctionInformation
 
   public int getParamStart(final int i)
   {
-    return paramStart[i];
+    if (i < paramStart.length)
+    {
+      return paramStart[i];
+    }
+
+    return functionParameterStart;
   }
 
   public int getParamEnd(final int i)
