@@ -22,6 +22,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -149,10 +150,6 @@ public class RepositoryOpenDialog extends CommonDialog
         }
       }
       catch (FileSystemException e1)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e1);
-      }
-      catch (IOException e1)
       {
         UncaughtExceptionsModel.getInstance().addException(e1);
       }
@@ -364,6 +361,33 @@ public class RepositoryOpenDialog extends CommonDialog
           setSelectedView(selectedItem);
         }
       }
+    }
+  }
+
+  private class ShowHiddenFilesAction extends AbstractAction
+  {
+    private ShowHiddenFilesAction()
+    {
+      putValue(Action.NAME, Messages.getInstance().getString("ShowHiddenFilesAction.Name"));
+      setSelected(Boolean.FALSE);
+    }
+
+    private Boolean getSelected()
+    {
+      return (Boolean) this.getValue(Action.SELECTED_KEY);
+    }
+
+    private void setSelected(final Boolean selected)
+    {
+      this.putValue (Action.SELECTED_KEY, selected);
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      table.setShowHiddenFiles(Boolean.TRUE.equals(getSelected()));
     }
   }
 
@@ -589,6 +613,7 @@ public class RepositoryOpenDialog extends CommonDialog
     centerCarrier.setLayout(new BorderLayout());
     centerCarrier.setBorder(new EmptyBorder(5, 5, 5, 5));
     centerCarrier.add(new JScrollPane(table), BorderLayout.CENTER);
+    centerCarrier.add(new JCheckBox(new ShowHiddenFilesAction()), BorderLayout.SOUTH);
 
     final JPanel contentPanel = new JPanel();
     contentPanel.setLayout(new BorderLayout());
