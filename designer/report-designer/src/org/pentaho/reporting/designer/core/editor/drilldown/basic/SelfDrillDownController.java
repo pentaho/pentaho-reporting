@@ -2,6 +2,7 @@ package org.pentaho.reporting.designer.core.editor.drilldown.basic;
 
 import java.util.HashMap;
 
+import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterRefreshEvent;
@@ -67,9 +68,11 @@ public class SelfDrillDownController extends DefaultXulDrillDownController
   {
   }
 
-  public void init(final ReportDesignerContext reportDesignerContext, final DrillDownModel model)
+  public void init(final ReportDesignerContext reportDesignerContext,
+                   final DrillDownModel model,
+                   final String[] fields)
   {
-    super.init(reportDesignerContext, model);
+    super.init(reportDesignerContext, model, fields);
     final DrillDownParameterTable drillDownTable = getTable();
     if (drillDownTable != null)
     {

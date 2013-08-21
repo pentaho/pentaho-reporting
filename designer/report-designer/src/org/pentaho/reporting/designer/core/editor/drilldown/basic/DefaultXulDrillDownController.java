@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterTable;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownModel;
@@ -113,13 +114,19 @@ public class DefaultXulDrillDownController implements XulDrillDownController
     return reportDesignerContext;
   }
 
-  public void init(final ReportDesignerContext reportDesignerContext, final DrillDownModel model)
+  public void init(final ReportDesignerContext reportDesignerContext,
+                   final DrillDownModel model,
+                   final String[] fields)
   {
     if (model == null)
     {
       throw new NullPointerException();
     }
     if (reportDesignerContext == null)
+    {
+      throw new NullPointerException();
+    }
+    if (fields == null)
     {
       throw new NullPointerException();
     }
@@ -167,6 +174,7 @@ public class DefaultXulDrillDownController implements XulDrillDownController
     {
       final XulDrillDownParameterTable parameterTable = (XulDrillDownParameterTable) paramTableElement;
       table = parameterTable.getTable();
+      table.setExtraFields(fields);
       table.setReportDesignerContext(reportDesignerContext);
       table.setDrillDownParameter(model.getDrillDownParameter());
       table.addPropertyChangeListener(DrillDownParameterTable.DRILL_DOWN_PARAMETER_PROPERTY, new TableModelBinding());

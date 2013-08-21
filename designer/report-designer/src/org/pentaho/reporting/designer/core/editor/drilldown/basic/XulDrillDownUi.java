@@ -52,13 +52,18 @@ public class XulDrillDownUi implements DrillDownUi
 
   public void init(final Component parent,
                    final ReportDesignerContext reportDesignerContext,
-                   final DrillDownModel model) throws DrillDownUiException
+                   final DrillDownModel model,
+                   final String[] extraFields) throws DrillDownUiException
   {
     if (model == null)
     {
       throw new NullPointerException();
     }
     if (reportDesignerContext == null)
+    {
+      throw new NullPointerException();
+    }
+    if (extraFields == null)
     {
       throw new NullPointerException();
     }
@@ -98,7 +103,7 @@ public class XulDrillDownUi implements DrillDownUi
       {
         controller.setName("controller"); // NON-NLS
         controller.setXulDomContainer(container);
-        controller.init(reportDesignerContext, model);
+        controller.init(reportDesignerContext, model, extraFields);
         container.addEventHandler(controller);
       }
 
