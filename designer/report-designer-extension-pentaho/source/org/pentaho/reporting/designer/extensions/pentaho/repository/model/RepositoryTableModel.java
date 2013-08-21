@@ -14,10 +14,22 @@ public class RepositoryTableModel extends AbstractTableModel
 {
   private FileObject selectedPath;
   private String[] filters;
+  private boolean showHiddenFiles;
 
   public RepositoryTableModel()
   {
     this.filters = new String[0];
+  }
+
+  public boolean isShowHiddenFiles()
+  {
+    return showHiddenFiles;
+  }
+
+  public void setShowHiddenFiles(final boolean showHiddenFiles)
+  {
+    this.showHiddenFiles = showHiddenFiles;
+    fireTableDataChanged();
   }
 
   public String[] getFilters()
@@ -66,6 +78,10 @@ public class RepositoryTableModel extends AbstractTableModel
       for (int i = 0; i < children.length; i++)
       {
         final FileObject child = children[i];
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER)
         {
           if (PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
@@ -120,6 +136,10 @@ public class RepositoryTableModel extends AbstractTableModel
       for (int i = 0; i < children.length; i++)
       {
         final FileObject child = children[i];
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER)
         {
           if (PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
