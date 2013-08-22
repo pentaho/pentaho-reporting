@@ -23,6 +23,7 @@ public class SelectFieldAction extends AbstractAction
   private FieldDefinitionSource fieldDefinitionSource;
   private FieldSelectorDialog fieldSelectorDialog;
   private Component parent;
+  private Component focusReturn;
 
   public SelectFieldAction(final Component parent,
                            final PropertyChangeListener selectorUpdateHandler,
@@ -84,12 +85,17 @@ public class SelectFieldAction extends AbstractAction
       this.fieldSelectorDialog.setFields(fields);
     }
 
+    fieldSelectorDialog.setFocusReturn(focusReturn);
     fieldSelectorDialog.removePropertyChangeListener
         (FieldSelectorDialog.SELECTED_DEFINITION_PROPERTY, selectorUpdateHandler);
     fieldSelectorDialog.setSelectedDefinition(null);
     fieldSelectorDialog.addPropertyChangeListener(FieldSelectorDialog.SELECTED_DEFINITION_PROPERTY,
         selectorUpdateHandler);
     fieldSelectorDialog.setVisible(true);
+  }
+
+  public void setFocusReturn(Component component) {
+    focusReturn = component;
   }
 
   public void dispose()
