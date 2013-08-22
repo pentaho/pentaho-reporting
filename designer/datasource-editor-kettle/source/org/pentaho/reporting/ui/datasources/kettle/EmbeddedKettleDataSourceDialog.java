@@ -67,7 +67,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
       
       if (evt.getPropertyName().equals("validate"))
       {
-        getPreviewAction().setEnabled((Boolean)evt.getNewValue());
+        getPreviewAction().setEnabled(((Boolean)evt.getNewValue()) && (lastSelectedQuery != null));
       }
       
     }
@@ -205,6 +205,8 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
         
       } catch(Exception e){
         // attempt to fall back to the default dialog...
+        
+        //TODO: LOG SOMETHING USEFUL HERE
         return super.performConfiguration(context, dataFactory, queryName);
       }
     }

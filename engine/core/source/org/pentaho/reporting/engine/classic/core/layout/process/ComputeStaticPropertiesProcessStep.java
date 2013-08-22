@@ -291,16 +291,29 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
         (ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX));
     sblp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
 
-    if (box.getParent() != null &&
+    final RenderBox parent = box.getParent();
+    if (parent != null &&
         style.getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0) == 0 &&
         style.getDoubleStyleProperty(ElementStyleKeys.WIDTH, 0) == 0)
     {
+      // todo: Should that flag also take paddings and borders of the parent into account?
+      // They alter the available space for the childs, and thus it would make sense to establish a new
+      // context for resolving percentage-widths
+
       // only a box with a parent can try to inherit a context ..
-      sblp.setUndefinedWidth(true);
+      if ((parent.getLayoutNodeType() & LayoutNodeTypes.TYPE_BOX_BLOCK) == LayoutNodeTypes.TYPE_BOX_BLOCK)
+      {
+        // a block level box always creates a block-context.
+        sblp.setDefinedWidth(true);
+      }
+      else
+      {
+        sblp.setDefinedWidth(false);
+      }
     }
     else
     {
-      sblp.setUndefinedWidth(false);
+      sblp.setDefinedWidth(true);
     }
   }
 

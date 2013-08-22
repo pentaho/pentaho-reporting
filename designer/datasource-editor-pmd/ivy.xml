@@ -26,12 +26,13 @@
     <dependency org="pentaho" name="pentaho-mql-editor" rev="${dependency.pentaho-mql-editor.revision}" changing="true" conf="default_external->default">
       <!-- These dependencies are dangerous and/or not needed in a Swing application. -->
       <exclude org="pentaho" module="pentaho-xul-swt"/>
-      <exclude org="${library.group}" module="libbase"/>
-      <exclude org="${library.group}" module="libformula"/>
+      <exclude org="${library.group}"/>
+      <exclude org="${ivy.artifact.group}"/>
       <exclude org="pentaho" module="pentaho-xul-gwt"/>
       <exclude org="com.google.gwt"/>
       <exclude org="org.eclipse" />
       <exclude org="org.eclipse.core" />
+      <exclude org="org.eclipse.jdt" />
       <exclude org="org.eclipse.equinox" />
       <!-- These are useless in production, and jcommon is probably no longer used anyway -->
       <exclude org="jfree" module="jcommon"/>
@@ -45,7 +46,6 @@
       <exclude org="pentaho" module="pentaho-xul-core"/>
       <exclude org="pentaho" module="pentaho-cwm"/>
       <exclude org="pentaho" module="pentaho-connections"/>
-      <exclude org="pentaho.kettle"/>
       <exclude org="pentaho.kettle"/>
       <exclude org="org.netbeans"/>
       <exclude org="com.thoughtworks.xstream"/>

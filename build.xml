@@ -24,7 +24,7 @@ This is the build file for the collection of Shims modules to provide support
             description="Directory where the Ant-Contrib jar (and dependencies) is placed after it is auto-downloaded by the build" />
   
   <!-- These are the modules this script should build in the proper order-->
-  <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-hibernate,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->
+  <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->
   <property name="modules" value="DEFINE_ME" />
 
 
@@ -222,5 +222,5 @@ This is the build file for the collection of Shims modules to provide support
       </sequential>
     </for>
   </target>
-
-</project> 
+	
+</project>

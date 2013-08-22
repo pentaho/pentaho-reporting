@@ -89,8 +89,8 @@ public class Prd4215Test extends TestCase
     final GraphicsOutputProcessorMetaData metaData = new GraphicsOutputProcessorMetaData(new DefaultFontStorage(registry));
     metaData.initialize(report.getConfiguration());
 
-    final LogicalPageDrawable drawable = new LogicalPageDrawable
-        (logicalPageBox, metaData, report.getResourceManager());
+    final LogicalPageDrawable drawable = new LogicalPageDrawable();
+    drawable.init(logicalPageBox, metaData, report.getResourceManager());
 
     final TracingGraphics g2 = new TracingGraphics();
     drawable.draw(g2, new Rectangle2D.Double(0, 0, 500, 500));

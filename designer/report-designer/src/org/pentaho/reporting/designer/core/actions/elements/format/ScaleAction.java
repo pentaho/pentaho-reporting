@@ -30,16 +30,16 @@ import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class ScaleAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
+  private ReportModelEventFilter eventFilter;
+
   public ScaleAction()
   {
     putValue(Action.SELECTED_KEY, Boolean.FALSE);
@@ -47,6 +47,16 @@ public final class ScaleAction extends AbstractElementSelectionAction implements
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("ScaleAction.Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("ScaleAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("ScaleAction.Accelerator"));
+
+    eventFilter = new ReportModelEventFilterFactory().createStyleFilter(ElementStyleKeys.SCALE);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   public boolean isSelected()

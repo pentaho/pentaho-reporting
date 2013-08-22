@@ -17,6 +17,11 @@
 
 package org.pentaho.openformula.ui;
 
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
@@ -27,6 +32,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class FormulaDialogTest
 {
@@ -42,24 +48,49 @@ public class FormulaDialogTest
   {
   }
 
-  public static void main(final String[] args)
+  @Test
+  public void testDialogDefaultProperties()
       throws IllegalAccessException, UnsupportedLookAndFeelException, InstantiationException, ClassNotFoundException
   {
+    if (GraphicsEnvironment.isHeadless())
+    {
+      return;
+    }
+
     UIManager.setLookAndFeel(MetalLookAndFeel.class.getName());
-    FieldDefinition mockFieldDefinition = mock(FieldDefinition.class);
+    final FieldDefinition mockFieldDefinition = mock(FieldDefinition.class);
 
     when(mockFieldDefinition.getName()).thenReturn("Name");
     when(mockFieldDefinition.getDisplayName()).thenReturn("Name");
     when(mockFieldDefinition.getIcon()).thenReturn(null);
 
     final FormulaEditorDialog dialog = new FormulaEditorDialog();
-    Assert.assertEquals("java.awt.Dimension[width=778,height=442]", dialog.getMinimumSize().toString());
-    Assert.assertEquals("java.awt.Dimension[width=821,height=519]", dialog.getPreferredSize().toString());
-    Assert.assertEquals("java.awt.Dimension[width=821,height=519]", dialog.getSize().toString());
+    final Dimension minimumSize = dialog.getMinimumSize();
+    Assert.assertTrue(minimumSize.getWidth() > 700);
+    Assert.assertTrue(minimumSize.getHeight() > 400);
+    final Dimension size = dialog.getPreferredSize();
+    Assert.assertTrue(size.getWidth() > 700);
+    Assert.assertTrue(size.getHeight() > 400);
 
     Assert.assertEquals(dialog.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[]{mockFieldDefinition}), "=IF(condition; TRUE; FALSE)");
-
-    System.exit(0);
   }
 
+  @Test
+  public void testRunFormulaDialog() throws IOException
+  {
+    if (GraphicsEnvironment.isHeadless())
+    {
+      return;
+    }
+
+    final Enumeration<URL> resources = getClass().getClassLoader().getResources("simplelog.properties");
+    while (resources.hasMoreElements())
+    {
+      URL url = resources.nextElement();
+      System.out.println(url);
+    }
+    DebugLog.logHere();
+    final FormulaEditorDialog d = new FormulaEditorDialog();
+    d.editFormula("=IF(condition; TRUE; FALSE)", new FieldDefinition[] { new TestFieldDefinition("test")});
+  }
 }

@@ -48,7 +48,6 @@ public class ReportPreProcessorRegistry
   private ReportPreProcessorRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.backend = new HashMap<String, ReportPreProcessorMetaData>();
   }
 

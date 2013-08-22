@@ -31,18 +31,12 @@ import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentMetaData;
-import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
+import org.pentaho.reporting.libraries.formula.DefaultFormulaContextFactory;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.LibFormulaBoot;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/**
- * Creation-Date: 08.04.2007, 15:46:44
- *
- * @author Thomas Morgner
- */
 public class DefaultProcessingContext implements ProcessingContext
 {
   private FormulaContext formulaContext;
@@ -70,7 +64,6 @@ public class DefaultProcessingContext implements ProcessingContext
     resourceBundleFactory = new DefaultResourceBundleFactory();
     configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     reportEnvironment = new CachingReportEnvironment(new DefaultReportEnvironment(configuration));
     try
     {
@@ -80,8 +73,8 @@ public class DefaultProcessingContext implements ProcessingContext
     {
       this.contentBase = null;
     }
-    formulaContext = new DefaultFormulaContext(LibFormulaBoot.getInstance().getGlobalConfig(),
-        resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
+    formulaContext = DefaultFormulaContextFactory.INSTANCE.create
+        (resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
     metaData = new MemoryDocumentMetaData();
     compatibilityLevel = -1;
   }
@@ -150,8 +143,8 @@ public class DefaultProcessingContext implements ProcessingContext
     this.resourceManager = resourceManager;
     this.outputProcessorMetaData = outputProcessorMetaData;
     this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory(resourceBundleFactory, environment);
-    this.formulaContext = new DefaultFormulaContext(LibFormulaBoot.getInstance().getGlobalConfig(),
-        resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
+    this.formulaContext = DefaultFormulaContextFactory.INSTANCE.create
+        (resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
     this.configuration = configuration;
     if (metaData == null)
     {

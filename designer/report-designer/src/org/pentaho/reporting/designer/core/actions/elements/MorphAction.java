@@ -39,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.filter.types.DateFieldType;
 import org.pentaho.reporting.engine.classic.core.filter.types.MessageType;
@@ -74,6 +75,10 @@ public final class MorphAction extends AbstractElementSelectionAction implements
 
     settingsChanged();
     WorkspaceSettings.getInstance().addSettingsListener(this);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   public void settingsChanged()
@@ -211,7 +216,7 @@ public final class MorphAction extends AbstractElementSelectionAction implements
         // This stuff only applies if we're morphing TO a Message Type field
         final String srcField = (String) oldAttributes.getAttribute(CORE_NAMESPACE, FIELD_ATTRIBUTE); // and morphing FROM Number, Date, or Text Type field
         final String formatString = (String) oldAttributes.getAttribute(CORE_NAMESPACE, FORMAT_ATTRIBUTE);
-        final StringBuffer buffer = new StringBuffer();
+        final StringBuilder buffer = new StringBuilder();
         buffer.append("$(").append(srcField); //$NON-NLS-1$
         if (srcType instanceof NumberFieldType)
         {

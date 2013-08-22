@@ -56,6 +56,9 @@ public class SharedElementRenderer
   private boolean lastResult;
   private boolean warnMigration;
 
+  private TableLayoutProducer tableLayoutProducer;
+  private DesignerTableContentProducer tableContentProducer;
+
   public SharedElementRenderer(final ReportRenderContext reportRenderContext)
   {
     if (reportRenderContext == null)
@@ -103,10 +106,12 @@ public class SharedElementRenderer
   {
     return reportLayouter.getOutputProcessorMetaData();
   }
+
   public boolean isLayoutValid()
   {
-      return (this.layoutAge == masterReport.getChangeTracker());
+    return (this.layoutAge == masterReport.getChangeTracker());
   }
+
   public boolean performLayouting()
   {
     if (this.isLayoutValid())
@@ -144,14 +149,26 @@ public class SharedElementRenderer
       if (pageBox != null)
       {
         final OutputProcessorMetaData outputProcessorMetaData = getOutputProcessorMetaData();
-        final TableLayoutProducer tableLayoutProducer = new TableLayoutProducer(outputProcessorMetaData);
-        tableLayoutProducer.setProcessWatermark(false);
+        if (tableLayoutProducer == null)
+        {
+          tableLayoutProducer = new TableLayoutProducer(outputProcessorMetaData);
+          tableLayoutProducer.setProcessWatermark(false);
+        }
+        else
+        {
+          tableLayoutProducer.clear();
+        }
         // we need to work on a copy here, as the layout computation marks boxes as finished to keep track
         // of the progress.
         tableLayoutProducer.update(pageBox, false);
-        final SheetLayout layout = tableLayoutProducer.getLayout();
-        final DesignerTableContentProducer tableContentProducer =
-            new DesignerTableContentProducer(layout, outputProcessorMetaData);
+        if (tableContentProducer == null)
+        {
+          tableContentProducer = new DesignerTableContentProducer(tableLayoutProducer.getLayout(), outputProcessorMetaData);
+        }
+        else
+        {
+          tableContentProducer.reset(tableLayoutProducer.getLayout());
+        }
 
         conflicts.clear();
         conflicts = tableContentProducer.computeConflicts(pageBox, conflicts);
@@ -159,10 +176,8 @@ public class SharedElementRenderer
         // watermark needs extra pass, or it will produce bogus warnings.
         tableLayoutProducer.computeDesigntimeConflicts(pageBox.getWatermarkArea());
         final SheetLayout watermarkLayout = tableLayoutProducer.getLayout();
-        final DesignerTableContentProducer watermarkContentProducer =
-            new DesignerTableContentProducer(watermarkLayout, outputProcessorMetaData);
-        conflicts = watermarkContentProducer.computeBoxConflicts(pageBox, conflicts);
-
+        tableContentProducer.reset(watermarkLayout);
+        conflicts = tableContentProducer.computeWatermarkConflics(pageBox, conflicts);
 
         transferGlobalLayoutProcessor.performTransfer(pageBox, conflicts, masterReport);
       }

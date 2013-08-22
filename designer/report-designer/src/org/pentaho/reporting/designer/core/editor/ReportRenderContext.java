@@ -36,6 +36,8 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
+import org.pentaho.reporting.engine.classic.core.RootLevelBand;
+import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -112,6 +114,7 @@ public class ReportRenderContext
   private AutoInspectionRunner inspectionRunner;
   private NodeDeleteListener deleteListener;
   private HashMap<String, Object> properties;
+  private boolean bandedContext;
 
   public ReportRenderContext(final MasterReport masterReport)
   {
@@ -155,6 +158,8 @@ public class ReportRenderContext
     this.zoomModel = new ZoomModel();
     this.zoomModel.addZoomModelListener(new ZoomUpdateHandler());
 
+    this.bandedContext = computeBandedContext(parentContext);
+
     this.reportDataSchemaModel = new ReportDataSchemaModel(masterReportElement, report);
     if (!computationTarget)
     {
@@ -197,6 +202,43 @@ public class ReportRenderContext
       setProperty(AUTHENTICATION_STORE_PROPERTY, new ReportAuthenticationStore(globalAuthenticationStore));
     }
 
+  }
+
+  public boolean isBandedContext()
+  {
+    return bandedContext;
+  }
+
+  private boolean computeBandedContext(final ReportRenderContext parentContext)
+  {
+    if (parentContext == null)
+    {
+      return true;
+    }
+    if (reportDefinition instanceof MasterReport)
+    {
+      return true;
+    }
+    if (parentContext.isBandedContext() == false)
+    {
+      return false;
+    }
+
+    final Section parentSection = reportDefinition.getParentSection();
+    if (parentSection instanceof RootLevelBand == false)
+    {
+      return false;
+    }
+
+    final RootLevelBand rlb = (RootLevelBand) parentSection;
+    for (int i = 0; i < rlb.getSubReportCount(); i+= 1)
+    {
+      if (rlb.getSubReport(i) == reportDefinition)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   public ReportLayouter getReportLayouter()

@@ -234,7 +234,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     return ModelUtility.getVerticalLinealModel(element);
   }
 
-  public double getLayoutHeight()
+  public synchronized double getLayoutHeight()
   {
     if (computedBounds == null || sharedRenderer.isLayoutValid() == false)
     {
@@ -243,7 +243,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     return Math.max(computedBounds.getHeight(), getVisualHeight());
   }
 
-  public void invalidateLayout()
+  public synchronized void invalidateLayout()
   {
     // Set computedBounds to null to allow performLayouting() to recalculate them.
     computedBounds = null;
@@ -255,7 +255,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     {
       computedBounds = performLayouting();
     }
-    return new Rectangle2D.Double(0, 0, computedBounds.getWidth(),
+    return new Rectangle2D.Double(0, computedBounds.getY(), computedBounds.getWidth(),
         Math.max(computedBounds.getHeight(), getVisualHeight()));
   }
 
@@ -273,6 +273,10 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     if (sharedRenderer.performLayouting())
     {
       fireChangeEvent();
+      if (computedBounds == null)
+      {
+        refreshLayoutFromSharedRenderer();
+      }
       return computedBounds;
     }
     else
@@ -282,8 +286,6 @@ public abstract class AbstractElementRenderer implements ElementRenderer
       return new Rectangle2D.Double();
     }
   }
-
-
 
   private void refreshLayoutFromSharedRenderer()
   {
@@ -300,7 +302,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
     logicalPageDrawable = new DesignerPageDrawable(pageBox, outputProcessorMetaData, resourceManager, element);
     final StrictBounds bounds = logicalPageDrawable.getRootElementBounds();
-    computedBounds = StrictGeomUtility.createAWTRectangle(0, 0, pageBox.getWidth(), bounds.getHeight());
+    computedBounds = StrictGeomUtility.createAWTRectangle(0, bounds.getY(), pageBox.getWidth(), bounds.getHeight());
     if (getVisualHeight() < computedBounds.getHeight())
     {
       setVisualHeight(computedBounds.getHeight());
@@ -401,5 +403,10 @@ public abstract class AbstractElementRenderer implements ElementRenderer
       }
     }
     return elements.toArray(new Element[elements.size()]);
+  }
+
+  protected DesignerPageDrawable getLogicalPageDrawable()
+  {
+    return logicalPageDrawable;
   }
 }

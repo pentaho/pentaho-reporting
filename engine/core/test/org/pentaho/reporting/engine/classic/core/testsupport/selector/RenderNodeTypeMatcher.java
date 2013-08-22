@@ -39,7 +39,7 @@ public class RenderNodeTypeMatcher implements NodeMatcher
 
   private boolean eval(final RenderNode node)
   {
-    if ((node.getNodeType() & nodeTypeMask) == nodeTypeMask)
+    if (node.getNodeType() == nodeTypeMask)
     {
       return true;
     }

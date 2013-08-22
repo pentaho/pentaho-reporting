@@ -77,7 +77,6 @@ public class StraightToPlainText
     try
     {
       final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
       final Resource resource = mgr.createDirectly(templateURL, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
       // plain text does not support images, so we do not care about the logo ..

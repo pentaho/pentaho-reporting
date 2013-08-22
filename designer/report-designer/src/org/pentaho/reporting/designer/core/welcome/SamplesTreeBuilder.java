@@ -144,8 +144,6 @@ public class SamplesTreeBuilder
     try
     {
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
-
       final HashMap cache = loadFromCache(resourceManager);
 
       final File installationDirectory = SettingsUtil.computeInstallationDirectory();

@@ -51,7 +51,6 @@ public class InteractiveSwingDemo extends AbstractXmlDemoHandler
     try
     {
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       final Resource directly = resourceManager.createDirectly(getReportDefinitionSource(), MasterReport.class);
       return (MasterReport) directly.getResource();
     }

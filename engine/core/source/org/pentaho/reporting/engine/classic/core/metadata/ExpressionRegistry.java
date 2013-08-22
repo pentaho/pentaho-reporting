@@ -48,7 +48,6 @@ public class ExpressionRegistry
   private ExpressionRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     this.backend = new ConcurrentHashMap<String,ExpressionMetaData>();
   }
 

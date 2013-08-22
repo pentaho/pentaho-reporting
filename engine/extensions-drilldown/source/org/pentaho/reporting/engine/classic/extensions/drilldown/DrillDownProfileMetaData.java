@@ -32,7 +32,6 @@ public class DrillDownProfileMetaData
   private DrillDownProfileMetaData()
   {
     this.resourceManager = new ResourceManager();
-    this.resourceManager.registerDefaults();
     drillDownProfiles = new HashMap<String, DrillDownProfile>();
   }
 

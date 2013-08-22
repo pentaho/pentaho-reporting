@@ -27,8 +27,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
@@ -40,8 +38,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.pentaho.openformula.ui.model2.FormulaElement;
 import org.pentaho.openformula.ui.model2.FormulaTextElement;
@@ -52,7 +48,7 @@ import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
-public class DefaultFunctionParameterEditor extends JPanel implements FunctionParameterEditor
+public class DefaultFunctionParameterEditor extends JPanel implements FunctionParameterEditor, FieldDefinitionSource
 {
   private class FieldSelectorUpdateHandler implements PropertyChangeListener
   {
@@ -70,7 +66,17 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if (value != null)
       {
         final String text = FormulaUtil.quoteReference(value.getName());
-        setParameterValue(paramIndex, text);
+        final String parameterValue = getParameterValue(paramIndex);
+        final JTextField field = getParameterField(paramIndex);
+
+        final StringBuilder b = new StringBuilder(parameterValue);
+        // remove the selected content, if any
+        b.delete(field.getSelectionStart(), field.getSelectionEnd());
+        // then insert the new content at the cursor position
+        final int caretPosition = field.getCaretPosition();
+        b.insert(caretPosition, text);
+        setParameterValue(paramIndex, b.toString());
+        field.setCaretPosition(caretPosition + text.length());
       }
     }
   }
@@ -146,8 +152,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   private JTextField[] textFields;
   private SelectFieldAction[] selectFieldActions;
   private FieldDefinition[] fields;
-  private int functionStartIndex;
-//  private boolean performingUpdate;
 
   private boolean inParameterUpdate;
   private boolean inSetupUpdate;
@@ -198,6 +202,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
    * Determines whether the current context formula is the main one (the first
    * formula following the '=').  So '=COUNT(1;SUM(1;2;3))', COUNT would be
    * the main formula.  If context points to SUM then we return false.
+   *
    * @param context
    * @return - true if the context points to the left most outer formula.
    */
@@ -211,8 +216,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final FormulaElement mainFormulaElement = editorModel.getFormulaElementAt(1);
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
-    if ((mainFormulaElement != null) && (currentFunction.getFunctionOffset() == 1) &&
-        (((FormulaTextElement)mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
+    if ((mainFormulaElement != null) && (currentFunction != null) && (currentFunction.getFunctionOffset() == 1) &&
+        (((FormulaTextElement) mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
     {
       return true;
     }
@@ -230,6 +235,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
    * an embedded formula, the parameter fields for that embedded formula don't get displayed.
    * They get displayed if user points cursor over the formula or arrows over the formula -
    * just not when typing.
+   *
    * @param context
    * @return
    */
@@ -247,7 +253,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if ((parameterValue != null) && (parameterValue.startsWith(selectedFunction.getCanonicalName()) == true))
       {
         String updatedFormula = selectedFunction.getCanonicalName() + "(";
-        for (int paramIndex = 0; paramIndex < parameterValues.length; paramIndex++) {
+        for (int paramIndex = 0; paramIndex < parameterValues.length; paramIndex++)
+        {
           if (parameterValues[paramIndex] != null)
           {
             updatedFormula = updatedFormula + parameterValues[paramIndex];
@@ -267,6 +274,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         }
 
         textFields[i].setText(updatedFormula);
+        textFields[i].setCaretPosition(updatedFormula.length());
         return true;
       }
     }
@@ -285,6 +293,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         if (textFields[i] != null)
         {
           textFields[i].setText(string);
+          if (string != null)
+          {
+            textFields[i].setCaretPosition(string.length());
+          }
         }
       }
     }
@@ -301,7 +313,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     {
       inSetupUpdate = true;
 
-      final int functionStart = context.getFunctionParameterStartPosition();
       final FunctionDescription selectedFunction = context.getFunction();
       final String[] parameterValues = context.getParameterValues();
 
@@ -327,7 +338,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       }
 
       this.selectedFunction = selectedFunction;
-      this.functionStartIndex = functionStart;
 
       if (context.isSwitchParameterEditor() == false)
       {
@@ -385,13 +395,17 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final JLabel paramNameLabel = new JLabel(displayName);
     final JTextField paramTextField = new JTextField();
     paramTextField.setText(parameterValue);
+    if (parameterValue != null)
+    {
+      paramTextField.setCaretPosition(parameterValue.length());
+    }
     paramTextField.setFont
         (new Font(Font.MONOSPACED, paramTextField.getFont().getStyle(), paramTextField.getFont().getSize()));
 
     final FocusListenerHandler handler = new FocusListenerHandler(paramTextField, parameterPosition);
     paramTextField.addFocusListener(handler);
-    final SelectFieldAction action = new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition));
-    action.setFields(fields);
+    final SelectFieldAction action =
+        new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition), this);
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -490,6 +504,11 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     }
   }
 
+  protected JTextField getParameterField(final int field)
+  {
+    return textFields[field];
+  }
+
   public String getParameterValue(final int param)
   {
     return textFields[param].getText();
@@ -508,9 +527,24 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     listenerList.remove(ParameterUpdateListener.class, listener);
   }
 
+  public boolean isCatchAll(final String text)
+  {
+    if (text != null)
+    {
+      FunctionDescription selectedFunction = getSelectedFunction();
+      if ((text != null) && (selectedFunction != null) &&
+          text.contains("(") && text.contains(")") && (text.contains(selectedFunction.getCanonicalName())))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   protected void fireParameterUpdate(final int param, final String text)
   {
-    final boolean catchAllParameter = (param == getParameterCount() - 1);
+    final boolean catchAllParameter = isCatchAll(text);
     final ParameterUpdateListener[] updateListeners = listenerList.getListeners(ParameterUpdateListener.class);
     for (int i = 0; i < updateListeners.length; i++)
     {
@@ -524,9 +558,28 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     this.fields = fields.clone();
   }
 
+  public FieldDefinition[] getFields()
+  {
+    if (fields == null)
+    {
+      return new FieldDefinition[0];
+    }
+    return fields.clone();
+  }
+
   public int getParameterCount()
   {
-    return textFields.length;
+    int paramCount = 0;
+    for (int index = 0; index < textFields.length; index++)
+    {
+      final String parameterValue = getParameterValue(index);
+      if ((parameterValue != null) && (parameterValue.length() > 0))
+      {
+        paramCount++;
+      }
+    }
+
+    return paramCount;
   }
 
   public Component getEditorComponent()

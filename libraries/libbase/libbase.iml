@@ -12,19 +12,21 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/external/commons-logging-api-1.1.jar!/" />
+          <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/test-lib/junit-4.10.jar!/" />
+          <root url="file://$MODULE_DIR$/test-lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" />
       </library>
     </orderEntry>
   </component>

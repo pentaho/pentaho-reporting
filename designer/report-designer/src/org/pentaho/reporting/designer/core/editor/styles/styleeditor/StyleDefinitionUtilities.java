@@ -383,7 +383,6 @@ public class StyleDefinitionUtilities
       try
       {
         final ResourceManager mgr = new ResourceManager();
-        mgr.registerDefaults();
         final Resource directly = mgr.createDirectly(file, ElementStyleDefinition.class);
         styleDefinition = (ElementStyleDefinition) directly.getResource();
       }

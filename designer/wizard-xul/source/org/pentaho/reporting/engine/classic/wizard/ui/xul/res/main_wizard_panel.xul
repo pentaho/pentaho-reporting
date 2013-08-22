@@ -12,7 +12,7 @@
   >
   <pen:include src="dialog.xul" />
   <hbox id="main_box" padding="0" spacing="0">
-	  <vbox background="images/rdw_bg.jpg" width="200" height="400" padding="0" spacing="0">
+	  <vbox background="images/rdw_bg.png" width="200" height="400" padding="0" spacing="0">
 	  	<hbox flex="1" padding="0">
   		  <spacer width="2"/>
   		  <vbox flex="1" padding="0">

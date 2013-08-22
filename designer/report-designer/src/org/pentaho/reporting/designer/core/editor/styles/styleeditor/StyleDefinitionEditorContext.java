@@ -131,7 +131,7 @@ public class StyleDefinitionEditorContext
   {
     for (int i = 0; i < this.styleDefinition.getRuleCount(); i += 1)
     {
-      if (this.styleDefinition.getRule(i) == rule)
+      if (this.styleDefinition.getRule(i).equals(rule))
       {
         this.styleDefinition.removeRule(rule);
         fireRuleRemoved(rule);

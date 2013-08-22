@@ -29,11 +29,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ResizeRightDragOperation extends AbstractMouseDragOperation
 {
   private long snapThreshold;

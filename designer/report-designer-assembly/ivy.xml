@@ -20,7 +20,6 @@
 		<!-- report designer dependencies -->
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-cda" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-external" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-hibernate" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-jdbc" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-table" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
 		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-kettle" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
@@ -51,7 +50,7 @@
 		<dependency org="pentaho" name="pentaho-hadoop-hive-jdbc-shim" rev="${dependency.pentaho-hadoop-hive-jdbc-shim.revision}" conf="drivers->default" changing="true"  transitive="false"/>
 		
 		<!-- Kettle big-data plugin -->
-		<dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin}" conf="plugin->default" changing="true" transitive="false">
+		<dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
 			<artifact name="pentaho-big-data-plugin" type="zip"/>
 		</dependency>
     <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}" conf="plugin->default" changing="true" transitive="false">

@@ -826,6 +826,10 @@ public abstract class ExpressionEventHelper
         value = null;
       }
     }
+    catch (InvalidReportStateException fe)
+    {
+      throw fe;
+    }
     catch (Exception e)
     {
       logger.info("Evaluation of expression '" + name + "'failed.", e);

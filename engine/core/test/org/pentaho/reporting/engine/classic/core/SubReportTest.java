@@ -116,7 +116,6 @@ public class SubReportTest extends TestCase
     final URL url = getClass().getResource("subreport-test-master.xml");
     assertNotNull(url);
     final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport resource = (MasterReport) directly.getResource();
 

@@ -81,7 +81,6 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
@@ -310,8 +309,8 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
 
         setQueryName(selectedQuery.getQueryName());
         queryTextArea.setText(selectedQuery.getQuery());
-        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
         queryScriptTextArea.setText(selectedQuery.getScript());
+        setScriptingLanguage(selectedQuery.getScriptLanguage(), queryLanguageField);
       }
       finally
       {
@@ -770,8 +769,8 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
     // Load the current configuration
     if (dataFactory != null)
     {
-      setGlobalScriptingLanguage(dataFactory.getGlobalScriptLanguage());
       globalScriptTextArea.setText(dataFactory.getGlobalScript());
+      setGlobalScriptingLanguage(dataFactory.getGlobalScriptLanguage());
 
       final String[] queryNames = dataFactory.getQueryNames();
       for (int i = 0; i < queryNames.length; i++)

@@ -105,7 +105,6 @@ public class Sample3 {
 
       // Parse the report file
       final ResourceManager resourceManager = new ResourceManager();
-      resourceManager.registerDefaults();
       final Resource directly = resourceManager.createDirectly(reportDefinitionURL, MasterReport.class);
       return (MasterReport) directly.getResource();
     } catch (ResourceException e) {

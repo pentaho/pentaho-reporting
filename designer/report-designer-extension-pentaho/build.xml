@@ -1,5 +1,5 @@
 <!--===========================================================================
-  This is the build file for the pentaho-reporting-designer-datasources-hibernate project.
+  This is the build file for the pentaho-reporting-designer-ext-pentaho project.
   
   This build file will use the build-res/subfloor.xml file as the default build
   process and should only override the tasks that need to differ from
@@ -7,7 +7,7 @@
   
   See build-res/subfloor.xml for more details
 ============================================================================-->
-<project name="pentaho-reporting-designer-datasources-hibernate" basedir="." default="default">
+<project name="pentaho-reporting-designer-ext-pentaho" basedir="." default="default">
 
     <description>
         This build file is used to create the API project

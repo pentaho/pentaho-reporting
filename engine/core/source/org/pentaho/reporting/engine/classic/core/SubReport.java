@@ -112,6 +112,11 @@ public class SubReport extends AbstractReportDefinition
     return o;
   }
 
+  public void reconnectParent (final Section parentSection)
+  {
+    parentSection.registerAsChild(this);
+  }
+
   /**
    * Clones the report.
    *
@@ -403,9 +408,7 @@ public class SubReport extends AbstractReportDefinition
       parent = parent.getParentSection();
     }
 
-    final ResourceManager manager = new ResourceManager();
-    manager.registerDefaults();
-    return manager;
+    return new ResourceManager();
   }
 
   public ResourceBundleFactory getResourceBundleFactory()

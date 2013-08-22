@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public final class InsertGroupAction extends AbstractElementSelectionAction
@@ -187,9 +188,10 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
   }
 
-  /**
-   *
-   */
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+  }
+
   public void actionPerformed(final ActionEvent e)
   {
     final ReportRenderContext activeContext = getActiveContext();

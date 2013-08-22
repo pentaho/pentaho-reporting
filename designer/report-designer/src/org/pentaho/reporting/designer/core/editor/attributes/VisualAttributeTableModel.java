@@ -20,9 +20,9 @@ package org.pentaho.reporting.designer.core.editor.attributes;
 import java.beans.PropertyEditor;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -140,7 +140,7 @@ public class VisualAttributeTableModel extends AbstractAttributeTableModel imple
   {
     if (isSameElements(elements, getData(), getElementTypes()))
     {
-      pool.submit(new SameElementsUpdateDataTask(getDataBackend()));
+      SwingUtilities.invokeLater(new SameElementsUpdateDataTask(getDataBackend()));
       return;
     }
 

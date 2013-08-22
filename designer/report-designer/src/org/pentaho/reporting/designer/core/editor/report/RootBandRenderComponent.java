@@ -50,7 +50,7 @@ public class RootBandRenderComponent extends AbstractRenderComponent
 
   public RootBandRenderer getRendererRoot()
   {
-    return (RootBandRenderer)getElementRenderer();
+    return (RootBandRenderer) getElementRenderer();
   }
 
   public void installRenderer(final RootBandRenderer rendererRoot, final LinealModel horizontalLinealModel,
@@ -62,6 +62,10 @@ public class RootBandRenderComponent extends AbstractRenderComponent
 
   protected boolean isLocalElement(final ReportElement e)
   {
+    if (e == getRootBand())
+    {
+      return false;
+    }
     return ModelUtility.isDescendant(getRootBand(), e);
   }
 

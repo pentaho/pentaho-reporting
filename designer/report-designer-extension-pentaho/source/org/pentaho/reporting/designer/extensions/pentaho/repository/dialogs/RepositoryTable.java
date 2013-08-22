@@ -81,6 +81,16 @@ public class RepositoryTable extends JTable
     setDefaultRenderer(Object.class, new GenericCellRenderer());
   }
 
+  public boolean isShowHiddenFiles()
+  {
+    return repositoryTableModel.isShowHiddenFiles();
+  }
+
+  public void setShowHiddenFiles(final boolean showHiddenFiles)
+  {
+    repositoryTableModel.setShowHiddenFiles(showHiddenFiles);
+  }
+
   public String[] getFilters()
   {
     return repositoryTableModel.getFilters();

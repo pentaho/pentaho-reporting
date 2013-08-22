@@ -161,6 +161,7 @@ public class ModuleNodeFactory
           value.setBaseClass(Class.forName(entry.getClassName(), false, ObjectUtilities.getClassLoader(packageManager.getClass())));
           value.setHidden(entry.isHidden());
           value.setGlobal(entry.isGlobal());
+          value.setDescription(entry.getDescription());
           configEntryLookup.put(entry.getKey(), value);
           continue;
         }
@@ -176,6 +177,7 @@ public class ModuleNodeFactory
         value.setOptions(tags);
         value.setHidden(entry.isHidden());
         value.setGlobal(entry.isGlobal());
+        value.setDescription(entry.getDescription());
         configEntryLookup.put(entry.getKey(), value);
         continue;
       }
@@ -183,6 +185,7 @@ public class ModuleNodeFactory
       final TextConfigDescriptionEntry value = new TextConfigDescriptionEntry(entry.getKey());
       value.setHidden(entry.isHidden());
       value.setGlobal(entry.isGlobal());
+      value.setDescription(entry.getDescription());
       configEntryLookup.put(entry.getKey(), value);
     }
   }

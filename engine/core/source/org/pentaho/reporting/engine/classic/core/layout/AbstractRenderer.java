@@ -82,7 +82,6 @@ public abstract class AbstractRenderer implements Renderer
   private RollbackStep rollbackStep;
   private ApplyAutoCommitStep applyAutoCommitStep;
 
-  private OutputProcessorMetaData metaData;
   private OutputProcessor outputProcessor;
 
   private int pagebreaks;
@@ -99,7 +98,6 @@ public abstract class AbstractRenderer implements Renderer
   protected AbstractRenderer(final OutputProcessor outputProcessor)
   {
     this.outputProcessor = outputProcessor;
-    this.metaData = outputProcessor.getMetaData();
 
     this.validateModelStep = new ValidateModelStep();
     this.staticPropertiesStep = new ComputeStaticPropertiesProcessStep();
@@ -164,7 +162,7 @@ public abstract class AbstractRenderer implements Renderer
 
   protected OutputProcessorMetaData getMetaData()
   {
-    return metaData;
+    return getOutputProcessor().getMetaData();
   }
 
   public void setStateKey(final ReportStateKey stateKey)
@@ -203,8 +201,10 @@ public abstract class AbstractRenderer implements Renderer
 
   protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
   {
+    final OutputProcessorMetaData metaData = getMetaData();
     this.paranoidChecks = "true".equals(metaData.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks"));
+        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks")) &&
+        processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false;
     this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
     staticPropertiesStep.initialize(metaData, processingContext);

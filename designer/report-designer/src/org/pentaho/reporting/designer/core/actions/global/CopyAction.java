@@ -28,12 +28,8 @@ import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.dnd.ClipboardManager;
 import org.pentaho.reporting.designer.core.util.dnd.InsertationUtil;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class CopyAction extends AbstractElementSelectionAction
 {
   public CopyAction()
@@ -43,6 +39,10 @@ public class CopyAction extends AbstractElementSelectionAction
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("CopyAction.Mnemonic"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getCopyIcon());
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("CopyAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**

@@ -31,12 +31,12 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.tools.configeditor.ConfigEditorPane;
 
 public class ConfigurationEditorDialog extends CommonDialog
 {
   private ConfigEditorPane editorPane;
-  private boolean defaultSize;
 
   public ConfigurationEditorDialog()
   {
@@ -60,7 +60,7 @@ public class ConfigurationEditorDialog extends CommonDialog
     setTitle(Messages.getString("ConfigurationEditorDialog.Title"));
 
     editorPane = new ConfigEditorPane(ClassicEngineBoot.getInstance(), false);
-    editorPane.setPreferredSize(new Dimension(800,400));
+    editorPane.setPreferredSize(new Dimension(825,425));
     try
     {
       editorPane.load(false);
@@ -95,12 +95,6 @@ public class ConfigurationEditorDialog extends CommonDialog
     }
     editorPane.updateConfiguration(hconf);
 
-    if (defaultSize)
-    {
-      performInitialResize();
-      defaultSize = false;
-    }
-
     if (performEdit() == false)
     {
       return false;
@@ -127,8 +121,8 @@ public class ConfigurationEditorDialog extends CommonDialog
 
   protected void performInitialResize()
   {
-    super.performInitialResize();
-    defaultSize = true;
+    setSize(825,425);
+    LibSwingUtil.centerDialogInParent(this);
   }
   public static void main(final String[] args)
   {

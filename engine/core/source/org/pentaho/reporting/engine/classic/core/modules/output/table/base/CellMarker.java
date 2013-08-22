@@ -21,11 +21,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public interface CellMarker
 {
-  public static final int TYPE_INVALID = -1;
-  public static final int TYPE_NORMALFLOW = 0;
-  public static final int TYPE_HEADER = 1;
-  public static final int TYPE_FOOTER = 2;
-  public static final int TYPE_REPEAT_FOOTER = 3;
+  public enum SectionType
+  {
+    TYPE_INVALID, TYPE_NORMALFLOW, TYPE_HEADER, TYPE_FOOTER, TYPE_REPEAT_FOOTER;
+  }
 
   public long getContentOffset();
 
@@ -35,7 +34,7 @@ public interface CellMarker
 
   public RenderBox getContent();
 
-  public int getSectionType();
+  public SectionType getSectionType();
 
   public int getSectionDepth();
 }

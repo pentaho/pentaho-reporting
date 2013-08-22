@@ -27,9 +27,11 @@
                 transitive="true" changing="true" conf="default_external->default">
       <exclude org="org.eclipse.swt"/>
       <exclude org="pentaho" module="pentaho-xul-swt"/>
+      <exclude org="pentaho-kettle" module="kettle-ui-swt"/>
       <exclude org="org.eclipse.core"/>
       <exclude org="org.eclipse"/>
       <exclude org="org.eclipse.equinox"/>
+      <exclude org="org.eclipse.jdt"/>
       <exclude org="mysql"/>
       <exclude org="hsqldb"/>
       <exclude org="commons-logging"/>
@@ -39,7 +41,7 @@
     </dependency>
 
     <!-- External dependencies -->
-    <dependency org="commons-logging" name="commons-logging-api" rev="1.1" transitive="false" conf="default_external->default"/>
+    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="default_external->default"/>
     <dependency org="nickyb" name="sqleonardo" rev="2009.03.rc1"
                 transitive="false" conf="default_external->default"/>
     <dependency org="org.fife.ui" name="rsyntaxtextarea" rev="1.3.2"

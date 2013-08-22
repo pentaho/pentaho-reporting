@@ -9,7 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="extensions-charting" exported="" />
     <orderEntry type="module" module-name="extensions-drilldown" exported="" />
-    <orderEntry type="module" module-name="extensions-hibernate" exported="" />
     <orderEntry type="module" module-name="extensions-kettle" exported="" />
     <orderEntry type="module" module-name="extensions-mondrian" exported="" />
     <orderEntry type="module" module-name="extensions-olap4j" exported="" />

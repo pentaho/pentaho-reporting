@@ -72,7 +72,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
                               final ResourceManager resourceManager,
                               final Section section)
   {
-    super(rootBox, metaData, resourceManager);
+    init(rootBox, metaData, resourceManager);
     setDrawPageBackground(false);
     
     rootElementIds = new HashSet<InstanceID>();
@@ -132,22 +132,12 @@ public class DesignerPageDrawable extends LogicalPageDrawable
    * Draws the object.
    *
    * @param g2   the graphics device.
-   * @param area the area inside which the object should be drawn.
+   * @param area the area inside which the object should be drawn. This is the clipping area for the page.
    */
   public void draw(final Graphics2D g2, final Rectangle2D area)
   {
     setOutlineMode(WorkspaceSettings.getInstance().isAlwaysDrawElementFrames());
-    final Graphics2D graphics = (Graphics2D) g2.create();
-    try
-    {
-      graphics.translate(0, -StrictGeomUtility.toExternalValue(rootElementBounds.getY()));
-      graphics.clip(StrictGeomUtility.createAWTRectangle(rootElementBounds));
-      super.draw(graphics, area);
-    }
-    finally
-    {
-      graphics.dispose();
-    }
+    super.draw(g2, area);
   }
 
   protected void processRootBand(final StrictBounds pageBounds)
@@ -156,7 +146,7 @@ public class DesignerPageDrawable extends LogicalPageDrawable
     {
       final WatermarkAreaBox box = getRootBox().getWatermarkArea();
       setDrawArea(new StrictBounds(box.getX(), box.getY(), box.getWidth(), box.getHeight()));
-      getGraphics().setClip(createClipRect(getDrawArea()));
+      getGraphics().clip(createClipRect(getDrawArea()));
       startProcessing(box);
     }
     else if (subType == SectionSubType.HEADER)

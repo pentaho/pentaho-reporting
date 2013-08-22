@@ -30,10 +30,15 @@ import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilter;
+import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public abstract class LayoutAction extends AbstractElementSelectionAction implements ToggleStateAction
 {
+  private ReportModelEventFilter eventFilter;
   private String prefix;
   private String layoutMode;
 
@@ -50,12 +55,21 @@ public abstract class LayoutAction extends AbstractElementSelectionAction implem
 
     this.prefix = prefix;
     this.layoutMode = layoutMode;
+    this.eventFilter = new ReportModelEventFilterFactory().createStyleFilter(BandStyleKeys.LAYOUT);
 
     putValue(Action.NAME, ActionMessages.getString(prefix + ".Text"));
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString(prefix + ".Description"));
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic(prefix + ".Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke(prefix + ".Accelerator"));
     putValue(Action.SELECTED_KEY, Boolean.FALSE);
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
+    if (eventFilter.isFilteredEvent(event))
+    {
+      updateSelection();
+    }
   }
 
   public boolean isSelected()

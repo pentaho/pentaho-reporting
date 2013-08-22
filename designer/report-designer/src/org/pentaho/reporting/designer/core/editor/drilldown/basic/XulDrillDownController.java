@@ -8,6 +8,7 @@ public interface XulDrillDownController extends XulEventHandler
 {
   public DrillDownModel getModel();
   public void init(final ReportDesignerContext reportDesignerContext,
-                   final DrillDownModel model);
+                   final DrillDownModel model,
+                   final String[] extraFields);
   public void deactivate();
 }

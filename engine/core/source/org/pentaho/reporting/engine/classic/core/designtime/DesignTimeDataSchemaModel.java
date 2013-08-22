@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -27,11 +28,11 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironmentMapping;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
@@ -411,8 +412,8 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
 
     final LinkedMap columnNamesCollector = new LinkedMap();
 
-    final LinkedMap envCols = ReportEnvironmentDataRow.createEnvironmentMapping();
-    final Object[] envColArray = envCols.values();
+    final Map<String,String> envCols = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
+    final Object[] envColArray = envCols.values().toArray();
     for (int i = 0; i < envColArray.length; i++)
     {
       final String name = (String) envColArray[i];

@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -52,11 +51,13 @@ public class DrillDownEditor extends JPanel
   private ReportDesignerContext designerContext;
   private DrillDownUiProfile selectedProfile;
   private boolean editFormulaFragment;
+  private String[] fields;
 
   public DrillDownEditor()
   {
     // this.drillDownSelector = drillDownSelector;
     editorContainer = new JPanel();
+    fields = new String[0];
     editorContainer.setLayout(new BorderLayout());
 
     final JPanel cardHolder = new JPanel();
@@ -125,7 +126,7 @@ public class DrillDownEditor extends JPanel
     try
     {
       drillDownEditor = uiProfile.createUI();
-      drillDownEditor.init(DrillDownEditor.this, designerContext, model);
+      drillDownEditor.init(DrillDownEditor.this, designerContext, model, fields);
       editorContainer.add(drillDownEditor.getEditorPanel());
       editorContainer.revalidate();
     }
@@ -180,8 +181,15 @@ public class DrillDownEditor extends JPanel
   public boolean initialize(final ReportDesignerContext designerContext,
                             final String linkFormula,
                             final String tooltipFormula,
-                            final String targetFormula)
+                            final String targetFormula,
+                            final String[] fields)
   {
+    if (fields == null)
+    {
+      throw new NullPointerException();
+    }
+    this.fields = fields.clone();
+
     this.model.setTargetFormula(targetFormula);
     this.model.setTooltipFormula(tooltipFormula);
     if (designerContext != null)

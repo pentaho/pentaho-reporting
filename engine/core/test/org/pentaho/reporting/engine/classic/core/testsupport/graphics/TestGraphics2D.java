@@ -32,6 +32,12 @@ public class TestGraphics2D extends AbstractGraphics2D
 {
   public TestGraphics2D()
   {
+    this(2, 2);
+  }
+
+  public TestGraphics2D(final int width, final int height)
+  {
+    super(width, height);
   }
 
   protected boolean drawImage(final Image img,
@@ -94,6 +100,7 @@ public class TestGraphics2D extends AbstractGraphics2D
   public void drawString(final String str, final float x, final float y)
   {
     DebugLog.log("drawString(..): " + x + ", " + y + " = " + str);
+    DebugLog.log("drawString(..): CLIP=" + getClipBounds());
   }
 
   /**

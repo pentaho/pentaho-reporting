@@ -1,29 +1,31 @@
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
-import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class ReportEnvironmentDataRow implements DataRow
 {
-  private static final String ENV_MAPPING_KEY_PREFIX = "org.pentaho.reporting.engine.classic.core.env-mapping.";
   private ReportEnvironment environment;
   private LinkedHashMap<String,String> columnMap;
   private String[] columnNames;
 
   public ReportEnvironmentDataRow(final ReportEnvironment environment)
   {
-    final LinkedMap envMapping = createEnvironmentMapping();
+    this(environment, DefaultReportEnvironmentMapping.INSTANCE);
+  }
+
+  public ReportEnvironmentDataRow(final ReportEnvironment environment,
+                                  final ReportEnvironmentMapping reportEnvironmentMapping)
+  {
+    final Map<String,String> envMapping = reportEnvironmentMapping.createEnvironmentMapping();
     this.columnMap = new LinkedHashMap<String,String>();
-    final Object[] keys = envMapping.keys();
-    for (int i = 0; i < keys.length; i++)
+    for (final Map.Entry<String,String> entry: envMapping.entrySet())
     {
-      final String key = (String) keys[i];
-      final String value = (String) envMapping.get(key);
+      final String key = entry.getKey();
+      final String value = entry.getValue();
       if (StringUtils.isEmpty(key) == false && StringUtils.isEmpty(value) == false)
       {
         this.columnMap.put(value, key);
@@ -101,26 +103,6 @@ public class ReportEnvironmentDataRow implements DataRow
       return false;
     }
     return (envName.endsWith("-array")); // NON-NLS
-  }
-
-  /**
-   * Creates a ordered map that contains the environment names as keys and the data-row column names as values.
-   *
-   * @return the mapping from environment names to data-row column names.
-   */
-  public static LinkedMap createEnvironmentMapping()
-  {
-    final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator propertyKeys = configuration.findPropertyKeys(ENV_MAPPING_KEY_PREFIX);
-    final LinkedMap names = new LinkedMap();
-    while (propertyKeys.hasNext())
-    {
-      final String key = (String) propertyKeys.next();
-      final String value = configuration.getConfigProperty(key);
-      final String shortKey = key.substring(ENV_MAPPING_KEY_PREFIX.length());
-      names.put(shortKey, value);
-    }
-    return names;
   }
 
   public ReportEnvironment getEnvironment()

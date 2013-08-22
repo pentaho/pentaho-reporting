@@ -30,12 +30,8 @@ import org.pentaho.reporting.designer.core.util.dnd.ClipboardManager;
 import org.pentaho.reporting.designer.core.util.dnd.InsertationUtil;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class CutAction extends AbstractElementSelectionAction
 {
   public CutAction()
@@ -45,6 +41,10 @@ public class CutAction extends AbstractElementSelectionAction
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("CutAction.Mnemonic"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getCutIcon());
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("CutAction.Accelerator"));
+  }
+
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
+  {
   }
 
   /**
@@ -65,7 +65,7 @@ public class CutAction extends AbstractElementSelectionAction
       return;
     }
 
-    final ArrayList preparedElements = new ArrayList(selectedElements.length);
+    final ArrayList<Object> preparedElements = new ArrayList<Object>(selectedElements.length);
     final ArrayList<UndoEntry> undoEntries = new ArrayList<UndoEntry>(selectedElements.length);
     try
     {

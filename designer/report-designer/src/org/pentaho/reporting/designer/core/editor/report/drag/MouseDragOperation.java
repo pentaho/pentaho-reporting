@@ -19,11 +19,6 @@ package org.pentaho.reporting.designer.core.editor.report.drag;
 
 import java.awt.geom.Point2D;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface MouseDragOperation
 {
   public void update(final Point2D normalizedPoint, final double zoomFactor);
