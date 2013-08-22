@@ -416,7 +416,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final FocusListenerHandler handler = new FocusListenerHandler(paramTextField, parameterPosition);
     paramTextField.addFocusListener(handler);
     final SelectFieldAction action =
-        new SelectFieldAction(paramTextField, new FieldSelectorUpdateHandler(parameterPosition), this);
+        new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition), this);
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
