@@ -52,6 +52,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import org.pentaho.openformula.ui.model2.FormulaElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
 import org.pentaho.openformula.ui.util.SelectFieldAction;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -216,6 +217,34 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     {
     }
 
+
+    public boolean isEmbeddedFunction(final String parameterText)
+    {
+      // Determine if the parameter is a function (i.e. has '(' and ')').  If so,
+      // then figure if the
+      if (parameterText != null)
+      {
+        if (parameterText.contains("(") && parameterText.contains(")"))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    public boolean isMainFunction(final String parameterText, final FunctionInformation fn)
+    {
+      FormulaElement outerElement = editorModel.getFormulaElementAt(1);
+      if (parameterText.contains(fn.getCanonicalName()) &&
+          (outerElement != null) && (fn.getFunctionParameterStart() > outerElement.getEndOffset()))
+      {
+          return false;
+      }
+
+      return true;
+    }
+
     /**
      * This method gets called after each parameter text has been entered in the
      * parameter field.  If user is manually entering text in formula text-area,
@@ -248,8 +277,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
 
       // The text entered in a parameter field
       String parameterText = event.getText();
-      final boolean catchAllParameter = event.isCatchAllParameter();
-
+      final boolean catchAllParameter = isEmbeddedFunction(parameterText) && event.isCatchAllParameter();
 
       // Determine the start and end positions.  These positions will be used
       // to build the new formula text in formula text-area
@@ -272,7 +300,15 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       else if (catchAllParameter)
       {
         start = fn.getParamStart(globalParameterIndex);
-        end = fn.getParamEnd(functionParameterCount - 1);
+
+        if ((isMainFunction(parameterText, fn) == false) && (globalParameterIndex < fn.getParameterCount()))
+        {
+          end = fn.getParamEnd(globalParameterIndex);
+        }
+        else
+        {
+          end = fn.getParamEnd(globalParameterIndex - 1);
+        }
       }
       else
       {

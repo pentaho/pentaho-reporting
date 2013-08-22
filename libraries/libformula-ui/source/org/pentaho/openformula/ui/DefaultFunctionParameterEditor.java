@@ -216,7 +216,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final FormulaElement mainFormulaElement = editorModel.getFormulaElementAt(1);
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
-    if ((mainFormulaElement != null) && (currentFunction.getFunctionOffset() == 1) &&
+    if ((mainFormulaElement != null) && (currentFunction != null) && (currentFunction.getFunctionOffset() == 1) &&
         (((FormulaTextElement) mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
     {
       return true;
@@ -527,9 +527,24 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     listenerList.remove(ParameterUpdateListener.class, listener);
   }
 
+  public boolean isCatchAll(final String text)
+  {
+    if (text != null)
+    {
+      FunctionDescription selectedFunction = getSelectedFunction();
+      if ((text != null) && (selectedFunction != null) &&
+          text.contains("(") && text.contains(")") && (text.contains(selectedFunction.getCanonicalName())))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   protected void fireParameterUpdate(final int param, final String text)
   {
-    final boolean catchAllParameter = (param == getParameterCount() - 1);
+    final boolean catchAllParameter = isCatchAll(text);
     final ParameterUpdateListener[] updateListeners = listenerList.getListeners(ParameterUpdateListener.class);
     for (int i = 0; i < updateListeners.length; i++)
     {
@@ -554,7 +569,17 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   public int getParameterCount()
   {
-    return textFields.length;
+    int paramCount = 0;
+    for (int index = 0; index < textFields.length; index++)
+    {
+      final String parameterValue = getParameterValue(index);
+      if ((parameterValue != null) && (parameterValue.length() > 0))
+      {
+        paramCount++;
+      }
+    }
+
+    return paramCount;
   }
 
   public Component getEditorComponent()
