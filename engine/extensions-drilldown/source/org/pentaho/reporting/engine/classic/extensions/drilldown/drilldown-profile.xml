@@ -78,14 +78,14 @@
                        class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
                        bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
                        expert="false" hidden="false" deprecated="false" preferred="false">
-      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;/api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/viewer?&quot; &amp; [&quot;::parameter&quot;]</attribute>
+      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/viewer?&quot; &amp; [&quot;::parameter&quot;]</attribute>
       <attribute name="extension">prpt</attribute>
     </drilldown-profile>
     <drilldown-profile name="local-sugar-no-parameter"
                        class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
                        bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
                        expert="false" hidden="false" deprecated="false" preferred="false">
-      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;/api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/content?&quot; &amp; [&quot;::parameter&quot;]</attribute>
+      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/content?&quot; &amp; [&quot;::parameter&quot;]</attribute>
       <attribute name="extension">prpt</attribute>
     </drilldown-profile>
   </group></drilldown-profiles>
