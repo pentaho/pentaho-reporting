@@ -25,6 +25,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -57,6 +58,7 @@ public class FieldSelectorDialog extends CommonDialog
   public static final String SELECTED_DEFINITION_PROPERTY = "selectedDefinition";
   private JList fieldList;
   private FieldDefinition selectedDefinition;
+  private Component focusReturn;
 
   /**
    * Creates a non-modal dialog without a title with the specified <code>Dialog</code> as its owner.
@@ -91,6 +93,7 @@ public class FieldSelectorDialog extends CommonDialog
 
   protected void init()
   {
+    // focus logic currently depends on this
     setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
     fieldList = new JList(new FieldListModel());
@@ -143,6 +146,7 @@ public class FieldSelectorDialog extends CommonDialog
     return null;
   }
 
+
   protected boolean validateInputs(final boolean onConfirm)
   {
     if (onConfirm)
@@ -151,4 +155,21 @@ public class FieldSelectorDialog extends CommonDialog
     }
     return selectedDefinition != null;
   }
+
+  public void setFocusReturn(Component component) {
+    focusReturn = component;
+  }
+
+  private void close() {
+    if (focusReturn != null) {
+      focusReturn.requestFocusInWindow();
+    }
+  }
+
+  @Override
+  public void dispose() {
+    close();
+    super.dispose();
+  }
+
 }

@@ -75,7 +75,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         // then insert the new content at the cursor position
         final int caretPosition = field.getCaretPosition();
         b.insert(caretPosition, text);
-        setParameterValue(paramIndex, b.toString());
+        field.setText(b.toString());
         field.setCaretPosition(caretPosition + text.length());
       }
     }
@@ -86,12 +86,20 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     private JTextField paramTextField;
     private int parameterIndex;
     private String oldText;
+    private Component focusIgnore;
 
     private FocusListenerHandler(final JTextField paramTextField, final int parameterIndex)
     {
       this.paramTextField = paramTextField;
       this.parameterIndex = parameterIndex;
       this.oldText = this.paramTextField.getText();
+    }
+
+    /**
+     * @param toIgnoreFocus Focus loss to this component will not be treated as focus loss.
+     */
+    private void setFocusIgnore(Component toIgnoreFocus) {
+      focusIgnore = toIgnoreFocus;
     }
 
     public void focusGained(final FocusEvent e)
@@ -106,6 +114,9 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     public void focusLost(final FocusEvent e)
     {
+      if (focusIgnore != null && focusIgnore.equals(e.getOppositeComponent())) {
+        return;
+      }
       if (parameterUpdateInProgress)
       {
         parameterUpdateInProgress = false;
@@ -426,7 +437,12 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     gbc.gridx = 3;
     gbc.gridy = parameterPosition;
     gbc.anchor = GridBagConstraints.WEST;
-    this.parameterPane.add(new BorderlessButton(action), gbc);
+    Component actionButton = new BorderlessButton(action);
+    this.parameterPane.add(actionButton, gbc);
+
+    // treat insert field as parameter edit
+    handler.setFocusIgnore(actionButton);
+    action.setFocusReturn(paramTextField);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
