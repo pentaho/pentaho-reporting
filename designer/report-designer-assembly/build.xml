@@ -22,6 +22,7 @@
               description="This is the location of the standardized build-res/subfloor.xml file"/>
 
     <!-- Properties -->
+    <property name="lib.dir" value="${basedir}/lib"/>
     <property name="runtime-lib.dir" value="${basedir}/runtime-lib"/>
     <property name="driver-lib.dir" value="${lib.dir}/jdbc"/>
     <property name="resource.dir" value="${basedir}/resource"/>
@@ -31,9 +32,11 @@
     <property name="dist.type" value="ce"/>
     <property name="dist.name" value="${dist.base-name}-${dist.type}"/>
     <property name="resource-mac.dir" value="${basedir}/resource.mac"/>
+    <property name="resource-dev.dir" value="${basedir}/devresource"/>
 
     <property name="stage.dir.mac" value="${basedir}/stage-mac"/>
     <property name="report-designer.dir.mac" value="${stage.dir.mac}/Pentaho Report Designer.app"/>
+    <property name="report-designer.dir.mac.java" value="${report-designer.dir.mac}/Contents/Java"/>
 
     <property name="stage.dir.winlinux" value="${basedir}/stage-winlinux"/>
     <property name="report-designer.dir.winlinux" value="${stage.dir.winlinux}/report-designer"/>
@@ -143,42 +146,92 @@
 
     </target>
 
-    <target name="stage-mac">
-        <copy todir="${report-designer.dir.mac}" overwrite="true">
+	<!--=======================================================================
+		  install-mac-app-bundler
+		  
+	  (Fetches and) installs the MacApp Bundler for use by this ant script
+	  ====================================================================-->
+	<target name="install-mac-app-bundler" depends="install-ivy">
+	  <if>
+	    <istrue value="${mac-app-bundler.isinstalled}" />
+	    <then>
+	      <echo message="Skipping Mac App Bundler install.  Mac App Bundler been configured by the build" />
+	    </then>
+	    <else>
+	      <taskdef-with-ivy organisation="com.oracle"
+	                        module="appbundler"
+	                        revision="1.0"
+	          		classname="com.oracle.appbundler.AppBundlerTask" />
+	      <property name="mac-app-bundler.isinstalled" value="true" />
+	    </else>
+	  </if>
+	</target>
+	
+    <taskdef name="bundleapp" 
+        classname="com.oracle.appbundler.AppBundlerTask"
+     />   
+    
+    <target name="stage-mac" depends="install-mac-app-bundler">
+		<bundleapp outputdirectory="${stage.dir.mac}"
+			name="Pentaho Report Designer"
+			displayname="Pentaho Report Designer"
+			identifier="org.pentaho.reporting.designer.ReportDesigner"
+		    shortversion="${project.revision}"
+		    copyright="Copyright (c) 2008 - 2010 Pentaho Corporation.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation."
+			mainclassname="org.pentaho.commons.launcher.Launcher"
+		    icon="${resource-mac.dir}/Contents/Resources/pentaho_reporting.icns">
+		    <runtime dir="${mac.java.runtime.home}"/>
+		    <classpath file="${runtime-lib.dir}/pentaho-application-launcher-${dependency.launcher.revision}.jar"/>
+		    <librarypath dir="${lib.dir}"/>
+		    <option value="-Dapple.laf.useScreenMenuBar=true"/>
+		    <option value="-Xms256m"/>
+		    <option value="-Xmx512m"/>
+		</bundleapp>
+        
+        <loadfile property="bundle.document.types" srcFile="${resource-mac.dir}/Contents/BundleDocumentTypes.txt" />
+
+    <!-- this task adds additional key/values to the info.plist that can't be created with the 
+    	 bundleapp task -->
+        <replaceregexp file="${stage.dir.mac}/Pentaho Report Designer.app/Contents/info.plist"
+                       match="&lt;/dict&gt;\s*&lt;/plist&gt;"
+                       replace="${bundle.document.types}"
+       />
+        
+    <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
+        <copy file="${resource-mac.dir}/Contents/Resources/Java/launcher.properties" todir="${report-designer.dir.mac.java}"/>
+    
+    <!-- put the other resources into the root of the .app -->
+          <copy todir="${report-designer.dir.mac}" overwrite="true">
             <fileset dir="${resource.dir}">
                 <exclude name="docs/*"/>
-            </fileset>
-            <fileset dir="${resource-mac.dir}"/>
-            <fileset dir="${runtime-lib.dir}">
-                <include name="**/*.jar"/>
+                <!-- samples need to go into the Content directory for the app to find it -->
+                <exclude name="samples/*"/>
             </fileset>
         </copy>
+    
+     <!-- samples need to go into the Content directory for the app to find it -->
+        <copy todir="${report-designer.dir.mac}/Contents" overwrite="true">
+           <fileset dir="${resource.dir}">
+               <include name="samples/*"/>
+           </fileset>
+       </copy>
 
+     <!-- docs go into their own directory at the root of the bundle -->
         <copy todir="${report-designer.dir.mac}/docs" overwrite="true">
             <fileset dir="${doc.dir}">
                 <include name="**/*"/>
             </fileset>
         </copy>
-
-        <move file="${report-designer.dir.mac}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
-              tofile="${report-designer.dir.mac}/launcher.jar"/>
-
-        <copy todir="${report-designer.dir.mac}/lib" flatten="false" overwrite="true">
-            <fileset dir="${lib.dir}"/>
-        </copy>
-
     </target>
 
     <target name="dist-mac" depends="stage-mac">
         <zip destfile="${dist.dir}/${dist.name}-mac-${project.revision}.zip">
             <zipfileset dir="${stage.dir.mac}" filemode="755">
-                <include name="**/*.sh"/>
-                <include name="**/JavaApplicationStub"/>
-                <include name="**/run-mailcap"/>
+               <include name="**/*.sh"/>
+               <include name="**/run-mailcap"/>
             </zipfileset>
             <zipfileset dir="${stage.dir.mac}">
                 <exclude name="**/*.sh"/>
-                <exclude name="**/JavaApplicationStub"/>
                 <exclude name="**/run-mailcap"/>
             </zipfileset>
         </zip>

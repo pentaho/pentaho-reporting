@@ -1,0 +1,37 @@
+<key>CFBundleDocumentTypes</key>
+<array>
+<dict>
+<key>CFBundleTypeIconFile</key>
+<string>pentaho_reporting.icns</string>
+<key>CFBundleTypeRole</key>
+<string>Editor</string>
+<key>CFBundleTypeName</key>
+<string>Pentaho Reporting Bundle Definition</string>
+<key>LSHandlerRank</key>
+<string>Default</string>
+<key>CFBundleTypeExtensions</key>
+<array>
+<string>prpt</string>
+</array>
+</dict>
+<dict>
+<key>CFBundleTypeIconFile</key>
+<string>pentaho_reporting.icns</string>
+<key>CFBundleTypeRole</key>
+<string>Editor</string>
+<key>CFBundleTypeName</key>
+<string>Pentaho Reporting Legacy Definition</string>
+<key>LSHandlerRank</key>
+<string>Default</string>
+<key>CFBundleTypeExtensions</key>
+<array>
+<string>report</string>
+</array>
+</dict>
+</array>
+<key>CFBundleAllowMixedLocalizations</key>
+<string>true</string>
+<key>CFBundleGetInfoString</key>
+<string>Pentaho Reporting Designer 3.7. Copyright (c) 2008 - 2010 Pentaho Corporation</string>
+</dict>
+</plist>
