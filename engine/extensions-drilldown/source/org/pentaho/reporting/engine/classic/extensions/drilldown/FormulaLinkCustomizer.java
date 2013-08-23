@@ -193,7 +193,12 @@ public class FormulaLinkCustomizer implements LinkCustomizer
   {
     final String parameter = PatternLinkCustomizer.computeParameter(formulaContext, filterEntries(entries));
     final HashMap<String, Object> parameterValues = new HashMap<String, Object>();
-    parameterValues.put("::path", reportPath);
+    if (reportPath == null || reportPath.endsWith("/")) {
+      parameterValues.put("::path", reportPath);
+    } else {
+      // make sure the path ends in slash for consistency
+      parameterValues.put("::path", reportPath + "/");
+    }
     parameterValues.put("::parameter", parameter);
     parameterValues.put("::config", configIndicator);
     parameterValues.put("::entries", createEntryTable(entries));
