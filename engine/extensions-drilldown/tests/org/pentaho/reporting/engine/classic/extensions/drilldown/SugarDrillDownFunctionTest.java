@@ -34,9 +34,13 @@ public class SugarDrillDownFunctionTest extends FormulaTestBase
             "http://localhost:8080/pentaho/api/repos/:public:steel-wheels:test.prpt/viewer?test=value&mtest=v1&mtest=v2&mtest=v3"},
         {"DRILLDOWN(\"remote-sugar\"; \"ssh://domain.example\"; {\"::pentaho-path\" ; \"/public/steel-wheels/test.prpt\" | \"test\" ; \"value\" | \"mtest\" ; {\"v1\"; \"v2\"; \"v3\" }})",
             "ssh://domain.example/api/repos/:public:steel-wheels:test.prpt/viewer?test=value&mtest=v1&mtest=v2&mtest=v3"},
+        {"DRILLDOWN(\"remote-sugar\"; \"ssh://domain.example/\"; {\"::pentaho-path\" ; \"/public/steel-wheels/test.prpt\" | \"test\" ; \"value\" | \"mtest\" ; {\"v1\"; \"v2\"; \"v3\" }})",
+            "ssh://domain.example/api/repos/:public:steel-wheels:test.prpt/viewer?test=value&mtest=v1&mtest=v2&mtest=v3"},
         {"DRILLDOWN(\"local-sugar-no-parameter\"; \"ssh://domain.example\"; {\"::pentaho-path\" ; \"/public/steel-wheels/test.prpt\" | \"test\" ; \"value\" | \"mtest\" ; {\"v1\"; \"v2\"; \"v3\" }})",
             "http://localhost:8080/pentaho/api/repos/:public:steel-wheels:test.prpt/content?test=value&mtest=v1&mtest=v2&mtest=v3"},
         {"DRILLDOWN(\"remote-sugar-no-parameter\"; \"ssh://domain.example\"; {\"::pentaho-path\" ; \"/public/steel-wheels/test.prpt\" | \"test\" ; \"value\" | \"mtest\" ; {\"v1\"; \"v2\"; \"v3\" }})",
+            "ssh://domain.example/api/repos/:public:steel-wheels:test.prpt/content?test=value&mtest=v1&mtest=v2&mtest=v3"},
+        {"DRILLDOWN(\"remote-sugar-no-parameter\"; \"ssh://domain.example/\"; {\"::pentaho-path\" ; \"/public/steel-wheels/test.prpt\" | \"test\" ; \"value\" | \"mtest\" ; {\"v1\"; \"v2\"; \"v3\" }})",
             "ssh://domain.example/api/repos/:public:steel-wheels:test.prpt/content?test=value&mtest=v1&mtest=v2&mtest=v3"},
     };
   }
