@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.wizard.ui.xul.EmbeddedWizard;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
 
 public class NewWizardReportAction extends AbstractDesignerContextAction
@@ -92,7 +93,7 @@ public class NewWizardReportAction extends AbstractDesignerContextAction
           final OutputStream outputStream = bundle.createEntry(TRANSLATIONS_PROPERTIES, "text/plain");
           outputStream.write(defaultMessage.getBytes("ISO-8859-1"));
           outputStream.close();
-          bundle.getWriteableDocumentMetaData().setEntryAttribute(TRANSLATIONS_PROPERTIES, "sticky", "true");
+          bundle.getWriteableDocumentMetaData().setEntryAttribute(TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true");
         }
       }
       catch (Exception ex)
