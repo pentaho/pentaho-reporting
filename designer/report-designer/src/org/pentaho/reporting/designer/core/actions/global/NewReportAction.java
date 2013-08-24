@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
 
 /**
@@ -90,7 +91,7 @@ public final class NewReportAction extends AbstractDesignerContextAction
         final OutputStream outputStream = bundle.createEntry(TRANSLATIONS_PROPERTIES, "text/plain");// NON-NLS
         outputStream.write(defaultMessage.getBytes("ISO-8859-1"));// NON-NLS
         outputStream.close();
-        bundle.getWriteableDocumentMetaData().setEntryAttribute(TRANSLATIONS_PROPERTIES, "sticky", "true");// NON-NLS
+        bundle.getWriteableDocumentMetaData().setEntryAttribute(TRANSLATIONS_PROPERTIES, BundleUtilities.STICKY_FLAG, "true");// NON-NLS
       }
     }
     catch (Exception ex)
