@@ -45,7 +45,6 @@ public class MemDocBundleUpdateTest extends TestCase
 
     bundle.removeEntry("test.properties");
 
-    Thread.sleep(6000);
     final Properties p2 = new Properties();
     p2.setProperty("key", "value2");
 
@@ -55,5 +54,37 @@ public class MemDocBundleUpdateTest extends TestCase
 
     final Resource res2 = resourceManager.create(key, null, Properties.class);
     assertEquals(p2, res2.getResource());
+  }
+
+
+  public void testPrd4680() throws IOException, ResourceException, InterruptedException
+  {
+    final Properties p1 = new Properties();
+    p1.setProperty("key", "value1");
+
+    final MemoryDocumentBundle bundle = new MemoryDocumentBundle();
+    bundle.getWriteableDocumentMetaData().setBundleType("text/plain");
+    final OutputStream outputStream = bundle.createEntry("test.properties", "text/plain");
+    p1.store(outputStream, "run 1");
+    outputStream.close();
+
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG));
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG));
+
+    bundle.getWriteableDocumentMetaData().setEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG, "true");
+    assertEquals("true", bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG));
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG));
+
+    bundle.getWriteableDocumentMetaData().setEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG, "false");
+    assertEquals("true", bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG));
+    assertEquals("false", bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG));
+
+    bundle.getWriteableDocumentMetaData().setEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG, null);
+    assertEquals("true", bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG));
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG));
+
+    bundle.getWriteableDocumentMetaData().setEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG, null);
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.HIDDEN_FLAG));
+    assertNull(bundle.getMetaData().getEntryAttribute("test.properties", BundleUtilities.STICKY_FLAG));
   }
 }

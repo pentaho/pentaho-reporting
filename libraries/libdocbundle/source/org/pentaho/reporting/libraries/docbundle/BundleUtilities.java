@@ -56,7 +56,7 @@ public class BundleUtilities
 {
   private static final Log logger = LogFactory.getLog(BundleUtilities.class);
   public static final String STICKY_FLAG = "sticky";
-  public static final String HIDDEN_FLAG = "sticky";
+  public static final String HIDDEN_FLAG = "hidden";
 
   private BundleUtilities()
   {
