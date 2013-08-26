@@ -185,7 +185,7 @@
 		    <option value="-Xmx512m"/>
 		</bundleapp>
         
-        <loadfile property="bundle.document.types" srcFile="${resource-mac.dir}/Contents/BundleDocumentTypes.txt" />
+ 		<loadfile property="bundle.document.types" srcFile="${resource-mac.dir}/Contents/BundleDocumentTypes.txt" />
 
     <!-- this task adds additional key/values to the info.plist that can't be created with the 
     	 bundleapp task -->
@@ -226,10 +226,14 @@
             <zipfileset dir="${stage.dir.mac}" filemode="755">
                <include name="**/*.sh"/>
                <include name="**/run-mailcap"/>
+               <include name="**/*.command" />
+               <include name="**/JavaAppLauncher" />
             </zipfileset>
             <zipfileset dir="${stage.dir.mac}">
                 <exclude name="**/*.sh"/>
                 <exclude name="**/run-mailcap"/>
+            	<exclude name="**/.command"/>
+            	<exclude name="**/JavaAppLauncher" />
             </zipfileset>
         </zip>
     </target>
