@@ -56,6 +56,11 @@ public class TableLayoutTest extends TestCase
 
   public void testLayoutSmallToLarge() throws ReportProcessingException, ContentProcessingException
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final int[][] layout = new int[][]{
         {200, 400},
         {400, 800}
