@@ -36,7 +36,7 @@
 
     <dependency org="joda-time" name="joda-time" rev="1.6" transitive="false" conf="default_external->default"/>
     <dependency org="commons-collections" name="commons-collections" rev="3.2" conf="default_external->default"/>
-    <dependency org="commons-lang" name="commons-lang" rev="2.4" conf="default_external->default"/>
+    <dependency org="commons-lang" name="commons-lang" rev="2.6" conf="default_external->default"/>
     <dependency org="log4j" name="log4j" rev="1.2.14" transitive="false" conf="default_external->default"/>
     <dependency org="commons-pool" name="commons-pool" rev="1.2" conf="default_external->default">
       <exclude org="xerces" module="xerces"/>
