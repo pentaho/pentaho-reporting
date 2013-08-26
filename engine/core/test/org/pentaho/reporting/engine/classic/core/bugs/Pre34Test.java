@@ -52,6 +52,11 @@ public class Pre34Test extends TestCase
 
   public void testReportSizePRD4251() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL url = getClass().getResource("Pre-34.xml");
     assertNotNull(url);
     final ResourceManager resourceManager = new ResourceManager();
