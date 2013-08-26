@@ -48,6 +48,11 @@ public class Prd3689Test extends TestCase
 
   public void testRunReport() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final URL url = getClass().getResource("Prd-3689.prpt");
     assertNotNull(url);
     final ResourceManager resourceManager = new ResourceManager();

@@ -23,6 +23,11 @@ public class Prd3950Test extends TestCase
 
   public void testGoldRun () throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     File file = GoldTestBase.locateGoldenSampleReport("Prd-3950.prpt");
     ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();

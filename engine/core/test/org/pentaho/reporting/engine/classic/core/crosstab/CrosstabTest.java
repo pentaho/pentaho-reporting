@@ -54,6 +54,11 @@ public class CrosstabTest extends TestCase
 
   public void testBreaking1() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
   }

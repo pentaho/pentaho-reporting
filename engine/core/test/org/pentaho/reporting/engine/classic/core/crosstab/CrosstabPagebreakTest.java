@@ -24,6 +24,12 @@ public class CrosstabPagebreakTest extends TestCase
 
   public void testStandardReport() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
+
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3857-001.prpt");
     final Group rootGroup = report.getRootGroup();
     assertTrue(rootGroup instanceof CrosstabGroup);
@@ -48,6 +54,12 @@ public class CrosstabPagebreakTest extends TestCase
 
   public void testStandardReport2() throws Exception
   {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return;
+    }
+
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3857-001.prpt");
     final Group rootGroup = report.getRootGroup();
     assertTrue(rootGroup instanceof CrosstabGroup);
