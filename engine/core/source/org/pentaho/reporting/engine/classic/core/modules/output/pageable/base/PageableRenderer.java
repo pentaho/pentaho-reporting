@@ -36,7 +36,6 @@ import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class PageableRenderer extends AbstractRenderer

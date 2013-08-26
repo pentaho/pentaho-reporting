@@ -79,7 +79,7 @@ public class BeginDetailsHandler implements AdvanceHandler
     final ReportElement[] childs = next.getReport().getChildElementsByType(NoDataBandType.INSTANCE);
     if (childs.length > 0)
     {
-      return InlineSubreportProcessor.process(next, (RootLevelBand) childs[0]);
+      return InlineSubreportProcessor.processBandedSubReports(next, (RootLevelBand) childs[0]);
     }
     return next;
   }

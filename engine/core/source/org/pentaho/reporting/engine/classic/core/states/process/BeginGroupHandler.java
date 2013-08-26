@@ -77,7 +77,7 @@ public class BeginGroupHandler implements AdvanceHandler
 
     final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
     final RootLevelBand rootLevelBand = group.getHeader();
-    return InlineSubreportProcessor.process(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
   }
 
   public boolean isFinish()

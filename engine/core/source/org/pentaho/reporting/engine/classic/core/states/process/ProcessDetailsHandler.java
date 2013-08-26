@@ -64,7 +64,7 @@ public class ProcessDetailsHandler implements AdvanceHandler
     if (InlineSubreportProcessor.hasSubReports(next, childs))
     {
       next.setAdvanceHandler(JoinDetailsHandler.HANDLER);
-      return InlineSubreportProcessor.process(next, childs);
+      return InlineSubreportProcessor.processBandedSubReports(next, childs);
     }
 
     return JoinDetailsHandler.HANDLER.commit(next);
