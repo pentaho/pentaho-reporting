@@ -599,7 +599,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     if (y < paginationTableState.getPageEnd())
     {
       final ReportStateKey stateKey = box.getStateKey();
-      if (stateKey != null)
+      if (stateKey != null && stateKey.isInlineSubReportState() == false)
       {
         this.visualState = stateKey;
       }
@@ -620,7 +620,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
 
     final ReportStateKey reportStateKey = findOldestProcessKeyStep.find(box);
-    if (reportStateKey != null)
+    if (reportStateKey != null && reportStateKey.isInlineSubReportState() == false)
     {
       this.visualState = reportStateKey;
     }

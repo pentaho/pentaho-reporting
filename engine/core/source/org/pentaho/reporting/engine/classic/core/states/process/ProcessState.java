@@ -350,7 +350,7 @@ public class ProcessState implements ReportState
     this.structureFunctionStorage = new FunctionStorage();
     this.sequenceCounter = 0;
     this.processKey = new ReportStateKey
-        (null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false);
+        (null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false, false);
     this.dataFactoryManager = new DataFactoryManager();
     this.subReportStorage = new SubReportStorage();
     this.processHandle = new InternalProcessHandle(dataFactoryManager);
@@ -1051,12 +1051,14 @@ public class ProcessState implements ReportState
     {
       return new ReportStateKey(parent.createKey(),
           getCurrentRow(), getEventCode(),
-          getCurrentGroupIndex(), getCurrentSubReport(), sequenceCounter, advanceHandler.isRestoreHandler());
+          getCurrentGroupIndex(), getCurrentSubReport(),
+          sequenceCounter, advanceHandler.isRestoreHandler(),
+          isInlineProcess());
     }
 
     return new ReportStateKey(null, getCurrentRow(),
         getEventCode(), getCurrentGroupIndex(), getCurrentSubReport(),
-        sequenceCounter, advanceHandler.isRestoreHandler());
+        sequenceCounter, advanceHandler.isRestoreHandler(), false);
   }
 
   public void setAdvanceHandler(final AdvanceHandler advanceHandler)

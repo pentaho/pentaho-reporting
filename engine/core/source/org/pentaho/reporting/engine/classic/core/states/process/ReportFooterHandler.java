@@ -53,7 +53,7 @@ public class ReportFooterHandler implements AdvanceHandler
 
     final RootLevelBand rootLevelBand = next.getReport().getReportFooter();
 
-    return InlineSubreportProcessor.process(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
   }
 
   public boolean isFinish()

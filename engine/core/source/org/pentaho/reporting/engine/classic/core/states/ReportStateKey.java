@@ -38,6 +38,10 @@ public class ReportStateKey
   private int sequenceCounter;
   private boolean restoreState;
 
+  // if true, indicates that an inline-subreport generated this content. Therefore it must be ignored for the
+  // purpose of finding visual content to mark page-break positions.
+  private boolean inlineSubReportState;
+
   public ReportStateKey()
   {
   }
@@ -48,7 +52,8 @@ public class ReportStateKey
                         final int groupLevel,
                         final int subreport,
                         final int sequenceCounter,
-                        final boolean restoreState)
+                        final boolean restoreState,
+                        final boolean inlineSubReportState)
   {
     this.parent = parent;
     this.cursor = cursor;
@@ -57,6 +62,7 @@ public class ReportStateKey
     this.subreport = subreport;
     this.sequenceCounter = sequenceCounter;
     this.restoreState = restoreState;
+    this.inlineSubReportState = inlineSubReportState;
   }
 
   /**
@@ -145,12 +151,18 @@ public class ReportStateKey
       result = 29 * result + groupLevel;
       result = 29 * result + subreport;
       result = 29 * result + (restoreState ? 1 : 0);
-      hashCode = new Integer(result);
+      result = 29 * result + (inlineSubReportState ? 1 : 0);
+      //noinspection UnnecessaryBoxing
+      hashCode = Integer.valueOf(result);
       return result;
     }
     return hashCode.intValue();
   }
 
+  public boolean isInlineSubReportState()
+  {
+    return inlineSubReportState;
+  }
 
   public String toString()
   {
@@ -161,6 +173,7 @@ public class ReportStateKey
         ", subreport=" + subreport +
         ", stateCode=" + ReportEvent.translateStateCode(stateCode) +
         ", restoreState=" + restoreState +
+        ", inlineSubReport=" + inlineSubReportState +
         ", stateCodeRaw=0x" + Integer.toHexString(stateCode) +
         ", parent=" + parent +
         '}';

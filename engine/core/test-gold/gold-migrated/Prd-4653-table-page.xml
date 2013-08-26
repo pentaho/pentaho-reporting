@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="5" row-count="10">
+    <cols>
+      <column width="20"/>
+      <column width="280"/>
+      <column width="422"/>
+      <column width="2.667"/>
+      <column width="0.333"/>
+    </cols>
+    <row height="5">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="32">
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Report Title"/>
+        <line type="ParagraphPoolBox" x="300.0" y="5.0" width="116.472" height="24.0" color="black" font-face="Times New Roman" font-size="24" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.0" y="5.0" width="65.256" height="24.0">Report</text>
+          <spacer width="6.0" height="0.0" preserve="true"/>
+          <text x="371.256" y="5.0" width="45.216" height="24.0">Title</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell background-color="#0070c0" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="SUB REPORT"/>
+        <line type="ParagraphPoolBox" x="324.856" y="41.0" width="72.288" height="12.0" color="white" font-face="Times New Roman" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="324.856" y="41.0" width="23.328" height="12.0">SUB</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="351.184" y="41.0" width="45.96" height="12.0">REPORT</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="13.333">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="no-data-band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="65.333">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"/>
+        <line type="ParagraphPoolBox" x="0.0" y="70.333" width="722.0" height="14.0" color="black" font-face="Times New Roman" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="70.333" width="37.282" height="14.0">Lorem</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="41.16547" y="70.333" width="34.202" height="14.0">ipsum</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="79.25094" y="70.333" width="29.54" height="14.0">dolor</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="112.67441" y="70.333" width="13.202" height="14.0">sit</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="129.75988" y="70.333" width="30.66" height="14.0">amet,</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="164.30335" y="70.333" width="63.672" height="14.0">consectetur</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="231.85882" y="70.333" width="61.362" height="14.0">adipisicing</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="297.10429" y="70.333" width="21.336" height="14.0">elit,</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="322.32376" y="70.333" width="18.648" height="14.0">sed</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="344.85523" y="70.333" width="14.0" height="14.0">do</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="362.7387" y="70.333" width="47.404" height="14.0">eiusmod</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="414.02617" y="70.333" width="39.62" height="14.0">tempor</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="457.52964" y="70.333" width="56.714" height="14.0">incididunt</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="518.12711" y="70.333" width="10.878" height="14.0">ut</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="532.88858" y="70.333" width="34.944" height="14.0">labore</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="571.71605" y="70.333" width="10.08" height="14.0">et</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="585.67952" y="70.333" width="35.742" height="14.0">dolore</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="625.30499" y="70.333" width="37.282" height="14.0">magna</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="666.47046" y="70.333" width="37.66" height="14.0">aliqua.</text>
+          <spacer width="3.88347" height="0.0" preserve="true"/>
+          <text x="708.01393" y="70.333" width="13.986" height="14.0">Ut</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="84.333" width="722.0" height="14.0" color="black" font-face="Times New Roman" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="84.333" width="27.958" height="14.0">enim</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="31.574" y="84.333" width="13.202" height="14.0">ad</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="48.392" y="84.333" width="36.512" height="14.0">minim</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="88.52" y="84.333" width="44.66" height="14.0">veniam,</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="136.796" y="84.333" width="23.324" height="14.0">quis</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="163.736" y="84.333" width="41.986" height="14.0">nostrud</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="209.338" y="84.333" width="65.982" height="14.0">exercitation</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="278.936" y="84.333" width="45.038" height="14.0">ullamco</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="327.59" y="84.333" width="38.066" height="14.0">laboris</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="369.272" y="84.333" width="20.202" height="14.0">nisi</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="393.09" y="84.333" width="10.878" height="14.0">ut</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="407.584" y="84.333" width="38.836" height="14.0">aliquip</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="450.036" y="84.333" width="13.202" height="14.0">ex</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="466.854" y="84.333" width="12.404" height="14.0">ea</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="482.874" y="84.333" width="55.958" height="14.0">commodo</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="542.448" y="84.333" width="59.43" height="14.0">consequat.</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="605.494" y="84.333" width="26.432" height="14.0">Duis</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="635.542" y="84.333" width="23.282" height="14.0">aute</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="662.44" y="84.333" width="26.404" height="14.0">irure</text>
+          <spacer width="3.616" height="0.0" preserve="true"/>
+          <text x="692.46" y="84.333" width="29.54" height="14.0">dolor</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="98.333" width="722.0" height="14.0" color="black" font-face="Times New Roman" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="98.333" width="10.878" height="14.0">in</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="15.93482" y="98.333" width="74.55" height="14.0">reprehenderit</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="95.54164" y="98.333" width="10.878" height="14.0">in</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="111.47646" y="98.333" width="52.038" height="14.0">voluptate</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="168.57128" y="98.333" width="24.836" height="14.0">velit</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="198.4641" y="98.333" width="23.296" height="14.0">esse</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="226.81692" y="98.333" width="35.714" height="14.0">cillum</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="267.58774" y="98.333" width="35.742" height="14.0">dolore</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="308.38656" y="98.333" width="13.202" height="14.0">eu</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="326.64538" y="98.333" width="32.62" height="14.0">fugiat</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="364.3222" y="98.333" width="27.958" height="14.0">nulla</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="397.33702" y="98.333" width="46.984" height="14.0">pariatur.</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="449.37784" y="98.333" width="56.686" height="14.0">Excepteur</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="511.12066" y="98.333" width="20.202" height="14.0">sint</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="536.37948" y="98.333" width="48.09" height="14.0">occaecat</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="589.5263" y="98.333" width="51.24" height="14.0">cupidatat</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="645.82312" y="98.333" width="21.0" height="14.0">non</text>
+          <spacer width="5.05682" height="0.0" preserve="true"/>
+          <text x="671.87994" y="98.333" width="50.12" height="14.0">proident,</text>
+        </line>
+        <line type="ParagraphPoolBox" x="0.0" y="112.333" width="722.0" height="14.0" color="black" font-face="Times New Roman" font-size="14" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="112.333" width="23.324" height="14.0">sunt</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="65.4632" y="112.333" width="10.878" height="14.0">in</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="118.4804" y="112.333" width="30.282" height="14.0">culpa</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="190.9016" y="112.333" width="17.878" height="14.0">qui</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="250.9188" y="112.333" width="36.484" height="14.0">officia</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="329.542" y="112.333" width="47.39" height="14.0">deserunt</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="419.0712" y="112.333" width="33.39" height="14.0">mollit</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="494.6004" y="112.333" width="27.958" height="14.0">anim</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="564.6976" y="112.333" width="10.878" height="14.0">id</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="617.7148" y="112.333" width="15.526" height="14.0">est</text>
+          <spacer width="42.1392" height="0.0" preserve="true"/>
+          <text x="675.38" y="112.333" width="46.62" height="14.0">laborum</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="16">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <cell background-color="#0070c0" row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Group footer"/>
+        <line type="ParagraphPoolBox" x="336.3785" y="154.166" width="51.91" height="10.0" color="white" font-face="Times New Roman" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="336.3785" y="154.166" width="25.55" height="10.0">Group</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="364.4285" y="154.166" width="23.86" height="10.0">footer</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="369.334">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="MMM-dd-yyyy"/>
+        <line type="ParagraphPoolBox" x="20.0" y="541.0" width="41.768" height="8.0" color="black" font-face="Times New Roman" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="20.0" y="541.0" width="41.768" height="8.0">Apr-07-2011</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+  <table col-count="3" row-count="8">
+    <cols>
+      <column width="20"/>
+      <column width="520"/>
+      <column width="182"/>
+    </cols>
+    <row height="20">
+      <cell background-color="#cccccc" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Duplicate content, you should see this message twice in the second page"/>
+        <line type="ParagraphPoolBox" x="187.54" y="4.0" width="346.92" height="12.0" color="black" font-face="Times New Roman" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="187.54" y="4.0" width="46.584" height="12.0">Duplicate</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="237.124" y="4.0" width="38.28" height="12.0">content,</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="278.404" y="4.0" width="18.0" height="12.0">you</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="299.404" y="4.0" width="31.992" height="12.0">should</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="334.396" y="4.0" width="15.3" height="12.0">see</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="352.696" y="4.0" width="17.316" height="12.0">this</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="373.012" y="4.0" width="40.608" height="12.0">message</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="416.62" y="4.0" width="25.944" height="12.0">twice</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="445.564" y="4.0" width="9.324" height="12.0">in</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="457.888" y="4.0" width="14.64" height="12.0">the</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="475.528" y="4.0" width="33.3" height="12.0">second</text>
+          <spacer width="3.0" height="0.0" preserve="true"/>
+          <text x="511.828" y="4.0" width="22.632" height="12.0">page</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Dup 1"/>
+        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="24.72" height="10.0" color="black" font-face="Times New Roman" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="20.0" width="17.22" height="10.0">Dup</text>
+          <spacer width="2.5" height="0.0" preserve="true"/>
+          <text x="19.72" y="20.0" width="5.0" height="10.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="15">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Customer Name"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="22">
+      <cell background-color="#0070c0" row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Dup 2"/>
+        <line type="ParagraphPoolBox" x="0.0" y="55.0" width="19.776" height="8.0" color="white" font-face="Times New Roman" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="55.0" width="13.776" height="8.0">Dup</text>
+          <spacer width="2.0" height="0.0" preserve="true"/>
+          <text x="15.776" y="55.0" width="4.0" height="8.0">2</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="2">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="457">
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Not Dup"/>
+        <line type="ParagraphPoolBox" x="585.899" y="79.0" width="27.768" height="8.0" color="black" font-face="Times New Roman" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="585.899" y="79.0" width="11.992" height="8.0">Not</text>
+          <spacer width="2.0" height="0.0" preserve="true"/>
+          <text x="599.891" y="79.0" width="13.776" height="8.0">Dup</text>
+        </line>
+      </cell>
+    </row>
+    <row height="5">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="MMM-dd-yyyy"/>
+        <line type="ParagraphPoolBox" x="20.0" y="541.0" width="41.768" height="8.0" color="black" font-face="Times New Roman" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="20.0" y="541.0" width="41.768" height="8.0">Apr-07-2011</text>
+        </line>
+      </cell>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>
