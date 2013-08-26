@@ -67,11 +67,6 @@ public class FormulaEditorModel
     return document.getElementAtPosition(index);
   }
 
-  public void updateParameterText(final int start, final int end, final String newText, final boolean hasDummyParams)
-  {
-    document.updateParameterText(start, end, newText, hasDummyParams);
-  }
-
   public void revalidateStructure()
   {
     document.revalidateStructure();
