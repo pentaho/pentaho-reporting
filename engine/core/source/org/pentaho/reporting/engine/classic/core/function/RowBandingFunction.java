@@ -225,7 +225,8 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
   private void triggerVisibleState(final ReportEvent event)
   {
     // avoid divide by zero exception
-    if(count == 0 || numberOfElements == 0){
+    if(numberOfElements == 0)
+    {
       return;
     }
 
