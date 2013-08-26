@@ -126,7 +126,6 @@ public class FormulaEditorPanelTest extends TestCase
   }
 
 
-  // TODO: Fix this test case.
   public void testValidateAddingAConstantToSumFunction()
   {
     FormulaEditorPanel panel = new FormulaEditorPanel();
@@ -137,6 +136,7 @@ public class FormulaEditorPanelTest extends TestCase
 
     MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
     DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+    activeEditor.addParameterUpdateListener(panel.getParameterUpdateHandler());
 
     activeEditor.fireParameterUpdate(0, "1");
     activeEditor.fireParameterUpdate(1, "2");
@@ -375,6 +375,26 @@ public class FormulaEditorPanelTest extends TestCase
     activeEditor.fireParameterUpdate(1, "IF(1;2;3)");
 
     assertEquals("=IF(Logical;IF(1;2;3);Any)", panel.getFormulaText());
+  }
+
+  public void testDrilldownFormulaChangingBrowseLocation()
+  {
+    final String drillDownFormulaBase = "DRILLDOWN(\"local-sugar\"; NA(); {\"::pentaho-path\";";
+    FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=" + drillDownFormulaBase + " \"/public/bi-developers/steel-wheels-old/reports/Top N Analysis.prpt\"})");
+
+    MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+    activeEditor.addParameterUpdateListener(panel.getParameterUpdateHandler());
+
+    final String newDrillDownFormula = drillDownFormulaBase + " \"/public/bi-developers/steel-wheels-old/reports/Buyer Product Analysis.prpt\"})";
+    FormulaEditorPanel.ParameterUpdateHandler handler = panel.getParameterUpdateHandler();
+    ParameterUpdateEvent event = new ParameterUpdateEvent(activeEditor, -1, newDrillDownFormula, false);
+    handler.parameterUpdated(event);
+
+    assertEquals("=" + newDrillDownFormula, panel.getFormulaText());
   }
 
 

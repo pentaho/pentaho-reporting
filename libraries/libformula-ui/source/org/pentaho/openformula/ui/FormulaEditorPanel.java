@@ -211,7 +211,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     }
   }
 
-  private class ParameterUpdateHandler implements ParameterUpdateListener
+  public class ParameterUpdateHandler implements ParameterUpdateListener
   {
     private ParameterUpdateHandler()
     {
@@ -326,9 +326,6 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       // Rebuild the element nodes based on this new representation.
       editorModel.setFormulaText(formulaText.toString());
 
-      // Handle any dummy parameters
-      editorModel.updateParameterText(start, end, parameterText, (globalParameterIndex != -1));
-
       // Update for formula text-area
       functionTextArea.setText(formulaText.toString());
       functionTextArea.setCaretPosition(parameterText.length() + start);
@@ -413,6 +410,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
   private SelectFieldAction selectFieldsAction;
   private JToolBar operatorPanel;
   private DocumentSyncHandler docSyncHandler;
+  private ParameterUpdateHandler parameterUpdateHandler;
 
   public FormulaEditorPanel()
   {
@@ -509,7 +507,9 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
 
     functionInformationPanel = new FunctionInformationPanel();
     functionParameterEditor = new MultiplexFunctionParameterEditor();
-    functionParameterEditor.addParameterUpdateListener(new ParameterUpdateHandler());
+
+    parameterUpdateHandler = new ParameterUpdateHandler();
+    functionParameterEditor.addParameterUpdateListener(parameterUpdateHandler);
 
     functionTextArea = new JTextArea();
     this.setDocSyncHandler(new DocumentSyncHandler());
@@ -623,6 +623,11 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     operatorButtonPanel.add(Box.createRigidArea(new Dimension(10, 1)));
     operatorButtonPanel.add(new ToolbarButton(selectFieldsAction));
     return operatorButtonPanel;
+  }
+
+  public ParameterUpdateHandler getParameterUpdateHandler()
+  {
+    return parameterUpdateHandler;
   }
 
   public String getFormulaText()
