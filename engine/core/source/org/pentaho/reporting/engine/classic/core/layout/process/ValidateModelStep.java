@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class ValidateModelStep extends IterateStructuralProcessStep
 {
   private static class TableValidationInfo
@@ -119,6 +120,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     result = true;
     // do not validate the header or footer or watermark sections..
     processBoxChilds(root);
+    if (logger.isDebugEnabled())
     logger.debug("Validation result: " + result);
     return result;
   }
@@ -132,7 +134,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
-      result &= box.isValidateModelResult();
+      result = box.isValidateModelResult();
       return false;
     }
 
@@ -168,7 +170,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
-      result &= box.isValidateModelResult();
+      result = box.isValidateModelResult();
       return false;
     }
 
@@ -254,7 +256,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (box.isValidateModelCacheValid())
     {
-      result &= box.isValidateModelResult();
+      result = box.isValidateModelResult();
       return false;
     }
 
@@ -315,7 +317,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
     if (table.isValidateModelCacheValid())
     {
-      result &= table.isValidateModelResult();
+      result = table.isValidateModelResult();
       return true;
     }
 
@@ -417,7 +419,6 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   {
     return result;
   }
-
 
   protected boolean isResult()
   {

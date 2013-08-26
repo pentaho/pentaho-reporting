@@ -540,7 +540,7 @@ public abstract class AbstractRenderer implements Renderer
     return lastStateKey;
   }
 
-  public void setLastStateKey(final ReportStateKey lastStateKey)
+  protected void setLastStateKey(final ReportStateKey lastStateKey)
   {
     this.lastStateKey = lastStateKey;
   }
