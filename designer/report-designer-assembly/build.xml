@@ -161,16 +161,13 @@
 	      <taskdef-with-ivy organisation="com.oracle"
 	                        module="appbundler"
 	                        revision="1.0"
-	          		classname="com.oracle.appbundler.AppBundlerTask" />
+	          				classname="com.oracle.appbundler.AppBundlerTask" 
+	      					task-name="bundleapp"/>
 	      <property name="mac-app-bundler.isinstalled" value="true" />
 	    </else>
 	  </if>
 	</target>
-	
-    <taskdef name="bundleapp" 
-        classname="com.oracle.appbundler.AppBundlerTask"
-     />   
-    
+
     <target name="stage-mac" depends="install-mac-app-bundler">
 		<bundleapp outputdirectory="${stage.dir.mac}"
 			name="Pentaho Report Designer"
