@@ -70,7 +70,7 @@ public class InlineSubreportProcessor
     try
     {
       // this recreates the process key.
-      state = (ProcessState) state.clone();
+      state = state.clone();
     }
     catch (CloneNotSupportedException e)
     {
@@ -104,8 +104,8 @@ public class InlineSubreportProcessor
     return true;
   }
 
-  public static ProcessState process(final ProcessState state,
-                                     final RootLevelBand rootLevelBand)
+  public static ProcessState processBandedSubReports(final ProcessState state,
+                                                     final RootLevelBand rootLevelBand)
       throws ReportProcessingException
   {
     final InlineSubreportMarker[] markers = collectMarkers(state, rootLevelBand);

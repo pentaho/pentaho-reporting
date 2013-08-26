@@ -49,7 +49,7 @@ public class EndGroupHandler implements AdvanceHandler
 
     final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
     final RootLevelBand rootLevelBand = group.getFooter();
-    return InlineSubreportProcessor.process(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
   }
 
   public int getEventCode()
