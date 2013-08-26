@@ -39,7 +39,7 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
   protected void processOtherNode(final RenderNode node)
   {
     final ReportStateKey stateKey = node.getStateKey();
-    if (stateKey == null)
+    if (stateKey == null || stateKey.isInlineSubReportState())
     {
       return;
     }
