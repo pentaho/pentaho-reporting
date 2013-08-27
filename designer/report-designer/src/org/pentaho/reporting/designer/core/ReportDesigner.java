@@ -59,10 +59,44 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor;
 import org.pentaho.reporting.libraries.fonts.LibFontBoot;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderBoot;
-import org.pentaho.ui.xul.XulException;
 
 public class ReportDesigner
 {
+  private static class SetLookAndFeelTask implements Runnable
+  {
+    public void run()
+    {
+      int indent = 0;
+      try
+      {
+        final String lnfName = WorkspaceSettings.getInstance().getLNF();
+        if (!StringUtils.isEmpty(lnfName))
+        {
+          final LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
+          for (final LookAndFeelInfo lnf : lnfs)
+          {
+            if (lnf.getName().equals(lnfName))
+            {
+              UIManager.setLookAndFeel(lnf.getClassName());
+              return;
+            }
+          }
+        }
+
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        indent = 5; //PRD-4583
+      }
+      catch (Throwable t)
+      {
+        UncaughtExceptionsModel.getInstance().addException(t);
+      }
+
+      final UIDefaults uiDefaults = UIManager.getDefaults();
+      uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
+      uiDefaults.put("Tree.leftChildIndent", indent);//PRD-4419
+    }
+  }
+
   private static SplashScreen splashScreen;
   private static ReportDesignerFrame reportDesignerFrame;
 
@@ -244,7 +278,7 @@ public class ReportDesigner
 
     try
     {
-      setLookAndFeel();
+      SwingUtilities.invokeAndWait(new SetLookAndFeelTask());
       SwingUtilities.invokeAndWait(new InstallAWTHandlerRunnable());
 
       SwingUtilities.invokeAndWait(new InitializeSplashScreenTask());
@@ -311,38 +345,6 @@ public class ReportDesigner
     }
   }
 
-  private static void setLookAndFeel()
-  {
-    int indent = 0;
-    try
-    {
-      final String lnfName = WorkspaceSettings.getInstance().getLNF();
-      if (!StringUtils.isEmpty(lnfName))
-      {
-        final LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
-        for (final LookAndFeelInfo lnf : lnfs)
-        {
-          if (lnf.getName().equals(lnfName))
-          {
-            UIManager.setLookAndFeel(lnf.getClassName());
-            return;
-          }
-        }
-      }
-
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      indent = 5; //PRD-4583
-    }
-    catch (Throwable t)
-    {
-      UncaughtExceptionsModel.getInstance().addException(t);
-    }
-
-    final UIDefaults uiDefaults = UIManager.getDefaults();
-    uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
-    uiDefaults.put("Tree.leftChildIndent" , indent );//PRD-4419
-  }
-
   public static void preloadFonts()
   {
     final BufferedImage image = ImageUtils.createTransparentImage(10, 10);
@@ -361,18 +363,19 @@ public class ReportDesigner
   public static class DataTabSetVisible implements Runnable
   {
     ReportRenderContext activeContext;
-    private DataTabSetVisible()
+
+    public DataTabSetVisible(final ReportRenderContext activeContext)
     {
+      this.activeContext = activeContext;
     }
-    public DataTabSetVisible(final ReportRenderContext activeContext){
-        this.activeContext = activeContext;
-    }
+
     public void run()
     {
-      if(this.activeContext == null){
+      if (this.activeContext == null)
+      {
         return;
       }
-     reportDesignerFrame.displayAndExpandDataSource(activeContext);
+      reportDesignerFrame.displayAndExpandDataSource(activeContext);
     }
   }
 }
