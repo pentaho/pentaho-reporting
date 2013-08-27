@@ -14,6 +14,7 @@
         and works with the build-res/subfloor.xml file.
     </description>
 
+    <property environment="env"/>
     <property file="${user.home}/.pentaho-reporting-build-settings.properties"
               description="Per user override settings-file for all pentaho-reporting projects."/>
 
@@ -151,7 +152,7 @@
 		  
 	  (Fetches and) installs the MacApp Bundler for use by this ant script
 	  ====================================================================-->
-	<target name="install-mac-app-bundler" depends="install-ivy">
+	<target name="install-mac-app-bundler" depends="install-ivy" if="mac.java.runtime.home">
 	  <if>
 	    <istrue value="${mac-app-bundler.isinstalled}" />
 	    <then>
@@ -168,7 +169,8 @@
 	  </if>
 	</target>
 
-    <target name="stage-mac" depends="install-mac-app-bundler">
+    <target name="stage-mac" depends="install-mac-app-bundler" if="mac.java.runtime.home">
+      <echo>Using JDK from ${mac.java.runtime.home}</echo>
 		<bundleapp outputdirectory="${stage.dir.mac}"
 			name="Pentaho Report Designer"
 			displayname="Pentaho Report Designer"
@@ -221,7 +223,7 @@
         </copy>
     </target>
 
-    <target name="dist-mac" depends="stage-mac">
+    <target name="dist-mac" depends="stage-mac" if="mac.java.runtime.home">
         <zip destfile="${dist.dir}/${dist.name}-mac-${project.revision}.zip">
             <zipfileset dir="${stage.dir.mac}" filemode="755">
                <include name="**/*.sh"/>
