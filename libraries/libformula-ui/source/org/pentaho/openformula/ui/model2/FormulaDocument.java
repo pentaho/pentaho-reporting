@@ -731,27 +731,6 @@ public class FormulaDocument implements Document
     return (FormulaElement)rootElement.getElement(index);
   }
 
-  public void updateParameterText(final int start, final int end, String parameterText, final boolean hasDummyParams)
-  {
-    // For functions that have dummy parameters (ie like DRILLDOWN), we are always recreating the whole
-    // formula text.  So remove all elements from second position to last element.  We always remove
-    // elements from same position as the element list pops the element of the list causing all other elements
-    // to shift down.
-    if (hasDummyParams == false)
-    {
-      final int startIndex = (start == 0) ? rootElement.getElementIndex(start) : rootElement.getElementIndex(start - 1);
-      final int endIndex = rootElement.getElementIndex(end);
-
-      for (int i = startIndex + 1; i <= endIndex; i++)
-      {
-        rootElement.removeElement(startIndex + 1);
-      }
-
-      rootElement.revalidateNodePositions();
-      needRevalidateStructure = true;
-    }
-  }
-
   public void revalidateStructure()
   {
     if (needRevalidateStructure)

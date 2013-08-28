@@ -22,6 +22,10 @@
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="org.fife.ui" name="rsyntaxtextarea" rev="1.3.2"
                 transitive="false" conf="default_external->default"/>
+    
+    <!-- release check resolve keeps failing on a conflictt with commons-lang 2.4 coming in 
+          transitively. If commons-lang is not required. Add it to the excludes -->
+    <dependency org="commons-lang" name="commons-lang" rev="2.6" transitive="false"/>                
 
     <dependency org="pentaho" name="pentaho-mql-editor" rev="${dependency.pentaho-mql-editor.revision}" changing="true" conf="default_external->default">
       <!-- These dependencies are dangerous and/or not needed in a Swing application. -->
