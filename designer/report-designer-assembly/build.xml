@@ -174,7 +174,7 @@
 			displayname="Pentaho Report Designer"
 			identifier="org.pentaho.reporting.designer.ReportDesigner"
 		    shortversion="${project.revision}"
-		    copyright="Copyright (c) 2008 - 2010 Pentaho Corporation.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation."
+		    copyright="Copyright (c) 2008 - 2013 Pentaho Corporation.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation."
 			mainclassname="org.pentaho.commons.launcher.Launcher"
 		    icon="${resource-mac.dir}/Contents/Resources/pentaho_reporting.icns">
 		    <runtime dir="${mac.java.runtime.home}"/>
