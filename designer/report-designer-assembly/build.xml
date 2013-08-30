@@ -189,7 +189,7 @@
 
     <!-- this task adds additional key/values to the info.plist that can't be created with the 
     	 bundleapp task -->
-        <replaceregexp file="${stage.dir.mac}/Pentaho Report Designer.app/Contents/info.plist"
+        <replaceregexp file="${stage.dir.mac}/Pentaho Report Designer.app/Contents/Info.plist"
                        match="&lt;/dict&gt;\s*&lt;/plist&gt;"
                        replace="${bundle.document.types}"
        />
