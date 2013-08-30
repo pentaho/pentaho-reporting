@@ -88,4 +88,43 @@
       <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/content?&quot; &amp; [&quot;::parameter&quot;]</attribute>
       <attribute name="extension">prpt</attribute>
     </drilldown-profile>
+    <drilldown-profile name="remote-sugar-prpti" class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">[&quot;::path&quot;] &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/prpti.view?&quot; &amp;[&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">prpti</attribute>
+    </drilldown-profile>
+    <drilldown-profile name="remote-sugar-analyzer" class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">[&quot;::path&quot;] &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/viewer?&quot; &amp;[&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">xanalyzer</attribute>
+    </drilldown-profile>
+    <drilldown-profile name="remote-sugar-xaction" class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">[&quot;::path&quot;] &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/generatedContent?&quot; &amp;[&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">xaction</attribute>
+    </drilldown-profile>
+    <drilldown-profile name="local-sugar-prpti"
+                       class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/prpti.view?&quot; &amp; [&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">prpti</attribute>
+    </drilldown-profile>
+    <drilldown-profile name="local-sugar-analyzer"
+                       class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/viewer?&quot; &amp; [&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">xanalyzer</attribute>
+    </drilldown-profile>
+    <drilldown-profile name="local-sugar-xaction"
+                       class="org.pentaho.reporting.engine.classic.extensions.drilldown.SugarFormulaLinkCustomizer"
+                       bundle-name="org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile"
+                       expert="false" hidden="false" deprecated="false" preferred="false">
+      <attribute name="formula">ENV(&quot;pentahoBaseURL&quot;) &amp; &quot;api/repos/&quot; &amp; [&quot;::pentaho-path&quot;] &amp; &quot;/generatedContent?&quot; &amp; [&quot;::parameter&quot;]</attribute>
+      <attribute name="extension">xaction</attribute>
+    </drilldown-profile>
   </group></drilldown-profiles>
