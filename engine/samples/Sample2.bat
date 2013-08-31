@@ -3,6 +3,7 @@
 REM SET UP CLASSPATH
 set CLASSPATH=.
 
+FOR %%F IN (dist\*.jar) DO call :updateClassPath %%F
 FOR %%F IN (lib\*.jar) DO call :updateClassPath %%F
 
 goto :startjava
