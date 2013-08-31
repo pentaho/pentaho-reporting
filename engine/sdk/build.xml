@@ -191,14 +191,5 @@
                 <exclude name="**/*.sh"/>
             </zipfileset>
         </zip>
-        
-        <tar tarfile="${dist.dir}/${ivy.artifact.id}-${project.revision}.tar.gz" compression="gzip">
-            <tarfileset dir="${stage.dir}" mode="755">
-                <include name="**/*.sh"/>
-            </tarfileset>
-            <tarfileset dir="${stage.dir}">
-                <exclude name="**/*.sh"/>
-            </tarfileset>
-        </tar>
     </target>
 </project>
