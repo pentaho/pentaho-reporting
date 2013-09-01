@@ -49,5 +49,47 @@
 
     <!-- Override default dist target to do a dist-full instead -->
     <target name="dist" depends="dist-full"/>
+    
+    <!--=======================================================================
+    	  set-build.id
+    
+      	Sets a property build.id to the either "development" or the svn revision
+      	if in release mode
+      	
+      	NOTE: OVERRIDE to fix issues with svn.revision in a git environment [PRD-4699]
+      	====================================================================-->
+    <target name="set-build.id" unless="build.id" depends="install-antcontrib">
+      <if>
+        <istrue value="${release}" />
+        <then>
+          <antcallback target="svn-revision" return="svn.revision" />
+          <property name="build.id" value="${svn.revision}" />
+        </then>
+        <else>
+          <property name="build.id" value="development" />
+        </else>
+      </if>
+    </target>
+
+
+  <!--=======================================================================
+      generate.manifest
+      
+      Creates a new manifest file if one is not specified, or updates
+      an existing manifest file if one is specified.
+      ====================================================================-->
+  <target name="generate.manifest" depends="init,set-build.id">
+    <delete file="${dist.manifest.file}" />
+    <touch file="${dist.manifest.file}" />
+    <copy file="${manifest.file}" tofile="${dist.manifest.file}" overwrite="true" failonerror="false" />
+
+    <manifest file="${dist.manifest.file}" mode="update">
+      <attribute name="Implementation-Title" value="${impl.title}" />
+      <attribute name="Implementation-Version" value="${project.revision}" />
+      <attribute name="Implementation-Vendor" value="${impl.vendor}" />
+      <attribute name="Implementation-ProductID" value="${impl.productID}" />
+    </manifest>
+  </target>
+
 
 </project>
