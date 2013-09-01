@@ -50,28 +50,6 @@
     <!-- Override default dist target to do a dist-full instead -->
     <target name="dist" depends="dist-full"/>
     
-    <!--=======================================================================
-    	  set-build.id
-    
-      	Sets a property build.id to the either "development" or the svn revision
-      	if in release mode
-      	
-      	NOTE: OVERRIDE to fix issues with svn.revision in a git environment [PRD-4699]
-      	====================================================================-->
-    <target name="set-build.id" unless="build.id" depends="install-antcontrib">
-      <if>
-        <istrue value="${release}" />
-        <then>
-          <antcallback target="svn-revision" return="svn.revision" />
-          <property name="build.id" value="${svn.revision}" />
-        </then>
-        <else>
-          <property name="build.id" value="development" />
-        </else>
-      </if>
-    </target>
-
-
   <!--=======================================================================
       generate.manifest
       
