@@ -209,7 +209,7 @@
      <!-- samples need to go into the Content directory for the app to find it -->
         <copy todir="${report-designer.dir.mac}/Contents" overwrite="true">
            <fileset dir="${resource.dir}">
-               <include name="samples/*"/>
+               <include name="samples/**/*"/>
            </fileset>
        </copy>
 
