@@ -68,12 +68,8 @@
   <target name="continuous-junit" depends="build,publish" />
 
   <!-- Until CM-466 is fixed, hot-patch it -->
-  <target name="create-pom" depends="install-ivy">
+  <target name="install-ivy" depends="subfloor.install-ivy">
     <ivy:settings url="${ivy.settingsurl}" />
-    <ivy:makepom ivyfile="${ivyfile}" pomfile="${dist.dir}/pom.xml">
-      <mapping conf="default" scope="compile" />
-      <mapping conf="runtime" scope="runtime" />
-    </ivy:makepom>
   </target>
 
     <!--
