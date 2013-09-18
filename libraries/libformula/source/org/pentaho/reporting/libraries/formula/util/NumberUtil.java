@@ -122,7 +122,7 @@ public class NumberUtil
       return bd.setScale(0);
     }
 
-    final String text = bd.toString();
+    final String text = bd.toPlainString(); // get non-logarithm representation
     int scale = bd.scale();
     for (int i = text.length() - 1; i >= 0; i--)
     {
