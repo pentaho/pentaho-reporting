@@ -1,55 +1,45 @@
 /* ===========================================================
-* JFreeChart : a free chart library for the Java(tm) platform
-* ===========================================================
-*
-* (C) Copyright 2000-2007, by Object Refinery Limited and Contributors.
-*
-* Project Info:  http://www.jfree.org/jfreechart/index.html
-*
-* This library is free software; you can redistribute it and/or modify it
-* under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation; either version 2.1 of the License, or
-* (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful, but
-* WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
-* or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
-* License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
-* USA.
-*
-* [Java is a trademark or registered trademark of Sun Microsystems, Inc.
-* in the United States and other countries.]
-*
-* ------------------
-* XYDotRenderer.java
-* ------------------
-* (C) Copyright 2002-2007, by Object Refinery Limited.
-*
-* Original Author:  David Gilbert (for Object Refinery Limited);
-* Contributor(s):   Christian W. Zuckschwerdt;
-*
-* Changes (from 29-Oct-2002)
-* --------------------------
-* 29-Oct-2002 : Added standard header (DG);
-* 25-Mar-2003 : Implemented Serializable (DG);
-* 01-May-2003 : Modified drawItem() method signature (DG);
-* 30-Jul-2003 : Modified entity constructor (CZ);
-* 20-Aug-2003 : Implemented Cloneable and PublicCloneable (DG);
-* 16-Sep-2003 : Changed ChartRenderingInfo --> PlotRenderingInfo (DG);
-* 25-Feb-2004 : Replaced CrosshairInfo with CrosshairState (DG);
-* 19-Jan-2005 : Now uses only primitives from dataset (DG);
-* ------------- JFREECHART 1.0.x ---------------------------------------------
-* 10-Jul-2006 : Added dotWidth and dotHeight attributes (DG);
-* 06-Feb-2007 : Fixed bug 1086307, crosshairs with multiple axes (DG);
-* 09-Nov-2007 : Added legend shape attribute, plus override for
-*               getLegendItem() (DG);
-*
-*/
-
+ * JFreeChart : a free chart library for the Java(tm) platform
+ * ===========================================================
+ *
+ * (C) Copyright 2000-2007, by Object Refinery Limited and Contributors.
+ *
+ * Project Info:  http://www.jfree.org/jfreechart/index.html
+ *
+ * This library is free software; you can redistribute it and/or modify it 
+ * under the terms of the GNU Lesser General Public License as published by 
+ * the Free Software Foundation; either version 2.1 of the License, or 
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but 
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, 
+ * USA.  
+ *
+ * [Java is a trademark or registered trademark of Sun Microsystems, Inc. 
+ * in the United States and other countries.]
+ *
+ * ------------------
+ * XYDotRenderer.java
+ * ------------------
+ * (C) Copyright 2002-2007, by Object Refinery Limited.
+ *
+ * Original Author:  David Gilbert (for Object Refinery Limited);
+ * Contributor(s):   Christian W. Zuckschwerdt;
+ *
+ * Changes (from 29-Oct-2002)
+ * --------------------------
+ * 29-Oct-2002 : Added standard header (DG);
+ * 25-Mar-2003 : Implemented Serializable (DG);
+ * 01-May-2003 : Modified drawItem() method signature (DG);
+ * 30-Jul-2003 : Modified entity constructor (CZ);
+ * 20-Aug-2003 : Implemented Cloneable and PublicCloneable (DG);
+ * 16-Sep-2003 : Changed ChartRenderingInfo --> PlotRenderingInfo (DG);
  * 25-Feb-2004 : Replaced CrosshairInfo with CrosshairState (DG);
  * 19-Jan-2005 : Now uses only primitives from dataset (DG);
  * ------------- JFREECHART 1.0.x ---------------------------------------------
