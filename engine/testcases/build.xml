@@ -30,7 +30,7 @@
         Runs a typical continuous integration build including project dist,
         test, and coverage artifacts
         ====================================================================-->
-    <target name="continuous" depends="build,publish-local"/>
+    <target name="continuous" depends="build"/>
 
 
     <!--=======================================================================
@@ -48,7 +48,7 @@
         Runs a typical continuous integration build including project dist,
         test, and coverage artifacts
         ====================================================================-->
-    <target name="continuous-local" depends="build,publish-local"/>
+    <target name="continuous-local" depends="build"/>
 
 
     <!--=======================================================================
