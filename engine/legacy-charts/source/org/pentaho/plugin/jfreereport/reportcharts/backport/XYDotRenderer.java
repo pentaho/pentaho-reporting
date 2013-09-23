@@ -47,18 +47,15 @@
 * 06-Feb-2007 : Fixed bug 1086307, crosshairs with multiple axes (DG);
 * 09-Nov-2007 : Added legend shape attribute, plus override for
 *               getLegendItem() (DG);
+* 25-Feb-2004 : Replaced CrosshairInfo with CrosshairState (DG);
+* 19-Jan-2005 : Now uses only primitives from dataset (DG);
+* ------------- JFREECHART 1.0.x ---------------------------------------------
+* 10-Jul-2006 : Added dotWidth and dotHeight attributes (DG);
+* 06-Feb-2007 : Fixed bug 1086307, crosshairs with multiple axes (DG);
+* 09-Nov-2007 : Added legend shape attribute, plus override for 
+*               getLegendItem() (DG);
 *
 */
-
- * 25-Feb-2004 : Replaced CrosshairInfo with CrosshairState (DG);
- * 19-Jan-2005 : Now uses only primitives from dataset (DG);
- * ------------- JFREECHART 1.0.x ---------------------------------------------
- * 10-Jul-2006 : Added dotWidth and dotHeight attributes (DG);
- * 06-Feb-2007 : Fixed bug 1086307, crosshairs with multiple axes (DG);
- * 09-Nov-2007 : Added legend shape attribute, plus override for 
- *               getLegendItem() (DG);
- *
- */
 
 package org.pentaho.plugin.jfreereport.reportcharts.backport;
 
