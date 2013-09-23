@@ -56,7 +56,7 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
     public void contentsChanged(final ListDataEvent e)
     {
       final DefaultComboBoxModel connections = getConnections();
-      final DefaultComboBoxModel queries = getQueries();
+      final DataSetComboBoxModel<String> queries = getQueries();
       setConnectionSelected(connections.getSelectedItem() != null);
       setQuerySelected(queries.getSelectedItem() != null);
 
@@ -84,8 +84,8 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
   }
 
   private PropertyChangeSupport propertyChangeSupport;
-  private DefaultComboBoxModel connections;
-  private DataSetComboBoxModel queries;
+  private DefaultComboBoxModel<JdbcConnectionDefinition> connections;
+  private DataSetComboBoxModel<String> queries;
   private boolean previewPossible;
   private boolean connectionSelected;
   private boolean querySelected;
@@ -103,9 +103,9 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
   {
     this.connectionDefinitionManager = connectionDefinitionManager;
     propertyChangeSupport = new PropertyChangeSupport(this);
-    connections = new DefaultComboBoxModel();
+    connections = new DefaultComboBoxModel<JdbcConnectionDefinition>();
     connections.addListDataListener(new PreviewPossibleUpdateHandler());
-    queries = new DataSetComboBoxModel();
+    queries = new DataSetComboBoxModel<String>();
     queries.addListDataListener(new PreviewPossibleUpdateHandler());
   }
 
@@ -147,7 +147,7 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
     propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
   }
 
-  public DataSetComboBoxModel getQueries()
+  public DataSetComboBoxModel<String> getQueries()
   {
     return queries;
   }
@@ -235,7 +235,6 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
 
   public void addQuery(final String queryName, final String query, final String scriptLanguage, final String script)
   {
-
     queries.addElement(new DataSetQuery<String>(queryName, query, scriptLanguage, script));
   }
 
@@ -308,16 +307,18 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
 
   public DataSetQuery getFirstQueryName()
   {
-    if(getQueries() != null && getQueries().getSize() > 0)
+    DataSetComboBoxModel<String> dataSetQueries = getQueries();
+    if(dataSetQueries != null && dataSetQueries.getSize() > 0)
     {
-        return getQueries().getQuery(0);
+        return dataSetQueries.getQuery(0);
     }
     return null;
   }
+
   public String generateQueryName()
   {
     final String queryName = Messages.getString("JdbcDataSourceDialog.Query");
-    final DataSetComboBoxModel queries = getQueries();
+    final DataSetComboBoxModel<String> queries = getQueries();
     for (int i = 1; i < 1000; ++i)
     {
       final String newQuery = queryName + " " + i;
