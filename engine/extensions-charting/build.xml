@@ -7,7 +7,7 @@
   
   See build-res/subfloor.xml for more details
 ============================================================================-->
-<project name="pentaho-reporting-engine-classic-ext-charting" basedir="." default="default">
+<project name="pentaho-reporting-engine-classic-ext-charting" basedir="." default="default" xmlns:ivy="antlib:org.apache.ivy.ant">
 	
 	<description>
 	  This build file is used to create the API project
@@ -48,6 +48,27 @@
         and coverage artifacts
         ====================================================================-->
     <target name="continuous-local-testless" depends="build-testless,publish-local"/>
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-junit" depends="build,publish" />
+
+  <!-- Until CM-466 is fixed, hot-patch it -->
+  <target name="install-ivy" depends="subfloor.install-ivy">
+    <ivy:settings url="${ivy.settingsurl}" />
+  </target>
 
     <!--
       AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
