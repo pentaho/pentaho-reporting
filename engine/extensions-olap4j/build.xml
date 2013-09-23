@@ -42,6 +42,27 @@
         ====================================================================-->
     <target name="continuous-local-testless" depends="build-testless,publish-local"/>
 
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-junit" depends="build,publish" />
+
+  <!-- Until CM-466 is fixed, hot-patch it -->
+  <target name="install-ivy" depends="subfloor.install-ivy">
+    <ivy:settings url="${ivy.settingsurl}" />
+  </target>
+
     <!--
       AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
       THE TASKS THAT NEED TO DIFFER FROM THE DEFAULT IMPLEMENTATION OF THE TASKS
