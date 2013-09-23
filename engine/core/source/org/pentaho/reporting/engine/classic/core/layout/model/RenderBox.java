@@ -1565,4 +1565,11 @@ public abstract class RenderBox extends RenderNode
   {
     return this.restrictFinishClearOut == RestrictFinishClearOut.LEAF;
   }
+
+  public long getVerticalInsets()
+  {
+    final long insetBottom = staticBoxLayoutProperties.getBorderBottom() + boxDefinition.getPaddingBottom();
+    final long insetTop = staticBoxLayoutProperties.getBorderTop() + boxDefinition.getPaddingTop();
+    return insetBottom + insetTop;
+  }
 }

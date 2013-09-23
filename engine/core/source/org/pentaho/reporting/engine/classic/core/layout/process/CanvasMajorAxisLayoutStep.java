@@ -100,12 +100,13 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
         final LogicalPageBox box = node.getLogicalPage();
         if (box != null)
         {
+          // a page-box has no margins, borders or paddings.
           return box.getPageHeight();
         }
       }
       return 0;
     }
-    return parent.getCachedHeight();
+    return Math.max (0, parent.getCachedHeight() - parent.getVerticalInsets());
   }
 
   protected boolean startBlockLevelBox(final RenderBox box)
