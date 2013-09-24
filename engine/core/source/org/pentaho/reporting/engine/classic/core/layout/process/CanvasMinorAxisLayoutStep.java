@@ -231,7 +231,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     else
     {
       processor.initialize(metaData, sequence, lineStart, lineEnd, pageGrid, overflowX);
-      nodeContext.updateX2(lineEnd);
+      if (overflowX == false)
+      {
+        nodeContext.updateX2(lineEnd);
+      }
     }
 
     while (processor.hasNext())
@@ -258,7 +261,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         else
         {
           processor.updateLineSize(lineStart, lineEnd);
-          nodeContext.updateX2(lineEnd);
+          if (overflowX == false)
+          {
+            nodeContext.updateX2(lineEnd);
+          }
         }
 
       }
