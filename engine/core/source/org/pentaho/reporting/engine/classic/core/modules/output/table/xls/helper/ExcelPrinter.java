@@ -382,6 +382,7 @@ public class ExcelPrinter
       {
         final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
         final RenderBox content = contentProducer.getContent(row, col);
+
         if (content == null)
         {
           final RenderBox backgroundBox = contentProducer.getBackground(row, col);
@@ -709,7 +710,7 @@ public class ExcelPrinter
     sheet.setDisplayGridlines(displayGridLines);
     sheet.setPrintGridlines(printGridLines);
 
-    if(sheetFreezeTop>0 || sheetFreezeLeft > 0)
+    if (sheetFreezeTop > 0 || sheetFreezeLeft > 0)
     {
     	sheet.createFreezePane(sheetFreezeLeft, sheetFreezeTop);
     }
@@ -1003,11 +1004,10 @@ public class ExcelPrinter
         return;
       }
 
-
       final int cell1x = rectangle.getX1();
       final int cell1y = rectangle.getY1();
-      final int cell2x = Math.max(cell1x, rectangle.getX2() - 1);
-      final int cell2y = Math.max(cell1y, rectangle.getY2() - 1);
+      final int cell2x = Math.max(cell1x, rectangle.getX2());
+      final int cell2y = Math.max(cell1y, rectangle.getY2());
 
       final long cell1width = currentLayout.getCellWidth(cell1x);
       final long cell1height = currentLayout.getRowHeight(cell1y);
@@ -1019,10 +1019,10 @@ public class ExcelPrinter
       final long cell2xPos = currentLayout.getXPosition(cell2x);
       final long cell2yPos = currentLayout.getYPosition(cell2y);
 
-      final int dx1 = (int) (1023 * ((cb.getX() - cell1xPos) / (double) cell1width));
-      final int dy1 = (int) (255 * ((cb.getY() - cell1yPos) / (double) cell1height));
-      final int dx2 = (int) (1023 * ((cb.getX() + cb.getWidth() - cell2xPos) / (double) cell2width));
-      final int dy2 = (int) (255 * ((cb.getY() + cb.getHeight() - cell2yPos) / (double) cell2height));
+      final int dx1 = (int)(1023 * ((cb.getX() - cell1xPos) / (double)cell1width));
+      final int dy1 = (int)(255 * ((cb.getY() - cell1yPos) / (double)cell1height));
+      final int dx2 = (int)(1023 * ((cb.getX() + cb.getWidth() - cell2xPos) / (double)cell2width));
+      final int dy2 = (int)(255 * ((cb.getY() + cb.getHeight() - cell2yPos) / (double)cell2height));
 
       final ClientAnchor anchor = workbook.getCreationHelper().createClientAnchor();
       anchor.setDx1(dx1);
@@ -1034,10 +1034,12 @@ public class ExcelPrinter
       anchor.setCol2(cell2x);
       anchor.setRow2(cell2y);
       anchor.setAnchorType(ClientAnchor.MOVE_DONT_RESIZE); // Move, but don't size
+
       if (patriarch == null)
       {
         patriarch = sheet.createDrawingPatriarch();
       }
+
       final Picture picture = patriarch.createPicture(anchor, pictureId);
       ExcelPrinter.logger.info("Created image: " + pictureId + " => " + picture);
     }
