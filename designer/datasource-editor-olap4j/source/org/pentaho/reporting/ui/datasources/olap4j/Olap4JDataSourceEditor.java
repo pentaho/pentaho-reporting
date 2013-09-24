@@ -104,7 +104,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
     protected void handleChange(final DocumentEvent e)
     {
       final NamedDataSourceDialogModel dialogModel = getDialogModel();
-      final DataSetQuery item = (DataSetQuery) dialogModel.getQueries().getSelectedItem();
+      final DataSetQuery<String> item = dialogModel.getQueries().getSelectedQuery();
       if (item == null)
       {
         return;
@@ -473,7 +473,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
 
     public void actionPerformed(final ActionEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery<String> query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
         final ScriptEngineFactory selectedItem = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
@@ -508,7 +508,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
 
     protected void handleChange(final DocumentEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
         query.setScript(queryScriptTextArea.getText());
@@ -518,7 +518,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
 
   protected static final Log logger = LogFactory.getLog(Olap4JDataSourceEditor.class);
 
-  private JList queryNameList;
+  private JList<DataSetQuery<String>> queryNameList;
   private JTextField queryNameTextField;
   private JTextArea queryTextArea;
   private NamedDataSourceDialogModel dialogModel;
@@ -528,9 +528,9 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
   private DesignTimeContext context;
 
   private RSyntaxTextArea globalScriptTextArea;
-  private SmartComboBox globalLanguageField;
+  private SmartComboBox<ScriptEngineFactory> globalLanguageField;
   private RSyntaxTextArea queryScriptTextArea;
-  private SmartComboBox queryLanguageField;
+  private SmartComboBox<ScriptEngineFactory> queryLanguageField;
   private QueryLanguageListCellRenderer queryLanguageListCellRenderer;
   private GlobalTemplateAction globalTemplateAction;
   private QueryTemplateAction queryTemplateAction;
@@ -586,7 +586,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
     queryTextArea.setEnabled(dialogModel.isQuerySelected());
     queryTextArea.getDocument().addDocumentListener(new QueryDocumentListener());
 
-    queryNameList = new JList(dialogModel.getQueries());
+    queryNameList = new JList<DataSetQuery<String>>(dialogModel.getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(new QuerySelectedHandler());
@@ -594,7 +594,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -604,7 +604,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -887,7 +887,7 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
       dataFactory.setGlobalScript(globalScriptTextArea.getText());
     }
 
-    final DataSetComboBoxModel queries = dialogModel.getQueries();
+    final DataSetComboBoxModel<String> queries = dialogModel.getQueries();
     for (int i = 0; i < queries.getSize(); i++)
     {
       final DataSetQuery<String> query = queries.getQuery(i);
