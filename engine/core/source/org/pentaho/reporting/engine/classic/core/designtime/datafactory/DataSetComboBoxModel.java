@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.core.designtime.datafactory;
 import java.util.Iterator;
 import javax.swing.DefaultComboBoxModel;
 
-public class DataSetComboBoxModel<T> extends DefaultComboBoxModel implements Iterable<DataSetQuery<T>>
+public class DataSetComboBoxModel<T> extends DefaultComboBoxModel<DataSetQuery<T>> implements Iterable<DataSetQuery<T>>
 {
   private class ComboBoxModelIterator implements Iterator<DataSetQuery<T>>
   {
@@ -38,7 +38,7 @@ public class DataSetComboBoxModel<T> extends DefaultComboBoxModel implements Ite
 
     public DataSetQuery<T> next()
     {
-      final DataSetQuery<T> value = (DataSetQuery<T>) getElementAt(index);
+      final DataSetQuery<T> value = getElementAt(index);
       index += 1;
       return value;
     }
@@ -65,7 +65,7 @@ public class DataSetComboBoxModel<T> extends DefaultComboBoxModel implements Ite
 
   public DataSetQuery<T> getQuery(final int index)
   {
-    return (DataSetQuery<T>) getElementAt(index);
+    return getElementAt(index);
   }
 
   public Iterator<DataSetQuery<T>> iterator()

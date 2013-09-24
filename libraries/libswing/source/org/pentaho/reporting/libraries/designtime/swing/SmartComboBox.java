@@ -27,7 +27,7 @@ import javax.swing.event.ListDataEvent;
  *
  * @author Thomas Morgner.
  */
-public class SmartComboBox extends JComboBox
+public class SmartComboBox<T> extends JComboBox<T>
 {
   private boolean selectingItem;
 
@@ -42,7 +42,7 @@ public class SmartComboBox extends JComboBox
    *               displayed list of items
    * @see javax.swing.DefaultComboBoxModel
    */
-  public SmartComboBox(final ComboBoxModel aModel)
+  public SmartComboBox(final ComboBoxModel<T> aModel)
   {
     super(aModel);
   }
@@ -55,7 +55,7 @@ public class SmartComboBox extends JComboBox
    * @param items an array of objects to insert into the combo box
    * @see javax.swing.DefaultComboBoxModel
    */
-  public SmartComboBox(final Object[] items)
+  public SmartComboBox(final T[] items)
   {
     super(items);
   }
