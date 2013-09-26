@@ -42,8 +42,11 @@ public class SVGDrawable
     }
     this.rootNode = rootNode;
     final Rectangle2D bounds = rootNode.getBounds();
-    this.width = bounds.getWidth();
-    this.height = bounds.getHeight();
+    if (bounds != null)
+    {
+      this.width = bounds.getWidth();
+      this.height = bounds.getHeight();
+    }
   }
 
   /**
@@ -61,7 +64,7 @@ public class SVGDrawable
     {
       return null;
     }
-    
+
     return new Dimension(w, h);
   }
 
