@@ -60,4 +60,11 @@ public interface ElementMetaData extends MetaData
   public Class<? extends ElementType> getElementType();
 
   public TypeClassification getReportElementType();
+
+  /**
+   * The namespace of the elemnet in an PRPT bundle.
+   *
+   * @return
+   */
+  public String getNamespace();
 }

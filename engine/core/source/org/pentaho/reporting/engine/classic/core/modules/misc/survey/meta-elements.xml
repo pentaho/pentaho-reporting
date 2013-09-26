@@ -1,10 +1,12 @@
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
   <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
-  
+
   <element name="survey-scale" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.core.modules.misc.survey.metadata"
-           implementation="org.pentaho.reporting.engine.classic.core.modules.misc.survey.SurveyScaleType">
+           implementation="org.pentaho.reporting.engine.classic.core.modules.misc.survey.SurveyScaleType"
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/survey-scale/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

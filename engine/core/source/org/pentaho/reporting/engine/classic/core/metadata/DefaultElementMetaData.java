@@ -37,17 +37,19 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   private TypeClassification reportElementType;
   private Class<?> contentType;
   private transient StyleMetaData[] stylesArray;
+  private String namespace;
 
   public DefaultElementMetaData(final String name,
                                 final String bundleLocation,
                                 final String keyPrefix,
+                                final String namespace,
                                 final boolean expert,
                                 final boolean preferred,
                                 final boolean hidden,
                                 final boolean deprecated,
                                 final TypeClassification reportElementType,
                                 final AttributeMap<AttributeMetaData> attributes,
-                                final HashMap<StyleKey, StyleMetaData> styles,
+                                final Map<StyleKey, StyleMetaData> styles,
                                 final Class<? extends ElementType> elementType,
                                 final Class<?> contentType,
                                 final boolean experimental,
@@ -70,12 +72,17 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     {
       throw new NullPointerException();
     }
+    if (namespace == null)
+    {
+      throw new NullPointerException();
+    }
 
     this.contentType = contentType;
     this.reportElementType = reportElementType;
     this.attributes = attributes.clone();
-    this.styles = (HashMap<StyleKey, StyleMetaData>) styles.clone();
+    this.styles = new HashMap<StyleKey, StyleMetaData>(styles);
     this.elementType = elementType;
+    this.namespace = namespace;
   }
 
   public DefaultElementMetaData(final ElementMetaData metaData)
@@ -84,6 +91,11 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     this.contentType = metaData.getContentType();
     this.reportElementType = metaData.getReportElementType();
     this.elementType = metaData.getElementType();
+    this.namespace = metaData.getNamespace();
+    if (this.namespace == null)
+    {
+      throw new IllegalArgumentException();
+    }
 
     this.styles = new HashMap<StyleKey, StyleMetaData>();
     final StyleMetaData[] styleDescriptions = metaData.getStyleDescriptions();
@@ -216,5 +228,10 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   public Class<? extends ElementType> getElementType()
   {
     return elementType;
+  }
+
+  public String getNamespace()
+  {
+    return namespace;
   }
 }

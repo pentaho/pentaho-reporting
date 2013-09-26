@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.e
 import org.pentaho.reporting.engine.classic.core.filter.types.ResourceFieldType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
+@Deprecated
 public class ResourceFieldReadHandler extends AbstractElementReadHandler
 {
   public ResourceFieldReadHandler() throws ParseException

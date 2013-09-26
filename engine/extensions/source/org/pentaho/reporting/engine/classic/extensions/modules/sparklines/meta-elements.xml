@@ -4,7 +4,8 @@
   
   <element name="bar-sparkline" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
-           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType">
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.BarSparklineType"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -34,7 +35,8 @@
 
   <element name="line-sparkline" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
-           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.LineSparklineType">
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.LineSparklineType"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0">
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="field-value"/>
@@ -60,7 +62,8 @@
 
   <element name="pie-sparkline" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.metadata"
-           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.PieSparklineType">
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sparklines.PieSparklineType"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sparkline/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

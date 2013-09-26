@@ -15,9 +15,8 @@
 * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
-package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
+package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
 
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.content.CrosstabContentRootElementHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;

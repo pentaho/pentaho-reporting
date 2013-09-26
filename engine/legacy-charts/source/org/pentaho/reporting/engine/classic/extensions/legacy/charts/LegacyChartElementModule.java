@@ -21,8 +21,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
-import org.pentaho.reporting.engine.classic.extensions.legacy.charts.parser.LegacyChartElementReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.legacy.charts.writer.LegacyChartWriteHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -41,15 +39,14 @@ public class LegacyChartElementModule extends AbstractModule
 
   public void initialize(final SubSystem subSystem) throws ModuleInitializeException
   {
-
-    BundleElementRegistry.getInstance().register("legacy-chart", LegacyChartWriteHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "legacy-chart", LegacyChartElementReadHandler.class);
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
-
     ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "legacy-charts");
     ElementMetaDataParser.initializeOptionalElementMetaData
         ("org/pentaho/reporting/engine/classic/extensions/legacy/charts/meta-elements.xml");
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData
         ("org/pentaho/reporting/engine/classic/extensions/legacy/charts/meta-report-preprocessors.xml");
+
+    BundleElementRegistry.getInstance().registerGenericElement(LegacyChartType.INSTANCE);
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
+
   }
 }

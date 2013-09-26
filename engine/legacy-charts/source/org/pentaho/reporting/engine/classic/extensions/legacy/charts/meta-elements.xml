@@ -4,7 +4,10 @@
 
   <element name="legacy-chart" expert="false" hidden="false" preferred="true"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.legacy.charts.metadata"
-           implementation="org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType">
+           implementation="org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartType"
+           content-type="org.pentaho.reporting.engine.classic.core.util.ReportDrawable"
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/legacy/charting/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

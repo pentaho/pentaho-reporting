@@ -29,6 +29,8 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 public class SurveyScaleType extends ContentType
 {
+  public static final SurveyScaleType INSTANCE = new SurveyScaleType();
+
   public SurveyScaleType()
   {
     super("survey-scale");

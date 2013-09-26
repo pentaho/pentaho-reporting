@@ -25,7 +25,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.xml.SimpleBarcodesElementReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.xml.SimpleBarcodesElementWriteHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -70,17 +69,18 @@ public class SimpleBarcodesModule extends AbstractModule
       throw new ModuleInitializeException("Unable to load Barbecue library class.", t);
     }
 
-    BundleElementRegistry.getInstance().register("simple-barcodes", SimpleBarcodesElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "simple-barcodes", SimpleBarcodesElementReadHandler.class);
-    // legacy handler for a buggy iteration ..
-    BundleElementRegistry.getInstance().register(NAMESPACE, "simple-barcode", SimpleBarcodesElementReadHandler.class);
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
-
     ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "sbarcodes");
 
     ElementMetaDataParser.initializeOptionalElementMetaData
         ("org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-elements.xml");
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
         ("org/pentaho/reporting/engine/classic/extensions/modules/sbarcodes/meta-expressions.xml");
+
+    BundleElementRegistry.getInstance().registerGenericElement(SimpleBarcodesType.INSTANCE);
+    // legacy handler for a buggy iteration ..
+    BundleElementRegistry.getInstance().register(NAMESPACE, "simple-barcode", SimpleBarcodesElementReadHandler.class);
+
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
+
   }
 }
