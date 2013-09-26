@@ -7,6 +7,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module" module-name="extensions-scripting" exported="" />
+    <orderEntry type="module" module-name="cgg-core" exported="" />
   </component>
   <component name="copyright">
     <Base>
