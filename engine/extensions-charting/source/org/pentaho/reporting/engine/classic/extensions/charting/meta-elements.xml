@@ -6,14 +6,26 @@
 
   <include-globals src="res://org/pentaho/reporting/engine/classic/core/metadata/global-meta-elements.xml"/>
 
-  <element name="community-chart" expert="false" hidden="false" preferred="true"
-           bundle-name="org.pentaho.reporting.engine.classic.extensions.charting.messages"
-           implementation="org.pentaho.reporting.engine.classic.extensions.charting.ChartElementType">
+  <element name="chart" expert="false" hidden="false" preferred="true"
+           bundle-name="org.pentaho.reporting.engine.classic.extensions.charting.ChartElementTypeBundle"
+           implementation="org.pentaho.reporting.engine.classic.extensions.charting.ChartElementType"
+           content-type="org.pentaho.reporting.engine.classic.core.util.ReportDrawable"
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/charting/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
-    <attribute-group-ref ref="field-value"/>
-    <attribute-group-ref ref="static-computed-value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/classic/charting/1.0"
+               name="chart-definition"
+               mandatory="true"
+               expert="true"
+               hidden="false"
+               prefer-bulk="true"
+               design-time-value="true"
+               value-type="java.lang.String"
+               value-role="Value"/>
+
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>

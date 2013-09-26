@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.extensions.charting;
 
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -24,7 +28,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
 public class ChartingModule extends AbstractModule
 {
   public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho-chartbeans";
+      "http://reporting.pentaho.org/namespaces/engine/classic/charting/1.0";
 
   public ChartingModule() throws ModuleInitializeException
   {
@@ -33,5 +37,14 @@ public class ChartingModule extends AbstractModule
 
   public void initialize(final SubSystem subSystem) throws ModuleInitializeException
   {
+    ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "charts");
+    ElementMetaDataParser.initializeOptionalElementMetaData("org/pentaho/reporting/engine/classic/extensions/charting/meta-elements.xml");
+
+    BundleElementRegistry.getInstance().registerGenericElement(ChartElementType.INSTANCE);
+  }
+
+  public static void main(String[] args)
+  {
+    ClassicEngineBoot.getInstance().start();
   }
 }
