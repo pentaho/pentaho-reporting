@@ -394,6 +394,8 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     }
   }
 
+  public static final int FIELDS_MAX_NUMBER=16;
+
   private boolean ignoreTextEvents;
 
   private FunctionListPanel functionSelectorPanel;
@@ -687,50 +689,27 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       functionParameterEditor.clearSelectedFunction();
       return;
     }
-    final FunctionInformation fn = editorModel.getCurrentFunction();
-    if (fn == null)
+    final FunctionInformation fnInfo = editorModel.getCurrentFunction();
+    if (fnInfo == null)
     {
       functionParameterEditor.clearSelectedFunction();
       return;
     }
-    final FunctionDescription function = formulaContext.getFunctionRegistry().getMetaData(fn.getCanonicalName());
-    if (function == null)
+    final FunctionDescription fnDesc = formulaContext.getFunctionRegistry().getMetaData(fnInfo.getCanonicalName());
+    if (fnDesc == null)
     {
       functionParameterEditor.clearSelectedFunction();
       return;
     }
 
-    functionInformationPanel.setSelectedFunction(function);
+    functionInformationPanel.setSelectedFunction(fnDesc);
 
     try
     {
       ignoreTextEvents = true;
-      final int paramCount = DefaultFunctionParameterEditor.computeFunctionParameterCount(function);
-      final String[] parameterValues = new String[paramCount];
-      final int definedParameterCount = Math.min(fn.getParameterCount(), paramCount);
-      for (int i = 0; i < definedParameterCount; i++)
-      {
-        final String text = fn.getParameterText(i);
-        parameterValues[i] = text;
-      }
+      String[] parameterValues = DefaultFunctionParameterEditor.getParametersValues(fnInfo, fnDesc);
 
-      if (definedParameterCount > 0 &&
-          fn.getParameterCount() > paramCount)
-      {
-        final StringBuilder lastParamEatsAllBuffer = new StringBuilder(100);
-        final int lastParamIdx = definedParameterCount - 1;
-        for (int i = lastParamIdx; i < fn.getParameterCount(); i++)
-        {
-          if (i > lastParamIdx)
-          {
-            lastParamEatsAllBuffer.append(';');
-          }
-          lastParamEatsAllBuffer.append(fn.getParameterText(i));
-        }
-        parameterValues[lastParamIdx] = lastParamEatsAllBuffer.toString();
-      }
-
-      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(function, parameterValues, fn, switchParameterEditor, editorModel));
+      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(fnDesc, parameterValues, fnInfo, switchParameterEditor, editorModel));
     }
     finally
     {

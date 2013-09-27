@@ -116,7 +116,7 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
 
   public void setSelectedFunction(final FunctionParameterContext context)
   {
-    final FunctionDescription selectedFunction = context.getFunction();
+    final FunctionDescription fnDesc = context.getFunction();
     final int functionStart = context.getFunctionInformation().getFunctionOffset();
 
     if (activeEditor != null)
@@ -137,10 +137,10 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       switchParameterEditor = context.isSwitchParameterEditor();
     }
 
-    this.selectedFunction = selectedFunction;
+    this.selectedFunction = fnDesc;
     this.functionStartIndex = functionStart;
 
-    final String name = selectedFunction.getCanonicalName();
+    final String name = fnDesc.getCanonicalName();
     if ((activeEditor != null) && (switchParameterEditor == true))
     {
       activeEditor.removeParameterUpdateListener(parameterUpdateHandler);

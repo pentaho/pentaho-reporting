@@ -90,16 +90,19 @@ public class FormulaEditorDialog extends CommonDialog
     return panel.getEditor(function);
   }
 
+  @Deprecated
   public String getFormulaText()
   {
     return panel.getFormulaText();
   }
 
+  @Deprecated
   public void setFormulaText(final String formulaText)
   {
     panel.setFormulaText(formulaText);
   }
 
+  @Deprecated
   public void setFields(final FieldDefinition[] fields)
   {
     panel.setFields(fields);
@@ -118,6 +121,7 @@ public class FormulaEditorDialog extends CommonDialog
     }
 
     panel.setFields(fields);
+
     if (StringUtils.isEmpty(formula, true))
     {
       panel.setFormulaText("=");
@@ -127,9 +131,9 @@ public class FormulaEditorDialog extends CommonDialog
       panel.setFormulaText(formula);
     }
     if (!super.performEdit())
-    {
-      return null;
-    }
+  {
+    return null;
+  }
 
     final String formulaText = panel.getFormulaText();
     if (StringUtils.isEmpty(formulaText, true) || formulaText.trim().equals("="))
@@ -139,6 +143,7 @@ public class FormulaEditorDialog extends CommonDialog
     return formulaText;
   }
 
+  @Deprecated
   public String editFormulaFragment(final String formula, final FieldDefinition[] fields)
   {
     if (fields == null)

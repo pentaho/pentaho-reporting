@@ -46,15 +46,6 @@ public class FunctionParameterContext
     return function;
   }
 
-  public int getFunctionParameterStartPosition()
-  {
-    if (functionInformation == null)
-    {
-      return -1;
-    }
-    return functionInformation.getFunctionParameterStart();
-  }
-
   public String[] getParameterValues()
   {
     return parameterValues;
@@ -68,20 +59,6 @@ public class FunctionParameterContext
   public void setSwitchParameterEditor(final boolean switchParameterEditor)
   {
     this.switchParameterEditor = switchParameterEditor;
-  }
-
-  public static boolean isSameFunctionDescription(final FunctionDescription d1,
-                                                   final FunctionDescription d2)
-  {
-    if (d1 == null || d2 == null)
-    {
-      return false;
-    }
-    if (d1.getClass().equals(d2.getClass()))
-    {
-      return true;
-    }
-    return false;
   }
 
   public String toString()

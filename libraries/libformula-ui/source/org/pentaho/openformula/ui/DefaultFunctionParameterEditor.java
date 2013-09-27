@@ -108,7 +108,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       {
         return;
       }
-
+      parameterUpdatedCount = parameterIndex;
       parameterUpdateInProgress = true;
     }
 
@@ -120,7 +120,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if (parameterUpdateInProgress)
       {
         parameterUpdateInProgress = false;
-
+        parameterUpdatedCount = -1;
         SwingUtilities.invokeLater(this);
       }
     }
@@ -128,29 +128,33 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     public void run()
     {
-      final boolean oldParameterUpdate = inParameterUpdate;
+      /*final boolean oldParameterUpdate = inParameterUpdate;
       try
       {
         inParameterUpdate = true;
         if (parameterIndex < getParameterCount())
-        {
+        {*/
           final String s = paramTextField.getText();
-          final int caretPosition = paramTextField.getCaretPosition();
+
+          //final int caretPosition = paramTextField.getCaretPosition();
           if (ObjectUtilities.equal(s, oldText))
           {
             return;
           }
           fireParameterUpdate(parameterIndex, s);
           oldText = s;
-          paramTextField.setCaretPosition(caretPosition);
-        }
+          //paramTextField.setCaretPosition(caretPosition);
+        /*}
       }
       finally
       {
         inParameterUpdate = oldParameterUpdate;
-      }
+      } */
     }
   }
+
+  public static final int FIELDS_MAX_NUMBER=16;
+  public static final int FIELDS_ADD=2;
 
   private static final JTextField[] EMPTY_FIELDS = new JTextField[0];
   private static final SelectFieldAction[] EMPTY_ACTIONS = new SelectFieldAction[0];
@@ -164,9 +168,9 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   private SelectFieldAction[] selectFieldActions;
   private FieldDefinition[] fields;
 
-  private boolean inParameterUpdate;
   private boolean inSetupUpdate;
   private boolean parameterUpdateInProgress;
+  private int parameterUpdatedCount=-1;
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
@@ -176,9 +180,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     parameterPane = new JPanel();
     parameterPane.setLayout(new GridBagLayout());
 
-    this.inParameterUpdate = false;
     this.inSetupUpdate = false;
-    this.parameterUpdateInProgress = false;
 
     this.textFields = EMPTY_FIELDS;
     this.selectFieldActions = EMPTY_ACTIONS;
@@ -315,22 +317,18 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   public void setSelectedFunction(final FunctionParameterContext context)
   {
-    if (inParameterUpdate)
-    {
-      return;
-    }
-
     try
     {
       inSetupUpdate = true;
 
-      final FunctionDescription selectedFunction = context.getFunction();
+      final FunctionDescription fnDesc = context.getFunction();
       final String[] parameterValues = context.getParameterValues();
 
       if (isMainFormula(context) == true)
       {
-        if ((parameterValues != null) && (parameterValues.length == textFields.length))
+        if ((parameterValues != null) && (!context.getFunction().isInfiniteParameterCount()))
         {
+          //for functions with fixed parameters count simple update is enough
           updateParameterFields(parameterValues);
           return;
         }
@@ -348,7 +346,9 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         }
       }
 
-      this.selectedFunction = selectedFunction;
+      this.selectedFunction = fnDesc;
+
+      String[] values = context.getParameterValues();
 
       if (context.isSwitchParameterEditor() == false)
       {
@@ -361,7 +361,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
       parameterPane.removeAll();
 
-      if (selectedFunction == null)
+      if (fnDesc == null)
       {
         for (int i = 0; i < selectFieldActions.length; i++)
         {
@@ -377,7 +377,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         return;
       }
 
-      final int count = computeFunctionParameterCount(selectedFunction);
+      int count = computeFunctionParameterCount(context.getFunctionInformation(), fnDesc);
 
       this.selectFieldActions = new SelectFieldAction[count];
       this.textFields = new JTextField[count];
@@ -405,6 +405,10 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final JLabel paramNameLabel = new JLabel(displayName);
     final JTextField paramTextField = new JTextField();
+    if (parameterPosition==0){
+      paramTextField.requestFocus();
+    }
+
     paramTextField.setText(parameterValue);
     if (parameterValue != null)
     {
@@ -481,43 +485,43 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     }
   }
 
-  public static int computeFunctionParameterCount(final FunctionDescription selectedFunction)
-  {
-    final int count;
-    if (selectedFunction.isInfiniteParameterCount())
-    {
-      count = Math.max(16, selectedFunction.getParameterCount());
+  public static int computeFunctionParameterCount(final FunctionInformation info, final FunctionDescription desc){
+    if  (!desc.isInfiniteParameterCount()){
+      return desc.getParameterCount();
+    } else {
+      return Math.min(FIELDS_MAX_NUMBER, info.getParameterCount()+FIELDS_ADD);
     }
-    else
-    {
-      count = selectedFunction.getParameterCount();
-    }
-    return count;
   }
 
-  public void setParameterValue(final int param, final String value)
-  {
-    if (inSetupUpdate)
+  public static String[] getParametersValues(final FunctionInformation fnInfo, final FunctionDescription fnDesc){
+    int paramCount = computeFunctionParameterCount(fnInfo, fnDesc);
+
+    final String[] parameterValues = new String[paramCount];
+    final int definedParameterCount = Math.min(fnInfo.getParameterCount(), paramCount);
+    for (int i = 0; i < definedParameterCount; i++)
     {
-      return;
+      final String text = fnInfo.getParameterText(i);
+      parameterValues[i] = text;
     }
 
-    try
+    //if there is more than FIELDS_MAX_NUMBER parameters -
+    if (definedParameterCount > 0 &&
+        fnInfo.getParameterCount() > paramCount)
     {
-      inParameterUpdate = true;
-      textFields[param].setText(value);
-
-      // User entered a field for a particular parameter.  Update formula text-area
-      if (param < getParameterCount())
+      final StringBuilder lastParamEatsAllBuffer = new StringBuilder(100);
+      final int lastParamIdx = definedParameterCount - 1;
+      for (int i = lastParamIdx; i < fnInfo.getParameterCount(); i++)
       {
-        fireParameterUpdate(param, value);
+        if (i > lastParamIdx)
+        {
+          lastParamEatsAllBuffer.append(';');
+        }
+        lastParamEatsAllBuffer.append(fnInfo.getParameterText(i));
       }
+      parameterValues[lastParamIdx] = lastParamEatsAllBuffer.toString();
+    }
 
-    }
-    finally
-    {
-      inParameterUpdate = false;
-    }
+    return parameterValues;
   }
 
   protected JTextField getParameterField(final int field)
@@ -583,6 +587,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     return fields.clone();
   }
 
+  @Deprecated
   public int getParameterCount()
   {
     int paramCount = 0;
