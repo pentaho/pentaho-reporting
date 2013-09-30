@@ -52,6 +52,10 @@ public class ChartElementType extends ContentType
     return null;
   }
 
+  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
+  {
+    return "Chart";
+  }
 
   public Object getValue(final ExpressionRuntime runtime,
                          final ReportElement element)
