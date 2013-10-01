@@ -529,6 +529,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     errorIcon = new ImageIcon(getClass().getResource("/org/pentaho/openformula/ui/images/error.gif")); // NON-NLS
     errorIconHolder = new JLabel();
     errorTextHolder = new JLabel();
+    errorTextHolder.setName("errorTextHolder");
 
     selectFieldsAction = new SelectFieldAction(this, new FieldSelectorListener(), this);
 
