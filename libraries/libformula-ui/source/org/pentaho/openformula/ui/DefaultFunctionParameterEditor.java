@@ -111,7 +111,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         return;
       }
       parameterUpdatedCount = parameterIndex;
-      parameterUpdateInProgress = true;
     }
 
     @Override
@@ -120,9 +119,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       if (focusIgnore != null && focusIgnore.equals(e.getOppositeComponent())) {
         return;
       }
-      if (parameterUpdateInProgress)
+      if (parameterUpdatedCount>0)
       {
-        parameterUpdateInProgress = false;
         parameterUpdatedCount = -1;
         SwingUtilities.invokeLater(this);
       }
@@ -157,7 +155,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
   private FieldDefinition[] fields;
 
   private boolean inSetupUpdate;
-  private boolean parameterUpdateInProgress;
   private int parameterUpdatedCount=-1;
 
   /**
