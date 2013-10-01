@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ClassicEngineFactoryParameters;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.StyleExpressionHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
@@ -42,6 +43,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.util.beans.ValueConverter;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -73,6 +75,19 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   protected AbstractElementReadHandler(final ElementType elementType) throws ParseException {
     this();
     initialize(elementType);
+  }
+
+  protected void autoInit() throws ParseException
+  {
+    String tagName = getTagName();
+    String uri = getUri();
+    ElementMetaData elementType = ElementTypeRegistry.getInstance().getElementType(tagName);
+    if (ObjectUtilities.equal(uri, elementType.getNamespace()) == false)
+    {
+      throw new ParseException("Metadata not registered, and auto-registration does not match namespace");
+    }
+    this.metaData = elementType;
+    this.element = createElement();
   }
 
   protected void initialize(final ElementType elementType)
@@ -143,7 +158,7 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
       return;
     }
 
-    if ("Resource".equals(attributeMetaData.getValueRole())) {
+    if (ElementMetaData.VALUEROLE_RESOURCE.equals(attributeMetaData.getValueRole())) {
       try {
         final Object type = attributes.getAttribute(AttributeNames.Core.NAMESPACE, "resource-type");
         if ("url".equals(type)) {

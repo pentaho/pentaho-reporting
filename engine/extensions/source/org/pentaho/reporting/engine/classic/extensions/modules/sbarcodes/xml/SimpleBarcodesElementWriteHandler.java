@@ -34,6 +34,7 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
  *
  * @author Thomas Morgner
  */
+@Deprecated
 public class SimpleBarcodesElementWriteHandler extends AbstractElementWriteHandler
 {
   public SimpleBarcodesElementWriteHandler()

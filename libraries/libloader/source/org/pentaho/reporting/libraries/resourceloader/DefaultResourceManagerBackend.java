@@ -295,8 +295,9 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
 
   private boolean isSupportedTarget(final Class target, final ResourceFactory fact)
   {
-    final Class factoryType = fact.getFactoryType();
-    if (target != null && target.isAssignableFrom(factoryType))
+    final Class<?> factoryType = fact.getFactoryType();
+    // strict tests. We do no longer allow sub-class matching, as this yields
+    if (target != null && factoryType != null && factoryType.equals(target))
     {
       return true;
     }

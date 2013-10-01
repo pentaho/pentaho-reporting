@@ -28,11 +28,7 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
+@Deprecated
 public class ResourceMessageElementWriteHandler extends AbstractElementWriteHandler
 {
   public ResourceMessageElementWriteHandler()

@@ -21,8 +21,6 @@ import java.beans.PropertyEditorManager;
 
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
-import org.pentaho.reporting.engine.classic.core.modules.misc.survey.parser.SurveyScaleElementReadHandler;
-import org.pentaho.reporting.engine.classic.core.modules.misc.survey.writer.SurveyScaleWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
@@ -61,16 +59,16 @@ public class SurveyModule extends AbstractModule
   public void initialize(final SubSystem subSystem)
       throws ModuleInitializeException
   {
-    BundleElementRegistry.getInstance().register("survey-scale", SurveyScaleWriteHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "survey-scale", SurveyScaleElementReadHandler.class);
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
     ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "surveyscale");
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
 
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
         ("org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-expressions.xml");
     ElementMetaDataParser.initializeOptionalElementMetaData
         ("org/pentaho/reporting/engine/classic/core/modules/misc/survey/meta-elements.xml");
 
+    BundleElementRegistry.getInstance().registerGenericWriter(SurveyScaleType.INSTANCE);
+    BundleElementRegistry.getInstance().registerGenericReader(SurveyScaleType.INSTANCE);
     PropertyEditorManager.registerEditor(SurveyScaleShapeType.class, SurveyScaleShapeTypePropertyEditor.class);
   }
 }

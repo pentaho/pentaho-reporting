@@ -1,27 +1,11 @@
-/*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
-
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
 import java.io.IOException;
 
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.Section;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
@@ -29,13 +13,12 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-@Deprecated
-public class DataGroupBodyElementWriteHandler extends AbstractElementWriteHandler
+/**
+ * A generic write handler for data elements and all sections that have no
+ * need for writing additional information.
+ */
+public class GenericElementWriteHandler extends AbstractElementWriteHandler
 {
-  public DataGroupBodyElementWriteHandler()
-  {
-  }
-
   /**
    * Writes a single element as XML structure.
    *
@@ -43,8 +26,9 @@ public class DataGroupBodyElementWriteHandler extends AbstractElementWriteHandle
    * @param state     the current write-state.
    * @param xmlWriter the xml writer.
    * @param element   the element.
-   * @throws IOException           if an IO error occured.
-   * @throws BundleWriterException if an Bundle writer.
+   * @throws java.io.IOException if an IO error occured.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException
+   *                             if an Bundle writer.
    */
   public void writeElement(final WriteableDocumentBundle bundle,
                            final BundleWriterState state,
@@ -68,11 +52,29 @@ public class DataGroupBodyElementWriteHandler extends AbstractElementWriteHandle
     {
       throw new NullPointerException();
     }
+    if (element instanceof MasterReport)
+    {
+      throw new BundleWriterException();
+    }
+    if (element instanceof SubReport)
+    {
+      throw new BundleWriterException();
+    }
+
+    String name = element.getMetaData().getName();
+    String namespace = element.getMetaData().getNamespace();
+
+    copyStaticResources(bundle, state, element);
 
     final AttributeList attList = createMainAttributes(element, xmlWriter);
-    xmlWriter.writeTag(BundleNamespaces.LAYOUT, "data-body", attList, XmlWriterSupport.OPEN);
+    ensureNamespaceDefined(xmlWriter, attList, namespace);
+    xmlWriter.writeTag(namespace, name, attList, XmlWriterSupport.OPEN);
     writeElementBody(bundle, state, element, xmlWriter);
-    writeChildElements(bundle, state, xmlWriter, (Section) element);
+    if (element instanceof Section)
+    {
+      writeChildElements(bundle, state, xmlWriter, (Section) element);
+    }
     xmlWriter.writeCloseTag();
   }
+
 }

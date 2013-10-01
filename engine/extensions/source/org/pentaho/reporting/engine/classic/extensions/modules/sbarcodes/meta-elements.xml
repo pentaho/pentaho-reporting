@@ -4,7 +4,8 @@
 
   <element name="simple-barcodes" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.metadata"
-           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesType">
+           implementation="org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesType"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/extensions/sbarcodes/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

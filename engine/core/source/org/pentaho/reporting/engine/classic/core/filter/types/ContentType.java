@@ -52,7 +52,9 @@ public class ContentType extends AbstractElementType
     public LFUMap<Object,Boolean> failureCache;
     public JFrame frame;
   }
-  
+
+  public static final ContentType INSTANCE = new ContentType();
+
   private static final Class[] TARGETS = new Class[]{DrawableWrapper.class, Image.class};
   private static final Log logger = LogFactory.getLog(ContentType.class);
 

@@ -28,6 +28,6 @@ public class CrosstabElement extends SubReport
 {
   public CrosstabElement()
   {
-    setElementType(new CrosstabElementType());
+    setElementType(CrosstabElementType.INSTANCE);
   }
 }
