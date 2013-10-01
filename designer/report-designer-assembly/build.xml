@@ -317,9 +317,30 @@
       ====================================================================-->
   <target name="continuous-local-testless" depends="dist"/>
 
-    <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
-         These do nothing in an assembly build, so don't call out to subfloor
-      -->
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-local-junit" depends="build-testless,test,publish-local"/>
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-junit" depends="build,publish"/>
+
+  <!-- Until CM-466 is fixed, hot-patch it -->
+  <target name="install-ivy" depends="subfloor.install-ivy">
+    <ivy:settings url="${ivy.settingsurl}"/>
+  </target>
+
+  <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
+       These do nothing in an assembly build, so don't call out to subfloor
+    -->
     <target name="dist-source" depends="dist"/>
     <target name="dist-javadoc" depends="dist"/>
     <target name="source.zip"/>
