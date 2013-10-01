@@ -52,7 +52,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+import org.pentaho.openformula.ui.model2.FormulaClosingParenthesisElement;
 import org.pentaho.openformula.ui.model2.FormulaElement;
+import org.pentaho.openformula.ui.model2.FormulaOpenParenthesisElement;
+import org.pentaho.openformula.ui.model2.FormulaSemicolonElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
 import org.pentaho.openformula.ui.util.SelectFieldAction;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -273,15 +276,18 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       }
 
       // The parameter index corresponds to the individual parameter text-fields
-      final int globalParameterIndex = event.getParameter();
+      int globalParameterIndex = event.getParameter();
 
       // The text entered in a parameter field
-      String parameterText = event.getText();
+      String parameterText = event.getText().trim();
       final boolean catchAllParameter = isEmbeddedFunction(parameterText) && event.isCatchAllParameter();
+
+      // Build the formula text.  Remove the old text and inject the new text in it's place
+      final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
 
       // Determine the start and end positions.  These positions will be used
       // to build the new formula text in formula text-area
-      final int start;
+      int start;
       final int end;
       if (globalParameterIndex == -1)
       {
@@ -290,7 +296,10 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       }
       else if (globalParameterIndex >= functionParameterCount)
       {
-        parameterText = ";" + parameterText;
+        while (globalParameterIndex >= functionParameterCount){
+          parameterText = FormulaSemicolonElement.ELEMENT + parameterText;
+          globalParameterIndex--;
+        }
 
         // start & end should be the same as we don't want to delete
         // anything from formula text
@@ -314,10 +323,19 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       {
         start = fn.getParamStart(globalParameterIndex);
         end = fn.getParamEnd(globalParameterIndex);
+        if (parameterText.isEmpty()){
+           String prev = String.valueOf(formulaText.charAt(start));
+           while(!prev.equals(FormulaSemicolonElement.ELEMENT)){
+             prev = String.valueOf(formulaText.charAt(start-1));
+             if (prev.equals(FormulaOpenParenthesisElement.ELEMENT) ||
+                 prev.equals(FormulaClosingParenthesisElement.ELEMENT)){
+               break;
+             }
+             start--;
+           }
+        }
       }
-
-      // Build the formula text.  Remove the old text and inject the new text in it's place
-      final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
+      //Remove the old text and inject the new text in it's place
       formulaText.delete(start, end);
       formulaText.insert(start, parameterText);
 
@@ -336,6 +354,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       revalidateFormulaSyntax();
     }
   }
+
 
   private class FieldSelectorListener implements PropertyChangeListener
   {
@@ -707,9 +726,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     try
     {
       ignoreTextEvents = true;
-      String[] parameterValues = DefaultFunctionParameterEditor.getParametersValues(fnInfo, fnDesc);
-
-      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(fnDesc, parameterValues, fnInfo, switchParameterEditor, editorModel));
+      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(fnDesc, fnInfo.getParametes(), fnInfo, switchParameterEditor, editorModel));
     }
     finally
     {

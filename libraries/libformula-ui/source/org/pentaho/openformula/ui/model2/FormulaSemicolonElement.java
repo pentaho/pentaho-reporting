@@ -19,6 +19,8 @@ package org.pentaho.openformula.ui.model2;
 
 public class FormulaSemicolonElement extends FormulaElement
 {
+  public static final String ELEMENT = ";";
+
   public FormulaSemicolonElement(final FormulaDocument document,
                                  final FormulaRootElement parentElement)
   {
@@ -27,7 +29,7 @@ public class FormulaSemicolonElement extends FormulaElement
 
   public String getText()
   {
-    return ";"; // NON-NLS
+    return ELEMENT; // NON-NLS
   }
 
   /**

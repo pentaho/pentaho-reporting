@@ -18,6 +18,7 @@ public class FunctionParameterContext
     switchParameterEditor = true;
   }
 
+  @Deprecated
   public FunctionParameterContext(final FunctionDescription function,
                                   final String[] parameterValues,
                                   final FunctionInformation fn,
@@ -26,6 +27,18 @@ public class FunctionParameterContext
   {
     this.function = function;
     this.parameterValues = parameterValues;
+    this.functionInformation = fn;
+    this.switchParameterEditor = switchParameterEditor;
+    this.editorModel = editorModel;
+  }
+
+  public FunctionParameterContext(final FunctionDescription function,
+                                  final FunctionInformation fn,
+                                  final boolean switchParameterEditor,
+                                  final FormulaEditorModel editorModel)
+  {
+    this.function = function;
+    this.parameterValues = fn.getParametes();
     this.functionInformation = fn;
     this.switchParameterEditor = switchParameterEditor;
     this.editorModel = editorModel;

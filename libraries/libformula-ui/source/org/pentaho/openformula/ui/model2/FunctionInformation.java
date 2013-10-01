@@ -116,4 +116,8 @@ public class FunctionInformation
   {
     return parameterText.length;
   }
+
+  public String[] getParametes(){
+    return parameterText;
+  }
 }

@@ -19,6 +19,8 @@ package org.pentaho.openformula.ui.model2;
 
 public class FormulaClosingParenthesisElement extends FormulaElement
 {
+  public static final String ELEMENT = ")";
+
   public FormulaClosingParenthesisElement(final FormulaDocument document,
                                           final FormulaRootElement parentElement)
   {
@@ -27,7 +29,7 @@ public class FormulaClosingParenthesisElement extends FormulaElement
 
   public String getText()
   {
-    return ")";
+    return ELEMENT;
   }
 
   /**
