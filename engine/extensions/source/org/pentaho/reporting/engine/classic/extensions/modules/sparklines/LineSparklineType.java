@@ -32,6 +32,8 @@ import org.pentaho.reporting.libraries.libsparklines.LineGraphDrawable;
  */
 public class LineSparklineType extends ContentType
 {
+  public static final LineSparklineType INSTANCE = new LineSparklineType();
+
   public LineSparklineType()
   {
     super("line-sparkline");
