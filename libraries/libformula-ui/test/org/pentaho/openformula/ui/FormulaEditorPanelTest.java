@@ -19,6 +19,8 @@
 
 package org.pentaho.openformula.ui;
 
+import java.util.EventListener;
+
 import junit.framework.TestCase;
 
 public class FormulaEditorPanelTest extends TestCase
@@ -41,6 +43,9 @@ public class FormulaEditorPanelTest extends TestCase
   public void testNestedFunctionEditing()
   {
     FormulaEditorPanel panel = new FormulaEditorPanel();
+    //remove this to have eliminate randomly test failings
+    //panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
     panel.setFormulaText("=COUNT()");
 
     MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
@@ -352,8 +357,8 @@ public class FormulaEditorPanelTest extends TestCase
     activeEditor.fireParameterUpdate(1, "aa");    // Then clause
     assertEquals("=IF(Logical;aa;Any)", panel.getFormulaText());
 
-    activeEditor.fireParameterUpdate(2, "");    // Other clause
-    assertEquals("=IF(Logical;aa;)", panel.getFormulaText());
+    activeEditor.fireParameterUpdate(2, "cc");    // Other clause
+    assertEquals("=IF(Logical;aa;cc)", panel.getFormulaText());
 
     activeEditor.fireParameterUpdate(2, "bb");    // Other clause
     assertEquals("=IF(Logical;aa;bb)", panel.getFormulaText());
@@ -396,7 +401,6 @@ public class FormulaEditorPanelTest extends TestCase
 
     assertEquals("=" + newDrillDownFormula, panel.getFormulaText());
   }
-
 
   // Validates PRD-4521
   public void testValidateFieldSelector()
