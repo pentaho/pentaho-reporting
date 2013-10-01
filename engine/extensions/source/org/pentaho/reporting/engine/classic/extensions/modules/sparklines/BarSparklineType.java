@@ -35,6 +35,8 @@ import org.pentaho.reporting.libraries.libsparklines.BarGraphDrawable;
  */
 public class BarSparklineType extends ContentType
 {
+  public static final BarSparklineType INSTANCE = new BarSparklineType();
+
   public BarSparklineType()
   {
     super("bar-sparkline");
