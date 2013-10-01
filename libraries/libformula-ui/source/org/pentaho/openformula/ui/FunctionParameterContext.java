@@ -18,6 +18,12 @@ public class FunctionParameterContext
     switchParameterEditor = true;
   }
 
+  //there is no need to pass parameters valuse in constructor,
+  //as the parameterValues can be derived from
+  //FunctionInformation - and if it is used as
+  //marker for fields count. Usually  parameterValues is
+  //functions set parameters + some empty positions to
+  //illustrate UI empty fields.
   @Deprecated
   public FunctionParameterContext(final FunctionDescription function,
                                   final String[] parameterValues,
