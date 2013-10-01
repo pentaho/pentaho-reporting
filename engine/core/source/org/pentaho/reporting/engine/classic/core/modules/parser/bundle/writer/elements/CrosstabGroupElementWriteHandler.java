@@ -29,6 +29,7 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+@Deprecated
 public class CrosstabGroupElementWriteHandler extends AbstractElementWriteHandler
 {
   public CrosstabGroupElementWriteHandler()

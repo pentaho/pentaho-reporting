@@ -57,6 +57,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   private String prefix;
   private Class elementType;
   private Class contentType;
+  private String namespace;
 
   private ArrayList<StyleReadHandler> styleHandlers;
   private ArrayList<AttributeReadHandler> attributeHandlers;
@@ -88,6 +89,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
       throw new ParseException("Attribute 'name' is undefined", getLocator());
     }
 
+    namespace = attrs.getValue(getUri(), "namespace"); // NON-NLS
     experimental = "true".equals(attrs.getValue(getUri(), "experimental")); // NON-NLS
     compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
     expert = "true".equals(attrs.getValue(getUri(), "expert"));
@@ -287,7 +289,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   public Object getObject() throws SAXException
   {
     return new DefaultElementMetaData
-        (name, bundleName, "element.", expert, preferred, hidden, deprecated, reportElementType,
+        (name, bundleName, "element.", namespace, expert, preferred, hidden, deprecated, reportElementType,
             attributes, styles, elementType, contentType, experimental, compatibilityLevel);
   }
 }

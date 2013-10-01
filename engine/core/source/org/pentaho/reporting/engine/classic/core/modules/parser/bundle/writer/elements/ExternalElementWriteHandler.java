@@ -28,14 +28,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.Element;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 21.07.2009
- * Time: 17:13:25
- *
- * @author Thomas Morgner.
- */
+@Deprecated
 public class ExternalElementWriteHandler extends AbstractElementWriteHandler
 {
   public ExternalElementWriteHandler()

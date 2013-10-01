@@ -51,12 +51,12 @@ public class RootXmlReadHandler extends DefaultHandler
   /**
    * The current handlers.
    */
-  private FastStack currentHandlers;
+  private FastStack<XmlReadHandler> currentHandlers;
 
   /**
    * The list of parent handlers.
    */
-  private FastStack outerScopes;
+  private FastStack<FastStack<XmlReadHandler>> outerScopes;
 
   /**
    * The root handler.
@@ -82,7 +82,7 @@ public class RootXmlReadHandler extends DefaultHandler
   private ResourceKey source;
   private ResourceKey context;
   private ResourceManager manager;
-  private FastStack namespaces;
+  private FastStack<String> namespaces;
   private boolean firstCall;
   private boolean xmlnsUrisNotAvailable;
 
@@ -131,7 +131,7 @@ public class RootXmlReadHandler extends DefaultHandler
     this.objectRegistry = new HashMap<String,Object>();
     this.parserConfiguration = new DefaultConfiguration();
     this.commentHandler = new CommentHandler();
-    this.namespaces = new FastStack();
+    this.namespaces = new FastStack<String>();
   }
 
   /**
@@ -275,8 +275,7 @@ public class RootXmlReadHandler extends DefaultHandler
    */
   public String[] getHelperObjectNames()
   {
-    return (String[]) this.objectRegistry.keySet().toArray
-        (new String[objectRegistry.size()]);
+    return this.objectRegistry.keySet().toArray(new String[objectRegistry.size()]);
   }
 
   /**
@@ -325,7 +324,7 @@ public class RootXmlReadHandler extends DefaultHandler
     }
 
     this.outerScopes.push(this.currentHandlers);
-    this.currentHandlers = new FastStack();
+    this.currentHandlers = new FastStack<XmlReadHandler>();
     this.currentHandlers.push(handler);
     handler.startElement(uri, tagName, attrs);
 
@@ -371,7 +370,7 @@ public class RootXmlReadHandler extends DefaultHandler
     {
       // if empty, but "recurse" had been called, then restore the old handler stack ..
       // but do not end the recursed element ..
-      this.currentHandlers = (FastStack) this.outerScopes.pop();
+      this.currentHandlers = this.outerScopes.pop();
     }
     else if (!this.currentHandlers.isEmpty())
     {
@@ -387,7 +386,7 @@ public class RootXmlReadHandler extends DefaultHandler
    */
   protected XmlReadHandler getCurrentHandler()
   {
-    return (XmlReadHandler) this.currentHandlers.peek();
+    return this.currentHandlers.peek();
   }
 
   /**
@@ -397,8 +396,8 @@ public class RootXmlReadHandler extends DefaultHandler
    */
   public void startDocument() throws SAXException
   {
-    this.outerScopes = new FastStack();
-    this.currentHandlers = new FastStack();
+    this.outerScopes = new FastStack<FastStack<XmlReadHandler>>();
+    this.currentHandlers = new FastStack<XmlReadHandler>();
     if (rootHandler != null)
     {
       // When dealing with the multiplexing beast, we cant define a
@@ -443,7 +442,7 @@ public class RootXmlReadHandler extends DefaultHandler
     }
     else
     {
-      defaultNamespace = (String) namespaces.peek();
+      defaultNamespace = namespaces.peek();
     }
 
     pushDefaultNamespace(defaultNamespace);
@@ -570,7 +569,7 @@ public class RootXmlReadHandler extends DefaultHandler
                                final String qName)
       throws SAXException
   {
-    final String defaultNamespace = (String) namespaces.pop();
+    final String defaultNamespace = namespaces.pop();
     final String uri;
     if ((originalUri == null || "".equals(originalUri)) &&
         defaultNamespace != null)

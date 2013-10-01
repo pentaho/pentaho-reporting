@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.extensions.toc;
 
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.LayoutDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.extensions.toc.parser.BundleIndexXmlFactoryModule;
@@ -65,10 +64,10 @@ public class TocModule extends AbstractModule
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
         ("org/pentaho/reporting/engine/classic/extensions/toc/meta-datafactory.xml");
 
-    BundleElementRegistry.getInstance().register("toc", TocElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register("index", IndexElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "toc", TocReadHandler.class);
-    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "index", IndexReadHandler.class);
+    BundleElementRegistry.getInstance().register(TocElementType.INSTANCE, TocElementWriteHandler.class);
+    BundleElementRegistry.getInstance().register(IndexElementType.INSTANCE, IndexElementWriteHandler.class);
+    BundleElementRegistry.getInstance().registerReader(TocElementType.INSTANCE, TocReadHandler.class);
+    BundleElementRegistry.getInstance().registerReader(IndexElementType.INSTANCE, IndexReadHandler.class);
 
     TocXmlResourceFactory.register(BundleTocXmlFactoryModule.class);
     TocXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);

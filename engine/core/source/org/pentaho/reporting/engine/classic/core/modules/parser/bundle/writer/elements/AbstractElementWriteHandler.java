@@ -279,7 +279,7 @@ public abstract class AbstractElementWriteHandler implements BundleElementWriteH
     return attList;
   }
 
-  private void ensureNamespaceDefined(final XmlWriter writer, final AttributeList attList, final String namespace)
+  protected void ensureNamespaceDefined(final XmlWriter writer, final AttributeList attList, final String namespace)
   {
     if (writer.isNamespaceDefined(namespace) == false &&
         attList.isNamespaceUriDefined(namespace) == false)
@@ -639,15 +639,17 @@ public abstract class AbstractElementWriteHandler implements BundleElementWriteH
 
     final ParameterMapping[] inputMappings = subReport.getInputMappings();
     final ParameterMapping[] outputMappings = subReport.getExportMappings();
-    final String tagName = subReport.getElementTypeName();
+    ElementMetaData metaData = subReport.getMetaData();
+    final String tagName = metaData.getName();
+    final String namespace = metaData.getNamespace();
     if (inputMappings.length == 0 && outputMappings.length == 0)
     {
-      xmlWriter.writeTag(BundleNamespaces.LAYOUT, tagName, "href",
+      xmlWriter.writeTag(namespace, tagName, "href",
           '/' + subReportState.getFileName() + "content.xml", XmlWriterSupport.CLOSE);
     }
     else
     {
-      xmlWriter.writeTag(BundleNamespaces.LAYOUT, tagName, "href",
+      xmlWriter.writeTag(namespace, tagName, "href",
           '/' + subReportState.getFileName() + "content.xml", XmlWriterSupport.OPEN);
 
       for (int i = 0; i < inputMappings.length; i++)

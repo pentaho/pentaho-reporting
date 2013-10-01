@@ -28,6 +28,7 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+@Deprecated
 public class PieSparklineWriteHandler extends AbstractElementWriteHandler
 {
 
