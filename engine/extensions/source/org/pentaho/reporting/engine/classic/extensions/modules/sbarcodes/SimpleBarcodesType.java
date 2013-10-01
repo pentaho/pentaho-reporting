@@ -37,6 +37,8 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  */
 public class SimpleBarcodesType extends ContentType
 {
+  public static final SimpleBarcodesType INSTANCE = new SimpleBarcodesType();
+
   private static final Log logger = LogFactory.getLog(SimpleBarcodesType.class);
 
   public SimpleBarcodesType()

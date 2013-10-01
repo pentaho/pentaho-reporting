@@ -33,6 +33,8 @@ import org.pentaho.reporting.libraries.libsparklines.PieGraphDrawable;
  */
 public class PieSparklineType extends ContentType
 {
+  public static final PieSparklineType INSTANCE = new PieSparklineType();
+
   public PieSparklineType()
   {
     super("pie-sparkline");

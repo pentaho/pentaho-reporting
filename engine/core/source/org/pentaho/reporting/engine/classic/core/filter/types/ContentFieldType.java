@@ -23,6 +23,8 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 public class ContentFieldType extends ContentType
 {
+  public static final ContentFieldType INSTANCE = new ContentFieldType();
+
   public ContentFieldType()
   {
     super("content-field");

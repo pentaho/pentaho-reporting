@@ -70,6 +70,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 public class LegacyChartType extends ContentFieldType
 {
+  public static final LegacyChartType INSTANCE = new LegacyChartType();
   private transient ElementMetaData elementType;
 
   public LegacyChartType()
