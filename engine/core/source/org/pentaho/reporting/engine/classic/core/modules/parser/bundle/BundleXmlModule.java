@@ -108,6 +108,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.el
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.RelationalGroupElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ReportFooterElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ReportHeaderElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.SubGroupBodyElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.SubreportElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.BandStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles.BorderStyleSetWriteHandler;
@@ -187,7 +188,6 @@ public class BundleXmlModule extends AbstractModule
     BundleElementRegistry.getInstance().registerGenericWriter(GroupDataBodyType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(PageFooterType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(PageHeaderType.INSTANCE);
-    BundleElementRegistry.getInstance().registerGenericWriter(SubGroupBodyType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(WatermarkType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(DetailsHeaderType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(DetailsFooterType.INSTANCE);
@@ -201,6 +201,7 @@ public class BundleXmlModule extends AbstractModule
     BundleElementRegistry.getInstance().registerGenericWriter(CrosstabCellBodyType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(CrosstabGroupType.INSTANCE);
 
+    BundleElementRegistry.getInstance().register(SubGroupBodyType.INSTANCE, SubGroupBodyElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(GroupFooterType.INSTANCE, GroupFooterElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(GroupHeaderType.INSTANCE, GroupHeaderElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(ItemBandType.INSTANCE, ItembandElementWriteHandler.class);
