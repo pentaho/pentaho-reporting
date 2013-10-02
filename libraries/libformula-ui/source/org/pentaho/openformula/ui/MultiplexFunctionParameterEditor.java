@@ -57,7 +57,6 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
   public static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
 
   private FunctionDescription selectedFunction;
-  private int functionStartIndex;
   private JPanel rootPanel;
 
   public MultiplexFunctionParameterEditor()
@@ -155,7 +154,6 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
     }
 
     this.selectedFunction = selectedFunction;
-    this.functionStartIndex = functionStart;
 
     final String name = selectedFunction.getCanonicalName();
     if ((activeEditor != null) && (switchParameterEditor == true))

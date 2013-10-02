@@ -600,7 +600,7 @@ public class FormulaDocument implements Document
           b.append(';');
         }
       }
-      else
+      else if (node != null)
       {
         b.append(node.getText());
       }

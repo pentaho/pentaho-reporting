@@ -114,9 +114,16 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     public void focusLost(final FocusEvent e)
     {
-      if (focusIgnore != null && focusIgnore.equals(e.getOppositeComponent())) {
+      // If user tabs between parameter textfields, then we need to process what was entered in previous
+      // parameter textfield.
+      final Object source = e.getSource();
+      if ((source instanceof JTextField) && (((JTextField)source).getName().startsWith("parameterValue")))
+      {
+        parameterUpdateInProgress = true;
+      } else if (focusIgnore != null && focusIgnore.equals(e.getOppositeComponent())) {
         return;
       }
+
       if (parameterUpdateInProgress)
       {
         parameterUpdateInProgress = false;
@@ -260,7 +267,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     // to reflect what was typed into the formula text-area
     for (int i = 0; i < textFields.length; i++)
     {
-      final String parameterValue = textFields[i].getText();
+      final String parameterValue = (textFields[i] != null) ? textFields[i].getText() : null;
       if ((parameterValue != null) && (parameterValue.startsWith(selectedFunction.getCanonicalName()) == true))
       {
         String updatedFormula = selectedFunction.getCanonicalName() + "(";
