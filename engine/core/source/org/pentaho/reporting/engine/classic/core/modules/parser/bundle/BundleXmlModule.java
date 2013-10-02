@@ -100,6 +100,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.el
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabOtherGroupElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabRowGroupElementWriteHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.DataGroupBodyElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.GroupFooterElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.GroupHeaderElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.ItembandElementWriteHandler;
@@ -201,6 +202,7 @@ public class BundleXmlModule extends AbstractModule
     BundleElementRegistry.getInstance().registerGenericWriter(CrosstabCellBodyType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(CrosstabGroupType.INSTANCE);
 
+    BundleElementRegistry.getInstance().register(GroupDataBodyType.INSTANCE, DataGroupBodyElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(SubGroupBodyType.INSTANCE, SubGroupBodyElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(GroupFooterType.INSTANCE, GroupFooterElementWriteHandler.class);
     BundleElementRegistry.getInstance().register(GroupHeaderType.INSTANCE, GroupHeaderElementWriteHandler.class);
