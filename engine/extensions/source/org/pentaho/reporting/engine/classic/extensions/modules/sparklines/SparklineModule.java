@@ -22,6 +22,9 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleStyleRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
+import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.BarSparklineElementReadHandler;
+import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.LineSparklineElementReadHandler;
+import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.PieSparklineElementReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.SparklineStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.SparklineStylesReadHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
@@ -79,6 +82,10 @@ public class SparklineModule extends AbstractModule
     BundleElementRegistry.getInstance().registerGenericElement(LineSparklineType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericElement(BarSparklineType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericElement(PieSparklineType.INSTANCE);
+    // legacy element handling
+    BundleElementRegistry.getInstance().register(NAMESPACE, "line-spark", LineSparklineElementReadHandler.class);
+    BundleElementRegistry.getInstance().register(NAMESPACE, "pie-spark", PieSparklineElementReadHandler.class);
+    BundleElementRegistry.getInstance().register(NAMESPACE, "bar-spark", BarSparklineElementReadHandler.class);
     BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
 
     BundleStyleRegistry.getInstance().register(SparklineStyleSetWriteHandler.class);
