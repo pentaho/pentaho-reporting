@@ -21,7 +21,6 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.el
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.PieSparklineType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-@Deprecated
 public class PieSparklineElementReadHandler extends AbstractElementReadHandler
 {
   public PieSparklineElementReadHandler()

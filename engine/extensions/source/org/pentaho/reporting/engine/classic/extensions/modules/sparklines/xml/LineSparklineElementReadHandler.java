@@ -27,7 +27,6 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
  *
  * @author Thomas Morgner
  */
-@Deprecated
 public class LineSparklineElementReadHandler extends AbstractElementReadHandler
 {
   public LineSparklineElementReadHandler()
