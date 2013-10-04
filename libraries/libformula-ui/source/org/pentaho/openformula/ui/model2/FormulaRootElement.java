@@ -37,7 +37,10 @@ public class FormulaRootElement extends FormulaElement
     for (int i = 0; i < elements.size(); i++)
     {
       final FormulaElement element = elements.get(i);
-      b.append(element.getText());
+      if (element != null)
+      {
+        b.append(element.getText());
+      }
     }
     return b.toString();
   }
