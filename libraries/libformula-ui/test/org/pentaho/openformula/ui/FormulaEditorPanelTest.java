@@ -416,4 +416,89 @@ public class FormulaEditorPanelTest extends TestCase
     panel.insertText(fieldNoFormula);
     assertEquals("=[PRODUCTNAME]", panel.getFormulaText());
   }
+
+  // Validates PRD-4691
+  public void testNestedFunctionOuterFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "IF(1;2;3)");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "4");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3);4", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=IF()");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "IF(1;2;3");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "4");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3);4", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionFirstInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "IF(1;2;3)");    // Then clause
+    assertEquals("=IF(IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "4");    // Other clause
+    assertEquals("=IF(IF(1;2;3);4", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "5");    // Other clause
+    assertEquals("=IF(IF(1;2;3);4;5", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionLastInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "4");    // Other clause
+    assertEquals("=IF(1;4", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "IF(1;2;3)");    // Other clause
+    assertEquals("=IF(1;4;IF(1;2;3)", panel.getFormulaText());
+  }
 }
