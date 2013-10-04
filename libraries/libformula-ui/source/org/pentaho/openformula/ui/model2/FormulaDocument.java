@@ -698,7 +698,15 @@ public class FormulaDocument implements Document
 
     if (functionsStack.isEmpty() == false)
     {
-      return (FormulaFunctionElement) functionsStack.peek();
+      final FormulaElement lastElement = (count >= 1) ? (FormulaElement)rootElement.getElement(count - 1) : null;
+      if ((lastElement != null) && (lastElement.getEndOffset() >= offset))
+      {
+        return (FormulaFunctionElement)functionsStack.get(0);
+      }
+      else
+      {
+        return (FormulaFunctionElement)functionsStack.peek();
+      }
     }
     return function;
   }
