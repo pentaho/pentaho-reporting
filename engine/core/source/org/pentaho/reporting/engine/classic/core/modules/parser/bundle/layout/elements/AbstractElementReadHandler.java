@@ -288,9 +288,14 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
       }
     }
 
-    final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(uri, tagName);
-    bulkattributes.add(readHandler);
-    return readHandler;
+    if (metaData.getAttributeDescription(uri, tagName) != null )
+    {
+      final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(uri, tagName);
+      bulkattributes.add(readHandler);
+      return readHandler;
+    }
+
+    return null;
   }
 
   /**
