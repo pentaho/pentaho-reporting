@@ -213,4 +213,11 @@
             </zipfileset>
         </zip>
     </target>
+	
+	
+	<!--========================================================================
+		override subfloor and do nothing since we have no source dir
+		=======================================================================-->
+	<target name="dist-javadoc" />
+	
 </project>
