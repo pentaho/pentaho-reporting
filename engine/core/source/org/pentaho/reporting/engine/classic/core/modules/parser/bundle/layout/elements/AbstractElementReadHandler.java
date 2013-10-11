@@ -281,6 +281,14 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
         bulkexpressions.add(readHandler);
         return readHandler;
       }
+      else if ("attribute".equals(tagName)) {
+        String namespace = atts.getValue(getUri(), "namespace");
+        String attrName = atts.getValue(getUri(), "name");
+
+        final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(namespace, attrName);
+        bulkattributes.add(readHandler);
+        return readHandler;
+      }
     }
     if (BundleNamespaces.STYLE.equals(uri)) {
       if ("element-style".equals(tagName)) {
