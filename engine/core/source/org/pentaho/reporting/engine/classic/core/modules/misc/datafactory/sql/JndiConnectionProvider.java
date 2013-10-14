@@ -1,50 +1,39 @@
 /*
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
-*/
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DataSourceService;
+import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DatasourceServiceException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class JndiConnectionProvider implements ConnectionProvider
 {
-  private static InitialContext initialContext;
-  private static final String JNDI_PREFIX_CONFIGURATION = "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.";
-
-  protected static synchronized InitialContext getInitialContext() throws NamingException
-  {
-    if (initialContext == null)
-    {
-      initialContext = new InitialContext();
-    }
-    return initialContext;
-  }
+  private transient DataSourceService dataSourceService;
 
   private static final Log logger = LogFactory.getLog(JndiConnectionProvider.class);
   private String connectionPath;
@@ -53,12 +42,14 @@ public class JndiConnectionProvider implements ConnectionProvider
 
   public JndiConnectionProvider()
   {
+    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
   }
 
   public JndiConnectionProvider(final String connectionPath,
                                 final String username,
                                 final String password)
   {
+    this();
     this.connectionPath = connectionPath;
     this.username = username;
     this.password = password;
@@ -99,7 +90,7 @@ public class JndiConnectionProvider implements ConnectionProvider
    * the connection in a way so that calls to "close()" on that connection do not prevent subsequent calls to this
    * method to fail.
    *
-   * @param user the user name.
+   * @param user     the user name.
    * @param password the password.
    * @return the connection.
    * @throws SQLException if the connection has errors.
@@ -112,8 +103,7 @@ public class JndiConnectionProvider implements ConnectionProvider
     }
     try
     {
-      final Context ctx = getInitialContext();
-      final DataSource ds = findDataSource(ctx, connectionPath);
+      final DataSource ds = dataSourceService.getDataSource(connectionPath);
 
       final String realUser;
       final String realPassword;
@@ -151,52 +141,11 @@ public class JndiConnectionProvider implements ConnectionProvider
       }
       return connection;
     }
-    catch (NamingException ne)
+    catch (DatasourceServiceException ne)
     {
-      JndiConnectionProvider.logger.warn("Failed to access the JDNI-System", ne);
+      logger.warn("Failed to access the JDNI-System", ne);
       throw new SQLException("Failed to access the JNDI system");
     }
-  }
-
-  private DataSource findDataSource(final Context initialContext, final String connectionPath) throws SQLException
-  {
-    try
-    {
-      final Object o = initialContext.lookup(connectionPath);
-      if (o instanceof DataSource)
-      {
-        return (DataSource) o;
-      }
-    }
-    catch (NamingException e)
-    {
-      logger.trace("Failed to lookup JNDI name", e);
-      // ignored ..
-    }
-
-    final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator keys = config.findPropertyKeys(JNDI_PREFIX_CONFIGURATION);
-    while (keys.hasNext())
-    {
-      final String key = (String) keys.next();
-      final String prefix = config.getConfigProperty(key);
-      try
-      {
-        final Object o = initialContext.lookup(prefix + connectionPath);
-        if (o instanceof DataSource)
-        {
-          return (DataSource) o;
-        }
-      }
-      catch (NamingException e)
-      {
-        logger.trace("Failed to lookup JNDI name", e);
-        // ignored ..
-      }
-    }
-
-    throw new SQLException("Failed to access the JNDI system: Cannot find the requested datasource '" +
-        connectionPath + "' anywhere in the JNDI system.");
   }
 
   public boolean equals(final Object o)
@@ -245,4 +194,12 @@ public class JndiConnectionProvider implements ConnectionProvider
     result = 31 * result + (password != null ? password.hashCode() : 0);
     return result;
   }
+
+  private void readObject(final ObjectInputStream stream)
+      throws IOException, ClassNotFoundException
+  {
+    stream.defaultReadObject();
+    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
+  }
+
 }
