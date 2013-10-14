@@ -466,4 +466,11 @@ public class AttributeMap<T> implements Serializable, Cloneable
     sb.append('}');
     return sb.toString();
   }
+
+  public void clear()
+  {
+    namespaces.clear();
+    singletonContent = null;
+    singletonNamespace = null;
+  }
 }

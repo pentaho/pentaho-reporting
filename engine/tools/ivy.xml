@@ -48,6 +48,8 @@
     </dependency>
 
     <dependency org="bcel" name="bcel" rev="5.1" conf="default_external->default"/>
+
+    <!-- Testing Dependencies -->
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="default_external->default"/>
     <dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="default_external->default"/>
     <dependency org="org.slf4j" name="slf4j-jcl" rev="1.6.4" transitive="false" conf="default_external->default"/>

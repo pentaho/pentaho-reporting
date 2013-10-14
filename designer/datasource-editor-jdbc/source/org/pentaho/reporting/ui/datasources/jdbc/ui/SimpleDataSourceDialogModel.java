@@ -1,30 +1,37 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
+ */
 
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
+import org.pentaho.database.model.IDatabaseConnection;
+import org.pentaho.database.model.IDatabaseType;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DataSourceMgmtService;
+import org.pentaho.reporting.libraries.base.boot.ObjectFactory;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JdbcConnectionDefinition;
 import org.pentaho.reporting.ui.datasources.jdbc.connection.JdbcConnectionDefinitionManager;
+import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefinition;
 
 
 public class SimpleDataSourceDialogModel implements DataSourceDialogModel
@@ -58,7 +65,7 @@ public class SimpleDataSourceDialogModel implements DataSourceDialogModel
   }
 
   private PropertyChangeSupport propertyChangeSupport;
-  private DefaultComboBoxModel connections;
+  private DefaultComboBoxModel<JdbcConnectionDefinition> connections;
   private boolean previewPossible;
   private boolean connectionSelected;
   private JdbcConnectionDefinitionManager connectionDefinitionManager;
@@ -74,7 +81,7 @@ public class SimpleDataSourceDialogModel implements DataSourceDialogModel
   {
     this.connectionDefinitionManager = connectionDefinitionManager;
     propertyChangeSupport = new PropertyChangeSupport(this);
-    connections = new DefaultComboBoxModel();
+    connections = new DefaultComboBoxModel<JdbcConnectionDefinition>();
     connections.addListDataListener(new PreviewPossibleUpdateHandler());
   }
 
@@ -92,7 +99,41 @@ public class SimpleDataSourceDialogModel implements DataSourceDialogModel
       final JdbcConnectionDefinition definition = jdbcConnectionDefinitions[i];
       connections.addElement(definition);
     }
+
+    readSharedConnections();
     connections.setSelectedItem(null);
+  }
+
+  private void readSharedConnections()
+  {
+    final ObjectFactory objectFactory = ClassicEngineBoot.getInstance().getObjectFactory();
+    try
+    {
+      final DataSourceMgmtService mgmtService = objectFactory.get(DataSourceMgmtService.class);
+      final List<IDatabaseConnection> datasources = mgmtService.getDatasources();
+      for (int i = 0; i < datasources.size(); i++)
+      {
+        final IDatabaseConnection connection = datasources.get(i);
+        final IDatabaseType databaseType = connection.getDatabaseType();
+        final String shortName;
+        if (databaseType == null)
+        {
+          shortName = "GENERIC";
+        }
+        else
+        {
+          shortName = databaseType.getShortName();
+        }
+
+        connections.addElement(new JndiConnectionDefinition
+            (connection.getName(), connection.getName(), shortName, null, null, true));
+      }
+    }
+    catch (Exception e)
+    {
+      // ignore
+      e.printStackTrace();
+    }
   }
 
   public void addPropertyChangeListener(final PropertyChangeListener listener)

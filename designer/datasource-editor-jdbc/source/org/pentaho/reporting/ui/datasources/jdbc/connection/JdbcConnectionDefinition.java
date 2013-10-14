@@ -63,4 +63,9 @@ public abstract class JdbcConnectionDefinition
   {
     return name.hashCode();
   }
+
+  public boolean isShared()
+  {
+    return false;
+  }
 }

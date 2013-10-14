@@ -64,7 +64,7 @@ public abstract class AbstractMetaDataReadHandler extends AbstractXmlReadHandler
     hidden = "true".equals(attrs.getValue(getUri(), "hidden")); // NON-NLS
     preferred = "true".equals(attrs.getValue(getUri(), "preferred")); // NON-NLS
     deprecated = "true".equals(attrs.getValue(getUri(), "deprecated")); // NON-NLS
-    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
+    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level")); // NON-NLS
   }
 
   protected boolean isDerivedName()

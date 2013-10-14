@@ -33,7 +33,6 @@ import org.xml.sax.SAXException;
 /** @noinspection HardCodedStringLiteral*/
 public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
 {
-  private String bundleName;
   private Class expressionClass;
 
   private ArrayList<ReportPreProcessorPropertyReadHandler> attributeHandlers;
@@ -62,7 +61,6 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-    bundleName = attrs.getValue(getUri(), "bundle-name");
     autoProcess = "true".equals(attrs.getValue(getUri(), "auto-process"));
     executeInDesignMode = "true".equals(attrs.getValue(getUri(), "execute-in-design-mode"));
 
@@ -73,7 +71,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
     }
     try
     {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(ExpressionReadHandler.class);
+      final ClassLoader loader = ObjectUtilities.getClassLoader(ReportPreProcessorReadHandler.class);
       expressionClass = Class.forName(valueTypeText, false, loader);
       if (ReportPreProcessor.class.isAssignableFrom(expressionClass) == false)
       {
@@ -113,7 +111,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
     if ("property".equals(tagName))
     {
       final ReportPreProcessorPropertyReadHandler readHandler =
-          new ReportPreProcessorPropertyReadHandler(beanInfo, bundleName);
+          new ReportPreProcessorPropertyReadHandler(beanInfo, getBundle());
       attributeHandlers.add(readHandler);
       return readHandler;
     }
@@ -144,7 +142,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
    */
   public Object getObject() throws SAXException
   {
-    return new DefaultReportPreProcessorMetaData(bundleName, 
+    return new DefaultReportPreProcessorMetaData(getBundle(),
         isExpert(), isPreferred(), isHidden(), isDeprecated(),
         expressionClass, properties, beanInfo, autoProcess, executeInDesignMode,
             isExperimental(), getCompatibilityLevel());
