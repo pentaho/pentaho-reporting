@@ -21,15 +21,19 @@ import java.io.File;
 import java.util.ArrayList;
 
 import mondrian.spi.CatalogLocator;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.vfs.FileSystemException;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.libraries.base.boot.ObjectFactoryException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DefaultCubeFileProvider implements CubeFileProvider
 {
+  private static final Log logger = LogFactory.getLog(DefaultCubeFileProvider.class);
   private String mondrianCubeFile;
   private String cubeConnectionName;
 
@@ -77,13 +81,20 @@ public class DefaultCubeFileProvider implements CubeFileProvider
       throw new ReportDataFactoryException("No schema file defined.");
     }
 
-    final CatalogLocator locator = ClassicEngineBoot.getInstance().getObjectFactory().get(CatalogLocator.class);
-    if (locator != null)
+    try
     {
+      final CatalogLocator locator = ClassicEngineBoot.getInstance().getObjectFactory().get(CatalogLocator.class);
       final String mappedCatalog = locator.locate(mondrianCubeFile);
       if (StringUtils.isEmpty(mappedCatalog) == false)
       {
         return mappedCatalog;
+      }
+    }
+    catch (ObjectFactoryException e)
+    {
+      if (logger.isTraceEnabled())
+      {
+        logger.trace("No catalog-locator defined", e); // NON-NLS
       }
     }
 

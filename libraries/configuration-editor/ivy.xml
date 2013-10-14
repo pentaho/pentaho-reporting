@@ -20,5 +20,7 @@
         <dependency org="${library.group}" name="libbase" rev="${dependency.reporting-library.revision}" changing="true"/>
         <dependency org="${library.group}" name="libloader" rev="${dependency.reporting-library.revision}" changing="true"/>
         <dependency org="${library.group}" name="libxml" rev="${dependency.reporting-library.revision}" changing="true"/>
+        <!--  test dependencies -->
+    		<dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default" />
     </dependencies>
 </ivy-module>

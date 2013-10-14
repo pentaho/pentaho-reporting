@@ -186,7 +186,6 @@ public class BundleXmlModule extends AbstractModule
     BundleElementRegistry.getInstance().registerGenericElement(VerticalLineType.INSTANCE);
 
     BundleElementRegistry.getInstance().registerGenericWriter(BandType.INSTANCE);
-    BundleElementRegistry.getInstance().registerGenericWriter(GroupDataBodyType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(PageFooterType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(PageHeaderType.INSTANCE);
     BundleElementRegistry.getInstance().registerGenericWriter(WatermarkType.INSTANCE);

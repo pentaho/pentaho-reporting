@@ -36,10 +36,6 @@ public class PasswordEncryptionService
   {
     services = new HashMap<String, PasswordEncryptionServiceProvider>();
     provider = ClassicEngineBoot.getInstance().getObjectFactory().get(PasswordEncryptionServiceProvider.class);
-    if (provider == null)
-    {
-      provider = new ObscurificatePasswordEncryptionServiceProvider();
-    }
     registerService(provider);
     logger.debug("Selected " + provider.getClass() + " as default provider.");
   }

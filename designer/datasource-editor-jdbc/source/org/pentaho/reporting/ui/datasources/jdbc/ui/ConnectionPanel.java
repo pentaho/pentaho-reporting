@@ -18,7 +18,6 @@
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -30,16 +29,17 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -53,80 +53,59 @@ import org.pentaho.ui.xul.XulException;
 
 public abstract class ConnectionPanel extends JPanel
 {
-  private class DataSourceDefinitionListSelectionListener implements ListSelectionListener
+  private class DataSourceDefinitionListSelectionListener implements TreeSelectionListener
   {
-    private JList dataSourceList;
-
-    private DataSourceDefinitionListSelectionListener(final JList dataSourceList)
+    private DataSourceDefinitionListSelectionListener()
     {
-      this.dataSourceList = dataSourceList;
     }
 
-    public void valueChanged(final ListSelectionEvent e)
+    public void valueChanged(final TreeSelectionEvent e)
     {
-      getDialogModel().getConnections().setSelectedItem(dataSourceList.getSelectedValue());
-    }
-  }
-
-  private static class DataSourceDefinitionListCellRenderer extends DefaultListCellRenderer
-  {
-    public Component getListCellRendererComponent(final JList list,
-                                                  final Object value,
-                                                  final int index,
-                                                  final boolean isSelected,
-                                                  final boolean cellHasFocus)
-    {
-      final JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index,
-          isSelected,
-          cellHasFocus);
-      if (value != null)
+      final TreePath selectionPath = dataSourceList.getSelectionPath();
+      if (selectionPath == null)
       {
-        final String jndiName = ((JdbcConnectionDefinition) value).getName();
-        if (!"".equals(jndiName))
-        {
-          listCellRendererComponent.setText(jndiName);
-        }
-        else
-        {
-          listCellRendererComponent.setText(" ");
-        }
+        return;
       }
-      return listCellRendererComponent;
-    }
-  }
 
-  private static class SelectionConnectionUpdateHandler implements PropertyChangeListener
-  {
-    private JList dataSourceList;
-
-    private SelectionConnectionUpdateHandler(final JList dataSourceList)
-    {
-      this.dataSourceList = dataSourceList;
-    }
-
-    public void propertyChange(final PropertyChangeEvent aEvent)
-    {
-      final DataSourceDialogModel theDialogModel = (DataSourceDialogModel) aEvent.getSource();
-      final DefaultComboBoxModel theConnections = theDialogModel.getConnections();
-      final Object theConnection = theConnections.getSelectedItem();
-      if (theConnection != null)
+      final Object lastPathComponent = selectionPath.getLastPathComponent();
+      if (lastPathComponent instanceof JdbcConnectionDefinition)
       {
-        dataSourceList.setSelectedValue(theConnection, true);
+        getDialogModel().getConnections().setSelectedItem(lastPathComponent);
       }
       else
       {
-        dataSourceList.clearSelection();
+        getDialogModel().getConnections().setSelectedItem(null);
+      }
+
+    }
+  }
+
+  private class SelectionConnectionUpdateHandler implements PropertyChangeListener
+  {
+    private SelectionConnectionUpdateHandler()
+    {
+    }
+
+    public void propertyChange(final PropertyChangeEvent event)
+    {
+      final DataSourceDialogModel dataSourceDialogModel = (DataSourceDialogModel) event.getSource();
+      final DefaultComboBoxModel connections = dataSourceDialogModel.getConnections();
+      final Object connection = connections.getSelectedItem();
+      if (connection != null)
+      {
+        dialogModel.getConnections().setSelectedItem(connection);
+      }
+      else
+      {
+        dialogModel.getConnections().setSelectedItem(null);
       }
     }
   }
 
   private class EditDataSourceAction extends AbstractAction implements PropertyChangeListener
   {
-    private JList dataSourceList;
-
-    private EditDataSourceAction(final JList dataSourceList)
+    private EditDataSourceAction()
     {
-      this.dataSourceList = dataSourceList;
       final URL location =
           ConnectionPanel.class.getResource("/org/pentaho/reporting/ui/datasources/jdbc/resources/Edit.png");
       if (location != null)
@@ -138,28 +117,49 @@ public abstract class ConnectionPanel extends JPanel
         putValue(Action.NAME, bundleSupport.getString("ConnectionPanel.Edit.Name"));
       }
       putValue(Action.SHORT_DESCRIPTION, bundleSupport.getString("ConnectionPanel.Edit.Description"));
-      setEnabled(getDialogModel().isConnectionSelected());
+      propertyChange(null);
     }
 
     public void propertyChange(final PropertyChangeEvent evt)
     {
-      setEnabled(getDialogModel().isConnectionSelected());
+      JdbcConnectionDefinition con = (JdbcConnectionDefinition) getDialogModel().getConnections().getSelectedItem();
+      if (con == null)
+      {
+        setEnabled(false);
+      }
+      else
+      {
+        setEnabled(con.isShared() == false);
+      }
     }
 
     public void actionPerformed(final ActionEvent e)
     {
-      final JdbcConnectionDefinition existingConnection =
-          (JdbcConnectionDefinition) dataSourceList.getSelectedValue();
+      final JdbcConnectionDefinition existingConnection = (JdbcConnectionDefinition) dialogModel.getConnections().getSelectedItem();
+      if (existingConnection == null)
+      {
+        return;
+      }
+      if (existingConnection.isShared())
+      {
+        return;
+      }
 
       final DesignTimeContext designTimeContext = getDesignTimeContext();
       try
       {
         final Window parentWindow = LibSwingUtil.getWindowAncestor(ConnectionPanel.this);
         final XulDatabaseDialog connectionDialog = new XulDatabaseDialog(parentWindow, designTimeContext);
-        final JdbcConnectionDefinition connectionDefinition = connectionDialog.open(existingConnection);
+        final JdbcConnectionDefinition connectionDefinition =
+            connectionDialog.performEdit(existingConnection, false);
 
         // See if the edit completed...
-        if (connectionDefinition != null)
+        if (connectionDefinition == null)
+        {
+          return;
+        }
+
+        if (existingConnection.isShared() == false)
         {
           // If the name changed, delete it before the update is performed
           if (existingConnection.getName().equals(connectionDefinition.getName()) == false)
@@ -171,7 +171,7 @@ public abstract class ConnectionPanel extends JPanel
           getDialogModel().getConnectionDefinitionManager().updateSourceList(connectionDefinition);
 
           dialogModel.editConnection(existingConnection, connectionDefinition);
-          dataSourceList.setSelectedValue(connectionDefinition, true);
+          dialogModel.getConnections().setSelectedItem(connectionDefinition);
         }
       }
       catch (XulException e1)
@@ -183,17 +183,8 @@ public abstract class ConnectionPanel extends JPanel
 
   private class RemoveDataSourceAction extends AbstractAction implements PropertyChangeListener
   {
-    private JList dataSourceList;
-
-    /**
-     * Defines an <code>Action</code> object with a default description string and default icon.
-     *
-     * @param dataSourceList the list containing the datasources
-     */
-    private RemoveDataSourceAction(final JList dataSourceList)
+    private RemoveDataSourceAction()
     {
-      this.dataSourceList = dataSourceList;
-      setEnabled(getDialogModel().isConnectionSelected());
       final URL resource = ConnectionPanel.class.getResource("/org/pentaho/reporting/ui/datasources/jdbc/resources/Remove.png");
       if (resource != null)
       {
@@ -204,17 +195,30 @@ public abstract class ConnectionPanel extends JPanel
         putValue(Action.NAME, bundleSupport.getString("ConnectionPanel.Remove.Name"));
       }
       putValue(Action.SHORT_DESCRIPTION, bundleSupport.getString("ConnectionPanel.Remove.Description"));
+      propertyChange(null);
     }
 
     public void propertyChange(final PropertyChangeEvent evt)
     {
-      setEnabled(getDialogModel().isConnectionSelected());
+      JdbcConnectionDefinition con = (JdbcConnectionDefinition) getDialogModel().getConnections().getSelectedItem();
+      if (con == null)
+      {
+        setEnabled(false);
+      }
+      else
+      {
+        setEnabled(con.isShared() == false);
+      }
     }
 
     public void actionPerformed(final ActionEvent e)
     {
-      final JdbcConnectionDefinition source = (JdbcConnectionDefinition) dataSourceList.getSelectedValue();
-      if (source != null)
+      final JdbcConnectionDefinition source = (JdbcConnectionDefinition) getDialogModel().getConnections().getSelectedItem();
+      if (source == null)
+      {
+        return;
+      }
+      if (source.isShared() == false)
       {
         getDialogModel().getConnectionDefinitionManager().removeSource(source.getName());
         getDialogModel().removeConnection(source);
@@ -224,11 +228,8 @@ public abstract class ConnectionPanel extends JPanel
 
   private class AddDataSourceAction extends AbstractAction
   {
-    private JList dataSourceList;
-
-    private AddDataSourceAction(final JList dataSourceList)
+    private AddDataSourceAction()
     {
-      this.dataSourceList = dataSourceList;
       final URL location = ConnectionPanel.class.getResource(
           "/org/pentaho/reporting/ui/datasources/jdbc/resources/Add.png");
       if (location != null)
@@ -249,7 +250,7 @@ public abstract class ConnectionPanel extends JPanel
       {
         final Window parentWindow = LibSwingUtil.getWindowAncestor(ConnectionPanel.this);
         final XulDatabaseDialog connectionDialog = new XulDatabaseDialog(parentWindow, designTimeContext);
-        final JdbcConnectionDefinition connectionDefinition = connectionDialog.open(null);
+        final JdbcConnectionDefinition connectionDefinition = connectionDialog.performEdit(null, false);
 
         if (connectionDefinition != null &&
             !StringUtils.isEmpty(connectionDefinition.getName()))
@@ -258,7 +259,7 @@ public abstract class ConnectionPanel extends JPanel
           if (getDialogModel().getConnectionDefinitionManager().updateSourceList(connectionDefinition) == false)
           {
             getDialogModel().addConnection(connectionDefinition);
-            dataSourceList.setSelectedValue(connectionDefinition, true);
+            getDialogModel().getConnections().setSelectedItem(connectionDefinition);
           }
         }
       }
@@ -269,10 +270,37 @@ public abstract class ConnectionPanel extends JPanel
     }
   }
 
+  private class SelectionHandler implements TreeSelectionListener
+  {
+    private SelectionHandler()
+    {
+    }
+
+    public void valueChanged(final TreeSelectionEvent e)
+    {
+      final TreePath selectionPath = dataSourceList.getSelectionPath();
+      if (selectionPath == null)
+      {
+        dialogModel.getConnections().setSelectedItem(null);
+        return;
+      }
+      final Object lastPathComponent = selectionPath.getLastPathComponent();
+      if (lastPathComponent instanceof JdbcConnectionDefinition)
+      {
+        dialogModel.getConnections().setSelectedItem(lastPathComponent);
+      }
+      else
+      {
+        dialogModel.getConnections().setSelectedItem(null);
+      }
+    }
+  }
+
   private DataSourceDialogModel dialogModel;
   private DesignTimeContext designTimeContext;
   private ResourceBundleSupport bundleSupport;
   private boolean securityConfigurationAvailable;
+  private JTree dataSourceList;
 
   public ConnectionPanel(final DataSourceDialogModel aDialogModel,
                          final DesignTimeContext designTimeContext)
@@ -288,20 +316,26 @@ public abstract class ConnectionPanel extends JPanel
   {
     setLayout(new BorderLayout());
 
-    final JList dataSourceList = new JList(dialogModel.getConnections());
-    dataSourceList.setCellRenderer(new DataSourceDefinitionListCellRenderer());
-    dataSourceList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    dataSourceList.addListSelectionListener(new DataSourceDefinitionListSelectionListener(dataSourceList));
-    dataSourceList.setVisibleRowCount(10);
+    ConnectionsTreeModel connectionsTreeModel = new ConnectionsTreeModel(dialogModel.getConnections());
 
-    final SelectionConnectionUpdateHandler theSelectedConnectionAction = new SelectionConnectionUpdateHandler(
-        dataSourceList);
+    final DefaultTreeSelectionModel selectionModel = new DefaultTreeSelectionModel();
+    selectionModel.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    selectionModel.addTreeSelectionListener(new SelectionHandler());
+
+    dataSourceList = new JTree(connectionsTreeModel);
+    dataSourceList.setCellRenderer(new DataSourceDefinitionCellRenderer());
+    dataSourceList.setSelectionModel(selectionModel);
+    dataSourceList.addTreeSelectionListener(new DataSourceDefinitionListSelectionListener());
+    dataSourceList.setVisibleRowCount(10);
+    dataSourceList.setRootVisible(false);
+
+    final SelectionConnectionUpdateHandler theSelectedConnectionAction = new SelectionConnectionUpdateHandler();
     dialogModel.addPropertyChangeListener(theSelectedConnectionAction);
 
-    final EditDataSourceAction editDataSourceAction = new EditDataSourceAction(dataSourceList);
+    final EditDataSourceAction editDataSourceAction = new EditDataSourceAction();
     dialogModel.addPropertyChangeListener(editDataSourceAction);
 
-    final RemoveDataSourceAction removeDataSourceAction = new RemoveDataSourceAction(dataSourceList);
+    final RemoveDataSourceAction removeDataSourceAction = new RemoveDataSourceAction();
     dialogModel.addPropertyChangeListener(removeDataSourceAction);
 
     final JPanel connectionButtonPanel = new JPanel();
@@ -312,7 +346,7 @@ public abstract class ConnectionPanel extends JPanel
       connectionButtonPanel.add(Box.createHorizontalStrut(40));
     }
     connectionButtonPanel.add(new BorderlessButton(editDataSourceAction));
-    connectionButtonPanel.add(new BorderlessButton(new AddDataSourceAction(dataSourceList)));
+    connectionButtonPanel.add(new BorderlessButton(new AddDataSourceAction()));
     connectionButtonPanel.add(new BorderlessButton(removeDataSourceAction));
 
     final JPanel connectionButtonPanelWrapper = new JPanel(new BorderLayout());
