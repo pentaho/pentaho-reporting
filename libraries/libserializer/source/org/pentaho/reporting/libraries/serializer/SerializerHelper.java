@@ -29,7 +29,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -58,10 +57,6 @@ public class SerializerHelper
     if (singleton == null)
     {
       singleton = LibSerializerBoot.getInstance().getObjectFactory().get(SerializerHelper.class);
-      if (singleton == null)
-      {
-        singleton = new SerializerHelper();
-      }
       singleton.registerMethods();
     }
     return singleton;
