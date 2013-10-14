@@ -144,7 +144,7 @@ public class JndiConnectionProvider implements ConnectionProvider
     catch (DatasourceServiceException ne)
     {
       logger.warn("Failed to access the JDNI-System", ne);
-      throw new SQLException("Failed to access the JNDI system");
+      throw new SQLException("Failed to access the JNDI system", ne);
     }
   }
 

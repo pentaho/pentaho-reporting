@@ -29,12 +29,12 @@ public class PooledDatasourceService implements DataSourceService
     {
       final DataSourceMgmtService datasourceMgmtSvc =
           ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceMgmtService.class);
-      final IDatabaseConnection databaseConnection = datasourceMgmtSvc.getDatasourceByName(datasource);
-      if (datasource != null)
+      try
       {
+        final IDatabaseConnection databaseConnection = datasourceMgmtSvc.getDatasourceByName(datasource);
         return PooledDatasourceHelper.setupPooledDataSource(databaseConnection);
       }
-      else
+      catch(DatasourceMgmtServiceException daoe)
       {
         return queryFallback(datasource);
       }

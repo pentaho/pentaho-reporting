@@ -1,26 +1,22 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
+ */
 
 package org.pentaho.reporting.ui.datasources.jdbc.connection;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.JndiConnectionProvider;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
@@ -32,6 +28,7 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   private String username;
   private String password;
   private String databaseType;
+  private boolean shared;
 
   public JndiConnectionDefinition(final String name,
                                   final String jndiName,
@@ -39,16 +36,32 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
                                   final String username,
                                   final String password)
   {
+    this(name, jndiName, databaseType, username, password, false);
+  }
+
+  public JndiConnectionDefinition(final String name,
+                                  final String jndiName,
+                                  final String databaseType,
+                                  final String username,
+                                  final String password,
+                                  final boolean shared)
+  {
     super(name);
     if (StringUtils.isEmpty(jndiName))
     {
       throw new IllegalArgumentException("The provided jndiName can not be empty");
     }
 
+    this.shared = shared;
     this.jndiName = jndiName;
     this.databaseType = databaseType;
     this.username = username;
     this.password = password;
+  }
+
+  public boolean isShared()
+  {
+    return shared;
   }
 
   public String getJndiName()
@@ -72,8 +85,11 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
     }
 
     final JndiConnectionDefinition that = (JndiConnectionDefinition) o;
-
     if (databaseType != null ? !databaseType.equals(that.databaseType) : that.databaseType != null)
+    {
+      return false;
+    }
+    if (shared != that.shared)
     {
       return false;
     }
@@ -97,6 +113,7 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   {
     int result = super.hashCode();
     result = 31 * result + jndiName.hashCode();
+    result = 31 * result + (shared ? 1 : 0);
     result = 31 * result + (username != null ? username.hashCode() : 0);
     result = 31 * result + (password != null ? password.hashCode() : 0);
     result = 31 * result + (databaseType != null ? databaseType.hashCode() : 0);
@@ -116,5 +133,10 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   public String getDatabaseType()
   {
     return databaseType;
+  }
+
+  public JndiConnectionDefinition createShared()
+  {
+    return new JndiConnectionDefinition(getName(), getJndiName(), getDatabaseType(), getUsername(), getPassword(), true);
   }
 }
