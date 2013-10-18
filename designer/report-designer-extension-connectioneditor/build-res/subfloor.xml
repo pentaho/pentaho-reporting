@@ -156,9 +156,10 @@ TYPICAL TARGET SEQUENCE
   <property name="javac.deprecation"
             value="true"
             description="Indicates whether source should be compiled with deprecation information" />
-  <property name="javac.source" value="1.5" description="Provide source compatibility with specified release" />
-  <property name="javac.target" value="1.5" description="Generate class files for specific VM version" />
+  <property name="javac.source" value="6" description="Provide source compatibility with specified release" />
+  <property name="javac.target" value="6" description="Generate class files for specific VM version" />
   <property name="javac.maxmemory" value="256M" description="Max memory alloted to java compile" />
+  <property name="javac.xlint" value="-Xlint:all" />
 
   <!-- Third party Ant tasks and tools properties -->
   <property name="subfloor.resources.dir"
@@ -181,6 +182,7 @@ TYPICAL TARGET SEQUENCE
             description="The URL to the current release of Apache IVY" />
 
   <!-- Test properties -->
+  <property name="junit.base.dir" value="${basedir}" description="Directory in which the junit test VM will be invoked" />
   <property name="testsrc.dir" value="${basedir}/test-src" description="Directory that hosts the test source files" />
   <property name="testlib.dir"
             value="${basedir}/test-lib"
@@ -201,13 +203,20 @@ TYPICAL TARGET SEQUENCE
             value="${testreports.dir}/html"
             description="Unit test html reports are placed here" />
   <property name="junit.haltonfailure" value="no" description="Fail the build if a test fails" />
+  <property name="junit.haltonerror" value="no" description="Fail the build if a error occurs" />
   <property name="junit.maxmemory" value="256M" description="Heap size when Junit is run in fork mode" />
+  <property name="junit.forkmode" 
+            value="perTest" 
+            description="Defines whether JUnit forks a new JVM for each test. Use 'once' for faster test runs, and 'perTest' for complete tests."/>
   <property name="headless.unittest" value="true" description="Runs the unit tests in headless mode" />
 
   <!-- Code Coverage properties -->
   <property name="instrumented.classes.dir"
             value="${testbin.dir}/instrumented-classes"
             description="Directory where instrumented project classes are placed for use by code coverage utility" />
+  <property name="cobertura.version"
+            value="1.9.4.1"
+            description="The version of cobertura to use for code coverage" />
   <property name="cobertura.data.dir"
             value="${testbin.dir}/cobertura-bin"
             description="Temporary data directory used by Cobertura" />
@@ -367,17 +376,17 @@ TYPICAL TARGET SEQUENCE
 
   <!-- Setup the classpath used for testing -->
   <path id="test.classpath">
+    <pathelement path="${testclasses.dir}" />
+    <pathelement path="${classes.dir}" />
     <fileset dir="${devlib.dir}">
-      <include name="**/*.jar" />
-    </fileset>
-    <fileset dir="${lib.dir}">
       <include name="**/*.jar" />
     </fileset>
     <fileset dir="${testlib.dir}">
       <include name="**/*.jar" />
     </fileset>
-    <pathelement path="${testclasses.dir}" />
-    <pathelement path="${classes.dir}" />
+    <fileset dir="${lib.dir}">
+      <include name="**/*.jar" />
+    </fileset>
   </path>
 
 
@@ -1153,6 +1162,7 @@ TYPICAL TARGET SEQUENCE
         <path refid="classpath" />
       </classpath>
       <src path="${src.dir}" />
+      <compilerarg value="${javac.xlint}" />
     </javac>
   </target>
 
@@ -1370,9 +1380,12 @@ TYPICAL TARGET SEQUENCE
       ====================================================================-->
   <target name="test" depends="compile,compile-tests, init-test-reports" description="Compiles and runs unit tests">
     <junit maxmemory="${junit.maxmemory}"
+           dir="${junit.base.dir}"
            fork="yes"
+           forkmode="${junit.forkmode}"
            failureProperty="test.failed"
            haltonfailure="${junit.haltonfailure}"
+           haltonerror="${junit.haltonerror}"
            printsummary="yes">
       <sysproperty key="java.awt.headless" value="${headless.unittest}" />
       
@@ -1457,7 +1470,7 @@ TYPICAL TARGET SEQUENCE
   <target name="javadoc" depends="javadoc.init, compile">
     <javadoc destdir="${javadoc.dir}/docs/api"
              access="public"
-             source="1.5"
+             source="6"
              use="true"
              notree="false"
              nonavbar="false"
@@ -1471,7 +1484,7 @@ TYPICAL TARGET SEQUENCE
              packagenames="${javadoc.packagenames}"
              sourcepath="${src.dir}"
              doctitle="${impl.title} documentation">
-      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+      <link href="http://docs.oracle.com/javase/6/docs/api/" />
       <classpath refid="classpath" />
     </javadoc>
   </target>
@@ -1571,7 +1584,7 @@ TYPICAL TARGET SEQUENCE
       Downloads and installs Cobertura ant tasks
       ====================================================================-->
   <target name="install-cobertura" depends="install-ivy">
-    <taskdef-with-ivy organisation="net.sourceforge.cobertura" module="cobertura" revision="1.9.4.1" resource="tasks.properties" classname="net.sourceforge.cobertura.ant.InstrumentTask"/>
+    <taskdef-with-ivy organisation="net.sourceforge.cobertura" module="cobertura" revision="${cobertura.version}" resource="tasks.properties" classname="net.sourceforge.cobertura.ant.InstrumentTask"/>
   </target>
 
 
@@ -1625,13 +1638,16 @@ TYPICAL TARGET SEQUENCE
           depends="init-test-reports,install-cobertura,compile,compile-tests,cobertura.instrument-classes">
     <mkdir dir="${instrumented.classes.dir}" />
     <path id="cobertura.classpath">
-      <fileset dir="${subfloor.resources.dir}/cobertura">
+      <fileset dir="${subfloor.resources.dir}/cobertura-${cobertura.version}">
         <include name="*.jar" />
       </fileset>
     </path>
     <junit fork="yes"
+           forkmode="${junit.forkmode}"
+           dir="${junit.base.dir}"
            maxmemory="${junit.maxmemory}"
            failureProperty="test.failed"
+           haltonerror="${junit.haltonerror}"
            haltonfailure="${junit.haltonfailure}">
       <sysproperty key="java.awt.headless" value="${headless.unittest}" />
 
@@ -1648,8 +1664,6 @@ TYPICAL TARGET SEQUENCE
         original (uninstrumented) classes.  This is important.
       -->
       <classpath location="${instrumented.classes.dir}" />
-      <classpath location="${classes.dir}" />
-      <classpath location="${testclasses.dir}" />
       <classpath refid="test.classpath" />
       <classpath refid="cobertura.classpath" />
 
@@ -1719,13 +1733,13 @@ TYPICAL TARGET SEQUENCE
     <dot-classpath>
       <!-- Include all lib dirs -->
       <classpath>
-        <fileset dir="${lib.dir}">
-          <include name="*.jar" />
-        </fileset>
         <fileset dir="${devlib.dir}">
           <include name="*.jar" />
         </fileset>
         <fileset dir="${testlib.dir}">
+          <include name="*.jar" />
+        </fileset>
+        <fileset dir="${lib.dir}">
           <include name="*.jar" />
         </fileset>
       </classpath>
