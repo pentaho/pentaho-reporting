@@ -19,6 +19,7 @@ package org.pentaho.reporting.ui.datasources.reflection;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ExternalDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.NamedStaticDataFactory;
@@ -55,7 +56,8 @@ public class ModuleTest extends TestCase
         DataFactoryRegistry.getInstance().getMetaData(StaticDataFactory.class.getName()).createEditor();
     assertNotNull(editor);
 
-    assertTrue(editor.canHandle(new StaticDataFactory()));
+    // this editor only creates, never modifies
+    assertFalse(editor.canHandle(new ExternalDataFactory()));
   }
 
 }
