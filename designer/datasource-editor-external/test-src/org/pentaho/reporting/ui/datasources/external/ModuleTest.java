@@ -45,7 +45,8 @@ public class ModuleTest extends TestCase
         DataFactoryRegistry.getInstance().getMetaData(ExternalDataFactory.class.getName()).createEditor();
     assertNotNull(editor);
 
-    assertTrue(editor.canHandle(new ExternalDataFactory()));
+    // this editor only creates, never modifies
+    assertFalse(editor.canHandle(new ExternalDataFactory()));
   }
 
 }
