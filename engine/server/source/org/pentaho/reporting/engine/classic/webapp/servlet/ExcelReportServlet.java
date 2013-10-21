@@ -65,6 +65,7 @@ public class ExcelReportServlet extends HttpServlet
       final ResourceManager mgr = new ResourceManager();
       final Resource resource = mgr.createDirectly(reportUrl, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
+      report.setReportEnvironment(new SessionReportEnvironment(report.getReportEnvironment(), request.getSession()));
       response.setContentType("application/vnd.ms-excel");
 
       final ServletOutputStream stream = response.getOutputStream();

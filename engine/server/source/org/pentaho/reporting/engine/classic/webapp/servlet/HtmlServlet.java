@@ -148,6 +148,7 @@ public class HtmlServlet extends HttpServlet
     final ResourceManager resourceManager = new ResourceManager();
     final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
     final MasterReport report = (MasterReport) resource.getResource();
+    report.setReportEnvironment(new SessionReportEnvironment(report.getReportEnvironment(), request.getSession()));
 
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
     final ZipRepository zipRepository = new ZipRepository(out);
