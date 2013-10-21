@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core;
 import java.awt.Component;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
 
 import org.pentaho.reporting.designer.core.xul.XulDesignerFrame;
 import org.pentaho.ui.xul.XulException;
@@ -49,7 +50,13 @@ public class DefaultReportDesignerContext extends AbstractReportDesignerContext
 
   public JComponent getToolBar(final String id)
   {
-    return xulDesignerFrame.getToolBar(id);
+    JComponent toolBar = xulDesignerFrame.getToolBar(id);
+    if (toolBar instanceof JToolBar)
+    {
+      final JToolBar realToolBar = (JToolBar) toolBar;
+      realToolBar.setFloatable(false);
+    }
+    return toolBar;
   }
 
   public Component getParent()

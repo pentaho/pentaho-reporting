@@ -111,4 +111,9 @@ public class TestReportDesignerView implements ReportDesignerView
   {
 
   }
+
+  public void showDataTree()
+  {
+
+  }
 }

@@ -101,11 +101,7 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.ReportRendererComponent;
 import org.pentaho.reporting.designer.core.editor.fieldselector.FieldSelectorPaletteDialog;
 import org.pentaho.reporting.designer.core.editor.palette.PaletteButton;
-import org.pentaho.reporting.designer.core.editor.structuretree.AbstractReportTree;
-import org.pentaho.reporting.designer.core.editor.structuretree.LayoutReportTree;
-import org.pentaho.reporting.designer.core.editor.structuretree.StructureTreePanel;
 import org.pentaho.reporting.designer.core.inspections.InspectionSidePanePanel;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.status.StatusBar;
@@ -888,48 +884,11 @@ public class ReportDesignerFrame extends JFrame
       getReportEditorPane().revalidate();
       getReportEditorPane().repaint();
     }
-  }
 
-  private class StructureAndDataTabChangeHandler implements ChangeListener
-  {
-    private StructureAndDataTabChangeHandler()
+    public void showDataTree()
     {
-    }
-
-    public void stateChanged(final ChangeEvent e)
-    {
-      final ElementPropertiesPanel attributeEditorPanel = getAttributeEditorPanel();
-      if (attributeEditorPanel == null)
-      {
-        return;
-      }
-      final ReportRenderContext activeContext = getContext().getActiveContext();
-      if (activeContext == null)
-      {
-        return;
-      }
-      final JTabbedPane tabs = (JTabbedPane) e.getSource();
-      if (tabs.getSelectedIndex() == 0)
-      {
-        refreshTabPanel(attributeEditorPanel, activeContext, true, false, false);
-      }
-      else
-      {
-        refreshTabPanel(attributeEditorPanel, activeContext, false, true, true);
-      }
-    }
-
-
-    protected void refreshTabPanel(final ElementPropertiesPanel attributeEditorPanel,
-                                         final ReportRenderContext activeContext,
-                                         final boolean attributeCard,
-                                         final boolean datasourceCard,
-                                         final boolean expressionCard)
-    {
-      attributeEditorPanel.setAllowAttributeCard(attributeCard);
-      attributeEditorPanel.setAllowDataSourceCard(datasourceCard);
-      attributeEditorPanel.setAllowExpressionCard(expressionCard);
-      attributeEditorPanel.reset(activeContext.getSelectionModel());
+      treePanel.refreshTabPanel(getAttributeEditorPanel());
+      treePanel.showDataTab();
     }
   }
 
@@ -1014,7 +973,7 @@ public class ReportDesignerFrame extends JFrame
   private ElementPropertiesPanel attributeEditorPanel;
   private WelcomePane welcomePane;
   private FieldSelectorPaletteDialog fieldSelectorPaletteDialog;
-  private  StructureAndDataTabChangeHandler structureAndDataTabChangeHandler;
+  private TreeSidePanel treePanel;
 
   public ReportDesignerFrame() throws XulException
   {
@@ -1043,11 +1002,18 @@ public class ReportDesignerFrame extends JFrame
 
     dockingPane = new GlobalPane(false);
     dockingPane.setMainComponent(reportEditorPane);
+
+    attributeEditorPanel = new ElementPropertiesPanel();
+    attributeEditorPanel.setAllowAttributeCard(true);
+    attributeEditorPanel.setReportDesignerContext(context);
+
+    treePanel = new TreeSidePanel(context, attributeEditorPanel);
+
     initializeToolWindows();
 
     final JPanel contentPane = new JPanel();
     contentPane.setLayout(new BorderLayout());
-    contentPane.add(createToolBar("main-toolbar"), BorderLayout.NORTH); // NON-NLS
+    contentPane.add(context.getToolBar("main-toolbar"), BorderLayout.NORTH); // NON-NLS
     contentPane.add(dockingPane, BorderLayout.CENTER);
     contentPane.add(statusBar, BorderLayout.SOUTH);
     contentPane.add(createPaletteToolBar(), BorderLayout.WEST);
@@ -1125,22 +1091,6 @@ public class ReportDesignerFrame extends JFrame
         SwingUtilities.invokeLater(new OpenReportAction.OpenReportTask(file, context));
       }
     }
-  }
-
-  public FrameViewController getViewController()
-  {
-    return viewController;
-  }
-
-  private JComponent createToolBar(final String id)
-  {
-    final JComponent toolBar = context.getXulDesignerFrame().getToolBar(id);
-    if (toolBar instanceof JToolBar)
-    {
-      final JToolBar realToolBar = (JToolBar) toolBar;
-      realToolBar.setFloatable(false);
-    }
-    return toolBar;
   }
 
   protected Category getAttributeToolWindow()
@@ -1396,10 +1346,6 @@ public class ReportDesignerFrame extends JFrame
 
   private Category createAttributesToolWindow()
   {
-    attributeEditorPanel = new ElementPropertiesPanel();
-    attributeEditorPanel.setAllowAttributeCard(true);
-    attributeEditorPanel.setReportDesignerContext(context);
-
     final ImageIcon propertyTableIcon = IconLoader.getInstance().getPropertyTableIcon();
 
     return new Category(propertyTableIcon, Messages.getString("Attribute.Title"), attributeEditorPanel);// NON-NLS
@@ -1424,32 +1370,9 @@ public class ReportDesignerFrame extends JFrame
 
   private Category createStructureTreeToolWindow()
   {
-    // report structure
-    final StructureTreePanel reportTree = new StructureTreePanel(AbstractReportTree.RenderType.REPORT);
-    reportTree.setReportDesignerContext(context);
-    final JPanel structurePanel = new JPanel(new BorderLayout());
-    final JComponent structureToolBar = createToolBar("report-structure-toolbar");// NON-NLS
-    structurePanel.add(structureToolBar, BorderLayout.NORTH);
-    structurePanel.add(reportTree, BorderLayout.CENTER);
-
-    final JPanel dataPanel = new JPanel(new BorderLayout());
-
-    final JComponent dataToolBar = createToolBar("report-fields-toolbar");// NON-NLS
-    dataPanel.add(dataToolBar, BorderLayout.NORTH);
-    final StructureTreePanel dataTree = new StructureTreePanel(AbstractReportTree.RenderType.DATA);
-    dataTree.setReportDesignerContext(context);
-    dataPanel.add(dataTree, BorderLayout.CENTER);
-
-    final JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP);
-    structureAndDataTabChangeHandler = new StructureAndDataTabChangeHandler();
-    tabs.addChangeListener(structureAndDataTabChangeHandler);
-    tabs.add(Messages.getString("StructureView.Structure"), structurePanel);// NON-NLS
-    tabs.add(Messages.getString("StructureView.Data"), dataPanel);// NON-NLS
-
-    return new Category
-        (IconLoader.getInstance().getReportTreeIcon(),
+    return new Category(IconLoader.getInstance().getReportTreeIcon(),
             Messages.getString("StructureView.Title"),// NON-NLS
-            tabs);
+            treePanel);
 
   }
 
@@ -1724,16 +1647,5 @@ public class ReportDesignerFrame extends JFrame
     }
 
     updateFrameTitle();
-  }
-  public void displayAndExpandDataSource(final ReportRenderContext activeContext)
-  {
-    if( getReportEditorPane().isVisible())
-    {
-      for(int index=0; index < getReportEditorPane().getTabCount(); index++)
-      {
-        getReportEditorPane().setSelectedIndex(index);
-      }
-      structureAndDataTabChangeHandler.refreshTabPanel(getAttributeEditorPanel(),activeContext,false,true,true);
-    }
   }
 }

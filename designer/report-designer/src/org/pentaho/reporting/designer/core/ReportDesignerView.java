@@ -18,12 +18,8 @@
 package org.pentaho.reporting.designer.core;
 
 import java.beans.PropertyChangeListener;
+import javax.swing.JComponent;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface ReportDesignerView
 {
   public static final String REPORT_DESIGNER_VIEW_STATE_PROPERTY = "reportDesignerViewState";
@@ -68,4 +64,6 @@ public interface ReportDesignerView
   public void setFieldSelectorVisible(final boolean visible);
 
   public void redrawAll();
+
+  public void showDataTree();
 }
