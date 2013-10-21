@@ -40,7 +40,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
@@ -48,11 +47,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.pentaho.reporting.designer.core.ReportDesigner;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -324,11 +323,34 @@ public class ProvisionDataSourcePanel extends JPanel
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
 
       expandAllNodes();
-      SwingUtilities.invokeLater(new ReportDesigner.DataTabSetVisible(reportDesignerContext.getActiveContext()));
+      SwingUtilities.invokeLater(new DataTabSetVisible(reportDesignerContext, reportDesignerContext.getActiveContext()));
     }
-
   }
 
+
+  private static class DataTabSetVisible implements Runnable
+  {
+    private ReportDesignerContext designerContext;
+    private ReportRenderContext activeContext;
+
+    public DataTabSetVisible(final ReportDesignerContext designerContext,
+                             final ReportRenderContext activeContext)
+    {
+      this.designerContext = designerContext;
+      this.activeContext = activeContext;
+    }
+
+    public void run()
+    {
+      if (this.activeContext == null)
+      {
+        return;
+      }
+
+      designerContext.setActiveContext(activeContext);
+      designerContext.getView().showDataTree();
+    }
+  }
 
   private class DataSourceDesignTimeContext implements DesignTimeContext
   {

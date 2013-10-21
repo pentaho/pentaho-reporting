@@ -33,7 +33,6 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.text.StyleContext;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionUtil;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionsTreeModel;
 import org.pentaho.reporting.designer.core.settings.SettingsUtil;
@@ -360,22 +359,4 @@ public class ReportDesigner
     d.dispose();
   }
 
-  public static class DataTabSetVisible implements Runnable
-  {
-    ReportRenderContext activeContext;
-
-    public DataTabSetVisible(final ReportRenderContext activeContext)
-    {
-      this.activeContext = activeContext;
-    }
-
-    public void run()
-    {
-      if (this.activeContext == null)
-      {
-        return;
-      }
-      reportDesignerFrame.displayAndExpandDataSource(activeContext);
-    }
-  }
 }
