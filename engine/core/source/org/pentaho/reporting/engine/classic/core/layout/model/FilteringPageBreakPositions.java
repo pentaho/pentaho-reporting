@@ -91,7 +91,7 @@ public class FilteringPageBreakPositions implements PageBreakPositions
   {
     if (pageOffset <= pageStart)
     {
-      return pageStart;
+      return -1;
     }
     return backend.findPageEndForPageStartPosition(pageOffset);
   }
