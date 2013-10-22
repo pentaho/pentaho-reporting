@@ -41,7 +41,7 @@
 		<dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}" transitive="true" changing="true" conf="runtime->default" />
 
         <!-- slf4j impl requires at least log4j 1.2.12-->
-        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.5.8" />
+        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.3" />
         <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
 		<!-- driver dependencies -->
