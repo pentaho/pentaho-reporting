@@ -58,8 +58,5 @@
     <!-- Override default dist target to do a dist-full instead -->
     <target name="dist" depends="dist-full"/>
     
-    <!-- override subfloor resolve-test and check-releasable -->
-    <target name="resolve" depends="resolve-default"/>
-    
 
 </project>
