@@ -118,13 +118,9 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       return contentByte;
     }
 
-    public void finishText()
-    {
-      contentByte.endText();
-    }
-
     public void close()
     {
+      contentByte.endText();
       //super.close(); // we do not dispose the graphics as we are working on the original object
     }
   }
@@ -495,17 +491,12 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       return false;
     }
 
-    final PdfTextSpec textSpec = (PdfTextSpec) getTextSpec();
-    if (textSpec != null)
-    {
-      textSpec.finishText();
-    }
     return super.startInlineBox(box);
   }
 
   protected void finishInlineBox(final InlineRenderBox box)
   {
-    if (box.getStaticBoxLayoutProperties().isVisible())
+    if (box.getStaticBoxLayoutProperties().isVisible() == false)
     {
       return;
     }
@@ -515,11 +506,6 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       return;
     }
 
-    final PdfTextSpec textSpec = (PdfTextSpec) getTextSpec();
-    if (textSpec != null)
-    {
-      textSpec.finishText();
-    }
     super.finishInlineBox(box);
   }
 
