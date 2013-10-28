@@ -312,8 +312,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   @Deprecated
   public LogicalPageDrawable(final LogicalPageBox rootBox,
-                   final OutputProcessorMetaData metaData,
-                   final ResourceManager resourceManager)
+                             final OutputProcessorMetaData metaData,
+                             final ResourceManager resourceManager)
   {
     this();
     init(rootBox, metaData, resourceManager);
@@ -731,10 +731,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     renderBoxBorderAndBackground(box);
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
 
     final FontDecorationSpec newUnderlineSpec = computeUnderline(box, underline);
@@ -893,10 +894,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       underline = computeUnderline(box, null);
     }
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
   }
 
@@ -914,12 +916,18 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   {
     this.contentAreaX1 = box.getContentAreaX1();
     this.contentAreaX2 = box.getContentAreaX2();
-
+    this.textSpec = null;
+    
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
       processTextLine(lineBox, contentAreaX1, contentAreaX2);
       lineBox = (RenderBox) lineBox.getNext();
+    }
+
+    if (textSpec != null)
+    {
+      throw new IllegalStateException();
     }
   }
 
@@ -1420,7 +1428,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long posY = renderableText.getY();
 
     final Graphics2D g2;
-    if (textSpec == null)
+    if (getTextSpec() == null)
     {
       g2 = (Graphics2D) getGraphics().create();
       final StyleSheet layoutContext = renderableText.getStyleSheet();
@@ -1438,7 +1446,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
     else
     {
-      g2 = textSpec.getGraphics();
+      g2 = getTextSpec().getGraphics();
     }
 
     // This shifting is necessary to make sure that all text is rendered like in the previous versions.
