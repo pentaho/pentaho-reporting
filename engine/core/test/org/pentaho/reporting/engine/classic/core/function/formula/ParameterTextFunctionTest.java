@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
-import org.pentaho.reporting.engine.classic.core.testsupport.FormulaTestBase;
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 
 public class ParameterTextFunctionTest extends FormulaTestBase
 {
