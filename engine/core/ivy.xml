@@ -48,6 +48,8 @@
       <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="default_external->default"/>
       <dependency org="pentaho" name="pentaho-database-model" rev="${dependency.pentaho-database-model.revision}" changing="true" conf="default_external->default"/>
 
+      <!-- designtime support -->
+      <dependency org="org.fife.ui" name="rsyntaxtextarea" rev="1.3.2" transitive="false" conf="default_external->default"/>
 
       <dependency org="bsf" name="bsf" rev="2.4.0" transitive="false" conf="default_external->default"/>
       <dependency org="org.beanshell" name="bsh" rev="1.3.0" conf="default_external->default"/>
