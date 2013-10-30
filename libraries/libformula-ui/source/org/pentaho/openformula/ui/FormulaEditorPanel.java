@@ -43,20 +43,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
-import org.pentaho.openformula.ui.model2.FormulaClosingParenthesisElement;
-import org.pentaho.openformula.ui.model2.FormulaElement;
-import org.pentaho.openformula.ui.model2.FormulaOpenParenthesisElement;
-import org.pentaho.openformula.ui.model2.FormulaSemicolonElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
+import org.pentaho.openformula.ui.util.FunctionParameterEditHelper;
+import org.pentaho.openformula.ui.util.InlineEditTextArea;
 import org.pentaho.openformula.ui.util.SelectFieldAction;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.HorizontalLayout;
@@ -87,6 +82,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       {
         return;
       }
+
       editorModel.setCaretPosition(functionTextArea.getCaretPosition());
       refreshInformationPanel();
       revalidateParameters(true);
@@ -154,52 +150,23 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     }
   }
 
-  private class DocumentSyncHandler implements DocumentListener, Runnable
+  private class DocumentSyncHandler implements PropertyChangeListener
   {
     private DocumentSyncHandler()
     {
     }
 
-    /**
-     * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
-     * freshly inserted region.
-     *
-     * @param e the document event
-     */
-    public void insertUpdate(final DocumentEvent e)
+    public void propertyChange(final PropertyChangeEvent evt)
     {
+      if ("text".equals(evt.getPropertyName()) == false)
+      {
+        return;
+      }
       if (ignoreTextEvents)
       {
         return;
       }
-      ignoreTextEvents = true;
-      SwingUtilities.invokeLater(this);
-    }
-
-    /**
-     * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
-     * last saw (that is, before updating sticky positions).
-     *
-     * @param e the document event
-     */
-    public void removeUpdate(final DocumentEvent e)
-    {
-      if (ignoreTextEvents)
-      {
-        return;
-      }
-      ignoreTextEvents = true;
-      SwingUtilities.invokeLater(this);
-    }
-
-    /**
-     * Gives notification that an attribute or set of attributes changed.
-     *
-     * @param e the document event
-     */
-    public void changedUpdate(final DocumentEvent e)
-    {
-      // we dont care about attributes ..
+      run();
     }
 
     public void run()
@@ -236,24 +203,13 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       return false;
     }
 
-    public boolean isMainFunction(final String parameterText, final FunctionInformation fn)
-    {
-      FormulaElement outerElement = editorModel.getFormulaElementAt(1);
-      if (parameterText.contains(fn.getCanonicalName()) &&
-          (outerElement != null) && (fn.getFunctionParameterStart() > outerElement.getEndOffset()))
-      {
-          return false;
-      }
-
-      return true;
-    }
-
     /**
      * This method gets called after each parameter text has been entered in the
      * parameter field.  If user is manually entering text in formula text-area,
      * then this method is called for each character entered.  If user is entering
      * a formula, the parameter field will not change to the corresponding embedded
      * formula unless user puts their cursor on the formula.
+     *
      * @param event
      */
     public synchronized void parameterUpdated(final ParameterUpdateEvent event)
@@ -269,84 +225,17 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
         return;
       }
 
-      final int functionParameterCount = fn.getParameterCount();
-      if (functionParameterCount == 0)
-      {
-        return;
-      }
-
-      // The parameter index corresponds to the individual parameter text-fields
-      int globalParameterIndex = event.getParameter();
-
-      // The text entered in a parameter field
-      String parameterText = event.getText().trim();
-      final boolean catchAllParameter = isEmbeddedFunction(parameterText) && event.isCatchAllParameter();
-
-      // Build the formula text.  Remove the old text and inject the new text in it's place
-      final StringBuilder formulaText = new StringBuilder(editorModel.getFormulaText());
-
-      // Determine the start and end positions.  These positions will be used
-      // to build the new formula text in formula text-area
-      int start;
-      final int end;
-      if (globalParameterIndex == -1)
-      {
-        start = fn.getFunctionOffset();
-        end = fn.getFunctionParameterEnd();
-      }
-      else if (globalParameterIndex >= functionParameterCount)
-      {
-        while (globalParameterIndex >= functionParameterCount){
-          parameterText = FormulaSemicolonElement.ELEMENT + parameterText;
-          globalParameterIndex--;
-        }
-
-        // start & end should be the same as we don't want to delete
-        // anything from formula text
-        start = fn.getParamEnd(functionParameterCount - 1);
-        end = start;
-      }
-      else if (catchAllParameter)
-      {
-        start = fn.getParamStart(globalParameterIndex);
-
-        if ((isMainFunction(parameterText, fn) == false) && (globalParameterIndex < fn.getParameterCount()))
-        {
-          end = fn.getParamEnd(globalParameterIndex);
-        }
-        else
-        {
-          end = fn.getParamEnd(globalParameterIndex - 1);
-        }
-      }
-      else
-      {
-        start = fn.getParamStart(globalParameterIndex);
-        end = fn.getParamEnd(globalParameterIndex);
-        if (parameterText.isEmpty()){
-           String prev = String.valueOf(formulaText.charAt(start));
-           while(!prev.equals(FormulaSemicolonElement.ELEMENT)){
-             prev = String.valueOf(formulaText.charAt(start-1));
-             if (prev.equals(FormulaOpenParenthesisElement.ELEMENT) ||
-                 prev.equals(FormulaClosingParenthesisElement.ELEMENT)){
-               break;
-             }
-             start--;
-           }
-        }
-      }
-      //Remove the old text and inject the new text in it's place
-      formulaText.delete(start, end);
-      formulaText.insert(start, parameterText);
+      final FunctionParameterEditHelper.EditResult formulaText =
+          FunctionParameterEditHelper.buildFormulaText(event, fn, editorModel.getFormulaText());
 
       ignoreTextEvents = true;
       // The formula in the formula text-area represents the correct and updated formula text.
       // Rebuild the element nodes based on this new representation.
-      editorModel.setFormulaText(formulaText.toString());
+      editorModel.setFormulaText(formulaText.text);
 
       // Update for formula text-area
-      functionTextArea.setText(formulaText.toString());
-      functionTextArea.setCaretPosition(parameterText.length() + start);
+      functionTextArea.setText(formulaText.text);
+      functionTextArea.setCaretPosition(formulaText.caretPositionAfterEdit);
       editorModel.setCaretPosition(functionTextArea.getCaretPosition());
       ignoreTextEvents = false;
 
@@ -354,7 +243,6 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
       revalidateFormulaSyntax();
     }
   }
-
 
   private class FieldSelectorListener implements PropertyChangeListener
   {
@@ -413,8 +301,6 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     }
   }
 
-  public static final int FIELDS_MAX_NUMBER=16;
-
   private boolean ignoreTextEvents;
 
   private FunctionListPanel functionSelectorPanel;
@@ -422,7 +308,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
   private FunctionInformationPanel functionInformationPanel;
 
   private FormulaContext formulaContext;
-  private JTextArea functionTextArea;
+  private InlineEditTextArea functionTextArea;
   private JLabel errorTextHolder;
   private JLabel errorIconHolder;
   private FieldDefinition[] fields;
@@ -532,9 +418,9 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     parameterUpdateHandler = new ParameterUpdateHandler();
     functionParameterEditor.addParameterUpdateListener(parameterUpdateHandler);
 
-    functionTextArea = new JTextArea();
+    functionTextArea = new InlineEditTextArea();
     this.setDocSyncHandler(new DocumentSyncHandler());
-    functionTextArea.getDocument().addDocumentListener(getDocSyncHandler());
+    functionTextArea.addPropertyChangeListener("text", getDocSyncHandler());
     functionTextArea.setRows(6);
     functionTextArea.addCaretListener(new CaretHandler());
     functionTextArea.setFont
@@ -696,6 +582,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
 
   /**
    * Re-validate the parameters of the selected formula.
+   *
    * @param switchParameterEditor - if true, then the parameter editor will adjust to correspond to
    *                              formula in the formula text-area.  This prevents parameter editor from
    *                              changing while user is entering an embedded formula.
@@ -727,18 +614,19 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
     try
     {
       ignoreTextEvents = true;
-      functionParameterEditor.setSelectedFunction(new FunctionParameterContext(fnDesc, fnInfo.getParametes(), fnInfo, switchParameterEditor, editorModel));
+      functionParameterEditor.setSelectedFunction(new FunctionParameterContext
+          (fnDesc, fnInfo, switchParameterEditor, editorModel));
     }
     finally
     {
       ignoreTextEvents = false;
     }
-
   }
 
   private void refreshInformationPanel()
   {
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
+    System.out.println(currentFunction);
     final FunctionDescription description;
     if (currentFunction != null)
     {

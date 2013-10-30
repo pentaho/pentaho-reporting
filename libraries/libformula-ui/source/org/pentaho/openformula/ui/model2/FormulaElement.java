@@ -48,7 +48,7 @@ public abstract class FormulaElement implements Element
     this.startOffset = startOffset;
   }
 
-  protected abstract String getText();
+  public abstract String getText();
 
   /**
    * Fetches the document associated with this element.

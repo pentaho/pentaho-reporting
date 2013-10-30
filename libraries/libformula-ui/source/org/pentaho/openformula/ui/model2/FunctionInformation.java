@@ -17,6 +17,8 @@
 
 package org.pentaho.openformula.ui.model2;
 
+import java.util.Arrays;
+
 public class FunctionInformation
 {
   private String canonicalName;
@@ -117,7 +119,21 @@ public class FunctionInformation
     return parameterText.length;
   }
 
-  public String[] getParametes(){
-    return parameterText;
+  public String[] getParameters(){
+    return parameterText.clone();
+  }
+
+  public String toString()
+  {
+    return "FunctionInformation{" +
+        "canonicalName='" + canonicalName + '\'' +
+        ", functionParameterStart=" + functionParameterStart +
+        ", functionParameterEnd=" + functionParameterEnd +
+        ", parameterText=" + Arrays.toString(parameterText) +
+        ", paramStart=" + Arrays.toString(paramStart) +
+        ", paramEnd=" + Arrays.toString(paramEnd) +
+        ", functionOffset=" + functionOffset +
+        ", functionText='" + functionText + '\'' +
+        '}';
   }
 }

@@ -35,12 +35,6 @@ public class FunctionParameterContext
     switchParameterEditor = true;
   }
 
-  //there is no need to pass parameters valuse in constructor,
-  //as the parameterValues can be derived from
-  //FunctionInformation - and if it is used as
-  //marker for fields count. Usually  parameterValues is
-  //functions set parameters + some empty positions to
-  //illustrate UI empty fields.
   @Deprecated
   public FunctionParameterContext(final FunctionDescription function,
                                   final String[] parameterValues,
@@ -48,11 +42,9 @@ public class FunctionParameterContext
                                   final boolean switchParameterEditor,
                                   final FormulaEditorModel editorModel)
   {
-    this.function = function;
+    // todo: remove me in next major release
+    this(function, fn, switchParameterEditor, editorModel);
     this.parameterValues = parameterValues;
-    this.functionInformation = fn;
-    this.switchParameterEditor = switchParameterEditor;
-    this.editorModel = editorModel;
   }
 
   public FunctionParameterContext(final FunctionDescription function,
@@ -61,10 +53,10 @@ public class FunctionParameterContext
                                   final FormulaEditorModel editorModel)
   {
     this.function = function;
-    this.parameterValues = fn.getParametes();
     this.functionInformation = fn;
     this.switchParameterEditor = switchParameterEditor;
     this.editorModel = editorModel;
+    this.parameterValues = fn.getParameters();
   }
 
   public FormulaEditorModel getEditorModel()
@@ -99,7 +91,7 @@ public class FunctionParameterContext
 
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append("FunctionParameterContext");
     sb.append("{function=").append(function);
     sb.append(", parameterValues=").append(parameterValues == null ? "null" : Arrays.asList(parameterValues).toString());
