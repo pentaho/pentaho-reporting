@@ -5,7 +5,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.LabelType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -23,7 +24,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -42,7 +44,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.MessageType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -60,7 +63,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.DateFieldType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -78,7 +82,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -96,7 +101,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ResourceLabelType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -114,7 +120,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ResourceFieldType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -132,7 +139,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ResourceMessageType"
            content-type="java.lang.String"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -149,7 +157,8 @@
   <element name="content" expert="false" hidden="false" preferred="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ContentType"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -167,7 +176,8 @@
   <element name="content-field" expert="false" hidden="false" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -185,7 +195,8 @@
   <element name="legacy-element" expert="true" hidden="true" preferred="false"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.LegacyType"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -202,7 +213,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.RectangleType"
            content-type="java.awt.Shape"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -234,7 +246,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.EllipseType"
            content-type="java.awt.Shape"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -250,7 +263,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.HorizontalLineType"
            content-type="java.awt.Shape"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -266,7 +280,8 @@
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.VerticalLineType"
            content-type="java.awt.Shape"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -281,7 +296,8 @@
   <element name="external-element-field" expert="false" hidden="true" preferred="false" container="false"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.ExternalElementType"
-           type-classification="data">
+           type-classification="data"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

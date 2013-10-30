@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2009 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2000 - 2013 Pentaho Corporation, Simba Management Limited and Contributors...  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
@@ -44,6 +44,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.layout.output.FlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
@@ -59,6 +60,8 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plainte
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.internal.XmlPageOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
@@ -418,6 +421,39 @@ public class DebugReportRunner
       return logicalPageBox;
     }
   }
+  private static class InterceptingXmlTableOutputProcessor extends XmlTableOutputProcessor
+  {
+    private LogicalPageBox logicalPageBox;
+    private FlowSelector flowSelector;
+
+    private InterceptingXmlTableOutputProcessor(final OutputStream outputStream,
+                                               final OutputProcessorMetaData metaData)
+    {
+      super(outputStream, metaData);
+    }
+
+    public void setFlowSelector(final FlowSelector flowSelector)
+    {
+      this.flowSelector = flowSelector;
+    }
+
+    protected FlowSelector getFlowSelector()
+    {
+      return flowSelector;
+    }
+
+    protected void processTableContent(final LogicalPageKey logicalPageKey,
+                                       final LogicalPageBox logicalPage,
+                                       final TableContentProducer contentProducer) throws ContentProcessingException
+    {
+      logicalPageBox = logicalPage.derive(true);
+    }
+
+    public LogicalPageBox getLogicalPageBox()
+    {
+      return logicalPageBox;
+    }
+  }
 
   public static LogicalPageBox layoutPage(final MasterReport report, final int page) throws Exception
   {
@@ -428,6 +464,26 @@ public class DebugReportRunner
         (new NullOutputStream(), new XmlPageOutputProcessorMetaData(localFontRegistry));
     outputProcessor.setFlowSelector(new SinglePageFlowSelector(page, false));
     final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
+    proc.processReport();
+
+    if (outputProcessor.getLogicalPageBox() == null)
+    {
+      Assert.fail("Did not find the requested page");
+    }
+
+    return outputProcessor.getLogicalPageBox();
+  }
+
+  public static LogicalPageBox layoutTablePage(final MasterReport report, final int page) throws Exception
+  {
+    final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+
+    final InterceptingXmlTableOutputProcessor outputProcessor = new InterceptingXmlTableOutputProcessor
+        (new NullOutputStream(), new XmlTableOutputProcessorMetaData
+            (XmlTableOutputProcessorMetaData.PAGINATION_MANUAL, localFontRegistry));
+    outputProcessor.setFlowSelector(new SinglePageFlowSelector(page, true));
+    final ReportProcessor proc = new FlowReportProcessor(report, outputProcessor);
     proc.processReport();
 
     if (outputProcessor.getLogicalPageBox() == null)

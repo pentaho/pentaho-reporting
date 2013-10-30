@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal;
 
@@ -312,8 +312,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   @Deprecated
   public LogicalPageDrawable(final LogicalPageBox rootBox,
-                   final OutputProcessorMetaData metaData,
-                   final ResourceManager resourceManager)
+                             final OutputProcessorMetaData metaData,
+                             final ResourceManager resourceManager)
   {
     this();
     init(rootBox, metaData, resourceManager);
@@ -731,10 +731,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     renderBoxBorderAndBackground(box);
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
 
     final FontDecorationSpec newUnderlineSpec = computeUnderline(box, underline);
@@ -893,10 +894,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       underline = computeUnderline(box, null);
     }
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
   }
 
@@ -914,12 +916,18 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   {
     this.contentAreaX1 = box.getContentAreaX1();
     this.contentAreaX2 = box.getContentAreaX2();
-
+    this.textSpec = null;
+    
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
       processTextLine(lineBox, contentAreaX1, contentAreaX2);
       lineBox = (RenderBox) lineBox.getNext();
+    }
+
+    if (textSpec != null)
+    {
+      throw new IllegalStateException();
     }
   }
 
@@ -1420,7 +1428,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long posY = renderableText.getY();
 
     final Graphics2D g2;
-    if (textSpec == null)
+    if (getTextSpec() == null)
     {
       g2 = (Graphics2D) getGraphics().create();
       final StyleSheet layoutContext = renderableText.getStyleSheet();
@@ -1438,7 +1446,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
     else
     {
-      g2 = textSpec.getGraphics();
+      g2 = getTextSpec().getGraphics();
     }
 
     // This shifting is necessary to make sure that all text is rendered like in the previous versions.

@@ -58,8 +58,13 @@
     <dependency org="org.swinglabs" name="swingx" rev="1.6.1"  conf="default_external->default"/>
 
     <!-- testing dependencies -->
-    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-core-test" 
-                rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
+    <!-- Testing Dependencies -->
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
+    <dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="default_external->default"/>
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.3" transitive="false" conf="default_external->default"/>
+    <dependency org="simple-jndi" name="simple-jndi" rev="0.11.3" transitive="false" conf="default_external->default"/>
+    <dependency org="xmlunit" name="xmlunit" rev="1.3" conf="default_external->default"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-core-test" rev="${project.revision}"
+                transitive="false" conf="test->default"/>
   </dependencies>
 </ivy-module>

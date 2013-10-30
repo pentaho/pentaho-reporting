@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
@@ -27,9 +27,7 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
-import com.lowagie.text.rtf.RtfWriter2;
 import com.lowagie.text.rtf.table.RtfBorder;
-import com.lowagie.text.rtf.table.RtfCell;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
@@ -48,6 +46,8 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellB
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext.PatchRtfCell;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext.PatchRtfWriter2;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.NoCloseOutputStream;
@@ -130,7 +130,7 @@ public class RTFPrinter
       imageCache = new RTFImageCache(resourceManager);
 
       // rtf does not support PageFormats or other meta data...
-      final RtfWriter2 instance = RtfWriter2.getInstance(document, new NoCloseOutputStream(outputStream));
+      final PatchRtfWriter2 instance = PatchRtfWriter2.getInstance(document, new NoCloseOutputStream(outputStream));
       instance.getDocumentSettings().setAlwaysUseUnicode(true);
 
       final String author = config.getConfigProperty
@@ -208,15 +208,17 @@ public class RTFPrinter
             if (background == null)
             {
               // An empty cell .. ignore
-              final RtfCell cell = new RtfCell();
+              final PatchRtfCell cell = new PatchRtfCell();
               cell.setBorderWidth(0);
+              cell.setMinimumHeight((float) StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row)));
               table.addCell(cell, row, col);
               continue;
             }
 
             // A empty cell with a defined background ..
-            final RtfCell cell = new RtfCell();
+            final PatchRtfCell cell = new PatchRtfCell();
             cell.setBorderWidth(0);
+            cell.setMinimumHeight((float) StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row)));
             updateCellStyle(cell, background);
             table.addCell(cell, row, col);
             continue;
@@ -242,12 +244,11 @@ public class RTFPrinter
           final CellBackground realBackground = cellBackgroundProducer.getBackgroundForBox
               (logicalPage, sheetLayout, col, row, colSpan, rowSpan, false, sectionType, content);
 
-          final Cell cell = new Cell();
+          final PatchRtfCell cell = new PatchRtfCell();
           cell.setRowspan(rowSpan);
           cell.setColspan(colSpan);
           cell.setBorderWidth(0);
-          // Sadly RTF-Cell does not provide a setter for the row-span. Therefore we have to "import" a plain cell
-          // for that. The design of the iText RTF writer seems to be seriously flawed here .. 
+          cell.setMinimumHeight((float) StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row)));
           if (realBackground != null)
           {
             updateCellStyle(cell, realBackground);

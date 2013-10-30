@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2012 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
@@ -40,7 +40,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
@@ -48,11 +47,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.pentaho.reporting.designer.core.ReportDesigner;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -324,11 +323,34 @@ public class ProvisionDataSourcePanel extends JPanel
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
 
       expandAllNodes();
-      SwingUtilities.invokeLater(new ReportDesigner.DataTabSetVisible(reportDesignerContext.getActiveContext()));
+      SwingUtilities.invokeLater(new DataTabSetVisible(reportDesignerContext, reportDesignerContext.getActiveContext()));
     }
-
   }
 
+
+  private static class DataTabSetVisible implements Runnable
+  {
+    private ReportDesignerContext designerContext;
+    private ReportRenderContext activeContext;
+
+    public DataTabSetVisible(final ReportDesignerContext designerContext,
+                             final ReportRenderContext activeContext)
+    {
+      this.designerContext = designerContext;
+      this.activeContext = activeContext;
+    }
+
+    public void run()
+    {
+      if (this.activeContext == null)
+      {
+        return;
+      }
+
+      designerContext.setActiveContext(activeContext);
+      designerContext.getView().showDataTree();
+    }
+  }
 
   private class DataSourceDesignTimeContext implements DesignTimeContext
   {

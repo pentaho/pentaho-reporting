@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
 
@@ -22,9 +22,13 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.ElementReadHandler;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements.GenericElementReadHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.GenericElementWriteHandler;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Locator;
@@ -84,6 +88,7 @@ public class BundleElementRegistry
       {
         return attribute.newInstance();
       }
+
       // this is valid ..
       // logger.debug("No handler for [" + namespace + "|" + tagName + "] at " + locator);
       return null;
@@ -92,6 +97,13 @@ public class BundleElementRegistry
     {
       throw new ParseException("Failed to instantiate element-read-handler for [" + namespace + "|" + tagName + "]", locator);
     }
+  }
+
+  public void registerReader(final ElementType elementType,
+                             final Class<? extends ElementReadHandler> readHandler)
+  {
+    ElementMetaData metaData = elementType.getMetaData();
+    register(metaData.getNamespace(), metaData.getName(), readHandler);
   }
 
   public void register(final String namespace,
@@ -114,6 +126,12 @@ public class BundleElementRegistry
     readHandlers.setAttribute(namespace, tagName, readHandler);
   }
 
+  public void register(final ElementType elementType, final Class<? extends BundleElementWriteHandler> writeHandler)
+  {
+    ElementMetaData metaData = elementType.getMetaData();
+    register(metaData.getName(), writeHandler);
+  }
+
   public void register(final String elementType, final Class<? extends BundleElementWriteHandler> writeHandler)
   {
     if (writeHandler == null)
@@ -122,4 +140,27 @@ public class BundleElementRegistry
     }
     writeHandlers.put(elementType, writeHandler);
   }
+
+  public void registerGenericReader(final ElementType elementType)
+  {
+    ElementMetaData metaData = elementType.getMetaData();
+    register(metaData.getNamespace(), metaData.getName(), GenericElementReadHandler.class);
+  }
+
+  public void registerGenericWriter(final ElementType elementType)
+  {
+    registerGenericWriter(elementType.getMetaData().getName());
+  }
+
+  public void registerGenericWriter(final String elementType)
+  {
+    writeHandlers.put(elementType, GenericElementWriteHandler.class);
+  }
+
+  public void registerGenericElement(final ElementType elementType)
+  {
+    registerGenericWriter(elementType);
+    registerGenericReader(elementType);
+  }
+
 }
