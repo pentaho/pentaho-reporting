@@ -1,20 +1,3 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
-
 package org.pentaho.openformula.ui;
 
 import java.awt.BorderLayout;
@@ -57,6 +40,7 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
   public static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
 
   private FunctionDescription selectedFunction;
+  private int functionStartIndex;
   private JPanel rootPanel;
 
   public MultiplexFunctionParameterEditor()
@@ -130,15 +114,11 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
     }
   }
 
+  @Override
   public void setSelectedFunction(final FunctionParameterContext context)
   {
-    final FunctionDescription selectedFunction = context.getFunction();
+    final FunctionDescription fnDesc = context.getFunction();
     final int functionStart = context.getFunctionInformation().getFunctionOffset();
-
-    if (activeEditor != null)
-    {
-      activeEditor.setSelectedFunction(context);
-    }
 
     // Ensure that the parameter field editor has been initialized. This can
     // happen if user manually types in the whole formula in text-area.
@@ -153,9 +133,10 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       switchParameterEditor = context.isSwitchParameterEditor();
     }
 
-    this.selectedFunction = selectedFunction;
+    this.selectedFunction = fnDesc;
+    this.functionStartIndex = functionStart;
 
-    final String name = selectedFunction.getCanonicalName();
+    final String name = fnDesc.getCanonicalName();
     if ((activeEditor != null) && (switchParameterEditor == true))
     {
       activeEditor.removeParameterUpdateListener(parameterUpdateHandler);
@@ -179,6 +160,8 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       rootPanel.invalidate();
       rootPanel.revalidate();
       rootPanel.repaint();
+    } else {
+      activeEditor.setSelectedFunction(context);
     }
   }
 

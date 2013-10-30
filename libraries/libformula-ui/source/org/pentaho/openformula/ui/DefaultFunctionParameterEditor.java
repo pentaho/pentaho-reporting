@@ -1,19 +1,19 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
+ */
 
 package org.pentaho.openformula.ui;
 
@@ -25,25 +25,23 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import javax.swing.Box;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import org.pentaho.openformula.ui.model2.FormulaElement;
-import org.pentaho.openformula.ui.model2.FormulaTextElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
+import org.pentaho.openformula.ui.util.InlineEditTextField;
 import org.pentaho.openformula.ui.util.SelectFieldAction;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.openformula.ui.util.TooltipLabel;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
@@ -59,6 +57,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       this.paramIndex = paramIndex;
     }
 
+    @Override
     public void propertyChange(final PropertyChangeEvent evt)
     {
       final FieldDefinition value = (FieldDefinition) evt.getNewValue();
@@ -67,7 +66,8 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
       {
         final String text = FormulaUtil.quoteReference(value.getName());
         final String parameterValue = getParameterValue(paramIndex);
-        final JTextField field = getParameterField(paramIndex);
+        final TextFieldHolderStruct fieldStruct = getParameterField(paramIndex);
+        final InlineEditTextField field = fieldStruct.getTextFields();
 
         final StringBuilder b = new StringBuilder(parameterValue);
         // remove the selected content, if any
@@ -75,105 +75,105 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         // then insert the new content at the cursor position
         final int caretPosition = field.getCaretPosition();
         b.insert(caretPosition, text);
-        field.setText(b.toString());
-        field.setCaretPosition(caretPosition + text.length());
+        fieldStruct.setText(b.toString());
       }
     }
   }
 
-  private class FocusListenerHandler implements FocusListener, Runnable
+  private class FocusListenerHandler extends FocusAdapter
   {
-    private JTextField paramTextField;
+    private InlineEditTextField paramTextField;
     private int parameterIndex;
-    private String oldText;
-    private Component focusIgnore;
 
-    private FocusListenerHandler(final JTextField paramTextField, final int parameterIndex)
+    private FocusListenerHandler(final InlineEditTextField paramTextField, final int parameterIndex)
     {
       this.paramTextField = paramTextField;
       this.parameterIndex = parameterIndex;
-      this.oldText = this.paramTextField.getText();
     }
 
-    /**
-     * @param toIgnoreFocus Focus loss to this component will not be treated as focus loss.
-     */
-    private void setFocusIgnore(Component toIgnoreFocus) {
-      focusIgnore = toIgnoreFocus;
+    public void focusLost(final FocusEvent e)
+    {
+      handleFocusChange();
     }
 
+    @Override
     public void focusGained(final FocusEvent e)
+    {
+      handleFocusChange();
+    }
+
+    private void handleFocusChange()
     {
       if (inSetupUpdate)
       {
         return;
       }
 
-      parameterUpdateInProgress = true;
+      final String s = paramTextField.getText();
+      fireParameterUpdate(parameterIndex, s);
+    }
+  }
+
+  private static class TextFieldHolderStruct
+  {
+    private InlineEditTextField textFields;
+    private SelectFieldAction selectFieldAction;
+    private FocusListenerHandler focusHandler;
+    private Component[] extraComponents;
+
+    protected TextFieldHolderStruct(final InlineEditTextField textFields,
+                                    final SelectFieldAction selectFieldAction,
+                                    final FocusListenerHandler focusHandler,
+                                    final Component... extraComponents)
+    {
+      this.textFields = textFields;
+      this.selectFieldAction = selectFieldAction;
+      this.focusHandler = focusHandler;
+      this.extraComponents = extraComponents;
     }
 
-    public void focusLost(final FocusEvent e)
+    protected InlineEditTextField getTextFields()
     {
-      // If user tabs between parameter textfields, then we need to process what was entered in previous
-      // parameter textfield.
-      final Object source = e.getSource();
-      if ((source instanceof JTextField) && (((JTextField)source).getName().startsWith("parameterValue")))
-      {
-        parameterUpdateInProgress = true;
-      } else if (focusIgnore != null && focusIgnore.equals(e.getOppositeComponent())) {
-        return;
-      }
+      return textFields;
+    }
 
-      if (parameterUpdateInProgress)
+    public void setText(final String text)
+    {
+      textFields.setText(text);
+      if (text != null)
       {
-        parameterUpdateInProgress = false;
-
-        SwingUtilities.invokeLater(this);
+        textFields.setCaretPosition(text.length());
       }
     }
 
-
-    public void run()
+    public String getText()
     {
-      final boolean oldParameterUpdate = inParameterUpdate;
-      try
+      return textFields.getText();
+    }
+
+    public void dispose()
+    {
+      selectFieldAction.dispose();
+      textFields.getParent().remove(textFields);
+      for (final Component c : extraComponents)
       {
-        inParameterUpdate = true;
-        if (parameterIndex < getParameterCount())
-        {
-          final String s = paramTextField.getText();
-          final int caretPosition = paramTextField.getCaretPosition();
-          if (ObjectUtilities.equal(s, oldText))
-          {
-            return;
-          }
-          fireParameterUpdate(parameterIndex, s);
-          oldText = s;
-          paramTextField.setCaretPosition(caretPosition);
-        }
-      }
-      finally
-      {
-        inParameterUpdate = oldParameterUpdate;
+        c.getParent().remove(c);
       }
     }
   }
 
-  private static final JTextField[] EMPTY_FIELDS = new JTextField[0];
-  private static final SelectFieldAction[] EMPTY_ACTIONS = new SelectFieldAction[0];
+  public static final int FIELDS_ADD = 2;
+
+  private static final TextFieldHolderStruct[] EMPTY_FIELDS = new TextFieldHolderStruct[0];
   private static final FieldDefinition[] EMPTY_FIELDDEF = new FieldDefinition[0];
-  private static final FocusListenerHandler[] EMPTY_HANDLERS = new FocusListenerHandler[0];
 
   private FunctionDescription selectedFunction;
   private JPanel parameterPane;
-  private FocusListenerHandler[] changeHandlers;
-  private JTextField[] textFields;
-  private SelectFieldAction[] selectFieldActions;
   private FieldDefinition[] fields;
+  private TextFieldHolderStruct[] textFields;
 
-  private boolean inParameterUpdate;
   private boolean inSetupUpdate;
-  private boolean parameterUpdateInProgress;
+  private int parameterUpdatedCount;
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
@@ -183,14 +183,11 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     parameterPane = new JPanel();
     parameterPane.setLayout(new GridBagLayout());
 
-    this.inParameterUpdate = false;
     this.inSetupUpdate = false;
-    this.parameterUpdateInProgress = false;
+    this.parameterUpdatedCount = -1;
 
     this.textFields = EMPTY_FIELDS;
-    this.selectFieldActions = EMPTY_ACTIONS;
     this.fields = EMPTY_FIELDDEF;
-    this.changeHandlers = EMPTY_HANDLERS;
 
     final JPanel parameterPaneCarrier = new JPanel();
     parameterPaneCarrier.setLayout(new BorderLayout());
@@ -210,6 +207,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     return selectedFunction;
   }
 
+  @Override
   public void clearSelectedFunction()
   {
     setSelectedFunction(new FunctionParameterContext());
@@ -235,7 +233,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     final FormulaElement mainFormulaElement = editorModel.getFormulaElementAt(1);
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
     if ((mainFormulaElement != null) && (currentFunction != null) && (currentFunction.getFunctionOffset() == 1) &&
-        (((FormulaTextElement) mainFormulaElement).getText().compareTo(currentFunction.getCanonicalName()) == 0))
+        (mainFormulaElement.getText().equals(currentFunction.getCanonicalName())))
     {
       return true;
     }
@@ -267,7 +265,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     // to reflect what was typed into the formula text-area
     for (int i = 0; i < textFields.length; i++)
     {
-      final String parameterValue = (textFields[i] != null) ? textFields[i].getText() : null;
+      final String parameterValue = textFields[i].getText();
       if ((parameterValue != null) && (parameterValue.startsWith(selectedFunction.getCanonicalName()) == true))
       {
         String updatedFormula = selectedFunction.getCanonicalName() + "(";
@@ -292,7 +290,6 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         }
 
         textFields[i].setText(updatedFormula);
-        textFields[i].setCaretPosition(updatedFormula.length());
         return true;
       }
     }
@@ -303,7 +300,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
   private void updateParameterFields(final String[] parameterValues)
   {
-    if ((parameterValues != null) && (parameterValues.length == textFields.length))
+    if (parameterValues != null && parameterValues.length <= textFields.length)
     {
       for (int i = 0; i < parameterValues.length; i++)
       {
@@ -311,36 +308,72 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
         if (textFields[i] != null)
         {
           textFields[i].setText(string);
-          if (string != null)
-          {
-            textFields[i].setCaretPosition(string.length());
-          }
         }
       }
     }
   }
 
+  @Override
   public void setSelectedFunction(final FunctionParameterContext context)
   {
-    if (inParameterUpdate)
-    {
-      return;
-    }
-
     try
     {
       inSetupUpdate = true;
 
-      final FunctionDescription selectedFunction = context.getFunction();
+      final FunctionDescription fnDesc = context.getFunction();
+
+      //this is empty function?
+      if (fnDesc == null)
+      {
+        for (int i = 0; i < textFields.length; i++)
+        {
+          textFields[i].dispose();
+        }
+
+        this.textFields = EMPTY_FIELDS;
+        return;
+      }
+
+      final boolean functionChanged = (selectedFunction != fnDesc);
+      this.selectedFunction = fnDesc;
+
+      //currently editing one
       final String[] parameterValues = context.getParameterValues();
+      final String[] parameterFieldValues =
+          getParametersValues(context.getFunctionInformation(), context.getFunction());
+
+      //recreate whole text fields
+      if (functionChanged)
+      {
+        parameterPane.removeAll();
+
+        this.textFields = new TextFieldHolderStruct[parameterFieldValues.length];
+        final int fieldFocus = Math.max(0, parameterUpdatedCount);
+        for (int i = 0; i < parameterFieldValues.length; i++)
+        {
+          this.textFields[i] = addTextField(parameterFieldValues[i], i, (i == fieldFocus));
+        }
+      }
+      else if (textFields.length != parameterFieldValues.length)
+      {
+        final TextFieldHolderStruct[] oldTextFields = this.textFields;
+        this.textFields = new TextFieldHolderStruct[parameterFieldValues.length];
+        System.arraycopy(oldTextFields, 0, textFields, 0, Math.min(oldTextFields.length, textFields.length));
+        final int fieldFocus = Math.max(0, parameterUpdatedCount);
+        for (int i = parameterFieldValues.length; i < oldTextFields.length; i++)
+        {
+          oldTextFields[i].dispose();
+        }
+        for (int i = oldTextFields.length; i < parameterFieldValues.length; i++)
+        {
+          this.textFields[i] = addTextField(parameterFieldValues[i], i, (i == fieldFocus));
+        }
+      }
 
       if (isMainFormula(context) == true)
       {
-        if ((parameterValues != null) && (parameterValues.length == textFields.length))
-        {
-          updateParameterFields(parameterValues);
-          return;
-        }
+        updateParameterFields(parameterValues);
+        //return;
       }
       else
       {
@@ -354,64 +387,28 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
           updateParameterFields(parameterValues);
         }
       }
-
-      this.selectedFunction = selectedFunction;
-
-      if (context.isSwitchParameterEditor() == false)
-      {
-        invalidate();
-        revalidate();
-        repaint();
-
-        return;
-      }
-
-      parameterPane.removeAll();
-
-      if (selectedFunction == null)
-      {
-        for (int i = 0; i < selectFieldActions.length; i++)
-        {
-          selectFieldActions[i].dispose();
-        }
-
-        this.selectFieldActions = EMPTY_ACTIONS;
-        this.textFields = EMPTY_FIELDS;
-        this.changeHandlers = EMPTY_HANDLERS;
-        invalidate();
-        revalidate();
-        repaint();
-        return;
-      }
-
-      final int count = computeFunctionParameterCount(selectedFunction);
-
-      this.selectFieldActions = new SelectFieldAction[count];
-      this.textFields = new JTextField[count];
-      this.changeHandlers = new FocusListenerHandler[count];
-      for (int i = 0; i < count; i++)
-      {
-        addTextField(parameterValues[i], i);
-      }
-      invalidate();
-      revalidate();
-      repaint();
     }
     finally
     {
       inSetupUpdate = false;
+      invalidate();
+      revalidate();
+      repaint();
     }
   }
 
-  private void addTextField(final String parameterValue,
-                            final int parameterPosition)
+  private TextFieldHolderStruct addTextField(final String parameterValue,
+                                             final int parameterPosition,
+                                             final boolean requestFocus)
   {
+    //this value is used to compute field hints.
     final int paramPos = Math.max(0, Math.min(selectedFunction.getParameterCount() - 1, parameterPosition));
     final String displayName = selectedFunction.getParameterDisplayName(paramPos, Locale.getDefault());
     final String description = selectedFunction.getParameterDescription(paramPos, Locale.getDefault());
 
     final JLabel paramNameLabel = new JLabel(displayName);
-    final JTextField paramTextField = new JTextField();
+    final InlineEditTextField paramTextField = new InlineEditTextField();
+
     paramTextField.setText(parameterValue);
     if (parameterValue != null)
     {
@@ -422,8 +419,20 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
 
     final FocusListenerHandler handler = new FocusListenerHandler(paramTextField, parameterPosition);
     paramTextField.addFocusListener(handler);
-    final SelectFieldAction action =
+
+    if (requestFocus)
+    {
+      paramTextField.setFocusable(true);
+      paramTextField.requestFocusInWindow();
+    }
+
+    final SelectFieldAction selectFieldAction =
         new SelectFieldAction(this, new FieldSelectorUpdateHandler(parameterPosition), this);
+    // treat insert field as parameter edit
+    selectFieldAction.setFocusReturn(paramTextField);
+
+    final BorderlessButton button = new BorderlessButton(selectFieldAction);
+    final TooltipLabel tooltipLabel = new TooltipLabel(description);
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -444,12 +453,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     gbc.gridx = 3;
     gbc.gridy = parameterPosition;
     gbc.anchor = GridBagConstraints.WEST;
-    Component actionButton = new BorderlessButton(action);
-    this.parameterPane.add(actionButton, gbc);
-
-    // treat insert field as parameter edit
-    handler.setFocusIgnore(actionButton);
-    action.setFocusReturn(paramTextField);
+    this.parameterPane.add(button, gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -458,76 +462,67 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.insets = new Insets(3, 5, 3, 5);
-    final JLabel label = new TooltipLabel(description);
-    label.setToolTipText(description);
-    this.parameterPane.add(label, gbc);
+    this.parameterPane.add(tooltipLabel, gbc);
 
-    this.changeHandlers[parameterPosition] = handler;
-    this.textFields[parameterPosition] = paramTextField;
-    this.selectFieldActions[parameterPosition] = action;
+    return new TextFieldHolderStruct(paramTextField, selectFieldAction, handler,
+        paramNameLabel, button, tooltipLabel);
   }
 
-  private static class TooltipLabel extends JLabel
+  //returns expected number of fields for formula editor
+  private static int computeFunctionParameterCount(final FunctionInformation info, final FunctionDescription desc)
   {
-    /**
-     * Creates a <code>JLabel</code> instance with
-     * no image and with an empty string for the title.
-     * The label is centered vertically
-     * in its display area.
-     * The label's contents, once set, will be displayed on the leading edge
-     * of the label's display area.
-     *
-     * @param description
-     */
-    private TooltipLabel(final String description)
+    if (!desc.isInfiniteParameterCount())
     {
-      final ImageIcon imageIcon = new ImageIcon(getClass().getResource("images/InfoIcon.png"));
-      setIcon(imageIcon);
-      setToolTipText(description);
-      // ensure that the actions are registered ...
-    }
-  }
-
-  public static int computeFunctionParameterCount(final FunctionDescription selectedFunction)
-  {
-    final int count;
-    if (selectedFunction.isInfiniteParameterCount())
-    {
-      count = Math.max(16, selectedFunction.getParameterCount());
-    }
-    else
-    {
-      count = selectedFunction.getParameterCount();
-    }
-    return count;
-  }
-
-  public void setParameterValue(final int param, final String value)
-  {
-    if (inSetupUpdate)
-    {
-      return;
+      return desc.getParameterCount();
     }
 
-    try
+    final String[] parameters = info.getParameters();
+    int lastNonEmpty = 0;
+    for (int i = 0; i < parameters.length; i += 1)
     {
-      inParameterUpdate = true;
-      textFields[param].setText(value);
-
-      // User entered a field for a particular parameter.  Update formula text-area
-      if (param < getParameterCount())
+      final String p = parameters[i];
+      if (StringUtils.isEmpty(p))
       {
-        fireParameterUpdate(param, value);
+        continue;
       }
+      lastNonEmpty = i;
+    }
 
-    }
-    finally
-    {
-      inParameterUpdate = false;
-    }
+    return Math.max (lastNonEmpty + 1, desc.getParameterCount()) + FIELDS_ADD;
   }
 
-  protected JTextField getParameterField(final int field)
+  public String[] getParametersValues(final FunctionInformation fnInfo, final FunctionDescription fnDesc)
+  {
+    final int paramCount = computeFunctionParameterCount(fnInfo, fnDesc);
+
+    final String[] parameterValues = new String[paramCount];
+    final int definedParameterCount = Math.min(fnInfo.getParameterCount(), paramCount);
+    for (int i = 0; i < definedParameterCount; i++)
+    {
+      final String text = fnInfo.getParameterText(i);
+      parameterValues[i] = text;
+    }
+
+    //if there is more than FIELDS_MAX_NUMBER parameters -
+    if (definedParameterCount > 0 && fnInfo.getParameterCount() > paramCount)
+    {
+      final StringBuilder lastParamEatsAllBuffer = new StringBuilder(100);
+      final int lastParamIdx = definedParameterCount - 1;
+      for (int i = lastParamIdx; i < fnInfo.getParameterCount(); i++)
+      {
+        if (i > lastParamIdx)
+        {
+          lastParamEatsAllBuffer.append(';');
+        }
+        lastParamEatsAllBuffer.append(fnInfo.getParameterText(i));
+      }
+      parameterValues[lastParamIdx] = lastParamEatsAllBuffer.toString();
+    }
+
+    return parameterValues;
+  }
+
+  protected TextFieldHolderStruct getParameterField(final int field)
   {
     return textFields[field];
   }
@@ -537,6 +532,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     return textFields[param].getText();
   }
 
+  @Override
   public void addParameterUpdateListener(final ParameterUpdateListener listener)
   {
     if (listenerList.getListenerCount(ParameterUpdateListener.class) == 0)
@@ -545,29 +541,16 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     }
   }
 
+  @Override
   public void removeParameterUpdateListener(final ParameterUpdateListener listener)
   {
     listenerList.remove(ParameterUpdateListener.class, listener);
   }
 
-  public boolean isCatchAll(final String text)
-  {
-    if (text != null)
-    {
-      FunctionDescription selectedFunction = getSelectedFunction();
-      if ((text != null) && (selectedFunction != null) &&
-          text.contains("(") && text.contains(")") && (text.contains(selectedFunction.getCanonicalName())))
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   protected void fireParameterUpdate(final int param, final String text)
   {
-    final boolean catchAllParameter = isCatchAll(text);
+    final boolean catchAllParameter =
+        selectedFunction.isInfiniteParameterCount() && (param >= selectedFunction.getParameterCount());
     final ParameterUpdateListener[] updateListeners = listenerList.getListeners(ParameterUpdateListener.class);
     for (int i = 0; i < updateListeners.length; i++)
     {
@@ -576,11 +559,13 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     }
   }
 
+  @Override
   public void setFields(final FieldDefinition[] fields)
   {
     this.fields = fields.clone();
   }
 
+  @Override
   public FieldDefinition[] getFields()
   {
     if (fields == null)
@@ -590,21 +575,7 @@ public class DefaultFunctionParameterEditor extends JPanel implements FunctionPa
     return fields.clone();
   }
 
-  public int getParameterCount()
-  {
-    int paramCount = 0;
-    for (int index = 0; index < textFields.length; index++)
-    {
-      final String parameterValue = getParameterValue(index);
-      if ((parameterValue != null) && (parameterValue.length() > 0))
-      {
-        paramCount++;
-      }
-    }
-
-    return paramCount;
-  }
-
+  @Override
   public Component getEditorComponent()
   {
     return this;
