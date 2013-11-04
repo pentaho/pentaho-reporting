@@ -36,6 +36,11 @@ public class AutoRenderBox extends RenderBox
     this(new InstanceID(), null, ReportAttributeMap.EMPTY_MAP);
   }
 
+  public AutoRenderBox(final StyleSheet styleSheet)
+  {
+    this(new InstanceID(), null, styleSheet, ReportAttributeMap.EMPTY_MAP);
+  }
+
   public AutoRenderBox(final InstanceID instanceId,
                        final ReportStateKey stateKey,
                        final ReportAttributeMap attributes)
@@ -48,9 +53,7 @@ public class AutoRenderBox extends RenderBox
                        final StyleSheet styleSheet,
                        final ReportAttributeMap attributes)
   {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-        styleSheet, instanceId, BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-        attributes, stateKey);
+    this(instanceId, stateKey, styleSheet, attributes, AutoLayoutBoxType.INSTANCE);
   }
 
   public AutoRenderBox(final InstanceID instanceId,
@@ -59,9 +62,7 @@ public class AutoRenderBox extends RenderBox
                        final ReportAttributeMap attributes,
                        final ElementType elementType)
   {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-        styleSheet, instanceId, BoxDefinition.EMPTY, elementType,
-        attributes, stateKey);
+    this(instanceId, stateKey, styleSheet, BoxDefinition.EMPTY, attributes, elementType);
   }
 
   public AutoRenderBox(final InstanceID instanceId,

@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
@@ -61,6 +62,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
     protected int tableCellPosition;
     protected int rowCount;
     private boolean bodySection;
+    private boolean headerOrFooterSection;
 
     public TableInfoStructure(final TableRenderBox table, final TableInfoStructure parent)
     {
@@ -143,6 +145,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
       {
         this.rowModel = sectionRenderBox.getRowModel();
         this.bodySection = (sectionRenderBox.getDisplayRole() == TableSectionRenderBox.Role.BODY);
+        this.headerOrFooterSection = !bodySection;
       }
       else
       {
@@ -150,6 +153,16 @@ public class TableValidationStep extends IterateStructuralProcessStep
         this.bodySection = false;
       }
       this.rowCount = -1;
+    }
+
+    public boolean isHeaderOrFooterSection()
+    {
+      return headerOrFooterSection;
+    }
+
+    public void setHeaderOrFooterSection(final boolean headerOrFooterSection)
+    {
+      this.headerOrFooterSection = headerOrFooterSection;
     }
 
     public boolean isBodySection()
@@ -236,9 +249,21 @@ public class TableValidationStep extends IterateStructuralProcessStep
   {
     if (currentTable != null)
     {
+      if (box.getParent().getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+      {
+        currentTable.setHeaderOrFooterSection(false);
+      }
       return true;
     }
     return abortIfNoTable(box);
+  }
+
+  protected void finishAutoBox(final RenderBox box)
+  {
+    if (currentTable != null)
+    {
+      box.setContainsReservedContent(currentTable.isHeaderOrFooterSection());
+    }
   }
 
   protected boolean startTableBox(final TableRenderBox table)
@@ -346,6 +371,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
     }
 
     currentTable.setSectionRenderBox(box);
+    box.setContainsReservedContent(box.getDisplayRole() != TableSectionRenderBox.Role.BODY);
     box.getRowModel().initialize(currentTable.getTable());
     return true;
   }
@@ -471,4 +497,6 @@ public class TableValidationStep extends IterateStructuralProcessStep
     currentTable.updateDefinedSize(rowSpan, preferredSize);
     return true;
   }
+
+
 }

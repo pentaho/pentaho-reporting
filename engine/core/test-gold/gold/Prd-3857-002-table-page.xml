@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="15" row-count="27">
+  <table col-count="15" row-count="28">
     <cols>
       <column width="80"/>
       <column width="80"/>
@@ -3426,7 +3426,7 @@
         </line>
       </cell>
     </row>
-    <row height="25">
+    <row height="20">
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
       </empty-cell>
@@ -3580,6 +3580,23 @@
           <text x="1174.99" y="520.0" width="25.01" height="10.0">47.42</text>
         </line>
       </cell>
+    </row>
+    <row height="5">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
     </row>
   </table>
   <table col-count="15" row-count="27">

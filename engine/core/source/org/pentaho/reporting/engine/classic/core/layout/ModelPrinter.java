@@ -27,8 +27,11 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class ModelPrinter
@@ -36,6 +39,7 @@ public class ModelPrinter
   public static final ModelPrinter INSTANCE = new ModelPrinter();
   private static final Log logger = LogFactory.getLog(ModelPrinter.class);
   private static final boolean PRINT_LINEBOX_CONTENTS = false;
+  private static final boolean PRINT_TABLE_CELL_CONTENTS = true;
 
   public ModelPrinter()
   {
@@ -299,6 +303,27 @@ public class ModelPrinter
       print(b.toString());
     }
 
+    if (box instanceof TableRenderBox)
+    {
+      final TableRenderBox pageBox = (TableRenderBox) box;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- Layout: ");
+      Object styleProperty = pageBox.getStyleSheet().getStyleProperty(BandStyleKeys.TABLE_LAYOUT);
+      if (TableLayout.auto.equals(styleProperty))
+      {
+        b.append(TableLayout.auto);
+      }
+      else
+      {
+        b.append(TableLayout.fixed);
+      }
+      print(b.toString());
+    }
+
     if (box instanceof TableSectionRenderBox)
     {
       final TableSectionRenderBox pageBox = (TableSectionRenderBox) box;
@@ -401,8 +426,11 @@ public class ModelPrinter
 
   private void printChilds(final RenderBox box, final int level)
   {
-    if (box instanceof TableCellRenderBox)
+    if (PRINT_TABLE_CELL_CONTENTS == false && box instanceof TableCellRenderBox)
+    {
       return;
+    }
+
     RenderNode childs = box.getFirstChild();
     while (childs != null)
     {

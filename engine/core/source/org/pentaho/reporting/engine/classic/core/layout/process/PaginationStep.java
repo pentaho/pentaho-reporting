@@ -176,7 +176,7 @@ public final class PaginationStep extends IterateVisualProcessStep
         breakPending = false;
         if (logger.isDebugEnabled())
         {
-         // logger.debug("pending page-break or manual break: " + box);
+          // logger.debug("pending page-break or manual break: " + box);
         }
         return true;
       }
@@ -377,12 +377,43 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     else
     {
-      return true;
+      if (box.isContainsReservedContent())
+      {
+        return true;
+      }
+      else
+      {
+        // todo:
+/*
+        if (box.isCommited())
+        {
+          box.setFinishedPaginate(true);
+        }
+        */
+        return true;
+      }
     }
   }
 
-  private void startTableHeaderSection(final RenderBox box, final TableSectionRenderBox sectionRenderBox)
+  private RenderBox findRootBox(RenderBox box)
   {
+    RenderBox parent = box.getParent();
+    while (parent != null)
+    {
+      if (parent.isContainsReservedContent() == false)
+      {
+        return box;
+      }
+      box = parent;
+      parent = box.getParent();
+    }
+    return box;
+  }
+
+  private void startTableHeaderSection(final RenderBox _box, final TableSectionRenderBox sectionRenderBox)
+  {
+    RenderBox box = findRootBox(_box);
+
     final long contextShift = shiftState.getShiftForNextChild();
     // shift the header downwards,
     // 1. Check that this table actually breaks across the current page. Header position must be
@@ -779,8 +810,9 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   private void handleBlockLevelBoxFinishedMarker(final RenderBox box, final long shift)
   {
-    if (box.isFinishedPaginate() != false)
+    if (box.isFinishedPaginate())
     {
+      // if already marked as finished, no need to do more work ..
       return;
     }
 

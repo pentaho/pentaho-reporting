@@ -20,10 +20,7 @@ package org.pentaho.reporting.engine.classic.core.util;
 import java.util.Arrays;
 
 /**
- * A Array-List for integer objects. Ints can be added to the list and will be stored in an int-array.
- * <p/>
- * Using this list for storing ints is much faster than creating java.lang.Long objects and storing them in an
- * ArrayList.
+ * An Array-List with a linear instead of exponential growth.
  * <p/>
  * This list is not synchronized and does not implement the full List interface. In fact, this list can only be used to
  * add new values or to clear the complete list.
@@ -64,7 +61,7 @@ public class BulkArrayList<T> implements Cloneable
 
   public BulkArrayList(final T[] data, final int increment)
   {
-    this (Math.max (increment, data.length));
+    this (Math.max (increment, data.length + increment));
     this.increment = increment;
 
     System.arraycopy(data, 0, this.data, 0, data.length);

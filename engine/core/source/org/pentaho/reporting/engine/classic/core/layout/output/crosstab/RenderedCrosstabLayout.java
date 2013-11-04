@@ -31,6 +31,8 @@ import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class RenderedCrosstabLayout implements Cloneable
@@ -60,6 +62,7 @@ public class RenderedCrosstabLayout implements Cloneable
   private int firstRowGroupIndex;
   private int firstColGroupIndex;
   private CrosstabDetailMode detailMode;
+  private TableLayout tableLayout;
 
   public RenderedCrosstabLayout()
   {
@@ -219,6 +222,9 @@ public class RenderedCrosstabLayout implements Cloneable
         (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER)));
     this.generateColumnTitleHeaders = !(Boolean.FALSE.equals
         (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER)));
+    this.tableLayout = (TableLayout) group.getStyle().getStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
+    // todo: PRD-4606 - remove me
+    this.tableLayout = TableLayout.auto;
   }
 
   private void computeGroupCounts(final CrosstabGroup crosstabGroup)
@@ -399,5 +405,10 @@ public class RenderedCrosstabLayout implements Cloneable
   public boolean isSummaryRowPrintable()
   {
     return summaryRowPrintable;
+  }
+
+  public TableLayout getTableLayout()
+  {
+    return tableLayout;
   }
 }

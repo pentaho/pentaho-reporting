@@ -54,6 +54,7 @@ public abstract class RenderBox extends RenderNode
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 = 0x4000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED5 = 0x8000000;
   protected static final int FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE = 0x10000000;
+  protected static final int FLAG_BOX_CONTAINS_PRESERVED_CONTENT = 0x20000000;
   private static final int FLAG_BOX_OPEN = 0x10000;
   private static final int FLAG_BOX_MARKED_OPEN = 0x20000;
   private static final int FLAG_BOX_APPLIED_OPEN = 0x40000;
@@ -1572,4 +1573,15 @@ public abstract class RenderBox extends RenderNode
     final long insetTop = staticBoxLayoutProperties.getBorderTop() + boxDefinition.getPaddingTop();
     return insetBottom + insetTop;
   }
+
+  public boolean isContainsReservedContent()
+  {
+    return isFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT);
+  }
+
+  public void setContainsReservedContent(final boolean containsReservedContent)
+  {
+    setFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT, containsReservedContent);
+  }
+
 }

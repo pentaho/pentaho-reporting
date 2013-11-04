@@ -26,14 +26,13 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 
@@ -90,24 +89,27 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return true;
   }
 
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
-    return false;
-  }
-
   protected boolean startBlockBox(final BlockRenderBox box)
   {
     return startBlockStyleBox(box);
   }
 
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
+  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
   {
-    if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
-    {
-      return startCleanTableRowBoxesFromSection(box);
-    }
-
+    // never remove table-column declarations. They are lightweight anyway ..
     return false;
+  }
+
+  protected boolean startTableRowBox(final TableRowRenderBox box)
+  {
+    // we dont remove cells from table-rows. If a table-row is finished, we may be able to remove the whole
+    // row. However, we can remove contents from table-cells if needed.
+    return true;
+  }
+
+  protected boolean startTableBox(final TableRenderBox box)
+  {
+    return true;
   }
 
   protected boolean startTableCellBox(final TableCellRenderBox box)
@@ -115,95 +117,25 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return startBlockBox(box);
   }
 
-  private Boolean filterNonRemovableStates(final RenderBox box)
+  protected boolean startTableSectionBox(final TableSectionRenderBox box)
   {
-    if (box.isFinishedPaginate() == false)
+    if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
     {
-      return Boolean.TRUE;
+      return startBlockStyleBox(box);
     }
 
-    final RenderNode firstNode = box.getFirstChild();
-    if (firstNode == null)
-    {
-      // The cell is empty ..
-      return Boolean.FALSE;
-    }
-
-    final long nodeY = firstNode.getY();
-    if (nodeY > pageOffset)
-    {
-      // This box will be visible or will be processed in the future.
-      return Boolean.FALSE;
-    }
-
-    if (firstNode.isOpen())
-    {
-      return Boolean.TRUE;
-    }
-/*
-    if ((nodeY + firstNode.getOverflowAreaHeight()) > pageOffset)
-    {
-      // this box will span to the next page and cannot be removed ...
-      return true;
-    }
-    */
-    return null;
+    return false;
   }
 
-  private boolean startCleanTableRowBoxesFromSection(final TableSectionRenderBox box)
+  private boolean startTableSectionStyleBox(final RenderBox box)
   {
-    if (box.isFinishedPaginate() == false)
+    if (box.isContainsReservedContent())
     {
-      return true;
+      // never clear out anything from reserved header or footer boxes. Never!
+      return false;
     }
 
-    final Boolean filterResult = filterNonRemovableStates(box);
-    if (filterResult != null)
-    {
-      return filterResult.booleanValue();
-    }
-
-    // todo: PRD-3857 - this model of cleaning out rows fails when faced with auto-boxes.
-
-    final TableRowModel rowModel = box.getRowModel();
-    final RenderBoxNonAutoIterator rows = new RenderBoxNonAutoIterator(box);
-    RenderNode lastNode = null;
-    while (rows.hasNext())
-    {
-      final RenderNode rowNode = rows.next();
-      if (rowNode.isFinishedPaginate() == false)
-      {
-        break;
-      }
-
-      if (rowNode.isOpen())
-      {
-        // as long as a box is open, it can grow and therefore it cannot be
-        // removed ..
-        break;
-      }
-
-      if (rowNode.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-      {
-        final TableRowRenderBox rowRenderBox = (TableRowRenderBox) rowNode;
-        final long height = rowModel.getValidatedRowSpanSize(rowRenderBox.getRowIndex());
-        if (rowNode.getY() + height > pageOffset)
-        {
-          break;
-        }
-        lastNode = rowNode;
-      }
-    }
-
-    if (lastNode != null)
-    {
-      final RenderBox parent = lastNode.getParent();
-      final RenderNode firstChild = parent.getFirstChild();
-      // todo:
-      removeFinishedNodes(parent, firstChild, lastNode, lastNode.isOrphanLeaf());
-    }
-
-    return true;
+    return startBlockStyleBox(box);
   }
 
   private boolean startBlockStyleBox(final RenderBox box)
@@ -214,12 +146,8 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       return false;
     }
 
-    if (box.isFinishedPaginate() == false)
-    {
-      return true;
-    }
-
-    final boolean safeForRemove = box.getParentWidowContexts() == 0 && (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
+    final boolean safeForRemove =
+        (box.getParentWidowContexts() == 0) && ((box.getY() + box.getOverflowAreaHeight()) <= pageOffset);
     if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
     {
       // Next, search the last node that is fully invisible. We collapse all
@@ -230,7 +158,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       RenderNode currentNode = firstNode;
       RenderNode lastToRemove = null;
 
-      while (currentNode != null && currentNode.isOpen() == false)
+      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -256,7 +184,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       // calculation of the OrphanStep.
 
       RenderNode currentNode = box.getFirstChild();
-      while (currentNode != null && currentNode.isOpen() == false)
+      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -430,6 +358,16 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startAutoBox(final RenderBox box)
   {
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      return startTableSectionStyleBox(box);
+    }
+
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return true;
+    }
+
     if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       return startBlockStyleBox(box);

@@ -17,9 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
-
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 
 public class SeparateRowModel extends AbstractRowModel
 {
@@ -38,6 +36,11 @@ public class SeparateRowModel extends AbstractRowModel
   public long getRowSpacing()
   {
     return rowSpacing;
+  }
+
+  public void setRowSpacing(final long rowSpacing)
+  {
+    this.rowSpacing = rowSpacing;
   }
 
   public void initialize(final TableRenderBox table)

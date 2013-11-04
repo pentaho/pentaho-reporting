@@ -21,9 +21,11 @@ import java.util.HashMap;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.SeparateRowModel;
@@ -93,15 +95,6 @@ public class TableSectionRenderBox extends BlockRenderBox
     {
       this.displayRole = Role.BODY;
     }
-  }
-
-  public RenderBox create(final StyleSheet styleSheet)
-  {
-    final TableSectionRenderBox renderBox = (TableSectionRenderBox) super.create(styleSheet);
-    renderBox.appliedHeaderShift = new HashMap<Long, Long>();
-    renderBox.markedHeaderShift = new HashMap<Long, Long>();
-    renderBox.headerShift = new HashMap<Long, Long>();
-    return renderBox;
   }
 
   public boolean useMinimumChunkWidth()
@@ -221,4 +214,46 @@ public class TableSectionRenderBox extends BlockRenderBox
   }
 
 
+  public void addChild(final RenderNode child)
+  {
+    if (isValid(child) == false)
+    {
+      TableRowRenderBox tsrb = new TableRowRenderBox();
+      tsrb.addChild(child);
+      addChild(tsrb);
+      tsrb.close();
+      return;
+    }
+
+    super.addChild(child);
+  }
+
+  private boolean isValid(final RenderNode child)
+  {
+    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  public RenderBox create(final StyleSheet styleSheet)
+  {
+    return new AutoRenderBox(styleSheet);
+  }
 }

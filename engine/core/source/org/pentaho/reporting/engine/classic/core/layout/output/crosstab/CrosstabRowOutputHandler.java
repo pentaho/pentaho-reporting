@@ -37,7 +37,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSection
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.output.GroupOutputHandler;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class CrosstabRowOutputHandler implements GroupOutputHandler
@@ -142,7 +141,7 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
   private void buildHeaderPlaceholder(final RenderedCrosstabLayout crosstabLayout,
                                       final LayoutModelBuilder layoutModelBuilder)
   {
-    layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(TableLayout.auto));
+    layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(crosstabLayout.getTableLayout()));
     layoutModelBuilder.startBox(CrosstabOutputHelper.createTableBand(BandStyleKeys.LAYOUT_TABLE_HEADER));
 
     // create column group placeholder rows. We subsequently add content as sub-flows into these groups.

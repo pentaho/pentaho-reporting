@@ -72,14 +72,26 @@ public class PageableRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-    if (pageCount == 2)
-    {
-//      DebugLog.logEnter();
-//      ModelPrinter.INSTANCE.print(pageBox);
-//      DebugLog.logExit();
-    }
+//    printConditional(17, pageBox);
+//    printConditional(18, pageBox);
   }
 
+  protected void printConditional(final int page, final LogicalPageBox pageBox)
+  {
+    if (logger.isDebugEnabled() == false)
+      return;
+
+    logger.debug("Printing a page: " + pageCount);
+    if (pageCount == page)
+    {
+      // leave the debug-code in until all of these cases are solved.
+      logger.debug("1: **** Start Printing Page: " + pageCount);
+    //  ModelPrinter.INSTANCE.print(clone);
+      logger.debug("1: **** Start Printing Page: " + pageCount);
+      ModelPrinter.INSTANCE.print(pageBox);
+    }
+
+  }
   protected boolean preparePagination(final LogicalPageBox pageBox)
   {
     if (widowsEnabled == false)
@@ -142,18 +154,6 @@ public class PageableRenderer extends AbstractRenderer
     pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
     pageCount += 1;
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Printing a page: " + pageCount);
-      if (pageCount == -1)
-      {
-        // leave the debug-code in until all of these cases are solved.
-        logger.debug("1: **** Start Printing Page: " + pageCount);
-      //  ModelPrinter.INSTANCE.print(clone);
-        logger.debug("1: **** Start Printing Page: " + pageCount);
-        ModelPrinter.INSTANCE.print(pageBox);
-      }
-    }
 
 //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
     debugPrint(pageBox);
