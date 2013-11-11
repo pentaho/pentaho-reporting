@@ -19,8 +19,6 @@ package org.pentaho.reporting.ui.datasources.kettle;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeListener;
-import java.io.UnsupportedEncodingException;
-
 import javax.swing.JPanel;
 
 import org.apache.commons.logging.Log;
@@ -72,7 +70,7 @@ public class KettleEmbeddedQueryEntry extends KettleQueryEntry {
     final String[] argumentFields = getArguments();
     final ParameterMapping[] varNames = getParameters();
 
-    return new EmbeddedKettleTransformationProducer(argumentFields, varNames, pluginId, getSelectedStep(),raw);
+    return new EmbeddedKettleTransformationProducer(argumentFields, varNames, pluginId, raw);
   }
 
   public void refreshQueryUIComponents(JPanel datasourcePanel, DesignTimeContext designTimeContext, PropertyChangeListener l) 

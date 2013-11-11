@@ -20,8 +20,6 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.table.TableModel;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,7 +30,6 @@ import org.pentaho.di.core.exception.KettleXMLException;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
@@ -55,10 +52,10 @@ public class EmbeddedKettleTransformationProducer extends AbstractKettleTransfor
   public EmbeddedKettleTransformationProducer(final String[] definedArgumentNames,
                                               final ParameterMapping[] definedVariableNames,
                                               final String pluginId,
-                                              final String stepName,
                                               final byte[] transformationRaw)
   {
-    super("", stepName, null, null, definedArgumentNames, definedVariableNames);
+    super("", EmbeddedKettleDataFactoryMetaData.DATA_RETRIEVAL_STEP,
+        null, null, definedArgumentNames, definedVariableNames);
 
     this.pluginId = pluginId;
     if (transformationRaw == null)
