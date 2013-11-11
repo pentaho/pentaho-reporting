@@ -41,6 +41,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
@@ -117,6 +118,40 @@ public abstract class DataSourceTestBase extends TestCase
     }
   }
 
+  protected void runSaveAndLoadForSubReports(final String[][] queriesAndResults) throws Exception
+  {
+    if (queriesAndResults.length == 0)
+    {
+      return;
+    }
+
+    for (int i = 0; i < queriesAndResults.length; i++)
+    {
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
+      final DataFactory dataFactory = createDataFactory(query);
+
+      SubReport subReport = new SubReport();
+      subReport.setDataFactory(dataFactory);
+
+      final MasterReport report = new MasterReport();
+      report.getReportHeader().addSubReport(subReport);
+
+      final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
+      BundleWriter.writeReportToZipStream(report, bout);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+
+      final Resource resource = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+      final MasterReport r2 = (MasterReport) resource.getResource();
+      final SubReport sr2 = r2.getReportHeader().getSubReport(0);
+      final DataFactory e2 = sr2.getDataFactory();
+      assertNotNull(e2); // cannot assert equals, as this is not implemented ...
+      initializeDataFactory(e2);
+      final String queryResult = performQueryTest(e2);
+      compareLineByLine(resultFile, queryResult);
+    }
+  }
 
   protected void runSaveAndLoad(final String[][] queriesAndResults) throws Exception
   {
