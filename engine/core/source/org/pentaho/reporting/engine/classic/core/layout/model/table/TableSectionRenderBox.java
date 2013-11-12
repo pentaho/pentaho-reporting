@@ -58,6 +58,7 @@ public class TableSectionRenderBox extends BlockRenderBox
   private HashMap<Long,Long> headerShift;
   private HashMap<Long,Long> markedHeaderShift;
   private HashMap<Long,Long> appliedHeaderShift;
+  private long rowModelAge;
 
   public static enum Role
   {
@@ -79,6 +80,7 @@ public class TableSectionRenderBox extends BlockRenderBox
   {
     super(styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey);
     this.rowModel = new SeparateRowModel();
+    this.rowModel.setDebugInformation(elementType, instanceID);
     this.appliedHeaderShift = new HashMap<Long, Long>();
     this.markedHeaderShift = new HashMap<Long, Long>();
     this.headerShift = new HashMap<Long, Long>();
@@ -95,6 +97,16 @@ public class TableSectionRenderBox extends BlockRenderBox
     {
       this.displayRole = Role.BODY;
     }
+  }
+
+  public long getRowModelAge()
+  {
+    return rowModelAge;
+  }
+
+  public void setRowModelAge(final long rowModelAge)
+  {
+    this.rowModelAge = rowModelAge;
   }
 
   public boolean useMinimumChunkWidth()

@@ -142,7 +142,6 @@ public class TableRowHeightCalculation
       long size = 0;
       for (int i = 0; i < box.getRowSpan(); i += 1)
       {
-//        final TableRow row = currentTable.getRow(i);
         size += currentTable.getPreferredRowSize(i);
       }
 
@@ -153,7 +152,6 @@ public class TableRowHeightCalculation
       long size = 0;
       for (int i = 0; i < box.getRowSpan(); i += 1)
       {
-//        final TableRow row = currentTable.getRow(i);
         size += currentTable.getValidatedRowSize(i);
       }
 
@@ -188,7 +186,11 @@ public class TableRowHeightCalculation
   public void finishTableSection(final TableSectionRenderBox section)
   {
     final TableRowModel rowModel = section.getRowModel();
-    rowModel.validateActualSizes();
+    if (section.getRowModelAge() != section.getChangeTracker())
+    {
+      rowModel.validateActualSizes();
+      section.setRowModelAge(section.getChangeTracker());
+    }
 
     TableRowHeightApplyStep applyStep = new TableRowHeightApplyStep();
     final long usedTableBodyHeight = applyStep.start(section);

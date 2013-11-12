@@ -69,12 +69,12 @@ public class Prd4606Test extends TestCase
   public void testLargeValidTable() throws Exception
   {
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
+        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false");
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
     SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
     PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
-    sequence.setParameter("limit", 2000);
+    sequence.setParameter("limit", 40000);
 
    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 0));
 

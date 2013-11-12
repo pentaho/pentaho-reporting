@@ -30,6 +30,11 @@ import java.util.Arrays;
  */
 public class BulkArrayList<T> implements Cloneable
 {
+  public static interface Func<T>
+  {
+    void process (T value, int index);
+  }
+
   /**
    * An empty array used to avoid object creation.
    */
@@ -211,5 +216,18 @@ public class BulkArrayList<T> implements Cloneable
     final BulkArrayList<T> intList = (BulkArrayList<T>) super.clone();
     intList.data = data.clone();
     return intList;
+  }
+
+  public void foreach (Func<T> func)
+  {
+    foreach(func, 0, size);
+  }
+
+  public void foreach (Func<T> func, int start, int end)
+  {
+    for (int i = start; i < end; i+= 1)
+    {
+      func.process((T) data[i], i);
+    }
   }
 }

@@ -18,7 +18,8 @@
 package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
  * The table row model is responsible for calculating cell heights and for distributing extra space for
@@ -33,7 +34,7 @@ public interface TableRowModel
   
   public long getRowSpacing();
 
-  public void validateSizes();
+  public void validatePreferredSizes();
   public void validateActualSizes();
 
   public void initialize(TableRenderBox table);
@@ -46,10 +47,10 @@ public interface TableRowModel
   void updateValidatedSize(int rowNumber, int rowSpan, long leading, long height);
 
   long getValidatedRowSize(int rowNumber);
-  long getValidatedRowSpanSize(int rowIndex);
 
   long getPreferredRowSize(int rowNumber);
 
   public int getMaximumRowSpan(int rowNumber);
 
+  void setDebugInformation(ElementType elementType, InstanceID instanceID);
 }
