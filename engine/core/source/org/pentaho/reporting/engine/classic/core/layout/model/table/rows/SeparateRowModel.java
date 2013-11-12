@@ -152,7 +152,7 @@ public class SeparateRowModel extends AbstractRowModel
       }
     });
 
-    applyPreferredSizes(preferredSizes, this.validatedRowCount, voter.getProcessedRows());
+    applyPreferredSizes(preferredSizes, this.validatedRowCount, rowCount);
     this.validatedRowCount = voter.getProcessedRows();
   }
 
@@ -175,7 +175,7 @@ public class SeparateRowModel extends AbstractRowModel
       }
     });
 
-    applyValidateSizes(trailingSizes, this.validatedActualSizes, voter.getProcessedRows());
+    applyValidateSizes(trailingSizes, this.validatedActualSizes, rowCount);
     this.validatedActualSizes = voter.getProcessedRows();
   }
 

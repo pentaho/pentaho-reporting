@@ -50,7 +50,7 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
     startProcessing(pageBox);
   }
 
-  public void continueComputation (final RenderBox pageBox)
+  public void continueComputation(final RenderBox pageBox)
   {
     this.tableRowHeightStep.reset();
     this.cacheClean = true;
@@ -59,6 +59,11 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
 
   protected boolean checkCacheValid(final RenderNode node)
   {
+    if (cacheClean == false)
+    {
+      return false;
+    }
+
     final RenderNode.CacheState cacheState = node.getCacheState();
     if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
     {
@@ -90,5 +95,8 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
     }
   }
 
-
+  protected boolean isCacheClean()
+  {
+    return cacheClean;
+  }
 }

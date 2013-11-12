@@ -72,7 +72,7 @@ public abstract class RenderNode implements Cloneable
   private static final int FLAG_RESERVED = 0xFFF0;
 
   private int flags;
-  private CacheState cacheState;
+  protected CacheState cacheState;
 
   private RenderBox parentNode;
   private RenderNode nextNode;
@@ -117,7 +117,7 @@ public abstract class RenderNode implements Cloneable
     }
 
     this.nodeLayoutProperties = nodeLayoutProperties;
-    this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
+    this.cacheState = RenderNode.CACHE_DIRTY;
   }
 
   protected void reinit(final StyleSheet styleSheet,
@@ -151,7 +151,7 @@ public abstract class RenderNode implements Cloneable
     this.minimumChunkWidth = 0;
     this.maximumBoxWidth = 0;
 
-    this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
+    this.cacheState = RenderNode.CACHE_DIRTY;
     this.nodeLayoutProperties = new NodeLayoutProperties
         (this.nodeLayoutProperties.getMajorAxis(), this.nodeLayoutProperties.getMinorAxis(),
             styleSheet, attributes, instanceId, elementType);
@@ -490,6 +490,7 @@ public abstract class RenderNode implements Cloneable
     {
       node.cachedAge = this.changeTracker;
       node.validateModelAge = -1;
+      // todo PRD-4606
       node.cacheState = CACHE_DEEP_DIRTY;
     }
     return node;

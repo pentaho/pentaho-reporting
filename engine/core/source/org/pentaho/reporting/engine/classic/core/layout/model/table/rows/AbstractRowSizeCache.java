@@ -19,12 +19,12 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
 import org.pentaho.reporting.engine.classic.core.util.BulkArrayList;
 
-public class RowSizeCache
+public class AbstractRowSizeCache
 {
   private long[] validatedSizes;
   private int validateSizesFillState;
 
-  public RowSizeCache()
+  public AbstractRowSizeCache()
   {
   }
 
@@ -37,7 +37,7 @@ public class RowSizeCache
     return Math.max(rowCount, array.length + 2000);
   }
 
-  public long[] get(int limit, BulkArrayList<TableRowImpl> rows)
+  protected long[] get(BulkArrayList<TableRowImpl> rows)
   {
     int rowCount = rows.size();
     if (this.validatedSizes == null || this.validatedSizes.length < rowCount)
@@ -51,30 +51,16 @@ public class RowSizeCache
       this.validatedSizes = newValidatedSizes;
     }
 
-    rows.foreach(new BulkArrayList.Func<TableRowImpl>()
-    {
-      public void process(final TableRowImpl value, final int index)
-      {
-        validatedSizes[index] = value.getValidateSize();
-      }
-    }, this.validateSizesFillState, limit);
     return validatedSizes;
   }
 
-  public void apply(final long[] trailingSizes,
-                    final int start,
-                    final int end,
-                    BulkArrayList<TableRowImpl> rows)
+  public void setFillState(final int validateSizesFillState)
   {
-    rows.foreach(new BulkArrayList.Func<TableRowImpl>()
-    {
-      public void process(final TableRowImpl row, final int i)
-      {
-        final long validateSize = trailingSizes[i] + row.getValidatedLeadingSize();
-        row.setValidateSize(Math.max(row.getPreferredSize(), validateSize));
-      }
-    }, start, end);
-    validateSizesFillState = end;
+    this.validateSizesFillState = validateSizesFillState;
   }
 
+  public int getFillState()
+  {
+    return validateSizesFillState;
+  }
 }

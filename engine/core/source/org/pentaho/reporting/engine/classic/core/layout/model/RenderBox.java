@@ -1258,7 +1258,8 @@ public abstract class RenderBox extends RenderNode
     setMarkedOpen(isAppliedOpen());
     this.markedContentRefCount = appliedContentRefCount;
     this.markedPinPosition = appliedPinPosition;
-    resetCacheState(deepDirty);
+    // todo PRD-4606
+    resetCacheState(false);
 
     validateDescendantCounter();
   }

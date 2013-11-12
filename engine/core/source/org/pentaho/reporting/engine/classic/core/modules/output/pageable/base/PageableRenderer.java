@@ -204,6 +204,7 @@ public class PageableRenderer extends AbstractRenderer
       pageBox.setPageOffset(nextOffset);
       countBoxesStep.process(pageBox);
       cleanPaginatedBoxesStep.compute(pageBox);
+      // todo PRD-4606
       pageBox.resetCacheState(true);
 
       if (pageBreak.isNextPageContainsContent())

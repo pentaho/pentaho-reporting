@@ -106,9 +106,11 @@ public class TableRowHeightCalculation
 
   private TableInfoStructure currentTable;
   private boolean secondPass;
+  private TableRowHeightApplyStep applyStep;
 
   public TableRowHeightCalculation(final boolean secondPass)
   {
+    this.applyStep = new TableRowHeightApplyStep();
     this.secondPass = secondPass;
   }
 
@@ -192,7 +194,6 @@ public class TableRowHeightCalculation
       section.setRowModelAge(section.getChangeTracker());
     }
 
-    TableRowHeightApplyStep applyStep = new TableRowHeightApplyStep();
     final long usedTableBodyHeight = applyStep.start(section);
 
     currentTable.setFilledHeight(usedTableBodyHeight + currentTable.getFilledHeight());

@@ -487,7 +487,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return false;
     }
 
-    breakState.openContext(new BoxAlignContext(box));
+    breakState.openContext(box);
     return true;
   }
 
@@ -538,7 +538,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     final int nodeType = box.getLayoutNodeType();
     if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
     {
-      breakState.openContext(new BoxAlignContext(box));
+      breakState.openContext(box);
       return true;
     }
     else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)

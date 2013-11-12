@@ -6,18 +6,26 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRend
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.StackedObjectPool;
 
 public class TableRowHeightApplyStep extends IterateStructuralProcessStep
 {
   private static class BoxContext
   {
-    public long boxContextStart;
-    public long boxCursor;
-    public final BoxContext parent;
+    private BoxContextPool pool;
+    private BoxContext parent;
+    private long boxContextStart;
+    private long boxCursor;
 
-    public BoxContext(final BoxContext parent,
+    private BoxContext()
+    {
+    }
+
+    public void reuse(final BoxContextPool pool,
+                      final BoxContext parent,
                       final RenderBox box)
     {
+      this.pool = pool;
       this.parent = parent;
       this.boxContextStart = box.getCachedY();
       this.boxCursor = boxContextStart;
@@ -25,7 +33,11 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
 
     public BoxContext pop()
     {
-      parent.boxCursor = boxCursor;
+      if (parent != null)
+      {
+        parent.boxCursor = boxCursor;
+      }
+      pool.free(this);
       return parent;
     }
 
@@ -40,21 +52,42 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
     }
   }
 
+  private class BoxContextPool extends StackedObjectPool<BoxContext>
+  {
+    private BoxContextPool()
+    {
+    }
+
+    protected BoxContext create()
+    {
+      return new BoxContext();
+    }
+
+    public BoxContext get(final BoxContext parent,
+                          final RenderBox box)
+    {
+      BoxContext boxContext = super.get();
+      boxContext.reuse(this, parent, box);
+      return boxContext;
+    }
+  }
+
+  private BoxContextPool pool;
   private BoxContext context;
   private TableRowModel rowModel;
 
   public TableRowHeightApplyStep()
   {
+    pool = new BoxContextPool();
   }
 
-  public long start (TableSectionRenderBox section)
+  public long start(TableSectionRenderBox section)
   {
     try
     {
-      context = null;
+      context = pool.get(null, section);
       rowModel = section.getRowModel();
 
-      context = new BoxContext(context, section);
       processBoxChilds(section);
 
       long usedTableBodyHeight = context.getBoxCursor() - context.boxContextStart;
@@ -64,7 +97,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
     }
     finally
     {
-      context = null;
+      context = context.pop();
       rowModel = null;
     }
   }
@@ -75,7 +108,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
     context.addBoxCursor(node.getCachedHeight());
   }
 
-  private void shiftBox (final RenderBox box)
+  private void shiftBox(final RenderBox box)
   {
     final long oldPosition = box.getCachedY();
     final long position = context.getBoxCursor();
@@ -93,7 +126,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
   {
     shiftBox(box);
 
-    context = new BoxContext(context, box);
+    context = pool.get(context, box);
     return false;
   }
 
@@ -109,7 +142,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
   {
     shiftBox(box);
 
-    context = new BoxContext(context, box);
+    context = pool.get(context, box);
     return true;
   }
 
@@ -122,7 +155,7 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
   {
     shiftBox(box);
 
-    context = new BoxContext(context, box);
+    context = pool.get(context, box);
     return true;
   }
 

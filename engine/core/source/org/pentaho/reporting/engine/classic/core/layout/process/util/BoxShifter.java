@@ -92,5 +92,6 @@ public final class BoxShifter
       return;
     }
     parent.extendHeight(child, amountDelta);
+    parent.resetCacheState(true);
   }
 }

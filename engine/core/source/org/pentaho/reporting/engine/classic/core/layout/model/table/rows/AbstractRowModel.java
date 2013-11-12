@@ -22,14 +22,14 @@ import org.pentaho.reporting.engine.classic.core.util.BulkArrayList;
 public abstract class AbstractRowModel implements TableRowModel
 {
   private BulkArrayList<TableRowImpl> rows;
-  private RowSizeCache validatedSizesCache;
-  private RowSizeCache preferredSizesCache;
+  private ValidatedRowSizeCache validatedSizesCache;
+  private PreferredRowSizeCache preferredSizesCache;
 
   public AbstractRowModel()
   {
     this.rows = new BulkArrayList<TableRowImpl>(2000);
-    this.validatedSizesCache = new RowSizeCache();
-    this.preferredSizesCache = new RowSizeCache();
+    this.validatedSizesCache = new ValidatedRowSizeCache();
+    this.preferredSizesCache = new PreferredRowSizeCache();
   }
 
   public void addRow()
