@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
@@ -113,6 +114,14 @@ public class ResourceMessageFormatFilter implements DataSource
 
       messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
       return messageFormatSupport.performFormat(runtime.getDataRow());
+    }
+    catch (MissingResourceException mre)
+    {
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Failed to format the value for resource-id " + resourceId + ", was '" + mre.getMessage() + "'");
+      }
+      return null;
     }
     catch (Exception e)
     {
