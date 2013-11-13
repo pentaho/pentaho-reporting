@@ -26,7 +26,7 @@
           <replaced-content x="0.0" y="0.0" width="102.0" height="102.0" source="null" content-width="100.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
           </replaced-content>
-          <replaced-content x="1.0" y="1.0" width="67.0" height="67.0" source="null" content-width="50.0" content-height="50.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+          <replaced-content x="1.0" y="1.0" width="67.0" height="67.0" source="null" content-width="75.0" content-height="75.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.engine.classic.core.DefaultImageReference">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="gorilla.jpg"/>
           </replaced-content>
