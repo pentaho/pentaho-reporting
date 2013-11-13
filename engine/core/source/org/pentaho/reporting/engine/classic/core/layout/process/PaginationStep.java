@@ -48,6 +48,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  * reserves a virtual padding area in the infinite-canvas flow to push the next assumed pagebreak to the y2-position
  * of the header. A header-shift modifies the pin-position on a box, and modifies where pagebreaks are detected.
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public final class PaginationStep extends IterateVisualProcessStep
 {
   private static final Log logger = LogFactory.getLog(PaginationStep.class);
@@ -174,10 +175,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       if (handleManualBreakOnBox(box, shiftState, breakPending))
       {
         breakPending = false;
-        if (logger.isDebugEnabled())
-        {
-          // logger.debug("pending page-break or manual break: " + box);
-        }
         return true;
       }
       breakPending = false;
@@ -639,11 +636,6 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   private void updateStateKeyDeep(final RenderBox box)
   {
-    if (paginationTableState.isVisualStateCollectionSuspended())
-    {
-      return;
-    }
-
     final long y = box.getY();
     if (y >= paginationTableState.getPageEnd())
     {
@@ -653,7 +645,10 @@ public final class PaginationStep extends IterateVisualProcessStep
     final ReportStateKey reportStateKey = findOldestProcessKeyStep.find(box);
     if (reportStateKey != null && reportStateKey.isInlineSubReportState() == false)
     {
-      this.visualState = reportStateKey;
+      if (paginationTableState.isVisualStateCollectionSuspended() == false)
+      {
+        this.visualState = reportStateKey;
+      }
     }
   }
 

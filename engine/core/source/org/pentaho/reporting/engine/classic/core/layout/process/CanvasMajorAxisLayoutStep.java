@@ -887,16 +887,19 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
+    // TODO: PRD-4606
+    box.setCachedHeight(0);
+    /*
     if (box instanceof TableRowRenderBox)
     {
-      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
-      box.setCachedHeight(blockHeight);
+//      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
     }
     else
     {
-      final long blockHeight = computeTableHeightAndAlign(box, true);
+//      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
       box.setCachedHeight(blockHeight);
     }
+    */
   }
 
   private static long computeTableHeightAndAlign(final RenderBox box, final boolean align)

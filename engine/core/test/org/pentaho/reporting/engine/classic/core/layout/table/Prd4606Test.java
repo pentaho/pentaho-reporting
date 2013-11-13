@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -102,6 +103,23 @@ public class Prd4606Test extends TestCase
 
    // DebugReportRunner.showDialog(report);
 
+  }
+
+  public void testPageSpanningAcrossPages () throws Exception
+  {
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false");
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0003.prpt");
+    CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
+    sequence.setParameter("limit", 10);
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+    DebugReportRunner.showDialog(report);
   }
 
 }

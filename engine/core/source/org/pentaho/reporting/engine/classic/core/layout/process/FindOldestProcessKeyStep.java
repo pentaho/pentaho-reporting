@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
 {
   private ReportStateKey key;
+  private boolean finishedPaginate;
 
   public FindOldestProcessKeyStep()
   {
@@ -32,6 +33,7 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
   public ReportStateKey find(final RenderBox box)
   {
     key = null;
+    finishedPaginate = box.isFinishedPaginate();
     startProcessing(box);
     return key;
   }
@@ -43,7 +45,7 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
     {
       return;
     }
-    
+
     if (key == null)
     {
       key = stateKey;
@@ -59,6 +61,10 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
   protected boolean startBox(final RenderBox box)
   {
     processOtherNode(box);
+    if (finishedPaginate == true)
+    {
+      box.setFinishedPaginate(finishedPaginate);
+    }
     return true;
   }
 }

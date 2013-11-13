@@ -246,4 +246,22 @@ public class SeparateRowModel extends AbstractRowModel
   {
 
   }
+
+  public String toString()
+  {
+    TableRowImpl[] rows = getRows();
+    StringBuilder b = new StringBuilder();
+    for (TableRowImpl r : rows)
+    {
+      b.append(r);
+      b.append("\n");
+    }
+
+    return "SeparateRowModel{" +
+        "rows=\n" + b +
+        ", rowSpacing=" + rowSpacing +
+        ", validatedActualSizes=" + validatedActualSizes +
+        ", validatedRowCount=" + validatedRowCount +
+        '}';
+  }
 }

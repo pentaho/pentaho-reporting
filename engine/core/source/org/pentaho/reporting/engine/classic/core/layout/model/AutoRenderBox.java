@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class AutoRenderBox extends RenderBox
 {
@@ -136,5 +137,26 @@ public class AutoRenderBox extends RenderBox
       return true;
     }
     return parent.isBlockForPagebreakPurpose();
+  }
+
+  public void setCachedY(final long cachedY)
+  {
+    if (cachedY == 22000000)
+      DebugLog.logHere();
+    super.setCachedY(cachedY);
+  }
+
+  public void shiftCached(final long amount)
+  {
+    super.shiftCached(amount);
+    if (getCachedY() == 22000000)
+      DebugLog.logHere();
+  }
+
+  public void setCachedHeight(final long cachedHeight)
+  {
+    if (cachedHeight == 20000000)
+      DebugLog.logHere();
+    super.setCachedHeight(cachedHeight);
   }
 }

@@ -52,7 +52,19 @@ public class Prd3857Test extends TestCase
     report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
 
     DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.showDialog(report);
+  }
 
+  public void testGoldRun3857Visually () throws Exception
+  {
+    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3857-001.prpt");
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+
+//    DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.showDialog(report);
   }
 
   public void testRowBoxesEstablishOwnBlockContext() throws Exception

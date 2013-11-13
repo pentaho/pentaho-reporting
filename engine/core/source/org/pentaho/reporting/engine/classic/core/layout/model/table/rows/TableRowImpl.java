@@ -148,4 +148,16 @@ public class TableRowImpl implements TableRow
   {
     return preferredSizes.size();
   }
+
+  public String toString()
+  {
+    return "TableRowImpl{" +
+        "preferredSize=" + preferredSize +
+        ", validateSize=" + validateSize +
+        ", preferredSizes=" + preferredSizes +
+        ", validatedLeadingSize=" + validatedLeadingSize +
+        ", validatedTrailingSize=" + validatedTrailingSize +
+        ", border=" + border +
+        '}';
+  }
 }
