@@ -31,6 +31,7 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 public class AutoRenderBox extends RenderBox
 {
   private static StyleSheet DEFAULT_STYLE = new SimpleStyleSheet(new UseMinChunkWidthStyleSheet(true));
+  private int rowIndex;
 
   public AutoRenderBox()
   {
@@ -141,16 +142,12 @@ public class AutoRenderBox extends RenderBox
 
   public void setCachedY(final long cachedY)
   {
-    if (cachedY == 22000000)
-      DebugLog.logHere();
     super.setCachedY(cachedY);
   }
 
   public void shiftCached(final long amount)
   {
     super.shiftCached(amount);
-    if (getCachedY() == 22000000)
-      DebugLog.logHere();
   }
 
   public void setCachedHeight(final long cachedHeight)
@@ -158,5 +155,15 @@ public class AutoRenderBox extends RenderBox
     if (cachedHeight == 20000000)
       DebugLog.logHere();
     super.setCachedHeight(cachedHeight);
+  }
+
+  public int getRowIndex()
+  {
+    return rowIndex;
+  }
+
+  public void setRowIndex(final int rowIndex)
+  {
+    this.rowIndex = rowIndex;
   }
 }

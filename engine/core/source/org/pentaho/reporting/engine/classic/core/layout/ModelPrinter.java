@@ -190,7 +190,9 @@ public class ModelPrinter
     b.append(", min-chunk-width=");
     b.append(box.getMinimumChunkWidth());
     b.append(", y2=");
-    b.append(box.getY() + box.getHeight());
+    b.append(box.getY2());
+    b.append(", y2-overflow=");
+    b.append(box.getY() + box.getOverflowAreaHeight());
     print(b.toString());
 
     b = new StringBuilder();

@@ -757,7 +757,8 @@ public abstract class RenderNode implements Cloneable
     final RenderBox parent = getParent();
     if (parent != null)
     {
-      parent.addOverflowArea(x + width - parent.getX(), y + height - parent.getY());
+      parent.addOverflowArea(x + getOverflowAreaWidth() - parent.getX(),
+          y + getOverflowAreaHeight() - parent.getY());
     }
   }
 

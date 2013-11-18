@@ -23,7 +23,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositionList;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -43,10 +42,33 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 {
+  private static class TableSectionContext
+  {
+    private TableSectionContext context;
+    private int safeRows;
+    private int expectedNextRowNumber;
+
+    private TableSectionContext(final TableSectionContext context)
+    {
+      this.context = context;
+    }
+
+    public TableSectionContext pop()
+    {
+      return context;
+    }
+
+    public boolean isProcessingUnsafe()
+    {
+      return expectedNextRowNumber <= safeRows;
+    }
+  }
+
+
   private long pageOffset;
   private long shiftOffset;
   private InstanceID shiftNode;
-  private PageBreakPositionList allVerticalBreaks;
+  private TableSectionContext tableSectionContext;
 
   public CleanPaginatedBoxesStep()
   {
@@ -56,7 +78,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   {
     shiftOffset = 0;
     pageOffset = pageBox.getPageOffset();
-    allVerticalBreaks = pageBox.getAllVerticalBreaks();
     if (startBlockBox(pageBox))
     {
       // not processing the header and footer area: they are 'out-of-context' bands
@@ -102,6 +123,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startTableRowBox(final TableRowRenderBox box)
   {
+    tableSectionContext.expectedNextRowNumber = box.getRowIndex() + 1;
     // we dont remove cells from table-rows. If a table-row is finished, we may be able to remove the whole
     // row. However, we can remove contents from table-cells if needed.
     return true;
@@ -119,12 +141,27 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startTableSectionBox(final TableSectionRenderBox box)
   {
+    tableSectionContext = new TableSectionContext(tableSectionContext);
+
     if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
     {
+      CleanTableRowsPreparationStep preparationStep = new CleanTableRowsPreparationStep();
+      tableSectionContext.safeRows = preparationStep.process(box, pageOffset);
+      tableSectionContext.expectedNextRowNumber = preparationStep.getFirstRowEncountered();
+
+      if (tableSectionContext.isProcessingUnsafe())
+      {
+        return false;
+      }
       return startBlockStyleBox(box);
     }
 
     return false;
+  }
+
+  protected void finishTableSectionBox(final TableSectionRenderBox box)
+  {
+    tableSectionContext = tableSectionContext.pop();
   }
 
   private boolean startTableSectionStyleBox(final RenderBox box)
@@ -132,6 +169,11 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     if (box.isContainsReservedContent())
     {
       // never clear out anything from reserved header or footer boxes. Never!
+      return false;
+    }
+
+    if (tableSectionContext.isProcessingUnsafe())
+    {
       return false;
     }
 
@@ -146,8 +188,8 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       return false;
     }
 
-    final boolean safeForRemove =
-        (box.getParentWidowContexts() == 0) && ((box.getY() + box.getOverflowAreaHeight()) <= pageOffset);
+    boolean boxOutsideVisibleRange = (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
+    final boolean safeForRemove = (box.getParentWidowContexts() == 0) && boxOutsideVisibleRange;
     if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
     {
       // Next, search the last node that is fully invisible. We collapse all

@@ -72,7 +72,7 @@ public class PageableRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-//    printConditional(17, pageBox);
+//    printConditional(3, pageBox);
 //    printConditional(18, pageBox);
   }
 
@@ -87,8 +87,8 @@ public class PageableRenderer extends AbstractRenderer
       // leave the debug-code in until all of these cases are solved.
       logger.debug("1: **** Start Printing Page: " + pageCount);
     //  ModelPrinter.INSTANCE.print(clone);
-      logger.debug("1: **** Start Printing Page: " + pageCount);
       ModelPrinter.INSTANCE.print(pageBox);
+      logger.debug("1: **** Stop  Printing Page: " + pageCount);
     }
 
   }

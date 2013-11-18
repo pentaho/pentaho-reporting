@@ -1258,6 +1258,8 @@ public abstract class RenderBox extends RenderNode
     setMarkedOpen(isAppliedOpen());
     this.markedContentRefCount = appliedContentRefCount;
     this.markedPinPosition = appliedPinPosition;
+    this.overflowAreaHeight = 0;
+    this.overflowAreaWidth = 0;
     // todo PRD-4606
     resetCacheState(false);
 
@@ -1387,7 +1389,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaHeight()
   {
-    return overflowAreaHeight;
+    return Math.max (getHeight(), overflowAreaHeight);
   }
 
   public void setOverflowAreaHeight(final long overflowAreaHeight)
@@ -1397,7 +1399,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaWidth()
   {
-    return overflowAreaWidth;
+    return Math.max (getWidth(), overflowAreaWidth);
   }
 
   public void setOverflowAreaWidth(final long overflowAreaWidth)
@@ -1422,8 +1424,6 @@ public abstract class RenderBox extends RenderNode
     super.apply();
     this.staticBoxPropertiesAge = getChangeTracker();
     this.tableValidationAge = getChangeTracker();
-    overflowAreaWidth = getCachedWidth();
-    overflowAreaHeight = getCachedHeight();
   }
 
   /**
@@ -1585,4 +1585,8 @@ public abstract class RenderBox extends RenderNode
     setFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT, containsReservedContent);
   }
 
+  public int getRowIndex()
+  {
+    return 0;
+  }
 }

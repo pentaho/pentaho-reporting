@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -13,6 +14,7 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequen
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.SequenceDataFactory;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.StopWatch;
@@ -112,14 +114,17 @@ public class Prd4606Test extends TestCase
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0003.prpt");
+    report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
     SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
     PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
     sequence.setParameter("limit", 10);
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
+
     ModelPrinter.INSTANCE.print(logicalPageBox);
-    DebugReportRunner.showDialog(report);
+//    DebugReportRunner.showDialog(report);
   }
 
 }
