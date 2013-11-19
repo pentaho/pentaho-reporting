@@ -219,21 +219,10 @@ public class BandSectionLayoutModelBuilderContext implements LayoutModelBuilderC
         (type == LayoutNodeTypes.TYPE_BOX_INLINE_PROGRESS_MARKER ||
             type == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER))
     {
-      if (strictCompatibilityMode)
+      if (parentContext.mergeSection(firstChild.getStateKey()))
       {
-        if (parentContext.mergeSection(null))
-        {
-          undoCommit();
-          return parentContext;
-        }
-      }
-      else
-      {
-        if (parentContext.mergeSection(firstChild.getStateKey()))
-        {
-          undoCommit();
-          return parentContext;
-        }
+        undoCommit();
+        return parentContext;
       }
     }
 
