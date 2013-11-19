@@ -224,7 +224,7 @@ public class RenderedCrosstabLayout implements Cloneable
         (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER)));
     this.tableLayout = (TableLayout) group.getStyle().getStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
     // todo: PRD-4606 - remove me
-    this.tableLayout = TableLayout.auto;
+    //this.tableLayout = TableLayout.auto;
   }
 
   private void computeGroupCounts(final CrosstabGroup crosstabGroup)
