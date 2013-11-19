@@ -565,6 +565,12 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
           final long childConsumedHeight = parentAvailableHeight - node.getCachedHeight();
           if (childConsumedHeight < 0)
           {
+            if (parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
+                parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW )
+            {
+              // row-spanned cells consistently exceed the parent height ..
+              return 0;
+            }
             logger.warn
                 ("A child cannot exceed the area of the parent: " + node.getName() +
                     " Parent: " + parentAvailableHeight + " Child: " + childConsumedHeight);

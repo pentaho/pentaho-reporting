@@ -40,6 +40,28 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  */
 public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 {
+  private static class TableSectionContext
+  {
+    private TableSectionContext context;
+    private int safeRows;
+    private int expectedNextRowNumber;
+
+    private TableSectionContext(final TableSectionContext context)
+    {
+      this.context = context;
+    }
+
+    public TableSectionContext pop()
+    {
+      return context;
+    }
+
+    public boolean isProcessingUnsafe()
+    {
+      return expectedNextRowNumber <= safeRows;
+    }
+  }
+
   private static class BoxContext
   {
     private BoxContext parent;
@@ -76,6 +98,8 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   private ReportStateKey lastSeenStateKey;
   private BoxContext boxContext;
+  private TableSectionContext tableSectionContext;
+  private long pageOffset;
 
   public CleanFlowBoxesStep()
   {
@@ -84,6 +108,7 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
   public void compute(final LogicalPageBox pageBox)
   {
     this.boxContext = new BoxContext(null, true);
+    this.pageOffset = pageBox.getPageOffset();
     try
     {
       if (startBlockBox(pageBox))
@@ -257,10 +282,21 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
     return true;
   }
 
+
   protected boolean startTableSectionBox(final TableSectionRenderBox box)
   {
+    tableSectionContext = new TableSectionContext(tableSectionContext);
+
     if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
     {
+      CleanTableRowsPreparationStep preparationStep = new CleanTableRowsPreparationStep();
+      tableSectionContext.safeRows = preparationStep.process(box, pageOffset);
+      tableSectionContext.expectedNextRowNumber = preparationStep.getFirstRowEncountered();
+
+      if (tableSectionContext.isProcessingUnsafe())
+      {
+        return false;
+      }
       return startBlockStyleBox(box);
     }
 
@@ -271,8 +307,12 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
   {
     if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
     {
-      finishBlockStyleBox(box);
+      if (tableSectionContext.isProcessingUnsafe() == false)
+      {
+        finishBlockStyleBox(box);
+      }
     }
+    tableSectionContext = tableSectionContext.pop();
   }
 
   protected void processOtherNode(final RenderNode node)

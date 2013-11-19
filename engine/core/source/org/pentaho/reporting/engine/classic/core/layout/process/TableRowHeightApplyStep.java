@@ -1,5 +1,6 @@
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
@@ -147,6 +148,19 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
   }
 
   protected void finishTableSectionBox(final TableSectionRenderBox box)
+  {
+    context = context.pop();
+  }
+
+  protected boolean startBlockBox(final BlockRenderBox box)
+  {
+    shiftBox(box);
+
+    context = pool.get(context, box);
+    return true;
+  }
+
+  protected void finishBlockBox(final BlockRenderBox box)
   {
     context = context.pop();
   }
