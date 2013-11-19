@@ -30,7 +30,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnN
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 {
@@ -191,12 +190,6 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   protected void finishTableRowBox(final TableRowRenderBox box)
   {
-    if (box.getLastChild() instanceof TableCellRenderBox)
-    {
-      TableCellRenderBox c = (TableCellRenderBox) box.getLastChild();
-      if (c.getRowSpan() == 10)
-        DebugLog.logHere();
-    }
     processFinishBox(box);
   }
 

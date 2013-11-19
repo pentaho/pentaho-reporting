@@ -28,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A table section box does not much rendering or layouting at all. It
@@ -178,9 +177,6 @@ public class TableCellRenderBox extends BlockRenderBox
 
   public void apply()
   {
-    if (getRowSpan() == 10)
-      DebugLog.logHere();
     super.apply();
-
   }
 }

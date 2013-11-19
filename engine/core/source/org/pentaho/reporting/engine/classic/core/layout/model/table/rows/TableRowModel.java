@@ -31,8 +31,6 @@ public interface TableRowModel
 {
   public void addRow();
   public int getRowCount();
-  
-  public long getRowSpacing();
 
   public void validatePreferredSizes();
   public void validateActualSizes();
