@@ -51,7 +51,6 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   private TextAlignmentProcessor leftProcessor;
   private TextAlignmentProcessor justifyProcessor;
   private MinorAxisTableContext tableContext;
-  private boolean cacheDeepDirty;
 
   protected AbstractMinorAxisLayoutStep()
   {
@@ -80,18 +79,10 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
 
   protected boolean checkCacheValid(final RenderNode node)
   {
-    if (cacheDeepDirty)
-    {
-      return false;
-    }
     final RenderNode.CacheState cacheState = node.getCacheState();
     if (cacheState == RenderNode.CacheState.CLEAN)
     {
       return true;
-    }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
     }
     return false;
   }
@@ -100,7 +91,6 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   {
     try
     {
-      cacheDeepDirty = false;
       pageGrid = root.getPageGrid();
       startProcessing(root);
     }
