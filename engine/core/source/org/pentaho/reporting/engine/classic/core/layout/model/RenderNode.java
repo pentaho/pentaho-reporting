@@ -262,7 +262,7 @@ public abstract class RenderNode implements Cloneable
           final RenderBox parent = getParent();
           if (parent != null)
           {
-            parent.updateCacheState(RenderNode.CACHE_DIRTY);
+            parent.updateCacheState(RenderNode.CACHE_DEEP_DIRTY);
           }
         }
         this.cacheState = RenderNode.CACHE_DEEP_DIRTY;

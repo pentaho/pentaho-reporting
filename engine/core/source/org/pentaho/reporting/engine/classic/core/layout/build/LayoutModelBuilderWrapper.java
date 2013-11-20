@@ -52,9 +52,9 @@ public abstract class LayoutModelBuilderWrapper implements LayoutModelBuilder
     parent.updateState(stateKey);
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-    parent.startBox(element);
+    return parent.startBox(element);
   }
 
   public void startSection()

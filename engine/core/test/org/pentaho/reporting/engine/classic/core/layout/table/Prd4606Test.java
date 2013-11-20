@@ -127,4 +127,13 @@ public class Prd4606Test extends TestCase
 //    DebugReportRunner.showDialog(report);
   }
 
+  public void testCacheInvalidation () throws Exception
+  {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Crosstab-List.prpt");
+    report.setCompatibilityLevel(null);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
+  }
 }

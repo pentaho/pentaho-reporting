@@ -141,14 +141,14 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     this.stateKey = stateKey;
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
     final StyleSheet computedStyle = element.getComputedStyle();
     final String layout = (String) computedStyle.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_CANVAS);
-    startBox(element, computedStyle, layout, false);
+    return startBox(element, computedStyle, layout, false);
   }
 
-  private void startBox(final ReportElement element,
+  private InstanceID startBox(final ReportElement element,
                         final StyleSheet styleSheet,
                         final String layout,
                         final boolean auto)
@@ -249,6 +249,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
       }
     }
     this.textProducer.startText();
+    return this.context.getRenderBox().getInstanceId();
   }
 
 

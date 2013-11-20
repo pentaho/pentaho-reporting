@@ -74,9 +74,9 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
     getParent().updateState(stateKey);
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-    getParent().startBox(element);
+    InstanceID instanceID = getParent().startBox(element);
     if (inBoxDepth == 0)
     {
       if (logger.isDebugEnabled())
@@ -85,6 +85,7 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
       }
     }
     inBoxDepth += 1;
+    return instanceID;
   }
 
   public void startSection(final ReportElement element, final int sectionSize)

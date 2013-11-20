@@ -48,16 +48,17 @@ public abstract class RenderBox extends RenderNode
     UNRESTRICTED, RESTRICTED, LEAF
   }
 
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED2 = 0x1000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED3 = 0x2000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 = 0x4000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED5 = 0x8000000;
   protected static final int FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE = 0x10000000;
   protected static final int FLAG_BOX_CONTAINS_PRESERVED_CONTENT = 0x20000000;
+  private static final int FLAG_BOX_PREVENT_PAGINATION = 0x40000000;
   private static final int FLAG_BOX_OPEN = 0x10000;
   private static final int FLAG_BOX_MARKED_OPEN = 0x20000;
   private static final int FLAG_BOX_APPLIED_OPEN = 0x40000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
   private static final int FLAG_BOX_MARKED_SEEN = 0x100000;
   private static final int FLAG_BOX_APPLIED_SEEN = 0x200000;
   private static final int FLAG_BOX_DEEP_FINISHED = 0x400000;
@@ -1583,6 +1584,17 @@ public abstract class RenderBox extends RenderNode
   public void setContainsReservedContent(final boolean containsReservedContent)
   {
     setFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT, containsReservedContent);
+  }
+
+  public boolean isPreventPagination()
+  {
+    return isFlag(FLAG_BOX_PREVENT_PAGINATION);
+  }
+
+  public void setPreventPagination(final boolean preventPagination)
+  {
+    setFlag(FLAG_BOX_PREVENT_PAGINATION, preventPagination);
+    updateChangeTracker();
   }
 
   public int getRowIndex()

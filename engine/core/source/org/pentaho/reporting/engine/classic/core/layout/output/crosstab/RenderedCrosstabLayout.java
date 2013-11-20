@@ -58,6 +58,7 @@ public class RenderedCrosstabLayout implements Cloneable
   private InstanceID[] rowHeaders;
   private InstanceID[] columnHeaders;
   private InstanceID[] columnTitleHeaders;
+  private InstanceID crosstabId;
 
   private int firstRowGroupIndex;
   private int firstColGroupIndex;
@@ -410,5 +411,15 @@ public class RenderedCrosstabLayout implements Cloneable
   public TableLayout getTableLayout()
   {
     return tableLayout;
+  }
+
+  public InstanceID getCrosstabId()
+  {
+    return crosstabId;
+  }
+
+  public void setCrosstabId(final InstanceID crosstabId)
+  {
+    this.crosstabId = crosstabId;
   }
 }

@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
@@ -97,6 +98,14 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
     }
 
+    final int firstRowGroupIndex = crosstabLayout.getFirstRowGroupIndex();
+    if (gidx == firstRowGroupIndex)
+    {
+      RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
+      RenderBox parentNode = (RenderBox) CrosstabOutputHelper.findParentNode(renderNode, crosstabLayout.getCrosstabId());
+      parentNode.setPreventPagination(true);
+    }
+
     CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder, 1, 1, group.getHeader());
     crosstabLayout.setRowHeader(gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
     outputFunction.getRenderer().add(group.getHeader(), outputFunction.getRuntime());
@@ -130,6 +139,15 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
       crosstabLayout.setCrosstabHeaderOpen(false);
     }
+
+    final int gidx = event.getState().getCurrentGroupIndex();
+    final int firstRowGroupIndex = crosstabLayout.getFirstRowGroupIndex();
+    if (gidx == firstRowGroupIndex)
+    {
+      RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
+      RenderBox parentNode = (RenderBox) CrosstabOutputHelper.findParentNode(renderNode, crosstabLayout.getCrosstabId());
+      parentNode.setPreventPagination(false);
+    }
   }
 
   public void groupBodyFinished(final DefaultOutputFunction outputFunction,
@@ -141,7 +159,9 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
   private void buildHeaderPlaceholder(final RenderedCrosstabLayout crosstabLayout,
                                       final LayoutModelBuilder layoutModelBuilder)
   {
-    layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(crosstabLayout.getTableLayout()));
+    crosstabLayout.setCrosstabId
+        (layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(crosstabLayout.getTableLayout())));
+
     layoutModelBuilder.startBox(CrosstabOutputHelper.createTableBand(BandStyleKeys.LAYOUT_TABLE_HEADER));
 
     // create column group placeholder rows. We subsequently add content as sub-flows into these groups.

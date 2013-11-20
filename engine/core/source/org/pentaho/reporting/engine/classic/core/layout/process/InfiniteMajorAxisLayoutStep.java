@@ -1074,11 +1074,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final long blockHeight = computeTableHeightAndAlign(box);
       box.setCachedHeight(blockHeight);
     }
+
+    markAllChildsDirty(box);
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
+    clearAllChildsDirtyMarker(box);
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       final long blockHeight = computeTableHeightAndAlign(box);

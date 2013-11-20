@@ -4597,12 +4597,15 @@
       <empty-cell/>
     </row>
     <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="MARKET"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
-        <line type="ParagraphPoolBox" x="0.0" y="100.0" width="27.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="100.0" width="27.24" height="10.0">Japan</text>
+        <line type="ParagraphPoolBox" x="80.0" y="100.0" width="27.24" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="80.0" y="100.0" width="27.24" height="10.0">Japan</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4611,16 +4614,6 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="140.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="140.55" y="100.0" width="19.45" height="10.0">0.00</text>
-        </line>
-      </cell>
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:1"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
         <line type="ParagraphPoolBox" x="220.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="220.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
@@ -4631,8 +4624,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="294.99" y="100.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="294.99" y="100.0" width="25.01" height="10.0">42.00</text>
+        <line type="ParagraphPoolBox" x="300.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4641,8 +4634,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="380.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="380.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="363.87" y="100.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="363.87" y="100.0" width="36.13" height="10.0">3045.21</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4651,8 +4644,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="460.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="460.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="454.99" y="100.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="454.99" y="100.0" width="25.01" height="10.0">42.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4661,8 +4654,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="518.31" y="100.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="518.31" y="100.0" width="41.69" height="10.0">10233.50</text>
+        <line type="ParagraphPoolBox" x="540.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="540.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4671,8 +4664,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="609.43" y="100.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="609.43" y="100.0" width="30.57" height="10.0">132.00</text>
+        <line type="ParagraphPoolBox" x="620.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="620.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4681,8 +4674,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="700.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="700.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="678.31" y="100.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="678.31" y="100.0" width="41.69" height="10.0">10233.50</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4691,8 +4684,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="780.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="780.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="769.43" y="100.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="769.43" y="100.0" width="30.57" height="10.0">132.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4761,8 +4754,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="1323.87" y="100.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1323.87" y="100.0" width="36.13" height="10.0">3523.67</text>
+        <line type="ParagraphPoolBox" x="1340.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1340.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4771,8 +4764,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="1414.99" y="100.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1414.99" y="100.0" width="25.01" height="10.0">49.00</text>
+        <line type="ParagraphPoolBox" x="1420.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1420.55" y="100.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4781,8 +4774,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="1500.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1500.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="1483.87" y="100.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1483.87" y="100.0" width="36.13" height="10.0">3523.67</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4791,20 +4784,41 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="1580.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1580.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="1574.99" y="100.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1574.99" y="100.0" width="25.01" height="10.0">49.00</text>
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:0"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
+        <line type="ParagraphPoolBox" x="1660.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1660.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
+        <line type="ParagraphPoolBox" x="1740.55" y="100.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1740.55" y="100.0" width="19.45" height="10.0">0.00</text>
+        </line>
+      </cell>
     </row>
     <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="MARKET"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
-        <line type="ParagraphPoolBox" x="0.0" y="120.0" width="13.88" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="120.0" width="13.88" height="10.0">NA</text>
+        <line type="ParagraphPoolBox" x="80.0" y="120.0" width="13.88" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="80.0" y="120.0" width="13.88" height="10.0">NA</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4813,16 +4827,6 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="140.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="140.55" y="120.0" width="19.45" height="10.0">0.00</text>
-        </line>
-      </cell>
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:1"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
         <line type="ParagraphPoolBox" x="220.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <text x="220.55" y="120.0" width="19.45" height="10.0">0.00</text>
         </line>
@@ -4833,8 +4837,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="294.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="294.99" y="120.0" width="25.01" height="10.0">75.00</text>
+        <line type="ParagraphPoolBox" x="300.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.55" y="120.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4844,7 +4848,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
         <line type="ParagraphPoolBox" x="363.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="363.87" y="120.0" width="36.13" height="10.0">7374.94</text>
+          <text x="363.87" y="120.0" width="36.13" height="10.0">5233.88</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4853,8 +4857,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="449.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="449.43" y="120.0" width="30.57" height="10.0">106.00</text>
+        <line type="ParagraphPoolBox" x="454.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="454.99" y="120.0" width="25.01" height="10.0">75.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4863,8 +4867,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="518.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="518.31" y="120.0" width="41.69" height="10.0">15695.31</text>
+        <line type="ParagraphPoolBox" x="523.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="523.87" y="120.0" width="36.13" height="10.0">7374.94</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4874,7 +4878,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
         <line type="ParagraphPoolBox" x="609.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="609.43" y="120.0" width="30.57" height="10.0">228.00</text>
+          <text x="609.43" y="120.0" width="30.57" height="10.0">106.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4883,8 +4887,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="700.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="700.55" y="120.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="678.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="678.31" y="120.0" width="41.69" height="10.0">15695.31</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4893,8 +4897,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="780.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="780.55" y="120.0" width="19.45" height="10.0">0.00</text>
+        <line type="ParagraphPoolBox" x="769.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="769.43" y="120.0" width="30.57" height="10.0">228.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4903,8 +4907,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="843.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="843.87" y="120.0" width="36.13" height="10.0">5082.42</text>
+        <line type="ParagraphPoolBox" x="860.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="860.55" y="120.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4913,8 +4917,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="934.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="934.99" y="120.0" width="25.01" height="10.0">42.00</text>
+        <line type="ParagraphPoolBox" x="940.55" y="120.0" width="19.45" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="940.55" y="120.0" width="19.45" height="10.0">0.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4923,8 +4927,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="998.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="998.31" y="120.0" width="41.69" height="10.0">18171.87</text>
+        <line type="ParagraphPoolBox" x="1003.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1003.87" y="120.0" width="36.13" height="10.0">5082.42</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4933,8 +4937,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="1089.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1089.43" y="120.0" width="30.57" height="10.0">263.00</text>
+        <line type="ParagraphPoolBox" x="1094.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1094.99" y="120.0" width="25.01" height="10.0">42.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4943,8 +4947,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="1163.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1163.87" y="120.0" width="36.13" height="10.0">2296.77</text>
+        <line type="ParagraphPoolBox" x="1158.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1158.31" y="120.0" width="41.69" height="10.0">18171.87</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4953,8 +4957,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="1254.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1254.99" y="120.0" width="25.01" height="10.0">21.00</text>
+        <line type="ParagraphPoolBox" x="1249.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1249.43" y="120.0" width="30.57" height="10.0">263.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4964,7 +4968,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
         <line type="ParagraphPoolBox" x="1323.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1323.87" y="120.0" width="36.13" height="10.0">5140.50</text>
+          <text x="1323.87" y="120.0" width="36.13" height="10.0">2296.77</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4974,7 +4978,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
         <line type="ParagraphPoolBox" x="1414.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1414.99" y="120.0" width="25.01" height="10.0">54.00</text>
+          <text x="1414.99" y="120.0" width="25.01" height="10.0">21.00</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4983,8 +4987,8 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
-        <line type="ParagraphPoolBox" x="1478.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1478.31" y="120.0" width="41.69" height="10.0">10257.87</text>
+        <line type="ParagraphPoolBox" x="1483.87" y="120.0" width="36.13" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1483.87" y="120.0" width="36.13" height="10.0">5140.50</text>
         </line>
       </cell>
       <cell row-span="1" col-span="1">
@@ -4993,12 +4997,30 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
-        <line type="ParagraphPoolBox" x="1569.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="1569.43" y="120.0" width="30.57" height="10.0">123.00</text>
+        <line type="ParagraphPoolBox" x="1574.99" y="120.0" width="25.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1574.99" y="120.0" width="25.01" height="10.0">54.00</text>
         </line>
       </cell>
-      <empty-cell/>
-      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:0"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="SALES"/>
+        <line type="ParagraphPoolBox" x="1638.31" y="120.0" width="41.69" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1638.31" y="120.0" width="41.69" height="10.0">10257.87</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="::wizard:aggregation:1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.00;-0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="QUANTITY"/>
+        <line type="ParagraphPoolBox" x="1729.43" y="120.0" width="30.57" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="1729.43" y="120.0" width="30.57" height="10.0">123.00</text>
+        </line>
+      </cell>
     </row>
     <row height="20">
       <cell row-span="1" col-span="1">

@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessStep
@@ -32,6 +33,7 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
 
   private boolean cacheClean;
   private TableRowHeightCalculation tableRowHeightStep;
+  private InstanceID allChildsDirtyMarker;
 
   protected AbstractMajorAxisLayoutStep(final boolean secondPass)
   {
@@ -57,9 +59,41 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
     startProcessing(pageBox);
   }
 
+  protected void markAllChildsDirty(final RenderNode node)
+  {
+    InstanceID instanceId = node.getInstanceId();
+    if (instanceId == null)
+    {
+      return;
+    }
+    if (this.allChildsDirtyMarker != null)
+    {
+      return;
+    }
+    this.allChildsDirtyMarker = instanceId;
+  }
+
+  public void clearAllChildsDirtyMarker(final RenderNode node)
+  {
+    InstanceID instanceId = node.getInstanceId();
+    if (instanceId == null)
+    {
+      return;
+    }
+    if (this.allChildsDirtyMarker == instanceId)
+    {
+      this.allChildsDirtyMarker = null;
+    }
+  }
+
   protected boolean checkCacheValid(final RenderNode node)
   {
     if (cacheClean == false)
+    {
+      return false;
+    }
+
+    if (allChildsDirtyMarker != null)
     {
       return false;
     }

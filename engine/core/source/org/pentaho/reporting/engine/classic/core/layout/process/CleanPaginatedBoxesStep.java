@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupDataBodyType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
@@ -34,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -189,11 +187,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     {
       return false;
     }
-
-    if (box.getElementType() instanceof GroupDataBodyType &&
-        box.getFirstChild() != null &&
-        "Banded-SubReport-Section: name=Subreport 1.1".equals(box.getFirstChild().getName()))
-      DebugLog.logHere();
 
     boolean boxOutsideVisibleRange = (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
     final boolean safeForRemove = (box.getParentWidowContexts() == 0) && boxOutsideVisibleRange;

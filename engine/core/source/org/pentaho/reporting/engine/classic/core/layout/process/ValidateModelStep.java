@@ -416,6 +416,16 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         table.setValidateModelResult(getResult());
         return false;
       }
+      else if (table.isPreventPagination())
+      {
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Table: Open Table and incremental mode not supported: " + table);
+        }
+        setResult(ValidationResult.TABLE_BOX_PREVENTS_PAGINATION);
+        table.setValidateModelResult(getResult());
+        return false;
+      }
     }
 
     validationInfo.setNeedCheck(true);

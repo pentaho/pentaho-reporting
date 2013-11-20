@@ -790,11 +790,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalRowPosition(box);
     CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
@@ -808,16 +803,14 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       final long blockHeight = computeTableHeightAndAlign(box, false);
       box.setCachedHeight(blockHeight);
     }
+
+    markAllChildsDirty(box);
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return;
-    }
-
+    clearAllChildsDirtyMarker(box);
     if (box instanceof TableCellRenderBox)
     {
       final long blockHeight = computeTableHeightAndAlign(box, true);
@@ -895,17 +888,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   {
     // TODO: PRD-4606
     box.setCachedHeight(0);
-    /*
-    if (box instanceof TableRowRenderBox)
-    {
-//      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
-    }
-    else
-    {
-//      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
-      box.setCachedHeight(blockHeight);
-    }
-    */
   }
 
   private static long computeTableHeightAndAlign(final RenderBox box, final boolean align)

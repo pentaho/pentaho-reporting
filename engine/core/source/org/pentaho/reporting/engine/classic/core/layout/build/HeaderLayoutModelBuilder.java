@@ -57,10 +57,11 @@ public class HeaderLayoutModelBuilder extends LayoutModelBuilderWrapper implemen
 
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-    super.startBox(element);
+    InstanceID instanceID = super.startBox(element);
     inBoxDepth += 1;
+    return instanceID;
   }
 
   public void startSection(final ReportElement element, final int sectionSize)
