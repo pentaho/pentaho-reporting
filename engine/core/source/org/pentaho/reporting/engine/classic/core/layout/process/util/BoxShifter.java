@@ -81,7 +81,7 @@ public final class BoxShifter
   }
 
 
-  public static void extendHeight(final RenderBox parent, final RenderNode child, final long amountDelta)
+  public static boolean extendHeight(final RenderBox parent, final RenderNode child, final long amountDelta)
   {
     if (amountDelta < 0)
     {
@@ -89,9 +89,12 @@ public final class BoxShifter
     }
     if (parent == null || amountDelta == 0)
     {
-      return;
+      return false;
     }
     parent.extendHeight(child, amountDelta);
-    parent.resetCacheState(true);
+    // todo: PRD-4606
+    parent.markApplyStateDirty();
+//    parent.resetCacheState(true);
+    return true;
   }
 }

@@ -42,7 +42,7 @@ public final class RollbackStep extends IterateSimpleStructureProcessStep
     startProcessing(pageBox);
     pageBox.rollbackSaveInformation();
     // todo PRD-4606
-    pageBox.resetCacheState(true);
+    // pageBox.resetCacheState(true);
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)

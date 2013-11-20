@@ -72,7 +72,8 @@ public abstract class RenderNode implements Cloneable
   private static final int FLAG_RESERVED = 0xFFF0;
 
   private int flags;
-  protected CacheState cacheState;
+  private CacheState cacheState;
+  private CacheState applyState;
 
   private RenderBox parentNode;
   private RenderNode nextNode;
@@ -301,7 +302,7 @@ public abstract class RenderNode implements Cloneable
       throw new IndexOutOfBoundsException("Height cannot be negative");
     }
     this.height = height;
-    this.updateCacheState(RenderNode.CACHE_DIRTY);
+  //  this.updateCacheState(RenderNode.CACHE_DIRTY);
   }
 
   public final StyleSheet getStyleSheet()
@@ -753,7 +754,9 @@ public abstract class RenderNode implements Cloneable
     this.width = this.cachedWidth;
     this.height = this.cachedHeight;
     this.cachedAge = this.changeTracker;
-    this.cacheState = RenderNode.CACHE_CLEAN;
+    this.cacheState = CacheState.CLEAN;
+    this.applyState = CacheState.CLEAN;
+
     final RenderBox parent = getParent();
     if (parent != null)
     {
@@ -1112,5 +1115,24 @@ public abstract class RenderNode implements Cloneable
   public boolean isContainsReservedContent()
   {
     return false;
+  }
+
+  public void markApplyStateDirty()
+  {
+    if (applyState != CacheState.CLEAN)
+    {
+      return;
+    }
+    applyState = CACHE_DIRTY;
+    RenderBox parent = getParent();
+    if (parent != null)
+    {
+      parent.markApplyStateDirty();
+    }
+  }
+
+  public CacheState getApplyState()
+  {
+    return applyState;
   }
 }

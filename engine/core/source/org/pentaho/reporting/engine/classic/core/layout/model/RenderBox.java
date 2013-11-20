@@ -1423,6 +1423,7 @@ public abstract class RenderBox extends RenderNode
   public void apply()
   {
     super.apply();
+    this.overflowAreaHeight = 0;
     this.staticBoxPropertiesAge = getChangeTracker();
     this.tableValidationAge = getChangeTracker();
   }
@@ -1444,7 +1445,7 @@ public abstract class RenderBox extends RenderNode
   {
     setHeight(getHeight() + heightOffset);
     setOverflowAreaHeight(getOverflowAreaHeight() + heightOffset);
-    updateCacheState(CACHE_DEEP_DIRTY);
+    //updateCacheState(CACHE_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)
@@ -1475,7 +1476,7 @@ public abstract class RenderBox extends RenderNode
     final long delta = Math.min(deltaToBase, heightOffset);
     setHeight(getHeight() + delta);
     setOverflowAreaHeight(getOverflowAreaHeight() + delta);
-    updateCacheState(CACHE_DEEP_DIRTY);
+    //updateCacheState(CACHE_DIRTY);
 
     final RenderBox parent = getParent();
     if (parent != null)

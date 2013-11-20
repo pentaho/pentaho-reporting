@@ -652,6 +652,11 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   private void updateStateKeyDeep(final RenderBox box)
   {
+    if (paginationTableState.isVisualStateCollectionSuspended())
+    {
+      return;
+    }
+
     final long y = box.getY();
     if (y >= paginationTableState.getPageEnd())
     {
@@ -661,10 +666,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     final ReportStateKey reportStateKey = findOldestProcessKeyStep.find(box);
     if (reportStateKey != null && reportStateKey.isInlineSubReportState() == false)
     {
-      if (paginationTableState.isVisualStateCollectionSuspended() == false)
-      {
-        this.visualState = reportStateKey;
-      }
+      this.visualState = reportStateKey;
     }
   }
 

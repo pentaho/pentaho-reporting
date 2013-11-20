@@ -304,5 +304,10 @@ public final class LogicalPageBox extends BlockRenderBox
     repeatFooterArea = ((PageAreaBox) savedRepeatFooterArea.derive(true));
     watermarkArea = ((WatermarkAreaBox) savedWatermarkArea.derive(true));
   }
+
+  public void markDeepDirty()
+  {
+    updateCacheState(CACHE_DEEP_DIRTY);
+  }
 }
 
