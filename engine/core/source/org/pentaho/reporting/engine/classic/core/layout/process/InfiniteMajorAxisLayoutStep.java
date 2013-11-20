@@ -1138,21 +1138,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    // TODO: PRD-4606
     box.setCachedHeight(0);
-/*    if (box instanceof TableRowRenderBox)
-    {
-      // rows get their height from the current table-row-model. This model cannot be computed until
-      // the full section is known.
-      // rows will be shifted into place by the finishTableLevelBox function.
-    }
-    else
-    {
-      // auto-boxes behave like normal block elements.
-      // This produces invalid output, as the rows are not shifted yet.
-      final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeight(blockHeight);
-    }
-    */
   }
 }

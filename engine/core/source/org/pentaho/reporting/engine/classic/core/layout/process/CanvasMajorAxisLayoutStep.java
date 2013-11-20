@@ -886,7 +886,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    // TODO: PRD-4606
     box.setCachedHeight(0);
   }
 

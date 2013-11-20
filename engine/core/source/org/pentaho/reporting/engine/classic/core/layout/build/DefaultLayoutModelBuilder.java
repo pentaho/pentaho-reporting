@@ -169,7 +169,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
         this.context = new DefaultLayoutModelBuilderContext
             (this.context, renderNodeFactory.createAutoParagraph(element, styleSheet, stateKey));
 
-        // TODO: PRD-3750 - A empty inline-band that creates a auto-paragraph reserves space on the vertical axis.
+        // PRD-3750 - A empty inline-band that creates a auto-paragraph reserves space on the vertical axis.
         if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) ||
             metaData.isFeatureSupported(OutputProcessorFeature.PRD_3750))
         {

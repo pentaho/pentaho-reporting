@@ -68,12 +68,6 @@ public class OrphanContextPool
       return retval;
     }
 
-    if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-    {
-      // todo: Make this a row-context later .. (Not needed for 3.9)
-      // return new WidowCanvasContext(context);
-    }
-
     final OrphanCanvasContext retval = canvasContextPool.get();
     retval.init(canvasContextPool, context);
     return retval;

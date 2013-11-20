@@ -387,7 +387,6 @@ public class Prd3930Test extends TestCase
       }
     }
 
-    // todo: Bug-fixing needed. Creates empty pages when manual-breaking..
     assertEquals(numberOfPagebreaks + 1, count);
   }
 

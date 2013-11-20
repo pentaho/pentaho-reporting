@@ -289,7 +289,6 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return true;
     }
 
-    // todo: Handle tables properly
     return validateInlineRowOrTableCellBox(box);
   }
 

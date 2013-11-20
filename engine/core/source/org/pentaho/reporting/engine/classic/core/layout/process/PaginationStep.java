@@ -388,7 +388,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
       else
       {
-        // todo:
+        // todo: Can we safely mark auto-boxes as finished? Or shall we wait until the table itself finishes?
 /*
         if (box.isCommited())
         {
@@ -785,7 +785,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
     }
 
-    // todo:
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final RenderLength fixedPosition = box.getBoxDefinition().getFixedPosition();
     final long fixedPositionResolved = fixedPosition.resolve(paginationTableState.getPageHeight(), 0);
