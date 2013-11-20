@@ -339,20 +339,59 @@ public final class CleanFlowBoxesStep extends IterateStructuralProcessStep
 
   protected boolean startAutoBox(final RenderBox box)
   {
-    final int layoutNodeType = box.getLayoutNodeType();
-    final int filteredType = layoutNodeType & LayoutNodeTypes.MASK_BASIC_BOX_TYPE;
-    if (filteredType == LayoutNodeTypes.MASK_BOX_BLOCK)
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      if (box.isContainsReservedContent())
+      {
+        // never clear out anything from reserved header or footer boxes. Never!
+        return false;
+      }
+
+      if (tableSectionContext.isProcessingUnsafe())
+      {
+        return false;
+      }
+
+      return startBlockStyleBox(box);
+    }
+
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return true;
+    }
+
+    if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       return startBlockStyleBox(box);
     }
-    // todo: Cleaning within tables ...
-    return false;
+    return true;
   }
 
   protected void finishAutoBox(final RenderBox box)
   {
     final int layoutNodeType = box.getLayoutNodeType();
     final int filteredType = layoutNodeType & LayoutNodeTypes.MASK_BASIC_BOX_TYPE;
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      if (box.isContainsReservedContent())
+      {
+        // never clear out anything from reserved header or footer boxes. Never!
+        return;
+      }
+
+      if (tableSectionContext.isProcessingUnsafe())
+      {
+        return;
+      }
+      finishBlockStyleBox(box);
+      return;
+    }
+
+    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+    {
+      return;
+    }
+
     if (filteredType == LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       finishBlockStyleBox(box);

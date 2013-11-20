@@ -164,22 +164,6 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     tableSectionContext = tableSectionContext.pop();
   }
 
-  private boolean startTableSectionStyleBox(final RenderBox box)
-  {
-    if (box.isContainsReservedContent())
-    {
-      // never clear out anything from reserved header or footer boxes. Never!
-      return false;
-    }
-
-    if (tableSectionContext.isProcessingUnsafe())
-    {
-      return false;
-    }
-
-    return startBlockStyleBox(box);
-  }
-
   private boolean startBlockStyleBox(final RenderBox box)
   {
     final int nodeType = box.getLayoutNodeType();
@@ -402,7 +386,18 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   {
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
-      return startTableSectionStyleBox(box);
+      if (box.isContainsReservedContent())
+      {
+        // never clear out anything from reserved header or footer boxes. Never!
+        return false;
+      }
+
+      if (tableSectionContext.isProcessingUnsafe())
+      {
+        return false;
+      }
+
+      return startBlockStyleBox(box);
     }
 
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)

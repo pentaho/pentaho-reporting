@@ -491,7 +491,7 @@ public abstract class RenderNode implements Cloneable
       node.cachedAge = this.changeTracker;
       node.validateModelAge = -1;
       // todo PRD-4606
-      node.cacheState = CACHE_DEEP_DIRTY;
+      node.cacheState = CACHE_DIRTY;
     }
     return node;
   }
