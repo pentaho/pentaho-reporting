@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
-
 import javax.swing.table.TableModel;
 
 import org.pentaho.di.core.exception.KettleException;
@@ -336,66 +335,66 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
     final String[] params = fillArguments(parameters);
 
+    final Repository repository = connectToRepository();
     try
     {
-      final Repository repository = connectToRepository();
+      final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
+      transMeta.setArguments(params);
+      final Trans trans = new Trans(transMeta);
+      for (int i = 0; i < definedVariableNames.length; i++)
+      {
+        final ParameterMapping mapping = definedVariableNames[i];
+        final String sourceName = mapping.getName();
+        final String variableName = mapping.getAlias();
+        final Object value = parameters.get(sourceName);
+        if (value != null)
+        {
+          trans.setParameterValue(variableName, String.valueOf(value));
+        }
+      }
+
+      transMeta.setInternalKettleVariables();
+      trans.prepareExecution(transMeta.getArguments());
+
+      TableProducer tableProducer = null;
+      final List<StepMetaDataCombi> stepList = trans.getSteps();
+      for (int i = 0; i < stepList.size(); i++)
+      {
+        final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
+        if (stepName.equals(metaDataCombi.stepname) == false)
+        {
+          continue;
+        }
+        final RowMetaInterface row = transMeta.getStepFields(stepName);
+        tableProducer = new TableProducer(row, queryLimit, stopOnError);
+        metaDataCombi.step.addRowListener(tableProducer);
+        break;
+      }
+
+      if (tableProducer == null)
+      {
+        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+      }
+
+      currentlyRunningTransformation = trans;
       try
       {
-        final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
-        transMeta.setArguments(params);
-        final Trans trans = new Trans(transMeta);
-        for (int i = 0; i < definedVariableNames.length; i++)
-        {
-          final ParameterMapping mapping = definedVariableNames[i];
-          final String sourceName = mapping.getName();
-          final String variableName = mapping.getAlias();
-          final Object value = parameters.get(sourceName);
-          if (value != null)
-          {
-            trans.setParameterValue(variableName, String.valueOf(value));
-          }
-        }
-
-        transMeta.setInternalKettleVariables();
-        trans.prepareExecution(transMeta.getArguments());
-
-        TableProducer tableProducer = null;
-      final List<StepMetaDataCombi> stepList = trans.getSteps();
-        for (int i = 0; i < stepList.size(); i++)
-        {
-          final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
-          if (stepName.equals(metaDataCombi.stepname) == false)
-          {
-            continue;
-          }
-          final RowMetaInterface row = transMeta.getStepFields(stepName);
-          tableProducer = new TableProducer(row, queryLimit, stopOnError);
-          metaDataCombi.step.addRowListener(tableProducer);
-          break;
-        }
-
-        if (tableProducer == null)
-        {
-          throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
-        }
-
-        currentlyRunningTransformation = trans;
         trans.startThreads();
         trans.waitUntilFinished();
-        trans.cleanup();
-        return tableProducer.getTableModel();
       }
       finally
       {
-        currentlyRunningTransformation = null;
-        if (repository != null)
-        {
-          repository.disconnect();
-        }
+        trans.cleanup();
       }
+      return tableProducer.getTableModel();
     }
     finally
     {
+      currentlyRunningTransformation = null;
+      if (repository != null)
+      {
+        repository.disconnect();
+      }
     }
   }
 
