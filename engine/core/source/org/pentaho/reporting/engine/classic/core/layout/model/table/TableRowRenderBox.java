@@ -177,6 +177,12 @@ public class TableRowRenderBox extends RenderBox
       return false;
     }
 
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
+    {
+      DebugLog.log("WARN: PROGRESS MARKER INSIDE TABLE ROW");
+      return true;
+    }
+
     return false;
   }
 

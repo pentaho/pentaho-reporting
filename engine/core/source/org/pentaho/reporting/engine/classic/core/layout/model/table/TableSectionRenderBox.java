@@ -257,6 +257,11 @@ public class TableSectionRenderBox extends BlockRenderBox
       return true;
     }
 
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
+    {
+      return true;
+    }
+
     if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
       return true;
