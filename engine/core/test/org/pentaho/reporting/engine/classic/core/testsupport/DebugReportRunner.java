@@ -659,4 +659,15 @@ public class DebugReportRunner
     LibSwingUtil.centerFrameOnScreen(dialog);
     dialog.setVisible(true);
   }
+
+  public static boolean isExecuteLongRunTest()
+  {
+    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+            ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    {
+      return true;
+    }
+    return false;
+  }
+
 }

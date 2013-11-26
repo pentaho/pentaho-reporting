@@ -33,6 +33,11 @@ public class Prd4606Test extends TestCase
   public void testValidTable() throws Exception
   {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
+    CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
+    assertEquals(10, sequence.getParameter("limit"));
+
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
 
     RenderNode[] tables = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE);

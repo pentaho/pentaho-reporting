@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
 public class SequenceDataFactory extends AbstractDataFactory
 {
-  private LinkedHashMap<String,Sequence> sequences;
+  private LinkedHashMap<String, Sequence> sequences;
 
   public SequenceDataFactory()
   {
@@ -38,11 +38,15 @@ public class SequenceDataFactory extends AbstractDataFactory
   {
     sequences.put(query, sequence);
   }
-  
+
   public TableModel queryData(final String query,
                               final DataRow parameters) throws ReportDataFactoryException
   {
     final Sequence sequence = sequences.get(query);
+    if (sequence == null)
+    {
+      throw new ReportDataFactoryException("No such query '" + query + "'");
+    }
     return sequence.produce(parameters, getDataFactoryContext());
   }
 
@@ -65,14 +69,14 @@ public class SequenceDataFactory extends AbstractDataFactory
   {
     final SequenceDataFactory dataFactory = (SequenceDataFactory) super.clone();
     dataFactory.sequences = (LinkedHashMap<String, Sequence>) sequences.clone();
-    for (final Map.Entry<String,Sequence> entry : dataFactory.sequences.entrySet())
+    for (final Map.Entry<String, Sequence> entry : dataFactory.sequences.entrySet())
     {
       final Sequence value = entry.getValue();
       entry.setValue((Sequence) value.clone());
     }
     return dataFactory;
   }
-  
+
   public Sequence getSequence(final String name)
   {
     return sequences.get(name);
