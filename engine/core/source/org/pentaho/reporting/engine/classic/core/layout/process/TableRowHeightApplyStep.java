@@ -175,6 +175,29 @@ public class TableRowHeightApplyStep extends IterateStructuralProcessStep
 
   protected void finishAutoBox(final RenderBox box)
   {
+    RenderNode firstChild = box.getFirstChild();
+    if (firstChild != null)
+    {
+      RenderNode lastChild = box.getLastChild();
+      long height = lastChild.getCachedY2() - firstChild.getCachedY();
+      box.setCachedHeight(height);
+    }
     context = context.pop();
+  }
+
+  protected boolean startOtherBox(final RenderBox box)
+  {
+    return false;
+  }
+
+  protected void finishOtherBox(final RenderBox box)
+  {
+    RenderNode firstChild = box.getFirstChild();
+    if (firstChild != null)
+    {
+      RenderNode lastChild = box.getLastChild();
+      long height = lastChild.getCachedY2() - firstChild.getCachedY();
+      box.setCachedHeight(height);
+    }
   }
 }

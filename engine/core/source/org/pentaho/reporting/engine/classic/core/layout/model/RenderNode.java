@@ -1139,4 +1139,10 @@ public abstract class RenderNode implements Cloneable
   {
     return applyState;
   }
+
+  public int getRowIndex()
+  {
+    return 0;
+  }
+
 }

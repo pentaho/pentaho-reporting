@@ -72,7 +72,7 @@ public class PageableRenderer extends AbstractRenderer
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-//    printConditional(3, pageBox);
+//    printConditional(5, pageBox);
 //    printConditional(18, pageBox);
   }
 

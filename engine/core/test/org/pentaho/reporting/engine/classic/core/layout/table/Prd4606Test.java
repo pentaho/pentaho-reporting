@@ -72,7 +72,7 @@ public class Prd4606Test extends TestCase
   public void testLargeValidTable() throws Exception
   {
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false");
+        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");

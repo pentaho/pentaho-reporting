@@ -60,7 +60,8 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
     public boolean isProcessingUnsafe()
     {
-      return expectedNextRowNumber <= safeRows;
+      // Are there any rows that could be removed? If not, take a short cut, and skip the body ..
+      return safeRows <= expectedNextRowNumber;
     }
   }
 
@@ -153,7 +154,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       {
         return false;
       }
-      return startBlockStyleBox(box);
+      return startTableSecionStyleBox(box);
     }
 
     return false;
@@ -216,6 +217,82 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         {
           // we cant handle that. This node will be visible. So the current last
           // node is the one we can shrink ..
+          break;
+        }
+
+        final RenderNode nodeForRemoval = currentNode;
+        currentNode = currentNode.getNext();
+        if (isSafeForRemoval(nodeForRemoval))
+        {
+          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval, true);
+        }
+      }
+
+    }
+    return true;
+  }
+
+  private boolean startTableSecionStyleBox(final RenderBox box)
+  {
+    final int nodeType = box.getLayoutNodeType();
+    if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
+    {
+      return false;
+    }
+
+    boolean boxOutsideVisibleRange = (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
+    final boolean safeForRemove = (box.getParentWidowContexts() == 0) && boxOutsideVisibleRange;
+    if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
+    {
+      // Next, search the last node that is fully invisible. We collapse all
+      // invisible node into one big box for efficiency reasons. They wont be
+      // visible anyway and thus the result will be the same as if they were
+      // still alive ..
+      final RenderNode firstNode = box.getFirstChild();
+      RenderNode currentNode = firstNode;
+      RenderNode lastToRemove = null;
+
+      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      {
+        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+        {
+          // we cant handle that. This node will be visible. So the current last
+          // node is the one we can shrink ..
+          break;
+        }
+
+        if (currentNode.getRowIndex() >= tableSectionContext.safeRows)
+        {
+          break;
+        }
+
+        lastToRemove = currentNode;
+        currentNode = currentNode.getNext();
+      }
+
+      if (lastToRemove != null)
+      {
+        removeFinishedNodes(box, firstNode, lastToRemove, false);
+      }
+    }
+    else
+    {
+      // any kind of restricted element: We can only remove one element at a time and only if the
+      // element is a orphan-leaf element. A orphan-leaf has no children that take part in the
+      // widow/orphan constraint calculation and removing the leaf does not alter the result of the
+      // calculation of the OrphanStep.
+
+      RenderNode currentNode = box.getFirstChild();
+      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      {
+        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
+        {
+          // we cant handle that. This node will be visible. So the current last
+          // node is the one we can shrink ..
+          break;
+        }
+        if (currentNode.getRowIndex() >= tableSectionContext.safeRows)
+        {
           break;
         }
 
@@ -397,7 +474,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         return false;
       }
 
-      return startBlockStyleBox(box);
+      return startTableSecionStyleBox(box);
     }
 
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
