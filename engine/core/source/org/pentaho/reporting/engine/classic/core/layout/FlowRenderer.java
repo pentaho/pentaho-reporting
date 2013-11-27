@@ -104,7 +104,7 @@ public class FlowRenderer extends AbstractRenderer
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 50) // this is a magic number ..
+    if (floodPrevention < 5) // this is a magic number ..
     {
       return;
     }
@@ -118,7 +118,6 @@ public class FlowRenderer extends AbstractRenderer
       return;
     }
 
-
     final LogicalPageBox pageBox = getPageBox();
     pageBox.setPageEnd(pageBox.getHeight());
 
@@ -127,11 +126,15 @@ public class FlowRenderer extends AbstractRenderer
       final IterativeOutputProcessor io = (IterativeOutputProcessor) outputProcessor;
       if (applyAutoCommitPageHeaderStep.compute(pageBox))
       {
-        logger.debug("Computing Incremental update: " + pageBox.getPageOffset() + " " + pageBox.getPageEnd());
-
         io.processIterativeContent(pageBox, performOutput);
         countBoxesStep.process(pageBox);
         cleanFlowBoxesStep.compute(pageBox);
+
+   //     ModelPrinter.INSTANCE.print(pageBox);
+
+        logger.debug("Computing Incremental update: offset=" + pageBox.getPageOffset() +
+            ", horizon=" + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd());
+
       }
     }
   }

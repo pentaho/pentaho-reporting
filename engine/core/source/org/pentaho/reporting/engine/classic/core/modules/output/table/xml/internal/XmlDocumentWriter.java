@@ -98,9 +98,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
   private FastDecimalFormat pointIntConverter;
   private FastDecimalFormat pointConverter;
   private FastDecimalFormat pointShortConverter;
-  private boolean ignoreEmptyBorders = true;
+  private boolean ignoreEmptyBorders;
   private CellBackgroundProducer cellBackgroundProducer;
   private OutputProcessorMetaData metaData;
+  private boolean tableOpen;
 
   public XmlDocumentWriter(final OutputStream outputStream,
                            final OutputProcessorMetaData metaData)
@@ -115,6 +116,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     this.pointConverter = new FastDecimalFormat("0.0####", Locale.US);
     this.pointShortConverter = new FastDecimalFormat("0.#####", Locale.US);
     this.pointIntConverter = new FastDecimalFormat("0", Locale.US);
+    this.ignoreEmptyBorders = true;
   }
 
   public void open() throws IOException
@@ -145,7 +147,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   public void processTableContent(final LogicalPageBox logicalPageBox,
                                   final OutputProcessorMetaData metaData,
-                                  final TableContentProducer contentProducer) throws IOException
+                                  final TableContentProducer contentProducer,
+                                  final boolean incremental) throws IOException
   {
 
     // Start a new page.
@@ -154,6 +157,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     final int rowCount = contentProducer.getRowCount();
     final int startRow = contentProducer.getFinishedRows();
     final int finishRow = contentProducer.getFilledRows();
+    if (incremental && startRow == finishRow)
+    {
+      return;
+    }
 
     if (cellBackgroundProducer == null)
     {
@@ -162,22 +169,26 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
               metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));
     }
 
-    final AttributeList pageAttributes = new AttributeList();
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-count", pointIntConverter.format(columnCount));
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-count", pointIntConverter.format(rowCount));
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "sheet-name", contentProducer.getSheetName());
-    xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table", pageAttributes, XmlWriter.OPEN);
-    xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "cols", XmlWriter.OPEN);
-    for (int i = 0; i < columnCount; i++)
+    if (tableOpen == false)
     {
-      final double cellWidth = StrictGeomUtility.toExternalValue(sheetLayout.getCellWidth(i, i + 1));
-      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "column", "width", pointShortConverter.format(cellWidth),
-          XmlWriter.CLOSE);
+      tableOpen = true;
+      final AttributeList pageAttributes = new AttributeList();
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-count", pointIntConverter.format(columnCount));
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-count", pointIntConverter.format(rowCount));
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "sheet-name", contentProducer.getSheetName());
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table", pageAttributes, XmlWriter.OPEN);
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "cols", XmlWriter.OPEN);
+      for (int i = 0; i < columnCount; i++)
+      {
+        final double cellWidth = StrictGeomUtility.toExternalValue(sheetLayout.getCellWidth(i, i + 1));
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "column", "width", pointShortConverter.format(cellWidth),
+            XmlWriter.CLOSE);
+      }
+      xmlWriter.writeCloseTag();
     }
-    xmlWriter.writeCloseTag();
 
     for (int row = startRow; row < finishRow; row++)
     {
@@ -270,96 +281,12 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       }
       xmlWriter.writeCloseTag();
     }
-    xmlWriter.writeCloseTag();
-  }
 
-  protected void processPage(final LogicalPageBox rootBox)
-  {
-    final StrictBounds pageBounds = drawArea;
-    startProcessing(rootBox.getWatermarkArea());
-
-    final BlockRenderBox headerArea = rootBox.getHeaderArea();
-    final BlockRenderBox footerArea = rootBox.getFooterArea();
-    final BlockRenderBox repeatFooterArea = rootBox.getRepeatFooterArea();
-    final StrictBounds headerBounds =
-        new StrictBounds(headerArea.getX(), headerArea.getY(), headerArea.getWidth(), headerArea.getHeight());
-    final StrictBounds footerBounds =
-        new StrictBounds(footerArea.getX(), footerArea.getY(), footerArea.getWidth(), footerArea.getHeight());
-    final StrictBounds repeatFooterBounds = new StrictBounds
-        (repeatFooterArea.getX(), repeatFooterArea.getY(), repeatFooterArea.getWidth(), repeatFooterArea.getHeight());
-    final StrictBounds contentBounds = new StrictBounds
-        (rootBox.getX(), headerArea.getY() + headerArea.getHeight(),
-            rootBox.getWidth(), footerArea.getY() - headerArea.getHeight());
-    this.drawArea = headerBounds;
-    startProcessing(headerArea);
-    this.drawArea = contentBounds;
-    processBoxChilds(rootBox);
-    this.drawArea = repeatFooterBounds;
-    startProcessing(repeatFooterArea);
-    this.drawArea = footerBounds;
-    startProcessing(footerArea);
-    this.drawArea = pageBounds;
-  }
-
-  protected final boolean isNodeVisible(final RenderNode rect2)
-  {
-    final long drawAreaX0 = drawArea.getX();
-    final long drawAreaY0 = drawArea.getY();
-    final long drawAreaX1 = drawAreaX0 + drawArea.getWidth();
-    final long drawAreaY1 = drawAreaY0 + drawArea.getHeight();
-
-    final long x = rect2.getX();
-    final long y = rect2.getY();
-    final long width = rect2.getWidth();
-    final long height = rect2.getHeight();
-    final long x2 = x + width;
-    final long y2 = y + height;
-
-    if (width == 0)
+    if (incremental == false)
     {
-      if (x2 < drawAreaX0)
-      {
-        return false;
-      }
-      if (x > drawAreaX1)
-      {
-        return false;
-      }
+      xmlWriter.writeCloseTag(); // table
+      tableOpen = false;
     }
-    else
-    {
-      if (x2 <= drawAreaX0)
-      {
-        return false;
-      }
-      if (x >= drawAreaX1)
-      {
-        return false;
-      }
-    }
-    if (height == 0)
-    {
-      if (y2 < drawAreaY0)
-      {
-        return false;
-      }
-      if (y > drawAreaY1)
-      {
-        return false;
-      }
-    }
-    else
-    {
-      if (y2 <= drawAreaY0)
-      {
-        return false;
-      }
-      if (y >= drawAreaY1)
-      {
-        return false;
-      }
-    }
-    return true;
   }
 
   private AttributeList createBoxAttributeList(final RenderBox box)

@@ -319,12 +319,16 @@ public class Prd3930Test extends TestCase
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlTableReportUtil.createFlowXML(report, bout);
     final String text = bout.toString("UTF-8");
+
+    System.out.println (text);
+    System.out.flush();
+
     for (int i = 0; i < 100; i += 1)
     {
-      assertTrue(text.contains("value=\"Data-" + i + "-0"));
-      assertTrue(text.contains("value=\"Data-" + i + "-1"));
-      assertTrue(text.contains(">Data-" + i + "-0</text>"));
-      assertTrue(text.contains(">Data-" + i + "-1</text>"));
+      assertTrue("Found data-0 cell", text.contains("value=\"Data-" + i + "-0"));
+      assertTrue("Found data-1 cell", text.contains("value=\"Data-" + i + "-1"));
+      assertTrue("Found data-0 label", text.contains(">Data-" + i + "-0</text>"));
+      assertTrue("Found data-1 label", text.contains(">Data-" + i + "-1</text>"));
     }
 
     // count table-tags.
@@ -344,9 +348,6 @@ public class Prd3930Test extends TestCase
 
   public void testLargeTableSingleBandBlockTableExportWithBreaksPage() throws Exception
   {
-    // PRD-4606 - todo
-    if (true) return;
-
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(PageSize.A4));
     final Band table = TableTestUtil.createTable(2, 1, 100, new Prd3930ElementProducer());

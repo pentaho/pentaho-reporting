@@ -74,8 +74,13 @@ public class Prd4606Test extends TestCase
     }
   }
 
-  public void testLargeValidTable() throws Exception
+  public void testLargeValidTableInExcelMode() throws Exception
   {
+    if (DebugReportRunner.isSkipLongRunTest())
+    {
+      return;
+    }
+
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
@@ -86,7 +91,29 @@ public class Prd4606Test extends TestCase
     PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
     sequence.setParameter("limit", 20000);
 
-   // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 0));
+    StopWatch sw = StopWatch.startNew();
+    DebugReportRunner.createXmlFlow(report);
+    DebugLog.log(sw);
+  }
+
+  public void testLargeValidTable() throws Exception
+  {
+    if (DebugReportRunner.isSkipLongRunTest())
+    {
+      return;
+    }
+
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
+    ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
+    CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
+    sequence.setParameter("limit", 20000);
+
+    // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 0));
 
     StopWatch sw = StopWatch.startNew();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 5);
@@ -108,11 +135,11 @@ public class Prd4606Test extends TestCase
       assertEquals(StrictGeomUtility.toInternalValue(20), tableRow.getHeight());
     }
 
-   // DebugReportRunner.showDialog(report);
+    // DebugReportRunner.showDialog(report);
 
   }
 
-  public void testPageSpanningAcrossPages () throws Exception
+  public void testPageSpanningAcrossPages() throws Exception
   {
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false");
@@ -132,7 +159,7 @@ public class Prd4606Test extends TestCase
 //    DebugReportRunner.showDialog(report);
   }
 
-  public void testCacheInvalidation () throws Exception
+  public void testCacheInvalidation() throws Exception
   {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Crosstab-List.prpt");
     report.setCompatibilityLevel(null);

@@ -31,7 +31,7 @@ public class GoldExecuteTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
-    if (DebugReportRunner.isExecuteLongRunTest())
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

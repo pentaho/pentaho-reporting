@@ -158,6 +158,9 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
       }
       finishBox(logicalPage);
     }
+
+    // try to remove as many nodes as you can ..
+    logicalPage.setProcessedTableOffset(logicalPage.getPageEnd());
   }
 
   protected boolean startBox(final RenderBox box)

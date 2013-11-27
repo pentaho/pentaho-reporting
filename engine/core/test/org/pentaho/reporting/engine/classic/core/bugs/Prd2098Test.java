@@ -62,4 +62,10 @@ public class Prd2098Test extends TestCase
         MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER);
     assertEquals(7, elementsByNodeType.length);
   }
+
+  public void testRunGoldenSample() throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2098.prpt");
+    DebugReportRunner.createXmlFlow(report);
+  }
 }

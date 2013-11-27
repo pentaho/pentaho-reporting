@@ -40,7 +40,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
+public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 {
   private static class TableSectionContext
   {
@@ -75,10 +75,20 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   {
   }
 
-  public long compute(final LogicalPageBox pageBox)
+  public long getPageOffset()
   {
-    shiftOffset = 0;
-    pageOffset = pageBox.getPageOffset();
+    return pageOffset;
+  }
+
+  public void setPageOffset(final long pageOffset)
+  {
+    this.pageOffset = pageOffset;
+  }
+
+  protected long compute(final LogicalPageBox pageBox, final long pageOffset)
+  {
+    this.shiftOffset = 0;
+    this.pageOffset = pageOffset;
     if (startBlockBox(pageBox))
     {
       // not processing the header and footer area: they are 'out-of-context' bands
@@ -87,6 +97,11 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     finishBlockBox(pageBox);
     //Log.debug ("ShiftOffset after clean: " + shiftOffset);
     return shiftOffset;
+  }
+
+  public long compute(final LogicalPageBox pageBox)
+  {
+    return compute(pageBox, pageBox.getPageOffset());
   }
 
   public InstanceID getShiftNode()
@@ -185,7 +200,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       RenderNode currentNode = firstNode;
       RenderNode lastToRemove = null;
 
-      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -211,7 +226,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       // calculation of the OrphanStep.
 
       RenderNode currentNode = box.getFirstChild();
-      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -252,7 +267,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       RenderNode currentNode = firstNode;
       RenderNode lastToRemove = null;
 
-      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -283,7 +298,7 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       // calculation of the OrphanStep.
 
       RenderNode currentNode = box.getFirstChild();
-      while (currentNode != null && currentNode.isOpen() == false && currentNode.isFinishedPaginate())
+      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
         {
@@ -306,6 +321,11 @@ public final class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
     }
     return true;
+  }
+
+  protected boolean checkFinishedForNode(final RenderNode currentNode)
+  {
+    return currentNode.isFinishedPaginate();
   }
 
   private boolean isSafeForRemoval(final RenderNode node)

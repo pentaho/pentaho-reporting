@@ -36,6 +36,7 @@ public final class LogicalPageBox extends BlockRenderBox
   private PageBreakPositionList allVerticalBreaks;
   private long pageOffset;
   private long pageEnd;
+  private long processedTableOffset;
 
   private WatermarkAreaBox watermarkArea;
   private PageAreaBox headerArea;
@@ -305,9 +306,14 @@ public final class LogicalPageBox extends BlockRenderBox
     watermarkArea = ((WatermarkAreaBox) savedWatermarkArea.derive(true));
   }
 
-  public void markDeepDirty()
+  public long getProcessedTableOffset()
   {
-    updateCacheState(CACHE_DEEP_DIRTY);
+    return processedTableOffset;
+  }
+
+  public void setProcessedTableOffset(final long processedTableOffset)
+  {
+    this.processedTableOffset = processedTableOffset;
   }
 }
 
