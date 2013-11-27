@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTi
 import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -82,6 +83,9 @@ public abstract class DataSourceTestBase extends TestCase
     {
       final String query = queriesAndResults[i][0];
       final String resultFile = queriesAndResults[i][1];
+
+      DebugLog.log("Executing query " + query);
+
       final DataFactory dataFactory = createDataFactory(query);
 
       final ByteArrayOutputStream bo = new ByteArrayOutputStream();

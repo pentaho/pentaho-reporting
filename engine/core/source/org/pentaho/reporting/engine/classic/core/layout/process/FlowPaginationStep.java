@@ -136,6 +136,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     final boolean retval = handleStartBlockLevelBox(box);
     installTableContext(box);
     return retval;
@@ -221,6 +223,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     installTableContext(box);
 
     shiftState = shiftStatePool.create(box, shiftState);
@@ -237,6 +241,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     installTableContext(box);
 
     shiftState = shiftStatePool.create(box, shiftState);
@@ -253,6 +259,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     shiftState = shiftStatePool.create(box, shiftState);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
@@ -384,6 +392,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
       if (box.isOpen())
@@ -411,6 +421,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     return startRowLevelBox(box);
   }
 
@@ -421,6 +433,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableCellLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     installTableContext(box);
     return startBlockLevelBox(box);
   }
@@ -433,6 +447,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     BoxShifter.shiftBox(box, shiftState.getShiftForNextChild());
     return false;
   }

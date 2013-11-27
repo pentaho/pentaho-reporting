@@ -762,7 +762,20 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   protected boolean startTableCellBox(final TableCellRenderBox box)
   {
-    return startBox(box, "table-cell");
+    try
+    {
+      AttributeList attrs = createBoxAttributeList(box);
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-span", String.valueOf(box.getColSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-span", String.valueOf(box.getRowSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-index", String.valueOf(box.getColumnIndex()));
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table-cell", attrs, XmlWriter.OPEN);
+      writeElementAttributes(box);
+      return true;
+    }
+    catch (IOException e)
+    {
+      throw new InvalidReportStateException(e.getMessage(), e);
+    }
   }
 
   protected void finishTableCellBox(final TableCellRenderBox box)

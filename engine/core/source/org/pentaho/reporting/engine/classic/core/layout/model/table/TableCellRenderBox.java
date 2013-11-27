@@ -122,7 +122,8 @@ public class TableCellRenderBox extends BlockRenderBox
   {
     this.rowSpan = Math.max (1, rowSpan);
     this.colSpan = Math.max (1, colSpan);
-    this.resetCacheState(true);
+    // todo PRD-4606
+    this.resetCacheState(false);
   }
 
   /**
@@ -173,5 +174,10 @@ public class TableCellRenderBox extends BlockRenderBox
   public void setBodySection(final boolean bodySection)
   {
     this.bodySection = bodySection;
+  }
+
+  public void apply()
+  {
+    super.apply();
   }
 }

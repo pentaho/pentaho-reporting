@@ -97,10 +97,12 @@ public class XmlTableOutputProcessorMetaData extends AbstractOutputProcessorMeta
     {
       addFeature(OutputProcessorFeature.PAGEBREAKS);
       addFeature(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
+      addFeature(OutputProcessorFeature.ITERATIVE_RENDERING);
     }
     else
     {
       addFeature(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
+      addFeature(OutputProcessorFeature.ITERATIVE_RENDERING);
     }
   }
 

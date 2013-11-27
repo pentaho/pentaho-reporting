@@ -269,6 +269,8 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       filledRows = getRowCount();
     }
 
+    logicalPage.setProcessedTableOffset(sheetLayout.getYPosition(filledRows));
+
     if (iterativeUpdate == false)
     {
       headerProcessed = false;

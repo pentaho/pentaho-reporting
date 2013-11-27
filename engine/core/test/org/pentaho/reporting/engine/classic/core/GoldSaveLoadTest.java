@@ -27,6 +27,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -57,8 +58,7 @@ public class GoldSaveLoadTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
@@ -68,8 +68,7 @@ public class GoldSaveLoadTest extends GoldTestBase
   @Test
   public void testParallelExecutionIsSafe() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

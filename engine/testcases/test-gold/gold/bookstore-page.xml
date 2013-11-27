@@ -66,7 +66,7 @@
                     <text x="27.511" y="48.0" width="34.221" height="11.0">Boston</text>
                   </line>
                 </p>
-                <replaced-content x="200.0" y="48.0" width="100.0" height="90.0" source="null" content-width="50.0" content-height="50.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <replaced-content x="200.0" y="48.0" width="100.0" height="90.0" source="null" content-width="900.0" content-height="823.5" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.engine.classic.core.DefaultImageReference">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="logo"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="butterfly.wmf"/>

@@ -45,6 +45,7 @@
 
     <xsd:attribute name="row-span" type="xsd:integer"/>
     <xsd:attribute name="col-span" type="xsd:integer"/>
+    <xsd:attribute name="col-index" type="xsd:integer"/>
     <xsd:attribute name="href" type="xsd:string"/>
     <xsd:attribute name="href-window" type="xsd:string"/>
     <xsd:attribute name="href-title" type="xsd:string"/>

@@ -23,13 +23,25 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
   private long shift;
   private long initialShift;
   private boolean breakSuspended;
+  private StackedObjectPool<BlockLevelPaginationShiftState> pool;
+
+  public BlockLevelPaginationShiftState()
+  {
+  }
 
   public BlockLevelPaginationShiftState(final PaginationShiftState parent)
+  {
+    reuse(null, parent);
+  }
+
+  public void reuse(final StackedObjectPool<BlockLevelPaginationShiftState> pool,
+                    final PaginationShiftState parent)
   {
     if (parent == null)
     {
       throw new NullPointerException();
     }
+    this.pool = pool;
     this.parent = parent;
     this.initialShift = parent.getShiftForNextChild();
     this.shift = initialShift;
@@ -83,6 +95,11 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
   public PaginationShiftState pop()
   {
     parent.updateShiftFromChild(this.shift);
+    if (this.pool != null)
+    {
+      this.pool.free(this);
+      this.pool = null;
+    }
     return parent;
   }
 }

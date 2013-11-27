@@ -51,9 +51,9 @@ public class DummyLayoutModelBuilder implements LayoutModelBuilder
 
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-
+    return null;
   }
 
   public void setCollapseProgressMarker(final boolean b)

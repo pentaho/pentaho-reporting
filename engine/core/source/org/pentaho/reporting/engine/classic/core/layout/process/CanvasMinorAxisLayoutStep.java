@@ -892,21 +892,17 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   private void startTableCol(final TableColumnNode box)
   {
-    // todo: Support col- and col-group elements
   }
 
   private void finishTableCol(final TableColumnNode box)
   {
-    // todo: Support col- and col-group elements
   }
 
   private void startTableColGroup(final TableColumnGroupNode box)
   {
-    // todo: Support col- and col-group elements
   }
 
   private void finishTableColGroup(final TableColumnGroupNode box)
   {
-    // todo: Support col- and col-group elements
   }
 }

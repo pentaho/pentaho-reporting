@@ -186,8 +186,17 @@ public class BSHExpression extends AbstractExpression
     }
     catch (Exception e)
     {
-      BSHExpression.logger.warn("Evaluation error: " + //$NON-NLS-1$
-          e.getClass() + " - " + e.getMessage(), e); //$NON-NLS-1$
+      if (logger.isWarnEnabled())
+      {
+        logger.warn("Evaluation error: " + //$NON-NLS-1$
+            e.getClass() + " - " + e.getMessage()); //$NON-NLS-1$
+      }
+      else if (logger.isDebugEnabled())
+      {
+        logger.debug("Evaluation error: " + //$NON-NLS-1$
+            e.getClass() + " - " + e.getMessage(), e); //$NON-NLS-1$
+      }
+
       return null;
     }
     finally

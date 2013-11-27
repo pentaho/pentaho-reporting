@@ -56,8 +56,7 @@ public class TableLayoutTest extends TestCase
 
   public void testLayoutSmallToLarge() throws ReportProcessingException, ContentProcessingException
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

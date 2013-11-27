@@ -487,7 +487,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return false;
     }
 
-    breakState.openContext(new BoxAlignContext(box));
+    breakState.openContext(box);
     return true;
   }
 
@@ -538,7 +538,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     final int nodeType = box.getLayoutNodeType();
     if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
     {
-      breakState.openContext(new BoxAlignContext(box));
+      breakState.openContext(box);
       return true;
     }
     else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
@@ -1074,11 +1074,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final long blockHeight = computeTableHeightAndAlign(box);
       box.setCachedHeight(blockHeight);
     }
+
+    markAllChildsDirty(box);
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
+    clearAllChildsDirtyMarker(box);
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       final long blockHeight = computeTableHeightAndAlign(box);
@@ -1135,19 +1138,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box instanceof TableRowRenderBox)
-    {
-      // rows get their height from the current table-row-model. This model cannot be computed until
-      // the full section is known.
-      // rows will be shifted into place by the finishTableLevelBox function.
-      box.setCachedHeight(0);
-    }
-    else
-    {
-      // auto-boxes behave like normal block elements.
-      // This produces invalid output, as the rows are not shifted yet.
-      final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeight(blockHeight);
-    }
+    box.setCachedHeight(0);
   }
 }

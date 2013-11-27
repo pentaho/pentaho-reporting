@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.valign.BoxAlignContext;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
@@ -89,8 +90,9 @@ public final class MajorAxisParagraphBreakState
     return currentLine;
   }
 
-  public void openContext(final BoxAlignContext context)
+  public void openContext(final RenderBox box)
   {
+    final BoxAlignContext context = new BoxAlignContext(box);
     if (currentLine != null)
     {
       currentLine.addChild(context);

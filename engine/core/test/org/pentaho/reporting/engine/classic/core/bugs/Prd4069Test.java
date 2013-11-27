@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlO
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.StreamHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.FlowExcelOutputProcessor;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.RelationalReportBuilder;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -64,8 +65,7 @@ public class Prd4069Test extends TestCase
 
   public void testFlowTableExport () throws ReportProcessingException
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
@@ -125,8 +125,7 @@ public class Prd4069Test extends TestCase
 
   public void testStreamTableExport() throws ReportProcessingException
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

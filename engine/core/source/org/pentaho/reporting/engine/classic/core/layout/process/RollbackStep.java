@@ -41,6 +41,8 @@ public final class RollbackStep extends IterateSimpleStructureProcessStep
     }
     startProcessing(pageBox);
     pageBox.rollbackSaveInformation();
+    // todo PRD-4606
+    // pageBox.resetCacheState(true);
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
@@ -76,7 +78,8 @@ public final class RollbackStep extends IterateSimpleStructureProcessStep
         // must be a new box. Go away, evil new box ...
         final RenderNode next = child.getNext();
         parent.remove(box);
-        parent.resetCacheState(true);
+        // todo PRD-4606
+        parent.resetCacheState(false);
         child = next;
         continue;
       }

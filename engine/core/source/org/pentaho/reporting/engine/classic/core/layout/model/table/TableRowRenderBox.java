@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -28,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A table section box does not much rendering or layouting at all. It
@@ -46,10 +48,8 @@ public class TableRowRenderBox extends RenderBox
 
   public TableRowRenderBox()
   {
-    super(RenderNode.HORIZONTAL_AXIS, RenderNode.VERTICAL_AXIS,
-        SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+    this(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
         AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
-    this.rowIndex = -1;
   }
 
   public TableRowRenderBox(final StyleSheet styleSheet,
@@ -138,5 +138,56 @@ public class TableRowRenderBox extends RenderBox
   public void extendHeight(final RenderNode child, final long heightOffset)
   {
     extendHeightInRowMode(child, heightOffset);
+  }
+
+  public void addChild(final RenderNode child)
+  {
+    if (isValid(child) == false)
+    {
+      TableCellRenderBox tsrb = new TableCellRenderBox();
+      tsrb.addChild(child);
+      addChild(tsrb);
+      tsrb.close();
+      return;
+    }
+
+    super.addChild(child);
+  }
+
+  private boolean isValid(final RenderNode child)
+  {
+    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      DebugLog.log("WARN: BREAK MARKER INSIDE TABLE ROW");
+      return false;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
+    {
+      DebugLog.log("WARN: PROGRESS MARKER INSIDE TABLE ROW");
+      return true;
+    }
+
+    return false;
+  }
+
+  public RenderBox create(final StyleSheet styleSheet)
+  {
+    return new AutoRenderBox(styleSheet);
   }
 }

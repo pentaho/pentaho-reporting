@@ -17,22 +17,49 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class SeparateRowModel extends AbstractRowModel
 {
-  private boolean validatedSize;
+  private static class ProcessedRowVoter
+  {
+    private int rejectedRow;
+    private int acceptedRow;
+
+    private ProcessedRowVoter(final int rowCount,
+                              final int previouslyProcessedRows)
+    {
+      this.rejectedRow = rowCount;
+      this.acceptedRow = previouslyProcessedRows;
+    }
+
+    public void reject(int row)
+    {
+      rejectedRow = Math.min(row, rejectedRow);
+    }
+
+    public void accept(int row)
+    {
+      acceptedRow = Math.max(row, acceptedRow);
+    }
+
+    public int getProcessedRows()
+    {
+      return Math.min(rejectedRow, acceptedRow);
+    }
+  }
+
+  private static final Log logger = LogFactory.getLog(SeparateRowModel.class);
+  private int validatedRowCount;
+  private int validatedActualSizes;
   private long rowSpacing;
 
   public SeparateRowModel()
   {
-  }
-
-  public void addRow()
-  {
-    super.addRow();
   }
 
   public long getRowSpacing()
@@ -40,94 +67,116 @@ public class SeparateRowModel extends AbstractRowModel
     return rowSpacing;
   }
 
+  public void setRowSpacing(final long rowSpacing)
+  {
+    this.rowSpacing = rowSpacing;
+  }
+
   public void initialize(final TableRenderBox table)
   {
     rowSpacing = table.getRowSpacing().resolve(0);
   }
 
-  public void validateSizes()
+  private interface RowProcessingDelegate
   {
-    if (validatedSize)
+    public long run(TableRow r, int rowSpan);
+  }
+
+  private ProcessedRowVoter compute(final long[] preferredSizes,
+                                    final int validatedRowCount,
+                                    RowProcessingDelegate delegate)
+  {
+    int rowCount = getRowCount();
+    final ProcessedRowVoter voter = new ProcessedRowVoter(rowCount, validatedRowCount);
+    if (preferredSizes.length == 0)
+    {
+      return voter;
+    }
+
+    if (logger.isDebugEnabled())
+    {
+      logger.debug("Computing: " + (rowCount - validatedRowCount) + " rows. " + validatedRowCount);
+    }
+
+    int currentRowSpan = 0;
+    boolean processNextLevel = true;
+    while (processNextLevel)
+    {
+      currentRowSpan += 1;
+      processNextLevel = false;
+
+      for (int rowIdx = validatedRowCount; rowIdx < rowCount; rowIdx++)
+      {
+        final TableRow row = getRow(rowIdx);
+        final int maximumRowSpan = row.getMaximumRowSpan();
+        if (maximumRowSpan >= currentRowSpan)
+        {
+          final long preferredSize = delegate.run(row, currentRowSpan);
+          distribute(preferredSize, preferredSizes, rowIdx, currentRowSpan);
+          if (maximumRowSpan > currentRowSpan)
+          {
+            processNextLevel = true;
+          }
+
+          if (rowIdx + currentRowSpan <= rowCount)
+          {
+            voter.accept(rowIdx + currentRowSpan);
+          }
+          else
+          {
+            voter.reject(rowIdx);
+          }
+        }
+      }
+    }
+    return voter;
+  }
+
+  public void validatePreferredSizes()
+  {
+    final int rowCount = getRowCount();
+    if (this.validatedRowCount == rowCount)
     {
       return;
     }
 
-    int maxRowSpan = 0;
-    final TableRow[] rows = getRows();
-    final int rowCount = rows.length;
-    for (int i = 0; i < rowCount; i++)
-    {
-      final TableRow row = rows[i];
-      final int cs = row.getMaximumRowSpan();
-      if (cs > maxRowSpan)
-      {
-        maxRowSpan = cs;
-      }
-    }
+    long[] preferredSizes = getPreferredSizes(this.validatedRowCount);
 
     // first, find out how much space is already used.
-    final long[] preferredSizes = new long[rowCount];
     // For each rowspan ...
-    for (int rowspan = 1; rowspan <= maxRowSpan; rowspan += 1)
+    ProcessedRowVoter voter = compute(preferredSizes, this.validatedRowCount, new RowProcessingDelegate()
     {
-      for (int rowIdx = 0; rowIdx < rowCount; rowIdx++)
+      public long run(final TableRow r, final int rowSpan)
       {
-        final TableRow row = rows[rowIdx];
-        final long preferredSize = row.getPreferredSize(rowspan);
-
-        distribute(preferredSize, preferredSizes, rowIdx, rowspan);
+        return r.getPreferredSize(rowSpan);
       }
-    }
+    });
 
-    for (int i = 0; i < rowCount; i++)
-    {
-      final TableRow row = rows[i];
-      row.setPreferredSize(preferredSizes[i]);
-    }
-
-    validatedSize = true;
+    applyPreferredSizes(preferredSizes, this.validatedRowCount, rowCount);
+    this.validatedRowCount = voter.getProcessedRows();
   }
-
 
   public void validateActualSizes()
   {
-    validateSizes();
+    validatePreferredSizes();
 
-    int maxRowSpan = 0;
-    final TableRow[] rows = getRows();
-    final int rowCount = rows.length;
-    for (int i = 0; i < rowCount; i++)
+    final int rowCount = getRowCount();
+    if (this.validatedActualSizes == rowCount)
     {
-      final TableRow row = rows[i];
-      final int cs = row.getMaxValidatedRowSpan();
-      if (cs > maxRowSpan)
+      return;
+    }
+
+    final long[] trailingSizes = getValidateSizes(this.validatedActualSizes);
+    ProcessedRowVoter voter = compute(trailingSizes, this.validatedActualSizes, new RowProcessingDelegate()
+    {
+      public long run(final TableRow r, final int rowSpan)
       {
-        maxRowSpan = cs;
+        return r.getValidatedTrailingSize(rowSpan);
       }
-    }
+    });
 
-    // first, find out how much space is already used.
-    // This follows the classical model.
-
-    final long[] trailingSizes = new long[rowCount];
-    // For each rowspan ...
-    for (int rowspan = 1; rowspan <= maxRowSpan; rowspan += 1)
-    {
-      for (int rowIdx = 0; rowIdx < trailingSizes.length; rowIdx++)
-      {
-        final TableRow row = rows[rowIdx];
-        final long size = row.getValidatedTrailingSize(rowspan);
-
-        distribute(size, trailingSizes, rowIdx, rowspan);
-      }
-    }
-
-    for (int i = 0; i < trailingSizes.length; i++)
-    {
-      final TableRow row = rows[i];
-      final long validateSize = trailingSizes[i] + row.getValidatedLeadingSize();
-      row.setValidateSize(Math.max(row.getPreferredSize(), validateSize));
-    }
+    applyValidateSizes(trailingSizes, this.validatedActualSizes, rowCount);
+    this.validatedActualSizes = voter.getProcessedRows();
   }
 
   private void distribute(final long usedSpace, final long[] allSpaces,
@@ -159,12 +208,60 @@ public class SeparateRowModel extends AbstractRowModel
 
   public void clear()
   {
-    final TableRow[] rows = getRows();
+    this.validatedActualSizes = 0;
+    this.validatedRowCount = 0;
+
+    final TableRowImpl[] rows = getRows();
     final int rowCount = rows.length;
     for (int i = 0; i < rowCount; i++)
     {
-      final TableRow row = rows[i];
+      final TableRowImpl row = rows[i];
       row.clear();
     }
+  }
+
+  public int getValidatedRowCount()
+  {
+    return validatedRowCount;
+  }
+
+  public int getValidatedActualSizes()
+  {
+    return validatedActualSizes;
+  }
+
+  public void prune(final int rows)
+  {
+    super.prune(rows);
+    if (rows <= 1)
+    {
+      return;
+    }
+
+    validatedActualSizes -= rows;
+    validatedRowCount -= rows;
+  }
+
+  public void setDebugInformation(final ElementType elementType, final InstanceID instanceID)
+  {
+
+  }
+
+  public String toString()
+  {
+    TableRowImpl[] rows = getRows();
+    StringBuilder b = new StringBuilder();
+    for (TableRowImpl r : rows)
+    {
+      b.append(r);
+      b.append("\n");
+    }
+
+    return "SeparateRowModel{" +
+        "rows=\n" + b +
+        ", rowSpacing=" + rowSpacing +
+        ", validatedActualSizes=" + validatedActualSizes +
+        ", validatedRowCount=" + validatedRowCount +
+        '}';
   }
 }

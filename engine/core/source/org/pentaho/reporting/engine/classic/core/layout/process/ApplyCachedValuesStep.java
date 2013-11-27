@@ -80,6 +80,11 @@ public final class ApplyCachedValuesStep extends IterateStructuralProcessStep
 
   private boolean processBox(final RenderBox box)
   {
+    if (box.getApplyState() != RenderNode.CacheState.CLEAN)
+    {
+      cacheClean = false;
+    }
+
     if (cacheClean)
     {
       final RenderNode.CacheState state = box.getCacheState();

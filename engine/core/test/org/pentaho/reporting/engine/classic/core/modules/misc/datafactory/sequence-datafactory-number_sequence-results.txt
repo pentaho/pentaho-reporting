@@ -1,0 +1,2476 @@
+Tablemodel contains 1234 rows.
+Column: 0 Name=number; DataType=class java.math.BigDecimal
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (2, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (3, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (4, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (5, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (6, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (7, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (8, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (9, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (10, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (11, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (12, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (13, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (14, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (15, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (16, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (17, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (18, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (19, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (20, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (21, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (22, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (23, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (24, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (25, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (26, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (27, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (28, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (29, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (30, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (31, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (32, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (33, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (34, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (35, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (36, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (37, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (38, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (39, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (40, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (41, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (42, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (43, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (44, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (45, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (46, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (47, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (48, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (49, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (50, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (51, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (52, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (53, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (54, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (55, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (56, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (57, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (58, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (59, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (60, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (61, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (62, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (63, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (64, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (65, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (66, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (67, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (68, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (69, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (70, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (71, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (72, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (73, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (74, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (75, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (76, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (77, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (78, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (79, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (80, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (81, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (82, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (83, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (84, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (85, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (86, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (87, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (88, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (89, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (90, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (91, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (92, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (93, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (94, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (95, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (96, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (97, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (98, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (99, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (100, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (101, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (102, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (103, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (104, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (105, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (106, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (107, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (108, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (109, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (110, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (111, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (112, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (113, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (114, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (115, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (116, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (117, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (118, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (119, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (120, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (121, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (122, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (123, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (124, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (125, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (126, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (127, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (128, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (129, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (130, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (131, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (132, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (133, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (134, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (135, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (136, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (137, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (138, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (139, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (140, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (141, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (142, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (143, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (144, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (145, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (146, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (147, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (148, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (149, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (150, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (151, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (152, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (153, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (154, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (155, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (156, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (157, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (158, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (159, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (160, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (161, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (162, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (163, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (164, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (165, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (166, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (167, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (168, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (169, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (170, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (171, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (172, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (173, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (174, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (175, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (176, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (177, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (178, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (179, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (180, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (181, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (182, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (183, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (184, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (185, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (186, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (187, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (188, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (189, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (190, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (191, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (192, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (193, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (194, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (195, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (196, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (197, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (198, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (199, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (200, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (201, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (202, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (203, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (204, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (205, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (206, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (207, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (208, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (209, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (210, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (211, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (212, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (213, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (214, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (215, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (216, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (217, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (218, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (219, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (220, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (221, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (222, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (223, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (224, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (225, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (226, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (227, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (228, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (229, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (230, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (231, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (232, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (233, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (234, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (235, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (236, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (237, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (238, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (239, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (240, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (241, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (242, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (243, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (244, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (245, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (246, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (247, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (248, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (249, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (250, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (251, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (252, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (253, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (254, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (255, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (256, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (257, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (258, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (259, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (260, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (261, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (262, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (263, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (264, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (265, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (266, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (267, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (268, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (269, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (270, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (271, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (272, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (273, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (274, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (275, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (276, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (277, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (278, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (279, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (280, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (281, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (282, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (283, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (284, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (285, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (286, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (287, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (288, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (289, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (290, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (291, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (292, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (293, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (294, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (295, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (296, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (297, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (298, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (299, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (300, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (301, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (302, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (303, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (304, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (305, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (306, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (307, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (308, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (309, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (310, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (311, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (312, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (313, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (314, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (315, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (316, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (317, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (318, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (319, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (320, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (321, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (322, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (323, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (324, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (325, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (326, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (327, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (328, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (329, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (330, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (331, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (332, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (333, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (334, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (335, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (336, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (337, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (338, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (339, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (340, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (341, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (342, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (343, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (344, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (345, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (346, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (347, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (348, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (349, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (350, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (351, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (352, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (353, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (354, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (355, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (356, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (357, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (358, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (359, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (360, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (361, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (362, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (363, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (364, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (365, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (366, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (367, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (368, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (369, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (370, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (371, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (372, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (373, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (374, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (375, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (376, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (377, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (378, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (379, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (380, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (381, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (382, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (383, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (384, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (385, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (386, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (387, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (388, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (389, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (390, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (391, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (392, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (393, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (394, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (395, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (396, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (397, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (398, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (399, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (400, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (401, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (402, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (403, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (404, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (405, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (406, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (407, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (408, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (409, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (410, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (411, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (412, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (413, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (414, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (415, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (416, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (417, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (418, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (419, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (420, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (421, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (422, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (423, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (424, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (425, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (426, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (427, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (428, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (429, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (430, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (431, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (432, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (433, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (434, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (435, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (436, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (437, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (438, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (439, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (440, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (441, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (442, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (443, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (444, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (445, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (446, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (447, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (448, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (449, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (450, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (451, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (452, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (453, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (454, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (455, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (456, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (457, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (458, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (459, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (460, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (461, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (462, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (463, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (464, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (465, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (466, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (467, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (468, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (469, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (470, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (471, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (472, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (473, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (474, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (475, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (476, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (477, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (478, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (479, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (480, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (481, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (482, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (483, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (484, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (485, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (486, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (487, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (488, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (489, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (490, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (491, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (492, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (493, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (494, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (495, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (496, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (497, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (498, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (499, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (500, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (501, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (502, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (503, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (504, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (505, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (506, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (507, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (508, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (509, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (510, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (511, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (512, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (513, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (514, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (515, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (516, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (517, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (518, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (519, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (520, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (521, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (522, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (523, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (524, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (525, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (526, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (527, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (528, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (529, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (530, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (531, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (532, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (533, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (534, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (535, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (536, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (537, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (538, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (539, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (540, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (541, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (542, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (543, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (544, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (545, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (546, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (547, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (548, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (549, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (550, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (551, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (552, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (553, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (554, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (555, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (556, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (557, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (558, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (559, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (560, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (561, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (562, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (563, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (564, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (565, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (566, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (567, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (568, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (569, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (570, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (571, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (572, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (573, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (574, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (575, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (576, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (577, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (578, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (579, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (580, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (581, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (582, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (583, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (584, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (585, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (586, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (587, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (588, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (589, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (590, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (591, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (592, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (593, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (594, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (595, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (596, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (597, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (598, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (599, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (600, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (601, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (602, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (603, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (604, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (605, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (606, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (607, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (608, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (609, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (610, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (611, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (612, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (613, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (614, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (615, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (616, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (617, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (618, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (619, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (620, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (621, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (622, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (623, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (624, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (625, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (626, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (627, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (628, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (629, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (630, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (631, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (632, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (633, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (634, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (635, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (636, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (637, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (638, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (639, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (640, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (641, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (642, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (643, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (644, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (645, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (646, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (647, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (648, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (649, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (650, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (651, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (652, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (653, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (654, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (655, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (656, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (657, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (658, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (659, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (660, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (661, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (662, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (663, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (664, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (665, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (666, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (667, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (668, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (669, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (670, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (671, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (672, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (673, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (674, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (675, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (676, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (677, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (678, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (679, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (680, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (681, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (682, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (683, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (684, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (685, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (686, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (687, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (688, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (689, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (690, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (691, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (692, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (693, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (694, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (695, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (696, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (697, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (698, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (699, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (700, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (701, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (702, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (703, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (704, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (705, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (706, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (707, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (708, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (709, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (710, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (711, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (712, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (713, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (714, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (715, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (716, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (717, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (718, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (719, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (720, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (721, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (722, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (723, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (724, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (725, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (726, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (727, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (728, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (729, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (730, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (731, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (732, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (733, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (734, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (735, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (736, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (737, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (738, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (739, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (740, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (741, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (742, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (743, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (744, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (745, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (746, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (747, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (748, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (749, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (750, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (751, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (752, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (753, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (754, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (755, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (756, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (757, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (758, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (759, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (760, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (761, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (762, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (763, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (764, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (765, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (766, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (767, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (768, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (769, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (770, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (771, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (772, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (773, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (774, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (775, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (776, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (777, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (778, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (779, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (780, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (781, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (782, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (783, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (784, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (785, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (786, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (787, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (788, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (789, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (790, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (791, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (792, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (793, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (794, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (795, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (796, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (797, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (798, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (799, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (800, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (801, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (802, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (803, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (804, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (805, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (806, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (807, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (808, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (809, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (810, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (811, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (812, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (813, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (814, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (815, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (816, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (817, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (818, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (819, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (820, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (821, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (822, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (823, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (824, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (825, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (826, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (827, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (828, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (829, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (830, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (831, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (832, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (833, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (834, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (835, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (836, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (837, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (838, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (839, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (840, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (841, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (842, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (843, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (844, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (845, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (846, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (847, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (848, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (849, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (850, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (851, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (852, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (853, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (854, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (855, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (856, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (857, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (858, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (859, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (860, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (861, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (862, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (863, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (864, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (865, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (866, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (867, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (868, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (869, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (870, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (871, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (872, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (873, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (874, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (875, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (876, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (877, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (878, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (879, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (880, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (881, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (882, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (883, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (884, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (885, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (886, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (887, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (888, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (889, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (890, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (891, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (892, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (893, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (894, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (895, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (896, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (897, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (898, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (899, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (900, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (901, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (902, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (903, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (904, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (905, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (906, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (907, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (908, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (909, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (910, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (911, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (912, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (913, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (914, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (915, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (916, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (917, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (918, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (919, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (920, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (921, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (922, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (923, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (924, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (925, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (926, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (927, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (928, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (929, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (930, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (931, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (932, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (933, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (934, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (935, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (936, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (937, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (938, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (939, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (940, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (941, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (942, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (943, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (944, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (945, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (946, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (947, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (948, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (949, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (950, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (951, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (952, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (953, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (954, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (955, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (956, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (957, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (958, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (959, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (960, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (961, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (962, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (963, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (964, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (965, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (966, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (967, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (968, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (969, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (970, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (971, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (972, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (973, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (974, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (975, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (976, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (977, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (978, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (979, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (980, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (981, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (982, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (983, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (984, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (985, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (986, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (987, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (988, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (989, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (990, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (991, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (992, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (993, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (994, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (995, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (996, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (997, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (998, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (999, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1000, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1001, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1002, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1003, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1004, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1005, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1006, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1007, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1008, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1009, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1010, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1011, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1012, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1013, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1014, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1015, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1016, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1017, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1018, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1019, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1020, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1021, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1022, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1023, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1024, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1025, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1026, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1027, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1028, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1029, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1030, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1031, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1032, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1033, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1034, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1035, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1036, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1037, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1038, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1039, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1040, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1041, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1042, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1043, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1044, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1045, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1046, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1047, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1048, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1049, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1050, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1051, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1052, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1053, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1054, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1055, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1056, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1057, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1058, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1059, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1060, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1061, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1062, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1063, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1064, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1065, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1066, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1067, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1068, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1069, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1070, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1071, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1072, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1073, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1074, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1075, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1076, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1077, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1078, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1079, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1080, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1081, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1082, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1083, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1084, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1085, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1086, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1087, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1088, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1089, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1090, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1091, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1092, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1093, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1094, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1095, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1096, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1097, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1098, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1099, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1100, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1101, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1102, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1103, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1104, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1105, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1106, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1107, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1108, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1109, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1110, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1111, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1112, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1113, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1114, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1115, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1116, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1117, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1118, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1119, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1120, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1121, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1122, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1123, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1124, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1125, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1126, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1127, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1128, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1129, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1130, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1131, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1132, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1133, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1134, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1135, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1136, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1137, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1138, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1139, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1140, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1141, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1142, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1143, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1144, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1145, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1146, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1147, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1148, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1149, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1150, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1151, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1152, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1153, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1154, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1155, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1156, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1157, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1158, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1159, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1160, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1161, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1162, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1163, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1164, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1165, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1166, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1167, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1168, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1169, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1170, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1171, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1172, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1173, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1174, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1175, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1176, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1177, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1178, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1179, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1180, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1181, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1182, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1183, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1184, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1185, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1186, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1187, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1188, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1189, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1190, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1191, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1192, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1193, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1194, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1195, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1196, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1197, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1198, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1199, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1200, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1201, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1202, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1203, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1204, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1205, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1206, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1207, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1208, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1209, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1210, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1211, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1212, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1213, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1214, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1215, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1216, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1217, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1218, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1219, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1220, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1221, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1222, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1223, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1224, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1225, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1226, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1227, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1228, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1229, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1230, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1231, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1232, 0) is in a typed column and is of type class java.math.BigDecimal
+ValueAt (1233, 0) is in a typed column and is of type class java.math.BigDecimal
+TableModel has no meta-data.
+TableModel has no meta-data.
+Tablemodel contains 1234 rows.
+Column: 0 Name=number; DataType=class java.math.BigDecimal
+Checking the data inside
+ValueAt (0, 0) is '1485.3'
+ValueAt (1, 0) is '1486.5'
+ValueAt (2, 0) is '1487.7'
+ValueAt (3, 0) is '1488.9'
+ValueAt (4, 0) is '1490.1'
+ValueAt (5, 0) is '1491.3'
+ValueAt (6, 0) is '1492.5'
+ValueAt (7, 0) is '1493.7'
+ValueAt (8, 0) is '1494.9'
+ValueAt (9, 0) is '1496.1'
+ValueAt (10, 0) is '1497.3'
+ValueAt (11, 0) is '1498.5'
+ValueAt (12, 0) is '1499.7'
+ValueAt (13, 0) is '1500.9'
+ValueAt (14, 0) is '1502.1'
+ValueAt (15, 0) is '1503.3'
+ValueAt (16, 0) is '1504.5'
+ValueAt (17, 0) is '1505.7'
+ValueAt (18, 0) is '1506.9'
+ValueAt (19, 0) is '1508.1'
+ValueAt (20, 0) is '1509.3'
+ValueAt (21, 0) is '1510.5'
+ValueAt (22, 0) is '1511.7'
+ValueAt (23, 0) is '1512.9'
+ValueAt (24, 0) is '1514.1'
+ValueAt (25, 0) is '1515.3'
+ValueAt (26, 0) is '1516.5'
+ValueAt (27, 0) is '1517.7'
+ValueAt (28, 0) is '1518.9'
+ValueAt (29, 0) is '1520.1'
+ValueAt (30, 0) is '1521.3'
+ValueAt (31, 0) is '1522.5'
+ValueAt (32, 0) is '1523.7'
+ValueAt (33, 0) is '1524.9'
+ValueAt (34, 0) is '1526.1'
+ValueAt (35, 0) is '1527.3'
+ValueAt (36, 0) is '1528.5'
+ValueAt (37, 0) is '1529.7'
+ValueAt (38, 0) is '1530.9'
+ValueAt (39, 0) is '1532.1'
+ValueAt (40, 0) is '1533.3'
+ValueAt (41, 0) is '1534.5'
+ValueAt (42, 0) is '1535.7'
+ValueAt (43, 0) is '1536.9'
+ValueAt (44, 0) is '1538.1'
+ValueAt (45, 0) is '1539.3'
+ValueAt (46, 0) is '1540.5'
+ValueAt (47, 0) is '1541.7'
+ValueAt (48, 0) is '1542.9'
+ValueAt (49, 0) is '1544.1'
+ValueAt (50, 0) is '1545.3'
+ValueAt (51, 0) is '1546.5'
+ValueAt (52, 0) is '1547.7'
+ValueAt (53, 0) is '1548.9'
+ValueAt (54, 0) is '1550.1'
+ValueAt (55, 0) is '1551.3'
+ValueAt (56, 0) is '1552.5'
+ValueAt (57, 0) is '1553.7'
+ValueAt (58, 0) is '1554.9'
+ValueAt (59, 0) is '1556.1'
+ValueAt (60, 0) is '1557.3'
+ValueAt (61, 0) is '1558.5'
+ValueAt (62, 0) is '1559.7'
+ValueAt (63, 0) is '1560.9'
+ValueAt (64, 0) is '1562.1'
+ValueAt (65, 0) is '1563.3'
+ValueAt (66, 0) is '1564.5'
+ValueAt (67, 0) is '1565.7'
+ValueAt (68, 0) is '1566.9'
+ValueAt (69, 0) is '1568.1'
+ValueAt (70, 0) is '1569.3'
+ValueAt (71, 0) is '1570.5'
+ValueAt (72, 0) is '1571.7'
+ValueAt (73, 0) is '1572.9'
+ValueAt (74, 0) is '1574.1'
+ValueAt (75, 0) is '1575.3'
+ValueAt (76, 0) is '1576.5'
+ValueAt (77, 0) is '1577.7'
+ValueAt (78, 0) is '1578.9'
+ValueAt (79, 0) is '1580.1'
+ValueAt (80, 0) is '1581.3'
+ValueAt (81, 0) is '1582.5'
+ValueAt (82, 0) is '1583.7'
+ValueAt (83, 0) is '1584.9'
+ValueAt (84, 0) is '1586.1'
+ValueAt (85, 0) is '1587.3'
+ValueAt (86, 0) is '1588.5'
+ValueAt (87, 0) is '1589.7'
+ValueAt (88, 0) is '1590.9'
+ValueAt (89, 0) is '1592.1'
+ValueAt (90, 0) is '1593.3'
+ValueAt (91, 0) is '1594.5'
+ValueAt (92, 0) is '1595.7'
+ValueAt (93, 0) is '1596.9'
+ValueAt (94, 0) is '1598.1'
+ValueAt (95, 0) is '1599.3'
+ValueAt (96, 0) is '1600.5'
+ValueAt (97, 0) is '1601.7'
+ValueAt (98, 0) is '1602.9'
+ValueAt (99, 0) is '1604.1'
+ValueAt (100, 0) is '1605.3'
+ValueAt (101, 0) is '1606.5'
+ValueAt (102, 0) is '1607.7'
+ValueAt (103, 0) is '1608.9'
+ValueAt (104, 0) is '1610.1'
+ValueAt (105, 0) is '1611.3'
+ValueAt (106, 0) is '1612.5'
+ValueAt (107, 0) is '1613.7'
+ValueAt (108, 0) is '1614.9'
+ValueAt (109, 0) is '1616.1'
+ValueAt (110, 0) is '1617.3'
+ValueAt (111, 0) is '1618.5'
+ValueAt (112, 0) is '1619.7'
+ValueAt (113, 0) is '1620.9'
+ValueAt (114, 0) is '1622.1'
+ValueAt (115, 0) is '1623.3'
+ValueAt (116, 0) is '1624.5'
+ValueAt (117, 0) is '1625.7'
+ValueAt (118, 0) is '1626.9'
+ValueAt (119, 0) is '1628.1'
+ValueAt (120, 0) is '1629.3'
+ValueAt (121, 0) is '1630.5'
+ValueAt (122, 0) is '1631.7'
+ValueAt (123, 0) is '1632.9'
+ValueAt (124, 0) is '1634.1'
+ValueAt (125, 0) is '1635.3'
+ValueAt (126, 0) is '1636.5'
+ValueAt (127, 0) is '1637.7'
+ValueAt (128, 0) is '1638.9'
+ValueAt (129, 0) is '1640.1'
+ValueAt (130, 0) is '1641.3'
+ValueAt (131, 0) is '1642.5'
+ValueAt (132, 0) is '1643.7'
+ValueAt (133, 0) is '1644.9'
+ValueAt (134, 0) is '1646.1'
+ValueAt (135, 0) is '1647.3'
+ValueAt (136, 0) is '1648.5'
+ValueAt (137, 0) is '1649.7'
+ValueAt (138, 0) is '1650.9'
+ValueAt (139, 0) is '1652.1'
+ValueAt (140, 0) is '1653.3'
+ValueAt (141, 0) is '1654.5'
+ValueAt (142, 0) is '1655.7'
+ValueAt (143, 0) is '1656.9'
+ValueAt (144, 0) is '1658.1'
+ValueAt (145, 0) is '1659.3'
+ValueAt (146, 0) is '1660.5'
+ValueAt (147, 0) is '1661.7'
+ValueAt (148, 0) is '1662.9'
+ValueAt (149, 0) is '1664.1'
+ValueAt (150, 0) is '1665.3'
+ValueAt (151, 0) is '1666.5'
+ValueAt (152, 0) is '1667.7'
+ValueAt (153, 0) is '1668.9'
+ValueAt (154, 0) is '1670.1'
+ValueAt (155, 0) is '1671.3'
+ValueAt (156, 0) is '1672.5'
+ValueAt (157, 0) is '1673.7'
+ValueAt (158, 0) is '1674.9'
+ValueAt (159, 0) is '1676.1'
+ValueAt (160, 0) is '1677.3'
+ValueAt (161, 0) is '1678.5'
+ValueAt (162, 0) is '1679.7'
+ValueAt (163, 0) is '1680.9'
+ValueAt (164, 0) is '1682.1'
+ValueAt (165, 0) is '1683.3'
+ValueAt (166, 0) is '1684.5'
+ValueAt (167, 0) is '1685.7'
+ValueAt (168, 0) is '1686.9'
+ValueAt (169, 0) is '1688.1'
+ValueAt (170, 0) is '1689.3'
+ValueAt (171, 0) is '1690.5'
+ValueAt (172, 0) is '1691.7'
+ValueAt (173, 0) is '1692.9'
+ValueAt (174, 0) is '1694.1'
+ValueAt (175, 0) is '1695.3'
+ValueAt (176, 0) is '1696.5'
+ValueAt (177, 0) is '1697.7'
+ValueAt (178, 0) is '1698.9'
+ValueAt (179, 0) is '1700.1'
+ValueAt (180, 0) is '1701.3'
+ValueAt (181, 0) is '1702.5'
+ValueAt (182, 0) is '1703.7'
+ValueAt (183, 0) is '1704.9'
+ValueAt (184, 0) is '1706.1'
+ValueAt (185, 0) is '1707.3'
+ValueAt (186, 0) is '1708.5'
+ValueAt (187, 0) is '1709.7'
+ValueAt (188, 0) is '1710.9'
+ValueAt (189, 0) is '1712.1'
+ValueAt (190, 0) is '1713.3'
+ValueAt (191, 0) is '1714.5'
+ValueAt (192, 0) is '1715.7'
+ValueAt (193, 0) is '1716.9'
+ValueAt (194, 0) is '1718.1'
+ValueAt (195, 0) is '1719.3'
+ValueAt (196, 0) is '1720.5'
+ValueAt (197, 0) is '1721.7'
+ValueAt (198, 0) is '1722.9'
+ValueAt (199, 0) is '1724.1'
+ValueAt (200, 0) is '1725.3'
+ValueAt (201, 0) is '1726.5'
+ValueAt (202, 0) is '1727.7'
+ValueAt (203, 0) is '1728.9'
+ValueAt (204, 0) is '1730.1'
+ValueAt (205, 0) is '1731.3'
+ValueAt (206, 0) is '1732.5'
+ValueAt (207, 0) is '1733.7'
+ValueAt (208, 0) is '1734.9'
+ValueAt (209, 0) is '1736.1'
+ValueAt (210, 0) is '1737.3'
+ValueAt (211, 0) is '1738.5'
+ValueAt (212, 0) is '1739.7'
+ValueAt (213, 0) is '1740.9'
+ValueAt (214, 0) is '1742.1'
+ValueAt (215, 0) is '1743.3'
+ValueAt (216, 0) is '1744.5'
+ValueAt (217, 0) is '1745.7'
+ValueAt (218, 0) is '1746.9'
+ValueAt (219, 0) is '1748.1'
+ValueAt (220, 0) is '1749.3'
+ValueAt (221, 0) is '1750.5'
+ValueAt (222, 0) is '1751.7'
+ValueAt (223, 0) is '1752.9'
+ValueAt (224, 0) is '1754.1'
+ValueAt (225, 0) is '1755.3'
+ValueAt (226, 0) is '1756.5'
+ValueAt (227, 0) is '1757.7'
+ValueAt (228, 0) is '1758.9'
+ValueAt (229, 0) is '1760.1'
+ValueAt (230, 0) is '1761.3'
+ValueAt (231, 0) is '1762.5'
+ValueAt (232, 0) is '1763.7'
+ValueAt (233, 0) is '1764.9'
+ValueAt (234, 0) is '1766.1'
+ValueAt (235, 0) is '1767.3'
+ValueAt (236, 0) is '1768.5'
+ValueAt (237, 0) is '1769.7'
+ValueAt (238, 0) is '1770.9'
+ValueAt (239, 0) is '1772.1'
+ValueAt (240, 0) is '1773.3'
+ValueAt (241, 0) is '1774.5'
+ValueAt (242, 0) is '1775.7'
+ValueAt (243, 0) is '1776.9'
+ValueAt (244, 0) is '1778.1'
+ValueAt (245, 0) is '1779.3'
+ValueAt (246, 0) is '1780.5'
+ValueAt (247, 0) is '1781.7'
+ValueAt (248, 0) is '1782.9'
+ValueAt (249, 0) is '1784.1'
+ValueAt (250, 0) is '1785.3'
+ValueAt (251, 0) is '1786.5'
+ValueAt (252, 0) is '1787.7'
+ValueAt (253, 0) is '1788.9'
+ValueAt (254, 0) is '1790.1'
+ValueAt (255, 0) is '1791.3'
+ValueAt (256, 0) is '1792.5'
+ValueAt (257, 0) is '1793.7'
+ValueAt (258, 0) is '1794.9'
+ValueAt (259, 0) is '1796.1'
+ValueAt (260, 0) is '1797.3'
+ValueAt (261, 0) is '1798.5'
+ValueAt (262, 0) is '1799.7'
+ValueAt (263, 0) is '1800.9'
+ValueAt (264, 0) is '1802.1'
+ValueAt (265, 0) is '1803.3'
+ValueAt (266, 0) is '1804.5'
+ValueAt (267, 0) is '1805.7'
+ValueAt (268, 0) is '1806.9'
+ValueAt (269, 0) is '1808.1'
+ValueAt (270, 0) is '1809.3'
+ValueAt (271, 0) is '1810.5'
+ValueAt (272, 0) is '1811.7'
+ValueAt (273, 0) is '1812.9'
+ValueAt (274, 0) is '1814.1'
+ValueAt (275, 0) is '1815.3'
+ValueAt (276, 0) is '1816.5'
+ValueAt (277, 0) is '1817.7'
+ValueAt (278, 0) is '1818.9'
+ValueAt (279, 0) is '1820.1'
+ValueAt (280, 0) is '1821.3'
+ValueAt (281, 0) is '1822.5'
+ValueAt (282, 0) is '1823.7'
+ValueAt (283, 0) is '1824.9'
+ValueAt (284, 0) is '1826.1'
+ValueAt (285, 0) is '1827.3'
+ValueAt (286, 0) is '1828.5'
+ValueAt (287, 0) is '1829.7'
+ValueAt (288, 0) is '1830.9'
+ValueAt (289, 0) is '1832.1'
+ValueAt (290, 0) is '1833.3'
+ValueAt (291, 0) is '1834.5'
+ValueAt (292, 0) is '1835.7'
+ValueAt (293, 0) is '1836.9'
+ValueAt (294, 0) is '1838.1'
+ValueAt (295, 0) is '1839.3'
+ValueAt (296, 0) is '1840.5'
+ValueAt (297, 0) is '1841.7'
+ValueAt (298, 0) is '1842.9'
+ValueAt (299, 0) is '1844.1'
+ValueAt (300, 0) is '1845.3'
+ValueAt (301, 0) is '1846.5'
+ValueAt (302, 0) is '1847.7'
+ValueAt (303, 0) is '1848.9'
+ValueAt (304, 0) is '1850.1'
+ValueAt (305, 0) is '1851.3'
+ValueAt (306, 0) is '1852.5'
+ValueAt (307, 0) is '1853.7'
+ValueAt (308, 0) is '1854.9'
+ValueAt (309, 0) is '1856.1'
+ValueAt (310, 0) is '1857.3'
+ValueAt (311, 0) is '1858.5'
+ValueAt (312, 0) is '1859.7'
+ValueAt (313, 0) is '1860.9'
+ValueAt (314, 0) is '1862.1'
+ValueAt (315, 0) is '1863.3'
+ValueAt (316, 0) is '1864.5'
+ValueAt (317, 0) is '1865.7'
+ValueAt (318, 0) is '1866.9'
+ValueAt (319, 0) is '1868.1'
+ValueAt (320, 0) is '1869.3'
+ValueAt (321, 0) is '1870.5'
+ValueAt (322, 0) is '1871.7'
+ValueAt (323, 0) is '1872.9'
+ValueAt (324, 0) is '1874.1'
+ValueAt (325, 0) is '1875.3'
+ValueAt (326, 0) is '1876.5'
+ValueAt (327, 0) is '1877.7'
+ValueAt (328, 0) is '1878.9'
+ValueAt (329, 0) is '1880.1'
+ValueAt (330, 0) is '1881.3'
+ValueAt (331, 0) is '1882.5'
+ValueAt (332, 0) is '1883.7'
+ValueAt (333, 0) is '1884.9'
+ValueAt (334, 0) is '1886.1'
+ValueAt (335, 0) is '1887.3'
+ValueAt (336, 0) is '1888.5'
+ValueAt (337, 0) is '1889.7'
+ValueAt (338, 0) is '1890.9'
+ValueAt (339, 0) is '1892.1'
+ValueAt (340, 0) is '1893.3'
+ValueAt (341, 0) is '1894.5'
+ValueAt (342, 0) is '1895.7'
+ValueAt (343, 0) is '1896.9'
+ValueAt (344, 0) is '1898.1'
+ValueAt (345, 0) is '1899.3'
+ValueAt (346, 0) is '1900.5'
+ValueAt (347, 0) is '1901.7'
+ValueAt (348, 0) is '1902.9'
+ValueAt (349, 0) is '1904.1'
+ValueAt (350, 0) is '1905.3'
+ValueAt (351, 0) is '1906.5'
+ValueAt (352, 0) is '1907.7'
+ValueAt (353, 0) is '1908.9'
+ValueAt (354, 0) is '1910.1'
+ValueAt (355, 0) is '1911.3'
+ValueAt (356, 0) is '1912.5'
+ValueAt (357, 0) is '1913.7'
+ValueAt (358, 0) is '1914.9'
+ValueAt (359, 0) is '1916.1'
+ValueAt (360, 0) is '1917.3'
+ValueAt (361, 0) is '1918.5'
+ValueAt (362, 0) is '1919.7'
+ValueAt (363, 0) is '1920.9'
+ValueAt (364, 0) is '1922.1'
+ValueAt (365, 0) is '1923.3'
+ValueAt (366, 0) is '1924.5'
+ValueAt (367, 0) is '1925.7'
+ValueAt (368, 0) is '1926.9'
+ValueAt (369, 0) is '1928.1'
+ValueAt (370, 0) is '1929.3'
+ValueAt (371, 0) is '1930.5'
+ValueAt (372, 0) is '1931.7'
+ValueAt (373, 0) is '1932.9'
+ValueAt (374, 0) is '1934.1'
+ValueAt (375, 0) is '1935.3'
+ValueAt (376, 0) is '1936.5'
+ValueAt (377, 0) is '1937.7'
+ValueAt (378, 0) is '1938.9'
+ValueAt (379, 0) is '1940.1'
+ValueAt (380, 0) is '1941.3'
+ValueAt (381, 0) is '1942.5'
+ValueAt (382, 0) is '1943.7'
+ValueAt (383, 0) is '1944.9'
+ValueAt (384, 0) is '1946.1'
+ValueAt (385, 0) is '1947.3'
+ValueAt (386, 0) is '1948.5'
+ValueAt (387, 0) is '1949.7'
+ValueAt (388, 0) is '1950.9'
+ValueAt (389, 0) is '1952.1'
+ValueAt (390, 0) is '1953.3'
+ValueAt (391, 0) is '1954.5'
+ValueAt (392, 0) is '1955.7'
+ValueAt (393, 0) is '1956.9'
+ValueAt (394, 0) is '1958.1'
+ValueAt (395, 0) is '1959.3'
+ValueAt (396, 0) is '1960.5'
+ValueAt (397, 0) is '1961.7'
+ValueAt (398, 0) is '1962.9'
+ValueAt (399, 0) is '1964.1'
+ValueAt (400, 0) is '1965.3'
+ValueAt (401, 0) is '1966.5'
+ValueAt (402, 0) is '1967.7'
+ValueAt (403, 0) is '1968.9'
+ValueAt (404, 0) is '1970.1'
+ValueAt (405, 0) is '1971.3'
+ValueAt (406, 0) is '1972.5'
+ValueAt (407, 0) is '1973.7'
+ValueAt (408, 0) is '1974.9'
+ValueAt (409, 0) is '1976.1'
+ValueAt (410, 0) is '1977.3'
+ValueAt (411, 0) is '1978.5'
+ValueAt (412, 0) is '1979.7'
+ValueAt (413, 0) is '1980.9'
+ValueAt (414, 0) is '1982.1'
+ValueAt (415, 0) is '1983.3'
+ValueAt (416, 0) is '1984.5'
+ValueAt (417, 0) is '1985.7'
+ValueAt (418, 0) is '1986.9'
+ValueAt (419, 0) is '1988.1'
+ValueAt (420, 0) is '1989.3'
+ValueAt (421, 0) is '1990.5'
+ValueAt (422, 0) is '1991.7'
+ValueAt (423, 0) is '1992.9'
+ValueAt (424, 0) is '1994.1'
+ValueAt (425, 0) is '1995.3'
+ValueAt (426, 0) is '1996.5'
+ValueAt (427, 0) is '1997.7'
+ValueAt (428, 0) is '1998.9'
+ValueAt (429, 0) is '2000.1'
+ValueAt (430, 0) is '2001.3'
+ValueAt (431, 0) is '2002.5'
+ValueAt (432, 0) is '2003.7'
+ValueAt (433, 0) is '2004.9'
+ValueAt (434, 0) is '2006.1'
+ValueAt (435, 0) is '2007.3'
+ValueAt (436, 0) is '2008.5'
+ValueAt (437, 0) is '2009.7'
+ValueAt (438, 0) is '2010.9'
+ValueAt (439, 0) is '2012.1'
+ValueAt (440, 0) is '2013.3'
+ValueAt (441, 0) is '2014.5'
+ValueAt (442, 0) is '2015.7'
+ValueAt (443, 0) is '2016.9'
+ValueAt (444, 0) is '2018.1'
+ValueAt (445, 0) is '2019.3'
+ValueAt (446, 0) is '2020.5'
+ValueAt (447, 0) is '2021.7'
+ValueAt (448, 0) is '2022.9'
+ValueAt (449, 0) is '2024.1'
+ValueAt (450, 0) is '2025.3'
+ValueAt (451, 0) is '2026.5'
+ValueAt (452, 0) is '2027.7'
+ValueAt (453, 0) is '2028.9'
+ValueAt (454, 0) is '2030.1'
+ValueAt (455, 0) is '2031.3'
+ValueAt (456, 0) is '2032.5'
+ValueAt (457, 0) is '2033.7'
+ValueAt (458, 0) is '2034.9'
+ValueAt (459, 0) is '2036.1'
+ValueAt (460, 0) is '2037.3'
+ValueAt (461, 0) is '2038.5'
+ValueAt (462, 0) is '2039.7'
+ValueAt (463, 0) is '2040.9'
+ValueAt (464, 0) is '2042.1'
+ValueAt (465, 0) is '2043.3'
+ValueAt (466, 0) is '2044.5'
+ValueAt (467, 0) is '2045.7'
+ValueAt (468, 0) is '2046.9'
+ValueAt (469, 0) is '2048.1'
+ValueAt (470, 0) is '2049.3'
+ValueAt (471, 0) is '2050.5'
+ValueAt (472, 0) is '2051.7'
+ValueAt (473, 0) is '2052.9'
+ValueAt (474, 0) is '2054.1'
+ValueAt (475, 0) is '2055.3'
+ValueAt (476, 0) is '2056.5'
+ValueAt (477, 0) is '2057.7'
+ValueAt (478, 0) is '2058.9'
+ValueAt (479, 0) is '2060.1'
+ValueAt (480, 0) is '2061.3'
+ValueAt (481, 0) is '2062.5'
+ValueAt (482, 0) is '2063.7'
+ValueAt (483, 0) is '2064.9'
+ValueAt (484, 0) is '2066.1'
+ValueAt (485, 0) is '2067.3'
+ValueAt (486, 0) is '2068.5'
+ValueAt (487, 0) is '2069.7'
+ValueAt (488, 0) is '2070.9'
+ValueAt (489, 0) is '2072.1'
+ValueAt (490, 0) is '2073.3'
+ValueAt (491, 0) is '2074.5'
+ValueAt (492, 0) is '2075.7'
+ValueAt (493, 0) is '2076.9'
+ValueAt (494, 0) is '2078.1'
+ValueAt (495, 0) is '2079.3'
+ValueAt (496, 0) is '2080.5'
+ValueAt (497, 0) is '2081.7'
+ValueAt (498, 0) is '2082.9'
+ValueAt (499, 0) is '2084.1'
+ValueAt (500, 0) is '2085.3'
+ValueAt (501, 0) is '2086.5'
+ValueAt (502, 0) is '2087.7'
+ValueAt (503, 0) is '2088.9'
+ValueAt (504, 0) is '2090.1'
+ValueAt (505, 0) is '2091.3'
+ValueAt (506, 0) is '2092.5'
+ValueAt (507, 0) is '2093.7'
+ValueAt (508, 0) is '2094.9'
+ValueAt (509, 0) is '2096.1'
+ValueAt (510, 0) is '2097.3'
+ValueAt (511, 0) is '2098.5'
+ValueAt (512, 0) is '2099.7'
+ValueAt (513, 0) is '2100.9'
+ValueAt (514, 0) is '2102.1'
+ValueAt (515, 0) is '2103.3'
+ValueAt (516, 0) is '2104.5'
+ValueAt (517, 0) is '2105.7'
+ValueAt (518, 0) is '2106.9'
+ValueAt (519, 0) is '2108.1'
+ValueAt (520, 0) is '2109.3'
+ValueAt (521, 0) is '2110.5'
+ValueAt (522, 0) is '2111.7'
+ValueAt (523, 0) is '2112.9'
+ValueAt (524, 0) is '2114.1'
+ValueAt (525, 0) is '2115.3'
+ValueAt (526, 0) is '2116.5'
+ValueAt (527, 0) is '2117.7'
+ValueAt (528, 0) is '2118.9'
+ValueAt (529, 0) is '2120.1'
+ValueAt (530, 0) is '2121.3'
+ValueAt (531, 0) is '2122.5'
+ValueAt (532, 0) is '2123.7'
+ValueAt (533, 0) is '2124.9'
+ValueAt (534, 0) is '2126.1'
+ValueAt (535, 0) is '2127.3'
+ValueAt (536, 0) is '2128.5'
+ValueAt (537, 0) is '2129.7'
+ValueAt (538, 0) is '2130.9'
+ValueAt (539, 0) is '2132.1'
+ValueAt (540, 0) is '2133.3'
+ValueAt (541, 0) is '2134.5'
+ValueAt (542, 0) is '2135.7'
+ValueAt (543, 0) is '2136.9'
+ValueAt (544, 0) is '2138.1'
+ValueAt (545, 0) is '2139.3'
+ValueAt (546, 0) is '2140.5'
+ValueAt (547, 0) is '2141.7'
+ValueAt (548, 0) is '2142.9'
+ValueAt (549, 0) is '2144.1'
+ValueAt (550, 0) is '2145.3'
+ValueAt (551, 0) is '2146.5'
+ValueAt (552, 0) is '2147.7'
+ValueAt (553, 0) is '2148.9'
+ValueAt (554, 0) is '2150.1'
+ValueAt (555, 0) is '2151.3'
+ValueAt (556, 0) is '2152.5'
+ValueAt (557, 0) is '2153.7'
+ValueAt (558, 0) is '2154.9'
+ValueAt (559, 0) is '2156.1'
+ValueAt (560, 0) is '2157.3'
+ValueAt (561, 0) is '2158.5'
+ValueAt (562, 0) is '2159.7'
+ValueAt (563, 0) is '2160.9'
+ValueAt (564, 0) is '2162.1'
+ValueAt (565, 0) is '2163.3'
+ValueAt (566, 0) is '2164.5'
+ValueAt (567, 0) is '2165.7'
+ValueAt (568, 0) is '2166.9'
+ValueAt (569, 0) is '2168.1'
+ValueAt (570, 0) is '2169.3'
+ValueAt (571, 0) is '2170.5'
+ValueAt (572, 0) is '2171.7'
+ValueAt (573, 0) is '2172.9'
+ValueAt (574, 0) is '2174.1'
+ValueAt (575, 0) is '2175.3'
+ValueAt (576, 0) is '2176.5'
+ValueAt (577, 0) is '2177.7'
+ValueAt (578, 0) is '2178.9'
+ValueAt (579, 0) is '2180.1'
+ValueAt (580, 0) is '2181.3'
+ValueAt (581, 0) is '2182.5'
+ValueAt (582, 0) is '2183.7'
+ValueAt (583, 0) is '2184.9'
+ValueAt (584, 0) is '2186.1'
+ValueAt (585, 0) is '2187.3'
+ValueAt (586, 0) is '2188.5'
+ValueAt (587, 0) is '2189.7'
+ValueAt (588, 0) is '2190.9'
+ValueAt (589, 0) is '2192.1'
+ValueAt (590, 0) is '2193.3'
+ValueAt (591, 0) is '2194.5'
+ValueAt (592, 0) is '2195.7'
+ValueAt (593, 0) is '2196.9'
+ValueAt (594, 0) is '2198.1'
+ValueAt (595, 0) is '2199.3'
+ValueAt (596, 0) is '2200.5'
+ValueAt (597, 0) is '2201.7'
+ValueAt (598, 0) is '2202.9'
+ValueAt (599, 0) is '2204.1'
+ValueAt (600, 0) is '2205.3'
+ValueAt (601, 0) is '2206.5'
+ValueAt (602, 0) is '2207.7'
+ValueAt (603, 0) is '2208.9'
+ValueAt (604, 0) is '2210.1'
+ValueAt (605, 0) is '2211.3'
+ValueAt (606, 0) is '2212.5'
+ValueAt (607, 0) is '2213.7'
+ValueAt (608, 0) is '2214.9'
+ValueAt (609, 0) is '2216.1'
+ValueAt (610, 0) is '2217.3'
+ValueAt (611, 0) is '2218.5'
+ValueAt (612, 0) is '2219.7'
+ValueAt (613, 0) is '2220.9'
+ValueAt (614, 0) is '2222.1'
+ValueAt (615, 0) is '2223.3'
+ValueAt (616, 0) is '2224.5'
+ValueAt (617, 0) is '2225.7'
+ValueAt (618, 0) is '2226.9'
+ValueAt (619, 0) is '2228.1'
+ValueAt (620, 0) is '2229.3'
+ValueAt (621, 0) is '2230.5'
+ValueAt (622, 0) is '2231.7'
+ValueAt (623, 0) is '2232.9'
+ValueAt (624, 0) is '2234.1'
+ValueAt (625, 0) is '2235.3'
+ValueAt (626, 0) is '2236.5'
+ValueAt (627, 0) is '2237.7'
+ValueAt (628, 0) is '2238.9'
+ValueAt (629, 0) is '2240.1'
+ValueAt (630, 0) is '2241.3'
+ValueAt (631, 0) is '2242.5'
+ValueAt (632, 0) is '2243.7'
+ValueAt (633, 0) is '2244.9'
+ValueAt (634, 0) is '2246.1'
+ValueAt (635, 0) is '2247.3'
+ValueAt (636, 0) is '2248.5'
+ValueAt (637, 0) is '2249.7'
+ValueAt (638, 0) is '2250.9'
+ValueAt (639, 0) is '2252.1'
+ValueAt (640, 0) is '2253.3'
+ValueAt (641, 0) is '2254.5'
+ValueAt (642, 0) is '2255.7'
+ValueAt (643, 0) is '2256.9'
+ValueAt (644, 0) is '2258.1'
+ValueAt (645, 0) is '2259.3'
+ValueAt (646, 0) is '2260.5'
+ValueAt (647, 0) is '2261.7'
+ValueAt (648, 0) is '2262.9'
+ValueAt (649, 0) is '2264.1'
+ValueAt (650, 0) is '2265.3'
+ValueAt (651, 0) is '2266.5'
+ValueAt (652, 0) is '2267.7'
+ValueAt (653, 0) is '2268.9'
+ValueAt (654, 0) is '2270.1'
+ValueAt (655, 0) is '2271.3'
+ValueAt (656, 0) is '2272.5'
+ValueAt (657, 0) is '2273.7'
+ValueAt (658, 0) is '2274.9'
+ValueAt (659, 0) is '2276.1'
+ValueAt (660, 0) is '2277.3'
+ValueAt (661, 0) is '2278.5'
+ValueAt (662, 0) is '2279.7'
+ValueAt (663, 0) is '2280.9'
+ValueAt (664, 0) is '2282.1'
+ValueAt (665, 0) is '2283.3'
+ValueAt (666, 0) is '2284.5'
+ValueAt (667, 0) is '2285.7'
+ValueAt (668, 0) is '2286.9'
+ValueAt (669, 0) is '2288.1'
+ValueAt (670, 0) is '2289.3'
+ValueAt (671, 0) is '2290.5'
+ValueAt (672, 0) is '2291.7'
+ValueAt (673, 0) is '2292.9'
+ValueAt (674, 0) is '2294.1'
+ValueAt (675, 0) is '2295.3'
+ValueAt (676, 0) is '2296.5'
+ValueAt (677, 0) is '2297.7'
+ValueAt (678, 0) is '2298.9'
+ValueAt (679, 0) is '2300.1'
+ValueAt (680, 0) is '2301.3'
+ValueAt (681, 0) is '2302.5'
+ValueAt (682, 0) is '2303.7'
+ValueAt (683, 0) is '2304.9'
+ValueAt (684, 0) is '2306.1'
+ValueAt (685, 0) is '2307.3'
+ValueAt (686, 0) is '2308.5'
+ValueAt (687, 0) is '2309.7'
+ValueAt (688, 0) is '2310.9'
+ValueAt (689, 0) is '2312.1'
+ValueAt (690, 0) is '2313.3'
+ValueAt (691, 0) is '2314.5'
+ValueAt (692, 0) is '2315.7'
+ValueAt (693, 0) is '2316.9'
+ValueAt (694, 0) is '2318.1'
+ValueAt (695, 0) is '2319.3'
+ValueAt (696, 0) is '2320.5'
+ValueAt (697, 0) is '2321.7'
+ValueAt (698, 0) is '2322.9'
+ValueAt (699, 0) is '2324.1'
+ValueAt (700, 0) is '2325.3'
+ValueAt (701, 0) is '2326.5'
+ValueAt (702, 0) is '2327.7'
+ValueAt (703, 0) is '2328.9'
+ValueAt (704, 0) is '2330.1'
+ValueAt (705, 0) is '2331.3'
+ValueAt (706, 0) is '2332.5'
+ValueAt (707, 0) is '2333.7'
+ValueAt (708, 0) is '2334.9'
+ValueAt (709, 0) is '2336.1'
+ValueAt (710, 0) is '2337.3'
+ValueAt (711, 0) is '2338.5'
+ValueAt (712, 0) is '2339.7'
+ValueAt (713, 0) is '2340.9'
+ValueAt (714, 0) is '2342.1'
+ValueAt (715, 0) is '2343.3'
+ValueAt (716, 0) is '2344.5'
+ValueAt (717, 0) is '2345.7'
+ValueAt (718, 0) is '2346.9'
+ValueAt (719, 0) is '2348.1'
+ValueAt (720, 0) is '2349.3'
+ValueAt (721, 0) is '2350.5'
+ValueAt (722, 0) is '2351.7'
+ValueAt (723, 0) is '2352.9'
+ValueAt (724, 0) is '2354.1'
+ValueAt (725, 0) is '2355.3'
+ValueAt (726, 0) is '2356.5'
+ValueAt (727, 0) is '2357.7'
+ValueAt (728, 0) is '2358.9'
+ValueAt (729, 0) is '2360.1'
+ValueAt (730, 0) is '2361.3'
+ValueAt (731, 0) is '2362.5'
+ValueAt (732, 0) is '2363.7'
+ValueAt (733, 0) is '2364.9'
+ValueAt (734, 0) is '2366.1'
+ValueAt (735, 0) is '2367.3'
+ValueAt (736, 0) is '2368.5'
+ValueAt (737, 0) is '2369.7'
+ValueAt (738, 0) is '2370.9'
+ValueAt (739, 0) is '2372.1'
+ValueAt (740, 0) is '2373.3'
+ValueAt (741, 0) is '2374.5'
+ValueAt (742, 0) is '2375.7'
+ValueAt (743, 0) is '2376.9'
+ValueAt (744, 0) is '2378.1'
+ValueAt (745, 0) is '2379.3'
+ValueAt (746, 0) is '2380.5'
+ValueAt (747, 0) is '2381.7'
+ValueAt (748, 0) is '2382.9'
+ValueAt (749, 0) is '2384.1'
+ValueAt (750, 0) is '2385.3'
+ValueAt (751, 0) is '2386.5'
+ValueAt (752, 0) is '2387.7'
+ValueAt (753, 0) is '2388.9'
+ValueAt (754, 0) is '2390.1'
+ValueAt (755, 0) is '2391.3'
+ValueAt (756, 0) is '2392.5'
+ValueAt (757, 0) is '2393.7'
+ValueAt (758, 0) is '2394.9'
+ValueAt (759, 0) is '2396.1'
+ValueAt (760, 0) is '2397.3'
+ValueAt (761, 0) is '2398.5'
+ValueAt (762, 0) is '2399.7'
+ValueAt (763, 0) is '2400.9'
+ValueAt (764, 0) is '2402.1'
+ValueAt (765, 0) is '2403.3'
+ValueAt (766, 0) is '2404.5'
+ValueAt (767, 0) is '2405.7'
+ValueAt (768, 0) is '2406.9'
+ValueAt (769, 0) is '2408.1'
+ValueAt (770, 0) is '2409.3'
+ValueAt (771, 0) is '2410.5'
+ValueAt (772, 0) is '2411.7'
+ValueAt (773, 0) is '2412.9'
+ValueAt (774, 0) is '2414.1'
+ValueAt (775, 0) is '2415.3'
+ValueAt (776, 0) is '2416.5'
+ValueAt (777, 0) is '2417.7'
+ValueAt (778, 0) is '2418.9'
+ValueAt (779, 0) is '2420.1'
+ValueAt (780, 0) is '2421.3'
+ValueAt (781, 0) is '2422.5'
+ValueAt (782, 0) is '2423.7'
+ValueAt (783, 0) is '2424.9'
+ValueAt (784, 0) is '2426.1'
+ValueAt (785, 0) is '2427.3'
+ValueAt (786, 0) is '2428.5'
+ValueAt (787, 0) is '2429.7'
+ValueAt (788, 0) is '2430.9'
+ValueAt (789, 0) is '2432.1'
+ValueAt (790, 0) is '2433.3'
+ValueAt (791, 0) is '2434.5'
+ValueAt (792, 0) is '2435.7'
+ValueAt (793, 0) is '2436.9'
+ValueAt (794, 0) is '2438.1'
+ValueAt (795, 0) is '2439.3'
+ValueAt (796, 0) is '2440.5'
+ValueAt (797, 0) is '2441.7'
+ValueAt (798, 0) is '2442.9'
+ValueAt (799, 0) is '2444.1'
+ValueAt (800, 0) is '2445.3'
+ValueAt (801, 0) is '2446.5'
+ValueAt (802, 0) is '2447.7'
+ValueAt (803, 0) is '2448.9'
+ValueAt (804, 0) is '2450.1'
+ValueAt (805, 0) is '2451.3'
+ValueAt (806, 0) is '2452.5'
+ValueAt (807, 0) is '2453.7'
+ValueAt (808, 0) is '2454.9'
+ValueAt (809, 0) is '2456.1'
+ValueAt (810, 0) is '2457.3'
+ValueAt (811, 0) is '2458.5'
+ValueAt (812, 0) is '2459.7'
+ValueAt (813, 0) is '2460.9'
+ValueAt (814, 0) is '2462.1'
+ValueAt (815, 0) is '2463.3'
+ValueAt (816, 0) is '2464.5'
+ValueAt (817, 0) is '2465.7'
+ValueAt (818, 0) is '2466.9'
+ValueAt (819, 0) is '2468.1'
+ValueAt (820, 0) is '2469.3'
+ValueAt (821, 0) is '2470.5'
+ValueAt (822, 0) is '2471.7'
+ValueAt (823, 0) is '2472.9'
+ValueAt (824, 0) is '2474.1'
+ValueAt (825, 0) is '2475.3'
+ValueAt (826, 0) is '2476.5'
+ValueAt (827, 0) is '2477.7'
+ValueAt (828, 0) is '2478.9'
+ValueAt (829, 0) is '2480.1'
+ValueAt (830, 0) is '2481.3'
+ValueAt (831, 0) is '2482.5'
+ValueAt (832, 0) is '2483.7'
+ValueAt (833, 0) is '2484.9'
+ValueAt (834, 0) is '2486.1'
+ValueAt (835, 0) is '2487.3'
+ValueAt (836, 0) is '2488.5'
+ValueAt (837, 0) is '2489.7'
+ValueAt (838, 0) is '2490.9'
+ValueAt (839, 0) is '2492.1'
+ValueAt (840, 0) is '2493.3'
+ValueAt (841, 0) is '2494.5'
+ValueAt (842, 0) is '2495.7'
+ValueAt (843, 0) is '2496.9'
+ValueAt (844, 0) is '2498.1'
+ValueAt (845, 0) is '2499.3'
+ValueAt (846, 0) is '2500.5'
+ValueAt (847, 0) is '2501.7'
+ValueAt (848, 0) is '2502.9'
+ValueAt (849, 0) is '2504.1'
+ValueAt (850, 0) is '2505.3'
+ValueAt (851, 0) is '2506.5'
+ValueAt (852, 0) is '2507.7'
+ValueAt (853, 0) is '2508.9'
+ValueAt (854, 0) is '2510.1'
+ValueAt (855, 0) is '2511.3'
+ValueAt (856, 0) is '2512.5'
+ValueAt (857, 0) is '2513.7'
+ValueAt (858, 0) is '2514.9'
+ValueAt (859, 0) is '2516.1'
+ValueAt (860, 0) is '2517.3'
+ValueAt (861, 0) is '2518.5'
+ValueAt (862, 0) is '2519.7'
+ValueAt (863, 0) is '2520.9'
+ValueAt (864, 0) is '2522.1'
+ValueAt (865, 0) is '2523.3'
+ValueAt (866, 0) is '2524.5'
+ValueAt (867, 0) is '2525.7'
+ValueAt (868, 0) is '2526.9'
+ValueAt (869, 0) is '2528.1'
+ValueAt (870, 0) is '2529.3'
+ValueAt (871, 0) is '2530.5'
+ValueAt (872, 0) is '2531.7'
+ValueAt (873, 0) is '2532.9'
+ValueAt (874, 0) is '2534.1'
+ValueAt (875, 0) is '2535.3'
+ValueAt (876, 0) is '2536.5'
+ValueAt (877, 0) is '2537.7'
+ValueAt (878, 0) is '2538.9'
+ValueAt (879, 0) is '2540.1'
+ValueAt (880, 0) is '2541.3'
+ValueAt (881, 0) is '2542.5'
+ValueAt (882, 0) is '2543.7'
+ValueAt (883, 0) is '2544.9'
+ValueAt (884, 0) is '2546.1'
+ValueAt (885, 0) is '2547.3'
+ValueAt (886, 0) is '2548.5'
+ValueAt (887, 0) is '2549.7'
+ValueAt (888, 0) is '2550.9'
+ValueAt (889, 0) is '2552.1'
+ValueAt (890, 0) is '2553.3'
+ValueAt (891, 0) is '2554.5'
+ValueAt (892, 0) is '2555.7'
+ValueAt (893, 0) is '2556.9'
+ValueAt (894, 0) is '2558.1'
+ValueAt (895, 0) is '2559.3'
+ValueAt (896, 0) is '2560.5'
+ValueAt (897, 0) is '2561.7'
+ValueAt (898, 0) is '2562.9'
+ValueAt (899, 0) is '2564.1'
+ValueAt (900, 0) is '2565.3'
+ValueAt (901, 0) is '2566.5'
+ValueAt (902, 0) is '2567.7'
+ValueAt (903, 0) is '2568.9'
+ValueAt (904, 0) is '2570.1'
+ValueAt (905, 0) is '2571.3'
+ValueAt (906, 0) is '2572.5'
+ValueAt (907, 0) is '2573.7'
+ValueAt (908, 0) is '2574.9'
+ValueAt (909, 0) is '2576.1'
+ValueAt (910, 0) is '2577.3'
+ValueAt (911, 0) is '2578.5'
+ValueAt (912, 0) is '2579.7'
+ValueAt (913, 0) is '2580.9'
+ValueAt (914, 0) is '2582.1'
+ValueAt (915, 0) is '2583.3'
+ValueAt (916, 0) is '2584.5'
+ValueAt (917, 0) is '2585.7'
+ValueAt (918, 0) is '2586.9'
+ValueAt (919, 0) is '2588.1'
+ValueAt (920, 0) is '2589.3'
+ValueAt (921, 0) is '2590.5'
+ValueAt (922, 0) is '2591.7'
+ValueAt (923, 0) is '2592.9'
+ValueAt (924, 0) is '2594.1'
+ValueAt (925, 0) is '2595.3'
+ValueAt (926, 0) is '2596.5'
+ValueAt (927, 0) is '2597.7'
+ValueAt (928, 0) is '2598.9'
+ValueAt (929, 0) is '2600.1'
+ValueAt (930, 0) is '2601.3'
+ValueAt (931, 0) is '2602.5'
+ValueAt (932, 0) is '2603.7'
+ValueAt (933, 0) is '2604.9'
+ValueAt (934, 0) is '2606.1'
+ValueAt (935, 0) is '2607.3'
+ValueAt (936, 0) is '2608.5'
+ValueAt (937, 0) is '2609.7'
+ValueAt (938, 0) is '2610.9'
+ValueAt (939, 0) is '2612.1'
+ValueAt (940, 0) is '2613.3'
+ValueAt (941, 0) is '2614.5'
+ValueAt (942, 0) is '2615.7'
+ValueAt (943, 0) is '2616.9'
+ValueAt (944, 0) is '2618.1'
+ValueAt (945, 0) is '2619.3'
+ValueAt (946, 0) is '2620.5'
+ValueAt (947, 0) is '2621.7'
+ValueAt (948, 0) is '2622.9'
+ValueAt (949, 0) is '2624.1'
+ValueAt (950, 0) is '2625.3'
+ValueAt (951, 0) is '2626.5'
+ValueAt (952, 0) is '2627.7'
+ValueAt (953, 0) is '2628.9'
+ValueAt (954, 0) is '2630.1'
+ValueAt (955, 0) is '2631.3'
+ValueAt (956, 0) is '2632.5'
+ValueAt (957, 0) is '2633.7'
+ValueAt (958, 0) is '2634.9'
+ValueAt (959, 0) is '2636.1'
+ValueAt (960, 0) is '2637.3'
+ValueAt (961, 0) is '2638.5'
+ValueAt (962, 0) is '2639.7'
+ValueAt (963, 0) is '2640.9'
+ValueAt (964, 0) is '2642.1'
+ValueAt (965, 0) is '2643.3'
+ValueAt (966, 0) is '2644.5'
+ValueAt (967, 0) is '2645.7'
+ValueAt (968, 0) is '2646.9'
+ValueAt (969, 0) is '2648.1'
+ValueAt (970, 0) is '2649.3'
+ValueAt (971, 0) is '2650.5'
+ValueAt (972, 0) is '2651.7'
+ValueAt (973, 0) is '2652.9'
+ValueAt (974, 0) is '2654.1'
+ValueAt (975, 0) is '2655.3'
+ValueAt (976, 0) is '2656.5'
+ValueAt (977, 0) is '2657.7'
+ValueAt (978, 0) is '2658.9'
+ValueAt (979, 0) is '2660.1'
+ValueAt (980, 0) is '2661.3'
+ValueAt (981, 0) is '2662.5'
+ValueAt (982, 0) is '2663.7'
+ValueAt (983, 0) is '2664.9'
+ValueAt (984, 0) is '2666.1'
+ValueAt (985, 0) is '2667.3'
+ValueAt (986, 0) is '2668.5'
+ValueAt (987, 0) is '2669.7'
+ValueAt (988, 0) is '2670.9'
+ValueAt (989, 0) is '2672.1'
+ValueAt (990, 0) is '2673.3'
+ValueAt (991, 0) is '2674.5'
+ValueAt (992, 0) is '2675.7'
+ValueAt (993, 0) is '2676.9'
+ValueAt (994, 0) is '2678.1'
+ValueAt (995, 0) is '2679.3'
+ValueAt (996, 0) is '2680.5'
+ValueAt (997, 0) is '2681.7'
+ValueAt (998, 0) is '2682.9'
+ValueAt (999, 0) is '2684.1'
+ValueAt (1000, 0) is '2685.3'
+ValueAt (1001, 0) is '2686.5'
+ValueAt (1002, 0) is '2687.7'
+ValueAt (1003, 0) is '2688.9'
+ValueAt (1004, 0) is '2690.1'
+ValueAt (1005, 0) is '2691.3'
+ValueAt (1006, 0) is '2692.5'
+ValueAt (1007, 0) is '2693.7'
+ValueAt (1008, 0) is '2694.9'
+ValueAt (1009, 0) is '2696.1'
+ValueAt (1010, 0) is '2697.3'
+ValueAt (1011, 0) is '2698.5'
+ValueAt (1012, 0) is '2699.7'
+ValueAt (1013, 0) is '2700.9'
+ValueAt (1014, 0) is '2702.1'
+ValueAt (1015, 0) is '2703.3'
+ValueAt (1016, 0) is '2704.5'
+ValueAt (1017, 0) is '2705.7'
+ValueAt (1018, 0) is '2706.9'
+ValueAt (1019, 0) is '2708.1'
+ValueAt (1020, 0) is '2709.3'
+ValueAt (1021, 0) is '2710.5'
+ValueAt (1022, 0) is '2711.7'
+ValueAt (1023, 0) is '2712.9'
+ValueAt (1024, 0) is '2714.1'
+ValueAt (1025, 0) is '2715.3'
+ValueAt (1026, 0) is '2716.5'
+ValueAt (1027, 0) is '2717.7'
+ValueAt (1028, 0) is '2718.9'
+ValueAt (1029, 0) is '2720.1'
+ValueAt (1030, 0) is '2721.3'
+ValueAt (1031, 0) is '2722.5'
+ValueAt (1032, 0) is '2723.7'
+ValueAt (1033, 0) is '2724.9'
+ValueAt (1034, 0) is '2726.1'
+ValueAt (1035, 0) is '2727.3'
+ValueAt (1036, 0) is '2728.5'
+ValueAt (1037, 0) is '2729.7'
+ValueAt (1038, 0) is '2730.9'
+ValueAt (1039, 0) is '2732.1'
+ValueAt (1040, 0) is '2733.3'
+ValueAt (1041, 0) is '2734.5'
+ValueAt (1042, 0) is '2735.7'
+ValueAt (1043, 0) is '2736.9'
+ValueAt (1044, 0) is '2738.1'
+ValueAt (1045, 0) is '2739.3'
+ValueAt (1046, 0) is '2740.5'
+ValueAt (1047, 0) is '2741.7'
+ValueAt (1048, 0) is '2742.9'
+ValueAt (1049, 0) is '2744.1'
+ValueAt (1050, 0) is '2745.3'
+ValueAt (1051, 0) is '2746.5'
+ValueAt (1052, 0) is '2747.7'
+ValueAt (1053, 0) is '2748.9'
+ValueAt (1054, 0) is '2750.1'
+ValueAt (1055, 0) is '2751.3'
+ValueAt (1056, 0) is '2752.5'
+ValueAt (1057, 0) is '2753.7'
+ValueAt (1058, 0) is '2754.9'
+ValueAt (1059, 0) is '2756.1'
+ValueAt (1060, 0) is '2757.3'
+ValueAt (1061, 0) is '2758.5'
+ValueAt (1062, 0) is '2759.7'
+ValueAt (1063, 0) is '2760.9'
+ValueAt (1064, 0) is '2762.1'
+ValueAt (1065, 0) is '2763.3'
+ValueAt (1066, 0) is '2764.5'
+ValueAt (1067, 0) is '2765.7'
+ValueAt (1068, 0) is '2766.9'
+ValueAt (1069, 0) is '2768.1'
+ValueAt (1070, 0) is '2769.3'
+ValueAt (1071, 0) is '2770.5'
+ValueAt (1072, 0) is '2771.7'
+ValueAt (1073, 0) is '2772.9'
+ValueAt (1074, 0) is '2774.1'
+ValueAt (1075, 0) is '2775.3'
+ValueAt (1076, 0) is '2776.5'
+ValueAt (1077, 0) is '2777.7'
+ValueAt (1078, 0) is '2778.9'
+ValueAt (1079, 0) is '2780.1'
+ValueAt (1080, 0) is '2781.3'
+ValueAt (1081, 0) is '2782.5'
+ValueAt (1082, 0) is '2783.7'
+ValueAt (1083, 0) is '2784.9'
+ValueAt (1084, 0) is '2786.1'
+ValueAt (1085, 0) is '2787.3'
+ValueAt (1086, 0) is '2788.5'
+ValueAt (1087, 0) is '2789.7'
+ValueAt (1088, 0) is '2790.9'
+ValueAt (1089, 0) is '2792.1'
+ValueAt (1090, 0) is '2793.3'
+ValueAt (1091, 0) is '2794.5'
+ValueAt (1092, 0) is '2795.7'
+ValueAt (1093, 0) is '2796.9'
+ValueAt (1094, 0) is '2798.1'
+ValueAt (1095, 0) is '2799.3'
+ValueAt (1096, 0) is '2800.5'
+ValueAt (1097, 0) is '2801.7'
+ValueAt (1098, 0) is '2802.9'
+ValueAt (1099, 0) is '2804.1'
+ValueAt (1100, 0) is '2805.3'
+ValueAt (1101, 0) is '2806.5'
+ValueAt (1102, 0) is '2807.7'
+ValueAt (1103, 0) is '2808.9'
+ValueAt (1104, 0) is '2810.1'
+ValueAt (1105, 0) is '2811.3'
+ValueAt (1106, 0) is '2812.5'
+ValueAt (1107, 0) is '2813.7'
+ValueAt (1108, 0) is '2814.9'
+ValueAt (1109, 0) is '2816.1'
+ValueAt (1110, 0) is '2817.3'
+ValueAt (1111, 0) is '2818.5'
+ValueAt (1112, 0) is '2819.7'
+ValueAt (1113, 0) is '2820.9'
+ValueAt (1114, 0) is '2822.1'
+ValueAt (1115, 0) is '2823.3'
+ValueAt (1116, 0) is '2824.5'
+ValueAt (1117, 0) is '2825.7'
+ValueAt (1118, 0) is '2826.9'
+ValueAt (1119, 0) is '2828.1'
+ValueAt (1120, 0) is '2829.3'
+ValueAt (1121, 0) is '2830.5'
+ValueAt (1122, 0) is '2831.7'
+ValueAt (1123, 0) is '2832.9'
+ValueAt (1124, 0) is '2834.1'
+ValueAt (1125, 0) is '2835.3'
+ValueAt (1126, 0) is '2836.5'
+ValueAt (1127, 0) is '2837.7'
+ValueAt (1128, 0) is '2838.9'
+ValueAt (1129, 0) is '2840.1'
+ValueAt (1130, 0) is '2841.3'
+ValueAt (1131, 0) is '2842.5'
+ValueAt (1132, 0) is '2843.7'
+ValueAt (1133, 0) is '2844.9'
+ValueAt (1134, 0) is '2846.1'
+ValueAt (1135, 0) is '2847.3'
+ValueAt (1136, 0) is '2848.5'
+ValueAt (1137, 0) is '2849.7'
+ValueAt (1138, 0) is '2850.9'
+ValueAt (1139, 0) is '2852.1'
+ValueAt (1140, 0) is '2853.3'
+ValueAt (1141, 0) is '2854.5'
+ValueAt (1142, 0) is '2855.7'
+ValueAt (1143, 0) is '2856.9'
+ValueAt (1144, 0) is '2858.1'
+ValueAt (1145, 0) is '2859.3'
+ValueAt (1146, 0) is '2860.5'
+ValueAt (1147, 0) is '2861.7'
+ValueAt (1148, 0) is '2862.9'
+ValueAt (1149, 0) is '2864.1'
+ValueAt (1150, 0) is '2865.3'
+ValueAt (1151, 0) is '2866.5'
+ValueAt (1152, 0) is '2867.7'
+ValueAt (1153, 0) is '2868.9'
+ValueAt (1154, 0) is '2870.1'
+ValueAt (1155, 0) is '2871.3'
+ValueAt (1156, 0) is '2872.5'
+ValueAt (1157, 0) is '2873.7'
+ValueAt (1158, 0) is '2874.9'
+ValueAt (1159, 0) is '2876.1'
+ValueAt (1160, 0) is '2877.3'
+ValueAt (1161, 0) is '2878.5'
+ValueAt (1162, 0) is '2879.7'
+ValueAt (1163, 0) is '2880.9'
+ValueAt (1164, 0) is '2882.1'
+ValueAt (1165, 0) is '2883.3'
+ValueAt (1166, 0) is '2884.5'
+ValueAt (1167, 0) is '2885.7'
+ValueAt (1168, 0) is '2886.9'
+ValueAt (1169, 0) is '2888.1'
+ValueAt (1170, 0) is '2889.3'
+ValueAt (1171, 0) is '2890.5'
+ValueAt (1172, 0) is '2891.7'
+ValueAt (1173, 0) is '2892.9'
+ValueAt (1174, 0) is '2894.1'
+ValueAt (1175, 0) is '2895.3'
+ValueAt (1176, 0) is '2896.5'
+ValueAt (1177, 0) is '2897.7'
+ValueAt (1178, 0) is '2898.9'
+ValueAt (1179, 0) is '2900.1'
+ValueAt (1180, 0) is '2901.3'
+ValueAt (1181, 0) is '2902.5'
+ValueAt (1182, 0) is '2903.7'
+ValueAt (1183, 0) is '2904.9'
+ValueAt (1184, 0) is '2906.1'
+ValueAt (1185, 0) is '2907.3'
+ValueAt (1186, 0) is '2908.5'
+ValueAt (1187, 0) is '2909.7'
+ValueAt (1188, 0) is '2910.9'
+ValueAt (1189, 0) is '2912.1'
+ValueAt (1190, 0) is '2913.3'
+ValueAt (1191, 0) is '2914.5'
+ValueAt (1192, 0) is '2915.7'
+ValueAt (1193, 0) is '2916.9'
+ValueAt (1194, 0) is '2918.1'
+ValueAt (1195, 0) is '2919.3'
+ValueAt (1196, 0) is '2920.5'
+ValueAt (1197, 0) is '2921.7'
+ValueAt (1198, 0) is '2922.9'
+ValueAt (1199, 0) is '2924.1'
+ValueAt (1200, 0) is '2925.3'
+ValueAt (1201, 0) is '2926.5'
+ValueAt (1202, 0) is '2927.7'
+ValueAt (1203, 0) is '2928.9'
+ValueAt (1204, 0) is '2930.1'
+ValueAt (1205, 0) is '2931.3'
+ValueAt (1206, 0) is '2932.5'
+ValueAt (1207, 0) is '2933.7'
+ValueAt (1208, 0) is '2934.9'
+ValueAt (1209, 0) is '2936.1'
+ValueAt (1210, 0) is '2937.3'
+ValueAt (1211, 0) is '2938.5'
+ValueAt (1212, 0) is '2939.7'
+ValueAt (1213, 0) is '2940.9'
+ValueAt (1214, 0) is '2942.1'
+ValueAt (1215, 0) is '2943.3'
+ValueAt (1216, 0) is '2944.5'
+ValueAt (1217, 0) is '2945.7'
+ValueAt (1218, 0) is '2946.9'
+ValueAt (1219, 0) is '2948.1'
+ValueAt (1220, 0) is '2949.3'
+ValueAt (1221, 0) is '2950.5'
+ValueAt (1222, 0) is '2951.7'
+ValueAt (1223, 0) is '2952.9'
+ValueAt (1224, 0) is '2954.1'
+ValueAt (1225, 0) is '2955.3'
+ValueAt (1226, 0) is '2956.5'
+ValueAt (1227, 0) is '2957.7'
+ValueAt (1228, 0) is '2958.9'
+ValueAt (1229, 0) is '2960.1'
+ValueAt (1230, 0) is '2961.3'
+ValueAt (1231, 0) is '2962.5'
+ValueAt (1232, 0) is '2963.7'
+ValueAt (1233, 0) is '2964.9'

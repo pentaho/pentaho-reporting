@@ -361,4 +361,17 @@ public final class CrosstabOutputHelper
 
   }
 
+  public static RenderNode findParentNode(RenderNode renderNode, final InstanceID crosstabId)
+  {
+    while (renderNode != null)
+    {
+      if (renderNode.getInstanceId() == crosstabId)
+      {
+        return renderNode;
+      }
+      renderNode = renderNode.getParent();
+    }
+
+    return null;
+  }
 }

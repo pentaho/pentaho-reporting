@@ -22,14 +22,26 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
   private PaginationShiftState parent;
   private long shift;
   private long shiftForChilds;
+  private StackedObjectPool<RowLevelPaginationShiftState> pool;
+
+  public RowLevelPaginationShiftState()
+  {
+  }
 
   public RowLevelPaginationShiftState(final PaginationShiftState parent)
+  {
+    reuse(null, parent);
+  }
+
+  public void reuse (final StackedObjectPool<RowLevelPaginationShiftState> pool,
+                     final PaginationShiftState parent)
   {
     if (parent == null)
     {
       throw new NullPointerException();
     }
     this.parent = parent;
+    this.pool = pool;
     this.shiftForChilds = parent.getShiftForNextChild();
     this.shift = this.shiftForChilds;
   }
@@ -61,6 +73,11 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
   public PaginationShiftState pop()
   {
     parent.updateShiftFromChild(shift);
+    if (this.pool != null)
+    {
+      this.pool.free(this);
+      this.pool = null;
+    }
     return parent;
   }
 

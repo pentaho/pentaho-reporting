@@ -73,10 +73,12 @@ public class CrosstabTestSequence extends AbstractSequence
 
     final int[] rowCards = populateCardinality(rowCardsRaw, rowDims);
     final int[] colCards = populateCardinality(colCardsRaw, colDims);
+    final int rowCount = computeRowCount (rowCards, colCards);
+    final int colCount = rowDims + colDims + 1;
     final String[] rowPattern = populatePatterns("Row-", rowPatternRaw, rowDims);
     final String[] colPattern = populatePatterns("Col-", colPatternRaw, colDims);
 
-    final TypedTableModel model = new TypedTableModel();
+    final TypedTableModel model = new TypedTableModel(rowCount, colCount);
     for (int r = 0; r < rowDims; r+= 1)
     {
       model.addColumn("r" + r, String.class);
@@ -120,6 +122,22 @@ public class CrosstabTestSequence extends AbstractSequence
     }
 
     return model;
+  }
+
+  private int computeRowCount(final int[] rowCards, final int[] colCards)
+  {
+    int rowCount = 1;
+    for (int i = 0; i < rowCards.length; i++)
+    {
+      int rowCard = rowCards[i];
+      rowCount *= rowCard;
+    }
+    for (int i = 0; i < colCards.length; i++)
+    {
+      int rowCard = colCards[i];
+      rowCount *= rowCard;
+    }
+    return rowCount;
   }
 
   private int queryCardinality(final int[] rows, final int[] cols, int pos)

@@ -141,14 +141,14 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     this.stateKey = stateKey;
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
     final StyleSheet computedStyle = element.getComputedStyle();
     final String layout = (String) computedStyle.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_CANVAS);
-    startBox(element, computedStyle, layout, false);
+    return startBox(element, computedStyle, layout, false);
   }
 
-  private void startBox(final ReportElement element,
+  private InstanceID startBox(final ReportElement element,
                         final StyleSheet styleSheet,
                         final String layout,
                         final boolean auto)
@@ -169,7 +169,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
         this.context = new DefaultLayoutModelBuilderContext
             (this.context, renderNodeFactory.createAutoParagraph(element, styleSheet, stateKey));
 
-        // TODO: PRD-3750 - A empty inline-band that creates a auto-paragraph reserves space on the vertical axis.
+        // PRD-3750 - A empty inline-band that creates a auto-paragraph reserves space on the vertical axis.
         if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) ||
             metaData.isFeatureSupported(OutputProcessorFeature.PRD_3750))
         {
@@ -249,6 +249,7 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
       }
     }
     this.textProducer.startText();
+    return this.context.getRenderBox().getInstanceId();
   }
 
 

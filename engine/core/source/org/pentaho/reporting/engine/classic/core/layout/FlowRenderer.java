@@ -104,7 +104,7 @@ public class FlowRenderer extends AbstractRenderer
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 50) // this is a magic number ..
+    if (floodPrevention < 5) // this is a magic number ..
     {
       return;
     }
@@ -118,7 +118,6 @@ public class FlowRenderer extends AbstractRenderer
       return;
     }
 
-
     final LogicalPageBox pageBox = getPageBox();
     pageBox.setPageEnd(pageBox.getHeight());
 
@@ -127,11 +126,15 @@ public class FlowRenderer extends AbstractRenderer
       final IterativeOutputProcessor io = (IterativeOutputProcessor) outputProcessor;
       if (applyAutoCommitPageHeaderStep.compute(pageBox))
       {
-        logger.debug("Computing Incremental update: " + pageBox.getPageOffset() + " " + pageBox.getPageEnd());
-
         io.processIterativeContent(pageBox, performOutput);
         countBoxesStep.process(pageBox);
         cleanFlowBoxesStep.compute(pageBox);
+
+   //     ModelPrinter.INSTANCE.print(pageBox);
+
+        logger.debug("Computing Incremental update: offset=" + pageBox.getPageOffset() +
+            ", horizon=" + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd());
+
       }
     }
   }
@@ -146,85 +149,89 @@ public class FlowRenderer extends AbstractRenderer
 //    final long sizeBeforePagination = pageBox.getHeight();
     //final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
     final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBreak.isOverflow() || pageBox.isOpen() == false)
+    if (pageBreak.isOverflow() == false && pageBox.isOpen())
     {
-      setLastStateKey(pageBreak.getLastVisibleState());
+      return false;
+    }
+
+    setLastStateKey(pageBreak.getLastVisibleState());
 //      final long sizeAfterPagination = pageBox.getHeight();
-      setPagebreaks(getPagebreaks() + 1);
-      pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+    setPagebreaks(getPagebreaks() + 1);
+    pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
-      flowCount += 1;
-      debugPrint(pageBox);
+    flowCount += 1;
+    debugPrint(pageBox);
 
-      // A new page has been started. Recover the page-grid, then restart
-      // everything from scratch. (We have to recompute, as the pages may
-      // be different now, due to changed margins or page definitions)
-      final long nextOffset = pageBox.computePageEnd();
-      pageBox.setPageEnd(nextOffset);
-      final long pageOffset = pageBox.getPageOffset();
+    // A new page has been started. Recover the page-grid, then restart
+    // everything from scratch. (We have to recompute, as the pages may
+    // be different now, due to changed margins or page definitions)
+    final long nextOffset = pageBox.computePageEnd();
+    pageBox.setPageEnd(nextOffset);
+    final long pageOffset = pageBox.getPageOffset();
 
-      if (performOutput)
+    if (performOutput)
+    {
+      if (outputProcessor.isNeedAlignedPage())
       {
-        if (outputProcessor.isNeedAlignedPage())
-        {
-          final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
-          logger.debug("Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+        final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
+        logger.debug("Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
 
-          outputProcessor.processContent(box);
-        }
-        else
-        {
-          logger.debug("Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-          outputProcessor.processContent(pageBox);
-        }
+        outputProcessor.processContent(box);
       }
       else
       {
-        logger.debug("Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-        outputProcessor.processRecomputedContent(pageBox);
-      }
-
-      // Now fire the pagebreak. This goes through all layers and informs all
-      // components, that a pagebreak has been encountered and possibly a
-      // new page has been set. It does not save the state or perform other
-      // expensive operations. However, it updates the 'isPagebreakEncountered'
-      // flag, which will be active until the input-feed received a new event.
-      //      Log.debug("PageTime " + (currentPageAge - lastPageAge));
-
-      final boolean repeat = pageBox.isOpen() || pageBreak.isOverflow();
-      if (repeat)
-      {
-        // pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
-        // First clean all boxes that have been marked as finished. This reduces the overall complexity of the
-        // pagebox and improves performance on huge reports.
-        countBoxesStep.process(pageBox);
-        cleanFlowBoxesStep.compute(pageBox);
-
-        //cleanPaginatedBoxesStep.compute(pageBox);
-        pageBox.setPageOffset(nextOffset);
-        pageBox.resetCacheState(true);
-        if (pageBreak.isNextPageContainsContent())
-        {
-          if (layoutPagebreakHandler != null)
-          {
-            layoutPagebreakHandler.pageStarted();
-          }
-          return true;
-        }
-        // No need to try again, we know that the result will not change, as the next page is
-        // empty. (We already tested it.)
-        pageStartPending = true;
-        return false;
-      }
-      else
-      {
-        outputProcessor.processingFinished();
-        pageBox.setPageOffset(nextOffset);
-        pageBox.resetCacheState(true);
-        return false;
+        logger.debug("Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+        outputProcessor.processContent(pageBox);
       }
     }
-    return false;
+    else
+    {
+      logger.debug("Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+      outputProcessor.processRecomputedContent(pageBox);
+    }
+
+    // Now fire the pagebreak. This goes through all layers and informs all
+    // components, that a pagebreak has been encountered and possibly a
+    // new page has been set. It does not save the state or perform other
+    // expensive operations. However, it updates the 'isPagebreakEncountered'
+    // flag, which will be active until the input-feed received a new event.
+    //      Log.debug("PageTime " + (currentPageAge - lastPageAge));
+
+    final boolean repeat = pageBox.isOpen() || pageBreak.isOverflow();
+    if (repeat)
+    {
+      // pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+      // First clean all boxes that have been marked as finished. This reduces the overall complexity of the
+      // pagebox and improves performance on huge reports.
+      countBoxesStep.process(pageBox);
+      cleanFlowBoxesStep.compute(pageBox);
+
+      //cleanPaginatedBoxesStep.compute(pageBox);
+      pageBox.setPageOffset(nextOffset);
+      // todo PRD-4606
+      pageBox.resetCacheState(true);
+
+      if (pageBreak.isNextPageContainsContent())
+      {
+        if (layoutPagebreakHandler != null)
+        {
+          layoutPagebreakHandler.pageStarted();
+        }
+        return true;
+      }
+      // No need to try again, we know that the result will not change, as the next page is
+      // empty. (We already tested it.)
+      pageStartPending = true;
+      return false;
+    }
+    else
+    {
+      outputProcessor.processingFinished();
+      pageBox.setPageOffset(nextOffset);
+// todo PRD-4606
+//      pageBox.resetCacheState(true);
+      return false;
+    }
   }
 
   public int getPageCount()

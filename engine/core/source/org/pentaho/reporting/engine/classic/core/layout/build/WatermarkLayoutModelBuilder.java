@@ -163,10 +163,11 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
   {
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-    getParent().startBox(element);
+    InstanceID instanceID = getParent().startBox(element);
     inBoxDepth += 1;
+    return instanceID;
   }
 
   public void startSection(final ReportElement element, final int sectionSize)

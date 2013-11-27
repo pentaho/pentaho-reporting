@@ -23,12 +23,14 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -94,8 +96,7 @@ public class Prd3245Test extends TestCase
 
   public void testGoldenSample () throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
@@ -108,6 +109,14 @@ public class Prd3245Test extends TestCase
     assertChildren(2, DebugReportRunner.layoutPage(report, 5));
     assertChildren(1, DebugReportRunner.layoutPage(report, 6));
     assertChildren(2, DebugReportRunner.layoutPage(report, 7));
+  }
+
+  public void testBandedPageSubreport() throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
+    LogicalPageBox box = DebugReportRunner.layoutPage(report, 2);
+    ModelPrinter.INSTANCE.print(box);
+    assertNull(MatchFactory.findElementByName(box, "Subreport 1.1"));
   }
 
   private void assertChildren(final int expected, final LogicalPageBox box)

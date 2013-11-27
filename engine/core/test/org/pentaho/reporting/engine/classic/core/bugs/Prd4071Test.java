@@ -55,8 +55,7 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReportEmptyPage2() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
@@ -76,8 +75,7 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReport() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
@@ -97,8 +95,7 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReport3() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

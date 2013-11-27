@@ -48,6 +48,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  * reserves a virtual padding area in the infinite-canvas flow to push the next assumed pagebreak to the y2-position
  * of the header. A header-shift modifies the pin-position on a box, and modifies where pagebreaks are detected.
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public final class PaginationStep extends IterateVisualProcessStep
 {
   private static final Log logger = LogFactory.getLog(PaginationStep.class);
@@ -156,6 +157,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     final boolean retval = handleStartBlockLevelBox(box);
     installTableContext(box);
     return retval;
@@ -174,10 +177,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       if (handleManualBreakOnBox(box, shiftState, breakPending))
       {
         breakPending = false;
-        if (logger.isDebugEnabled())
-        {
-         // logger.debug("pending page-break or manual break: " + box);
-        }
         return true;
       }
       breakPending = false;
@@ -302,6 +301,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     if (box.isCommited())
     {
       box.setFinishedPaginate(true);
@@ -323,6 +324,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     if (box.isCommited())
     {
       box.setFinishedPaginate(true);
@@ -344,6 +347,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     shiftState = shiftStatePool.create(box, shiftState);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
@@ -377,12 +382,43 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     else
     {
-      return true;
+      if (box.isContainsReservedContent())
+      {
+        return true;
+      }
+      else
+      {
+        // todo: Can we safely mark auto-boxes as finished? Or shall we wait until the table itself finishes?
+/*
+        if (box.isCommited())
+        {
+          box.setFinishedPaginate(true);
+        }
+        */
+        return true;
+      }
     }
   }
 
-  private void startTableHeaderSection(final RenderBox box, final TableSectionRenderBox sectionRenderBox)
+  private RenderBox findRootBox(RenderBox box)
   {
+    RenderBox parent = box.getParent();
+    while (parent != null)
+    {
+      if (parent.isContainsReservedContent() == false)
+      {
+        return box;
+      }
+      box = parent;
+      parent = box.getParent();
+    }
+    return box;
+  }
+
+  private void startTableHeaderSection(final RenderBox _box, final TableSectionRenderBox sectionRenderBox)
+  {
+    RenderBox box = findRootBox(_box);
+
     final long contextShift = shiftState.getShiftForNextChild();
     // shift the header downwards,
     // 1. Check that this table actually breaks across the current page. Header position must be
@@ -471,6 +507,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
       if (box.isOpen())
@@ -498,6 +536,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     return startRowLevelBox(box);
   }
 
@@ -508,6 +548,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableCellLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     installTableContext(box);
     return startBlockLevelBox(box);
   }
@@ -520,6 +562,8 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
+    box.setOverflowAreaHeight(0);
+
     BoxShifter.shiftBox(box, shiftState.getShiftForNextChild());
     return false;
   }
@@ -743,7 +787,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
     }
 
-    // todo:
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final RenderLength fixedPosition = box.getBoxDefinition().getFixedPosition();
     final long fixedPositionResolved = fixedPosition.resolve(paginationTableState.getPageHeight(), 0);
@@ -779,8 +822,9 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   private void handleBlockLevelBoxFinishedMarker(final RenderBox box, final long shift)
   {
-    if (box.isFinishedPaginate() != false)
+    if (box.isFinishedPaginate())
     {
+      // if already marked as finished, no need to do more work ..
       return;
     }
 
