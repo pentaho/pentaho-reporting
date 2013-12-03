@@ -39,7 +39,7 @@ public class ShowExternalStyleDefinitionEditorAction extends AbstractDesignerCon
   public void actionPerformed(final ActionEvent e)
   {
     final ReportDesignerContext context = getReportDesignerContext();
-    final StyleDefinitionEditorDialog dialog = StyleDefinitionEditorDialog.createDialog(context.getParent(), context);
+    final StyleDefinitionEditorDialog dialog = StyleDefinitionEditorDialog.createDialog(context.getView().getParent(), context);
     dialog.setStandalone(true);
     dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     dialog.setVisible(true);

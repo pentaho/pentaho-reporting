@@ -198,7 +198,7 @@ public class MigrateReportTask implements Runnable
       return;
     }
 
-    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
     final MigrateConfirmationDialog dialog;
     if (window instanceof JDialog)
     {

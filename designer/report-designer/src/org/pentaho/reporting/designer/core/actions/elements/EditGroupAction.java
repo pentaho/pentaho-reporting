@@ -85,7 +85,7 @@ public final class EditGroupAction extends AbstractElementSelectionAction
                                                     final Object selectedElement,
                                                     final boolean addGroup)
   {
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final EditGroupDetailsDialog dialog;
     if (window instanceof JDialog)

@@ -106,6 +106,6 @@ public class AnonymizeDataAction extends AbstractElementSelectionAction
     thread.setName("AnonymizeDataSource-Worker");
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("AnonymizeDataAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("AnonymizeDataAction.TaskTitle"));
   }
 }

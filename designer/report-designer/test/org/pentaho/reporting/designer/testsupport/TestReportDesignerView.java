@@ -17,9 +17,18 @@
 
 package org.pentaho.reporting.designer.testsupport;
 
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
+
 import org.pentaho.reporting.designer.core.ReportDesignerView;
+import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
+import org.pentaho.ui.xul.XulComponent;
+import org.pentaho.ui.xul.XulException;
+import org.pentaho.ui.xul.containers.XulMenupopup;
 
 public class TestReportDesignerView implements ReportDesignerView
 {
@@ -115,5 +124,40 @@ public class TestReportDesignerView implements ReportDesignerView
   public void showDataTree()
   {
 
+  }
+
+  public Component getParent()
+  {
+    return null;
+  }
+
+  public JPopupMenu getPopupMenu(final String id)
+  {
+    return null;
+  }
+
+  public JComponent getToolBar(final String id)
+  {
+    return null;
+  }
+
+  public <T extends JComponent> T getComponent(final String id, final Class<T> type)
+  {
+    return null;
+  }
+
+  public <T extends XulComponent> T getXulComponent(final String id, final Class<T> type)
+  {
+    return null;
+  }
+
+  public ActionSwingMenuitem createMenuItem(final Action action)
+  {
+    return null;
+  }
+
+  public XulMenupopup createPopupMenu(final String label, final XulComponent parent) throws XulException
+  {
+    return null;
   }
 }

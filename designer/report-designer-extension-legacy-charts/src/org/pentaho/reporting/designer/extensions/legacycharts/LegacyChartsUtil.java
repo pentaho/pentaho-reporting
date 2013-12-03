@@ -69,7 +69,7 @@ public class LegacyChartsUtil
       return;
     }
 
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final LegacyChartEditorDialog dialog;
     if (window instanceof JDialog)

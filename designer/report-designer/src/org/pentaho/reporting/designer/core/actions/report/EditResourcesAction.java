@@ -67,7 +67,7 @@ public class EditResourcesAction extends AbstractReportContextAction
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final BundledResourceEditor dialog;
     if (window instanceof JDialog)

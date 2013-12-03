@@ -18,8 +18,6 @@
 package org.pentaho.reporting.designer.core.actions.report;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Random;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
@@ -39,7 +37,6 @@ import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCan
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
-import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 
 public class AnonymizeReportAction extends AbstractReportContextAction
@@ -123,7 +120,7 @@ public class AnonymizeReportAction extends AbstractReportContextAction
     thread.setName("AnonymizeReport-Worker");// NON-NLS
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
 
   }
 }

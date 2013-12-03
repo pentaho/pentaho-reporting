@@ -50,7 +50,7 @@ public abstract class AbstractExportAction extends AbstractReportContextAction
       {
         return null;
       }
-      final Component parent = context.getParent();
+      final Component parent = context.getView().getParent();
       return LibSwingUtil.getWindowAncestor(parent);
     }
 

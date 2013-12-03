@@ -79,7 +79,7 @@ public class EditSubReportAction extends AbstractElementSelectionAction
         final ReportRenderContext rrc = designerContext.getReportRenderContext(i);
         if (rrc.getReportDefinition() == element)
         {
-          designerContext.setActiveContext(rrc);
+          designerContext.setActiveDocument(rrc);
           return;
         }
       }

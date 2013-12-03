@@ -62,7 +62,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
 
     final ConfigurationEditorDialog dialog;
 
-    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
     if (window instanceof JDialog)
     {
       dialog = new ConfigurationEditorDialog((JDialog) window);

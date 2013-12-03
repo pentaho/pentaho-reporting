@@ -42,11 +42,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class SaveReportAction extends AbstractReportContextAction
 {
   public SaveReportAction()
@@ -63,13 +58,13 @@ public final class SaveReportAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportRenderContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    saveReport(getReportDesignerContext(), activeContext, getReportDesignerContext().getParent());
+    saveReport(getReportDesignerContext(), activeContext, getReportDesignerContext().getView().getParent());
   }
 
   public static boolean saveReport(final ReportDesignerContext context,

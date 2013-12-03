@@ -83,7 +83,7 @@ public class AddConditionalVisibilityAction extends AbstractElementSelectionActi
     }
 
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final ConditionalVisibilityDialog dialog;
     if (window instanceof JDialog)

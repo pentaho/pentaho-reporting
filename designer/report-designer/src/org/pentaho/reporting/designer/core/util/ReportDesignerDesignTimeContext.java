@@ -61,7 +61,7 @@ public class ReportDesignerDesignTimeContext implements DesignTimeContext
 
   public Window getParentWindow()
   {
-    final Component component = designerContext.getParent();
+    final Component component = designerContext.getView().getParent();
     if (component instanceof Window)
     {
       return (Window) component;

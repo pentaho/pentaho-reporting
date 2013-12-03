@@ -93,7 +93,7 @@ public final class ReportABugAction extends AbstractDesignerContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final Thread t = new Thread(new LaunchBrowserTask(getReportDesignerContext().getParent()));
+    final Thread t = new Thread(new LaunchBrowserTask(getReportDesignerContext().getView().getParent()));
     t.setDaemon(true);
     t.start();
 

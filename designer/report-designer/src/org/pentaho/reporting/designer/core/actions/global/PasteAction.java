@@ -258,7 +258,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
       final MasterReport rawMasterReport = (MasterReport) element;
       final MasterReport masterReport = (MasterReport) rawMasterReport.derive();
 
-      final int result = JOptionPane.showOptionDialog(getReportDesignerContext().getParent(),
+      final int result = JOptionPane.showOptionDialog(getReportDesignerContext().getView().getParent(),
           Messages.getString("SubreportReportElementDragHandler.BandedOrInlineSubreportQuestion"),
           Messages.getString("SubreportReportElementDragHandler.InsertSubreport"),
           JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,

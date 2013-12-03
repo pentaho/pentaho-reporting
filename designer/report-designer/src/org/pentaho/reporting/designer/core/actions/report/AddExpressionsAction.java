@@ -63,7 +63,7 @@ public final class AddExpressionsAction extends AbstractReportContextAction
       return;
     }
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final ExpressionChooserDialog dialog;
     if (window instanceof JDialog)

@@ -77,7 +77,7 @@ public class ElementFormatAction extends AbstractElementSelectionAction
       styleExpressions = visualElements[0].getStyleExpressions();
     }
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final ElementFormatDialog dialog = createDialog(window);
     final ElementFormatUndoEntry.EditResult result =

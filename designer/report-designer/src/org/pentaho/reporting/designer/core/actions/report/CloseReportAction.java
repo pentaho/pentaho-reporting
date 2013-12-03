@@ -86,14 +86,14 @@ public class CloseReportAction extends AbstractReportContextAction
     if (activeContext.isChanged() && activeContext.getReportDefinition() instanceof MasterReport)
     {
       // ask the user and maybe save the report..
-      final int option = JOptionPane.showConfirmDialog(context.getParent(),
+      final int option = JOptionPane.showConfirmDialog(context.getView().getParent(),
           ActionMessages.getString("ReportModifiedCloseWarning.Message"),
           ActionMessages.getString("ReportModifiedCloseWarning.Title"),
           JOptionPane.YES_NO_CANCEL_OPTION,
           JOptionPane.WARNING_MESSAGE);
       if (option == JOptionPane.YES_OPTION)
       {
-        if (SaveReportAction.saveReport(context, activeContext, context.getParent()) == false)
+        if (SaveReportAction.saveReport(context, activeContext, context.getView().getParent()) == false)
         {
           return false;
         }

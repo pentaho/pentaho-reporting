@@ -52,7 +52,7 @@ public class SubreportReportElementInlineEditor extends AbstractCellEditor imple
       final ReportRenderContext rrc = context.getReportRenderContext(i);
       if (rrc.getReportDefinition() == value)
       {
-        context.setActiveContext(rrc);
+        context.setActiveDocument(rrc);
         return null;
       }
     }

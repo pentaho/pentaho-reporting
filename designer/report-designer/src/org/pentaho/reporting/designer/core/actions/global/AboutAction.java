@@ -52,7 +52,7 @@ public final class AboutAction extends AbstractDesignerContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     if (window instanceof JDialog)
     {

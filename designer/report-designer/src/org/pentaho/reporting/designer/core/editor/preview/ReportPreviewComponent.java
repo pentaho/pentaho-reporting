@@ -193,7 +193,7 @@ public class ReportPreviewComponent extends JPanel
     add(previewPane, BorderLayout.CENTER);
 
 
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     if (parent instanceof Dialog)
     {
       progressDialog = new ReportProgressDialog((Dialog) parent);

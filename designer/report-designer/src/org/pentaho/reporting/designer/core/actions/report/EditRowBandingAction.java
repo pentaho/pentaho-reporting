@@ -62,7 +62,7 @@ public class EditRowBandingAction extends AbstractReportContextAction
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final RowBandingDialog dialog;
     if (window instanceof JDialog)

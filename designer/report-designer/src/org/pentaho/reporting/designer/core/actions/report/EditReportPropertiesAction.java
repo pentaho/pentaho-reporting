@@ -65,7 +65,7 @@ public class EditReportPropertiesAction extends AbstractReportContextAction
       return;
     }
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final DocumentMetaDataDialog dialog;
     if (window instanceof JDialog)

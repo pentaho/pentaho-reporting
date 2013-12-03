@@ -173,7 +173,7 @@ public class InsertTableAction extends AbstractElementSelectionAction implements
     }
 
     ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final CreateTableDialog dialog;
     if (window instanceof JDialog)

@@ -143,7 +143,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
     }
     final SubReport subReport = (SubReport) definition;
 
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final SubReportParameterDialog parameterDialog;
     if (window instanceof JDialog)
@@ -223,7 +223,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
       return;
     }
 
-    final Component theParent = context.getParent();
+    final Component theParent = context.getView().getParent();
     final Window theWindow = LibSwingUtil.getWindowAncestor(theParent);
     final ParameterDialog parameterDialog;
     if (theWindow instanceof JDialog)

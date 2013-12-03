@@ -155,7 +155,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
       }
 
       final ReportDesignerContext designerContext = dragContext.getDesignerContext();
-      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
       final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
 
       try
@@ -167,7 +167,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
         subReport.setResourceBundleFactory(rbf);
 
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
-        designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
+        designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
       }
       catch (ReportDataFactoryException e)
       {

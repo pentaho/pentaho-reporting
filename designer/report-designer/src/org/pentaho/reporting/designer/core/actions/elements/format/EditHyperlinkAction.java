@@ -82,7 +82,7 @@ public class EditHyperlinkAction extends AbstractElementSelectionAction
 
     final EditableStyleSheet styleSheet = EditableStyleSheet.create(visualElements);
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final HyperlinkEditorDialog dialog = createDialog(window);
 

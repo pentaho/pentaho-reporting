@@ -21,8 +21,6 @@ import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
 import java.awt.dnd.DnDConstants;
@@ -34,7 +32,6 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -42,7 +39,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.BeanInfo;
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -51,13 +47,12 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -68,9 +63,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
@@ -83,13 +76,11 @@ import org.pentaho.reporting.designer.core.actions.elements.InsertElementAction;
 import org.pentaho.reporting.designer.core.actions.elements.MorphAction;
 import org.pentaho.reporting.designer.core.actions.elements.barcode.BarcodeTypeAction;
 import org.pentaho.reporting.designer.core.actions.global.AboutAction;
-import org.pentaho.reporting.designer.core.actions.global.OpenRecentReportAction;
 import org.pentaho.reporting.designer.core.actions.global.OpenReportAction;
 import org.pentaho.reporting.designer.core.actions.global.OpenSampleReportAction;
 import org.pentaho.reporting.designer.core.actions.global.QuitAction;
 import org.pentaho.reporting.designer.core.actions.global.SelectTabAction;
 import org.pentaho.reporting.designer.core.actions.global.SettingsAction;
-import org.pentaho.reporting.designer.core.actions.global.ZoomAction;
 import org.pentaho.reporting.designer.core.actions.report.CloseAllReportsAction;
 import org.pentaho.reporting.designer.core.actions.report.CloseChildReportsAction;
 import org.pentaho.reporting.designer.core.actions.report.CloseOtherReportsAction;
@@ -101,11 +92,10 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.ReportRendererComponent;
 import org.pentaho.reporting.designer.core.editor.fieldselector.FieldSelectorPaletteDialog;
 import org.pentaho.reporting.designer.core.editor.palette.PaletteButton;
+import org.pentaho.reporting.designer.core.frame.RecentFilesUpdateHandler;
 import org.pentaho.reporting.designer.core.inspections.InspectionSidePanePanel;
-import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.status.StatusBar;
-import org.pentaho.reporting.designer.core.util.CanvasImageLoader;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.docking.Category;
 import org.pentaho.reporting.designer.core.util.docking.GlobalPane;
@@ -113,38 +103,24 @@ import org.pentaho.reporting.designer.core.util.docking.InternalWindow;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.welcome.SamplesTreeBuilder;
 import org.pentaho.reporting.designer.core.welcome.WelcomePane;
-import org.pentaho.reporting.designer.core.widgets.CloseTabIcon;
+import org.pentaho.reporting.designer.core.widgets.FancyTabbedPane;
+import org.pentaho.reporting.designer.core.widgets.TabRenderer;
 import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
 import org.pentaho.reporting.designer.core.xul.XulDesignerFrame;
-import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.engine.classic.core.CrosstabElement;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
-import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.BarcodeTypePropertyEditor;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
-import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.MacOSXIntegration;
-import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.XulException;
-import org.pentaho.ui.xul.XulLoader;
 import org.pentaho.ui.xul.components.XulMenuitem;
-import org.pentaho.ui.xul.containers.XulMenu;
 import org.pentaho.ui.xul.containers.XulMenupopup;
 import org.pentaho.ui.xul.swing.tags.SwingMenuseparator;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ReportDesignerFrame extends JFrame
 {
   /**
@@ -214,36 +190,6 @@ public class ReportDesignerFrame extends JFrame
     }
   }
 
-  private static class InternalZoomAction extends ZoomAction
-  {
-    private InternalZoomAction(final int percentage)
-    {
-      super(percentage);
-    }
-
-    public boolean isSelected()
-    {
-      final ReportRenderContext activeContext = getActiveContext();
-      if (activeContext != null)
-      {
-        return activeContext.getZoomModel().getZoomAsPercentage() == (getPercentage() / 100f);
-      }
-      return false;
-    }
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(final ActionEvent e)
-    {
-      final ReportRenderContext activeContext = getActiveContext();
-      if (activeContext != null)
-      {
-        activeContext.getZoomModel().setZoomAsPercentage(getPercentage() / 100f);
-      }
-    }
-  }
-
   private class ReportTabActivationHandler implements ChangeListener, PropertyChangeListener
   {
     private ReportTabActivationHandler()
@@ -252,7 +198,7 @@ public class ReportDesignerFrame extends JFrame
 
     public void propertyChange(final PropertyChangeEvent evt)
     {
-      final ReportRenderContext activeContext = getContext().getActiveContext();
+      final ReportDesignerDocumentContext activeContext = getContext().getActiveDocument();
       final JTabbedPane editorPanes = getReportEditorPane();
       final int i = findTabForContext(activeContext);
       if (i != -1 && editorPanes.getSelectedIndex() != i)
@@ -263,7 +209,7 @@ public class ReportDesignerFrame extends JFrame
       updateFrameTitle();
     }
 
-    private int findTabForContext(final ReportRenderContext activeContext)
+    private int findTabForContext(final ReportDesignerDocumentContext activeContext)
     {
       final JTabbedPane editorPanes = getReportEditorPane();
       final int count = editorPanes.getTabCount();
@@ -293,14 +239,14 @@ public class ReportDesignerFrame extends JFrame
       final DefaultReportDesignerContext context = getContext();
       if (editorPanes.getTabCount() == 0)
       {
-        context.setActiveContext(null);
+        context.setActiveDocument(null);
         return;
       }
 
       final int index = editorPanes.getSelectedIndex();
       if (index == -1 || editorPanes.getComponentAt(index) instanceof ReportRendererComponent == false)
       {
-        context.setActiveContext(null);
+        context.setActiveDocument(null);
       }
       else
       {
@@ -312,7 +258,7 @@ public class ReportDesignerFrame extends JFrame
           final ReportRenderContext context1 = context.getReportRenderContext(i);
           if (context1 == rendererContext)
           {
-            context.setActiveContext(rendererContext);
+            context.setActiveDocument(rendererContext);
             rendererContext.getInspectionRunner().startTimer();
             return;
           }
@@ -324,12 +270,12 @@ public class ReportDesignerFrame extends JFrame
           // instead of blowing away the context, let's grab one and
           // attempt to use it
           // this works around PRD-1609
-          context.setActiveContext(context.getReportRenderContext(context.getReportRenderContextCount() - 1));
+          context.setActiveDocument(context.getReportRenderContext(context.getReportRenderContextCount() - 1));
         }
         else
         {
           // not found, so we are probably in a remove at the moment.
-          context.setActiveContext(null);
+          context.setActiveDocument(null);
         }
       }
     }
@@ -350,167 +296,6 @@ public class ReportDesignerFrame extends JFrame
     public void propertyChange(final PropertyChangeEvent evt)
     {
       getStatusBar().setGeneralInfoText(getContext().getStatusText());
-    }
-  }
-
-  private static class ReportNameUpdateHandler implements ReportModelListener
-  {
-    private JTabbedPane reportEditorPane;
-    private JComponent tabComponent;
-    private AbstractReportDefinition report;
-    private ReportDesignerFrame reportDesignerFrame;
-
-    private ReportNameUpdateHandler(final JTabbedPane reportEditorPane,
-                                    final ReportDesignerFrame reportDesignerFrame,
-                                    final JComponent tabComponent,
-                                    final AbstractReportDefinition report)
-    {
-      this.reportEditorPane = reportEditorPane;
-      this.tabComponent = tabComponent;
-      this.report = report;
-      this.reportDesignerFrame = reportDesignerFrame;
-    }
-
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getElement() == report &&
-          event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
-      {
-        final int tabCount = reportEditorPane.getTabCount();
-        for (int i = 0; i < tabCount; i++)
-        {
-          if (reportEditorPane.getComponentAt(i) == tabComponent)
-          {
-            final TabRenderer tabComponent = (TabRenderer) reportEditorPane.getTabComponentAt(i);
-            final String reportTitle = computeTabName(report);
-            tabComponent.setRawTabName(reportTitle);
-            reportDesignerFrame.recomputeAllTabTitles();
-            reportDesignerFrame.rebuildReportMenu();
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  private class TabRenderer extends JComponent implements ActionListener
-  {
-    private String rawTabName;
-    private JLabel label;
-    private JButton closeButton;
-
-    public TabRenderer(final Icon icon, final String tabName)
-    {
-      if (tabName == null)
-      {
-        throw new NullPointerException();
-      }
-      this.rawTabName = tabName;
-
-      closeButton = new BorderlessButton();
-      closeButton.setBorder(new EmptyBorder(0, 0, 0, 0));
-      closeButton.setPressedIcon(new CloseTabIcon(false, true));
-      closeButton.setIcon(new CloseTabIcon(false, false));
-      closeButton.setRolloverIcon(new CloseTabIcon(true, false));
-      closeButton.setRolloverEnabled(true);
-      closeButton.setContentAreaFilled(false);
-      closeButton.setBorderPainted(false);
-      closeButton.addActionListener(this);
-
-      label = new JLabel(tabName, icon, SwingConstants.LEFT);
-
-      setLayout(new BorderLayout());
-      add(closeButton, BorderLayout.EAST);
-      add(label, BorderLayout.CENTER);
-    }
-
-    private int findTab()
-    {
-      final JTabbedPane tabbedPane = getReportEditorPane();
-      final int count = tabbedPane.getTabCount();
-      for (int i = 0; i < count; i++)
-      {
-        final Component at = tabbedPane.getTabComponentAt(i);
-        if (at == this)
-        {
-          return i;
-        }
-      }
-      return -1;
-    }
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(final ActionEvent e)
-    {
-      final int tab = findTab();
-      if (tab == -1)
-      {
-        return;
-      }
-
-      final CloseReportAction cra = new CloseReportAction(tab);
-      cra.setReportDesignerContext(getContext());
-      cra.actionPerformed(e);
-    }
-
-    public String getTitle()
-    {
-      return label.getText();
-    }
-
-    public void setTitle(final String title)
-    {
-      label.setText(title);
-    }
-
-    public String getRawTabName()
-    {
-      return rawTabName;
-    }
-
-    public void setRawTabName(final String rawTabName)
-    {
-      this.rawTabName = rawTabName;
-    }
-
-    public String recomputeTabName()
-    {
-      final JTabbedPane editorPane = ReportDesignerFrame.this.getReportEditorPane();
-      final int count = editorPane.getTabCount();
-      int found = 0;
-      for (int i = 0; i < count; i++)
-      {
-        final Component at = editorPane.getTabComponentAt(i);
-        if (at == this)
-        {
-          if (found == 0)
-          {
-            return rawTabName;
-          }
-          else
-          {
-            return rawTabName + "<" + found + ">";
-          }
-        }
-        else if (at instanceof TabRenderer)
-        {
-          final TabRenderer otherRenderer = (TabRenderer) at;
-          if (rawTabName.equals(otherRenderer.rawTabName))
-          {
-            found += 1;
-          }
-        }
-        else
-        {
-          if (rawTabName.equals(editorPane.getTitleAt(i)))
-          {
-            found += 1;
-          }
-        }
-      }
-      return rawTabName;
     }
   }
 
@@ -544,26 +329,18 @@ public class ReportDesignerFrame extends JFrame
       {
         // added
         final ReportRenderContext renderContext = (ReportRenderContext) ievt.getNewValue();
-        final ReportRendererComponent rendererComponent = new ReportRendererComponent(getContext(), renderContext);
+        DefaultReportDesignerContext reportDesignerContext = getContext();
+        final ReportRendererComponent rendererComponent = new ReportRendererComponent(reportDesignerContext, renderContext);
 
-        // register the listeners ...
-        final AbstractReportDefinition report = renderContext.getReportDefinition();
-        report.addReportModelListener(new ReportNameUpdateHandler(editorPanes, ReportDesignerFrame.this, rendererComponent, report));
-
-        final String title = computeTabName(report);
-        final Image iconImage = report.getElementType().getMetaData().getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_16x16);
-        final Icon icon;
-        if (iconImage != null)
-        {
-          icon = new ImageIcon(iconImage);
-        }
-        else
-        {
-          icon = null;
-        }
+        final String title = renderContext.getTabName();
+        final Icon icon = renderContext.getIcon();
+        final TabRenderer tabRenderer = new TabRenderer(icon, title, reportDesignerContext, editorPanes);
         editorPanes.addTab(title, null, rendererComponent);
-        editorPanes.setTabComponentAt(editorPanes.getTabCount() - 1, new TabRenderer(icon, title));
+        editorPanes.setTabComponentAt(editorPanes.getTabCount() - 1, tabRenderer);
         editorPanes.setSelectedComponent(rendererComponent);
+        renderContext.addPropertyChangeListener("tabName",
+            new DocumentNameChangeHandler(renderContext, tabRenderer, editorPanes.getTabCount() - 1));
+
       }
       else if (ievt.getOldValue() != null)
       {
@@ -615,58 +392,6 @@ public class ReportDesignerFrame extends JFrame
 
       recomputeAllTabTitles();
       rebuildReportMenu();
-    }
-  }
-
-  private static class RecentFilesUpdateHandler implements SettingsListener
-  {
-    private ReportDesignerContext context;
-    private XulDesignerFrame xulDesignerFrame;
-    private XulMenupopup reopenMenu;
-    private XulMenuitem clearMenu;
-
-    private RecentFilesUpdateHandler(final ReportDesignerContext context,
-                                     final XulDesignerFrame xulDesignerFrame,
-                                     final XulMenupopup reopenMenu,
-                                     final XulMenuitem clearMenu)
-    {
-      this.context = context;
-      this.xulDesignerFrame = xulDesignerFrame;
-      this.reopenMenu = reopenMenu;
-      this.clearMenu = clearMenu;
-    }
-
-    public void settingsChanged()
-    {
-      final File[] recentFiles = context.getRecentFilesModel().getRecentFiles();
-      final List<XulComponent> xulComponents = reopenMenu.getChildNodes();
-      final XulComponent[] objects = xulComponents.toArray(new XulComponent[xulComponents.size()]);
-      for (int i = 0; i < objects.length; i++)
-      {
-        final XulComponent object = objects[i];
-        reopenMenu.removeChild(object);
-      }
-      if (recentFiles.length == 0)
-      {
-        clearMenu.setDisabled(true);
-      }
-      else
-      {
-        clearMenu.setDisabled(false);
-        for (int i = 0; i < recentFiles.length; i++)
-        {
-          final File file = recentFiles[i];
-          if (file.exists() == false)
-          {
-            continue;
-          }
-          final OpenRecentReportAction action = new OpenRecentReportAction(file);
-          final ActionSwingMenuitem actionSwingMenuitem = xulDesignerFrame.createMenu(action);
-          actionSwingMenuitem.setReportDesignerContext(context);
-          reopenMenu.addChild(actionSwingMenuitem);
-        }
-        reopenMenu.addChild(new SwingMenuseparator(null, null, null, null));
-      }
     }
   }
 
@@ -731,10 +456,19 @@ public class ReportDesignerFrame extends JFrame
   private class FrameViewController implements ReportDesignerView
   {
     private PropertyChangeSupport propertyChangeSupport;
+    private XulDesignerFrame xulDesignerFrame;
+    private Component parent;
 
-    private FrameViewController()
+    private FrameViewController(final Component parent)
     {
-      propertyChangeSupport = new PropertyChangeSupport(this);
+      this.propertyChangeSupport = new PropertyChangeSupport(this);
+      this.parent = parent;
+    }
+
+    private void initializeXulDesignerFrame(final ReportDesignerContext context) throws XulException
+    {
+      this.xulDesignerFrame = new XulDesignerFrame();
+      this.xulDesignerFrame.setReportDesignerContext(context);
     }
 
     public void addPropertyChangeListener(final PropertyChangeListener listener)
@@ -890,6 +624,57 @@ public class ReportDesignerFrame extends JFrame
       treePanel.refreshTabPanel(getAttributeEditorPanel());
       treePanel.showDataTab();
     }
+
+    public JPopupMenu getPopupMenu(final String id)
+    {
+      return xulDesignerFrame.getComponent(id, JPopupMenu.class);
+    }
+
+    public JComponent getToolBar(final String id)
+    {
+      JComponent toolBar = xulDesignerFrame.getComponent(id, JComponent.class);
+      if (toolBar instanceof JToolBar)
+      {
+        final JToolBar realToolBar = (JToolBar) toolBar;
+        realToolBar.setFloatable(false);
+      }
+      return toolBar;
+    }
+
+    public Component getParent()
+    {
+      return parent;
+    }
+
+    public <T extends JComponent> T getComponent(final String id, final Class<T> type)
+    {
+      T xulComponentById = xulDesignerFrame.getComponent(id, type);
+      if (type.isInstance(xulComponentById))
+      {
+        return (T) xulComponentById;
+      }
+      return null;
+    }
+
+    public <T extends XulComponent> T getXulComponent(final String id, final Class<T> type)
+    {
+      T xulComponentById = xulDesignerFrame.getXulComponent(id, type);
+      if (type.isInstance(xulComponentById))
+      {
+        return (T) xulComponentById;
+      }
+      return null;
+    }
+
+    public ActionSwingMenuitem createMenuItem(final Action action)
+    {
+      return xulDesignerFrame.createMenu(action);
+    }
+
+    public XulMenupopup createPopupMenu(final String label, final XulComponent parent) throws XulException
+    {
+      return xulDesignerFrame.createPopupMenu(label, parent);
+    }
   }
 
   private class ShowWelcomeScreenTask implements Runnable
@@ -897,29 +682,6 @@ public class ReportDesignerFrame extends JFrame
     public void run()
     {
       viewController.setWelcomeVisible(WorkspaceSettings.getInstance().isShowLauncher());
-    }
-  }
-
-  private class FancyTabbedPane extends JTabbedPane
-  {
-    /**
-     * Creates an empty <code>TabbedPane</code> with a default
-     * tab placement of <code>JTabbedPane.TOP</code>.
-     *
-     * @see #addTab
-     */
-    private FancyTabbedPane()
-    {
-    }
-
-    protected void paintComponent(final Graphics g)
-    {
-      super.paintComponent(g);
-      if (getTabCount() == 0)
-      {
-        final Image img = CanvasImageLoader.getInstance().getBackgroundImage().getImage();
-        g.drawImage(img, 0, 0, this);
-      }
     }
   }
 
@@ -961,6 +723,31 @@ public class ReportDesignerFrame extends JFrame
     }
   }
 
+  private class DocumentNameChangeHandler implements PropertyChangeListener
+  {
+    private ReportDesignerDocumentContext documentContext;
+    private TabRenderer tabRenderer;
+    private int tabIndex;
+
+    private DocumentNameChangeHandler(final ReportDesignerDocumentContext documentContext,
+                                      final TabRenderer tabRenderer,
+                                      final int tabIndex)
+    {
+      this.documentContext = documentContext;
+      this.tabRenderer = tabRenderer;
+      this.tabIndex = tabIndex;
+    }
+
+    public void propertyChange(final PropertyChangeEvent evt)
+    {
+      String tabName = documentContext.getTabName();
+      tabRenderer.setRawTabName(tabName);
+      getReportEditorPane().setTitleAt(tabIndex, tabName);
+      recomputeAllTabTitles();
+      rebuildReportMenu();
+    }
+  }
+
   private static final Log logger = LogFactory.getLog(ReportDesignerFrame.class);
   private JTabbedPane reportEditorPane;
   private GlobalPane dockingPane;
@@ -987,8 +774,9 @@ public class ReportDesignerFrame extends JFrame
     setTitle(Messages.getString("ReportDesignerFrame.Title"));
     addWindowListener(new WindowCloseHandler());
 
-    viewController = new FrameViewController();
-    context = new DefaultReportDesignerContext(this, viewController);
+    viewController = new FrameViewController(this);
+    context = new DefaultReportDesignerContext(viewController);
+    viewController.initializeXulDesignerFrame(context);
 
     welcomePane = new WelcomePane(ReportDesignerFrame.this, getContext());
     fieldSelectorPaletteDialog = new FieldSelectorPaletteDialog(ReportDesignerFrame.this, getContext());
@@ -1130,20 +918,19 @@ public class ReportDesignerFrame extends JFrame
 
   private JMenuBar createMenuBar()
   {
-    final JMenuBar menuBar = context.getXulDesignerFrame().getMenuBar();
-
     createRecentFilesMenu();
     createZoomMenu();
     createMorphMenu();
     createInsertElementsMenu();
     createInsertDataSourcesMenu();
     createSamplesMenu();
-    return menuBar;
+
+    return context.getView().getComponent("main-menubar", JMenuBar.class);
   }
 
   private void createInsertDataSourcesMenu()
   {
-    final JMenu insertDataSourcesMenu = context.getXulDesignerFrame().getMenuById("insert-datasources-menu");// NON-NLS
+    final JMenu insertDataSourcesMenu = context.getView().getComponent("insert-datasources-menu", JMenu.class);// NON-NLS
     if (insertDataSourcesMenu != null)
     {
       ContextMenuUtility.createDataSourceMenu(context, insertDataSourcesMenu);
@@ -1152,7 +939,7 @@ public class ReportDesignerFrame extends JFrame
 
   private void createInsertElementsMenu()
   {
-    final XulMenupopup insertElementsMenu = context.getXulDesignerFrame().getXulMenuPopupById("insert-elements-popup");// NON-NLS
+    final XulMenupopup insertElementsMenu = context.getView().getXulComponent("insert-elements-popup", XulMenupopup.class);// NON-NLS
     if (insertElementsMenu != null)
     {
       final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
@@ -1194,12 +981,11 @@ public class ReportDesignerFrame extends JFrame
 
   private void createRecentFilesMenu()
   {
-    final XulComponent reopenMenu = context.getXulDesignerFrame().getXulComponentById("file-reopen-popup"); // NON-NLS
-    final XulComponent clearMenuitem = context.getXulDesignerFrame().getXulComponentById("file-clear-recent");// NON-NLS
-    if (reopenMenu instanceof XulMenupopup && clearMenuitem instanceof XulMenuitem)
+    final XulMenupopup reopenMenu = context.getView().getXulComponent("file-reopen-popup", XulMenupopup.class); // NON-NLS
+    final XulMenuitem clearMenuitem = context.getView().getXulComponent("file-clear-recent", XulMenuitem.class);// NON-NLS
+    if (reopenMenu != null && clearMenuitem != null)
     {
-      final RecentFilesUpdateHandler updateHandler = new RecentFilesUpdateHandler
-          (context, context.getXulDesignerFrame(), (XulMenupopup) reopenMenu, (XulMenuitem) clearMenuitem);
+      final RecentFilesUpdateHandler updateHandler = new RecentFilesUpdateHandler(context, reopenMenu, clearMenuitem);
       updateHandler.settingsChanged();
       context.getRecentFilesModel().addSettingsListener(updateHandler);
     }
@@ -1207,30 +993,32 @@ public class ReportDesignerFrame extends JFrame
 
   private void createZoomMenu()
   {
-    final XulComponent zoomMenu = context.getXulDesignerFrame().getXulComponentById("view-zoom-selection-popup");// NON-NLS
-    if (zoomMenu instanceof XulMenupopup)
+    final XulComponent zoomMenu = context.getView().getXulComponent("view-zoom-selection-popup", XulMenupopup.class);// NON-NLS
+    if (zoomMenu == null)
     {
-      final InternalZoomAction zoom50action = new InternalZoomAction(50);
-      final InternalZoomAction zoom100action = new InternalZoomAction(100);
-      final InternalZoomAction zoom200action = new InternalZoomAction(200);
-      final InternalZoomAction zoom400action = new InternalZoomAction(400);
-
-      zoom50action.setReportDesignerContext(context);
-      zoom100action.setReportDesignerContext(context);
-      zoom200action.setReportDesignerContext(context);
-      zoom400action.setReportDesignerContext(context);
-
-      zoomMenu.addChild(context.getXulDesignerFrame().createMenu(zoom50action));
-      zoomMenu.addChild(context.getXulDesignerFrame().createMenu(zoom100action));
-      zoomMenu.addChild(context.getXulDesignerFrame().createMenu(zoom200action));
-      zoomMenu.addChild(context.getXulDesignerFrame().createMenu(zoom400action));
+      return;
     }
+
+    final InternalZoomAction zoom50action = new InternalZoomAction(50);
+    final InternalZoomAction zoom100action = new InternalZoomAction(100);
+    final InternalZoomAction zoom200action = new InternalZoomAction(200);
+    final InternalZoomAction zoom400action = new InternalZoomAction(400);
+
+    zoom50action.setReportDesignerContext(context);
+    zoom100action.setReportDesignerContext(context);
+    zoom200action.setReportDesignerContext(context);
+    zoom400action.setReportDesignerContext(context);
+
+    zoomMenu.addChild(context.getView().createMenuItem(zoom50action));
+    zoomMenu.addChild(context.getView().createMenuItem(zoom100action));
+    zoomMenu.addChild(context.getView().createMenuItem(zoom200action));
+    zoomMenu.addChild(context.getView().createMenuItem(zoom400action));
   }
 
   private void createSamplesMenu()
   {
-    final XulComponent samplesopup = context.getXulDesignerFrame().getXulComponentById("help-samples-popup");// NON-NLS
-    if (samplesopup instanceof XulMenupopup == false)
+    final XulComponent samplesopup = context.getView().getXulComponent("help-samples-popup", XulMenupopup.class);// NON-NLS
+    if (samplesopup == null)
     {
       return;
     }
@@ -1255,7 +1043,7 @@ public class ReportDesignerFrame extends JFrame
     final int childCount = model.getChildCount(currentLevel);
     for (int i = 0; i < childCount; i += 1)
     {
-      final XulDesignerFrame frame = context.getXulDesignerFrame();
+      final ReportDesignerView frame = context.getView();
 
       final Object child = model.getChild(currentLevel, i);
       if (model.isLeaf(child))
@@ -1264,17 +1052,11 @@ public class ReportDesignerFrame extends JFrame
         final File file = new File(String.valueOf(node.getUserObject()));
         final OpenSampleReportAction action = new OpenSampleReportAction(file, node.toString());
         action.setReportDesignerContext(context);
-        popup.addChild(frame.createMenu(action));
+        popup.addChild(frame.createMenuItem(action));
       }
       else
       {
-        final XulLoader xulLoader = frame.getWindow().getXulDomContainer().getXulLoader();
-        final XulMenu menu = (XulMenu) xulLoader.createElement("MENU");
-        menu.setLabel(String.valueOf(child));
-        popup.addChild(menu);
-
-        final XulMenupopup childPopup = (XulMenupopup) xulLoader.createElement("MENUPOPUP");
-        menu.addChild(childPopup);
+        final XulMenupopup childPopup = frame.createPopupMenu(String.valueOf(child), popup);
         insertReports(model, child, childPopup);
       }
     }
@@ -1282,47 +1064,48 @@ public class ReportDesignerFrame extends JFrame
 
   private void createMorphMenu()
   {
-    final JMenu morphMenu = context.getXulDesignerFrame().getMenuById("format-morph-menu");// NON-NLS     PRD-4452
-    if (morphMenu != null)
+    final JMenu morphMenu = context.getView().getComponent("format-morph-menu", JMenu.class);// NON-NLS     PRD-4452
+    if (morphMenu == null)
     {
-      final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
-      Arrays.sort(datas, new GroupedMetaDataComparator());
-      Object grouping = null;
-      boolean firstElement = true;
-      for (int i = 0; i < datas.length; i++)
+      return;
+    }
+
+    final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
+    Arrays.sort(datas, new GroupedMetaDataComparator());
+    Object grouping = null;
+    boolean firstElement = true;
+    for (int i = 0; i < datas.length; i++)
+    {
+      final ElementMetaData data = datas[i];
+      if (data.isHidden())
       {
-        final ElementMetaData data = datas[i];
-        if (data.isHidden())
-        {
-          continue;
-        }
-        final String currentGrouping = data.getGrouping(Locale.getDefault());
-        if (firstElement == false)
-        {
-          if (ObjectUtilities.equal(currentGrouping, grouping) == false)
-          {
-            grouping = currentGrouping;
-            morphMenu.addSeparator();
-          }
-        }
-        else
+        continue;
+      }
+      final String currentGrouping = data.getGrouping(Locale.getDefault());
+      if (firstElement == false)
+      {
+        if (ObjectUtilities.equal(currentGrouping, grouping) == false)
         {
           grouping = currentGrouping;
-          firstElement = false;
-        }
-
-        try
-        {
-          final MorphAction action = new MorphAction(data.create());
-          action.setReportDesignerContext(context);
-          morphMenu.add(new JMenuItem(action));
-        }
-        catch (InstantiationException e)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e);
+          morphMenu.addSeparator();
         }
       }
+      else
+      {
+        grouping = currentGrouping;
+        firstElement = false;
+      }
 
+      try
+      {
+        final MorphAction action = new MorphAction(data.create());
+        action.setReportDesignerContext(context);
+        morphMenu.add(new JMenuItem(action));
+      }
+      catch (InstantiationException e)
+      {
+        UncaughtExceptionsModel.getInstance().addException(e);
+      }
     }
   }
 
@@ -1379,64 +1162,68 @@ public class ReportDesignerFrame extends JFrame
 
   private void initSetBarcodeTypeElements(final String id)
   {
-    final JMenu menu = context.getXulDesignerFrame().getMenuById(id);
-    if (menu != null)
+    final JMenu menu = context.getView().getComponent(id, JMenu.class);
+    if (menu == null)
     {
-      final BarcodeTypePropertyEditor editor = new BarcodeTypePropertyEditor();
-      final String[] tags = editor.getTags();
-      for (int i = 0; i < tags.length; i++)
-      {
-        final String tag = tags[i];
-        final BarcodeTypeAction action = new BarcodeTypeAction(tag);
-        action.setReportDesignerContext(context);
-        menu.add(new JRadioButtonMenuItem(action));
-      }
+      return;
+    }
+
+    final BarcodeTypePropertyEditor editor = new BarcodeTypePropertyEditor();
+    final String[] tags = editor.getTags();
+    for (int i = 0; i < tags.length; i++)
+    {
+      final String tag = tags[i];
+      final BarcodeTypeAction action = new BarcodeTypeAction(tag);
+      action.setReportDesignerContext(context);
+      menu.add(new JRadioButtonMenuItem(action));
     }
   }
 
   private void initAddElements(final String id)
   {
-    final JMenu menu = context.getXulDesignerFrame().getMenuById(id);
-    if (menu != null)
+    final JMenu menu = context.getView().getComponent(id, JMenu.class);
+    if (menu == null)
     {
-      final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
-      Arrays.sort(datas, new GroupedMetaDataComparator());
-      Object grouping = null;
-      boolean firstElement = true;
-      for (int i = 0; i < datas.length; i++)
-      {
-        final ElementMetaData data = datas[i];
-        if (data.isHidden())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
-        {
-          continue;
-        }
+      return;
+    }
 
-        final String currentGrouping = data.getGrouping(Locale.getDefault());
-        if (firstElement == false)
-        {
-          if (ObjectUtilities.equal(currentGrouping, grouping) == false)
-          {
-            grouping = currentGrouping;
-            menu.addSeparator();
-          }
-        }
-        else
+    final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
+    Arrays.sort(datas, new GroupedMetaDataComparator());
+    Object grouping = null;
+    boolean firstElement = true;
+    for (int i = 0; i < datas.length; i++)
+    {
+      final ElementMetaData data = datas[i];
+      if (data.isHidden())
+      {
+        continue;
+      }
+      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
+      {
+        continue;
+      }
+      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
+      {
+        continue;
+      }
+
+      final String currentGrouping = data.getGrouping(Locale.getDefault());
+      if (firstElement == false)
+      {
+        if (ObjectUtilities.equal(currentGrouping, grouping) == false)
         {
           grouping = currentGrouping;
-          firstElement = false;
+          menu.addSeparator();
         }
-        final InsertElementAction action = new InsertElementAction(data);
-        action.setReportDesignerContext(context);
-        menu.add(new JMenuItem(action));
       }
+      else
+      {
+        grouping = currentGrouping;
+        firstElement = false;
+      }
+      final InsertElementAction action = new InsertElementAction(data);
+      action.setReportDesignerContext(context);
+      menu.add(new JMenuItem(action));
     }
   }
 
@@ -1498,8 +1285,7 @@ public class ReportDesignerFrame extends JFrame
 
   private void rebuildReportMenu()
   {
-    final XulDesignerFrame xulDesignerFrame = context.getXulDesignerFrame();
-    final XulComponent reopenMenu = xulDesignerFrame.getXulComponentById("window.reports-area");// NON-NLS
+    final XulComponent reopenMenu = context.getView().getXulComponent("window.reports-area", XulComponent.class);
     if (reopenMenu == null)
     {
       return;
@@ -1532,57 +1318,17 @@ public class ReportDesignerFrame extends JFrame
           tabName = tabbedPane.getTitleAt(i);
         }
         final SelectTabAction action = new SelectTabAction(i, tabName);
-        final ActionSwingMenuitem actionSwingMenuitem = xulDesignerFrame.createMenu(action);
+        final ActionSwingMenuitem actionSwingMenuitem = context.getView().createMenuItem(action);
         actionSwingMenuitem.setReportDesignerContext(context);
         reopenMenu.addChild(actionSwingMenuitem);
       }
     }
   }
 
-  private static String computeTabName(final AbstractReportDefinition report)
-  {
-    if (report instanceof MasterReport)
-    {
-      final MasterReport mreport = (MasterReport) report;
-      final Object title = mreport.getBundle().getMetaData().getBundleAttribute
-          (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE);
-      if (title instanceof String)
-      {
-        return (String) title;
-      }
-    }
-
-    final String name = report.getName();
-    if (StringUtils.isEmpty(name) == false)
-    {
-      return name;
-    }
-
-    final String theSavePath = (String) report.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path");// NON-NLS
-    if (!StringUtils.isEmpty(theSavePath))
-    {
-      final String fileName = IOUtils.getInstance().getFileName(theSavePath);
-      return IOUtils.getInstance().stripFileExtension(fileName);
-    }
-
-    if (report instanceof MasterReport)
-    {
-      return Messages.getString("ReportDesignerFrame.TabName.UntitledReport");// NON-NLS
-    }
-    else if (report instanceof CrosstabElement)
-    {
-      return Messages.getString("ReportDesignerFrame.TabName.UntitledCrosstab");// NON-NLS
-    }
-    else
-    {
-      return Messages.getString("ReportDesignerFrame.TabName.UntitledSubReport");// NON-NLS
-    }
-  }
-
   protected void updateFrameTitle()
   {
     final int i = getReportEditorPane().getSelectedIndex();
-    final MasterReport report;
+    final String report;
     final String reportName;
     if (getContext() != null && getContext().getActiveContext() != null)
     {
@@ -1604,7 +1350,7 @@ public class ReportDesignerFrame extends JFrame
         }
       }
 
-      report = getContext().getActiveContext().getMasterReportElement();
+      report = getContext().getActiveContext().getDocumentFile();
     }
     else
     {
@@ -1614,14 +1360,13 @@ public class ReportDesignerFrame extends JFrame
     setTitle(computeFrameTitle(reportName, report));
   }
 
-  private String computeFrameTitle(final String tabName, final MasterReport report)
+  private String computeFrameTitle(final String tabName, final String path)
   {
-    if (tabName == null || report == null)
+    if (tabName == null || path == null)
     {
       return Messages.getString("ReportDesignerFrame.Title");// NON-NLS
     }
 
-    final String path = (String) report.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path");// NON-NLS
     if (StringUtils.isEmpty(path))
     {
       return Messages.getString("ReportDesignerFrame.TitleWithName", tabName);// NON-NLS

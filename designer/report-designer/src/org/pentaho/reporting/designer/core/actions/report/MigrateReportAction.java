@@ -133,7 +133,7 @@ public class MigrateReportAction extends AbstractReportContextAction
 
   public static void migrateReport(final ReportDesignerContext context)
   {
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final MigrationDialog dialog;
     if (window instanceof JDialog)

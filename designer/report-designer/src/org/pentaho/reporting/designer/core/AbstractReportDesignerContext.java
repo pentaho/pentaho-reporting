@@ -17,9 +17,12 @@
 
 package org.pentaho.reporting.designer.core;
 
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
@@ -79,8 +82,8 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
 
   private PropertyChangeSupport propertyChangeSupport;
   private String statusText;
-  private ReportRenderContext activeContext;
-  private ArrayList<ReportRenderContext> contexts;
+  private ReportDesignerDocumentContext activeContext;
+  private ArrayList<ReportDesignerDocumentContext> contexts;
   private RecentFilesModel recentFilesModel;
   private boolean selectionWaiting;
   private GlobalAuthenticationStore authenticationStore;
@@ -96,7 +99,7 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
     }
     this.view = view;
     this.recentFilesModel = new RecentFilesModel();
-    this.contexts = new ArrayList<ReportRenderContext>();
+    this.contexts = new ArrayList<ReportDesignerDocumentContext>();
     this.propertyChangeSupport = new PropertyChangeSupport(this);
     this.authenticationStore = new GlobalAuthenticationStore();
   }
@@ -145,7 +148,7 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
     // todo: Also remove all subreports ..
     setSelectionWaiting(false);
 
-    final ReportRenderContext context = contexts.get(index);
+    final ReportDesignerDocumentContext context = contexts.get(index);
     try
     {
       contexts.remove(index);
@@ -159,16 +162,16 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
       {
         if (contexts.isEmpty() == false)
         {
-          setActiveContext(contexts.get(0));
+          setActiveDocument(contexts.get(0));
         }
         else
         {
-          setActiveContext(null);
+          setActiveDocument(null);
         }
       }
       else
       {
-        setActiveContext(contexts.get(index - 1));
+        setActiveDocument(contexts.get(index - 1));
       }
       propertyChangeSupport.fireIndexedPropertyChange(REPORT_RENDER_CONTEXT_PROPERTY, index, context, null);
     }
@@ -183,17 +186,36 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
     return contexts.size();
   }
 
-  public ReportRenderContext getReportRenderContext(final int index)
+  public ReportDesignerDocumentContext getDocumentContext(final int index)
   {
     return contexts.get(index);
   }
 
+  public ReportRenderContext getReportRenderContext(final int index)
+  {
+    ReportDesignerDocumentContext documentContext = getDocumentContext(index);
+    if (documentContext instanceof ReportRenderContext)
+    {
+      return (ReportRenderContext) documentContext;
+    }
+    return null;
+  }
+
   public ReportRenderContext getActiveContext()
+  {
+    if (activeContext instanceof ReportRenderContext)
+    {
+      return (ReportRenderContext) activeContext;
+    }
+    return null;
+  }
+
+  public ReportDesignerDocumentContext getActiveDocument()
   {
     return activeContext;
   }
 
-  public void setActiveContext(final ReportRenderContext activeContext)
+  public void setActiveDocument(final ReportDesignerDocumentContext activeContext)
   {
     if (activeContext != null)
     {
@@ -205,7 +227,7 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
 
     setSelectionWaiting(false);
 
-    final ReportRenderContext context = this.activeContext;
+    final ReportDesignerDocumentContext context = this.activeContext;
     this.activeContext = activeContext;
     propertyChangeSupport.firePropertyChange(ACTIVE_CONTEXT_PROPERTY, context, activeContext);
   }
@@ -251,7 +273,7 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
   {
     for (int i = 0; i < contexts.size(); i++)
     {
-      final ReportRenderContext context = contexts.get(i);
+      final ReportDesignerDocumentContext context = contexts.get(i);
       if (context == activeContext)
       {
         return i;
@@ -297,4 +319,20 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
   {
     return pageTotal;
   }
+
+  public Component getParent()
+  {
+    return getView().getParent();
+  }
+
+  public JPopupMenu getPopupMenu(final String id)
+  {
+    return getView().getPopupMenu(id);
+  }
+
+  public JComponent getToolBar(final String id)
+  {
+    return getView().getToolBar(id);
+  }
+
 }

@@ -71,7 +71,7 @@ public final class PageSetupAction extends AbstractReportContextAction
     {
       final GuiContext context = new DefaultGuiContext();
       final PageSetupDialog dialog;
-      final Window proxy = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+      final Window proxy = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
       if (proxy instanceof Frame)
       {
         dialog = new PageSetupDialog(context, (Frame) proxy);
@@ -125,7 +125,7 @@ public final class PageSetupAction extends AbstractReportContextAction
 
   private void alignElements(final PageDefinition original)
   {
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final AlignmentOptionsDialog dialog;
     if (window instanceof JDialog)

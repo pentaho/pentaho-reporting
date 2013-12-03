@@ -210,7 +210,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       }
 
       final ReportDesignerContext context = getReportDesignerContext();
-      final Component parent = context.getParent();
+      final Component parent = context.getView().getParent();
       final Window window = LibSwingUtil.getWindowAncestor(parent);
       final CreateCrosstabDialog dialog;
       if (window instanceof JDialog)

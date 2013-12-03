@@ -22,10 +22,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.Action;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -34,6 +31,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerUiPluginRegistry;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.XulDomContainer;
 import org.pentaho.ui.xul.XulException;
+import org.pentaho.ui.xul.XulLoader;
 import org.pentaho.ui.xul.containers.XulMenu;
 import org.pentaho.ui.xul.containers.XulMenupopup;
 import org.pentaho.ui.xul.containers.XulWindow;
@@ -106,97 +104,26 @@ public class XulDesignerFrame
     return window;
   }
 
-  public JPopupMenu getPopupMenu(final String id)
-  {
-    final XulComponent mainMenuBar = window.getElementById(id);
-    if (mainMenuBar == null)
-    {
-      return null;
-    }
-    final Object o = mainMenuBar.getManagedObject();
-    if (o instanceof JPopupMenu)
-    {
-      return (JPopupMenu) o;
-    }
-    return null;
-  }
-
   public JMenuBar getMenuBar()
   {
-    final XulComponent mainMenuBar = window.getElementById("main-menubar");//NON-NLS
+    return getComponent("main-menubar", JMenuBar.class);//NON-NLS
+  }
+
+  public <T extends XulComponent> T getXulComponent(String id, Class<T> type)
+  {
+    final XulComponent mainMenuBar = window.getElementById(id);
     if (mainMenuBar == null)
     {
       return null;
     }
-    final Object o = mainMenuBar.getManagedObject();
-    if (o instanceof JMenuBar)
+    if (type.isInstance(mainMenuBar))
     {
-      return (JMenuBar) o;
+      return (T) mainMenuBar;
     }
     return null;
   }
 
-  public JMenuItem getMenuItemById(final String s)
-  {
-    final XulComponent mainMenuBar = window.getElementById(s);
-    if (mainMenuBar == null)
-    {
-      return null;
-    }
-    final Object o = mainMenuBar.getManagedObject();
-    if (o instanceof JMenuItem)
-    {
-      return (JMenuItem) o;
-    }
-    return null;
-  }
-
-  public XulMenu getXulMenuById(final String s)
-  {
-    final XulComponent mainMenuBar = window.getElementById(s);
-    if (mainMenuBar instanceof XulMenu == false)
-    {
-      return null;
-    }
-    return (XulMenu) mainMenuBar;
-  }
-
-  public XulComponent getXulComponentById(final String s)
-  {
-    final XulComponent mainMenuBar = window.getElementById(s);
-    if (mainMenuBar == null)
-    {
-      return null;
-    }
-    return mainMenuBar;
-  }
-
-  public JMenu getMenuById(final String s)
-  {
-    final XulComponent mainMenuBar = window.getElementById(s);
-    if (mainMenuBar == null)
-    {
-      return null;
-    }
-    final Object o = mainMenuBar.getManagedObject();
-    if (o instanceof JMenu)
-    {
-      return (JMenu) o;
-    }
-    return null;
-  }
-
-  public XulMenupopup getXulMenuPopupById(final String s)
-  {
-    final XulComponent mainMenuBar = window.getElementById(s);
-    if (mainMenuBar instanceof XulMenupopup)
-    {
-      return (XulMenupopup) mainMenuBar;
-    }
-    return null;
-  }
-
-  public JComponent getToolBar(String id)
+  public <T extends JComponent> T getComponent(String id, Class<T> type)
   {
     final XulComponent mainMenuBar = window.getElementById(id);
     if (mainMenuBar == null)
@@ -204,9 +131,9 @@ public class XulDesignerFrame
       return null;
     }
     final Object o = mainMenuBar.getManagedObject();
-    if (o instanceof JComponent)
+    if (type.isInstance(o))
     {
-      return (JComponent) o;
+      return (T) o;
     }
     return null;
   }
@@ -242,5 +169,18 @@ public class XulDesignerFrame
     final ActionSwingMenuitem item = new ActionSwingMenuitem(null, null, null, "menu-item");//NON-NLS
     item.setAction(action);
     return item;
+  }
+
+  public XulMenupopup createPopupMenu(final String label, final XulComponent parent) throws XulException
+  {
+
+    final XulLoader xulLoader = window.getXulDomContainer().getXulLoader();
+    final XulMenu menu = (XulMenu) xulLoader.createElement("MENU");
+    menu.setLabel(label);
+    parent.addChild(menu);
+
+    final XulMenupopup childPopup = (XulMenupopup) xulLoader.createElement("MENUPOPUP");
+    menu.addChild(childPopup);
+    return childPopup;
   }
 }

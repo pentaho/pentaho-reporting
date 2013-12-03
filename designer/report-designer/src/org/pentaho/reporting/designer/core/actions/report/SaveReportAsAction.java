@@ -63,7 +63,7 @@ public final class SaveReportAsAction extends AbstractReportContextAction
     {
       return;
     }
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
 
     saveReportAs(getReportDesignerContext(), activeContext, parent);
   }

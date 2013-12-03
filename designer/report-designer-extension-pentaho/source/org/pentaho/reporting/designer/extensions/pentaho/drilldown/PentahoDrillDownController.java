@@ -224,7 +224,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     parameterRefreshHandler = new PentahoParameterRefreshHandler(pentahoPathWrapper, reportDesignerContext, c);
 
@@ -326,7 +326,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask(null));
     SwingUtilities.invokeLater(loginTask);
@@ -360,7 +360,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask
         (new SelectDrillTargetTask(pentahoPathWrapper, c, new RefreshParameterTask(), activeContext)),

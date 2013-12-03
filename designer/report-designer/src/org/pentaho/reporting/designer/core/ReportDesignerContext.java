@@ -48,19 +48,27 @@ public interface ReportDesignerContext
 
   public ReportRenderContext getActiveContext();
 
-  public void setActiveContext(ReportRenderContext context);
+  public ReportDesignerDocumentContext getActiveDocument();
+  public void setActiveDocument(ReportDesignerDocumentContext context);
 
   public void setStatusText(String text);
 
+  @Deprecated
   public void setPageNumbers(int page, int pageTotal);
 
+  @Deprecated
   public int getPage();
+
+  @Deprecated
   public int getPageTotal();
 
+  @Deprecated
   public Component getParent();
 
+  @Deprecated
   public JPopupMenu getPopupMenu(final String id);
 
+  @Deprecated
   public JComponent getToolBar(final String id);
 
   public int addMasterReport(final MasterReport masterReportElement) throws ReportDataFactoryException;
@@ -68,6 +76,7 @@ public interface ReportDesignerContext
   public int addSubReport(final ReportRenderContext parentReportContext,
                           final SubReport subReportElement) throws ReportDataFactoryException;
 
+  public ReportDesignerDocumentContext getDocumentContext(int index);
   public ReportRenderContext getReportRenderContext(int index);
 
   public int getReportRenderContextCount();

@@ -347,7 +347,7 @@ public class ProvisionDataSourcePanel extends JPanel
         return;
       }
 
-      designerContext.setActiveContext(activeContext);
+      designerContext.setActiveDocument(activeContext);
       designerContext.getView().showDataTree();
     }
   }

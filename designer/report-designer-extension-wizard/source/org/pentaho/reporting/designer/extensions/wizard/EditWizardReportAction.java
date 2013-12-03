@@ -57,7 +57,7 @@ public class EditWizardReportAction extends AbstractReportContextAction
     {
       return;
     }
-    final Component parent = reportDesignerContext1.getParent();
+    final Component parent = reportDesignerContext1.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final EmbeddedWizard dialog;
     dialog = new EmbeddedWizard(window, new ReportDesignerDesignTimeContext(reportDesignerContext1));

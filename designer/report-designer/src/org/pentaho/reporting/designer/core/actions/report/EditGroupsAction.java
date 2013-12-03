@@ -61,7 +61,7 @@ public class EditGroupsAction extends AbstractReportContextAction
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final EditGroupsDialog dialog;
     if (window instanceof JDialog)

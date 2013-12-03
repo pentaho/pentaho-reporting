@@ -183,7 +183,7 @@ public class ValidateReportAction extends AbstractReportContextAction
       }
       else
       {
-        final Window window = LibSwingUtil.getWindowAncestor(reportDesignerContext.getParent());
+        final Window window = LibSwingUtil.getWindowAncestor(reportDesignerContext.getView().getParent());
         final InspectionsMessageDialog dialog;
         if (window instanceof JDialog)
         {
@@ -217,7 +217,7 @@ public class ValidateReportAction extends AbstractReportContextAction
     final RunInspectionTask task = new RunInspectionTask(reportDesignerContext);
     final Thread t = new Thread(task);
     t.setDaemon(true);
-    BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(t, task, reportDesignerContext.getParent(),
+    BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(t, task, reportDesignerContext.getView().getParent(),
         "Running Inspections ..", task);
   }
 

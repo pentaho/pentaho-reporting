@@ -94,7 +94,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
     final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("report");//NON-NLS
     fileChooser.setFilters(new FileFilter[]{filter});
     fileChooser.setAllowMultiSelection(true);
-    if (fileChooser.showDialog(getReportDesignerContext().getParent(), JFileChooser.OPEN_DIALOG) == false)
+    if (fileChooser.showDialog(getReportDesignerContext().getView().getParent(), JFileChooser.OPEN_DIALOG) == false)
     {
       return;
     }
@@ -142,7 +142,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
     final Thread loadThread = new Thread(target);
     loadThread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-        (loadThread, null, context.getParent(), ActionMessages.getString("OpenReportAction.LoadReportMessage"));
+        (loadThread, null, context.getView().getParent(), ActionMessages.getString("OpenReportAction.LoadReportMessage"));
     final AbstractReportDefinition report = target.getReport();
     if (report instanceof MasterReport)
     {
@@ -167,7 +167,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
       final Exception exception = target.getException();
       if (exception instanceof ResourceCreationException)
       {
-        ExceptionDialog.showExceptionDialog(context.getParent(), ActionMessages.getString("FailedToOpen.Error.Title"),
+        ExceptionDialog.showExceptionDialog(context.getView().getParent(), ActionMessages.getString("FailedToOpen.Error.Title"),
             ActionMessages.getString("FailedToOpen.Error.Message"), exception);
         UncaughtExceptionsModel.getInstance().addException(exception);
       }

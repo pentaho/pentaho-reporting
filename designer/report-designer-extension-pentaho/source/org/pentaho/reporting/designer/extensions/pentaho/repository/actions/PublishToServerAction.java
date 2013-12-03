@@ -64,14 +64,14 @@ public class PublishToServerAction extends AbstractReportContextAction
     if (activeContext.isChanged())
     {
       // ask the user and maybe save the report..
-      final int option = JOptionPane.showConfirmDialog(reportDesignerContext.getParent(),
+      final int option = JOptionPane.showConfirmDialog(reportDesignerContext.getView().getParent(),
           Messages.getInstance().getString("PublishToServerAction.ReportModifiedWarning.Message"),
           Messages.getInstance().getString("PublishToServerAction.ReportModifiedWarning.Title"),
           JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
       if (option == JOptionPane.YES_OPTION)
       {
         if (SaveReportAction.saveReport
-            (reportDesignerContext, activeContext, reportDesignerContext.getParent()) == false)
+            (reportDesignerContext, activeContext, reportDesignerContext.getView().getParent()) == false)
         {
           return;
         }
@@ -83,9 +83,9 @@ public class PublishToServerAction extends AbstractReportContextAction
     }
 
     final PublishToServerTask publishToServerTask =
-        new PublishToServerTask(reportDesignerContext, reportDesignerContext.getParent());
+        new PublishToServerTask(reportDesignerContext, reportDesignerContext.getView().getParent());
     final LoginTask loginTask = new LoginTask
-        (reportDesignerContext, reportDesignerContext.getParent(), publishToServerTask);
+        (reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask);
 
     SwingUtilities.invokeLater(loginTask);
 

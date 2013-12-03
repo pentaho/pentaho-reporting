@@ -68,7 +68,7 @@ public final class DeleteAction extends AbstractElementSelectionAction
     {
       final String theTitle = ActionMessages.getString("DeleteAction.Warning");
       final String theDeleteMessage = ActionMessages.getString("DeleteAction.Confirmation");
-      final Component theParent = getReportDesignerContext().getParent();
+      final Component theParent = getReportDesignerContext().getView().getParent();
       final int result = JOptionPane.showConfirmDialog(theParent, theDeleteMessage, theTitle, JOptionPane.YES_NO_OPTION);
       if (result != JOptionPane.YES_OPTION)
       {

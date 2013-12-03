@@ -172,6 +172,6 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
     thread.setName("ConvertDataSource-Worker");
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("ConvertDataSourceAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("ConvertDataSourceAction.TaskTitle"));
   }
 }
