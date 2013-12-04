@@ -22,6 +22,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.CrosstabRenderer;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
@@ -34,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
+import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -97,7 +99,7 @@ public class RootBandRenderingModel
   }
 
   private ArrayList<ElementRenderer> rootBandComponents;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private AbstractReportDefinition report;
   private EventListenerList eventListenerList;
   private RendererChangeHandler rendererChangeHandler;
@@ -180,7 +182,8 @@ public class RootBandRenderingModel
     }
   }
 
-  public ReportRenderContext getRenderContext()
+  // todo Codesmell
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
@@ -363,5 +366,10 @@ public class RootBandRenderingModel
     }
 
     this.rootBandComponents.clear();
+  }
+
+  public PageDefinition getPageDefinition()
+  {
+    return renderContext.getContextRoot().getPageDefinition();
   }
 }

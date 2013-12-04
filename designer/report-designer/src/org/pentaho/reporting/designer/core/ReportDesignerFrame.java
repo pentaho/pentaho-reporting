@@ -88,6 +88,7 @@ import org.pentaho.reporting.designer.core.actions.report.CloseReportAction;
 import org.pentaho.reporting.designer.core.actions.report.CloseUnmodifiedReportsAction;
 import org.pentaho.reporting.designer.core.editor.ContextMenuUtility;
 import org.pentaho.reporting.designer.core.editor.ElementPropertiesPanel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.ReportRendererComponent;
 import org.pentaho.reporting.designer.core.editor.fieldselector.FieldSelectorPaletteDialog;
@@ -252,14 +253,14 @@ public class ReportDesignerFrame extends JFrame
       {
         // try to sync the context.
         final ReportRendererComponent rendererComponent = (ReportRendererComponent) editorPanes.getComponentAt(index);
-        final ReportRenderContext rendererContext = rendererComponent.getRenderContext();
+        final ReportDocumentContext rendererContext = rendererComponent.getRenderContext();
         for (int i = 0; i < context.getReportRenderContextCount(); i++)
         {
           final ReportRenderContext context1 = context.getReportRenderContext(i);
           if (context1 == rendererContext)
           {
             context.setActiveDocument(rendererContext);
-            rendererContext.getInspectionRunner().startTimer();
+            rendererContext.onDocumentActivated();
             return;
           }
         }

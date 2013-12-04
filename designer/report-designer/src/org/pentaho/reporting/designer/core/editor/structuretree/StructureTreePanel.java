@@ -35,8 +35,8 @@ import org.pentaho.reporting.designer.core.actions.global.CopyAction;
 import org.pentaho.reporting.designer.core.actions.global.CutAction;
 import org.pentaho.reporting.designer.core.actions.global.PasteAction;
 import org.pentaho.reporting.designer.core.editor.ContextMenuUtility;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 
 /**
@@ -170,12 +170,12 @@ public class StructureTreePanel extends SidePanel
     tree.setReportDesignerContext(newContext);
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
     // do nothing. We *do* define the selection, we dont really listen to it..
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     super.updateActiveContext(oldContext, newContext);
     tree.setRenderContext(newContext);

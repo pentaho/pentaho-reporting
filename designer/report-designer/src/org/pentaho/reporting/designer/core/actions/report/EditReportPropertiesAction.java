@@ -27,7 +27,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.metadata.DocumentMetaDataDialog;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
@@ -59,7 +59,7 @@ public class EditReportPropertiesAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -83,7 +83,7 @@ public class EditReportPropertiesAction extends AbstractReportContextAction
 
     try
     {
-      final MasterReport report = activeContext.getMasterReportElement();
+      final MasterReport report = activeContext.getContextRoot();
       final DocumentBundle bundle = report.getBundle();
       final DocumentMetaData oldMetaData = (DocumentMetaData) bundle.getMetaData().clone();
       final DocumentMetaData result = dialog.performEdit(oldMetaData,
@@ -126,9 +126,9 @@ public class EditReportPropertiesAction extends AbstractReportContextAction
       this.newMetaData = newMetaData;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
-      final MasterReport report = renderContext.getMasterReportElement();
+      final MasterReport report = renderContext.getContextRoot();
       final WriteableDocumentBundle bundle = (WriteableDocumentBundle) report.getBundle();
       final WriteableDocumentMetaData metaData = bundle.getWriteableDocumentMetaData();
       metaData.setBundleAttribute
@@ -149,9 +149,9 @@ public class EditReportPropertiesAction extends AbstractReportContextAction
       report.notifyNodePropertiesChanged();
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
-      final MasterReport report = renderContext.getMasterReportElement();
+      final MasterReport report = renderContext.getContextRoot();
       final WriteableDocumentBundle bundle = (WriteableDocumentBundle) report.getBundle();
       final WriteableDocumentMetaData metaData = bundle.getWriteableDocumentMetaData();
       metaData.setBundleAttribute

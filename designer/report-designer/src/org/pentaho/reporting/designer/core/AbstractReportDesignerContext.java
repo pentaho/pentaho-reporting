@@ -25,6 +25,7 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.settings.RecentFilesModel;
@@ -126,12 +127,12 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
     return index;
   }
 
-  public int addSubReport(final ReportRenderContext parentReportContext, final SubReport subReportElement)
+  public int addSubReport(final ReportDocumentContext parentReportContext, final SubReport subReportElement)
   {
     setSelectionWaiting(false);
 
     subReportElement.setDataFactory(CompoundDataFactory.normalize(subReportElement.getDataFactory()));
-    final ReportRenderContext context = new ReportRenderContext(parentReportContext.getMasterReportElement(),
+    final ReportRenderContext context = new ReportRenderContext(parentReportContext.getContextRoot(),
         subReportElement, parentReportContext,
         getGlobalAuthenticationStore());
     contexts.add(context);
@@ -201,11 +202,11 @@ public abstract class AbstractReportDesignerContext implements ReportDesignerCon
     return null;
   }
 
-  public ReportRenderContext getActiveContext()
+  public ReportDocumentContext getActiveContext()
   {
-    if (activeContext instanceof ReportRenderContext)
+    if (activeContext instanceof ReportDocumentContext)
     {
-      return (ReportRenderContext) activeContext;
+      return (ReportDocumentContext) activeContext;
     }
     return null;
   }

@@ -22,7 +22,7 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.Anonymizer;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -110,13 +110,13 @@ public class AnonymizeReportAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getMasterReportElement()));
+    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getContextRoot()));
     thread.setName("AnonymizeReport-Worker");// NON-NLS
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,

@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -52,7 +52,7 @@ public class MassElementStyleUndoEntry implements UndoEntry
     return visualElements;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition reportDefinition = renderContext.getReportDefinition();
     final StyleKey[] keys = StyleKey.getDefinedStyleKeys();
@@ -70,7 +70,7 @@ public class MassElementStyleUndoEntry implements UndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition reportDefinition = renderContext.getReportDefinition();
     final StyleKey[] keys = StyleKey.getDefinedStyleKeys();

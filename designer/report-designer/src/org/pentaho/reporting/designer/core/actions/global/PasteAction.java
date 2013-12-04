@@ -31,7 +31,7 @@ import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.dnd.ClipboardManager;
@@ -119,7 +119,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
 
   protected void updateSelection()
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       setSelectionActive(false);
@@ -153,7 +153,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -229,7 +229,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
         else if (insertResult instanceof ParameterDefinitionEntry)
         {
           final ParameterDefinitionEntry insertParam = (ParameterDefinitionEntry) insertResult;
-          final ReportParameterDefinition definition = activeContext.getMasterReportElement().getParameterDefinition();
+          final ReportParameterDefinition definition = activeContext.getContextRoot().getParameterDefinition();
           final int index = definition.getParameterCount() - 1;
           undos.add(new ParameterEditUndoEntry(index, null, insertParam));
         }
@@ -405,7 +405,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
 
   private boolean isGenericElementInsertable()
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return false;

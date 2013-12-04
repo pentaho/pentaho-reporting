@@ -24,7 +24,7 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -52,7 +52,7 @@ public class EditWizardReportAction extends AbstractReportContextAction
     {
       return;
     }
-    final ReportRenderContext activeContext = reportDesignerContext1.getActiveContext();
+    final ReportDocumentContext activeContext = reportDesignerContext1.getActiveContext();
     if (activeContext == null)
     {
       return;

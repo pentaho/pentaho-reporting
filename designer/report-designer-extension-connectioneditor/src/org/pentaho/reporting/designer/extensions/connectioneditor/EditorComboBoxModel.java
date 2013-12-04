@@ -7,13 +7,13 @@ import javax.swing.event.ListDataListener;
 
 public class EditorComboBoxModel extends AbstractListModel
 {
-  private DefaultComboBoxModel model;
-  private Vector data;
+  private DefaultComboBoxModel<Object> model;
+  private Vector<Object> data;
 
   public EditorComboBoxModel()
   {
-    data = new Vector();
-    model = new DefaultComboBoxModel(data);
+    data = new Vector<Object>();
+    model = new DefaultComboBoxModel<Object>(data);
   }
 
   public void setSelectedItem(final Object anObject)

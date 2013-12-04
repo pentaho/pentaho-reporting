@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -42,7 +42,7 @@ public class DataSourceEditUndoEntry implements UndoEntry
     this.newElement = newElement;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     final DataFactory dataFactory = abstractReportDefinition.getDataFactory();
@@ -63,7 +63,7 @@ public class DataSourceEditUndoEntry implements UndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     final DataFactory dataFactory = abstractReportDefinition.getDataFactory();

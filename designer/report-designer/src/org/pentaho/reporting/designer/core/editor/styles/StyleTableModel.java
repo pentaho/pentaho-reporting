@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
@@ -188,7 +188,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
   private Executor pool;
   private DefaultStyleDataBackend oldDataBackend;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
 
   public StyleTableModel()
   {
@@ -578,7 +578,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
     if (changed)
     {
-      final ReportRenderContext reportRenderContext = getReportRenderContext();
+      final ReportDocumentContext reportRenderContext = getReportRenderContext();
       if (reportRenderContext == null)
       {
         throw new IllegalStateException("No report render context? Thats bad.");
@@ -671,7 +671,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
     if (changed)
     {
-      final ReportRenderContext reportRenderContext = getReportRenderContext();
+      final ReportDocumentContext reportRenderContext = getReportRenderContext();
       if (reportRenderContext == null)
       {
         throw new IllegalStateException("No report render context? Thats bad.");
@@ -785,12 +785,12 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     }
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  public void setReportRenderContext(final ReportRenderContext reportRenderContext)
+  public void setReportRenderContext(final ReportDocumentContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
   }

@@ -22,6 +22,7 @@ import java.beans.BeanInfo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TreeSet;
 import javax.swing.Icon;
@@ -29,17 +30,16 @@ import javax.swing.ImageIcon;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.ReportAuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.report.layouting.ReportLayouter;
 import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
 import org.pentaho.reporting.designer.core.inspections.AutoInspectionRunner;
+import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.model.selection.DefaultReportSelectionModel;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
@@ -63,7 +63,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class ReportRenderContext implements ReportDesignerDocumentContext
+public class ReportRenderContext implements ReportDocumentContext
 {
   private static class ReportNameUpdateHandler implements ReportModelListener
   {
@@ -139,15 +139,14 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
     {
       if (event.isNodeDeleteEvent())
       {
-        final ReportSelectionModel selectionModel = getSelectionModel();
+        final DocumentContextSelectionModel selectionModel = getSelectionModel();
         final AbstractReportDefinition reportDefinition = getReportDefinition();
         final Object element = event.getElement();
         if (element instanceof Element)
         {
-          final Element[] selectedElements = selectionModel.getSelectedVisualElements();
-          for (int i = 0; i < selectedElements.length; i++)
+          final List<Element> selectedElements = selectionModel.getSelectedElementsOfType(Element.class);
+          for (Element selectedElement : selectedElements)
           {
-            final Element selectedElement = selectedElements[i];
             if (ModelUtility.isDescendant(reportDefinition, selectedElement) == false)
             {
               selectionModel.remove(element);
@@ -185,7 +184,7 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
   private ZoomModel zoomModel;
   private MasterReport masterReportElement;
   private AbstractReportDefinition reportDefinition;
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
   private UndoManager undo;
   private ReportDataSchemaModel reportDataSchemaModel;
   private AutoInspectionRunner inspectionRunner;
@@ -202,7 +201,7 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
 
   public ReportRenderContext(final MasterReport masterReportElement,
                              final AbstractReportDefinition report,
-                             final ReportRenderContext parentContext,
+                             final ReportDocumentContext parentContext,
                              final GlobalAuthenticationStore globalAuthenticationStore)
   {
     this(masterReportElement, report, parentContext, globalAuthenticationStore, false);
@@ -210,7 +209,7 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
 
   public ReportRenderContext(final MasterReport masterReportElement,
                              final AbstractReportDefinition report,
-                             final ReportRenderContext parentContext,
+                             final ReportDocumentContext parentContext,
                              final GlobalAuthenticationStore globalAuthenticationStore,
                              final boolean computationTarget)
   {
@@ -273,8 +272,8 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
     }
     else
     {
-      this.sharedRenderer = parentContext.sharedRenderer;
-      this.properties = parentContext.properties;
+      this.sharedRenderer = parentContext.getSharedRenderer();
+      this.properties = parentContext.getProperties();
     }
 
     prepareAuthenticationStore(globalAuthenticationStore);
@@ -310,7 +309,7 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
     return bandedContext;
   }
 
-  private boolean computeBandedContext(final ReportRenderContext parentContext)
+  private boolean computeBandedContext(final ReportDocumentContext parentContext)
   {
     if (parentContext == null)
     {
@@ -342,17 +341,12 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
     return false;
   }
 
-  public ReportLayouter getReportLayouter()
-  {
-    return sharedRenderer.getLayouter();
-  }
-
   public SharedElementRenderer getSharedRenderer()
   {
     return sharedRenderer;
   }
 
-  public ReportSelectionModel getSelectionModel()
+  public DocumentContextSelectionModel getSelectionModel()
   {
     return selectionModel;
   }
@@ -375,6 +369,11 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
   public MasterReport getMasterReportElement()
   {
     return masterReportElement;
+  }
+
+  public MasterReport getContextRoot()
+  {
+    return getMasterReportElement();
   }
 
   public AbstractReportDefinition getReportDefinition()
@@ -430,6 +429,11 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
   public Object getProperty(final String property)
   {
     return properties.get(property);
+  }
+
+  public HashMap<String, Object> getProperties()
+  {
+    return properties;
   }
 
   public void addExpandedNode(final int aRow)
@@ -502,5 +506,20 @@ public class ReportRenderContext implements ReportDesignerDocumentContext
   protected void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue)
   {
     propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+  }
+
+  public void onDocumentActivated()
+  {
+    getInspectionRunner().startTimer();
+  }
+
+  public void addInspectionListener(final InspectionResultListener listener)
+  {
+    getInspectionRunner().addInspectionListener(listener);
+  }
+
+  public void removeInspectionListener(final InspectionResultListener listener)
+  {
+    getInspectionRunner().removeInspectionListener(listener);
   }
 }

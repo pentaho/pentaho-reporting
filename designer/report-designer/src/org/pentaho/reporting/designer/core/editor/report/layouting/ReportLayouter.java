@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -31,7 +32,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 public class ReportLayouter
 {
   private LogicalPageBox logicalPageBox;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private long lastModCount;
   private DesignerOutputProcessorMetaData metaData;
   private DesignerRenderComponentFactory componentFactory;
@@ -44,7 +45,7 @@ public class ReportLayouter
 
   public LogicalPageBox layout() throws ReportProcessingException, ContentProcessingException
   {
-    final MasterReport report = reportRenderContext.getMasterReportElement();
+    final MasterReport report = reportRenderContext.getContextRoot();
     if (logicalPageBox != null && lastModCount == report.getChangeTracker())
     {
       return logicalPageBox;
@@ -68,7 +69,7 @@ public class ReportLayouter
     if (metaData == null)
     {
       final DesignerOutputProcessorMetaData designerOutputProcessorMetaData = new DesignerOutputProcessorMetaData();
-      designerOutputProcessorMetaData.initialize(reportRenderContext.getMasterReportElement().getConfiguration());
+      designerOutputProcessorMetaData.initialize(reportRenderContext.getContextRoot().getConfiguration());
       metaData = designerOutputProcessorMetaData;
     }
     return metaData;

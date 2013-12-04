@@ -39,7 +39,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.report.MigrateReportAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
@@ -170,11 +170,11 @@ public class MigrateReportTask implements Runnable
   }
 
   private final ReportDesignerContext designerContext;
-  private final ReportRenderContext reportContext;
+  private final ReportDocumentContext reportContext;
   private final long minimumVersionNeeded;
 
   public MigrateReportTask(final ReportDesignerContext designerContext,
-                           final ReportRenderContext reportContext,
+                           final ReportDocumentContext reportContext,
                            final long minimumVersionNeeded)
   {
 
@@ -186,7 +186,7 @@ public class MigrateReportTask implements Runnable
 
   public void run()
   {
-    final MasterReport masterReportElement = reportContext.getMasterReportElement();
+    final MasterReport masterReportElement = reportContext.getContextRoot();
     final Integer compatibilityLevel = masterReportElement.getCompatibilityLevel();
     if (compatibilityLevel == null)
     {

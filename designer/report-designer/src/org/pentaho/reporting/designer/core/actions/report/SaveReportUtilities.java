@@ -28,7 +28,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
@@ -164,7 +164,7 @@ public final class SaveReportUtilities
    * @return true, if saving was successful, false otherwise.
    */
   public static boolean saveReport(final ReportDesignerContext context,
-                                   final ReportRenderContext activeContext,
+                                   final ReportDocumentContext activeContext,
                                    final File target)
   {
     if (context == null)
@@ -184,7 +184,7 @@ public final class SaveReportUtilities
     {
       // Save the report to the specified file
       logger.debug("Saving report in filename [" + target.getAbsolutePath() + "]");// NON-NLS
-      BundleWriter.writeReportToZipFile(activeContext.getMasterReportElement(), target);
+      BundleWriter.writeReportToZipFile(activeContext.getContextRoot(), target);
       context.getRecentFilesModel().addFile(target);
       return true;
     }

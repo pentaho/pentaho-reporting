@@ -30,6 +30,7 @@ import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
@@ -78,7 +79,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
 
   protected Element createElement(final ElementMetaData elementMetaData,
                                   final String fieldName,
-                                  final ReportRenderContext context) throws InstantiationException
+                                  final ReportDocumentContext context) throws InstantiationException
   {
     // Create a crosstab element
     final ElementType type = elementMetaData.create();
@@ -123,7 +124,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
 
     public void run()
     {
-      final ReportRenderContext context = dragContext.getRenderContext();
+      final ReportDocumentContext context = dragContext.getRenderContext();
       if (rootband)
       {
         final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),

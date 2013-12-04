@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterTable;
 import org.pentaho.reporting.designer.core.editor.drilldown.basic.DefaultXulDrillDownController;
@@ -76,11 +77,11 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     {
       pentahoPathWrapper.setLoginData(loginData);
 
-      final ReportRenderContext reportRenderContext = reportDesignerContext.getActiveContext();
-      final Object o = reportRenderContext.getProperty("pentaho-login-url");
+      final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
+      final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
       if (o == null)
       {
-        reportRenderContext.setProperty("pentaho-login-url", loginData.getUrl());
+        reportRenderContext.getProperties().put("pentaho-login-url", loginData.getUrl());
       }
 
       if (nextTask != null)
@@ -271,10 +272,10 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     if (StringUtils.isEmpty(model.getDrillDownPath()))
     {
       pentahoPathWrapper.setUseRemoteServer(false);
-      final ReportRenderContext reportRenderContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
       if (reportRenderContext != null)
       {
-        final Object o = reportRenderContext.getProperty("pentaho-login-url");
+        final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
         if (o != null)
         {
           pentahoPathWrapper.setServerPath(String.valueOf(o));
@@ -337,14 +338,13 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
    */
   public void browse()
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
     if (pentahoPathWrapper.getLoginData() == null)
     {
-      final ReportRenderContext reportRenderContext = activeContext;
       final String path = getModel().getDrillDownPath();
       if (path != null)
       {
-        final AuthenticationStore authStore = reportRenderContext.getAuthenticationStore();
+        final AuthenticationStore authStore = activeContext.getAuthenticationStore();
         final String username = authStore.getUsername(path);
         final String password = authStore.getPassword(path);
         final int timeout = authStore.getIntOption(path, "timeout", 0);

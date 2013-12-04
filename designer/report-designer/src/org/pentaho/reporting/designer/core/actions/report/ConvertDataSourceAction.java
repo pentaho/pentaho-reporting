@@ -24,9 +24,9 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -45,9 +45,9 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
   public static class ConvertDataSourceTask implements Runnable
   {
     private Object[] selectedElements;
-    private ReportRenderContext activeContext;
+    private ReportDocumentContext activeContext;
 
-    public ConvertDataSourceTask(final ReportRenderContext activeContext)
+    public ConvertDataSourceTask(final ReportDocumentContext activeContext)
     {
       this.activeContext = activeContext;
       this.selectedElements = activeContext.getSelectionModel().getSelectedElements();
@@ -64,7 +64,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
           {
             final ReportQueryNode queryNode = (ReportQueryNode) element;
             final DataFactory dataFactory = queryNode.getDataFactory().derive();
-            final MasterReport report = activeContext.getMasterReportElement();
+            final MasterReport report = activeContext.getContextRoot();
             dataFactory.initialize(new DesignTimeDataFactoryContext(report));
             if (dataFactory.isQueryExecutable(queryNode.getQueryName(), new StaticDataRow()) == false)
             {
@@ -128,7 +128,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel model = getSelectionModel();
+    final DocumentContextSelectionModel model = getSelectionModel();
     if (model == null)
     {
       setEnabled(false);
@@ -162,7 +162,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;

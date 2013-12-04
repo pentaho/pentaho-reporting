@@ -43,7 +43,7 @@ public class EditStyleDefinitionAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final MasterReport masterReportElement = getActiveContext().getMasterReportElement();
+    final MasterReport masterReportElement = getActiveContext().getContextRoot();
     final ElementStyleDefinition styleDefinition = masterReportElement.getStyleDefinition();
 
     final ReportDesignerContext context = getReportDesignerContext();

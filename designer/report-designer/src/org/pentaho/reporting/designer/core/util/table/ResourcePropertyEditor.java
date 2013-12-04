@@ -24,6 +24,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ClassicEngineFactoryParameters;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -47,7 +48,7 @@ public class ResourcePropertyEditor implements AdvancedPropertyEditor
    *
    * @param reportRenderContext the current render context.
    */
-  public ResourcePropertyEditor(final ReportRenderContext reportRenderContext)
+  public ResourcePropertyEditor(final ReportDocumentContext reportRenderContext)
   {
     this.propertyChangeSupport = new PropertyChangeSupport(this);
     this.editorComponent = new ResourcePropertyEditorComponent(reportRenderContext);

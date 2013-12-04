@@ -40,7 +40,6 @@ import javax.swing.event.ListDataListener;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.ExpressionListCellRenderer;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -189,7 +188,6 @@ public class ExpressionEditorDialog extends CommonDialog
   private ExpressionEditorWrapper wrapper;
   private HashMap<String, Class> editorPlugins;
   private ReportDesignerContext designerContext;
-  private ReportRenderContext renderContext;
   private DefaultComboBoxModel model;
   private boolean expressionsOnly;
   private boolean showStandaloneProperties;
@@ -400,8 +398,6 @@ public class ExpressionEditorDialog extends CommonDialog
     setShowStandaloneProperties(false);
     setExpressionsOnly(true);
     designerContext = context;
-    renderContext = context.getActiveContext();
-
     if (expression == null)
     {
       setExpression(new FormulaExpression());

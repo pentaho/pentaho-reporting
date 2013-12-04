@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
@@ -100,8 +101,8 @@ public class ValidateReportAction extends AbstractReportContextAction
 
     public void run()
     {
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
-      final MasterReport report = activeContext.getMasterReportElement();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
+      final MasterReport report = activeContext.getContextRoot();
       final int numberReports = countReports(report);
 
       runInspection(report, report, reportDesignerContext, null, collector, 1, numberReports);

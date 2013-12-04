@@ -42,7 +42,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.filechooser.FileFilter;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.UtilMessages;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ClassicEngineFactoryParameters;
@@ -84,7 +84,7 @@ public class ResourcePropertyEditorComponent extends JComponent implements Valid
   private JRadioButton linkToRadio;
   private JRadioButton embedRadio;
   private JTextField sourceTextField;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private Object currentValue;
   private String lastTextValue;
   private DocumentLocation lastDocumentLocation;
@@ -95,7 +95,7 @@ public class ResourcePropertyEditorComponent extends JComponent implements Valid
    *
    * @param reportRenderContext the report render context for the current report
    */
-  public ResourcePropertyEditorComponent(final ReportRenderContext reportRenderContext)
+  public ResourcePropertyEditorComponent(final ReportDocumentContext reportRenderContext)
   {
     // Get the information used to embed items in the document bundle
     if (reportRenderContext == null)

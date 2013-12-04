@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -62,7 +63,7 @@ public class CloseReportAction extends AbstractReportContextAction
     final ReportDesignerContext reportDesignerContext1 = getReportDesignerContext();
     if (tabIndex == -1)
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       if (activeContext == null)
       {
         return;
@@ -81,7 +82,7 @@ public class CloseReportAction extends AbstractReportContextAction
   }
 
   public static boolean performCloseReport(final ReportDesignerContext context,
-                                           final ReportRenderContext activeContext)
+                                           final ReportDocumentContext activeContext)
   {
     if (activeContext.isChanged() && activeContext.getReportDefinition() instanceof MasterReport)
     {
@@ -109,7 +110,7 @@ public class CloseReportAction extends AbstractReportContextAction
   }
 
   public static void performUnconditionalClose(final ReportDesignerContext context,
-                                               final ReportRenderContext activeContext)
+                                               final ReportDocumentContext activeContext)
   {
     final int contextCount = context.getReportRenderContextCount();
 

@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
@@ -41,13 +41,13 @@ public class StyleEditUndoEntry implements UndoEntry
     this.newValue = newValue;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
     elementById.getStyle().setStyleProperty(styleKey, oldValue);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
     elementById.getStyle().setStyleProperty(styleKey, newValue);

@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ZoomModel;
 import org.pentaho.reporting.designer.core.editor.ZoomModelListener;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -213,7 +213,7 @@ public class ReportPreviewComponent extends JPanel
     previewPane.addReportProgressListener(progressBar);
   }
 
-  public void updatePreview(final ReportRenderContext reportRenderContext)
+  public void updatePreview(final ReportDocumentContext reportRenderContext)
   {
     if (zoomModel != null)
     {
@@ -228,7 +228,7 @@ public class ReportPreviewComponent extends JPanel
     }
     else
     {
-      final MasterReport reportDialog = reportRenderContext.getMasterReportElement();
+      final MasterReport reportDialog = reportRenderContext.getContextRoot();
       previewPane.setReportJob(reportDialog);
 
       zoomModel = reportRenderContext.getZoomModel();

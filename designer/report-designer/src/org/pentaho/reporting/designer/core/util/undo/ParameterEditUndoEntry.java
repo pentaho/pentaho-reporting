@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportParameterDefinition;
@@ -44,7 +44,7 @@ public class ParameterEditUndoEntry implements UndoEntry
     this.newElement = newElement;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     if (abstractReportDefinition instanceof MasterReport == false)
@@ -73,7 +73,7 @@ public class ParameterEditUndoEntry implements UndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     if (abstractReportDefinition instanceof MasterReport == false)

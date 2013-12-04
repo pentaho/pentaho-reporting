@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.DataFactoryWrapper;
 import org.pentaho.reporting.designer.core.editor.parameters.ParameterDialog;
@@ -98,7 +99,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -131,7 +132,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
 
   public static void performEditSubReportParameters(final ReportDesignerContext context)
   {
-    final ReportRenderContext activeContext = context.getActiveContext();
+    final ReportDocumentContext activeContext = context.getActiveContext();
     if (activeContext == null)
     {
       throw new NullPointerException();
@@ -193,14 +194,14 @@ public class EditParametersAction extends AbstractElementSelectionAction
       this.newExportParameters = newExportParameters;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final SubReport reportDefinition = (SubReport) renderContext.getReportDefinition();
       reportDefinition.setInputMappings(oldImportParameters);
       reportDefinition.setExportMappings(oldExportParameters);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final SubReport reportDefinition = (SubReport) renderContext.getReportDefinition();
       reportDefinition.setInputMappings(newImportParameters);
@@ -217,7 +218,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
                                                        final ParameterDefinitionEntry parameter)
       throws ReportDataFactoryException
   {
-    final ReportRenderContext activeContext = context.getActiveContext();
+    final ReportDocumentContext activeContext = context.getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -239,7 +240,7 @@ public class EditParametersAction extends AbstractElementSelectionAction
       parameterDialog = new ParameterDialog(context);
     }
 
-    final MasterReport masterReport = activeContext.getMasterReportElement();
+    final MasterReport masterReport = activeContext.getContextRoot();
     final ModifiableReportParameterDefinition parameterDefinition =
         (ModifiableReportParameterDefinition) masterReport.getParameterDefinition();
     int index = -1;

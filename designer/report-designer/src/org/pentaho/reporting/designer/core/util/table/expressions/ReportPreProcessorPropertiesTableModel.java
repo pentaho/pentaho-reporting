@@ -26,7 +26,6 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.FastPropertyEditorManager;
 import org.pentaho.reporting.designer.core.util.UtilMessages;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -57,7 +56,6 @@ public class ReportPreProcessorPropertiesTableModel
   private TableStyle tableStyle;
   private ReportPreProcessor elements;
   private BeanUtility editors;
-  private ReportRenderContext activeContext;
 
   public ReportPreProcessorPropertiesTableModel()
   {
@@ -66,16 +64,6 @@ public class ReportPreProcessorPropertiesTableModel
     this.metaData = EMPTY_METADATA;
     this.groupings = EMPTY_GROUPINGS;
     this.editors = null;
-  }
-
-  public ReportRenderContext getActiveContext()
-  {
-    return activeContext;
-  }
-
-  public void setActiveContext(final ReportRenderContext activeContext)
-  {
-    this.activeContext = activeContext;
   }
 
   public int getRowCount()

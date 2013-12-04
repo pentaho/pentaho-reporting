@@ -18,18 +18,15 @@
 package org.pentaho.reporting.designer.core.actions.report;
 
 import java.awt.Cursor;
-import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.beans.BeanInfo;
 import java.util.Locale;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -61,7 +58,7 @@ public class AddDataFactoryAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -100,7 +97,7 @@ public class AddDataFactoryAction extends AbstractReportContextAction
     }
   }
 
-  public static void addDataFactory(final ReportRenderContext activeContext,
+  public static void addDataFactory(final ReportDocumentContext activeContext,
                                     final DataFactory dataFactory,
                                     final DataFactoryChange[] dataFactoryChanges)
   {

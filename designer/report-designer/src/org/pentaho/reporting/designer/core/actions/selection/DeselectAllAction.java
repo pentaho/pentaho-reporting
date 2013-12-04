@@ -29,7 +29,7 @@ import javax.swing.text.JTextComponent;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 
 /**
@@ -84,7 +84,7 @@ public final class DeselectAllAction extends AbstractReportContextAction
     }
     else
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       if (activeContext != null)
       {
         activeContext.getSelectionModel().clearSelection();

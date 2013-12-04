@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
+import java.util.List;
+
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
@@ -32,13 +35,14 @@ public class MassElementStyleUndoEntryBuilder
   private ReportElement[] visualElements;
   private Object[][] styleProperties;
 
-  public MassElementStyleUndoEntryBuilder(final ReportElement[] visualElements)
+  public MassElementStyleUndoEntryBuilder(final List<? extends Element> visualElements)
   {
-    this.visualElements = visualElements.clone();
-    this.styleProperties = new Object[visualElements.length][];
-    for (int i = 0; i < visualElements.length; i++)
+    this.visualElements = visualElements.toArray(new ReportElement[visualElements.size()]);
+    this.styleProperties = new Object[visualElements.size()][];
+
+    for (int i = 0; i < visualElements.size(); i++)
     {
-      final ReportElement visualElement = visualElements[i];
+      final ReportElement visualElement = visualElements.get(i);
       styleProperties[i] = computeStyleChangeSet(visualElement);
     }
   }

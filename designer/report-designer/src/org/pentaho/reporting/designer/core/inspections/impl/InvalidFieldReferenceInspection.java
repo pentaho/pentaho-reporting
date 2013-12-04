@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeExpressionPropertyLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
@@ -39,7 +39,6 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
@@ -64,7 +63,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportRenderContext reportRenderContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)
@@ -112,7 +111,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectAttributeExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element,
@@ -163,7 +162,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectStyleExpression(final ReportDesignerContext designerContext,
-                                        final ReportRenderContext reportRenderContext,
+                                        final ReportDocumentContext reportRenderContext,
                                         final InspectionResultListener resultHandler,
                                         final String[] columnNames,
                                         final ReportElement element,
@@ -207,7 +206,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final Expression expression,
@@ -263,7 +262,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectDataSource(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final DataFactory dataFactory)

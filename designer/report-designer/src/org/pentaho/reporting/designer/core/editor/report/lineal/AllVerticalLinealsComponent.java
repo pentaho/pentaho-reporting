@@ -109,7 +109,7 @@ public class AllVerticalLinealsComponent extends JPanel
     innerCarrier.removeAll();
 
     final ElementRenderer[] allRenderers = renderContext.getAllRenderers();
-    final PageDefinition definition = renderContext.getRenderContext().getPageDefinition();
+    final PageDefinition definition = renderContext.getPageDefinition();
     for (int i = 0; i < allRenderers.length; i++)
     {
       final ElementRenderer renderer = allRenderers[i];

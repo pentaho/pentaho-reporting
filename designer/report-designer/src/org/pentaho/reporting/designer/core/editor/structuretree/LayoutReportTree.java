@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.editor.structuretree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -100,7 +101,7 @@ public class LayoutReportTree extends AbstractReportTree
 
   }
 
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private ReportUpdateHandler updateHandler;
 
   public LayoutReportTree()
@@ -122,12 +123,12 @@ public class LayoutReportTree extends AbstractReportTree
     return TreeSelectionHelper.getPathForNode(getStructureModel(), node);
   }
 
-  public ReportRenderContext getRenderContext()
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
 
-  public void setRenderContext(final ReportRenderContext renderContext)
+  public void setRenderContext(final ReportDocumentContext renderContext)
   {
     if (this.renderContext != null)
     {

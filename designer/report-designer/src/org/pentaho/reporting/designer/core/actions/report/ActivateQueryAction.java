@@ -24,7 +24,7 @@ import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionActio
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -54,7 +54,7 @@ public class ActivateQueryAction extends AbstractElementSelectionAction implemen
 
   protected void updateSelection()
   {
-    final ReportSelectionModel reportSelectionModel = getSelectionModel();
+    final DocumentContextSelectionModel reportSelectionModel = getSelectionModel();
     if (reportSelectionModel == null)
     {
       setEnabled(false);
@@ -79,7 +79,7 @@ public class ActivateQueryAction extends AbstractElementSelectionAction implemen
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel reportSelectionModel = getSelectionModel();
+    final DocumentContextSelectionModel reportSelectionModel = getSelectionModel();
     if (reportSelectionModel == null)
     {
       return;

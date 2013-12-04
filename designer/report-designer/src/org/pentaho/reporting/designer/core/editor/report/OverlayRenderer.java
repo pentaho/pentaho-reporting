@@ -21,7 +21,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
 /**
  * Overlay renderers draw additional information on the canvas. This drawing happens after the complete
@@ -32,6 +32,6 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
  */
 public interface OverlayRenderer
 {
-  public void validate(final ReportRenderContext context, final double zoomFactor);
+  public void validate(final ReportDocumentContext context, final double zoomFactor);
   public void draw(final Graphics2D graphics, final Rectangle2D bounds, final ImageObserver obs);
 }

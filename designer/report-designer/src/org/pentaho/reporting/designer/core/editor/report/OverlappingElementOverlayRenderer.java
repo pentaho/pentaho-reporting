@@ -22,7 +22,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -44,7 +44,7 @@ public class OverlappingElementOverlayRenderer implements OverlayRenderer
     this.rootElement = defaultElement;
   }
 
-  public void validate(final ReportRenderContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor)
   {
     this.zoomFactor = zoomFactor;
   }

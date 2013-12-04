@@ -26,7 +26,7 @@ import org.pentaho.openformula.ui.FormulaEditorPanel;
 import org.pentaho.openformula.ui.FunctionParameterEditor;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
 import org.pentaho.reporting.designer.core.util.GUIUtils;
@@ -46,7 +46,7 @@ public class FormulaExpressionEditor implements ExpressionEditor
   private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
 
   private FormulaEditorPanel editorPanel;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private DefaultDataAttributeContext dataAttributeContext;
   private FormulaExpression formulaExpression;
   private FormulaFunction formulaFunction;
@@ -98,14 +98,14 @@ public class FormulaExpressionEditor implements ExpressionEditor
     }
   }
 
-  public ReportRenderContext getRenderContext()
+  private ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
 
   private FieldDefinition[] getFields()
   {
-    final ReportRenderContext renderContext = getRenderContext();
+    final ReportDocumentContext renderContext = getRenderContext();
     if (renderContext == null)
     {
       return EMPTY_FIELDS;

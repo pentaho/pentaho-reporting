@@ -54,7 +54,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.table.TextAreaPropertyEditorDialog;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -510,13 +510,13 @@ public class BundledResourceEditor extends JDialog
 
   public boolean editResources()
   {
-    final ReportRenderContext activeContext = designerContext.getActiveContext();
+    final ReportDocumentContext activeContext = designerContext.getActiveContext();
     if (activeContext == null)
     {
       throw new IllegalStateException();
     }
 
-    bundle = (WriteableDocumentBundle) activeContext.getMasterReportElement().getBundle();
+    bundle = (WriteableDocumentBundle) activeContext.getContextRoot().getBundle();
     refreshBundleList();
 
     changed = false;

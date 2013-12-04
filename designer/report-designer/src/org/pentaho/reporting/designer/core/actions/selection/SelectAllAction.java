@@ -30,9 +30,8 @@ import javax.swing.text.JTextComponent;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.report.RootBandRenderComponent;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
-import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -97,7 +96,7 @@ public final class SelectAllAction extends AbstractReportContextAction
     {
       final RootBandRenderComponent rc = (RootBandRenderComponent) owner;
       final Section reportElement = rc.getRendererRoot().getElement();
-      final ReportSelectionModel selectionModel = getActiveContext().getSelectionModel();
+      final DocumentContextSelectionModel selectionModel = getActiveContext().getSelectionModel();
       selectRecursively(selectionModel, reportElement);
       if (reportElement instanceof RootLevelBand)
       {
@@ -111,7 +110,7 @@ public final class SelectAllAction extends AbstractReportContextAction
     }
   }
 
-  private void selectRecursively(final ReportSelectionModel selectionModel, final Section band)
+  private void selectRecursively(final DocumentContextSelectionModel selectionModel, final Section band)
   {
     if (band instanceof RootLevelBand == false)
     {
@@ -120,7 +119,7 @@ public final class SelectAllAction extends AbstractReportContextAction
     final int count = band.getElementCount();
     for (int i = 0; i < count; i++)
     {
-      final Element element = (Element) band.getElement(i);
+      final Element element = band.getElement(i);
       if (element instanceof Band)
       {
         selectRecursively(selectionModel, (Band) element);

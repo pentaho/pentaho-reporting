@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.actions.elements.format;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.Map;
 import javax.swing.Action;
 import javax.swing.JDialog;
@@ -29,7 +30,7 @@ import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionActio
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.drilldown.HyperlinkEditorDialog;
 import org.pentaho.reporting.designer.core.editor.format.EditableStyleSheet;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.ElementFormatUndoEntry;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -68,18 +69,12 @@ public class EditHyperlinkAction extends AbstractElementSelectionAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
-    if (selectionModel1 == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-
-    final Element[] visualElements = selectionModel1.getSelectedVisualElements();
-    if (visualElements.length == 0)
-    {
-      return;
-    }
-
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
     final EditableStyleSheet styleSheet = EditableStyleSheet.create(visualElements);
 
     final Component parent = getReportDesignerContext().getView().getParent();
@@ -87,13 +82,13 @@ public class EditHyperlinkAction extends AbstractElementSelectionAction
     final HyperlinkEditorDialog dialog = createDialog(window);
 
     final Map<StyleKey,Expression> styleExpressions;
-    if (visualElements.length != 1)
+    if (visualElements.size() != 1)
     {
       styleExpressions = null;
     }
     else
     {
-      styleExpressions = visualElements[0].getStyleExpressions();
+      styleExpressions = visualElements.get(0).getStyleExpressions();
     }
 
     final ElementFormatUndoEntry.EditResult result =

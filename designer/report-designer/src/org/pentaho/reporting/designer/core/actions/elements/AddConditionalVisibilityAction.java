@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.actions.elements;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -27,18 +28,13 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.format.ConditionalVisibilityDialog;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class AddConditionalVisibilityAction extends AbstractElementSelectionAction
 {
   public AddConditionalVisibilityAction()
@@ -70,14 +66,14 @@ public class AddConditionalVisibilityAction extends AbstractElementSelectionActi
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       return;
     }
 
-    final Element[] visualElements = selectionModel1.getSelectedVisualElements();
-    if (visualElements.length != 1)
+    final List<Element> visualElements = selectionModel1.getSelectedElementsOfType(Element.class);
+    if (visualElements.size() != 1)
     {
       return;
     }
@@ -99,12 +95,12 @@ public class AddConditionalVisibilityAction extends AbstractElementSelectionActi
       dialog = new ConditionalVisibilityDialog();
     }
 
-    final Expression oldExpression = visualElements[0].getStyleExpression(ElementStyleKeys.VISIBLE);
+    final Expression oldExpression = visualElements.get(0).getStyleExpression(ElementStyleKeys.VISIBLE);
     dialog.setReportDesignerContext(getReportDesignerContext());
     final Expression expression = dialog.performEdit(oldExpression);
     if (expression != null)
     {
-      visualElements[0].setStyleExpression(ElementStyleKeys.VISIBLE, expression.getInstance());
+      visualElements.get(0).setStyleExpression(ElementStyleKeys.VISIBLE, expression.getInstance());
     }
   }
 }

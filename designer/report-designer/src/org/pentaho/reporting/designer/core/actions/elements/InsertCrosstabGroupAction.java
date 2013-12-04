@@ -27,10 +27,10 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.crosstab.CreateCrosstabDialog;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -61,13 +61,13 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
       report.setRootGroup(oldRootGroup);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
       final SubGroupBody body = new SubGroupBody();
@@ -97,7 +97,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -111,7 +111,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       subGroupBodyReportElement.setGroup(oldRootGroup);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -152,7 +152,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       this.oldBody = (GroupDataBody) oldBody.derive();
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -160,7 +160,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       selectedGroup.setBody((GroupBody) oldBody.derive());
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -194,7 +194,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -291,7 +291,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       return;
     }
 
-    final ReportSelectionModel selectionModel = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getSelectionModel();
     if (selectionModel == null)
     {
       setEnabled(false);

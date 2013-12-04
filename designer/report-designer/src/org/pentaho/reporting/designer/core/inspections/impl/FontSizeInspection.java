@@ -19,7 +19,7 @@ package org.pentaho.reporting.designer.core.inspections.impl;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.StyleLocationInfo;
@@ -50,7 +50,7 @@ public class FontSizeInspection extends AbstractStructureInspection
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     outputProcessorMetaData = new GenericOutputProcessorMetaData();
@@ -63,7 +63,7 @@ public class FontSizeInspection extends AbstractStructureInspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportRenderContext reportRenderContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)

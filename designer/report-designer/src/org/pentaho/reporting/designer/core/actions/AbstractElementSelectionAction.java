@@ -17,10 +17,11 @@
 
 package org.pentaho.reporting.designer.core.actions;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
@@ -56,7 +57,7 @@ public abstract class AbstractElementSelectionAction extends AbstractReportConte
 
     public void nodeChanged(final ReportModelEvent event)
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       if (activeContext == null)
       {
         throw new IllegalStateException("Stale Action reference!");
@@ -69,7 +70,7 @@ public abstract class AbstractElementSelectionAction extends AbstractReportConte
   }
 
 
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
   private SelectionUpdateHandler updateHandler;
   private UpdatePropertiesForSelectionHandler updateSelectionHandler;
   
@@ -79,7 +80,7 @@ public abstract class AbstractElementSelectionAction extends AbstractReportConte
     updateSelectionHandler = new UpdatePropertiesForSelectionHandler();
   }
 
-  public ReportSelectionModel getSelectionModel()
+  protected DocumentContextSelectionModel getSelectionModel()
   {
     return selectionModel;
   }

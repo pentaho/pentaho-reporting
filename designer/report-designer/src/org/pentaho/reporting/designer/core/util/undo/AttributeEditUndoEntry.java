@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
@@ -44,13 +44,13 @@ public class AttributeEditUndoEntry implements UndoEntry
     this.newValue = newValue;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
     elementById.setAttribute(attributeNamespace, attributeName, oldValue);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final ReportElement elementById = ModelUtility.findElementById(renderContext.getReportDefinition(), target);
     elementById.setAttribute(attributeNamespace, attributeName, newValue);

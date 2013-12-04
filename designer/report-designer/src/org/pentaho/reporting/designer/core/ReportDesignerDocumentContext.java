@@ -20,8 +20,17 @@ package org.pentaho.reporting.designer.core;
 import java.beans.PropertyChangeListener;
 import javax.swing.Icon;
 
-public interface ReportDesignerDocumentContext
+import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
+import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
+import org.pentaho.reporting.designer.core.util.undo.UndoManager;
+
+public interface ReportDesignerDocumentContext<T>
 {
+  UndoManager getUndo();
+  DocumentContextSelectionModel getSelectionModel();
+
+  T getContextRoot();
   String getTabName();
   Icon getIcon();
   void dispose();
@@ -32,4 +41,12 @@ public interface ReportDesignerDocumentContext
   void removePropertyChangeListener(final PropertyChangeListener listener);
   void removePropertyChangeListener(final String property, final PropertyChangeListener listener);
 
+  void onDocumentActivated();
+
+  void removeInspectionListener(InspectionResultListener listener);
+  void addInspectionListener(InspectionResultListener listener);
+
+  AuthenticationStore getAuthenticationStore();
+
+  boolean isChanged();
 }

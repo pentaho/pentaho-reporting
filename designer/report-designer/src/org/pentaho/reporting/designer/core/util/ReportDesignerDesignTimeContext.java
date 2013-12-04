@@ -21,7 +21,7 @@ import java.awt.Component;
 import java.awt.Window;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -38,7 +38,7 @@ import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 public class ReportDesignerDesignTimeContext implements DesignTimeContext
 {
   private ReportDesignerContext designerContext;
-  private ReportRenderContext activeContext;
+  private ReportDocumentContext activeContext;
 
   public ReportDesignerDesignTimeContext(final ReportDesignerContext designerContext)
   {

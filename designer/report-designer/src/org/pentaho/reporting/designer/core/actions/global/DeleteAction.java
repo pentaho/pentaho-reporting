@@ -25,8 +25,8 @@ import javax.swing.JOptionPane;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.dnd.InsertationUtil;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
@@ -56,13 +56,13 @@ public final class DeleteAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final ReportSelectionModel selectionModel = activeContext.getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = activeContext.getSelectionModel();
     final Object[] selectedElements = selectionModel.getSelectedElements();
     if (isParameter())
     {
@@ -95,7 +95,7 @@ public final class DeleteAction extends AbstractElementSelectionAction
 
   private boolean isParameter()
   {
-    final ReportSelectionModel selectionModel = getActiveContext().getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getActiveContext().getSelectionModel();
     final Object[] selectedElements = selectionModel.getSelectedElements();
     for (int i = 0; i < selectedElements.length; i++)
     {
@@ -113,7 +113,7 @@ public final class DeleteAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null || selectionModel1.getSelectionCount() == 0)
     {
       setEnabled(false);

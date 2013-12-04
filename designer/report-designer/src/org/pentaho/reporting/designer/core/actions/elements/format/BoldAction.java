@@ -19,13 +19,13 @@ package org.pentaho.reporting.designer.core.actions.elements.format;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
@@ -80,24 +80,22 @@ public final class BoldAction extends AbstractElementSelectionAction implements 
   {
     super.updateSelection();
 
-    final ReportSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-    final Element[] visualElements = selectionModel.getSelectedVisualElements();
-
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
     boolean selected;
-    if (visualElements.length == 0)
+    if (visualElements.isEmpty())
     {
       selected = false;
     }
     else
     {
       selected = true;
-      for (int i = 0; i < visualElements.length; i++)
+      for (Element visualElement : visualElements)
       {
-        final Element visualElement = visualElements[i];
         selected &= visualElement.getStyle().getBooleanStyleProperty(TextStyleKeys.BOLD);
       }
     }
@@ -109,29 +107,19 @@ public final class BoldAction extends AbstractElementSelectionAction implements 
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-    final Element[] visualElements = selectionModel.getSelectedVisualElements();
-    if (visualElements.length == 0)
-    {
-      return;
-    }
-    final ReportRenderContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
-      return;
-    }
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
 
-    Boolean value = Boolean.FALSE;
+    Boolean value = null;
     final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
-    for (int i = 0; i < visualElements.length; i++)
+    for (Element element : visualElements)
     {
-      final Element element = visualElements[i];
       final ElementStyleSheet styleSheet = element.getStyle();
-      if (i == 0)
+      if (value == null)
       {
         if (styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD))
         {

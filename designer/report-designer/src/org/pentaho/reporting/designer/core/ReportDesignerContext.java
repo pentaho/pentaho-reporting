@@ -23,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.RecentFilesModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -46,10 +47,10 @@ public interface ReportDesignerContext
 
   public RecentFilesModel getRecentFilesModel();
 
-  public ReportRenderContext getActiveContext();
+  public ReportDocumentContext getActiveContext();
 
-  public ReportDesignerDocumentContext getActiveDocument();
-  public void setActiveDocument(ReportDesignerDocumentContext context);
+  public ReportDesignerDocumentContext<?> getActiveDocument();
+  public void setActiveDocument(ReportDesignerDocumentContext<?> context);
 
   public void setStatusText(String text);
 
@@ -73,7 +74,7 @@ public interface ReportDesignerContext
 
   public int addMasterReport(final MasterReport masterReportElement) throws ReportDataFactoryException;
 
-  public int addSubReport(final ReportRenderContext parentReportContext,
+  public int addSubReport(final ReportDocumentContext parentReportContext,
                           final SubReport subReportElement) throws ReportDataFactoryException;
 
   public ReportDesignerDocumentContext getDocumentContext(int index);

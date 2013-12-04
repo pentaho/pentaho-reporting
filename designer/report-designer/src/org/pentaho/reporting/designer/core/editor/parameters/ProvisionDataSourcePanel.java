@@ -48,10 +48,10 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -331,10 +331,10 @@ public class ProvisionDataSourcePanel extends JPanel
   private static class DataTabSetVisible implements Runnable
   {
     private ReportDesignerContext designerContext;
-    private ReportRenderContext activeContext;
+    private ReportDesignerDocumentContext<?> activeContext;
 
     public DataTabSetVisible(final ReportDesignerContext designerContext,
-                             final ReportRenderContext activeContext)
+                             final ReportDesignerDocumentContext<?> activeContext)
     {
       this.designerContext = designerContext;
       this.activeContext = activeContext;
@@ -365,7 +365,7 @@ public class ProvisionDataSourcePanel extends JPanel
      */
     public AbstractReportDefinition getReport()
     {
-      return reportDesignerContext.getActiveContext().getMasterReportElement();
+      return reportDesignerContext.getActiveContext().getContextRoot();
     }
 
     /**

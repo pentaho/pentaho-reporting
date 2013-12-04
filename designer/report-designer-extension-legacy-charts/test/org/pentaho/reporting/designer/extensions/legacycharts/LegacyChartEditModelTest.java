@@ -18,26 +18,18 @@
 package org.pentaho.reporting.designer.extensions.legacycharts;
 
 import junit.framework.TestCase;
-import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.plugin.jfreereport.reportcharts.BarChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.BarLineChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.CategorySetDataCollector;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.XYSeriesCollector;
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
+import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 
 public class LegacyChartEditModelTest extends TestCase
 {
   public LegacyChartEditModelTest()
   {
-  }
-
-  public LegacyChartEditModelTest(final String s)
-  {
-    super(s);
   }
 
   protected void setUp() throws Exception
@@ -47,12 +39,7 @@ public class LegacyChartEditModelTest extends TestCase
 
   public void testDefaults()
   {
-    final MasterReport report = new MasterReport();
-    final ReportRenderContext context = new ReportRenderContext
-        (report, report, null, new GlobalAuthenticationStore());
-
     final LegacyChartEditModel model = new LegacyChartEditModel();
-    model.setActiveContext(context);
     assertNull(model.getChartExpression());
     assertNull(model.getPrimaryDataSource());
     assertNull(model.getSecondaryDataSource());
@@ -69,16 +56,11 @@ public class LegacyChartEditModelTest extends TestCase
 
   public void testInitWithChart()
   {
-    final MasterReport report = new MasterReport();
-    final ReportRenderContext context = new ReportRenderContext
-        (report, report, null, new GlobalAuthenticationStore());
-
     final BarLineChartExpression chartExpression = new BarLineChartExpression();
     final CategorySetDataCollector primaryDataCollector = new CategorySetDataCollector();
     final XYSeriesCollector secondaryDataCollector = new XYSeriesCollector();
 
     final LegacyChartEditModel model = new LegacyChartEditModel();
-    model.setActiveContext(context);
     model.setChartExpression(chartExpression);
     model.setPrimaryDataSource(primaryDataCollector);
     model.setSecondaryDataSource(secondaryDataCollector);
@@ -100,16 +82,11 @@ public class LegacyChartEditModelTest extends TestCase
 
   public void testChartTypeChange()
   {
-    final MasterReport report = new MasterReport();
-    final ReportRenderContext context = new ReportRenderContext
-        (report, report, null, new GlobalAuthenticationStore());
-
     final BarLineChartExpression chartExpression = new BarLineChartExpression();
     final CategorySetDataCollector primaryDataCollector = new CategorySetDataCollector();
     final XYSeriesCollector secondaryDataCollector = new XYSeriesCollector();
 
     final LegacyChartEditModel model = new LegacyChartEditModel();
-    model.setActiveContext(context);
     model.setChartExpression(chartExpression);
     model.setPrimaryDataSource(primaryDataCollector);
     model.setSecondaryDataSource(secondaryDataCollector);

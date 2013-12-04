@@ -22,7 +22,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -63,7 +63,7 @@ public interface ElementRenderer
   public boolean draw(Graphics2D g2);
 
   public void handleError (ReportDesignerContext designerContext,
-                              ReportRenderContext reportContext);
+                           ReportDocumentContext reportContext);
 
   public StrictBounds getRootElementBounds();
 

@@ -30,7 +30,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.status.ExceptionDialog;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -58,7 +58,7 @@ public final class SaveReportAsAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -69,11 +69,11 @@ public final class SaveReportAsAction extends AbstractReportContextAction
   }
 
   public static boolean saveReportAs(final ReportDesignerContext context,
-                                     final ReportRenderContext activeContext,
+                                     final ReportDocumentContext activeContext,
                                      final Component parent)
   {
     // Get the current file target
-    final MasterReport report = activeContext.getMasterReportElement();
+    final MasterReport report = activeContext.getContextRoot();
     final ResourceKey definitionSource = report.getDefinitionSource();
     final File defaultFile = SaveReportUtilities.getCurrentFile(definitionSource);
 

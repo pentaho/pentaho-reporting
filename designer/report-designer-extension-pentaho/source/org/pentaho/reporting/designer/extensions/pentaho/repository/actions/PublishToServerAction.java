@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.report.SaveReportAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 
 /**
@@ -55,7 +55,7 @@ public class PublishToServerAction extends AbstractReportContextAction
   {
 
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;

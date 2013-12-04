@@ -28,8 +28,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.FastPropertyEditorManager;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -69,7 +68,7 @@ public class ExpressionPropertiesTableModel
   private TableStyle tableStyle;
   private Expression[] elements;
   private BeanUtility[] editors;
-  private ReportRenderContext activeContext;
+  private ReportDocumentContext activeContext;
   private boolean filterInlineExpressionProperty;
 
   public ExpressionPropertiesTableModel()
@@ -91,12 +90,12 @@ public class ExpressionPropertiesTableModel
     this.filterInlineExpressionProperty = filterInlineExpressionProperty;
   }
 
-  public ReportRenderContext getActiveContext()
+  public ReportDocumentContext getActiveContext()
   {
     return activeContext;
   }
 
-  public void setActiveContext(final ReportRenderContext activeContext)
+  public void setActiveContext(final ReportDocumentContext activeContext)
   {
     this.activeContext = activeContext;
   }
@@ -453,7 +452,7 @@ public class ExpressionPropertiesTableModel
 
       if (changed)
       {
-        final ReportRenderContext activeContext1 = getActiveContext();
+        final ReportDocumentContext activeContext1 = getActiveContext();
         final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
 
         for (int i = 0; i < elements.length; i++)

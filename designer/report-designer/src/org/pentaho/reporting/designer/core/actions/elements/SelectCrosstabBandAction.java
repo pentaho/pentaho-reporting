@@ -25,8 +25,8 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -57,7 +57,7 @@ import org.pentaho.reporting.engine.classic.core.GroupHeader;
  */
 public class SelectCrosstabBandAction extends AbstractDesignerContextAction implements ToggleStateAction
 {
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
 
   private ArrayList<Element> otherGroupBodyList;
   private ArrayList<Element> rowGroupBodyList;
@@ -151,12 +151,12 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     cellBodyList.clear();
   }
 
-  private ReportSelectionModel getSelectionModel()
+  private DocumentContextSelectionModel getSelectionModel()
   {
     if (selectionModel == null)
     {
       final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       selectionModel = activeContext.getSelectionModel();
     }
 
@@ -179,7 +179,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     // Clear lists just in case something changed.
     initialize();
 
-    final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+    final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
     selectionModel = getSelectionModel();
 
     final AbstractReportDefinition reportDefinition = activeContext.getReportDefinition();

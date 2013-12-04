@@ -48,7 +48,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
@@ -446,7 +446,7 @@ public class CreateCrosstabDialog extends CommonDialog
   }
 
   public CrosstabGroup createCrosstab(final ReportDesignerContext designerContext,
-                                      final ReportRenderContext reportRenderContext)
+                                      final ReportDocumentContext reportRenderContext)
   {
     if (designerContext == null)
     {

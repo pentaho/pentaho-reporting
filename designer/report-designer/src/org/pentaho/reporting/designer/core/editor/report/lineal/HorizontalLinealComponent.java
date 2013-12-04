@@ -37,6 +37,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.GuideLine;
@@ -359,7 +360,7 @@ public class HorizontalLinealComponent extends JPanel
   private int activeGuideLineIndex;
   private boolean showLeftBorder;
   private PageDefinition pageDefinition;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private HorizontalLinealComponent.LinealUpdateHandler linealModelListener;
 
   public HorizontalLinealComponent(final ReportRenderContext renderContext, final boolean showLeftBorder)
@@ -370,7 +371,7 @@ public class HorizontalLinealComponent extends JPanel
     }
 
     this.renderContext = renderContext;
-    this.renderContext.getMasterReportElement().addReportModelListener(new PageFormatUpdateHandler());
+    this.renderContext.getContextRoot().addReportModelListener(new PageFormatUpdateHandler());
     this.linealModelListener = new LinealUpdateHandler();
 
     this.showLeftBorder = showLeftBorder;
@@ -398,7 +399,7 @@ public class HorizontalLinealComponent extends JPanel
       this.linealModel.removeLinealModelListener(linealModelListener);
     }
 
-    this.pageDefinition = renderContext.getPageDefinition();
+    this.pageDefinition = renderContext.getContextRoot().getPageDefinition();
     final AbstractReportDefinition abstractReportDefinition = this.renderContext.getReportDefinition();
     this.linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
     this.linealModel.addLinealModelListener(linealModelListener);
@@ -721,7 +722,7 @@ public class HorizontalLinealComponent extends JPanel
     this.activeGuideLineIndex = activeGuideLineIndex;
   }
 
-  protected ReportRenderContext getRenderContext()
+  protected ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }

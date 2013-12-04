@@ -18,7 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.CrosstabRenderer;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
 import org.pentaho.reporting.designer.core.model.HorizontalPositionsModel;
@@ -39,7 +39,7 @@ public class CrosstabRenderComponent extends AbstractRenderComponent
   private CrosstabRenderer elementRenderer;
 
   public CrosstabRenderComponent(final ReportDesignerContext designerContext,
-                                 final ReportRenderContext renderContext)
+                                 final ReportDocumentContext renderContext)
   {
     super(designerContext, renderContext);
   }

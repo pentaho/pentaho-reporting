@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
@@ -45,7 +45,8 @@ public class MandatoryAttributeMissingInspection extends AbstractStructureInspec
     return true;
   }
 
-  protected void inspectElement(final ReportDesignerContext designerContext, final ReportRenderContext reportRenderContext,
+  protected void inspectElement(final ReportDesignerContext designerContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)

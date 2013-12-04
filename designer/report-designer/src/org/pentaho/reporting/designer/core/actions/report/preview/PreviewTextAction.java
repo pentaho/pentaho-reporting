@@ -67,7 +67,7 @@ public final class PreviewTextAction extends AbstractReportContextAction
       return;
     }
 
-    final MasterReport reportElement = getActiveContext().getMasterReportElement();
+    final MasterReport reportElement = getActiveContext().getContextRoot();
     final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     if (PreviewParametersDialog.process(window, reportElement))

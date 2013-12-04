@@ -25,7 +25,7 @@ import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.FastPropertyEditorManager;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -176,7 +176,7 @@ public abstract class AbstractAttributeTableModel
 
   private DataBackend dataBackend, oldDataBackend;
   private TableStyle tableStyle;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
 
   protected AbstractAttributeTableModel()
   {
@@ -531,12 +531,12 @@ public abstract class AbstractAttributeTableModel
     return FastPropertyEditorManager.findEditor(type);
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  public void setReportRenderContext(final ReportRenderContext reportRenderContext)
+  public void setReportRenderContext(final ReportDocumentContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
   }

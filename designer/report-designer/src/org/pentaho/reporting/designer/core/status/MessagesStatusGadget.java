@@ -39,6 +39,7 @@ import javax.swing.Timer;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
@@ -118,15 +119,15 @@ public class MessagesStatusGadget extends JLabel implements InspectionResultList
     updateActiveContext(null, designerContext.getActiveContext());
   }
 
-  private void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext activeContext)
+  private void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext activeContext)
   {
     if (oldContext != null)
     {
-      oldContext.getInspectionRunner().removeInspectionListener(this);
+      oldContext.removeInspectionListener(this);
     }
     if (activeContext != null)
     {
-      activeContext.getInspectionRunner().addInspectionListener(this);
+      activeContext.addInspectionListener(this);
     }
   }
 

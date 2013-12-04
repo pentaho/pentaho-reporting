@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -55,7 +55,7 @@ public class ElementEditUndoEntry implements UndoEntry
     this.newElement = newElement;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final Band elementById = (Band)
         ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -69,7 +69,7 @@ public class ElementEditUndoEntry implements UndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final Band elementById = (Band)
         ModelUtility.findElementById(renderContext.getReportDefinition(), target);

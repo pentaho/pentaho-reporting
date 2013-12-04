@@ -19,7 +19,7 @@ package org.pentaho.reporting.designer.core.util.undo;
 
 import java.io.Serializable;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
 /**
  * Todo: Document Me
@@ -28,9 +28,9 @@ import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
  */
 public interface UndoEntry extends Serializable
 {
-  public void undo(final ReportRenderContext renderContext);
+  public void undo(final ReportDocumentContext renderContext);
 
-  public void redo(final ReportRenderContext renderContext);
+  public void redo(final ReportDocumentContext renderContext);
 
   public UndoEntry merge(final UndoEntry newEntry);
 }

@@ -26,6 +26,7 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -56,12 +57,12 @@ public abstract class AbstractExportAction extends AbstractReportContextAction
 
     public MasterReport getReportJob()
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       if (activeContext == null)
       {
         return null;
       }
-      return activeContext.getMasterReportElement();
+      return activeContext.getContextRoot();
     }
 
     public void fireReportChange(final MasterReport oldReport, final MasterReport newReport)
@@ -140,7 +141,7 @@ public abstract class AbstractExportAction extends AbstractReportContextAction
       return;
     }
 
-    final MasterReport reportJob = getActiveContext().getMasterReportElement();
+    final MasterReport reportJob = getActiveContext().getContextRoot();
     if (reportJob == null)
     {
       return;
@@ -148,7 +149,7 @@ public abstract class AbstractExportAction extends AbstractReportContextAction
 
     try
     {
-      actionPlugin.performExport((MasterReport) reportJob.clone());
+      actionPlugin.performExport(reportJob.clone());
     }
     catch (Exception e1)
     {

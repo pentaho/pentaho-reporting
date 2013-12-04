@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report.lineal;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.GuideLine;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -43,7 +43,7 @@ public class RemoveVerticalGuidelineUndoEntry implements UndoEntry
     this.id = id;
   }
 
-  public void undo(final ReportRenderContext context)
+  public void undo(final ReportDocumentContext context)
   {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
     final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);
@@ -51,7 +51,7 @@ public class RemoveVerticalGuidelineUndoEntry implements UndoEntry
     linealModel.addGuidLine(guideLine);
   }
 
-  public void redo(final ReportRenderContext context)
+  public void redo(final ReportDocumentContext context)
   {
     final AbstractReportDefinition abstractReportDefinition = context.getReportDefinition();
     final Band band = (Band) ModelUtility.findElementById(abstractReportDefinition, id);

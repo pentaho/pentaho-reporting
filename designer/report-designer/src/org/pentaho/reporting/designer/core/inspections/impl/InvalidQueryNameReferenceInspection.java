@@ -19,7 +19,7 @@ package org.pentaho.reporting.designer.core.inspections.impl;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
@@ -49,7 +49,7 @@ public class InvalidQueryNameReferenceInspection extends AbstractStructureInspec
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     super.inspect(designerContext, reportRenderContext, resultHandler);
@@ -84,7 +84,7 @@ public class InvalidQueryNameReferenceInspection extends AbstractStructureInspec
       final Throwable throwable = dataSchemaModel.getDataFactoryException();
       if (throwable != null)
       {
-        final DataFactory dataFactory = reportRenderContext.getMasterReportElement().getDataFactory();
+        final DataFactory dataFactory = reportRenderContext.getContextRoot().getDataFactory();
         final LocationInfo queryLocation;
         if (dataFactory instanceof CompoundDataFactory)
         {
@@ -112,7 +112,7 @@ public class InvalidQueryNameReferenceInspection extends AbstractStructureInspec
   }
 
   protected void inspectParameter(final ReportDesignerContext designerContext,
-                                  final ReportRenderContext reportRenderContext,
+                                  final ReportDocumentContext reportRenderContext,
                                   final InspectionResultListener resultHandler,
                                   final String[] columnNames,
                                   final ReportParameterDefinition definition,

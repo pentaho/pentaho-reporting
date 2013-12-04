@@ -15,39 +15,29 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core;
+package org.pentaho.reporting.designer.core.model.selection;
 
-import java.awt.event.ActionEvent;
+import java.util.EventObject;
 
-import org.pentaho.reporting.designer.core.actions.global.ZoomAction;
-import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-
-class InternalZoomAction extends ZoomAction
+public class DocumentSelectionEvent extends EventObject
 {
-  InternalZoomAction(final int percentage)
+  private Object element;
+
+  public DocumentSelectionEvent(final DocumentContextSelectionModel source,
+                                final Object element)
   {
-    super(percentage);
+    super(source);
+    this.element = element;
   }
 
-  public boolean isSelected()
+  public DocumentContextSelectionModel getModel()
   {
-    final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext != null)
-    {
-      return activeContext.getZoomModel().getZoomAsPercentage() == (getPercentage() / 100f);
-    }
-    return false;
+    return (DocumentContextSelectionModel ) getSource();
   }
 
-  /**
-   * Invoked when an action occurs.
-   */
-  public void actionPerformed(final ActionEvent e)
+  public Object getElement()
   {
-    final ReportDocumentContext activeContext = getActiveContext();
-    if (activeContext != null)
-    {
-      activeContext.getZoomModel().setZoomAsPercentage(getPercentage() / 100f);
-    }
+    return element;
   }
+
 }

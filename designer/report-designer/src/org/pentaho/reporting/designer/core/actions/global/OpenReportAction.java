@@ -29,7 +29,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -151,10 +151,10 @@ public final class OpenReportAction extends AbstractDesignerContextAction
         context.addMasterReport((MasterReport) report);
         context.getRecentFilesModel().addFile(selectedFile);
 
-        final ReportRenderContext theReportRenderContext = context.getActiveContext();
-        if (theReportRenderContext != null)
+        final ReportDocumentContext activeContext = context.getActiveContext();
+        if (activeContext != null)
         {
-          theReportRenderContext.resetChangeTracker();
+          activeContext.resetChangeTracker();
         }
       }
       catch (ReportDataFactoryException e)

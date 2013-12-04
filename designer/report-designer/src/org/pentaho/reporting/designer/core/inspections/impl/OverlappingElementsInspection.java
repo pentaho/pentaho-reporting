@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.LocationInfo;
@@ -44,7 +44,7 @@ public class OverlappingElementsInspection extends AbstractStructureInspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportRenderContext reportRenderContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)
@@ -84,7 +84,7 @@ public class OverlappingElementsInspection extends AbstractStructureInspection
 
   }
 
-  private String computeConflictingElementName(final ReportRenderContext reportRenderContext,
+  private String computeConflictingElementName(final ReportDocumentContext reportRenderContext,
                                              final Set<InstanceID> instanceIDs)
   {
     final Map<InstanceID, Element> elementsById = reportRenderContext.getSharedRenderer().getElementsById();

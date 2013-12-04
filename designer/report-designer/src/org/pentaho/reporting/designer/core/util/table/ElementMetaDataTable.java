@@ -39,6 +39,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -364,7 +365,7 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     if (oldContext != null)
     {
       oldContext.removePropertyChangeListener(this.changeHandler);
-      final ReportRenderContext oldActiveContext = getReportRenderContext();
+      final ReportDocumentContext oldActiveContext = getReportRenderContext();
       updateActiveContext(oldActiveContext, null);
     }
 
@@ -381,8 +382,8 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     }
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext,
-                                     final ReportRenderContext activeContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext,
+                                     final ReportDocumentContext activeContext)
   {
     structureFunctionCellEditor.setRenderContext(activeContext);
     reportPreProcessorCellEditor.setRenderContext(activeContext);
@@ -393,7 +394,7 @@ public class ElementMetaDataTable extends JTable implements DesignerContextCompo
     return arrayCellEditor.getReportDesignerContext();
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
     if (reportDesignerContext == null)
