@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.vfs.FileName;
+import org.apache.commons.vfs.FileSelector;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileType;
 import org.apache.commons.vfs.provider.AbstractFileObject;
@@ -227,5 +228,10 @@ public class WebSolutionFileObject extends AbstractFileObject
   public void setDescription(final String description) throws FileSystemException
   {
     fs.setDescription(getName(), description);
+  }
+  
+  @Override
+  public int delete( final FileSelector selector ) throws FileSystemException {
+	  return fs.delete( getName() ) ? 1 : 0;
   }
 }

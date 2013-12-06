@@ -51,4 +51,6 @@ public interface SolutionFileModel
 
   byte[] getData(FileName name) throws FileSystemException;
   void setData(FileName name, byte[] data) throws FileSystemException;
+  
+  boolean delete( FileName name ) throws FileSystemException;
 }

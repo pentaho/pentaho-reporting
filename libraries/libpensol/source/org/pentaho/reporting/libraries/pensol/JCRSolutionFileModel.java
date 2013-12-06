@@ -25,6 +25,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -58,6 +59,8 @@ public class JCRSolutionFileModel implements SolutionFileModel
       ("org.pentaho.reporting.libraries.pensol.jcr.RetrieveContent");
   public static final String RETRIEVE_PARAMETER_URL_SERVICE = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
       ("org.pentaho.reporting.libraries.pensol.jcr.RetrieveParameters");
+  public static final String DELETE_FILE_OR_FOLDER = LibPensolBoot.getInstance().getGlobalConfig().getConfigProperty
+	         ("org.pentaho.reporting.libraries.pensol.jcr.delete.file.or.folder");
 
   private static final String BI_SERVER_NULL_OBJECT = "BI-Server returned a RepositoryFileTreeDto without an attached RepositoryFileDto. " +
       "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
@@ -525,5 +528,52 @@ public class JCRSolutionFileModel implements SolutionFileModel
       throw new FileSystemException(BI_SERVER_NULL_OBJECT);
     }
     return file.getFileSize();
+  }
+  
+  @Override
+  public boolean delete( FileName name ) throws FileSystemException {
+
+    boolean success = false;
+        
+    final RepositoryFileDto file = getFile( name );
+    
+    try {   
+      
+    	final WebResource resource = client.resource( url + DELETE_FILE_OR_FOLDER );
+        final ClientResponse response = resource.put( ClientResponse.class, file.getId() );
+         
+        if ( response != null && response.getStatus() == Response.Status.OK.getStatusCode() ) {
+        	refresh();
+            success = true;
+        } else {
+        	throw new FileSystemException( "Failed with error-code " + response.getStatus() );
+        }
+        
+    } catch ( Exception e ) {
+        throw new FileSystemException("Failed", e);
+    }
+    
+    return success;
+  }
+  
+  private RepositoryFileDto getFile( FileName name ) throws FileSystemException {
+    
+	if(name == null){
+      throw new FileSystemException(FILE_NOT_FOUND);
+    }
+        
+    final String[] pathArray = computeFileNames( name );
+    final RepositoryFileTreeDto fileInfo = lookupNode( pathArray );
+    
+    if (fileInfo == null) {
+      throw new FileSystemException(FILE_NOT_FOUND, name);
+    }
+    
+    final RepositoryFileDto file = fileInfo.getFile();
+    
+    if ( file == null ) {
+      throw new FileSystemException(BI_SERVER_NULL_OBJECT);
+    }    
+    return file;
   }
 }
