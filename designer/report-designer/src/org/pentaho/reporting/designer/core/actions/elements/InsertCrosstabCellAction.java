@@ -22,7 +22,7 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -56,7 +56,7 @@ public final class InsertCrosstabCellAction extends AbstractElementSelectionActi
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -139,14 +139,14 @@ public final class InsertCrosstabCellAction extends AbstractElementSelectionActi
       this.cell = cell;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final CrosstabCellBody selectedGroup = (CrosstabCellBody)
               ModelUtility.findElementById(renderContext.getReportDefinition(), target);
       selectedGroup.removeElement(cell);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final CrosstabCellBody selectedGroup = (CrosstabCellBody)
               ModelUtility.findElementById(renderContext.getReportDefinition(), target);

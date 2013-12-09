@@ -17,22 +17,32 @@
 
 package org.pentaho.reporting.designer.core.editor;
 
+import java.awt.Image;
+import java.beans.BeanInfo;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.TreeSet;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
+import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.ReportAuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.report.layouting.ReportLayouter;
 import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
 import org.pentaho.reporting.designer.core.inspections.AutoInspectionRunner;
+import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.model.selection.DefaultReportSelectionModel;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
@@ -40,6 +50,10 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
+import org.pentaho.reporting.libraries.base.util.IOUtils;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
@@ -49,8 +63,70 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class ReportRenderContext
+public class ReportRenderContext implements ReportDocumentContext
 {
+  private static class ReportNameUpdateHandler implements ReportModelListener
+  {
+    private ReportRenderContext context;
+
+    protected ReportNameUpdateHandler(ReportRenderContext context)
+    {
+      this.context = context;
+      this.context.setTabName(computeTabName(this.context.getReportDefinition()));
+    }
+
+    public void nodeChanged(final ReportModelEvent event)
+    {
+      AbstractReportDefinition report = context.getReportDefinition();
+      if (event.getElement() == report &&
+          event.getType() == ReportModelEvent.NODE_PROPERTIES_CHANGED)
+      {
+        context.setTabName(computeTabName(report));
+      }
+    }
+
+    private String computeTabName(final AbstractReportDefinition report)
+    {
+      if (report instanceof MasterReport)
+      {
+        final MasterReport mreport = (MasterReport) report;
+        final Object title = mreport.getBundle().getMetaData().getBundleAttribute
+            (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE);
+        if (title instanceof String)
+        {
+          return (String) title;
+        }
+      }
+
+      final String name = report.getName();
+      if (StringUtils.isEmpty(name) == false)
+      {
+        return name;
+      }
+
+      final String theSavePath = (String) report.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path");// NON-NLS
+      if (!StringUtils.isEmpty(theSavePath))
+      {
+        final String fileName = IOUtils.getInstance().getFileName(theSavePath);
+        return IOUtils.getInstance().stripFileExtension(fileName);
+      }
+
+      if (report instanceof MasterReport)
+      {
+        return Messages.getString("ReportDesignerFrame.TabName.UntitledReport");// NON-NLS
+      }
+      else if (report instanceof CrosstabElement)
+      {
+        return Messages.getString("ReportDesignerFrame.TabName.UntitledCrosstab");// NON-NLS
+      }
+      else
+      {
+        return Messages.getString("ReportDesignerFrame.TabName.UntitledSubReport");// NON-NLS
+      }
+    }
+  }
+
+
   // TODO add a new delete listener that is looking for embedded resources - separate class
 
   private class NodeDeleteListener implements ReportModelListener
@@ -63,15 +139,14 @@ public class ReportRenderContext
     {
       if (event.isNodeDeleteEvent())
       {
-        final ReportSelectionModel selectionModel = getSelectionModel();
+        final DocumentContextSelectionModel selectionModel = getSelectionModel();
         final AbstractReportDefinition reportDefinition = getReportDefinition();
         final Object element = event.getElement();
         if (element instanceof Element)
         {
-          final Element[] selectedElements = selectionModel.getSelectedVisualElements();
-          for (int i = 0; i < selectedElements.length; i++)
+          final List<Element> selectedElements = selectionModel.getSelectedElementsOfType(Element.class);
+          for (Element selectedElement : selectedElements)
           {
-            final Element selectedElement = selectedElements[i];
             if (ModelUtility.isDescendant(reportDefinition, selectedElement) == false)
             {
               selectionModel.remove(element);
@@ -102,19 +177,22 @@ public class ReportRenderContext
 
   private static final String AUTHENTICATION_STORE_PROPERTY = "authentication-store";
 
+  private PropertyChangeSupport propertyChangeSupport;
   private SharedElementRenderer sharedRenderer;
   private TreeSet<Integer> expandedNodes;
   private long changeTracker;
   private ZoomModel zoomModel;
   private MasterReport masterReportElement;
   private AbstractReportDefinition reportDefinition;
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
   private UndoManager undo;
   private ReportDataSchemaModel reportDataSchemaModel;
   private AutoInspectionRunner inspectionRunner;
   private NodeDeleteListener deleteListener;
   private HashMap<String, Object> properties;
   private boolean bandedContext;
+  private String tabName;
+  private Icon icon;
 
   public ReportRenderContext(final MasterReport masterReport)
   {
@@ -123,7 +201,7 @@ public class ReportRenderContext
 
   public ReportRenderContext(final MasterReport masterReportElement,
                              final AbstractReportDefinition report,
-                             final ReportRenderContext parentContext,
+                             final ReportDocumentContext parentContext,
                              final GlobalAuthenticationStore globalAuthenticationStore)
   {
     this(masterReportElement, report, parentContext, globalAuthenticationStore, false);
@@ -131,7 +209,7 @@ public class ReportRenderContext
 
   public ReportRenderContext(final MasterReport masterReportElement,
                              final AbstractReportDefinition report,
-                             final ReportRenderContext parentContext,
+                             final ReportDocumentContext parentContext,
                              final GlobalAuthenticationStore globalAuthenticationStore,
                              final boolean computationTarget)
   {
@@ -144,6 +222,7 @@ public class ReportRenderContext
       throw new NullPointerException();
     }
 
+    this.propertyChangeSupport = new PropertyChangeSupport(this);
 
     this.selectionModel = new DefaultReportSelectionModel();
     this.masterReportElement = masterReportElement;
@@ -152,6 +231,7 @@ public class ReportRenderContext
 
     this.reportDefinition = report;
     this.reportDefinition.addReportModelListener(deleteListener);
+    this.reportDefinition.addReportModelListener(new ReportNameUpdateHandler(this));
 
     this.expandedNodes = new TreeSet<Integer>();
 
@@ -192,16 +272,36 @@ public class ReportRenderContext
     }
     else
     {
-      this.sharedRenderer = parentContext.sharedRenderer;
-      this.properties = parentContext.properties;
+      this.sharedRenderer = parentContext.getSharedRenderer();
+      this.properties = parentContext.getProperties();
     }
 
+    prepareAuthenticationStore(globalAuthenticationStore);
+    prepareIcon();
+
+
+  }
+
+  private void prepareAuthenticationStore(final GlobalAuthenticationStore globalAuthenticationStore)
+  {
     final Object maybeAuthStore = getProperty(AUTHENTICATION_STORE_PROPERTY);
     if (maybeAuthStore == null)
     {
       setProperty(AUTHENTICATION_STORE_PROPERTY, new ReportAuthenticationStore(globalAuthenticationStore));
     }
+  }
 
+  private void prepareIcon()
+  {
+    final Image iconImage = reportDefinition.getElementType().getMetaData().getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_16x16);
+    if (iconImage != null)
+    {
+      icon = new ImageIcon(iconImage);
+    }
+    else
+    {
+      icon = null;
+    }
   }
 
   public boolean isBandedContext()
@@ -209,7 +309,7 @@ public class ReportRenderContext
     return bandedContext;
   }
 
-  private boolean computeBandedContext(final ReportRenderContext parentContext)
+  private boolean computeBandedContext(final ReportDocumentContext parentContext)
   {
     if (parentContext == null)
     {
@@ -231,7 +331,7 @@ public class ReportRenderContext
     }
 
     final RootLevelBand rlb = (RootLevelBand) parentSection;
-    for (int i = 0; i < rlb.getSubReportCount(); i+= 1)
+    for (int i = 0; i < rlb.getSubReportCount(); i += 1)
     {
       if (rlb.getSubReport(i) == reportDefinition)
       {
@@ -241,17 +341,12 @@ public class ReportRenderContext
     return false;
   }
 
-  public ReportLayouter getReportLayouter()
-  {
-    return sharedRenderer.getLayouter();
-  }
-
   public SharedElementRenderer getSharedRenderer()
   {
     return sharedRenderer;
   }
 
-  public ReportSelectionModel getSelectionModel()
+  public DocumentContextSelectionModel getSelectionModel()
   {
     return selectionModel;
   }
@@ -274,6 +369,11 @@ public class ReportRenderContext
   public MasterReport getMasterReportElement()
   {
     return masterReportElement;
+  }
+
+  public MasterReport getContextRoot()
+  {
+    return getMasterReportElement();
   }
 
   public AbstractReportDefinition getReportDefinition()
@@ -331,6 +431,11 @@ public class ReportRenderContext
     return properties.get(property);
   }
 
+  public HashMap<String, Object> getProperties()
+  {
+    return properties;
+  }
+
   public void addExpandedNode(final int aRow)
   {
     expandedNodes.add(aRow);
@@ -349,5 +454,72 @@ public class ReportRenderContext
   public AuthenticationStore getAuthenticationStore()
   {
     return (AuthenticationStore) getProperty(AUTHENTICATION_STORE_PROPERTY);
+  }
+
+  public String getTabName()
+  {
+    return tabName;
+  }
+
+  public void setTabName(final String tabName)
+  {
+    String oldName = this.tabName;
+    if (ObjectUtilities.equal(oldName, tabName))
+    {
+      return;
+    }
+
+    this.tabName = tabName;
+    firePropertyChange("tabName", oldName, tabName);
+  }
+
+  public Icon getIcon()
+  {
+    return icon;
+  }
+
+  public String getDocumentFile()
+  {
+    return (String) masterReportElement.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "report-save-path");
+  }
+
+  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+  }
+
+  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+  }
+
+  public void removePropertyChangeListener(final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.removePropertyChangeListener(listener);
+  }
+
+  public void addPropertyChangeListener(final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.addPropertyChangeListener(listener);
+  }
+
+  protected void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue)
+  {
+    propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+  }
+
+  public void onDocumentActivated()
+  {
+    getInspectionRunner().startTimer();
+  }
+
+  public void addInspectionListener(final InspectionResultListener listener)
+  {
+    getInspectionRunner().addInspectionListener(listener);
+  }
+
+  public void removeInspectionListener(final InspectionResultListener listener)
+  {
+    getInspectionRunner().removeInspectionListener(listener);
   }
 }

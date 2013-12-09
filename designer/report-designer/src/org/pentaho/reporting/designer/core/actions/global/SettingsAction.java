@@ -57,7 +57,7 @@ public final class SettingsAction extends AbstractDesignerContextAction
       ce.consume();
     }
 
-    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
     final SettingsDialog settingsDialog;
     if (window instanceof Frame)
     {

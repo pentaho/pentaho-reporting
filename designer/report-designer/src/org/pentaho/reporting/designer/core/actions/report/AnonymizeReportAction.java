@@ -18,13 +18,11 @@
 package org.pentaho.reporting.designer.core.actions.report;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Random;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.Anonymizer;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -39,7 +37,6 @@ import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCan
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
-import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 
 public class AnonymizeReportAction extends AbstractReportContextAction
@@ -113,17 +110,17 @@ public class AnonymizeReportAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getMasterReportElement()));
+    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getContextRoot()));
     thread.setName("AnonymizeReport-Worker");// NON-NLS
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
 
   }
 }

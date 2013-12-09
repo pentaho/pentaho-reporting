@@ -61,7 +61,7 @@ public final class ShowAddDataSourcePopupAction extends AbstractReportContextAct
     }
     else
     {
-      final Component parent = reportDesignerContext1.getParent();
+      final Component parent = reportDesignerContext1.getView().getParent();
       menu.show(parent, 0, 0);
     }
   }

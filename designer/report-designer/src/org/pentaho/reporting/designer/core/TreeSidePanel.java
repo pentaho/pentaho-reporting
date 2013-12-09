@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.editor.ElementPropertiesPanel;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.AbstractReportTree;
 import org.pentaho.reporting.designer.core.editor.structuretree.StructureTreePanel;
 
@@ -100,7 +100,7 @@ public class TreeSidePanel extends JComponent
       {
         return;
       }
-      final ReportRenderContext activeContext = context.getActiveContext();
+      final ReportDocumentContext activeContext = context.getActiveContext();
       if (activeContext == null)
       {
         return;
@@ -118,7 +118,7 @@ public class TreeSidePanel extends JComponent
 
 
     protected void refreshTabPanel(final ElementPropertiesPanel attributeEditorPanel,
-                                         final ReportRenderContext activeContext,
+                                         final ReportDocumentContext activeContext,
                                          final boolean attributeCard,
                                          final boolean datasourceCard,
                                          final boolean expressionCard)

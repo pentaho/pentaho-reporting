@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 
 public class CrosstabRenderer extends AbstractElementRenderer
 {
   public CrosstabRenderer(final CrosstabGroup group,
-                          final ReportRenderContext renderContext)
+                          final ReportDocumentContext renderContext)
   {
     super(group, renderContext);
   }

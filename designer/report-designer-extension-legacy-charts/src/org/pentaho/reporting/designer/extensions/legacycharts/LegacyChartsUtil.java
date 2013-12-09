@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 
 import org.pentaho.plugin.jfreereport.reportcharts.AbstractChartExpression;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.AttributeExpressionEditUndoEntry;
@@ -63,13 +63,13 @@ public class LegacyChartsUtil
   public static void performEdit(final Element chartElement,
                                  final ReportDesignerContext context)
   {
-    final ReportRenderContext activeContext = context.getActiveContext();
+    final ReportDocumentContext activeContext = context.getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final LegacyChartEditorDialog dialog;
     if (window instanceof JDialog)

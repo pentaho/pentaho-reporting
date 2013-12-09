@@ -18,13 +18,14 @@
 package org.pentaho.reporting.designer.core.editor.styles;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
 import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
@@ -106,9 +107,11 @@ public class StyleEditorPanel extends SidePanel
     col.sizeWidthToFit();
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
-    setData(model.getSelectedVisualElements());
+    List<Element> selectedElementsOfType = model.getSelectedElementsOfType(Element.class);
+    final Element[] visualElements = selectedElementsOfType.toArray(new Element[selectedElementsOfType.size()]);
+    setData(visualElements);
   }
 
   public Element[] getData()
@@ -139,7 +142,7 @@ public class StyleEditorPanel extends SidePanel
     headerPanel.setEnabled(enabled);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     table.stopEditing();
     

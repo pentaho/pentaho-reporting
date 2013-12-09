@@ -17,8 +17,16 @@
 
 package org.pentaho.reporting.designer.core;
 
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
+import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
+
+import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
+import org.pentaho.ui.xul.XulComponent;
+import org.pentaho.ui.xul.XulException;
+import org.pentaho.ui.xul.containers.XulMenupopup;
 
 public interface ReportDesignerView
 {
@@ -66,4 +74,16 @@ public interface ReportDesignerView
   public void redrawAll();
 
   public void showDataTree();
+
+  public Component getParent();
+
+  public JPopupMenu getPopupMenu(final String id);
+
+  public JComponent getToolBar(final String id);
+
+  public <T extends JComponent> T getComponent(String id, Class<T> type);
+  public <T extends XulComponent> T getXulComponent(String id, Class<T> type);
+
+  ActionSwingMenuitem createMenuItem(Action action);
+  XulMenupopup createPopupMenu (String label, XulComponent parent) throws XulException;
 }

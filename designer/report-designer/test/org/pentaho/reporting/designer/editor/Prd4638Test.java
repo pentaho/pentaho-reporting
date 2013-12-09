@@ -60,7 +60,7 @@ public class Prd4638Test extends TestCase
     final ReportDesignerContext rdc = new TestReportDesignerContext();
     rdc.addMasterReport(report);
     final ReportRenderContext activeContext = rdc.getReportRenderContext(0);
-    rdc.setActiveContext(activeContext);
+    rdc.setActiveDocument(activeContext);
     assertNotNull(activeContext);
 
     // use the style editor panel in isolation to make the whole process debuggable ..

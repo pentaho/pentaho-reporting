@@ -23,8 +23,9 @@ import javax.swing.Action;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -53,13 +54,13 @@ public class EditSubReportAction extends AbstractElementSelectionAction
       return;
     }
 
-    final ReportRenderContext activeReportContext = getActiveContext();
+    final ReportDocumentContext activeReportContext = getActiveContext();
     if (activeReportContext == null)
     {
       return;
     }
 
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       return;
@@ -79,7 +80,7 @@ public class EditSubReportAction extends AbstractElementSelectionAction
         final ReportRenderContext rrc = designerContext.getReportRenderContext(i);
         if (rrc.getReportDefinition() == element)
         {
-          designerContext.setActiveContext(rrc);
+          designerContext.setActiveDocument(rrc);
           return;
         }
       }

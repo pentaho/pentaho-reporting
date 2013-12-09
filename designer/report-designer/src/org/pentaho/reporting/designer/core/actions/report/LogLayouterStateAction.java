@@ -50,7 +50,7 @@ public class LogLayouterStateAction extends AbstractReportContextAction implemen
   {
     try
     {
-      final LogicalPageBox layout = getActiveContext().getReportLayouter().layout();
+      final LogicalPageBox layout = getActiveContext().getSharedRenderer().getLayouter().layout();
       ModelPrinter.INSTANCE.print(layout);
     }
     catch (Exception ex)

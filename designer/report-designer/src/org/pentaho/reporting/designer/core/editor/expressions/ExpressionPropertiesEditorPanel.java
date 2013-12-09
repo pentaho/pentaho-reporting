@@ -18,13 +18,13 @@
 package org.pentaho.reporting.designer.core.editor.expressions;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
 import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
@@ -83,7 +83,7 @@ public class ExpressionPropertiesEditorPanel extends SidePanel
     table.setReportDesignerContext(newContext);
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
     if (model == null)
     {
@@ -91,21 +91,12 @@ public class ExpressionPropertiesEditorPanel extends SidePanel
     }
     else
     {
-      final Object[] selectedElements = model.getSelectedElements();
-      final ArrayList<Expression> filter = new ArrayList<Expression>();
-      for (int i = 0; i < selectedElements.length; i++)
-      {
-        final Object element = selectedElements[i];
-        if (element instanceof Expression)
-        {
-          filter.add((Expression) element);
-        }
-      }
+      final List<Expression> filter = model.getSelectedElementsOfType(Expression.class);
       setData(filter.toArray(new Expression[filter.size()]));
     }
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     stopEditing();
 

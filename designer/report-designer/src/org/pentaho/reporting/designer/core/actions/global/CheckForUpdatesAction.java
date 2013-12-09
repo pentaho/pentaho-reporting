@@ -58,7 +58,7 @@ public final class CheckForUpdatesAction extends AbstractDesignerContextAction
     try
     {
       Class.forName("org.pentaho.versionchecker.VersionChecker");
-      VersionCheckerUtility.checkVersion(getReportDesignerContext().getParent(), true, false);
+      VersionCheckerUtility.checkVersion(getReportDesignerContext().getView().getParent(), true, false);
     }
     catch (Throwable t)
     {

@@ -23,7 +23,7 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
@@ -108,10 +108,10 @@ public class AutoInspectionRunner implements ReportModelListener, InspectionResu
 
   private final Timer timer;
   private AutoInspectionRunner.InspectionTask lastTask;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private EventListenerList eventListeners;
 
-  public AutoInspectionRunner(final ReportRenderContext reportRenderContext)
+  public AutoInspectionRunner(final ReportDocumentContext reportRenderContext)
   {
     if (reportRenderContext == null)
     {
@@ -171,7 +171,7 @@ public class AutoInspectionRunner implements ReportModelListener, InspectionResu
     }
   }
 
-  public ReportRenderContext getReportRenderContext()
+  protected ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }

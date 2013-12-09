@@ -21,7 +21,7 @@ import java.util.HashSet;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
@@ -48,7 +48,7 @@ public class DuplicateFieldInspection implements Inspection
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();

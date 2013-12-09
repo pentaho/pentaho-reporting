@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 
 /**
@@ -40,10 +40,10 @@ public class EditReportConfigUndoEntry implements UndoEntry
     this.newConfig = newConfig;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final HierarchicalConfiguration configuration =
-        (HierarchicalConfiguration) renderContext.getMasterReportElement().getConfiguration();
+        (HierarchicalConfiguration) renderContext.getContextRoot().getConfiguration();
 
     final Iterator newEntries = newConfig.entrySet().iterator();
     while (newEntries.hasNext())
@@ -60,13 +60,13 @@ public class EditReportConfigUndoEntry implements UndoEntry
       final String o = (String) entry.getKey();
       configuration.setConfigProperty(o, (String) entry.getValue());
     }
-    renderContext.getMasterReportElement().notifyNodePropertiesChanged();
+    renderContext.getContextRoot().notifyNodePropertiesChanged();
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final HierarchicalConfiguration configuration =
-        (HierarchicalConfiguration) renderContext.getMasterReportElement().getConfiguration();
+        (HierarchicalConfiguration) renderContext.getContextRoot().getConfiguration();
 
     final Iterator newEntries = oldConfig.entrySet().iterator();
     while (newEntries.hasNext())
@@ -83,7 +83,7 @@ public class EditReportConfigUndoEntry implements UndoEntry
       final String o = (String) entry.getKey();
       configuration.setConfigProperty(o, (String) entry.getValue());
     }
-    renderContext.getMasterReportElement().notifyNodePropertiesChanged();
+    renderContext.getContextRoot().notifyNodePropertiesChanged();
   }
 
   public UndoEntry merge(final UndoEntry newEntry)

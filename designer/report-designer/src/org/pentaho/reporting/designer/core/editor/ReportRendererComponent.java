@@ -353,7 +353,7 @@ public class ReportRendererComponent extends JComponent
 
   }
 
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private RootBandRenderingModel renderingModel;
 
   private HorizontalLinealComponent horizontalLinealComponent;
@@ -368,7 +368,8 @@ public class ReportRendererComponent extends JComponent
   private JComponent designView;
   private JComponent previewView;
 
-  public ReportRendererComponent(final ReportDesignerContext designerContext, final ReportRenderContext renderContext)
+  public ReportRendererComponent(final ReportDesignerContext designerContext,
+                                 final ReportRenderContext renderContext)
   {
     if (renderContext == null)
     {
@@ -591,7 +592,7 @@ public class ReportRendererComponent extends JComponent
       if (allRenderer instanceof RootBandRenderer)
       {
         final RootBandRenderer rootRenderer = (RootBandRenderer)allRenderer;
-        final ReportRenderContext context = rootRenderer.getReportRenderContext();
+        final ReportDocumentContext context = rootRenderer.getReportRenderContext();
         final ReportDefinition reportDefinition = context.getReportDefinition();
 
         // Increase crosstab canvas height during a drag-n-drop operation of a new crosstab
@@ -665,7 +666,7 @@ public class ReportRendererComponent extends JComponent
     repaint();
   }
 
-  public ReportRenderContext getRenderContext()
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }

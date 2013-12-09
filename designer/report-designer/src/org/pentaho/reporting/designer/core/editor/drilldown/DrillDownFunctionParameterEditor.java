@@ -35,7 +35,7 @@ import org.pentaho.openformula.ui.FunctionParameterContext;
 import org.pentaho.openformula.ui.ParameterUpdateEvent;
 import org.pentaho.openformula.ui.ParameterUpdateListener;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.ReportDesignerFunctionParameterEditor;
 
 public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionParameterEditor
@@ -202,7 +202,7 @@ public class DrillDownFunctionParameterEditor implements ReportDesignerFunctionP
     {
       throw new IllegalStateException();
     }
-    final ReportRenderContext activeContext = designerContext.getActiveContext();
+    final ReportDocumentContext activeContext = designerContext.getActiveContext();
     if (activeContext == null)
     {
       return new String[0];

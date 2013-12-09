@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.LocationInfo;
@@ -54,7 +54,7 @@ public class InvalidElementReferenceInspection extends AbstractStructureInspecti
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportRenderContext reportRenderContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)
@@ -62,7 +62,7 @@ public class InvalidElementReferenceInspection extends AbstractStructureInspecti
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final Expression expression,

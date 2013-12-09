@@ -44,7 +44,7 @@ public final class SystemInformationAction extends AbstractDesignerContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final SystemInformationDialog dialog;
     if (window instanceof JDialog)

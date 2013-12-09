@@ -51,7 +51,7 @@ public class NextTabAction extends AbstractDesignerContextAction
     final int index = context.findActiveContextIndex();
     if (index != -1 && index != context.getReportRenderContextCount() - 1)
     {
-      context.setActiveContext(context.getReportRenderContext(index + 1));
+      context.setActiveDocument(context.getReportRenderContext(index + 1));
     }
   }
 }

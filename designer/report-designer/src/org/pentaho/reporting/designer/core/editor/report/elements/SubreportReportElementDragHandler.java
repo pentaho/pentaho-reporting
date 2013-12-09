@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
@@ -71,7 +72,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
 
   protected Element createElement(final ElementMetaData elementMetaData,
                                   final String fieldName,
-                                  final ReportRenderContext context) throws InstantiationException
+                                  final ReportDocumentContext context) throws InstantiationException
   {
     // Create a subreport element
     final ElementType type = elementMetaData.create();
@@ -128,7 +129,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
 
         if (result == 0)
         {
-          final ReportRenderContext context = dragContext.getRenderContext();
+          final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
               new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
@@ -138,7 +139,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
         {
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
 
-          final ReportRenderContext context = dragContext.getRenderContext();
+          final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
               new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
@@ -147,7 +148,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
       }
       else
       {
-        final ReportRenderContext context = dragContext.getRenderContext();
+        final ReportDocumentContext context = dragContext.getRenderContext();
         final UndoManager undo = context.getUndo();
         undo.addChange(Messages.getString("SubreportReportElementDragHandler.UndoEntry"),
             new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
@@ -155,7 +156,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
       }
 
       final ReportDesignerContext designerContext = dragContext.getDesignerContext();
-      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
       final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
 
       try
@@ -167,7 +168,7 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
         subReport.setResourceBundleFactory(rbf);
 
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
-        designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
+        designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
       }
       catch (ReportDataFactoryException e)
       {

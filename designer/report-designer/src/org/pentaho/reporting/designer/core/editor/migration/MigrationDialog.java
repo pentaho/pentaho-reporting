@@ -37,7 +37,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.report.SaveReportAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.designtime.compat.CompatibilityConverter;
@@ -49,7 +49,7 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class MigrationDialog extends CommonDialog
 {
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private JLabel warningLabel;
   private JEditorPane textArea;
   private int fromVersion;
@@ -132,13 +132,13 @@ public class MigrationDialog extends CommonDialog
   }
 
   public void performMigration(final ReportDesignerContext designerContext,
-                               final ReportRenderContext reportRenderContext)
+                               final ReportDocumentContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
 
     toVersion = ClassicEngineBoot.computeCurrentVersionId();
 
-    final MasterReport masterReportElement = this.reportRenderContext.getMasterReportElement();
+    final MasterReport masterReportElement = this.reportRenderContext.getContextRoot();
     final Integer compatibilityLevel = masterReportElement.getCompatibilityLevel();
     if (compatibilityLevel == null)
     {
@@ -161,7 +161,7 @@ public class MigrationDialog extends CommonDialog
     }
 
     final CompatibilityUpdater updater = new CompatibilityUpdater();
-    updater.performUpdate(reportRenderContext.getMasterReportElement());
+    updater.performUpdate(reportRenderContext.getContextRoot());
   }
 
   protected boolean validateInputs(final boolean onConfirm)

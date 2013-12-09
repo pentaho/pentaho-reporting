@@ -21,6 +21,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 
 public abstract class AbstractReportContextAction extends AbstractDesignerContextAction
@@ -52,7 +53,7 @@ public abstract class AbstractReportContextAction extends AbstractDesignerContex
     changeHandler = new ActiveContextChangeHandler();
   }
 
-  protected ReportRenderContext getActiveContext()
+  protected ReportDocumentContext getActiveContext()
   {
     if (getReportDesignerContext() == null)
     {
@@ -66,7 +67,7 @@ public abstract class AbstractReportContextAction extends AbstractDesignerContex
     if (oldContext != null)
     {
       oldContext.removePropertyChangeListener(this.changeHandler);
-      final ReportRenderContext oldActiveContext = getActiveContext();
+      final ReportDocumentContext oldActiveContext = getActiveContext();
       updateActiveContext(oldActiveContext, null);
     }
     super.updateDesignerContext(oldContext, newContext);
@@ -75,6 +76,12 @@ public abstract class AbstractReportContextAction extends AbstractDesignerContex
       newContext.addPropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, changeHandler);
       updateActiveContext(null, newContext.getActiveContext());
     }
+  }
+
+  protected void updateActiveContext(final ReportDocumentContext oldContext,
+                                     final ReportDocumentContext newContext)
+  {
+    setEnabled(newContext != null);
   }
 
   protected void updateActiveContext(final ReportRenderContext oldContext,

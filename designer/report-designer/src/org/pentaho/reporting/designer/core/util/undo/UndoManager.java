@@ -25,7 +25,7 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
 public class UndoManager implements Serializable
 {
@@ -161,7 +161,7 @@ public class UndoManager implements Serializable
     return name;
   }
   
-  public void undo(final ReportRenderContext context)
+  public void undo(final ReportDocumentContext context)
   {
     if (offset == 0)
     {
@@ -175,7 +175,7 @@ public class UndoManager implements Serializable
     fireChangeEvent();
   }
 
-  public void redo(final ReportRenderContext context)
+  public void redo(final ReportDocumentContext context)
   {
     if (undos.isEmpty())
     {

@@ -23,12 +23,10 @@ import javax.swing.JOptionPane;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
-import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
@@ -59,7 +57,7 @@ public class PublishToServerTask implements AuthenticatedServerTask
 
   public void run()
   {
-    final MasterReport report = reportDesignerContext.getActiveContext().getMasterReportElement();
+    final MasterReport report = reportDesignerContext.getActiveContext().getContextRoot();
     final DocumentMetaData metaData = report.getBundle().getMetaData();
 
     try

@@ -19,9 +19,10 @@ package org.pentaho.reporting.designer.core.util.undo;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -48,7 +49,7 @@ public class ElementFormatUndoEntry extends MassElementStyleUndoEntry
     this.newExpressions = newExpressions;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     super.undo(renderContext);
     final AbstractReportDefinition reportDefinition = renderContext.getReportDefinition();
@@ -67,7 +68,7 @@ public class ElementFormatUndoEntry extends MassElementStyleUndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     super.redo(renderContext);
     final AbstractReportDefinition reportDefinition = renderContext.getReportDefinition();
@@ -141,6 +142,11 @@ public class ElementFormatUndoEntry extends MassElementStyleUndoEntry
       return Collections.EMPTY_MAP;
     }
 
+
+    public ElementFormatUndoEntry process(final List<Element> visualElements)
+    {
+      return process(visualElements.toArray(new Element[visualElements.size()]));
+    }
 
     public ElementFormatUndoEntry process(final Element[] visualElements)
     {

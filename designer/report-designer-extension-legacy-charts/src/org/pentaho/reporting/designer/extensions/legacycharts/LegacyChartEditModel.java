@@ -26,7 +26,6 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import org.jfree.chart.JFreeChart;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -235,7 +234,6 @@ public class LegacyChartEditModel
   private DefaultComboBoxModel primaryDataSourcesModel;
   private DefaultComboBoxModel secondaryDataSourcesModel;
   private DefaultComboBoxModel chartExpressionsModel;
-  private ReportRenderContext activeContext;
 
   public LegacyChartEditModel()
   {
@@ -269,16 +267,6 @@ public class LegacyChartEditModel
   public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
   {
     propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
-  }
-
-  public ReportRenderContext getActiveContext()
-  {
-    return activeContext;
-  }
-
-  public void setActiveContext(final ReportRenderContext activeContext)
-  {
-    this.activeContext = activeContext;
   }
 
   public Expression getChartExpression()

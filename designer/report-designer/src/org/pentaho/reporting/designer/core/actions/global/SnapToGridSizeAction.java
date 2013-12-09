@@ -51,7 +51,7 @@ public final class SnapToGridSizeAction extends AbstractDesignerContextAction
   public void actionPerformed(final ActionEvent e)
   {
     final GridSizeDialog spinnerDialog;
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     if (window instanceof JDialog)
     {

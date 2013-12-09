@@ -38,7 +38,7 @@ import javax.swing.table.TableCellEditor;
 
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
@@ -140,10 +140,10 @@ public class StructureFunctionCellEditor implements TableCellEditor
 
 
   private JPanel carrierPanel;
-  private JComboBox expressionEditor;
+  private JComboBox<ExpressionMetaData> expressionEditor;
   private EventListenerList eventListenerList;
   private ReportDesignerContext designerContext;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
   private DefaultDataAttributeContext dataAttributeContext;
   private boolean initialized;
@@ -156,7 +156,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
     final EllipsisButton ellipsisButton = new EllipsisButton("...");
     ellipsisButton.addActionListener(new ExtendedEditorAction());
 
-    expressionEditor = new SmartComboBox();
+    expressionEditor = new SmartComboBox<ExpressionMetaData>();
     expressionEditor.setEditable(false);
     expressionEditor.setEditor(new ValuePassThroughCellEditor(expressionEditor, new ExpressionListCellRenderer()));
     expressionEditor.setRenderer(new ExpressionListCellRenderer());
@@ -178,7 +178,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
       return;
     }
     initialized = true;
-    final DefaultComboBoxModel model = new DefaultComboBoxModel();
+    final DefaultComboBoxModel<ExpressionMetaData> model = new DefaultComboBoxModel<ExpressionMetaData>();
     model.addElement(null);
 
     final ExpressionMetaData[] datas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
@@ -206,12 +206,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
     expressionEditor.setModel(model);
   }
 
-  public ReportRenderContext getRenderContext()
-  {
-    return renderContext;
-  }
-
-  public void setRenderContext(final ReportRenderContext renderContext)
+  public void setRenderContext(final ReportDocumentContext renderContext)
   {
     this.renderContext = renderContext;
   }

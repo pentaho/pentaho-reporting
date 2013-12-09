@@ -30,7 +30,7 @@ import javax.swing.JFrame;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.AlignmentOptionsDialog;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -57,13 +57,13 @@ public final class PageSetupAction extends AbstractReportContextAction
   public void actionPerformed(final ActionEvent e)
   {
 
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final MasterReport report = activeContext.getMasterReportElement();
+    final MasterReport report = activeContext.getContextRoot();
     final PageDefinition originalPageDef = report.getPageDefinition();
 
     if ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty // NON-NLS
@@ -71,7 +71,7 @@ public final class PageSetupAction extends AbstractReportContextAction
     {
       final GuiContext context = new DefaultGuiContext();
       final PageSetupDialog dialog;
-      final Window proxy = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+      final Window proxy = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
       if (proxy instanceof Frame)
       {
         dialog = new PageSetupDialog(context, (Frame) proxy);
@@ -125,7 +125,7 @@ public final class PageSetupAction extends AbstractReportContextAction
 
   private void alignElements(final PageDefinition original)
   {
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final AlignmentOptionsDialog dialog;
     if (window instanceof JDialog)

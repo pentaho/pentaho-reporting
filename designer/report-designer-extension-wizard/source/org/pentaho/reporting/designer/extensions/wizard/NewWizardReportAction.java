@@ -56,7 +56,7 @@ public class NewWizardReportAction extends AbstractDesignerContextAction
     {
       return;
     }
-    final Component parent = designerContext.getParent();
+    final Component parent = designerContext.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final EmbeddedWizard dialog;
     if (window instanceof JDialog)

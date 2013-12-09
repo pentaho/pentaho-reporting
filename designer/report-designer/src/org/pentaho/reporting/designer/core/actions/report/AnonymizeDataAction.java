@@ -22,9 +22,9 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.Anonymizer;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -39,7 +39,7 @@ public class AnonymizeDataAction extends AbstractElementSelectionAction
   {
     private Anonymizer anonymizer;
 
-    private AnonymizeDataSourceTask(final ReportRenderContext activeContext)
+    private AnonymizeDataSourceTask(final ReportDocumentContext activeContext)
     {
       super(activeContext);
       this.anonymizer = new Anonymizer();
@@ -66,7 +66,7 @@ public class AnonymizeDataAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel model = getSelectionModel();
+    final DocumentContextSelectionModel model = getSelectionModel();
     if (model == null)
     {
       setEnabled(false);
@@ -96,7 +96,7 @@ public class AnonymizeDataAction extends AbstractElementSelectionAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -106,6 +106,6 @@ public class AnonymizeDataAction extends AbstractElementSelectionAction
     thread.setName("AnonymizeDataSource-Worker");
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("AnonymizeDataAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("AnonymizeDataAction.TaskTitle"));
   }
 }

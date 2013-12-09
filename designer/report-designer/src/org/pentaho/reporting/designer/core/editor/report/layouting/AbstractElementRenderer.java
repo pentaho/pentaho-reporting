@@ -30,7 +30,7 @@ import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.DesignerPageDrawable;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -97,7 +97,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   private SharedElementRenderer sharedRenderer;
   private Section element;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private EventListenerList listenerList;
   private Rectangle2D computedBounds;
   private BreakPositionsList verticalEdgePositions;
@@ -106,7 +106,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
   private Map<InstanceID, Element> elementsById;
 
   protected AbstractElementRenderer(final Section element,
-                                    final ReportRenderContext reportRenderContext)
+                                    final ReportDocumentContext reportRenderContext)
   {
     if (element == null)
     {
@@ -158,7 +158,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     sharedRenderer.removeChangeListener(sharedLayoutUpdateHandler);
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
@@ -328,7 +328,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     return true;
   }
 
-  public void handleError(final ReportDesignerContext designerContext, final ReportRenderContext reportContext)
+  public void handleError(final ReportDesignerContext designerContext, final ReportDocumentContext reportContext)
   {
     if (sharedRenderer.isMigrationError())
     {

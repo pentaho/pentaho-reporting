@@ -24,7 +24,7 @@ import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 
 /**
@@ -50,7 +50,7 @@ public final class UndoAction extends AbstractReportContextAction implements Cha
    */
   public void stateChanged(final ChangeEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -66,7 +66,7 @@ public final class UndoAction extends AbstractReportContextAction implements Cha
     }
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     super.updateActiveContext(oldContext, newContext);
     if (oldContext != null)
@@ -86,7 +86,7 @@ public final class UndoAction extends AbstractReportContextAction implements Cha
   public void actionPerformed(final ActionEvent e)
   {
 
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;

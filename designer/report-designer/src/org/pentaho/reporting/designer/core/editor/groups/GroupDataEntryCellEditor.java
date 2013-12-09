@@ -46,7 +46,7 @@ import javax.swing.text.Position;
 import javax.swing.text.Segment;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
@@ -201,7 +201,7 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
   private JTextField textField;
   private JButton ellipsisButton;
   private EventListenerList eventListenerList;
-  private ReportRenderContext reportContext;
+  private ReportDocumentContext reportContext;
   private GroupDataEntry groupDataEntry;
 
   public GroupDataEntryCellEditor()
@@ -403,12 +403,12 @@ public class GroupDataEntryCellEditor extends JPanel implements TableCellEditor
     return this;
   }
 
-  public ReportRenderContext getReportContext()
+  public ReportDocumentContext getReportContext()
   {
     return reportContext;
   }
 
-  public void setReportContext(final ReportRenderContext reportContext)
+  public void setReportContext(final ReportDocumentContext reportContext)
   {
     this.reportContext = reportContext;
   }

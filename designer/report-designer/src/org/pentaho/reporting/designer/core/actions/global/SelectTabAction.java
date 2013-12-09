@@ -60,6 +60,6 @@ public class SelectTabAction extends AbstractDesignerContextAction
     {
       return;
     }
-    designerContext.setActiveContext(designerContext.getReportRenderContext(tabIndex));
+    designerContext.setActiveDocument(designerContext.getReportRenderContext(tabIndex));
   }
 }

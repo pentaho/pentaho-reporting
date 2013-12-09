@@ -20,7 +20,7 @@ package org.pentaho.reporting.designer.core.editor.groups;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Group;
@@ -46,12 +46,12 @@ public class EditGroupsUndoEntry implements UndoEntry
     this.newGroupData = newGroupData;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     applyGroupData(renderContext.getReportDefinition(), oldGroupData);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     applyGroupData(renderContext.getReportDefinition(), newGroupData);
   }

@@ -18,6 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report.drag;
 
 import java.awt.geom.Point2D;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.editor.report.snapping.SnapPositionsModel;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
@@ -33,7 +34,7 @@ public class ResizeTopDragOperation extends AbstractMouseDragOperation
 {
   private long snapThreshold;
 
-  public ResizeTopDragOperation(final Element[] selectedVisualElements,
+  public ResizeTopDragOperation(final List<Element> selectedVisualElements,
                                 final Point2D originPoint,
                                 final SnapPositionsModel horizontalSnapModel,
                                 final SnapPositionsModel verticalSnapModel)

@@ -19,7 +19,7 @@ package org.pentaho.reporting.designer.core.inspections;
 
 import java.awt.BorderLayout;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 
 /**
@@ -45,15 +45,15 @@ public class InspectionSidePanePanel extends SidePanel
     autoInspectionPanel.setEnabled(enabled);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     if (oldContext != null)
     {
-      oldContext.getInspectionRunner().removeInspectionListener(autoInspectionPanel.getResultHandler());
+      oldContext.removeInspectionListener(autoInspectionPanel.getResultHandler());
     }
     if (newContext != null)
     {
-      newContext.getInspectionRunner().addInspectionListener(autoInspectionPanel.getResultHandler());
+      newContext.addInspectionListener(autoInspectionPanel.getResultHandler());
       setEnabled(true);
     }
     else

@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.format;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
@@ -77,6 +78,11 @@ public class EditableStyleSheet extends ElementStyleSheet
       final StyleKey propertyKey = propertyKeys[i];
       parentValues.put(propertyKey, getStyleProperty(propertyKey));
     }
+  }
+
+  public static EditableStyleSheet create(final List<Element> visualElements)
+  {
+    return create(visualElements.toArray(new Element[visualElements.size()]));
   }
 
   public static EditableStyleSheet create(final Element... visualElements)

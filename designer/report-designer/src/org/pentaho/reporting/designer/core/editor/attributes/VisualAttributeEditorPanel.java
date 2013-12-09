@@ -18,13 +18,14 @@
 package org.pentaho.reporting.designer.core.editor.attributes;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
 import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
@@ -36,11 +37,6 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.designtime.swing.DefaultTableHeaderRenderer;
 
-/**
- * Todo: Document me!
- *
- * @author Thomas Morgner
- */
 public class VisualAttributeEditorPanel extends SidePanel
 {
   protected static final Element[] EMPTY_DATA = new Element[0];
@@ -129,13 +125,14 @@ public class VisualAttributeEditorPanel extends SidePanel
     headerPanel.setEnabled(enabled);
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
-    final Element[] selectedElements = model.getSelectedVisualElements();
-    setData(selectedElements);
+    List<Element> selectedElementsOfType = model.getSelectedElementsOfType(Element.class);
+    final Element[] visualElements = selectedElementsOfType.toArray(new Element[selectedElementsOfType.size()]);
+    setData(visualElements);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     table.stopEditing();
     

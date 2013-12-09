@@ -51,7 +51,7 @@ public class QuitAction extends AbstractDesignerContextAction
   {
     final ReportDesignerContext context = getReportDesignerContext();
     final WorkspaceSettings theWorkspaceSettings = WorkspaceSettings.getInstance();
-    theWorkspaceSettings.setBounds(context.getParent().getBounds());
+    theWorkspaceSettings.setBounds(context.getView().getParent().getBounds());
     final int contextCount = context.getReportRenderContextCount();
     final ReportRenderContext[] contextArray = new ReportRenderContext[contextCount];
     for (int i = 0; i < contextCount; i++)

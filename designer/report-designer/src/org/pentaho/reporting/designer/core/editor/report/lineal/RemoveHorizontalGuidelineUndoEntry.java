@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report.lineal;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.GuideLine;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -38,14 +38,14 @@ public class RemoveHorizontalGuidelineUndoEntry implements UndoEntry
     this.guideLine = guideLine;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);
     linealModel.addGuidLine(guideLine);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition abstractReportDefinition = renderContext.getReportDefinition();
     final LinealModel linealModel = ModelUtility.getHorizontalLinealModel(abstractReportDefinition);

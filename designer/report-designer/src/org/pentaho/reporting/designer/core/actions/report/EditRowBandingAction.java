@@ -27,7 +27,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.format.RowBandingDialog;
 import org.pentaho.reporting.designer.core.util.undo.ExpressionAddedUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ExpressionEditUndoEntry;
@@ -55,14 +55,14 @@ public class EditRowBandingAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final RowBandingDialog dialog;
     if (window instanceof JDialog)
@@ -106,7 +106,7 @@ public class EditRowBandingAction extends AbstractReportContextAction
     }
   }
 
-  private RowBandingFunction findRowbandingFunction(final ReportRenderContext activeContext)
+  private RowBandingFunction findRowbandingFunction(final ReportDocumentContext activeContext)
   {
     final Expression[] expressions = activeContext.getReportDefinition().getExpressions().getExpressions();
     for (int i = 0; i < expressions.length; i++)

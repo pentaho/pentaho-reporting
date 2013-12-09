@@ -24,9 +24,9 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.DataSourceEditUndoEntry;
@@ -62,7 +62,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       setEnabled(false);
@@ -98,7 +98,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -150,7 +150,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
     final DataFactory storedFactory = dataFactory.derive();
     if (dataSourcePlugin.canHandle(dataFactory))
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       final AbstractReportDefinition report = activeContext.getReportDefinition();
       final boolean editingActiveQuery = contains(report.getQuery(), dataFactory.getQueryNames());
 

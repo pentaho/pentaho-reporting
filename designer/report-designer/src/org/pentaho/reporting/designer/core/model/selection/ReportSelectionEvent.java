@@ -17,31 +17,15 @@
 
 package org.pentaho.reporting.designer.core.model.selection;
 
-import java.util.EventObject;
-
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
-public class ReportSelectionEvent extends EventObject
+public class ReportSelectionEvent extends DocumentSelectionEvent
 {
-  private Object element;
-
-  public ReportSelectionEvent(final ReportSelectionModel source,
-                              final Object element)
+  public ReportSelectionEvent(final DocumentContextSelectionModel source, final Object element)
   {
-    super(source);
-    this.element = element;
+    super(source, element);
   }
 
-  public ReportSelectionModel getModel()
+  public DocumentContextSelectionModel  getModel()
   {
-    return (ReportSelectionModel) getSource();
-  }
-
-  public Object getElement()
-  {
-    return element;
+    return (DocumentContextSelectionModel ) getSource();
   }
 }

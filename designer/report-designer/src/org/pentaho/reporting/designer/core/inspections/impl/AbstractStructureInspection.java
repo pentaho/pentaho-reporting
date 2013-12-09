@@ -20,7 +20,7 @@ package org.pentaho.reporting.designer.core.inspections.impl;
 import java.util.Map;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
@@ -47,7 +47,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();
@@ -86,7 +86,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   public void traverseSection(final ReportDesignerContext designerContext,
-                              final ReportRenderContext reportRenderContext,
+                              final ReportDocumentContext reportRenderContext,
                               final InspectionResultListener resultHandler,
                               final String[] columnNames,
                               final Section section)
@@ -109,7 +109,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                         final ReportRenderContext reportRenderContext,
+                                         final ReportDocumentContext reportRenderContext,
                                          final InspectionResultListener resultHandler,
                                          final String[] columnNames,
                                          final ReportElement element)
@@ -118,7 +118,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void traverseAttributeExpressions(final ReportDesignerContext designerContext,
-                                              final ReportRenderContext reportRenderContext,
+                                              final ReportDocumentContext reportRenderContext,
                                               final InspectionResultListener resultHandler,
                                               final String[] columnNames,
                                               final ReportElement element)
@@ -154,7 +154,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectAttributeExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element,
@@ -166,7 +166,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void traverseStyleExpressions (final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element)
@@ -198,7 +198,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectStyleExpression (final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element,
@@ -209,7 +209,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final Expression expression)
@@ -229,7 +229,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final Expression expression,
@@ -238,7 +238,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectParameter(final ReportDesignerContext designerContext,
-                                  final ReportRenderContext reportRenderContext,
+                                  final ReportDocumentContext reportRenderContext,
                                   final InspectionResultListener resultHandler,
                                   final String[] columnNames,
                                   final ReportParameterDefinition definition,
@@ -247,7 +247,7 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectDataSource(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final DataFactory dataFactory)

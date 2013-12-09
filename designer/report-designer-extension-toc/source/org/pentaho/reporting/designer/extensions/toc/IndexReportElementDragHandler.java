@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.elements.AbstractSubReportElementDragHandler;
@@ -46,7 +47,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
 
   protected Element createElement(final ElementMetaData elementMetaData,
                                   final String fieldName,
-                                  final ReportRenderContext context) throws InstantiationException
+                                  final ReportDocumentContext context) throws InstantiationException
   {
     final ElementType type = elementMetaData.create();
     final IndexElement visualElement = new IndexElement();
@@ -110,7 +111,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
 
         if (result == 0)
         {
-          final ReportRenderContext context = dragContext.getRenderContext();
+          final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
               new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
@@ -120,7 +121,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
         {
           final AbstractRootLevelBand arb = (AbstractRootLevelBand) parent;
 
-          final ReportRenderContext context = dragContext.getRenderContext();
+          final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
           undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
               new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
@@ -129,7 +130,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
       }
       else
       {
-        final ReportRenderContext context = dragContext.getRenderContext();
+        final ReportDocumentContext context = dragContext.getRenderContext();
         final UndoManager undo = context.getUndo();
         undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
             new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));

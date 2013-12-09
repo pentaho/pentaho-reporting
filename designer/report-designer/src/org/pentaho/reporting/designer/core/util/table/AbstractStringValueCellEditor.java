@@ -57,6 +57,7 @@ import org.pentaho.openformula.ui.util.FieldDefinitionCellRenderer;
 import org.pentaho.openformula.ui.util.FieldSelectorDialog;
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
@@ -893,7 +894,12 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
     {
       return null;
     }
-    return designerContext.getActiveContext();
+    ReportDesignerDocumentContext documentContext = designerContext.getActiveContext();
+    if (documentContext instanceof ReportRenderContext)
+    {
+      return (ReportRenderContext) documentContext;
+    }
+    return null;
   }
 
   public void setReportDesignerContext(final ReportDesignerContext designerContext)

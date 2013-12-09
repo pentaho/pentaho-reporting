@@ -21,6 +21,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreePath;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
@@ -32,7 +33,7 @@ public class MasterReportDataTreeModel extends AbstractReportDataTreeModel
   private ReportParametersNode reportParametersNode;
   private ParameterDefinitionEntry[] cachedParameterDefinitions;
 
-  public MasterReportDataTreeModel(final ReportRenderContext renderContext)
+  public MasterReportDataTreeModel(final ReportDocumentContext renderContext)
   {
     super(renderContext);
     if (renderContext.getReportDefinition() instanceof MasterReport == false)

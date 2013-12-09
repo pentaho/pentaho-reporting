@@ -22,7 +22,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -38,7 +38,7 @@ import org.pentaho.reporting.engine.classic.core.Section;
 public class SelectionOverlayRenderer implements OverlayRenderer
 {
   private Section rootElement;
-  private ReportRenderContext context;
+  private ReportDocumentContext context;
   private double zoomFactor;
 
   public SelectionOverlayRenderer(final Element defaultElement)
@@ -49,7 +49,7 @@ public class SelectionOverlayRenderer implements OverlayRenderer
     }
   }
 
-  public void validate(final ReportRenderContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor)
   {
     this.context = context;
     this.zoomFactor = zoomFactor;
@@ -64,10 +64,8 @@ public class SelectionOverlayRenderer implements OverlayRenderer
 
     graphics.translate(bounds.getX(), bounds.getY());
     
-    final Element[] visualElements = context.getSelectionModel().getSelectedVisualElements();
-    for (int i = 0; i < visualElements.length; i++)
+    for (final Element visualElement : context.getSelectionModel().getSelectedElementsOfType(Element.class))
     {
-      final Element visualElement = visualElements[i];
       if (ModelUtility.isDescendant(rootElement, visualElement) == false)
       {
         continue;

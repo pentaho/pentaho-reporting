@@ -55,7 +55,7 @@ public class FormulaDialogTest extends TestCase
     }
     ReportDesignerBoot.getInstance().start();
     final FormulaEditorDialog dialog =
-        GUIUtils.createFormulaEditorDialog(new DefaultReportDesignerContext(null, new TestReportDesignerView()), null);
+        GUIUtils.createFormulaEditorDialog(new DefaultReportDesignerContext(new TestReportDesignerView()), null);
     dialog.editFormula("=AND(", new FieldDefinition[0]);
   }
 }

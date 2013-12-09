@@ -26,7 +26,7 @@ public class ConnectionEditorAction extends AbstractDesignerContextAction
   public void actionPerformed(final ActionEvent e)
   {
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final ConnectionEditorDialog dialog;
     if (window instanceof JDialog)

@@ -22,10 +22,11 @@ import java.beans.PropertyChangeListener;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 
@@ -92,7 +93,7 @@ public abstract class ElementSelectionComponentSupport implements DesignerContex
     }
   }
 
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
   private SelectionUpdateHandler updateHandler;
   private ActiveContextChangeHandler changeHandler;
   private ReportModelChangeHandler modelChangeHandler;
@@ -121,18 +122,18 @@ public abstract class ElementSelectionComponentSupport implements DesignerContex
 
   }
 
-  public ReportSelectionModel getSelectionModel()
+  public DocumentContextSelectionModel getSelectionModel()
   {
     return selectionModel;
   }
 
-  protected ReportRenderContext getActiveContext()
+  protected ReportDocumentContext getActiveContext()
   {
     return getReportDesignerContext().getActiveContext();
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext,
-                                     final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext,
+                                     final ReportDocumentContext newContext)
   {
     if (oldContext != null)
     {

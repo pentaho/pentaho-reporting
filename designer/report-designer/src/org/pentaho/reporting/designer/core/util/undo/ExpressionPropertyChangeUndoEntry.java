@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
@@ -45,7 +45,7 @@ public class ExpressionPropertyChangeUndoEntry implements UndoEntry
     this.newPropertyValue = newPropertyValue;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     try
     {
@@ -60,7 +60,7 @@ public class ExpressionPropertyChangeUndoEntry implements UndoEntry
     }
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     try
     {

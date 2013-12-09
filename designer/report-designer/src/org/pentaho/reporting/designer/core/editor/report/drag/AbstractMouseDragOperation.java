@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.editor.report.drag;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.editor.report.snapping.SnapPositionsModel;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
@@ -44,15 +45,15 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
   private long originPointX;
   private long originPointY;
 
-  protected AbstractMouseDragOperation(final Element[] selectedVisualElements,
+  protected AbstractMouseDragOperation(final List<Element> selectedVisualElements,
                                        final Point2D originPoint,
                                        final SnapPositionsModel horizontalSnapModel,
                                        final SnapPositionsModel verticalSnapModel)
   {
-    final ArrayList<Element> nonDescendants = new ArrayList<Element>(selectedVisualElements.length);
-    for (int i = 0; i < selectedVisualElements.length; i++)
+    final ArrayList<Element> nonDescendants = new ArrayList<Element>(selectedVisualElements.size());
+    for (int i = 0; i < selectedVisualElements.size(); i++)
     {
-      final Element element = selectedVisualElements[i];
+      final Element element = selectedVisualElements.get(i);
       if (isDescendant(element, selectedVisualElements) == false)
       {
         nonDescendants.add(element);
@@ -89,7 +90,7 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
    * @param elements
    * @return
    */
-  protected boolean isDescendant(final Element element, final Element[] elements)
+  protected boolean isDescendant(final Element element, final List<Element> elements)
   {
     final HashSet<Element> parents = new HashSet<Element>();
     Element parent = element.getParentSection();
@@ -99,9 +100,8 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
       parent = parent.getParent();
     }
 
-    for (int i = 0; i < elements.length; i++)
+    for (Element visualReportElement : elements)
     {
-      final Element visualReportElement = elements[i];
       if (element == visualReportElement)
       {
         continue;

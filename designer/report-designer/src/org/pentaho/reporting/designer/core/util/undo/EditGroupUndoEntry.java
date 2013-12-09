@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
@@ -58,7 +58,7 @@ public class EditGroupUndoEntry implements UndoEntry
     return newFields.clone();
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final RelationalGroup elementById =
         (RelationalGroup) ModelUtility.findElementById(renderContext.getReportDefinition(), group);
@@ -66,7 +66,7 @@ public class EditGroupUndoEntry implements UndoEntry
     elementById.setFieldsArray(oldFields);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final RelationalGroup elementById =
         (RelationalGroup) ModelUtility.findElementById(renderContext.getReportDefinition(), group);

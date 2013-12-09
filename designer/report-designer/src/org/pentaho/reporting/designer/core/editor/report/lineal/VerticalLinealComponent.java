@@ -46,7 +46,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ZoomModel;
 import org.pentaho.reporting.designer.core.editor.ZoomModelListener;
 import org.pentaho.reporting.designer.core.editor.report.layouting.AbstractElementRenderer;
@@ -429,13 +429,13 @@ public class VerticalLinealComponent extends JComponent
   private LinealUpdateHandler linealUpdateHandler;
   private ElementRenderer reportElement;
   private RootBandChangeHandler changeHandler;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private String name;
   private double padding;
   private boolean renderNamesVertically;
 
   public VerticalLinealComponent(final boolean showTopBorder,
-                                 final ReportRenderContext renderContext)
+                                 final ReportDocumentContext renderContext)
   {
     if (renderContext == null)
     {
@@ -445,7 +445,7 @@ public class VerticalLinealComponent extends JComponent
     setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
 
     this.renderContext = renderContext;
-    this.renderContext.getMasterReportElement().addReportModelListener(new PageFormatUpdateHandler());
+    this.renderContext.getContextRoot().addReportModelListener(new PageFormatUpdateHandler());
     this.changeHandler = new RootBandChangeHandler();
     this.showTopBorder = showTopBorder;
     this.zoomModel = renderContext.getZoomModel();
@@ -945,7 +945,7 @@ public class VerticalLinealComponent extends JComponent
     return zoomModel;
   }
 
-  protected ReportRenderContext getRenderContext()
+  protected ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }

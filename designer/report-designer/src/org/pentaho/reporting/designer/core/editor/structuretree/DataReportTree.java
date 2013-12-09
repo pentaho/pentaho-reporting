@@ -29,8 +29,8 @@ import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.actions.report.EditParametersAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.dnd.FieldDescriptionTransferable;
@@ -496,7 +496,7 @@ public class DataReportTree extends AbstractReportTree
     }
   }
 
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private ReportUpdateHandler updateHandler;
 
   @SuppressWarnings("FieldCanBeLocal")
@@ -518,7 +518,7 @@ public class DataReportTree extends AbstractReportTree
     WorkspaceSettings.getInstance().addSettingsListener(settingsChangeHandler);
   }
 
-  public ReportRenderContext getRenderContext()
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
@@ -533,7 +533,7 @@ public class DataReportTree extends AbstractReportTree
     return getDataTreeModel().getPathForNode(node);
   }
 
-  public void setRenderContext(final ReportRenderContext renderContext)
+  public void setRenderContext(final ReportDocumentContext renderContext)
   {
     if (this.renderContext != null)
     {
@@ -580,7 +580,7 @@ public class DataReportTree extends AbstractReportTree
 
       setModel(model);
 
-      final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+      final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
       final Object[] selectedElements = selectionModel.getSelectedElements();
       final ArrayList<TreePath> selectionPaths = new ArrayList<TreePath>();
       for (int i = 0; i < selectedElements.length; i++)

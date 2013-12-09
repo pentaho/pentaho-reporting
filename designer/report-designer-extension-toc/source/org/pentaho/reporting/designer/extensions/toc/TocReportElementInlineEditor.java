@@ -45,7 +45,7 @@ public class TocReportElementInlineEditor extends AbstractCellEditor implements 
       final ReportRenderContext rrc = context.getReportRenderContext(i);
       if (rrc.getReportDefinition() == value)
       {
-        context.setActiveContext(rrc);
+        context.setActiveDocument(rrc);
         return null;
       }
     }

@@ -89,7 +89,7 @@ public class FieldSelectorPaletteDialog extends JDialog
     final Rectangle rectangle = WorkspaceSettings.getInstance().getFieldPaletteBounds();
     if (rectangle != null)
     {
-      final Rectangle bounds = fieldSelectorPanel.getReportDesignerContext().getParent().getBounds();
+      final Rectangle bounds = fieldSelectorPanel.getReportDesignerContext().getView().getParent().getBounds();
       if (rectangle.contains(bounds) || rectangle.equals(bounds))
       {
         DebugLog.log("Found a usable screen-configuration: Restoring frame to " + bounds);// NON-NLS

@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.model;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -164,17 +165,16 @@ public class ModelUtility
     return false;
   }
 
-  public static Element[] filterParents(final Element[] elements)
+  public static List<Element> filterParents(final List<Element> elements)
   {
-    if (elements.length == 1)
+    if (elements.size() == 1)
     {
       return elements;
     }
 
-    final ArrayList<Element> retval = new ArrayList<Element>(elements.length);
-    for (int i = 0; i < elements.length; i++)
+    final ArrayList<Element> retval = new ArrayList<Element>(elements.size());
+    for (Element element : elements)
     {
-      final Element element = elements[i];
       if (element instanceof Section)
       {
         final Section s = (Section) element;
@@ -185,14 +185,13 @@ public class ModelUtility
       }
       retval.add(element);
     }
-    return retval.toArray(new Element[retval.size()]);
+    return retval;
   }
 
-  private static boolean isParentSection(final Section s, final Element[] elements)
+  private static boolean isParentSection(final Section s, final List<Element> elements)
   {
-    for (int j = 0; j < elements.length; j++)
+    for (Element potentialChild: elements)
     {
-      final Element potentialChild = elements[j];
       if (potentialChild != s)
       {
         if (ModelUtility.isDescendant(s, potentialChild))

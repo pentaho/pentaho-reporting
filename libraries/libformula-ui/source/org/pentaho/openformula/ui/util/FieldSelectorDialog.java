@@ -48,7 +48,7 @@ public class FieldSelectorDialog extends CommonDialog
     {
       if (e.getClickCount() > 1)
       {
-        setSelectedDefinition((FieldDefinition) fieldList.getSelectedValue());
+        setSelectedDefinition(fieldList.getSelectedValue());
         getConfirmAction().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         FieldSelectorDialog.this.dispose();
       }
@@ -56,7 +56,7 @@ public class FieldSelectorDialog extends CommonDialog
   }
 
   public static final String SELECTED_DEFINITION_PROPERTY = "selectedDefinition";
-  private JList fieldList;
+  private JList<FieldDefinition> fieldList;
   private FieldDefinition selectedDefinition;
   private Component focusReturn;
 
@@ -96,7 +96,7 @@ public class FieldSelectorDialog extends CommonDialog
     // focus logic currently depends on this
     setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-    fieldList = new JList(new FieldListModel());
+    fieldList = new JList<FieldDefinition>(new FieldListModel());
     fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     fieldList.setCellRenderer(new FieldDefinitionCellRenderer());
     fieldList.addMouseListener(new MouseHandler());
@@ -108,7 +108,7 @@ public class FieldSelectorDialog extends CommonDialog
 
   protected String getDialogId()
   {
-    return "LibFormula.FieldSelector";
+    return "LibFormula.FieldSelector"; // NON-NLS
   }
 
   protected Component createContentPane()
@@ -151,7 +151,7 @@ public class FieldSelectorDialog extends CommonDialog
   {
     if (onConfirm)
     {
-      setSelectedDefinition((FieldDefinition) fieldList.getSelectedValue());
+      setSelectedDefinition(fieldList.getSelectedValue());
     }
     return selectedDefinition != null;
   }
