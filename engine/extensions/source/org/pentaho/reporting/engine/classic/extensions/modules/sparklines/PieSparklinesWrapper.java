@@ -18,6 +18,8 @@
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -31,7 +33,6 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
 
 public class PieSparklinesWrapper extends DrawableWrapper implements ReportDrawable
 {
-
   public PieSparklinesWrapper(final PieGraphDrawable sparkline)
   {
     super(sparkline);
@@ -109,5 +110,21 @@ public class PieSparklinesWrapper extends DrawableWrapper implements ReportDrawa
   public ImageMap getImageMap(final Rectangle2D bounds)
   {
     return null;
+  }
+
+
+  public boolean isPreserveAspectRatio()
+  {
+    return false;
+  }
+
+  public Dimension getPreferredSize()
+  {
+    return null;
+  }
+
+  public void draw(final Graphics2D g2, final Rectangle2D bounds)
+  {
+    getPieGraphDrawable().draw(g2, bounds);
   }
 }
