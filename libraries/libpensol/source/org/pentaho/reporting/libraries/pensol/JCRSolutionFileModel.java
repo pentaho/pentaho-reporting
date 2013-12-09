@@ -99,6 +99,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     config.getProperties().put(ClientConfig.PROPERTY_FOLLOW_REDIRECTS, true);
     config.getProperties().put(ClientConfig.PROPERTY_READ_TIMEOUT, timeout);
     this.client = Client.create(config);
+    this.client.addFilter(new CookiesHandlerFilter()); // must be inserted before HTTPBasicAuthFilter
     this.client.addFilter(new HTTPBasicAuthFilter(username, password));
     this.majorVersion = "999";
     this.minorVersion = "999";
