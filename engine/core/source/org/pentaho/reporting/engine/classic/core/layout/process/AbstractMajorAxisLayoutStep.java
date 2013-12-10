@@ -47,9 +47,19 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
 
   public void compute(final LogicalPageBox pageBox)
   {
-    this.tableRowHeightStep.reset();
-    this.cacheClean = true;
-    startProcessing(pageBox);
+    getEventWatch().start();
+    getSummaryWatch().start();
+    try
+    {
+      this.tableRowHeightStep.reset();
+      this.cacheClean = true;
+      startProcessing(pageBox);
+    }
+    finally
+    {
+      getSummaryWatch().stop(true);
+      getEventWatch().stop();
+    }
   }
 
   public void continueComputation(final RenderBox pageBox)

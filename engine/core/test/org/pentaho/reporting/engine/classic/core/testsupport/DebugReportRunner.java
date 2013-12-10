@@ -74,6 +74,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTab
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableReportUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal.XmlTableOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.xml.XMLProcessor;
+import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
@@ -589,7 +590,7 @@ public class DebugReportRunner
 
     final DebugRenderer debugLayoutSystem = new DebugRenderer(metaData);
     debugLayoutSystem.setStateKey(stateKey);
-    debugLayoutSystem.startReport(report, processingContext);
+    debugLayoutSystem.startReport(report, processingContext, new DefaultPerformanceMonitorContext());
     debugLayoutSystem.startSection(Renderer.SectionType.NORMALFLOW);
     debugLayoutSystem.add(reportHeader, runtime);
     debugLayoutSystem.endSection();

@@ -69,6 +69,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
     PaginationStepLib.assertProgress(pageBox);
 
     this.unresolvedWidowReferenceEncountered = false;
@@ -123,6 +125,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     finally
     {
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;

@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillFlowPagesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FlowPaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 
 /**
  * A flow renderer is a light-weight paginating renderer. It does not care about the page-size but searches for manual
@@ -83,10 +84,12 @@ public class FlowRenderer extends AbstractRenderer
     return false;
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition report,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
     flowCount = 0;
-    super.startReport(report, processingContext);
+    super.startReport(report, processingContext, performanceMonitorContext);
   }
 
   protected void debugPrint(final LogicalPageBox pageBox)
@@ -266,5 +269,19 @@ public class FlowRenderer extends AbstractRenderer
   public boolean isPageStartPending()
   {
     return pageStartPending;
+  }
+
+  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
+  {
+    super.initializeRendererOnStartReport(processingContext);
+    paginationStep.initialize(getPerformanceMonitorContext());
+    fillPhysicalPagesStep.initialize(getPerformanceMonitorContext());
+  }
+
+  protected void close()
+  {
+    super.close();
+    paginationStep.close();
+    fillPhysicalPagesStep.close();
   }
 }

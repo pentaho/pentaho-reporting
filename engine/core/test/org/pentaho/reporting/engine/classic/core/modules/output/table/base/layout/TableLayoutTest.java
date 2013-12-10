@@ -40,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layou
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.ValidationSequence;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.parser.TableTestSpecXmlResourceFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
@@ -164,7 +165,7 @@ public class TableLayoutTest extends TestCase
     final MasterReport report = new MasterReport();
     report.setPageDefinition(pageDefinition);
     DebugReportRunner.resolveStyle(report);
-    flowRenderer.startReport(report, processingContext);
+    flowRenderer.startReport(report, processingContext, new DefaultPerformanceMonitorContext());
     // execute .. (maybe it is not pretty, "... but it works")
     final ArrayList list = sequence.getContents();
     for (int i = 0; i < list.size(); i++)
@@ -200,7 +201,7 @@ public class TableLayoutTest extends TestCase
       fail();
     }
 
-    flowRenderer.startReport(report, processingContext);
+    flowRenderer.startReport(report, processingContext, new DefaultPerformanceMonitorContext());
     for (int i = 0; i < list.size(); i++)
     {
       final Object o = list.get(i);

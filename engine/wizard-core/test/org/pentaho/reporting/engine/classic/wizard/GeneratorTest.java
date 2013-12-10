@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.wizard.model.DefaultDetailFieldDefinition;
@@ -74,7 +75,8 @@ public class GeneratorTest extends TestCase
 
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DefaultFlowController flowController = new DefaultFlowController
-        (processingContext, report.getDataSchemaDefinition(), new ReportParameterValues());
+        (processingContext, report.getDataSchemaDefinition(), new ReportParameterValues(),
+            new NoOpPerformanceMonitorContext());
 
     final WizardProcessor processor = new WizardProcessor();
     final MasterReport masterReport = processor.performPreProcessing(report, flowController);

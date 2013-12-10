@@ -89,6 +89,8 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
 
   public void compute(final LogicalPageBox root)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
     try
     {
       pageGrid = root.getPageGrid();
@@ -97,6 +99,8 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
     finally
     {
       pageGrid = null;
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
     }
   }
 
