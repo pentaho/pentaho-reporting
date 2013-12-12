@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.pensol;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
@@ -58,10 +59,11 @@ public class JCRRepositoryTest extends TestCase
     final ClientConfig config = new DefaultClientConfig();
     config.getProperties().put(ClientConfig.PROPERTY_FOLLOW_REDIRECTS, true);
     Client client = Client.create(config);
-    client.addFilter(new HTTPBasicAuthFilter("joe", "password"));
+    client.addFilter(new HTTPBasicAuthFilter("admin", "password"));
 
-    final WebResource resource = client.resource(url + "/api/repo/files/children?depth=-1&filter=*");
-    final RepositoryFileTreeDto tree = resource.path("").accept(MediaType.APPLICATION_XML_TYPE).get(RepositoryFileTreeDto.class);
+    final WebResource resource = client.resource(url + "/api/repo/files/tree");//files/children?depth=-1&filter=*")
+   final RepositoryFileTreeDto tree = resource.path("").accept(MediaType.APPLICATION_XML_TYPE).accept(MediaType.APPLICATION_JSON_TYPE).get(RepositoryFileTreeDto.class);
+    //final Response tree = resource.path("").accept(MediaType.APPLICATION_XML_TYPE).get(Response.class);
 
     printDebugInfo(tree);
 
@@ -89,7 +91,7 @@ public class JCRRepositoryTest extends TestCase
 
   private void printDebugInfo(final RepositoryFileTreeDto tree)
   {
-    System.out.println ("FileTreeDto: " + tree);
+    System.out.println ("FileTreeDto: " + tree.getClass());
     System.out.println ("  - childs: " + tree.getChildren().size());
     System.out.println ("FileDto: " + tree.getFile());
     System.out.println ("  - Name: " + tree.getFile().getName());
