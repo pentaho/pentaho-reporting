@@ -44,6 +44,10 @@ public class RunReportsTest extends TestCase
     // the table-datasource
 
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3529.prpt");
+    // to enable the complex-processing mode, set this configuration option to true
+    report.getReportConfiguration().setConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout", "false");
+
     ReportHeader reportHeader = report.getReportHeader();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
 
