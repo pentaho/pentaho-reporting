@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnG
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.TextAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
@@ -72,11 +73,18 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   private MinorAxisParagraphBreakState lineBreakState;
   private MinorAxisNodeContext nodeContext;
   private MinorAxisNodeContextPool nodeContextPool;
+  private boolean complexText;
 
   public CanvasMinorAxisLayoutStep()
   {
     nodeContextPool = new MinorAxisNodeContextPool();
     lineBreakState = new MinorAxisParagraphBreakState();
+  }
+
+  public void initialize(final OutputProcessorMetaData metaData)
+  {
+    super.initialize(metaData);
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox root)
@@ -118,6 +126,25 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
+  {
+    if (complexText)
+    {
+      processParagraphChildsComplex(box);
+    }
+    else
+    {
+      processParagraphChildsNormal(box);
+    }
+  }
+
+  protected void processParagraphChildsComplex(final ParagraphRenderBox box)
+  {
+    // todo Arabic
+
+    processParagraphChildsNormal(box);
+  }
+
+  protected void processParagraphChildsNormal(final ParagraphRenderBox box)
   {
     final MinorAxisNodeContext nodeContext = getNodeContext();
     final MinorAxisParagraphBreakState breakState = getLineBreakState();
@@ -542,6 +569,25 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
+    if (complexText)
+    {
+      return startInlineLevelBoxComplex(box);
+    }
+    else
+    {
+      return startInlineLevelBoxNormal(box);
+    }
+  }
+
+
+  protected boolean startInlineLevelBoxComplex(final RenderBox box)
+  {
+    // todo
+    return startInlineLevelBoxNormal(box);
+  }
+
+  protected boolean startInlineLevelBoxNormal(final RenderBox box)
+  {
     if (lineBreakState.isInsideParagraph() == false)
     {
       throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
@@ -599,6 +645,24 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
+    if (complexText)
+    {
+      finishInlineLevelBoxComplex(box);
+    }
+    else
+    {
+      finishInlineLevelBoxNormal(box);
+    }
+  }
+
+  private void finishInlineLevelBoxComplex(final RenderBox box)
+  {
+    // todo Arabic text
+    finishInlineLevelBoxNormal(box);
+  }
+
+  private void finishInlineLevelBoxNormal(final RenderBox box)
+  {
     if (lineBreakState.isInsideParagraph() == false)
     {
       throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
@@ -611,6 +675,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     }
 
     lineBreakState.add(EndSequenceElement.INSTANCE, box);
+
   }
 
   // Table-sections or auto-boxes masking as tables (treated as table-sections nonetheless).

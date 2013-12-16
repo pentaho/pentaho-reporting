@@ -212,6 +212,7 @@ public abstract class AbstractRenderer implements Renderer
     canvasMinorAxisLayoutStep.initialize(metaData);
     minorAxisLayoutStep.initialize(metaData);
     canvasMajorAxisLayoutStep.initialize(metaData);
+    majorAxisLayoutStep.initialize(metaData);
   }
 
   public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint)

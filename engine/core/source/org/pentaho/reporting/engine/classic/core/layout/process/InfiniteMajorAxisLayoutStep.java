@@ -34,6 +34,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MajorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
@@ -57,12 +59,18 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 {
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
+  private boolean complexText;
 
   public InfiniteMajorAxisLayoutStep()
   {
     super(false);
     this.breakState = new MajorAxisParagraphBreakState();
     this.processor = new VerticalAlignmentProcessor();
+  }
+
+  public void initialize(OutputProcessorMetaData metaData)
+  {
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox pageBox)
@@ -453,6 +461,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
+    // todo Arabic text
+
     // Process the direct childs of the paragraph
     // Each direct child represents a line ..
 
@@ -516,6 +526,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
+    // todo Arabic text
+
     if (checkCacheValid(box))
     {
       return false;
@@ -605,6 +617,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
+    // todo Arabic text
+
     if (checkCacheValid(box))
     {
       return;

@@ -1,5 +1,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
+import java.awt.font.TextLayout;
+
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
@@ -9,6 +11,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 public class RenderableComplexText extends RenderNode
 {
   private String text;
+  private TextLayout textLayout;
 
   public RenderableComplexText(final StyleSheet styleSheet,
                                final InstanceID instanceID,
@@ -28,5 +31,15 @@ public class RenderableComplexText extends RenderNode
   public String getRawText()
   {
     return text;
+  }
+
+  public TextLayout getTextLayout()
+  {
+    return textLayout;
+  }
+
+  public void setTextLayout(final TextLayout textLayout)
+  {
+    this.textLayout = textLayout;
   }
 }
