@@ -84,7 +84,11 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   {
     if (complexText)
     {
-      // the AWT classes will take care of that for us automatically. No need to do it manually here.
+      // todo Arabic text
+      // for a first draft, we can ignore this step. The line-break step matters for
+      // text that has text-wrap style set to "None". For these lines, all normal
+      // line breaking is disabled, but manual line/breaks (\n, \r or \r\n) are still
+      // valid and honoured by the system.
       return;
     }
 
