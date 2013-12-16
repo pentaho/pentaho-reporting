@@ -46,6 +46,9 @@ public abstract class OutputProcessorFeature implements Serializable
   public static final BooleanOutputProcessorFeature PRD_3750 =
       new BooleanOutputProcessorFeature("prd-3750-compatibility");
 
+  public static final BooleanOutputProcessorFeature COMPLEX_TEXT =
+      new BooleanOutputProcessorFeature("complex-text-layout");
+
   public static final BooleanOutputProcessorFeature STRICT_COMPATIBILITY =
       new BooleanOutputProcessorFeature("strict-compatibility");
 

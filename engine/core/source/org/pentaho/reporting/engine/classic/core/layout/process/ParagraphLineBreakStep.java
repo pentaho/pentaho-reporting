@@ -32,6 +32,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnG
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
@@ -66,14 +68,26 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   private FastStack<ParagraphLinebreaker> paragraphNesting;
   private ParagraphLinebreaker breakState;
   private SimpleLinebreaker reusableSimpleLinebreaker;
+  private boolean complexText;
 
   public ParagraphLineBreakStep()
   {
     paragraphNesting = new FastStack<ParagraphLinebreaker>(50);
   }
 
+  public void initialize(OutputProcessorMetaData metaData)
+  {
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+  }
+
   public void compute(final LogicalPageBox root)
   {
+    if (complexText)
+    {
+      // the AWT classes will take care of that for us automatically. No need to do it manually here.
+      return;
+    }
+
     paragraphNesting.clear();
     try
     {
@@ -502,7 +516,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
       return true;
     }
-    
+
     if (breakState.isWritable() == false)
     {
       return false;

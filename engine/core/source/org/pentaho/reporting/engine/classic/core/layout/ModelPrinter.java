@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
@@ -523,6 +524,20 @@ public class ModelPrinter
         b.append("   ");
       }
       b.append("- text='");
+      b.append(text.getRawText());
+      b.append("'");
+      print(b.toString());
+    }
+
+    if (node instanceof RenderableComplexText)
+    {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- complex-text='");
       b.append(text.getRawText());
       b.append("'");
       print(b.toString());
