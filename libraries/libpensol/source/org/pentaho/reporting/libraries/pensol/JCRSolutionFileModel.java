@@ -119,7 +119,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
   {
     try
     {
-      final String path = normalizePath(file.getPath());
+      final String path = URLEncoder.encodeUTF8( normalizePath(file.getPath()) );
       final String service = MessageFormat.format(CREATE_FOLDER_SERVICE, path);
 
       final WebResource resource = client.resource(url + service);
@@ -411,7 +411,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
       b.append(fileName[i]);
     }
 
-    final String service = MessageFormat.format(UPLOAD_SERVICE, normalizePath(b.toString()));
+    final String service = MessageFormat.format(UPLOAD_SERVICE, URLEncoder.encodeUTF8( normalizePath(b.toString()) ) );
     final WebResource resource = client.resource(url + service);
     final ByteArrayInputStream stream = new ByteArrayInputStream(data);
     final ClientResponse response = resource.put(ClientResponse.class, stream);
