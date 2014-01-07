@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public abstract class ExpressionEventHelper
 {
 
