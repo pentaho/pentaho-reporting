@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -88,6 +89,11 @@ public final class SheetLayout
     this.ensureYMapping(0, Boolean.FALSE);
   }
 
+  public SheetLayout (OutputProcessorMetaData metaData)
+  {
+    this(metaData.isFeatureSupported(AbstractTableOutputProcessor.STRICT_LAYOUT),
+        metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE));
+  }
   public SheetLayout derive()
   {
     SheetLayout clone = clone();
