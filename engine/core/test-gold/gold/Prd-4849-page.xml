@@ -1,0 +1,852 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
+  <physical-page page-x="0" page-y="0" page-width="595" page-height="842" margin-top="72" margin-left="55" margin-bottom="30" margin-right="30">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="510.0" height="740.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="510.0" height="740.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="510.0" height="740.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="510.0" height="158.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <auto name="Header-1" type="AutoRenderBox" x="0.0" y="0.0" width="510.0" height="158.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="510.0" height="158.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+          <p type="ParagraphRenderBox" x="284.667" y="93.333" width="118.667" height="62.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Langley Travel AB&#x000a;Box 53004 &#x000a;400 14  Göteborg&#x000a;Suède"/>
+            <line type="ParagraphPoolBox" x="284.667" y="93.333" width="81.65" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="284.667" y="93.333" width="35.02" height="10.0">Langley</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="322.457" y="93.333" width="27.77" height="10.0">Travel</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="352.997" y="93.333" width="13.32" height="10.0">AB</text>
+            </line>
+            <line type="ParagraphPoolBox" x="284.667" y="103.333" width="50.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="284.667" y="103.333" width="17.22" height="10.0">Box</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="304.657" y="103.333" width="27.8" height="10.0">53004</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="335.227" y="103.333" width="0.0" height="10.0"></text>
+            </line>
+            <line type="ParagraphPoolBox" x="284.667" y="113.333" width="77.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="284.667" y="113.333" width="16.68" height="10.0">400</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="304.117" y="113.333" width="11.12" height="10.0">14</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="320.777" y="113.333" width="41.67" height="10.0">Göteborg</text>
+            </line>
+            <line type="ParagraphPoolBox" x="284.667" y="123.333" width="28.9" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="284.667" y="123.333" width="28.9" height="10.0">Suède</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="43.333" y="96.0" width="118.667" height="62.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="SARL Fort Royal Resort&#x000a;Lieu dit « Petit Bas Vent »&#x000a;97126 Deshaies, Guadeloupe&#x000a;&#x000a;"/>
+            <line type="ParagraphPoolBox" x="43.333" y="96.0" width="107.17" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="43.333" y="96.0" width="26.1" height="10.0">SARL</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="72.203" y="96.0" width="17.76" height="10.0">Fort</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="92.733" y="96.0" width="25.56" height="10.0">Royal</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="121.063" y="96.0" width="29.44" height="10.0">Resort</text>
+            </line>
+            <line type="ParagraphPoolBox" x="43.333" y="106.0" width="114.94" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="43.333" y="106.0" width="18.9" height="10.0">Lieu</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="65.003" y="106.0" width="10.55" height="10.0">dit</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="78.323" y="106.0" width="5.56" height="10.0">«</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="86.653" y="106.0" width="19.98" height="10.0">Petit</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="109.403" y="106.0" width="17.22" height="10.0">Bas</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="129.393" y="106.0" width="20.55" height="10.0">Vent</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="152.713" y="106.0" width="5.56" height="10.0">»</text>
+            </line>
+            <line type="ParagraphPoolBox" x="43.333" y="116.0" width="118.667" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="43.333" y="116.0" width="27.8" height="10.0">97126</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="73.903" y="116.0" width="44.45" height="10.0">Deshaies,</text>
+            </line>
+            <line type="ParagraphPoolBox" x="43.333" y="126.0" width="54.47" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="43.333" y="126.0" width="54.47" height="10.0">Guadeloupe</text>
+            </line>
+            <line type="ParagraphPoolBox" x="43.333" y="136.0" width="0.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="43.333" y="136.0" width="0.0" height="10.0"></text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="274.667" y="78.0" width="100.0" height="14.667" color="black" font-face="Serif" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Client :"/>
+            <line type="ParagraphPoolBox" x="274.667" y="78.0" width="24.872" height="8.0" color="black" font-face="Serif" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="274.667" y="78.0" width="20.44" height="8.0">Client</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="297.323" y="78.0" width="2.216" height="8.0">:</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="175.333" y="0.0" width="151.333" height="20.0" color="black" font-face="Serif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="INVOICE / FACTURE"/>
+            <line type="ParagraphPoolBox" x="183.4075" y="0.0" width="135.184" height="14.0" color="black" font-face="Serif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="183.4075" y="0.0" width="57.498" height="14.0">INVOICE</text>
+              <spacer width="3.878" height="0.0" preserve="true"/>
+              <text x="244.7835" y="0.0" width="3.878" height="14.0">/</text>
+              <spacer width="3.878" height="0.0" preserve="true"/>
+              <text x="252.5395" y="0.0" width="66.052" height="14.0">FACTURE</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="370.0" y="3.333" width="58.0" height="12.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Facture n*: "/>
+            <line type="ParagraphPoolBox" x="370.0" y="3.333" width="51.64" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="370.0" y="3.333" width="33.88" height="10.0">Facture</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="406.65" y="3.333" width="12.22" height="10.0">n*:</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="370.0" y="17.334" width="66.0" height="12.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Facture Date: "/>
+            <line type="ParagraphPoolBox" x="370.0" y="17.334" width="63.3" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="370.0" y="17.334" width="33.88" height="10.0">Facture</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="406.65" y="17.334" width="23.88" height="10.0">Date:</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+            </line>
+          </p>
+        </canvas>
+      </auto>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="158.667" width="510.0" height="311.334" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:lock-preferred-output-type="true"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:preferred-output-type="pageable/pdf"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="MainFinance"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="158.667" width="510.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="158.667" width="510.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="158.667" width="510.0" height="77.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="ID"/>
+        <block type="AutoRenderBox" x="0.0" y="158.667" width="510.0" height="54.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          <block name="Section-0" type="AutoRenderBox" x="0.0" y="158.667" width="510.0" height="54.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <canvas type="CanvasRenderBox" x="0.0" y="158.667" width="510.0" height="54.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
+              <p type="ParagraphRenderBox" x="3.333" y="198.667" width="41.333" height="12.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hôtel ID"/>
+                <line type="ParagraphPoolBox" x="3.333" y="202.667" width="28.872" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="3.333" y="202.667" width="18.664" height="8.0">Hôtel</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="24.213" y="202.667" width="7.992" height="8.0">ID</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="46.666" y="198.667" width="60.0" height="12.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hôtels"/>
+                <line type="ParagraphPoolBox" x="46.666" y="202.667" width="22.664" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="46.666" y="202.667" width="22.664" height="8.0">Hôtels</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="187.333" y="198.667" width="34.0" height="12.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Semaine"/>
+                <line type="ParagraphPoolBox" x="187.333" y="202.667" width="31.56" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="187.333" y="202.667" width="31.56" height="8.0">Semaine</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="424.667" y="173.334" width="32.667" height="37.333" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant&#x000a;Taxe de Séjour&#x000a;"/>
+                <line type="ParagraphPoolBox" x="428.446" y="186.667" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="428.446" y="186.667" width="28.888" height="8.0">Montant</text>
+                </line>
+                <line type="ParagraphPoolBox" x="428.446" y="194.667" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="428.446" y="194.667" width="17.776" height="8.0">Taxe</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="448.438" y="194.667" width="8.896" height="8.0">de</text>
+                </line>
+                <line type="ParagraphPoolBox" x="434.222" y="202.667" width="23.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="434.222" y="202.667" width="23.112" height="8.0">Séjour</text>
+                </line>
+              </p>
+              <replaced-content x="3.334" y="212.667" width="503.333" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+              </replaced-content>
+              <p type="ParagraphRenderBox" x="225.0" y="192.667" width="24.667" height="18.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Nbre Clients"/>
+                <line type="ParagraphPoolBox" x="228.6655" y="194.667" width="21.0015" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="228.6655" y="194.667" width="17.336" height="8.0">Nbre</text>
+                </line>
+                <line type="ParagraphPoolBox" x="225.1135" y="202.667" width="24.44" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="225.1135" y="202.667" width="24.44" height="8.0">Clients</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="253.333" y="192.667" width="28.667" height="18.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Adultes"/>
+                <line type="ParagraphPoolBox" x="254.3345" y="202.667" width="26.664" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="254.3345" y="202.667" width="26.664" height="8.0">Adultes</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="283.333" y="192.667" width="30.667" height="18.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Enfants"/>
+                <line type="ParagraphPoolBox" x="285.1145" y="202.667" width="27.104" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="285.1145" y="202.667" width="27.104" height="8.0">Enfants</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="322.0" y="185.334" width="38.0" height="25.333" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant Hors Taxes"/>
+                <line type="ParagraphPoolBox" x="331.112" y="186.667" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="331.112" y="186.667" width="28.888" height="8.0">Montant</text>
+                </line>
+                <line type="ParagraphPoolBox" x="343.112" y="194.667" width="16.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="343.112" y="194.667" width="16.888" height="8.0">Hors</text>
+                </line>
+                <line type="ParagraphPoolBox" x="338.224" y="202.667" width="21.776" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="338.224" y="202.667" width="21.776" height="8.0">Taxes</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="396.0" y="196.667" width="18.667" height="14.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA"/>
+                <line type="ParagraphPoolBox" x="399.131" y="202.667" width="15.536" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="399.131" y="202.667" width="15.536" height="8.0">TVA</text>
+                </line>
+              </p>
+              <p type="ParagraphRenderBox" x="458.667" y="167.334" width="50.0" height="43.333" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant TTC &#x000a;Taxe de séjour incluse&#x000a;"/>
+                <line type="ParagraphPoolBox" x="459.811" y="186.667" width="48.856" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="459.811" y="186.667" width="28.888" height="8.0">Montant</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="490.915" y="186.667" width="15.536" height="8.0">TTC</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="508.667" y="186.667" width="0.0" height="8.0"></text>
+                </line>
+                <line type="ParagraphPoolBox" x="479.779" y="194.667" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="479.779" y="194.667" width="17.776" height="8.0">Taxe</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="499.771" y="194.667" width="8.896" height="8.0">de</text>
+                </line>
+                <line type="ParagraphPoolBox" x="459.771" y="202.667" width="48.896" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="459.771" y="202.667" width="21.784" height="8.0">séjour</text>
+                  <spacer width="2.216" height="0.0" preserve="true"/>
+                  <text x="483.771" y="202.667" width="24.896" height="8.0">incluse</text>
+                </line>
+              </p>
+            </canvas>
+          </block>
+        </block>
+        <block name="Section-0" type="AutoRenderBox" x="0.0" y="212.667" width="510.0" height="23.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <canvas type="CanvasRenderBox" x="0.0" y="212.667" width="510.0" height="23.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+            <p type="ParagraphRenderBox" x="225.333" y="216.0" width="26.0" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumClients"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+              <line type="ParagraphPoolBox" x="236.109" y="216.0" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="236.109" y="216.0" width="4.448" height="8.0">0</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="256.333" y="216.0" width="20.667" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumAdultes"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+              <line type="ParagraphPoolBox" x="264.4425" y="216.0" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="264.4425" y="216.0" width="4.448" height="8.0">0</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="287.0" y="216.0" width="19.333" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="0"/>
+              <line type="ParagraphPoolBox" x="294.4425" y="216.0" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="294.4425" y="216.0" width="4.448" height="8.0">0</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="311.333" y="216.0" width="48.667" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumMontHorsTax"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+              <line type="ParagraphPoolBox" x="348.888" y="216.0" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="348.888" y="216.0" width="11.112" height="8.0">.00</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="371.333" y="216.0" width="43.333" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumTVA"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+              <line type="ParagraphPoolBox" x="403.554" y="216.0" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="403.554" y="216.0" width="11.112" height="8.0">.00</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="419.333" y="216.0" width="38.0" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumTDS"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+              <line type="ParagraphPoolBox" x="446.221" y="216.0" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="446.221" y="216.0" width="11.112" height="8.0">.00</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="460.667" y="216.0" width="48.0" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+              <line type="ParagraphPoolBox" x="497.555" y="216.0" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="497.555" y="216.0" width="11.112" height="8.0">.00</text>
+              </line>
+            </p>
+            <replaced-content x="4.667" y="215.333" width="504.666" height="0.667" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+            </replaced-content>
+          </canvas>
+        </block>
+      </block>
+      <block name="Banded-SubReport-Section: name=" type="BlockRenderBox" x="0.0" y="236.0" width="510.0" height="48.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="VATspec"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-limit="-1"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query-timeout="0"/>
+        <block name="Section-0" type="AutoRenderBox" x="0.0" y="236.0" width="510.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block type="ProgressMarkerRenderBox" x="0.0" y="236.0" width="510.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          </block>
+        </block>
+        <block name="::group-0" type="AutoRenderBox" x="0.0" y="236.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+          <block type="AutoRenderBox" x="0.0" y="236.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="236.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="236.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
+                <replaced-content x="369.0" y="260.0" width="134.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+                </replaced-content>
+                <p type="ParagraphRenderBox" x="369.0" y="247.667" width="133.0" height="10.333" color="black" font-face="Calibri Light" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA spécifications"/>
+                  <line type="ParagraphPoolBox" x="369.0" y="247.667" width="65.752" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="369.0" y="247.667" width="15.536" height="8.0">TVA</text>
+                    <spacer width="2.216" height="0.0" preserve="true"/>
+                    <text x="386.752" y="247.667" width="48.0" height="8.0">spécifications</text>
+                  </line>
+                </p>
+              </canvas>
+            </block>
+          </block>
+        </block>
+        <block name="Section-0" type="AutoRenderBox" x="0.0" y="260.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <canvas type="CanvasRenderBox" x="0.0" y="260.0" width="510.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+            <p type="ParagraphRenderBox" x="403.0" y="264.0" width="100.0" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VATsum"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;-#,###.00"/>
+              <line type="ParagraphPoolBox" x="491.888" y="264.0" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="491.888" y="264.0" width="11.112" height="8.0">.00</text>
+              </line>
+            </p>
+            <replaced-content x="369.0" y="261.0" width="134.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+            </replaced-content>
+          </canvas>
+        </block>
+      </block>
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="284.0" width="510.0" height="186.001" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="284.0" width="510.0" height="186.001" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+          <p type="ParagraphRenderBox" x="430.0" y="296.0" width="68.0" height="20.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0;-#,##0"/>
+            <line type="ParagraphPoolBox" x="492.44" y="296.0" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="492.44" y="296.0" width="5.56" height="10.0">0</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="309.999" y="296.0" width="119.333" height="20.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant total TTC"/>
+            <line type="ParagraphPoolBox" x="349.382" y="296.0" width="79.95" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="349.382" y="296.0" width="36.11" height="10.0">Montant</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="388.262" y="296.0" width="18.88" height="10.0">total</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="409.912" y="296.0" width="19.42" height="10.0">TTC</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="498.666" y="296.0" width="10.666" height="13.333" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="€"/>
+            <line type="ParagraphPoolBox" x="501.219" y="296.0" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="501.219" y="296.0" width="5.56" height="10.0">€</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="30.0" y="346.0" width="445.333" height="40.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Cette facture est établie selon les accords contractuels entre &#x000a;FORT ROYAL RESORT &amp; LANGLEY TRAVEL.&#x000a;Conditions de paiement :  virement bancaire à 30 jours fin de mois"/>
+            <line type="ParagraphPoolBox" x="117.4165" y="346.0" width="270.5" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+              <text x="117.4165" y="346.0" width="23.88" height="10.0">Cette</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="144.0665" y="346.0" width="30.55" height="10.0">facture</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="177.3865" y="346.0" width="13.33" height="10.0">est</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="193.4865" y="346.0" width="29.45" height="10.0">établie</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="225.7065" y="346.0" width="23.9" height="10.0">selon</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="252.3765" y="346.0" width="12.78" height="10.0">les</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="267.9265" y="346.0" width="35.01" height="10.0">accords</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="305.7065" y="346.0" width="53.89" height="10.0">contractuels</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="362.3665" y="346.0" width="22.78" height="10.0">entre</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="387.9165" y="346.0" width="0.0" height="10.0"></text>
+            </line>
+            <line type="ParagraphPoolBox" x="147.2065" y="356.0" width="210.92" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+              <text x="147.2065" y="356.0" width="27.19" height="10.0">FORT</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="177.1665" y="356.0" width="33.87" height="10.0">ROYAL</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="213.8065" y="356.0" width="41.63" height="10.0">RESORT</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="258.2065" y="356.0" width="6.66" height="10.0">&amp;</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="267.6365" y="356.0" width="46.09" height="10.0">LANGLEY</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="316.4965" y="356.0" width="41.63" height="10.0">TRAVEL.</text>
+            </line>
+            <line type="ParagraphPoolBox" x="106.0215" y="366.0" width="293.29" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+              <text x="106.0215" y="366.0" width="47.23" height="10.0">Conditions</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="156.0215" y="366.0" width="11.12" height="10.0">de</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="169.9115" y="366.0" width="41.12" height="10.0">paiement</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="213.8015" y="366.0" width="2.77" height="10.0">:</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="222.1115" y="366.0" width="38.33" height="10.0">virement</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="263.2115" y="366.0" width="38.35" height="10.0">bancaire</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="304.3315" y="366.0" width="5.56" height="10.0">à</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="312.6615" y="366.0" width="11.12" height="10.0">30</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="326.5515" y="366.0" width="21.67" height="10.0">jours</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="350.9915" y="366.0" width="10.55" height="10.0">fin</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="364.3115" y="366.0" width="11.12" height="10.0">de</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="378.2015" y="366.0" width="21.11" height="10.0">mois</text>
+            </line>
+          </p>
+          <replaced-content x="16.667" y="401.334" width="478.667" height="68.667" source="null" content-width="100.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+          </replaced-content>
+          <p type="ParagraphRenderBox" x="26.666" y="409.333" width="222.0" height="60.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Coordonnées Bancaires .&#x000a;BANQUE POPULAIRE&#x000a;Client SARL FORT ROYAL RESORT&#x000a;IBAN : FR76 1680 7001 6531 5062 7121 442&#x000a;BIC/SWIFT : CCBPFRPPGRE&#x000a;&#x000a;"/>
+            <line type="ParagraphPoolBox" x="26.666" y="409.333" width="112.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="409.333" width="60.03" height="10.0">Coordonnées</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="89.466" y="409.333" width="44.45" height="10.0">Bancaires</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="136.686" y="409.333" width="2.77" height="10.0">.</text>
+            </line>
+            <line type="ParagraphPoolBox" x="26.666" y="419.333" width="102.14" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="419.333" width="42.19" height="10.0">BANQUE</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="71.626" y="419.333" width="57.18" height="10.0">POPULAIRE</text>
+            </line>
+            <line type="ParagraphPoolBox" x="26.666" y="429.333" width="165.42" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="429.333" width="25.55" height="10.0">Client</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="54.986" y="429.333" width="26.1" height="10.0">SARL</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="83.856" y="429.333" width="27.19" height="10.0">FORT</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="113.816" y="429.333" width="33.87" height="10.0">ROYAL</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="150.456" y="429.333" width="41.63" height="10.0">RESORT</text>
+            </line>
+            <line type="ParagraphPoolBox" x="26.666" y="439.333" width="200.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="439.333" width="23.31" height="10.0">IBAN</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="52.746" y="439.333" width="2.77" height="10.0">:</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="58.286" y="439.333" width="24.44" height="10.0">FR76</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="85.496" y="439.333" width="22.24" height="10.0">1680</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="110.506" y="439.333" width="22.24" height="10.0">7001</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="135.516" y="439.333" width="22.24" height="10.0">6531</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="160.526" y="439.333" width="22.24" height="10.0">5062</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="185.536" y="439.333" width="22.24" height="10.0">7121</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="210.546" y="439.333" width="16.68" height="10.0">442</text>
+            </line>
+            <line type="ParagraphPoolBox" x="26.666" y="449.333" width="134.84" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="449.333" width="50.48" height="10.0">BIC/SWIFT</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="79.916" y="449.333" width="2.77" height="10.0">:</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="85.456" y="449.333" width="76.05" height="10.0">CCBPFRPPGRE</text>
+            </line>
+            <line type="ParagraphPoolBox" x="26.666" y="459.333" width="0.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="26.666" y="459.333" width="0.0" height="10.0"></text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="300.667" y="406.0" width="110.0" height="15.333" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant à payer:"/>
+            <line type="ParagraphPoolBox" x="300.667" y="406.0" width="74.99" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="300.667" y="406.0" width="36.11" height="10.0">Montant</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="339.547" y="406.0" width="5.56" height="10.0">à</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="347.877" y="406.0" width="27.78" height="10.0">payer:</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="411.333" y="406.0" width="68.0" height="12.667" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0;-#,##0"/>
+            <line type="ParagraphPoolBox" x="473.773" y="406.0" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="473.773" y="406.0" width="5.56" height="10.0">0</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="481.333" y="406.0" width="11.333" height="12.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="€"/>
+            <line type="ParagraphPoolBox" x="484.2195" y="406.0" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="484.2195" y="406.0" width="5.56" height="10.0">€</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="300.667" y="423.333" width="102.667" height="15.333" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Date d'échéance:"/>
+            <line type="ParagraphPoolBox" x="300.667" y="423.333" width="77.47" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="300.667" y="423.333" width="21.11" height="10.0">Date</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="324.547" y="423.333" width="53.59" height="10.0">d'échéance:</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="299.333" y="441.334" width="111.333" height="15.333" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Référence de paiement:"/>
+            <line type="ParagraphPoolBox" x="299.333" y="441.334" width="106.67" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="299.333" y="441.334" width="46.12" height="10.0">Référence</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="348.223" y="441.334" width="11.12" height="10.0">de</text>
+              <spacer width="2.77" height="0.0" preserve="true"/>
+              <text x="362.113" y="441.334" width="43.89" height="10.0">paiement:</text>
+            </line>
+          </p>
+        </canvas>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="612.667" width="510.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="612.667" width="511.333" height="127.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="612.667" width="511.333" height="127.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="612.667" width="511.333" height="127.333" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+          <replaced-content x="6.0" y="704.667" width="505.333" height="0.667" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+          </replaced-content>
+          <replaced-content x="15.334" y="622.0" width="478.667" height="68.0" source="null" content-width="100.0" content-height="100.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+          </replaced-content>
+          <p type="ParagraphRenderBox" x="21.333" y="628.667" width="470.0" height="58.667" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="*  Pénalités de retard :&#x000a;   - Taux de pénalités exigibles le jour suivant la date d'échéance de règlement inscrite sur la facture. ( art L 441-6 du code de commerce) &#x000a;      Pénalités de retard ne pouvant être inférieures à 3 fois le taux d'intérêt légal (taux annuel) &#x000a;   - Une indemnité forfaitaire de 40 euros (décret 2012-1115 du 2 octobre 2012)&#x000a;*  Escompte pour paiement anticipé (taux mensuel applicable en cas de paiement anticipé)&#x000a;"/>
+            <line type="ParagraphPoolBox" x="21.333" y="628.667" width="79.08" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="628.667" width="3.112" height="8.0">*</text>
+              <spacer width="4.432" height="0.0" preserve="true"/>
+              <text x="28.877" y="628.667" width="32.888" height="8.0">Pénalités</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="63.981" y="628.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="75.093" y="628.667" width="20.888" height="8.0">retard</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="98.197" y="628.667" width="2.216" height="8.0">:</text>
+            </line>
+            <line type="ParagraphPoolBox" x="21.333" y="636.667" width="470.0" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="636.667" width="2.664" height="8.0">-</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="26.213" y="636.667" width="17.776" height="8.0">Taux</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="46.205" y="636.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="57.317" y="636.667" width="32.008" height="8.0">pénalités</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="91.541" y="636.667" width="31.12" height="8.0">exigibles</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="124.877" y="636.667" width="6.224" height="8.0">le</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="133.317" y="636.667" width="13.336" height="8.0">jour</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="148.869" y="636.667" width="25.336" height="8.0">suivant</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="176.421" y="636.667" width="6.224" height="8.0">la</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="184.861" y="636.667" width="15.56" height="8.0">date</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="202.637" y="636.667" width="40.656" height="8.0">d'échéance</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="245.509" y="636.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="256.621" y="636.667" width="35.56" height="8.0">règlement</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="294.397" y="636.667" width="25.328" height="8.0">inscrite</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="321.941" y="636.667" width="11.112" height="8.0">sur</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="335.269" y="636.667" width="6.224" height="8.0">la</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="343.709" y="636.667" width="26.656" height="8.0">facture.</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="372.581" y="636.667" width="2.664" height="8.0">(</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="377.461" y="636.667" width="9.328" height="8.0">art</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="389.005" y="636.667" width="4.448" height="8.0">L</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="395.669" y="636.667" width="20.456" height="8.0">441-6</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="418.341" y="636.667" width="8.896" height="8.0">du</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="429.453" y="636.667" width="17.344" height="8.0">code</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="449.013" y="636.667" width="8.896" height="8.0">de</text>
+            </line>
+            <line type="ParagraphPoolBox" x="21.333" y="644.667" width="42.216" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="644.667" width="40.0" height="8.0">commerce)</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="63.549" y="644.667" width="0.0" height="8.0"></text>
+            </line>
+            <line type="ParagraphPoolBox" x="21.333" y="652.667" width="318.8" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="652.667" width="32.888" height="8.0">Pénalités</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="56.437" y="652.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="67.549" y="652.667" width="20.888" height="8.0">retard</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="90.653" y="652.667" width="8.896" height="8.0">ne</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="101.765" y="652.667" width="28.456" height="8.0">pouvant</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="132.437" y="652.667" width="13.776" height="8.0">être</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="148.429" y="652.667" width="37.336" height="8.0">inférieures</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="187.981" y="652.667" width="4.448" height="8.0">à</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="194.645" y="652.667" width="4.448" height="8.0">3</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="201.309" y="652.667" width="12.44" height="8.0">fois</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="215.965" y="652.667" width="6.224" height="8.0">le</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="224.405" y="652.667" width="15.112" height="8.0">taux</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="241.733" y="652.667" width="28.184" height="8.0">d'intérêt</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="272.133" y="652.667" width="16.896" height="8.0">légal</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="291.245" y="652.667" width="17.776" height="8.0">(taux</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="311.237" y="652.667" width="26.68" height="8.0">annuel)</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="340.133" y="652.667" width="0.0" height="8.0"></text>
+            </line>
+            <line type="ParagraphPoolBox" x="21.333" y="660.667" width="273.328" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="660.667" width="2.664" height="8.0">-</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="26.213" y="660.667" width="14.672" height="8.0">Une</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="43.101" y="660.667" width="34.672" height="8.0">indemnité</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="79.989" y="660.667" width="33.32" height="8.0">forfaitaire</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="115.525" y="660.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="126.637" y="660.667" width="8.896" height="8.0">40</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="137.749" y="660.667" width="20.008" height="8.0">euros</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="159.973" y="660.667" width="24.888" height="8.0">(décret</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="187.077" y="660.667" width="38.248" height="8.0">2012-1115</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="227.541" y="660.667" width="8.896" height="8.0">du</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="238.653" y="660.667" width="4.448" height="8.0">2</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="245.317" y="660.667" width="26.672" height="8.0">octobre</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="274.205" y="660.667" width="20.456" height="8.0">2012)</text>
+            </line>
+            <line type="ParagraphPoolBox" x="21.333" y="668.667" width="321.32" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="21.333" y="668.667" width="3.112" height="8.0">*</text>
+              <spacer width="4.432" height="0.0" preserve="true"/>
+              <text x="28.877" y="668.667" width="35.552" height="8.0">Escompte</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="66.645" y="668.667" width="16.008" height="8.0">pour</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="84.869" y="668.667" width="32.896" height="8.0">paiement</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="119.981" y="668.667" width="27.56" height="8.0">anticipé</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="149.757" y="668.667" width="17.776" height="8.0">(taux</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="169.749" y="668.667" width="30.232" height="8.0">mensuel</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="202.197" y="668.667" width="36.016" height="8.0">applicable</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="240.429" y="668.667" width="8.896" height="8.0">en</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="251.541" y="668.667" width="12.448" height="8.0">cas</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="266.205" y="668.667" width="8.896" height="8.0">de</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="277.317" y="668.667" width="32.896" height="8.0">paiement</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="312.429" y="668.667" width="30.224" height="8.0">anticipé)</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="4.667" y="708.0" width="176.667" height="25.333" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="SARL Fort Royal Resort&#x000a;Lieu dit « Petit Bas Vent »&#x000a;97126 Deshaies, Guadeloupe&#x000a;"/>
+            <line type="ParagraphPoolBox" x="4.667" y="708.0" width="85.736" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="4.667" y="708.0" width="20.88" height="8.0">SARL</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="27.763" y="708.0" width="14.208" height="8.0">Fort</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="44.187" y="708.0" width="20.448" height="8.0">Royal</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="66.851" y="708.0" width="23.552" height="8.0">Resort</text>
+            </line>
+            <line type="ParagraphPoolBox" x="4.667" y="716.0" width="91.952" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="4.667" y="716.0" width="15.12" height="8.0">Lieu</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="22.003" y="716.0" width="8.44" height="8.0">dit</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="32.659" y="716.0" width="4.448" height="8.0">«</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="39.323" y="716.0" width="15.984" height="8.0">Petit</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="57.523" y="716.0" width="13.776" height="8.0">Bas</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="73.515" y="716.0" width="16.44" height="8.0">Vent</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="92.171" y="716.0" width="4.448" height="8.0">»</text>
+            </line>
+            <line type="ParagraphPoolBox" x="4.667" y="724.0" width="105.808" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="4.667" y="724.0" width="22.24" height="8.0">97126</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="29.123" y="724.0" width="35.56" height="8.0">Deshaies,</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="66.899" y="724.0" width="43.576" height="8.0">Guadeloupe</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="183.333" y="708.0" width="128.667" height="20.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Téléphone: +590 (0)590 68 76 70&#x000a;Fax: +590 (0)590 68 79 50&#x000a;"/>
+            <line type="ParagraphPoolBox" x="188.2145" y="708.0" width="118.904" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="188.2145" y="708.0" width="40.008" height="8.0">Téléphone:</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="230.4385" y="708.0" width="18.008" height="8.0">+590</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="250.6625" y="708.0" width="23.12" height="8.0">(0)590</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="275.9985" y="708.0" width="8.896" height="8.0">68</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="287.1105" y="708.0" width="8.896" height="8.0">76</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="298.2225" y="708.0" width="8.896" height="8.0">70</text>
+            </line>
+            <line type="ParagraphPoolBox" x="200.4465" y="716.0" width="94.44" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="200.4465" y="716.0" width="15.544" height="8.0">Fax:</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="218.2065" y="716.0" width="18.008" height="8.0">+590</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="238.4305" y="716.0" width="23.12" height="8.0">(0)590</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="263.7665" y="716.0" width="8.896" height="8.0">68</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="274.8785" y="716.0" width="8.896" height="8.0">79</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="285.9905" y="716.0" width="8.896" height="8.0">50</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="335.333" y="708.0" width="168.0" height="32.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Société à responsabilité limitée – Capital 7 500 EUR&#x000a;Code APE 5510Z RCS Basse Terre – 501 094 999&#x000a;"/>
+            <line type="ParagraphPoolBox" x="337.133" y="708.0" width="166.2" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="337.133" y="708.0" width="26.664" height="8.0">Société</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="366.013" y="708.0" width="4.448" height="8.0">à</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="372.677" y="708.0" width="49.344" height="8.0">responsabilité</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="424.237" y="708.0" width="23.104" height="8.0">limitée</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="449.557" y="708.0" width="4.448" height="8.0">–</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="456.221" y="708.0" width="24.888" height="8.0">Capital</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="483.325" y="708.0" width="4.448" height="8.0">7</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="489.989" y="708.0" width="13.344" height="8.0">500</text>
+            </line>
+            <line type="ParagraphPoolBox" x="486.453" y="716.0" width="16.88" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="486.453" y="716.0" width="16.88" height="8.0">EUR</text>
+            </line>
+            <line type="ParagraphPoolBox" x="338.485" y="724.0" width="164.848" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="338.485" y="724.0" width="19.12" height="8.0">Code</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="359.821" y="724.0" width="15.984" height="8.0">APE</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="378.021" y="724.0" width="22.672" height="8.0">5510Z</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="402.909" y="724.0" width="16.88" height="8.0">RCS</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="422.005" y="724.0" width="22.224" height="8.0">Basse</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="446.445" y="724.0" width="19.104" height="8.0">Terre</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="467.765" y="724.0" width="4.448" height="8.0">–</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="474.429" y="724.0" width="13.344" height="8.0">501</text>
+              <spacer width="2.216" height="0.0" preserve="true"/>
+              <text x="489.989" y="724.0" width="13.344" height="8.0">094</text>
+            </line>
+            <line type="ParagraphPoolBox" x="489.989" y="732.0" width="13.344" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="489.989" y="732.0" width="13.344" height="8.0">999</text>
+            </line>
+          </p>
+        </canvas>
+      </auto>
+    </page-area>
+  </physical-page>
+</layout-output>
