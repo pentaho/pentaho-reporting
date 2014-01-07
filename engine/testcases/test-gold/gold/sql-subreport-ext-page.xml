@@ -3903,8 +3903,6 @@
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <block type="ProgressMarkerRenderBox" x="0.0" y="696.0" width="540.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        </block>
         <canvas type="CanvasRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
           <replaced-content x="0.0" y="696.0" width="540.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
@@ -5856,8 +5854,6 @@
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <block type="ProgressMarkerRenderBox" x="0.0" y="696.0" width="540.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        </block>
         <canvas type="CanvasRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
           <replaced-content x="0.0" y="696.0" width="540.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
@@ -7809,8 +7805,6 @@
     </page-area>
     <page-area name="Logical-Page-Footer-Area" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
       <auto name="Footer-2" type="AutoRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <block type="ProgressMarkerRenderBox" x="0.0" y="696.0" width="540.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        </block>
         <canvas type="CanvasRenderBox" x="0.0" y="696.0" width="540.0" height="24.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
           <replaced-content x="0.0" y="696.0" width="540.0" height="0.0" source="null" content-width="100.0" content-height="0.0" requested-width="auto" requested-height="auto" raw-object-type="org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper">
