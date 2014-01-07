@@ -55,11 +55,11 @@ public final class SheetLayout
   /**
    * The XBounds, all vertical cell boundaries (as CoordinateMappings).
    */
-  private final TableCutList xBounds;
+  private TableCutList xBounds;
   /**
    * The YBounds, all vertical cell boundaries (as CoordinateMappings).
    */
-  private final TableCutList yBounds;
+  private TableCutList yBounds;
   /**
    * The right border of the grid. This is needed when not being in the strict mode.
    */
@@ -86,6 +86,28 @@ public final class SheetLayout
     this.yMaxBounds = 0;
     this.ensureXMapping(0, Boolean.FALSE);
     this.ensureYMapping(0, Boolean.FALSE);
+  }
+
+  public SheetLayout derive()
+  {
+    SheetLayout clone = clone();
+    clone.clearVerticalInfo();
+    return clone;
+  }
+
+  public SheetLayout clone()
+  {
+    try
+    {
+      SheetLayout clone = (SheetLayout) super.clone();
+      clone.xBounds = xBounds.clone();
+      clone.yBounds = yBounds.clone();
+      return clone;
+    }
+    catch (CloneNotSupportedException e)
+    {
+      throw new IllegalStateException();
+    }
   }
 
   private SheetLayoutTableCellDefinition createBackground(final RenderBox box)
@@ -757,6 +779,12 @@ public final class SheetLayout
     xBounds.clear();
     xMaxBounds = 0;
 
+    yBounds.clear();
+    yMaxBounds = 0;
+  }
+
+  public void clearVerticalInfo()
+  {
     yBounds.clear();
     yMaxBounds = 0;
   }
