@@ -60,7 +60,7 @@ public class Prd2098Test extends TestCase
 
     RenderNode[] elementsByNodeType =
         MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER);
-    assertEquals(7, elementsByNodeType.length);
+    assertEquals(3, elementsByNodeType.length);
   }
 
   public void testRunGoldenSample() throws Exception

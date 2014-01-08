@@ -138,7 +138,7 @@ public class Pre492Test extends TestCase
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
     final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(37, elementsByElementType.length);
+    assertEquals(31, elementsByElementType.length);
     assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[36].getY());
 
     final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 1);
