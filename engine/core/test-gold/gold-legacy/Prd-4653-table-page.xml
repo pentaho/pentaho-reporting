@@ -263,7 +263,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="3" row-count="9">
+  <table col-count="3" row-count="8">
     <cols>
       <column width="20"/>
       <column width="520"/>
@@ -343,7 +343,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="25">
+    <row height="457">
       <empty-cell/>
       <empty-cell/>
       <cell row-span="1" col-span="1">
@@ -355,11 +355,6 @@
           <text x="599.891" y="79.0" width="13.776" height="8.0">Dup</text>
         </line>
       </cell>
-    </row>
-    <row height="432">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="5">
       <empty-cell>
