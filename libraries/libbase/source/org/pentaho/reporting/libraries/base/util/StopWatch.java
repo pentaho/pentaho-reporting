@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-public class StopWatch
+public class StopWatch implements AutoCloseable
 {
   private long elapsedTime;
   private long startTime;
@@ -71,12 +71,12 @@ public class StopWatch
     return elapsedTime;
   }
 
-  public float getElapsedMilliseconds()
+  public double getElapsedMilliseconds()
   {
     return getElapsedTime() / 1000000.0f;
   }
 
-  public float getElapsedSeconds()
+  public double getElapsedSeconds()
   {
     return getElapsedTime() / 1000000000.0f;
   }
@@ -84,5 +84,25 @@ public class StopWatch
   public String toString()
   {
     return "StopWatch={elapsedTimeInSeconds=" + getElapsedSeconds() + "}";
+  }
+
+  public long getStartTime()
+  {
+    return startTime;
+  }
+
+  public double getStartMilliseconds()
+  {
+    return getStartTime() / 1000000.0f;
+  }
+
+  public boolean isStarted()
+  {
+    return started;
+  }
+
+  public void close()
+  {
+    stop();
   }
 }

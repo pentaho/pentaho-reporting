@@ -129,7 +129,7 @@ public class DefaultOutputFunction extends AbstractFunction
       final ReportDefinition report = event.getReport();
       if (event.getState().isSubReportEvent() == false)
       {
-        renderer.startReport(report, getRuntime().getProcessingContext());
+        renderer.startReport(report, getRuntime().getProcessingContext(), event.getState().getPerformanceMonitorContext());
 
         final ReportState reportState = event.getState();
         final ExpressionRuntime runtime = getRuntime();

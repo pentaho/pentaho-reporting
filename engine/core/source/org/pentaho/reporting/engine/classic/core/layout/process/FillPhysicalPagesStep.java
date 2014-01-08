@@ -114,6 +114,9 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
                                 final long pageEnd)
   {
 
+    getEventWatch().start();
+    getSummaryWatch().start();
+    try{
     final long contentStart = pagebox.getHeaderArea().getHeight();
     final long contentEnd = (pageEnd - pageStart) + contentStart;
     pageContext = new PageContext(contentStart, contentEnd);
@@ -157,6 +160,11 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     derived.setPageOffset(0);
     derived.setPageEnd(contentEnd + footerArea.getHeight() + repeatFooterArea.getHeight());
     return derived;
+    }
+    finally {
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
+    }
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)

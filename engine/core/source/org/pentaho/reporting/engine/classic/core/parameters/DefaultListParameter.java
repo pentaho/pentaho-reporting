@@ -22,9 +22,12 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.libraries.base.util.FormattedMessage;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class DefaultListParameter extends AbstractParameter implements ListParameter
@@ -99,23 +102,28 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
     final DataRow parameterData = context.getParameterData();
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow(context.getReportEnvironment());
     final DataFactory dataFactory = context.getDataFactory();
-    final TableModel tableModel = dataFactory.queryData(getQueryName(),
-        new CompoundDataRow(envDataRow, parameterData));
+    try (PerformanceLoggingStopWatch sw = context.getPerformanceMonitorContext().createStopWatch
+        (PerformanceTags.REPORT_PARAMETER_QUERY, new FormattedMessage("query={%s}", getQueryName())))
+    {
+      sw.start();
+      final TableModel tableModel = dataFactory.queryData(getQueryName(),
+          new CompoundDataRow(envDataRow, parameterData));
 
-    final String formula = getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context);
-    if (StringUtils.isEmpty(formula, true))
-    {
-      return new DefaultParameterValues(tableModel, getKeyColumn(), getTextColumn());
-    }
+      final String formula = getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
+          ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context);
+      if (StringUtils.isEmpty(formula, true))
+      {
+        return new DefaultParameterValues(tableModel, getKeyColumn(), getTextColumn());
+      }
 
-    try
-    {
-      return new ComputedParameterValues(tableModel, getKeyColumn(), getTextColumn(), formula, context);
-    }
-    catch (ReportProcessingException e)
-    {
-      throw new ReportDataFactoryException("Failed to initialize parameter-value-collection", e);
+      try
+      {
+        return new ComputedParameterValues(tableModel, getKeyColumn(), getTextColumn(), formula, context);
+      }
+      catch (ReportProcessingException e)
+      {
+        throw new ReportDataFactoryException("Failed to initialize parameter-value-collection", e);
+      }
     }
   }
 
@@ -176,7 +184,7 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
         }
       }
     }
-    
+
     if (allowMultiSelection)
     {
       final Class valueType1 = getValueType();

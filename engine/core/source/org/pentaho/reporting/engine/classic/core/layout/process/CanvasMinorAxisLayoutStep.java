@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -48,9 +49,11 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 
 /**
@@ -72,11 +75,26 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   private MinorAxisParagraphBreakState lineBreakState;
   private MinorAxisNodeContext nodeContext;
   private MinorAxisNodeContextPool nodeContextPool;
+  private PerformanceLoggingStopWatch paragraphLayoutWatch;
 
   public CanvasMinorAxisLayoutStep()
   {
     nodeContextPool = new MinorAxisNodeContextPool();
     lineBreakState = new MinorAxisParagraphBreakState();
+  }
+
+  public void initialize(final PerformanceMonitorContext monitorContext)
+  {
+    super.initialize(monitorContext);
+    paragraphLayoutWatch = monitorContext.createStopWatch
+        (PerformanceTags.getSummaryTag(PerformanceTags.REPORT_LAYOUT_PROCESS_SUFFIX,
+            getClass().getSimpleName() + ".ParagraphLayout"));
+  }
+
+  public void close()
+  {
+    super.close();
+    paragraphLayoutWatch.close();
   }
 
   public void compute(final LogicalPageBox root)
@@ -119,50 +137,58 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    final MinorAxisNodeContext nodeContext = getNodeContext();
-    final MinorAxisParagraphBreakState breakState = getLineBreakState();
-
-    if (box.isComplexParagraph())
+    paragraphLayoutWatch.start();
+    try
     {
-      final RenderBox lineboxContainer = box.getLineboxContainer();
-      RenderNode node = lineboxContainer.getFirstChild();
-      while (node != null)
+      final MinorAxisNodeContext nodeContext = getNodeContext();
+      final MinorAxisParagraphBreakState breakState = getLineBreakState();
+
+      if (box.isComplexParagraph())
       {
+        final RenderBox lineboxContainer = box.getLineboxContainer();
+        RenderNode node = lineboxContainer.getFirstChild();
+        while (node != null)
+        {
+          // all childs of the linebox container must be inline boxes. They
+          // represent the lines in the paragraph. Any other element here is
+          // a error that must be reported
+          if (node.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
+          {
+            throw new IllegalStateException("Expected ParagraphPoolBox elements.");
+          }
+
+          final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
+          if (startLine(inlineRenderBox))
+          {
+            processBoxChilds(inlineRenderBox);
+            finishLine(inlineRenderBox, nodeContext, breakState);
+          }
+
+          node = node.getNext();
+        }
+      }
+      else
+      {
+        final ParagraphPoolBox node = box.getPool();
+
+        if (node.getFirstChild() == null)
+        {
+          return;
+        }
+
         // all childs of the linebox container must be inline boxes. They
         // represent the lines in the paragraph. Any other element here is
         // a error that must be reported
-        if (node.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
+        if (startLine(node))
         {
-          throw new IllegalStateException("Expected ParagraphPoolBox elements.");
+          processBoxChilds(node);
+          finishLine(node, nodeContext, breakState);
         }
-
-        final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-        if (startLine(inlineRenderBox))
-        {
-          processBoxChilds(inlineRenderBox);
-          finishLine(inlineRenderBox, nodeContext, breakState);
-        }
-
-        node = node.getNext();
       }
     }
-    else
+    finally
     {
-      final ParagraphPoolBox node = box.getPool();
-
-      if (node.getFirstChild() == null)
-      {
-        return;
-      }
-
-      // all childs of the linebox container must be inline boxes. They
-      // represent the lines in the paragraph. Any other element here is
-      // a error that must be reported
-      if (startLine(node))
-      {
-        processBoxChilds(node);
-        finishLine(node, nodeContext, breakState);
-      }
+      paragraphLayoutWatch.stop(true);
     }
   }
 

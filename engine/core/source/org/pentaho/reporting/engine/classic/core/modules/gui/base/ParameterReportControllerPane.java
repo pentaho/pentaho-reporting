@@ -72,6 +72,7 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationMessage;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.Messages;
@@ -111,6 +112,11 @@ public class ParameterReportControllerPane extends JPanel
       final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow(reportEnvironment);
       parameterData = new CompoundDataRow(envDataRow, new ParameterDataRow());
 
+    }
+
+    public PerformanceMonitorContext getPerformanceMonitorContext()
+    {
+      return ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
     }
 
     /**

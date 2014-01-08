@@ -87,6 +87,8 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
+import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -313,6 +315,11 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
       final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow(defaultEnvironment);
       dataRow = new CompoundDataRow(envDataRow, new StaticDataRow());
+    }
+
+    public PerformanceMonitorContext getPerformanceMonitorContext()
+    {
+      return new NoOpPerformanceMonitorContext();
     }
 
     public DataRow getParameterData()
