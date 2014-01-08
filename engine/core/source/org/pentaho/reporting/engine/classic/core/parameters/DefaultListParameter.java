@@ -102,8 +102,9 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
     final DataRow parameterData = context.getParameterData();
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow(context.getReportEnvironment());
     final DataFactory dataFactory = context.getDataFactory();
-    try (PerformanceLoggingStopWatch sw = context.getPerformanceMonitorContext().createStopWatch
-        (PerformanceTags.REPORT_PARAMETER_QUERY, new FormattedMessage("query={%s}", getQueryName())))
+    PerformanceLoggingStopWatch sw = context.getPerformanceMonitorContext().createStopWatch
+            (PerformanceTags.REPORT_PARAMETER_QUERY, new FormattedMessage("query={%s}", getQueryName()));
+    try
     {
       sw.start();
       final TableModel tableModel = dataFactory.queryData(getQueryName(),
@@ -124,6 +125,10 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
       {
         throw new ReportDataFactoryException("Failed to initialize parameter-value-collection", e);
       }
+    }
+    finally
+    {
+      sw.close();
     }
   }
 

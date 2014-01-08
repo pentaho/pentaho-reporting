@@ -136,8 +136,9 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       result = new ValidationResult();
     }
 
-    try (PerformanceLoggingStopWatch sw =
-             parameterContext.getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PARAMETER))
+    PerformanceLoggingStopWatch sw =
+                 parameterContext.getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PARAMETER);
+    try
     {
       sw.start();
 
@@ -154,6 +155,9 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       }
       result.setParameterValues(trustedParameterContext.getTrustedValues());
       return result;
+    }
+    finally{
+      sw.close();
     }
   }
 
