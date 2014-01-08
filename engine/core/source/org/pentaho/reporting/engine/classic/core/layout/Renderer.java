@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
@@ -43,17 +44,13 @@ public interface Renderer extends Cloneable
     NORMALFLOW, HEADER, FOOTER, REPEAT_FOOTER, WATERMARK
   }
   
-  public static final int TYPE_NORMALFLOW = 0;
-  public static final int TYPE_HEADER = 1;
-  public static final int TYPE_FOOTER = 2;
-  public static final int TYPE_REPEATED_FOOTER = 3;
-  public static final int TYPE_WATERMARK = 4;
-
   public OutputProcessor getOutputProcessor();
 
   public LayoutModelBuilder getNormalFlowLayoutModelBuilder();
 
-  public void startReport(final ReportDefinition pageDefinition, final ProcessingContext processingContext);
+  public void startReport(final ReportDefinition pageDefinition,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext);
 
   public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint);
 
@@ -73,9 +70,6 @@ public interface Renderer extends Cloneable
 
   public void add(Band band, ExpressionRuntime runtime)
       throws ReportProcessingException;
-
-  public void addToNormalFlow(final Band band,
-                              final ExpressionRuntime runtime) throws ReportProcessingException;
 
   public void endGroupBody();
 

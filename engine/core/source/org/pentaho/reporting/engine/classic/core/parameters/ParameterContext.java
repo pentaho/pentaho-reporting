@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -56,6 +57,8 @@ public interface ParameterContext
   public ResourceManager getResourceManager();
 
   public Configuration getConfiguration();
+
+  public PerformanceMonitorContext getPerformanceMonitorContext();
 
   public void close() throws ReportDataFactoryException;
 }

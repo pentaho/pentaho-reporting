@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.parameters;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -28,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
@@ -165,5 +167,10 @@ public class DefaultParameterContext implements ParameterContext
   public ResourceKey getContentBase()
   {
     return contentBase;
+  }
+
+  public PerformanceMonitorContext getPerformanceMonitorContext()
+  {
+    return ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
   }
 }

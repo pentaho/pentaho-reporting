@@ -72,21 +72,22 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
   {
-    PaginationStepLib.assertProgress(pageBox);
+    getEventWatch().start();
+    getSummaryWatch().start();
+    try{
+      PaginationStepLib.assertProgress(pageBox);
 
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Start pagination ... " + pageBox.getPageOffset());
-    }
-    this.breakIndicatorEncountered = null;
-    this.visualState = null;
-    this.pageOffsetKey = pageBox.getPageOffset();
-    this.shiftState = new InitialPaginationShiftState();
-    this.breakPending = false;
-    this.usablePageHeight = Long.MAX_VALUE;
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Start pagination ... " + pageBox.getPageOffset());
+      }
+      this.breakIndicatorEncountered = null;
+      this.visualState = null;
+      this.pageOffsetKey = pageBox.getPageOffset();
+      this.shiftState = new InitialPaginationShiftState();
+      this.breakPending = false;
+      this.usablePageHeight = Long.MAX_VALUE;
 
-    try
-    {
       final long[] allCurrentBreaks = pageBox.getPhysicalBreaks(RenderNode.VERTICAL_AXIS);
       if (allCurrentBreaks.length == 0)
       {
@@ -147,6 +148,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
     }
   }
 

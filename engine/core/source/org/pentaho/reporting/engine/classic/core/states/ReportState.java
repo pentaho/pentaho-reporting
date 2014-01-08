@@ -122,4 +122,6 @@ public interface ReportState extends Cloneable
 
   public long getGroupSequenceCounter (final int groupIndex);
   public long getCrosstabColumnSequenceCounter (final int groupIndex);
+
+  PerformanceMonitorContext getPerformanceMonitorContext();
 }

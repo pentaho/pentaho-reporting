@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
@@ -55,7 +56,9 @@ public class DummyRenderer implements Renderer
     return modelBuilder;
   }
 
-  public void startReport(final ReportDefinition pageDefinition, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition pageDefinition,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
     modelBuilder = new DummyLayoutModelBuilder();
   }

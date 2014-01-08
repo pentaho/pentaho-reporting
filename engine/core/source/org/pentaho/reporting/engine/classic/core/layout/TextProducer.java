@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTextFactory;
+import org.pentaho.reporting.engine.classic.core.layout.text.RenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
@@ -29,7 +30,7 @@ import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
 public class TextProducer
 {
   private CodePointBuffer buffer;
-  private DefaultRenderableTextFactory textFactory;
+  private RenderableTextFactory textFactory;
   private TextCache textCache;
   private int[] bufferArray;
   private Utf16LE utf16LE;

@@ -33,11 +33,9 @@ import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class CachingDataFactory extends AbstractDataFactory implements CompoundDataFactorySupport
 {
@@ -47,8 +45,6 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   }
 
   private static final Log logger = LogFactory.getLog(CachingDataFactory.class);
-
-  private static final Object NULL_INDICATOR = new Object();
 
   private DataCache dataCache;
   private HashMap<DataCacheKey, TableModel> sessionCache;
@@ -135,8 +131,6 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
 
     return backend.isFreeFormQueryExecutable(query, parameter);
   }
-
-  private Object lastKey;
 
   public TableModel queryStatic(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
