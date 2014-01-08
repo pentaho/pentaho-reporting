@@ -229,8 +229,9 @@ public final class DefaultFlowController
       return new EmptyTableModel();
     }
 
-    try (PerformanceLoggingStopWatch sw = performanceMonitorContext.createStopWatch
-        (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query)))
+    PerformanceLoggingStopWatch sw = performanceMonitorContext.createStopWatch
+            (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query));
+    try
     {
       final TableModel reportData = dataFactory.queryData
           (query, new QueryDataRowWrapper(parameters, queryLimit, queryTimeout));
@@ -239,6 +240,10 @@ public final class DefaultFlowController
         return new LengthLimitingTableModel(reportData, queryLimit);
       }
       return reportData;
+    }
+    finally
+    {
+      sw.close();
     }
   }
 

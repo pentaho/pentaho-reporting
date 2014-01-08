@@ -466,7 +466,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       return;
     }
 
-    try (PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE))
+    PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE);
+    try
     {
       sw.start();
       // every report processing starts with an StartState.
@@ -519,8 +520,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       {
         throw new IllegalStateException("Assertation Failed: No functions defined, invalid implementation.");
       }
-      try (final PerformanceLoggingStopWatch preDataSw =
-               getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_DATA))
+      final PerformanceLoggingStopWatch preDataSw =
+                     getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_DATA);
+      try
       {
         preDataSw.start();
 
@@ -580,8 +582,16 @@ public abstract class AbstractReportProcessor implements ReportProcessor
         }
         while (hasNext == true);
       }
+      finally
+      {
+        preDataSw.close();
+      }
       // finally return the saved page states.
       processingContext.setPrepareRun(false);
+    }
+    finally
+    {
+      sw.close();
     }
   }
 
@@ -599,7 +609,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                                                       final DefaultProcessingContext processingContext)
       throws ReportProcessingException
   {
-    try (PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_CROSSTAB))
+    PerformanceLoggingStopWatch sw =
+        getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_CROSSTAB);
+    try
     {
       sw.start();
       processingContext.setProcessingLevel(LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING);
@@ -616,6 +628,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
         throw new IllegalStateException("Repaginate did not produce an finish state");
       }
       return state;
+    }
+    finally
+    {
+      sw.close();
     }
   }
 
@@ -635,7 +651,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                                               final int maxRows)
       throws ReportProcessingException
   {
-    try (PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PAGINATE))
+    PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PAGINATE);
+    try
     {
       sw.start();
       final boolean failOnError = isStrictErrorHandling(getReport().getReportConfiguration());
@@ -1110,6 +1127,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     catch (ContentProcessingException e)
     {
       throw new ReportProcessingException("Content-Processing failed.", e);
+    }
+    finally
+    {
+      sw.close();
     }
   }
 
@@ -1670,7 +1691,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor
 
   public void processReport() throws ReportProcessingException
   {
-    try (PerformanceLoggingStopWatch swGlobal = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PROCESSING))
+    PerformanceLoggingStopWatch swGlobal =
+        getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PROCESSING);
+    try
     {
       swGlobal.start();
       if (AbstractReportProcessor.logger.isDebugEnabled())
@@ -1689,8 +1712,9 @@ public abstract class AbstractReportProcessor implements ReportProcessor
           // Processes the whole report ..
           prepareReportProcessing();
         }
-
-        try (PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_GENERATE))
+        PerformanceLoggingStopWatch sw =
+            getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_GENERATE);
+        try
         {
           sw.start();
           final long paginateTime = System.currentTimeMillis();
@@ -1719,6 +1743,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                     ": Report processing time: " + ((endTime - startTime) / 1000.0)));
           }
         }
+        finally
+        {
+          sw.close();
+        }
       }
       catch (EmptyReportException re)
       {
@@ -1743,6 +1771,11 @@ public abstract class AbstractReportProcessor implements ReportProcessor
             Thread.currentThread()) + ": Report processing finished.");
       }
     }
+    finally
+    {
+      swGlobal.close();
+    }
+
   }
 
   public int getLogicalPageCount()
