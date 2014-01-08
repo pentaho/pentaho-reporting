@@ -189,7 +189,8 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
                   final Band band) throws ReportProcessingException
   {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
-    builderStrategy.add(runtime, getLayoutModelBuilder(), band, collectedSubReportMarker);
+    LayoutModelBuilder layoutModelBuilder = getLayoutModelBuilder();
+    builderStrategy.add(runtime, layoutModelBuilder, band, collectedSubReportMarker);
   }
 
   public void addToNormalFlow(final ExpressionRuntime runtime,
