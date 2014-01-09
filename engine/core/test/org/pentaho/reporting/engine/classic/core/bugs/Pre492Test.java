@@ -139,12 +139,12 @@ public class Pre492Test extends TestCase
     final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
     assertEquals(31, elementsByElementType.length);
-    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[36].getY());
+    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[elementsByElementType.length - 1].getY());
 
     final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 1);
     final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(38, elementsPage1.length);
-    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[37].getY());
+    assertEquals(34, elementsPage1.length);
+    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[elementsPage1.length - 1].getY());
     //  ModelPrinter.INSTANCE.print(page1);
   }
 }
