@@ -776,11 +776,21 @@ public class JdbcDataSourceDialog extends CommonDialog
       final JdbcConnectionDefinition definition = connectionComponent.createConnectionDefinition(currentConnectionProvider);
       dialogModel.addConnection(definition);
       dialogModel.getConnections().setSelectedItem(definition);
-      final String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
-      if(quernNameForSelection != null)
+
+      String selectedQuery = selectedQueryName;
+      if (StringUtils.isEmpty(selectedQuery))
       {
-        dialogModel.setSelectedQuery(quernNameForSelection);
-        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(quernNameForSelection));
+        DataSetQuery query = dialogModel.getFirstQueryName();
+        if (query != null)
+        {
+          selectedQuery = query.getQueryName();
+        }
+      }
+
+      if(StringUtils.isEmpty(selectedQuery) == false)
+      {
+        dialogModel.setSelectedQuery(selectedQuery);
+        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(selectedQuery));
       }
     }
 
