@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.ui.datasources.jdbc.connection;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.JndiConnectionProvider;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
@@ -28,7 +32,6 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   private String username;
   private String password;
   private String databaseType;
-  private boolean shared;
 
   public JndiConnectionDefinition(final String name,
                                   final String jndiName,
@@ -36,32 +39,16 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
                                   final String username,
                                   final String password)
   {
-    this(name, jndiName, databaseType, username, password, false);
-  }
-
-  public JndiConnectionDefinition(final String name,
-                                  final String jndiName,
-                                  final String databaseType,
-                                  final String username,
-                                  final String password,
-                                  final boolean shared)
-  {
     super(name);
     if (StringUtils.isEmpty(jndiName))
     {
       throw new IllegalArgumentException("The provided jndiName can not be empty");
     }
 
-    this.shared = shared;
     this.jndiName = jndiName;
     this.databaseType = databaseType;
     this.username = username;
     this.password = password;
-  }
-
-  public boolean isShared()
-  {
-    return shared;
   }
 
   public String getJndiName()
@@ -85,11 +72,8 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
     }
 
     final JndiConnectionDefinition that = (JndiConnectionDefinition) o;
+
     if (databaseType != null ? !databaseType.equals(that.databaseType) : that.databaseType != null)
-    {
-      return false;
-    }
-    if (shared != that.shared)
     {
       return false;
     }
@@ -113,7 +97,6 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   {
     int result = super.hashCode();
     result = 31 * result + jndiName.hashCode();
-    result = 31 * result + (shared ? 1 : 0);
     result = 31 * result + (username != null ? username.hashCode() : 0);
     result = 31 * result + (password != null ? password.hashCode() : 0);
     result = 31 * result + (databaseType != null ? databaseType.hashCode() : 0);
@@ -133,10 +116,5 @@ public class JndiConnectionDefinition extends JdbcConnectionDefinition
   public String getDatabaseType()
   {
     return databaseType;
-  }
-
-  public JndiConnectionDefinition createShared()
-  {
-    return new JndiConnectionDefinition(getName(), getJndiName(), getDatabaseType(), getUsername(), getPassword(), true);
   }
 }
