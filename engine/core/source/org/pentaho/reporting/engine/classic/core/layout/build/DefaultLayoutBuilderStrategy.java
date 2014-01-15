@@ -38,37 +38,10 @@ import org.pentaho.reporting.engine.classic.core.layout.richtext.RichTextConvert
 import org.pentaho.reporting.engine.classic.core.layout.richtext.RichTextConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
-import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 
 public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy
 {
-  private static class RichTextStyleResolver extends AbstractStructureVisitor
-  {
-    private SimpleStyleResolver simpleStyleResolver;
-    private ResolverStyleSheet resolveStyleSheet;
-
-    private RichTextStyleResolver()
-    {
-      this.simpleStyleResolver = new SimpleStyleResolver();
-      this.resolveStyleSheet = new ResolverStyleSheet();
-    }
-
-    public void resolve(final Section section)
-    {
-      inspectElement(section);
-      traverseSection(section);
-    }
-
-    protected void inspectElement(final ReportElement element)
-    {
-      simpleStyleResolver.resolve(element, resolveStyleSheet);
-      element.setComputedStyle(new SimpleStyleSheet(resolveStyleSheet));
-    }
-  }
-
   private static final Log logger = LogFactory.getLog(DefaultLayoutBuilderStrategy.class);
 
   private ExpressionRuntime runtime;
@@ -236,7 +209,7 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy
     if (value instanceof Section)
     {
       final Section section = (Section) value;
-      resolveStyle(section);
+      RichTextStyleResolver.resolveStyle(section);
       addBandInternal(section, builder, false);
       return;
     }
@@ -255,12 +228,6 @@ public class DefaultLayoutBuilderStrategy implements LayoutBuilderStrategy
     }
 
     builder.processContent(element, value, rawValue);
-  }
-
-  private void resolveStyle(final Section section)
-  {
-    final RichTextStyleResolver richTextStyleResolver = new RichTextStyleResolver();
-    richTextStyleResolver.resolve(section);
   }
 
   protected boolean isElementProcessable(final ReportElement element,

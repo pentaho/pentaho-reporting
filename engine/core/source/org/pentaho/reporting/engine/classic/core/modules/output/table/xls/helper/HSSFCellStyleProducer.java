@@ -34,7 +34,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -132,11 +131,11 @@ public class HSSFCellStyleProducer
 
 
     /**
-     * @param background can be null
-     * @param content    can be null
+     * @param background   can be null
+     * @param contentStyle can be null
      */
     protected HSSFCellStyleKey(final CellBackground background,
-                               final RenderBox content,
+                               final StyleSheet contentStyle,
                                final DataFormat dataFormat,
                                final ExcelFontFactory fontFactory,
                                final ExcelColorProducer colorProducer,
@@ -186,34 +185,27 @@ public class HSSFCellStyleProducer
         this.borderStrokeRight = HSSFCellStyleProducer.translateStroke(right.getBorderStyle(), right.getWidth());
       }
 
-      if (content != null)
+      if (contentStyle != null)
       {
-        final StyleSheet styleSheet = content.getStyleSheet();
-        final Color textColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
-        final String fontName = (String) styleSheet.getStyleProperty(TextStyleKeys.FONT);
-        final short fontSize = (short) styleSheet.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
-        final boolean bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD);
-        final boolean italic = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC);
-        final boolean underline = styleSheet.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
-        final boolean strikethrough = styleSheet.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+        final Color textColor = (Color) contentStyle.getStyleProperty(ElementStyleKeys.PAINT);
         final HSSFFontWrapper wrapper = new HSSFFontWrapper
-            (fontName, fontSize, bold, italic, underline, strikethrough, fontColorProducer.getNearestColor(textColor));
+            (contentStyle, fontColorProducer.getNearestColor(textColor));
         final Font excelFont = fontFactory.getExcelFont(wrapper);
         this.font = excelFont.getIndex();
 
         final ElementAlignment horizontal =
-            (ElementAlignment) styleSheet.getStyleProperty(ElementStyleKeys.ALIGNMENT);
+            (ElementAlignment) contentStyle.getStyleProperty(ElementStyleKeys.ALIGNMENT);
         this.horizontalAlignment = HSSFCellStyleProducer.convertAlignment(horizontal);
         final ElementAlignment vertical =
-            (ElementAlignment) styleSheet.getStyleProperty(ElementStyleKeys.VALIGNMENT);
+            (ElementAlignment) contentStyle.getStyleProperty(ElementStyleKeys.VALIGNMENT);
         this.verticalAlignment = HSSFCellStyleProducer.convertAlignment(vertical);
         final String dataStyle =
-            (String) styleSheet.getStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING);
+            (String) contentStyle.getStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING);
         if (dataStyle != null)
         {
           this.dataStyle = dataFormat.getFormat(dataStyle);
         }
-        this.wrapText = isWrapText(styleSheet);
+        this.wrapText = isWrapText(contentStyle);
       }
     }
 
@@ -561,7 +553,7 @@ public class HSSFCellStyleProducer
   /**
    * The cache for all generated styles.
    */
-  private HashMap<HSSFCellStyleKey,CellStyle> styleCache;
+  private HashMap<HSSFCellStyleKey, CellStyle> styleCache;
 
   private boolean warningDone;
   private boolean hardLimit;
@@ -624,7 +616,7 @@ public class HSSFCellStyleProducer
    * @param bg      the optional background style for the table cell.
    * @return the generated or cached HSSFCellStyle.
    */
-  public CellStyle createCellStyle(final RenderBox element,
+  public CellStyle createCellStyle(final StyleSheet element,
                                    final CellBackground bg)
   {
     // check, whether that style is already created
@@ -649,7 +641,7 @@ public class HSSFCellStyleProducer
         return null;
       }
     }
-    
+
     final CellStyle hssfCellStyle = workbook.createCellStyle();
     if (element != null)
     {

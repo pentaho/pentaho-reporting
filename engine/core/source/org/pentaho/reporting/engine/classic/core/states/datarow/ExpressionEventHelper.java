@@ -659,7 +659,7 @@ public abstract class ExpressionEventHelper
           }
           else
           {
-            logger.error("Failed to fire report-initialized event: " + ex);
+            logger.error("Failed to fire report-initialized event: ", ex);
           }
           evaluateToNull(expression);
         }

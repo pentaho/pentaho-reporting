@@ -40,7 +40,7 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
 /**
  * The sheet layout is used to build the background map and to collect the x- and y-cell-borders.
  */
-public final class SheetLayout
+public final class SheetLayout implements SlimSheetLayout, Cloneable
 {
 
   private static final SheetLayoutTableCellDefinition MARKER_DEFINITION = new SheetLayoutTableCellDefinition();
@@ -492,7 +492,7 @@ public final class SheetLayout
     xBounds.put(coordinate, aux);
   }
 
-  private void ensureYMapping(final long coordinate, final Boolean aux)
+  public void ensureYMapping(final long coordinate, final Boolean aux)
   {
     yBounds.put(coordinate, aux);
   }

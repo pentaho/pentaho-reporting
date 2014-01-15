@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
 public class CellBackground
 {
-  private ReportAttributeMap attributes;
+  private ReportAttributeMap<Object> attributes;
   private ArrayList<Color> collectedColors;
   private Color backgroundColor;
   private ArrayList<String> anchors;
@@ -51,7 +51,7 @@ public class CellBackground
     this.left = BorderEdge.EMPTY;
     this.bottom = BorderEdge.EMPTY;
     this.right = BorderEdge.EMPTY;
-    this.attributes = new ReportAttributeMap();
+    this.attributes = new ReportAttributeMap<Object>();
 
     this.topLeft = new BorderCorner(0, 0);
     this.topRight = new BorderCorner(0, 0);
@@ -69,7 +69,7 @@ public class CellBackground
     this.origin = origin;
   }
 
-  public void addAttributes(final ReportAttributeMap attrs)
+  public void addAttributes(final ReportAttributeMap<Object> attrs)
   {
     if (attrs == null)
     {
@@ -93,7 +93,7 @@ public class CellBackground
     }
   }
 
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     return attributes;
   }

@@ -284,6 +284,14 @@ public class RenderUtility
                                                        final RenderNode box,
                                                        final OutputProcessorMetaData metaData)
   {
+    return createImageFromDrawable(drawable, rect, box.getStyleSheet(), metaData);
+  }
+
+  public static ImageContainer createImageFromDrawable(final DrawableWrapper drawable,
+                                                       final StrictBounds rect,
+                                                       final StyleSheet box,
+                                                       final OutputProcessorMetaData metaData)
+  {
     final int imageWidth = (int) StrictGeomUtility.toExternalValue(rect.getWidth());
     final int imageHeight = (int) StrictGeomUtility.toExternalValue(rect.getHeight());
 
@@ -296,8 +304,7 @@ public class RenderUtility
     final Image image = ImageUtils.createTransparentImage((int) (imageWidth * scale), (int) (imageHeight * scale));
     final Graphics2D g2 = (Graphics2D) image.getGraphics();
 
-    final Object attribute =
-        box.getStyleSheet().getStyleProperty(ElementStyleKeys.ANTI_ALIASING);
+    final Object attribute = box.getStyleProperty(ElementStyleKeys.ANTI_ALIASING);
     if (attribute != null)
     {
       if (Boolean.TRUE.equals(attribute))
@@ -310,7 +317,7 @@ public class RenderUtility
       }
 
     }
-    if (RenderUtility.isFontSmooth(box.getStyleSheet(), metaData))
+    if (RenderUtility.isFontSmooth(box, metaData))
     {
       g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
     }
@@ -323,11 +330,10 @@ public class RenderUtility
     // the clipping bounds are a sub-area of the whole drawable
     // we only want to print a certain area ...
 
-    final StyleSheet style = box.getStyleSheet();
-    final String fontName = (String) style.getStyleProperty(TextStyleKeys.FONT);
-    final int fontSize = style.getIntStyleProperty(TextStyleKeys.FONTSIZE, 8);
-    final boolean bold = style.getBooleanStyleProperty(TextStyleKeys.BOLD);
-    final boolean italics = style.getBooleanStyleProperty(TextStyleKeys.ITALIC);
+    final String fontName = (String) box.getStyleProperty(TextStyleKeys.FONT);
+    final int fontSize = box.getIntStyleProperty(TextStyleKeys.FONTSIZE, 8);
+    final boolean bold = box.getBooleanStyleProperty(TextStyleKeys.BOLD);
+    final boolean italics = box.getBooleanStyleProperty(TextStyleKeys.ITALIC);
     if (bold && italics)
     {
       g2.setFont(new Font(fontName, Font.BOLD | Font.ITALIC, fontSize));
@@ -345,8 +351,8 @@ public class RenderUtility
       g2.setFont(new Font(fontName, Font.PLAIN, fontSize));
     }
 
-    g2.setStroke((Stroke) style.getStyleProperty(ElementStyleKeys.STROKE));
-    g2.setPaint((Paint) style.getStyleProperty(ElementStyleKeys.PAINT));
+    g2.setStroke((Stroke) box.getStyleProperty(ElementStyleKeys.STROKE));
+    g2.setPaint((Paint) box.getStyleProperty(ElementStyleKeys.PAINT));
 
     drawable.draw(g2, new Rectangle2D.Double(0, 0, imageWidth, imageHeight));
     g2.dispose();
