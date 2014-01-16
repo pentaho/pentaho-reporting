@@ -45,8 +45,10 @@ import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessingException;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlTagHelper;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlTextExtractorState;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilder;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilderFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleManager;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -90,19 +92,19 @@ public class HtmlTextExtractor extends DefaultTextExtractor
   private HtmlContentGenerator contentGenerator;
   private CharacterEntityParser characterEntityParser;
   private boolean result;
-  private boolean safariLengthFix;
   private RenderBox firstElement;
-  private boolean useWhitespacePreWrap;
-  private boolean enableRoundBorderCorner;
   private HtmlTextExtractorState processStack;
   private boolean enableInheritedLinkStyle;
+  private StyleBuilderFactory styleBuilderFactory;
 
   public HtmlTextExtractor(final OutputProcessorMetaData metaData,
                            final XmlWriter xmlWriter,
                            final StyleManager styleManager,
-                           final HtmlContentGenerator contentGenerator)
+                           final HtmlContentGenerator contentGenerator,
+                           final StyleBuilderFactory styleBuilderFactory)
   {
     super(metaData);
+    this.styleBuilderFactory = styleBuilderFactory;
     if (xmlWriter == null)
     {
       throw new NullPointerException();
@@ -120,14 +122,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     this.metaData = metaData;
     this.xmlWriter = xmlWriter;
     this.styleManager = styleManager;
-    this.styleBuilder = new DefaultStyleBuilder();
+    this.styleBuilder = new DefaultStyleBuilder(styleBuilderFactory);
     this.characterEntityParser = HtmlCharacterEntities.getEntityParser();
-    this.safariLengthFix = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack")));
-    this.useWhitespacePreWrap = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseWhitespacePreWrap")));
-    this.enableRoundBorderCorner = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.EnableRoundBorderCorner")));
     this.enableInheritedLinkStyle = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.LinksInheritStyle")));
   }
@@ -187,7 +183,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       if (firstElement != box)
       {
         final AttributeList attrList = new AttributeList();
-        HtmlPrinter.applyHtmlAttributes(attrs, attrList);
+        HtmlTagHelper.applyHtmlAttributes(attrs, attrList);
         if (attrList.isEmpty() == false)
         {
           xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrList, XmlWriterSupport.OPEN);
@@ -376,10 +372,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       final ReportAttributeMap attrs = box.getAttributes();
       if (firstElement != box)
       {
-        HtmlPrinter.applyHtmlAttributes(attrs, attrList);
-        final StyleBuilder style = HtmlPrinter.produceTextStyle
-            (styleBuilder, box, true, safariLengthFix,
-                useWhitespacePreWrap, enableRoundBorderCorner, processStack.getStyle());
+        HtmlTagHelper.applyHtmlAttributes(attrs, attrList);
+        final StyleBuilder style = styleBuilderFactory.produceTextStyle
+            (styleBuilder, box.getStyleSheet(), box.getBoxDefinition(), true, processStack.getStyle());
         styleManager.updateStyle(style, attrList);
       }
 
@@ -448,7 +443,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
   {
     if (b == null)
     {
-      b = new DefaultStyleBuilder();
+      b = new DefaultStyleBuilder(styleBuilderFactory);
     }
 
     b.append(StyleBuilder.CSSKeys.FONT_STYLE, "inherit");
@@ -514,10 +509,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       final ReportAttributeMap attrs = box.getAttributes();
       if (firstElement != box)
       {
-        HtmlPrinter.applyHtmlAttributes(attrs, attrList);
-        final StyleBuilder style = HtmlPrinter.produceTextStyle
-            (styleBuilder, box, true, safariLengthFix,
-                useWhitespacePreWrap, enableRoundBorderCorner, processStack.getStyle());
+        HtmlTagHelper.applyHtmlAttributes(attrs, attrList);
+        final StyleBuilder style = styleBuilderFactory.produceTextStyle
+            (styleBuilder, box.getStyleSheet(), box.getBoxDefinition(), true, processStack.getStyle());
         styleManager.updateStyle(style, attrList);
       }
 
@@ -608,10 +602,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       if (firstElement != box)
       {
         final AttributeList attrList = new AttributeList();
-        HtmlPrinter.applyHtmlAttributes(attrs, attrList);
-        final StyleBuilder style = HtmlPrinter.produceTextStyle
-            (styleBuilder, box, true, safariLengthFix,
-                useWhitespacePreWrap, enableRoundBorderCorner, processStack.getStyle());
+        HtmlTagHelper.applyHtmlAttributes(attrs, attrList);
+        final StyleBuilder style = styleBuilderFactory.produceTextStyle
+            (styleBuilder, box.getStyleSheet(), box.getBoxDefinition(), true, processStack.getStyle());
         styleManager.updateStyle(style, attrList);
 
         if (attrList.isEmpty() == false)
@@ -739,7 +732,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     {
       final ReportAttributeMap map = node.getAttributes();
       final AttributeList attrs = new AttributeList();
-      HtmlPrinter.applyHtmlAttributes(map, attrs);
+      HtmlTagHelper.applyHtmlAttributes(map, attrs);
       if (attrs.isEmpty() == false)
       {
         xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrs, XmlWriterSupport.OPEN);
@@ -1031,9 +1024,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     final NumberFormat pointConverter = styleBuilder.getPointConverter();
     styleBuilder.append(DefaultStyleBuilder.CSSKeys.OVERFLOW, "hidden"); //NON-NLS
     styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format//NON-NLS
-        (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue(nodeWidth), safariLengthFix)), PT_UNIT);
+        (styleBuilderFactory.fixLengthForSafari(StrictGeomUtility.toExternalValue(nodeWidth))), PT_UNIT);
     styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format//NON-NLS
-        (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue(nodeHeight), safariLengthFix)), PT_UNIT);
+        (styleBuilderFactory.fixLengthForSafari(StrictGeomUtility.toExternalValue(nodeHeight))), PT_UNIT);
     return styleBuilder;
   }
 
@@ -1064,20 +1057,20 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         final double scaleFactor = Math.min(nodeWidth / (double) contentWidth, nodeHeight / (double) contentHeight);
 
         styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format
-            (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue((long) (contentWidth * scaleFactor * scale)),
-                safariLengthFix)), PX_UNIT);
+            (styleBuilderFactory.fixLengthForSafari
+                (StrictGeomUtility.toExternalValue((long) (contentWidth * scaleFactor * scale)))), PX_UNIT);
         styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format
-            (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue((long) (contentHeight * scaleFactor * scale)),
-                safariLengthFix)), PX_UNIT);
+            (styleBuilderFactory.fixLengthForSafari
+                (StrictGeomUtility.toExternalValue((long) (contentHeight * scaleFactor * scale)))), PX_UNIT);
       }
       else
       {
         styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format
-            (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue((long) (nodeWidth * scale)),
-                safariLengthFix)), PX_UNIT);
+            (styleBuilderFactory.fixLengthForSafari
+                (StrictGeomUtility.toExternalValue((long) (nodeWidth * scale)))), PX_UNIT);
         styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format
-            (HtmlPrinter.fixLengthForSafari(StrictGeomUtility.toExternalValue((long) (nodeHeight * scale)),
-                safariLengthFix)), PX_UNIT);
+            (styleBuilderFactory.fixLengthForSafari
+                (StrictGeomUtility.toExternalValue((long) (nodeHeight * scale)))), PX_UNIT);
       }
     }
     else
@@ -1094,19 +1087,19 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       if (contentWidth == 0 && contentHeight == 0)
       {
         // Drawable content has no intrinsic height or width, therefore we must not use the content size at all.
-        styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format(HtmlPrinter.fixLengthForSafari
-            (StrictGeomUtility.toExternalValue((long) (nodeWidth * scale)), safariLengthFix)), PX_UNIT);
-        styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format(HtmlPrinter.fixLengthForSafari
-            (StrictGeomUtility.toExternalValue((long) (nodeHeight * scale)), safariLengthFix)), PX_UNIT);
+        styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format(styleBuilderFactory.fixLengthForSafari
+            (StrictGeomUtility.toExternalValue((long) (nodeWidth * scale)))), PX_UNIT);
+        styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format(styleBuilderFactory.fixLengthForSafari
+            (StrictGeomUtility.toExternalValue((long) (nodeHeight * scale)))), PX_UNIT);
       }
       else
       {
         final long width = Math.min(nodeWidth, contentWidth);
         final long height = Math.min(nodeHeight, contentHeight);
-        styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format(HtmlPrinter.fixLengthForSafari
-            (StrictGeomUtility.toExternalValue((long) (width * scale)), safariLengthFix)), PX_UNIT);
-        styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format(HtmlPrinter.fixLengthForSafari
-            (StrictGeomUtility.toExternalValue((long) (height * scale)), safariLengthFix)), PX_UNIT);
+        styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format(styleBuilderFactory.fixLengthForSafari
+            (StrictGeomUtility.toExternalValue((long) (width * scale)))), PX_UNIT);
+        styleBuilder.append(DefaultStyleBuilder.CSSKeys.HEIGHT, pointConverter.format(styleBuilderFactory.fixLengthForSafari
+            (StrictGeomUtility.toExternalValue((long) (height * scale)))), PX_UNIT);
       }
     }
     return styleBuilder;

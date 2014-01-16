@@ -15,24 +15,12 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriteException;
+import org.pentaho.reporting.libraries.repository.ContentItem;
 
-public interface SlimSheetLayout
+public interface ContentUrlReWriteService
 {
-  long getCellWidth(int col);
-
-  long getRowHeight(int row);
-
-  long getXPosition(int col);
-  long getYPosition(int row);
-
-  TableRectangle getTableBounds(StrictBounds cb, TableRectangle rectangle);
-
-  int getColumnCount();
-
-  long getCellWidth(int startCell, int endCell);
-
-  long getMaxWidth();
+  public String rewriteContentDataItem (ContentItem item) throws URLRewriteException;
 }

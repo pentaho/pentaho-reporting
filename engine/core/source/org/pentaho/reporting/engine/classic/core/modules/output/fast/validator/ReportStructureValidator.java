@@ -89,6 +89,8 @@ public class ReportStructureValidator extends AbstractStructureVisitor
 
   protected void inspectElement(final ReportElement element)
   {
+    traverseStyleExpressions(element);
+
     if (element instanceof AbstractReportDefinition)
     {
       AbstractReportDefinition report = (AbstractReportDefinition) element;
@@ -208,7 +210,8 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     super.inspectExpression(report, expression);
     if (expression instanceof RowBandingFunction)
     {
-      // ignore that one ..
+      // later we can add code to handle row-banding safely.
+      valid = false;
       return;
     }
     if (expression instanceof LayoutProcessorFunction)

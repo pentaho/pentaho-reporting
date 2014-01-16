@@ -15,24 +15,13 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastTextExtractor;
 
-public interface SlimSheetLayout
+public class FastHtmlTextExtractor extends FastTextExtractor
 {
-  long getCellWidth(int col);
-
-  long getRowHeight(int row);
-
-  long getXPosition(int col);
-  long getYPosition(int row);
-
-  TableRectangle getTableBounds(StrictBounds cb, TableRectangle rectangle);
-
-  int getColumnCount();
-
-  long getCellWidth(int startCell, int endCell);
-
-  long getMaxWidth();
+  public FastHtmlTextExtractor()
+  {
+  }
 }

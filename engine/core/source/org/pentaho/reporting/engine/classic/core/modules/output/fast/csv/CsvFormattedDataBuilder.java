@@ -42,6 +42,7 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
   private HashMap<String, Object> values;
   private final MessageFormatSupport messageFormatSupport;
   private CSVQuoter csvQuoter;
+  private FastTextExtractor textExtractor;
 
   public CsvFormattedDataBuilder(HashMap<InstanceID, String> idMapping,
                                  MessageFormatSupport messageFormatSupport,
@@ -85,7 +86,11 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
       return;
     }
 
-    FastTextExtractor textExtractor = new FastTextExtractor();
+    if (textExtractor == null)
+    {
+      textExtractor = new FastTextExtractor();
+    }
+
     textExtractor.compute(element, getRuntime());
     String text = textExtractor.getText();
     if (StringUtils.isEmpty(text) == false)

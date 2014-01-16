@@ -76,6 +76,11 @@ public class FastSheetLayout implements SlimSheetLayout
     return sheetLayout.getCellWidth(startCell, endCell);
   }
 
+  public long getMaxWidth()
+  {
+    return sheetLayout.getMaxWidth();
+  }
+
   public StrictBounds getBounds(TableRectangle rectangle)
   {
     final long x = getXPosition(rectangle.getX1());

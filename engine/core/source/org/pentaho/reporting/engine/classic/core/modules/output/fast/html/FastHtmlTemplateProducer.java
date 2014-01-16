@@ -15,10 +15,7 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -27,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.CellLayoutInfo;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastExportTemplateProducer;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastGridLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FormattedDataBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.TemplatingOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.AbstractTableOutputProcessor;
@@ -36,27 +34,22 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellM
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class FastExcelTemplateProducer implements FastExportTemplateProducer
+public class FastHtmlTemplateProducer implements FastExportTemplateProducer
 {
   private final OutputProcessorMetaData metaData;
   private final SheetLayout sheetLayout;
-  private final FastExcelPrinter excelPrinter;
+  private final FastHtmlPrinter htmlPrinter;
   private final CellBackgroundProducer cellBackgroundProducer;
-  private final HashMap<InstanceID, CellLayoutInfo> layout;
-  private final ArrayList<CellLayoutInfo> backgroundCells;
-  private long[] cellHeights;
+  private FastGridLayout gridLayout;
 
-  public FastExcelTemplateProducer(final OutputProcessorMetaData metaData,
-                                   final SheetLayout sheetLayout,
-                                   final FastExcelPrinter excelPrinter)
+  public FastHtmlTemplateProducer(final OutputProcessorMetaData metaData,
+                                  final SheetLayout sheetLayout,
+                                  final FastHtmlPrinter htmlPrinter)
   {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
-    this.excelPrinter = excelPrinter;
-    this.layout = new HashMap<InstanceID,CellLayoutInfo>();
-    this.backgroundCells = new ArrayList<CellLayoutInfo>();
+    this.htmlPrinter = htmlPrinter;
     this.cellBackgroundProducer = new CellBackgroundProducer
             (metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE),
                 metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));
@@ -64,7 +57,7 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer
 
   public FormattedDataBuilder createDataBuilder()
   {
-    return new FastExcelFormattedDataBuilder(layout, backgroundCells, cellHeights, excelPrinter);
+    return new FastHtmlFormattedDataBuilder(gridLayout, htmlPrinter);
   }
 
   public void produceTemplate(final LogicalPageBox pageBox)
@@ -76,11 +69,11 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer
 
     final int finishRow = contentProducer.getFilledRows();
 
-    cellHeights = new long[finishRow - startRow];
+    gridLayout = new FastGridLayout();
 
     for (int row = startRow; row < finishRow; row++)
     {
-      cellHeights[row - startRow] = sheetLayout.getRowHeight(row);
+      gridLayout.addRow(row - startRow, sheetLayout.getRowHeight(row));
 
       for (short col = 0; col < columnCount; col++)
       {
@@ -101,7 +94,7 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer
           }
           if (background != null)
           {
-            backgroundCells.add(new CellLayoutInfo(col, row, background));
+            gridLayout.addBackground(new CellLayoutInfo(col, row, background));
           }
           continue;
         }
@@ -123,7 +116,7 @@ public class FastExcelTemplateProducer implements FastExportTemplateProducer
 
         final CellBackground bg = cellBackgroundProducer.getBackgroundForBox(pageBox, sheetLayout,
             rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content);
-        layout.put(content.getInstanceId(), new CellLayoutInfo(rect, bg));
+        gridLayout.addContent(content.getInstanceId(), new CellLayoutInfo(rect, bg));
         content.setFinishedTable(true);
       }
     }

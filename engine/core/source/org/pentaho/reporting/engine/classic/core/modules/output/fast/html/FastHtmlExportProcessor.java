@@ -15,7 +15,7 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import java.io.OutputStream;
 
@@ -29,9 +29,9 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportOutputFunction;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelOutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessorMetaData;
 
-public class FastExcelExportProcessor extends AbstractReportProcessor
+public class FastHtmlExportProcessor extends AbstractReportProcessor
 {
   private static class ExcelDataOutputProcessor extends AbstractOutputProcessor
   {
@@ -39,7 +39,7 @@ public class FastExcelExportProcessor extends AbstractReportProcessor
 
     private ExcelDataOutputProcessor()
     {
-      metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_MANUAL);
+      metaData = new HtmlOutputProcessorMetaData(HtmlOutputProcessorMetaData.PAGINATION_NONE);
     }
 
     protected void processPageContent(final LogicalPageKey logicalPageKey,
@@ -55,21 +55,16 @@ public class FastExcelExportProcessor extends AbstractReportProcessor
   }
 
   private OutputStream outputStream;
-  private boolean useXlsx;
 
-  public FastExcelExportProcessor(final MasterReport report,
-                                  final OutputStream outputStream,
-                                  final boolean useXlsx) throws ReportProcessingException
+  public FastHtmlExportProcessor(final MasterReport report,
+                                 final OutputStream outputStream) throws ReportProcessingException
   {
     super(report, new ExcelDataOutputProcessor());
     this.outputStream = outputStream;
-    this.useXlsx = useXlsx;
   }
 
   protected OutputFunction createLayoutManager()
   {
-    return new FastExportOutputFunction(new FastExcelExportTemplate(outputStream, useXlsx));
+    return new FastExportOutputFunction(new FastHtmlExportTemplate(outputStream));
   }
-
-
 }

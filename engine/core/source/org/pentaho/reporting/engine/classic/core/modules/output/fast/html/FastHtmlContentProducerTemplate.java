@@ -15,7 +15,7 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,19 +30,16 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.Fa
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FormattedDataBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 
-public class FastExcelContentProducerTemplate extends AbstractContentProducerTemplate
+public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemplate
 {
   private final OutputStream outputStream;
-  private final boolean useXlsx;
-  private FastExcelPrinter excelPrinter;
+  private FastHtmlPrinter htmlPrinter;
 
-  public FastExcelContentProducerTemplate(final SheetLayout sheetLayout,
-                                          final OutputStream outputStream,
-                                          final boolean useXlsx)
+  public FastHtmlContentProducerTemplate(final SheetLayout sheetLayout,
+                                         final OutputStream outputStream)
   {
     super(sheetLayout);
     this.outputStream = outputStream;
-    this.useXlsx = useXlsx;
   }
 
   public void initialize(final ReportDefinition report,
@@ -50,9 +47,8 @@ public class FastExcelContentProducerTemplate extends AbstractContentProducerTem
                          final boolean pagination)
   {
     super.initialize(report, runtime, pagination);
-    this.excelPrinter = new FastExcelPrinter(getSharedSheetLayout());
-    this.excelPrinter.setUseXlsxFormat(useXlsx);
-    this.excelPrinter.init(getMetaData(), runtime.getProcessingContext().getResourceManager(), report);
+    this.htmlPrinter = new FastHtmlPrinter(getSharedSheetLayout(), outputStream);
+    this.htmlPrinter.init(getMetaData(), runtime.getProcessingContext().getResourceManager(), report);
   }
 
   protected void writeContent(final Band band,
@@ -67,7 +63,7 @@ public class FastExcelContentProducerTemplate extends AbstractContentProducerTem
   {
     try
     {
-      this.excelPrinter.closeWorkbook(outputStream);
+      this.htmlPrinter.close();
     }
     catch (IOException e)
     {
@@ -77,6 +73,6 @@ public class FastExcelContentProducerTemplate extends AbstractContentProducerTem
 
   protected FastExportTemplateProducer createTemplateProducer()
   {
-    return new FastExcelTemplateProducer(getMetaData(), getSharedSheetLayout(), excelPrinter);
+    return new FastHtmlTemplateProducer(getMetaData(), getSharedSheetLayout(), htmlPrinter);
   }
 }

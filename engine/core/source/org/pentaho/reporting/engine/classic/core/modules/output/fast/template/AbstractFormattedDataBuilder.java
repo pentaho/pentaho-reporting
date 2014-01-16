@@ -50,6 +50,7 @@ public abstract class AbstractFormattedDataBuilder extends AbstractStructureVisi
     try
     {
       this.runtime = runtime;
+      inspectElement(band);
       traverseSection(band);
     }
     finally
@@ -61,11 +62,6 @@ public abstract class AbstractFormattedDataBuilder extends AbstractStructureVisi
   public ExpressionRuntime getRuntime()
   {
     return runtime;
-  }
-
-  protected void inspectElement(final ReportElement element, Object computedValue)
-  {
-
   }
 
   public static Object filterRichText(final ReportElement element,

@@ -15,7 +15,7 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import java.io.OutputStream;
 
@@ -29,17 +29,15 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportT
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastSheetLayoutProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 
-public class FastExcelExportTemplate implements FastExportTemplate
+public class FastHtmlExportTemplate implements FastExportTemplate
 {
   private OutputStream outputStream;
-  private boolean useXlsx;
   private SheetLayout sharedSheetLayout;
   private FastExportTemplate processor;
 
-  public FastExcelExportTemplate(final OutputStream outputStream, final boolean useXlsx)
+  public FastHtmlExportTemplate(final OutputStream outputStream)
   {
     this.outputStream = outputStream;
-    this.useXlsx = useXlsx;
   }
 
   public void initialize(final ReportDefinition report,
@@ -54,7 +52,7 @@ public class FastExcelExportTemplate implements FastExportTemplate
     }
     else
     {
-      this.processor = new FastExcelContentProducerTemplate(sharedSheetLayout, outputStream, useXlsx);
+      this.processor = new FastHtmlContentProducerTemplate(sharedSheetLayout, outputStream);
       this.processor.initialize(report, runtime, pagination);
     }
   }

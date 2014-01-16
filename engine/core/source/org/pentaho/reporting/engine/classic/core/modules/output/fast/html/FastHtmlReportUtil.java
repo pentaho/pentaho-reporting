@@ -15,7 +15,7 @@
  *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
+package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,39 +23,21 @@ import java.io.OutputStream;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 
-public class FastExcelReportUtil
+public class FastHtmlReportUtil
 {
-  private FastExcelReportUtil()
-  {
-  }
-
-  public static void processXls(MasterReport report, OutputStream out) throws ReportProcessingException, IOException
+  public void processStreamHtml(MasterReport report,
+                                OutputStream out) throws ReportProcessingException, IOException
   {
     ReportStructureValidator validator = new ReportStructureValidator();
     if (validator.isValidForFastProcessing(report) == false)
     {
-      ExcelReportUtil.createXLS(report, out);
+      HtmlReportUtil.createStreamHTML(report, out);
       return;
     }
 
-    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor(report, out, false);
-    reportProcessor.processReport();
-    reportProcessor.close();
-    out.flush();
-  }
-
-  public static void processXlsx(MasterReport report, OutputStream out) throws ReportProcessingException, IOException
-  {
-    ReportStructureValidator validator = new ReportStructureValidator();
-    if (validator.isValidForFastProcessing(report) == false)
-    {
-      ExcelReportUtil.createXLS(report, out);
-      return;
-    }
-
-    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor(report, out, true);
+    final FastHtmlExportProcessor reportProcessor = new FastHtmlExportProcessor(report, out);
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();
