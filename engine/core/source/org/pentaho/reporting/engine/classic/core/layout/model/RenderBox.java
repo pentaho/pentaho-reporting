@@ -751,7 +751,7 @@ public abstract class RenderBox extends RenderNode
 
   /**
    * Derive creates a disconnected node that shares all the properties of the original node. The derived node will no
-   * longer have any parent, silbling, child or any other relationships with other nodes.
+   * longer have any parent, sibling, child or any other relationships with other nodes.
    *
    * @return
    */

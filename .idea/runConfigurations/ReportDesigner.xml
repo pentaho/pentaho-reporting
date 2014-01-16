@@ -7,7 +7,7 @@
       </pattern>
     </extension>
     <option name="MAIN_CLASS_NAME" value="org.pentaho.reporting.designer.core.ReportDesigner" />
-    <option name="VM_PARAMETERS" value="" />
+    <option name="VM_PARAMETERS" value="-Dorg.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout=&quot;true&quot;" />
     <option name="PROGRAM_PARAMETERS" value="" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$/resource" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />

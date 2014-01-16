@@ -47,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
@@ -1017,6 +1018,24 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
               drawText(text, effectiveAreaX2);
             }
           }
+          else if (isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+            final RenderableComplexText text = (RenderableComplexText) node;
+            //final long ellipseSize = extractEllipseSize(node);
+            final long x1 = text.getX();
+            //final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+
+            if (x1 >= contentAreaX2)
+            {
+              // Skip, the node will not be visible.
+            }
+            else
+            {
+              // The text node that is printed will overlap with the ellipse we need to print.
+              //drawText(text, effectiveAreaX2);
+              final Graphics2D g2 = (Graphics2D) getGraphics().create();
+              text.getTextLayout().draw(g2, text.getX(), text.getY());
+            }
+          }
 
           ellipseDrawn = true;
 
@@ -1094,6 +1113,21 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       else
       {
         drawText(text);
+      }
+    }
+    else if (type == LayoutNodeTypes.TYPE_NODE_TEXT) {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      final long x1 = text.getX();
+
+      if (x1 >= contentAreaX2)
+      {
+        // Skip, the node will not be visible.
+      }
+      else
+      {
+        // The text node that is printed will overlap with the ellipse we need to print.
+        final Graphics2D g2 = (Graphics2D) getGraphics().create();
+        text.getTextLayout().draw(g2, text.getX(), text.getY());
       }
     }
   }

@@ -479,7 +479,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
       addFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
     }
     if (extendedConfig.getBoolProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout", true) == false)
+        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout", false) == true)
     {
       addFeature(OutputProcessorFeature.COMPLEX_TEXT);
     }

@@ -119,7 +119,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
 
     performStartTable(box);
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalBlockPosition(box));
 
@@ -273,7 +273,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final RenderNode prev = node.getPrev();
       if (prev != null)
       {
-        // we have a silbling. Position yourself directly below your silbling ..
+        // we have a sibling. Position yourself directly below your sibling ..
         return (marginTop + prev.getCachedY() + prev.getCachedHeight());
       }
       else
@@ -462,24 +462,28 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
     // todo Arabic text
+    if(complexText) {
+      processBoxChilds(box);
+    }
+    else {
+      // Process the direct childs of the paragraph
+      // Each direct child represents a line ..
 
-    // Process the direct childs of the paragraph
-    // Each direct child represents a line ..
-
-    RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      // all childs of the linebox container must be inline boxes. They
-      // represent the lines in the paragraph. Any other element here is
-      // a error that must be reported
-      final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-      if (startLine(inlineRenderBox))
+      RenderNode node = box.getFirstChild();
+      while (node != null)
       {
-        processBoxChilds(inlineRenderBox);
-        finishLine(inlineRenderBox);
-      }
+        // all childs of the linebox container must be inline boxes. They
+        // represent the lines in the paragraph. Any other element here is
+        // a error that must be reported
+        final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
+        if (startLine(inlineRenderBox))
+        {
+          processBoxChilds(inlineRenderBox);
+          finishLine(inlineRenderBox);
+        }
 
-      node = node.getNext();
+        node = node.getNext();
+      }
     }
   }
 
@@ -936,7 +940,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     performStartTable(box);
 
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalRowPosition(box));
 

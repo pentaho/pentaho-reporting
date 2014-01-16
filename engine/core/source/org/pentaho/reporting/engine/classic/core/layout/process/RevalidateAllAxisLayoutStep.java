@@ -32,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.CenterAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.JustifyAlignmentProcessor;
@@ -100,6 +101,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   private PageGrid pageGrid;
   private OutputProcessorMetaData metaData;
   private VerticalAlignmentProcessor verticalAlignmentProcessor;
+  private boolean complexText;
 
   public RevalidateAllAxisLayoutStep()
   {
@@ -109,6 +111,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   public void initialize(final OutputProcessorMetaData metaData)
   {
     this.metaData = metaData;
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void processBoxChilds(final ParagraphRenderBox box, final PageGrid pageGrid)
@@ -116,7 +119,12 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     try
     {
       this.pageGrid = pageGrid;
-      processParagraphChilds(box);
+      if(complexText) {
+        performVerticalBlockAlignment(box);
+      }
+      else {
+        processParagraphChilds(box);
+      }
     }
     finally
     {

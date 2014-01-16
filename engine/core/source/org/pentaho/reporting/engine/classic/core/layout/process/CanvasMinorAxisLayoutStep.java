@@ -17,6 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -30,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnNode;
@@ -52,6 +59,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTa
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 
 /**
@@ -139,9 +147,63 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected void processParagraphChildsComplex(final ParagraphRenderBox box)
   {
-    // todo Arabic
+    // 1. clear the paragraph to throw away previously layouted nodes. This leaves the paragraph's pool (where your original text is stored) untouched.
+    box.clearLayout();
 
-    processParagraphChildsNormal(box);
+    // 2. Get your nodes and iterate over its children to build the AttributedString.
+    final RenderBox lineBoxContainer = box.getEffectiveLineboxContainer();
+    AttributedString attributedString = null;
+    StringBuilder poolText = new StringBuilder();
+
+    RenderNode node = lineBoxContainer.getFirstChild();
+    while (node != null) {
+      if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        throw new IllegalStateException("Expected RenderableComplexText elements.");
+      }
+
+      RenderableComplexText complexNode = (RenderableComplexText) node;
+      poolText.append(complexNode.getRawText());
+
+      node = node.getNext();
+    }
+
+    attributedString = new AttributedString(poolText.toString());
+
+    // 3. Create a LineBreakMeasurer to break down that string into lines.
+    AttributedCharacterIterator attributedCharacterIterator =  attributedString.getIterator();
+    // Check if FontRenderContext initialisation should be done using AbstractGraphics2D.getFontRenderContext()
+    final FontRenderContext fontRenderContext = new FontRenderContext(null, false, false);
+    LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(attributedCharacterIterator, fontRenderContext);
+    float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
+
+    while (lineBreakMeasurer.getPosition() < attributedCharacterIterator.getEndIndex()) {
+      // 4. For each line produced by the LinebreakMeasurer
+      TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
+
+      //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
+      RenderableComplexText text = null;//(RenderableComplexText) lineBoxContainer.derive(false);
+      text.setTextLayout(textLayout);
+
+      // Store the height and width, so that the other parts of the layouter have access to the information:
+      text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
+      text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
+
+      // Create a shallow copy of the paragraph-pool to act as a line container.
+      RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
+      line.addGeneratedChild(text);
+      line.setCachedWidth(box.getCachedWidth());
+
+      // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
+      line.setCachedX(box.getCachedX());
+
+      // and finally add the line to the paragraph
+      box.addGeneratedChild(line);
+
+    }
+
+    // to be removed
+    //processParagraphChildsNormal(box);
   }
 
   protected void processParagraphChildsNormal(final ParagraphRenderBox box)
