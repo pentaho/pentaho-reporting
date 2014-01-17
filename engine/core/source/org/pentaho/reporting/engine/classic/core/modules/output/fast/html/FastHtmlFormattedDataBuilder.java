@@ -36,6 +36,7 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder
   private final FastHtmlPrinter htmlPrinter;
   private HashMap<InstanceID, FastHtmlImageBounds> recordedBounds;
   private HashMap<InstanceID, ReportElement> elements;
+  private FastHtmlStyleCache styleCache;
 
   public FastHtmlFormattedDataBuilder(final FastGridLayout gridLayout,
                                       final FastHtmlPrinter htmlPrinter,
@@ -45,6 +46,7 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder
     this.htmlPrinter = htmlPrinter;
     this.recordedBounds = recordedBounds;
     this.elements = new HashMap<InstanceID, ReportElement>();
+    this.styleCache = new FastHtmlStyleCache();
   }
 
   public void compute(final Band band,
@@ -55,7 +57,7 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder
     elements.clear();
     super.compute(band, runtime);
     this.htmlPrinter.startSection(band);
-    this.htmlPrinter.print(runtime, gridLayout, elements, recordedBounds);
+    this.htmlPrinter.print(runtime, gridLayout, elements, recordedBounds, styleCache);
     this.htmlPrinter.endSection(band, gridLayout);
   }
 

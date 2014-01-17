@@ -32,10 +32,6 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.LayoutProcessorFunction;
 import org.pentaho.reporting.engine.classic.core.function.PageFunction;
 import org.pentaho.reporting.engine.classic.core.function.RowBandingFunction;
-import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor;
 
@@ -118,92 +114,6 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     {
       valid = false;
     }
-  }
-
-  protected void inspectStyleExpression(final ReportElement element,
-                                        final StyleKey styleKey,
-                                        final Expression expression,
-                                        final ExpressionMetaData expressionMetaData)
-  {
-    if (isCriticalLayoutStyle(styleKey))
-    {
-      valid = false;
-      return;
-    }
-
-    if (element instanceof RootLevelBand)
-    {
-      return;
-    }
-/*
-    if (styleKey.equals(ElementStyleKeys.VISIBLE))
-    {
-      valid = false;
-    }
-    */
-  }
-
-  private boolean isCriticalLayoutStyle(final StyleKey styleKey)
-  {
-    if (styleKey.equals(BandStyleKeys.LAYOUT))
-    {
-      return true;
-    }
-    if (styleKey.equals(BandStyleKeys.FIXED_POSITION))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_BOTTOM_STYLE))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_TOP_STYLE))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_LEFT_STYLE))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_RIGHT_STYLE))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_BOTTOM_WIDTH))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_TOP_WIDTH))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_LEFT_WIDTH))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.BORDER_RIGHT_WIDTH))
-    {
-      return true;
-    }
-
-    if (styleKey.equals(ElementStyleKeys.PADDING_TOP))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.PADDING_LEFT))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.PADDING_BOTTOM))
-    {
-      return true;
-    }
-    if (styleKey.equals(ElementStyleKeys.PADDING_RIGHT))
-    {
-      return true;
-    }
-
-    return false;
   }
 
   protected void inspectExpression(final AbstractReportDefinition report, final Expression expression)

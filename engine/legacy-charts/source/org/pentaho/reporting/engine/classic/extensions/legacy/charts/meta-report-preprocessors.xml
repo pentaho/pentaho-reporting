@@ -1,7 +1,7 @@
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
   <pre-processor class="org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartPreProcessor"
                  bundle-name="org.pentaho.reporting.engine.classic.extensions.legacy.charts.LegacyChartPreProcessorBundle"
-                 expert="false" hidden="true" preferred="false" auto-process="true">
+                 expert="false" hidden="true" preferred="false" auto-process="true" priority="5000">
   </pre-processor>
 
 </meta-data>

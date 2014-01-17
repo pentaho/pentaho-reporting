@@ -30,18 +30,17 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportTemplate;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public abstract class AbstractContentProducerTemplate implements FastExportTemplate
 {
   private SheetLayout sharedSheetLayout;
   private OutputProcessorMetaData metaData;
-  private HashMap<InstanceID, FormattedDataBuilder> bandFormatter;
+  private HashMap<DynamicStyleKey, FormattedDataBuilder> bandFormatter;
 
   public AbstractContentProducerTemplate(final SheetLayout sharedSheetLayout)
   {
     this.sharedSheetLayout = sharedSheetLayout;
-    this.bandFormatter = new HashMap<InstanceID, FormattedDataBuilder>();
+    this.bandFormatter = new HashMap<DynamicStyleKey, FormattedDataBuilder>();
   }
 
   protected OutputProcessorMetaData getMetaData()
@@ -58,11 +57,12 @@ public abstract class AbstractContentProducerTemplate implements FastExportTempl
   {
     try
     {
-      FormattedDataBuilder messageFormatSupport = bandFormatter.get(band.getObjectID());
+      DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create(band);
+      FormattedDataBuilder messageFormatSupport = bandFormatter.get(dynamicStyleKey);
       if (messageFormatSupport == null)
       {
         messageFormatSupport = createTemplate(band, runtime);
-        bandFormatter.put(band.getObjectID(), messageFormatSupport);
+        bandFormatter.put(dynamicStyleKey, messageFormatSupport);
       }
 
       writeContent(band, runtime, messageFormatSupport);

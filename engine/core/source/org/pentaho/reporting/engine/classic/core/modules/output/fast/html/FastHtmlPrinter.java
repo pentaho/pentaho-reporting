@@ -127,7 +127,8 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
   public void print(final ExpressionRuntime runtime,
                     final FastGridLayout gridLayout,
                     final HashMap<InstanceID, ReportElement> elements,
-                    final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds)
+                    final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds,
+                    final FastHtmlStyleCache styleCache)
   {
     if (gridLayout.getRowCount() == 0)
       return;
@@ -155,17 +156,21 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
       }
 
       final boolean emptyCellsUseCSS = getTagHelper().isEmptyCellsUseCSS();
-      StyleBuilder styleBuilder = getStyleBuilder();
-      DefaultStyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
 
       final int rowCount = gridLayout.getRowCount();
       final int colCount = gridLayout.getColumnCount();
       for (int row = 0; row < rowCount; row++)
       {
-        final int rowHeight = (int) StrictGeomUtility.toExternalValue(gridLayout.getCellHeights().get(row));
-        final HtmlRowBackgroundStruct struct = getCommonBackground(gridLayout, colCount, row);
-        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "tr",
-            getTagHelper().createRowAttributes(rowHeight, struct), XmlWriterSupport.OPEN);
+        AttributeList rowAttributes = styleCache.getRowAttributes(row);
+        if (rowAttributes == null)
+        {
+          final int rowHeight = (int) StrictGeomUtility.toExternalValue(gridLayout.getCellHeights().get(row));
+          final HtmlRowBackgroundStruct struct = getCommonBackground(gridLayout, colCount, row);
+          rowAttributes = getTagHelper().createRowAttributes(rowHeight, struct);
+          styleCache.putRowAttributes(row, rowAttributes);
+        }
+
+        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "tr", rowAttributes, XmlWriterSupport.OPEN);
 
         for (int col = 0; col < colCount; col++)
         {
@@ -184,19 +189,13 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
             continue;
           }
 
-          final int colSpan = gridCell.getLayoutInfo().getColumnSpan();
-          final int rowSpan = gridCell.getLayoutInfo().getRowSpan();
-
-          final CellBackground realBackground = gridCell.getLayoutInfo().getBackground();
 
           ReportElement content = elements.get(gridCell.getInstanceId());
-          final AttributeList cellAttributes;
+          FastHtmlStyleCache.CellStyle cellStyle = computeCellAttributes(styleCache, row, col, gridCell, content);
+
           if (content == null)
           {
-            final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder, realBackground, null, null);
-            cellAttributes = getTagHelper().createCellAttributes
-                (colSpan, rowSpan, null, null, realBackground, cellStyle);
-            xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN);
+            xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellStyle.getCellAttributeList(), XmlWriterSupport.OPEN);
             if (emptyCellsUseCSS == false)
             {
               xmlWriter.writeText("&nbsp;");
@@ -205,12 +204,7 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
             continue;
           }
 
-          BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(content.getComputedStyle());
-          final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder,
-              content.getComputedStyle(), boxDefinition, realBackground, null, null);
-          cellAttributes = getTagHelper().createCellAttributes
-              (colSpan, rowSpan, content.getAttributes(), content.getComputedStyle(), realBackground, cellStyle);
-          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN);
+          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellStyle.getCellAttributeList(), XmlWriterSupport.OPEN);
 
           final Object rawContent = content.getAttribute(AttributeNames.Html.NAMESPACE, AttributeNames.Html.EXTRA_RAW_CONTENT);
           if (rawContent != null)
@@ -224,7 +218,7 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
           {
             // the style of the content-box itself is already contained in the <td> tag. So there is no need
             // to duplicate the style here
-            if (textExtractor.performOutput(content, cellStyle.toArray(), recordedBounds, runtime) == false)
+            if (textExtractor.performOutput(content, cellStyle.getCellStyle(), recordedBounds, runtime) == false)
             {
               if (emptyCellsUseCSS == false)
               {
@@ -264,6 +258,42 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
     {
       throw new InvalidReportStateException(e);
     }
+  }
+
+  private FastHtmlStyleCache.CellStyle computeCellAttributes(final FastHtmlStyleCache styleCache,
+                                              final int row,
+                                              final int col,
+                                              final FastGridLayout.GridCell gridCell,
+                                              final ReportElement content)
+  {
+    StyleBuilder styleBuilder = getStyleBuilder();
+    DefaultStyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
+    FastHtmlStyleCache.CellStyle cellStyleCache = styleCache.getCellAttributes(row, col);
+    if (cellStyleCache == null)
+    {
+      final CellBackground realBackground = gridCell.getLayoutInfo().getBackground();
+      final int colSpan = gridCell.getLayoutInfo().getColumnSpan();
+      final int rowSpan = gridCell.getLayoutInfo().getRowSpan();
+
+      if (content == null)
+      {
+        final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder, realBackground, null, null);
+        final AttributeList cellAttributes = getTagHelper().createCellAttributes
+            (colSpan, rowSpan, null, null, realBackground, cellStyle);
+        cellStyleCache = new FastHtmlStyleCache.CellStyle(cellAttributes, cellStyle.toArray());
+      }
+      else
+      {
+        BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(content.getComputedStyle());
+        final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder,
+            content.getComputedStyle(), boxDefinition, realBackground, null, null);
+        final AttributeList cellAttributes = getTagHelper().createCellAttributes
+            (colSpan, rowSpan, content.getAttributes(), content.getComputedStyle(), realBackground, cellStyle);
+        cellStyleCache = new FastHtmlStyleCache.CellStyle(cellAttributes, cellStyle.toArray());
+      }
+      styleCache.putCellAttributes(row, col, cellStyleCache);
+    }
+    return cellStyleCache;
   }
 
   private void writeAnchors(final XmlWriter xmlWriter, final ReportElement realBackground) throws IOException

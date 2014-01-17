@@ -30,7 +30,6 @@ import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class FastExportOutputFunction extends AbstractFunction implements OutputFunction
 {
@@ -45,7 +44,6 @@ public class FastExportOutputFunction extends AbstractFunction implements Output
   {
     if (event.getState().isSubReportEvent() == false)
     {
-      DebugLog.log("Report Init");
       boolean prepareRun = event.getState().isPrepareRun();
       this.template.initialize(event.getReport(), getRuntime(), prepareRun);
     }
