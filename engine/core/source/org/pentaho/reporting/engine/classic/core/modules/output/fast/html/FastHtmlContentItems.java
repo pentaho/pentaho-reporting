@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriter;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
-import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
 public class FastHtmlContentItems
@@ -84,13 +83,13 @@ public class FastHtmlContentItems
     this.urlRewriter = urlRewriter;
   }
 
-  public void setContentWriter(final ContentLocation targetRoot, final DefaultNameGenerator nameGenerator)
+  public void setContentWriter(final ContentLocation targetRoot, final NameGenerator nameGenerator)
   {
     this.contentLocation = targetRoot;
     this.contentNameGenerator = nameGenerator;
   }
 
-  public void setDataWriter(final ContentLocation targetRoot, final DefaultNameGenerator nameGenerator)
+  public void setDataWriter(final ContentLocation targetRoot, final NameGenerator nameGenerator)
   {
     this.dataLocation = targetRoot;
     this.dataNameGenerator = nameGenerator;
