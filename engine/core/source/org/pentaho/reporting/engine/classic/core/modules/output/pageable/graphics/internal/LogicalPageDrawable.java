@@ -1041,7 +1041,16 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
               {
                 g2 = getTextSpec().getGraphics();
               }
-              text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(text.getX()), text.getY());
+              final long posX = text.getX();
+              final long posY = text.getY();
+
+              final FontMetrics fm = g2.getFontMetrics();
+              final Rectangle2D rect = fm.getMaxCharBounds(g2);
+              final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
+
+              final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
+
+              text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
             }
           }
 
@@ -1143,7 +1152,16 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         {
           g2 = getTextSpec().getGraphics();
         }
-        text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(text.getX()), text.getY());
+        final long posX = text.getX();
+        final long posY = text.getY();
+
+        final FontMetrics fm = g2.getFontMetrics();
+        final Rectangle2D rect = fm.getMaxCharBounds(g2);
+        final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
+
+        final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
+
+        text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
       }
     }
   }

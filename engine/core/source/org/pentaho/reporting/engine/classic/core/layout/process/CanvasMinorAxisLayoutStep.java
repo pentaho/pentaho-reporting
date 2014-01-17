@@ -44,6 +44,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.TextAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineNodeSequenceElement;
@@ -189,21 +190,24 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
       text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
 
+      final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
+
+      //text.setCachedX(box.getTextAlignment() == ElementAlignment.RIGHT ? box.getCachedX() + StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()) : box.getCachedX());
+      //text.setCachedX(box.getCachedX());
+      text.setCachedX(alignmentX + box.getCachedX());
+
       // Create a shallow copy of the paragraph-pool to act as a line container.
       RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
       line.addGeneratedChild(text);
       line.setCachedWidth(box.getCachedWidth());
 
       // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-      line.setCachedX(box.getCachedX());
+      //line.setCachedX(box.getCachedX());
+      line.setCachedX(alignmentX + box.getCachedX());
 
       // and finally add the line to the paragraph
       box.addGeneratedChild(line);
-
     }
-
-    // to be removed
-    //processParagraphChildsNormal(box);
   }
 
   protected void processParagraphChildsNormal(final ParagraphRenderBox box)
