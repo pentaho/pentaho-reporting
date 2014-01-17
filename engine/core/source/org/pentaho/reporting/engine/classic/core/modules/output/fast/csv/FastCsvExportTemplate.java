@@ -32,12 +32,15 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 public class FastCsvExportTemplate implements FastExportTemplate
 {
   private OutputStream outputStream;
+  private String encoding;
   private SheetLayout sharedSheetLayout;
   private FastExportTemplate processor;
 
-  public FastCsvExportTemplate(final OutputStream outputStream)
+  public FastCsvExportTemplate(final OutputStream outputStream,
+                               final String encoding)
   {
     this.outputStream = outputStream;
+    this.encoding = encoding;
   }
 
   public void initialize(final ReportDefinition report,
@@ -52,7 +55,7 @@ public class FastCsvExportTemplate implements FastExportTemplate
     }
     else
     {
-      this.processor = new FastCsvContentProducerTemplate(sharedSheetLayout, outputStream);
+      this.processor = new FastCsvContentProducerTemplate(sharedSheetLayout, outputStream, encoding);
       this.processor.initialize(report, runtime, pagination);
     }
   }

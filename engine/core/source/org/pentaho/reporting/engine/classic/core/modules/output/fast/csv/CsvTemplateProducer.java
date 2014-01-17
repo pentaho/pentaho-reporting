@@ -36,20 +36,24 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTableModule;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
 public class CsvTemplateProducer implements FastExportTemplateProducer
 {
   private OutputProcessorMetaData metaData;
   private SheetLayout sheetLayout;
+  private String encoding;
   private HashMap<InstanceID, String> idMapping;
   private String template;
   private CSVQuoter quoter;
 
   public CsvTemplateProducer(final OutputProcessorMetaData metaData,
-                             final SheetLayout sheetLayout)
+                             final SheetLayout sheetLayout,
+                             final String encoding)
   {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
+    this.encoding = encoding;
     this.idMapping = new HashMap<InstanceID, String>();
 
     final String separator = metaData.getConfiguration().getConfigProperty
@@ -58,6 +62,14 @@ public class CsvTemplateProducer implements FastExportTemplateProducer
     {
       throw new IllegalArgumentException("CSV separate cannot be an empty string.");
     }
+
+    if (this.encoding == null)
+    {
+      this.encoding = metaData.getConfiguration().getConfigProperty
+          ("org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding",
+              EncodingRegistry.getPlatformDefaultEncoding());
+    }
+
 
     quoter = new CSVQuoter(separator.charAt(0));
   }
@@ -141,6 +153,6 @@ public class CsvTemplateProducer implements FastExportTemplateProducer
     messageFormatSupport.setLocale(Locale.ENGLISH);
     messageFormatSupport.setFormatString(getTemplate());
     messageFormatSupport.setNullString("");
-    return new CsvFormattedDataBuilder(idMapping, messageFormatSupport, getQuoter());
+    return new CsvFormattedDataBuilder(idMapping, messageFormatSupport, getQuoter(), encoding);
   }
 }

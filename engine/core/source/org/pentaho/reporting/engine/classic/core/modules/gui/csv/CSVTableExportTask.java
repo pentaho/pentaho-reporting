@@ -28,10 +28,13 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGuiContext;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.csv.FastCsvExportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StreamCSVOutputProcessor;
 import org.pentaho.reporting.libraries.base.util.Messages;
@@ -124,8 +127,20 @@ public class CSVTableExportTask implements Runnable
         }
       }
       out = new BufferedOutputStream(new FileOutputStream(file));
-      final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(out);
-      final StreamReportProcessor reportProcessor = new StreamReportProcessor(report, target);
+
+      ReportProcessor reportProcessor;
+      ReportStructureValidator validator = new ReportStructureValidator();
+      if (validator.isValidForFastProcessing(report) == false)
+      {
+        final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(out);
+        reportProcessor = new StreamReportProcessor(report, target);
+      }
+      else
+      {
+        reportProcessor = new FastCsvExportProcessor(report, out);
+      }
+
+
       if (progressDialog != null)
       {
         progressDialog.setModal(false);
