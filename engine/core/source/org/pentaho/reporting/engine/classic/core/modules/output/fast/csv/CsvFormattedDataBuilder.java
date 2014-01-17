@@ -23,6 +23,7 @@ import java.util.HashMap;
 
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
@@ -91,11 +92,18 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
       textExtractor = new FastTextExtractor();
     }
 
+    try
+    {
     textExtractor.compute(element, getRuntime());
     String text = textExtractor.getText();
     if (StringUtils.isEmpty(text) == false)
     {
       values.put(uuid, csvQuoter.doQuoting(text));
+    }
+    }
+    catch (ContentProcessingException rse)
+    {
+      throw new InvalidReportStateException(rse);
     }
   }
 }

@@ -23,11 +23,15 @@ import java.io.OutputStream;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FileSystemURLRewriter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
+import org.pentaho.reporting.libraries.repository.ContentLocation;
+import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
+import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 
 public class FastHtmlReportUtil
 {
-  public void processStreamHtml(MasterReport report,
+  public static void processStreamHtml(MasterReport report,
                                 OutputStream out) throws ReportProcessingException, IOException
   {
     ReportStructureValidator validator = new ReportStructureValidator();
@@ -37,7 +41,14 @@ public class FastHtmlReportUtil
       return;
     }
 
-    final FastHtmlExportProcessor reportProcessor = new FastHtmlExportProcessor(report, out);
+    final StreamRepository targetRepository = new StreamRepository(out);
+    final ContentLocation targetRoot = targetRepository.getRoot();
+    final FastHtmlContentItems contentItems = new FastHtmlContentItems();
+    contentItems.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
+    contentItems.setDataWriter(null, null);
+    contentItems.setUrlRewriter(new FileSystemURLRewriter());
+
+    final FastHtmlExportProcessor reportProcessor = new FastHtmlExportProcessor(report, contentItems);
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();

@@ -31,17 +31,18 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 
 public class FastHtmlExportTemplate implements FastExportTemplate
 {
-  private OutputStream outputStream;
+  private FastHtmlContentItems contentItems;
   private SheetLayout sharedSheetLayout;
   private FastExportTemplate processor;
 
-  public FastHtmlExportTemplate(final OutputStream outputStream)
+  public FastHtmlExportTemplate(final FastHtmlContentItems contentItems)
   {
-    this.outputStream = outputStream;
+    this.contentItems = contentItems;
   }
 
   public void initialize(final ReportDefinition report,
-                         final ExpressionRuntime runtime, final boolean pagination)
+                         final ExpressionRuntime runtime,
+                         final boolean pagination)
   {
     OutputProcessorMetaData metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
     if (pagination)
@@ -52,7 +53,7 @@ public class FastHtmlExportTemplate implements FastExportTemplate
     }
     else
     {
-      this.processor = new FastHtmlContentProducerTemplate(sharedSheetLayout, outputStream);
+      this.processor = new FastHtmlContentProducerTemplate(sharedSheetLayout, contentItems);
       this.processor.initialize(report, runtime, pagination);
     }
   }

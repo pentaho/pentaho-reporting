@@ -55,16 +55,17 @@ public class FastHtmlExportProcessor extends AbstractReportProcessor
   }
 
   private OutputStream outputStream;
+  private FastHtmlContentItems contentItems;
 
   public FastHtmlExportProcessor(final MasterReport report,
-                                 final OutputStream outputStream) throws ReportProcessingException
+                                 final FastHtmlContentItems contentItems) throws ReportProcessingException
   {
     super(report, new ExcelDataOutputProcessor());
-    this.outputStream = outputStream;
+    this.contentItems = contentItems;
   }
 
   protected OutputFunction createLayoutManager()
   {
-    return new FastExportOutputFunction(new FastHtmlExportTemplate(outputStream));
+    return new FastExportOutputFunction(new FastHtmlExportTemplate(contentItems));
   }
 }

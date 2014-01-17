@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.filter.DataSource;
 import org.pentaho.reporting.engine.classic.core.filter.RawDataSource;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.build.RichTextStyleResolver;
+import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 
@@ -40,7 +41,7 @@ public class FastTextExtractor
   }
 
   public Object compute(final ReportElement content,
-                        final ExpressionRuntime runtime)
+                        final ExpressionRuntime runtime) throws ContentProcessingException
   {
     this.runtime = runtime;
     this.rawResult = null;
@@ -69,6 +70,16 @@ public class FastTextExtractor
     }
   }
 
+  public void setRuntime(final ExpressionRuntime runtime)
+  {
+    this.runtime = runtime;
+  }
+
+  protected void clearText()
+  {
+    textBuffer.delete(0, textBuffer.length());
+  }
+
   public Object getRawResult()
   {
     return rawResult;
@@ -80,7 +91,7 @@ public class FastTextExtractor
   }
 
 
-  protected void traverseSection(final Section section)
+  protected void traverseSection(final Section section) throws ContentProcessingException
   {
     boolean inlineSection;
     if (inlineLayout == 0)
@@ -131,16 +142,16 @@ public class FastTextExtractor
     }
   }
 
-  protected void inspectEndSection(final Section section, final boolean inlineSection)
+  protected void inspectEndSection(final ReportElement section, final boolean inlineSection)
   {
   }
 
-  protected boolean inspectStartSection(final Section section, final boolean inlineSection)
+  protected boolean inspectStartSection(final ReportElement section, final boolean inlineSection)
   {
     return false;
   }
 
-  protected void inspectElement(final ReportElement element, final boolean inlineSection)
+  protected void inspectElement(final ReportElement element, final boolean inlineSection) throws ContentProcessingException
   {
     if (element instanceof Section)
     {
@@ -162,6 +173,11 @@ public class FastTextExtractor
       return;
     }
 
+    handleValueContent(element, value);
+  }
+
+  protected void handleValueContent(final ReportElement element, final Object value) throws ContentProcessingException
+  {
     if (value instanceof String)
     {
       textBuffer.append(value);
@@ -180,6 +196,16 @@ public class FastTextExtractor
     }
 
     rawResult = value;
+  }
+
+  protected StringBuilder getTextBuffer()
+  {
+    return textBuffer;
+  }
+
+  protected void setRawResult(final Object rawResult)
+  {
+    this.rawResult = rawResult;
   }
 
   protected int getTextLength()

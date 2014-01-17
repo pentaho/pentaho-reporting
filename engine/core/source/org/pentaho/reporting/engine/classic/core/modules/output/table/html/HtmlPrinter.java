@@ -24,7 +24,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -38,7 +37,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellB
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackgroundProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellMarker;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SlimSheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.AbstractHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.ContentUrlReWriteService;
@@ -65,33 +63,6 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
  */
 public abstract class HtmlPrinter extends AbstractHtmlPrinter implements ContentUrlReWriteService
 {
-  public static class RowBackgroundStruct
-  {
-    protected Color color;
-    protected BorderEdge topEdge;
-    protected BorderEdge bottomEdge;
-    protected boolean failed;
-
-    public Color getColor()
-    {
-      return color;
-    }
-
-    public BorderEdge getTopEdge()
-    {
-      return topEdge;
-    }
-
-    public BorderEdge getBottomEdge()
-    {
-      return bottomEdge;
-    }
-
-    public boolean isFailed()
-    {
-      return failed;
-    }
-  }
 
   private static final Log logger = LogFactory.getLog(HtmlPrinter.class);
 
@@ -206,13 +177,14 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
   }
 
 
-  private RowBackgroundStruct getCommonBackground(final LogicalPageBox logicalPageBox,
-                                                  final SheetLayout sheetLayout, final int row,
-                                                  final TableContentProducer tableContentProducer)
+  private HtmlRowBackgroundStruct getCommonBackground(final LogicalPageBox logicalPageBox,
+                                                      final SheetLayout sheetLayout,
+                                                      final int row,
+                                                      final TableContentProducer tableContentProducer)
   {
-    final RowBackgroundStruct bg = new RowBackgroundStruct();
-    bg.topEdge = BorderEdge.EMPTY;
-    bg.bottomEdge = BorderEdge.EMPTY;
+    Color color = null;
+    BorderEdge topEdge = BorderEdge.EMPTY;
+    BorderEdge bottomEdge = BorderEdge.EMPTY;
 
     final int columnCount = sheetLayout.getColumnCount();
     for (int col = 0; col < columnCount; col += 1)
@@ -243,31 +215,29 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       }
       if (backgroundAt == null)
       {
-        bg.failed = true;
-        bg.color = null;
-        bg.topEdge = BorderEdge.EMPTY;
-        bg.bottomEdge = BorderEdge.EMPTY;
-        return bg;
+        HtmlRowBackgroundStruct struct = new HtmlRowBackgroundStruct();
+        struct.fail();
+        return struct;
       }
 
       boolean fail = false;
       if (col == 0)
       {
-        bg.color = backgroundAt.getBackgroundColor();
-        bg.topEdge = backgroundAt.getTop();
-        bg.bottomEdge = backgroundAt.getBottom();
+        color = backgroundAt.getBackgroundColor();
+        topEdge = backgroundAt.getTop();
+        bottomEdge = backgroundAt.getBottom();
       }
       else
       {
-        if (ObjectUtilities.equal(bg.color, backgroundAt.getBackgroundColor()) == false)
+        if (ObjectUtilities.equal(color, backgroundAt.getBackgroundColor()) == false)
         {
           fail = true;
         }
-        if (ObjectUtilities.equal(bg.topEdge, backgroundAt.getTop()) == false)
+        if (ObjectUtilities.equal(topEdge, backgroundAt.getTop()) == false)
         {
           fail = true;
         }
-        if (ObjectUtilities.equal(bg.bottomEdge, backgroundAt.getBottom()) == false)
+        if (ObjectUtilities.equal(bottomEdge, backgroundAt.getBottom()) == false)
         {
           fail = true;
         }
@@ -291,15 +261,14 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
       }
       if (fail)
       {
-        bg.failed = true;
-        bg.color = null;
-        bg.topEdge = BorderEdge.EMPTY;
-        bg.bottomEdge = BorderEdge.EMPTY;
-        break;
+        HtmlRowBackgroundStruct struct = new HtmlRowBackgroundStruct();
+        struct.fail();
+        return struct;
       }
-
     }
-    return bg;
+    HtmlRowBackgroundStruct struct = new HtmlRowBackgroundStruct();
+    struct.set(color, topEdge, bottomEdge);
+    return struct;
   }
 
   public void print(final LogicalPageKey logicalPageKey,
@@ -348,13 +317,13 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
 
       if (textExtractor == null)
       {
-        textExtractor = new HtmlTextExtractor(metaData, xmlWriter, getStyleManager(), contentGenerator, styleBuilderFactory);
+        textExtractor = new HtmlTextExtractor(metaData, xmlWriter, contentGenerator, getTagHelper());
       }
 
       for (int row = startRow; row < finishRow; row++)
       {
         final int rowHeight = (int) StrictGeomUtility.toExternalValue(sheetLayout.getRowHeight(row));
-        final RowBackgroundStruct struct = getCommonBackground(logicalPage, sheetLayout, row, contentProducer);
+        final HtmlRowBackgroundStruct struct = getCommonBackground(logicalPage, sheetLayout, row, contentProducer);
         xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "tr",
             getTagHelper().createRowAttributes(rowHeight, struct), XmlWriterSupport.OPEN);
 
@@ -375,45 +344,7 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
             {
               background = cellBackgroundProducer.getBackgroundAt(logicalPage, sheetLayout, col, row, true, sectionType);
             }
-            if (background == null)
-            {
-              if (emptyCellsUseCSS)
-              {
-                xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", XmlWriterSupport.CLOSE);
-              }
-              else
-              {
-                final AttributeList attrs = new AttributeList();
-                attrs.setAttribute(HtmlPrinter.XHTML_NAMESPACE, "style", "font-size: 1pt");
-                xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", attrs, XmlWriterSupport.OPEN);
-                xmlWriter.writeText("&nbsp;");
-                xmlWriter.writeCloseTag();
-              }
-              continue;
-            }
-
-            // Background cannot be null at this point ..
-            final String[] anchor = background.getAnchors();
-            if (anchor.length == 0 && emptyCellsUseCSS)
-            {
-              final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder, null, null, background, null, null);
-              final AttributeList cellAttributes = getTagHelper().createCellAttributes(1, 1, null, null, background, cellStyle);
-              xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.CLOSE);
-            }
-            else
-            {
-              final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle
-                  (styleBuilder, null, null, background, HtmlPrinter.EMPTY_CELL_ATTRNAMES, HtmlPrinter.EMPTY_CELL_ATTRVALS);
-              final AttributeList cellAttributes = getTagHelper().createCellAttributes(1, 1, null, null, background, cellStyle);
-              xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN);
-              for (int i = 0; i < anchor.length; i++)
-              {
-                xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "a", "name", anchor[i], XmlWriterSupport.CLOSE);
-              }
-              xmlWriter.writeText("&nbsp;");
-              xmlWriter.writeCloseTag();
-
-            }
+            writeBackgroundCell(background, xmlWriter);
             continue;
           }
 
@@ -571,41 +502,5 @@ public abstract class HtmlPrinter extends AbstractHtmlPrinter implements Content
     }
   }
 
-  private void openSheet(final ReportAttributeMap logicalPage,
-                         final String sheetName,
-                         final OutputProcessorMetaData metaData,
-                         final SlimSheetLayout sheetLayout,
-                         final XmlWriter xmlWriter) throws ContentIOException, URLRewriteException, IOException
-  {
-    setStyleManager(createStyleManager());
-
-    generateExternalStylePlaceHolder();
-    generateHeaderOnOpen(logicalPage, sheetName, xmlWriter);
-
-    final Object rawContent = logicalPage.getAttribute(AttributeNames.Html.NAMESPACE,
-        AttributeNames.Html.EXTRA_RAW_CONTENT);
-    if (rawContent != null)
-    {
-      xmlWriter.writeText(String.valueOf(rawContent));
-    }
-
-    // table name
-    if ("true".equals(metaData.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.EnableSheetNameProcessing")))
-    {
-      if (sheetName != null)
-      {
-        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "h1", getTagHelper().createSheetNameAttributes(), XmlWriterSupport.OPEN);
-        xmlWriter.writeTextNormalized(sheetName, true);
-        xmlWriter.writeCloseTag();
-      }
-    }
-
-    // table
-    xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "table",
-        getTagHelper().createTableAttributes(sheetLayout, logicalPage),
-        XmlWriterSupport.OPEN);
-    writeColumnDeclaration(sheetLayout, xmlWriter);
-  }
 
 }

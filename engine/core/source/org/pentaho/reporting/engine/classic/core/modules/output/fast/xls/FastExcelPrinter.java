@@ -41,6 +41,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.CellLayoutInfo;
@@ -154,7 +155,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
 
   public void print(final CellLayoutInfo tableRectangle,
                     final ReportElement element,
-                    final ExpressionRuntime runtime)
+                    final ExpressionRuntime runtime) throws ContentProcessingException
   {
     int y = tableRectangle.getY1() + rowOffset;
     int x = tableRectangle.getX1();
@@ -212,7 +213,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
   private boolean applyCellValue(final ReportElement content,
                                  final Cell cell,
                                  final TableRectangle rectangle,
-                                 final ExpressionRuntime runtime)
+                                 final ExpressionRuntime runtime) throws ContentProcessingException
   {
     final Object value = textExtractor.compute(content, runtime);
 

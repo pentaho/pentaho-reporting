@@ -24,6 +24,7 @@ import java.util.HashMap;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -78,7 +79,14 @@ public class FastExcelFormattedDataBuilder extends AbstractFormattedDataBuilder
     CellLayoutInfo tableRectangle = layout.get(element.getObjectID());
     if (tableRectangle != null)
     {
-      this.excelPrinter.print(tableRectangle, element, getRuntime());
+      try
+      {
+        this.excelPrinter.print(tableRectangle, element, getRuntime());
+      }
+      catch (ContentProcessingException e)
+      {
+        throw new InvalidReportStateException(e);
+      }
     }
   }
 }

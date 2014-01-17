@@ -395,6 +395,14 @@ public class DefaultStyleBuilderFactory implements StyleBuilderFactory
 
 
   public StyleBuilder createCellStyle(StyleBuilder styleBuilder,
+                                      final CellBackground background,
+                                      final StyleBuilder.CSSKeys[] extraStyleKeys,
+                                      final String[] extraStyleValues)
+  {
+    return createCellStyle(styleBuilder, background, extraStyleKeys, extraStyleValues);
+  }
+
+  public StyleBuilder createCellStyle(StyleBuilder styleBuilder,
                                       final StyleSheet styleSheet,
                                       final BoxDefinition boxDefinition,
                                       final CellBackground background,

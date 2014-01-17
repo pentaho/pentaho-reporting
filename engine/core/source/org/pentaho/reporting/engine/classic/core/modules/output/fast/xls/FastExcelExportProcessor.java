@@ -39,7 +39,7 @@ public class FastExcelExportProcessor extends AbstractReportProcessor
 
     private ExcelDataOutputProcessor()
     {
-      metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_MANUAL);
+      metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_NONE);
     }
 
     protected void processPageContent(final LogicalPageKey logicalPageKey,

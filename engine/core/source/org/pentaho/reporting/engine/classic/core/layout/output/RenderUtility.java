@@ -399,15 +399,23 @@ public class RenderUtility
     return 0;
   }
 
+  @Deprecated
+  public static ImageMap extractImageMap(final RenderableReplacedContentBox node,
+                                         final DrawableWrapper drawable)
+  {
+    return extractImageMap(drawable, node.getWidth(), node.getHeight());
+  }
 
-  public static ImageMap extractImageMap(final RenderableReplacedContentBox node, final DrawableWrapper drawable)
+  private static ImageMap extractImageMap(final DrawableWrapper drawable,
+                                         final long width,
+                                         final long height)
   {
     final Object backend = drawable.getBackend();
     if (backend instanceof ReportDrawable)
     {
       final ReportDrawable rdrawable = (ReportDrawable) backend;
-      final int imageWidth = (int) StrictGeomUtility.toExternalValue(node.getWidth());
-      final int imageHeight = (int) StrictGeomUtility.toExternalValue(node.getHeight());
+      final int imageWidth = (int) StrictGeomUtility.toExternalValue(width);
+      final int imageHeight = (int) StrictGeomUtility.toExternalValue(height);
       if (imageWidth == 0 || imageHeight == 0)
       {
         return null;
@@ -420,6 +428,15 @@ public class RenderUtility
   public static ImageMap extractImageMap(final RenderableReplacedContentBox content)
   {
     final ReportAttributeMap attributes = content.getAttributes();
+    Object rawObject = content.getContent().getRawObject();
+    return extractImageMap(attributes, rawObject, content.getWidth(), content.getHeight());
+  }
+
+  public static ImageMap extractImageMap(final ReportAttributeMap attributes,
+                                         final Object rawObject,
+                                         final long width,
+                                         final long height)
+  {
     final Object manualImageMap = attributes.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.IMAGE_MAP);
     if (manualImageMap instanceof ImageMap)
     {
@@ -427,11 +444,10 @@ public class RenderUtility
     }
     else
     {
-      final Object o = content.getContent().getRawObject();
-      if (o instanceof DrawableWrapper)
+      if (rawObject instanceof DrawableWrapper)
       {
-        final DrawableWrapper drawable = (DrawableWrapper) o;
-        return RenderUtility.extractImageMap(content, drawable);
+        final DrawableWrapper drawable = (DrawableWrapper) rawObject;
+        return RenderUtility.extractImageMap(drawable, width, height);
       }
       else
       {

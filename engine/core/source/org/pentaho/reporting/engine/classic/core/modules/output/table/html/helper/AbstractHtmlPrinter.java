@@ -30,6 +30,8 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SlimSheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlTableModule;
@@ -515,6 +517,91 @@ public abstract class AbstractHtmlPrinter
 
     docWriter.writeCloseTag(); // for the html ..
     docWriter.close();
+  }
+
+  protected void openSheet(final ReportAttributeMap logicalPage,
+                         final String sheetName,
+                         final OutputProcessorMetaData metaData,
+                         final SlimSheetLayout sheetLayout,
+                         final XmlWriter xmlWriter) throws ContentIOException, URLRewriteException, IOException
+  {
+    setStyleManager(createStyleManager());
+
+    generateExternalStylePlaceHolder();
+    generateHeaderOnOpen(logicalPage, sheetName, xmlWriter);
+
+    final Object rawContent = logicalPage.getAttribute(AttributeNames.Html.NAMESPACE,
+        AttributeNames.Html.EXTRA_RAW_CONTENT);
+    if (rawContent != null)
+    {
+      xmlWriter.writeText(String.valueOf(rawContent));
+    }
+
+    // table name
+    if ("true".equals(metaData.getConfiguration().getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.EnableSheetNameProcessing")))
+    {
+      if (sheetName != null)
+      {
+        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "h1", getTagHelper().createSheetNameAttributes(), XmlWriterSupport.OPEN);
+        xmlWriter.writeTextNormalized(sheetName, true);
+        xmlWriter.writeCloseTag();
+      }
+    }
+
+    // table
+    xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "table",
+        getTagHelper().createTableAttributes(sheetLayout, logicalPage),
+        XmlWriterSupport.OPEN);
+    writeColumnDeclaration(sheetLayout, xmlWriter);
+  }
+
+  protected void writeBackgroundCell(CellBackground background, XmlWriter xmlWriter) throws IOException
+  {
+    final boolean emptyCellsUseCSS = getTagHelper().isEmptyCellsUseCSS();
+    if (background == null)
+    {
+      if (emptyCellsUseCSS)
+      {
+        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", XmlWriterSupport.CLOSE);
+      }
+      else
+      {
+        final AttributeList attrs = new AttributeList();
+        attrs.setAttribute(HtmlPrinter.XHTML_NAMESPACE, "style", "font-size: 1pt");
+        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", attrs, XmlWriterSupport.OPEN);
+        xmlWriter.writeText("&nbsp;");
+        xmlWriter.writeCloseTag();
+      }
+      return;
+    }
+
+    StyleBuilder styleBuilder = getStyleBuilder();
+    DefaultStyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
+
+    // Background cannot be null at this point ..
+    final String[] anchor = background.getAnchors();
+    if (anchor.length == 0 && emptyCellsUseCSS)
+    {
+      final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle(styleBuilder, null, null, background, null, null);
+      final AttributeList cellAttributes = getTagHelper().createCellAttributes(1, 1, null, null, background, cellStyle);
+      xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.CLOSE);
+    }
+    else
+    {
+      final StyleBuilder cellStyle = styleBuilderFactory.createCellStyle
+          (styleBuilder, null, null, background, HtmlPrinter.EMPTY_CELL_ATTRNAMES, HtmlPrinter.EMPTY_CELL_ATTRVALS);
+      final AttributeList cellAttributes = getTagHelper().createCellAttributes(1, 1, null, null, background, cellStyle);
+      xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "td", cellAttributes, XmlWriterSupport.OPEN);
+      for (int i = 0; i < anchor.length; i++)
+      {
+        xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, "a", "name", anchor[i], XmlWriterSupport.CLOSE);
+      }
+      xmlWriter.writeText("&nbsp;");
+      xmlWriter.writeCloseTag();
+
+    }
+
   }
 
 }

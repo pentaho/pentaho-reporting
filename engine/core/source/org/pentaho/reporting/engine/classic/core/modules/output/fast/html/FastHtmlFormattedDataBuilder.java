@@ -34,13 +34,16 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder
 {
   private final FastGridLayout gridLayout;
   private final FastHtmlPrinter htmlPrinter;
+  private HashMap<InstanceID, FastHtmlImageBounds> recordedBounds;
   private HashMap<InstanceID, ReportElement> elements;
 
   public FastHtmlFormattedDataBuilder(final FastGridLayout gridLayout,
-                                      final FastHtmlPrinter htmlPrinter)
+                                      final FastHtmlPrinter htmlPrinter,
+                                      final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds)
   {
     this.gridLayout = gridLayout;
     this.htmlPrinter = htmlPrinter;
+    this.recordedBounds = recordedBounds;
     this.elements = new HashMap<InstanceID, ReportElement>();
   }
 
@@ -52,8 +55,8 @@ public class FastHtmlFormattedDataBuilder extends AbstractFormattedDataBuilder
     elements.clear();
     super.compute(band, runtime);
     this.htmlPrinter.startSection(band);
-    this.htmlPrinter.print (runtime, gridLayout, elements);
-    this.htmlPrinter.endSection(band);
+    this.htmlPrinter.print(runtime, gridLayout, elements, recordedBounds);
+    this.htmlPrinter.endSection(band, gridLayout);
   }
 
   protected void inspectElement(final ReportElement element)

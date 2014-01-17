@@ -17,11 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
+import java.util.HashMap;
+
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.CellLayoutInfo;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastExportTemplateProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastGridLayout;
@@ -34,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellM
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class FastHtmlTemplateProducer implements FastExportTemplateProducer
 {
@@ -42,6 +49,7 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
   private final FastHtmlPrinter htmlPrinter;
   private final CellBackgroundProducer cellBackgroundProducer;
   private FastGridLayout gridLayout;
+  private Recorder recorder;
 
   public FastHtmlTemplateProducer(final OutputProcessorMetaData metaData,
                                   final SheetLayout sheetLayout,
@@ -50,6 +58,7 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.htmlPrinter = htmlPrinter;
+    this.recorder = new Recorder();
     this.cellBackgroundProducer = new CellBackgroundProducer
             (metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE),
                 metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));
@@ -57,7 +66,7 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
 
   public FormattedDataBuilder createDataBuilder()
   {
-    return new FastHtmlFormattedDataBuilder(gridLayout, htmlPrinter);
+    return new FastHtmlFormattedDataBuilder(gridLayout, htmlPrinter, recorder.getRecordedBounds());
   }
 
   public void produceTemplate(final LogicalPageBox pageBox)
@@ -96,6 +105,10 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
           {
             gridLayout.addBackground(new CellLayoutInfo(col, row, background));
           }
+          else
+          {
+            gridLayout.addBackground(new CellLayoutInfo(col, row, null));
+          }
           continue;
         }
 
@@ -116,9 +129,52 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
 
         final CellBackground bg = cellBackgroundProducer.getBackgroundForBox(pageBox, sheetLayout,
             rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content);
+
+        recordInlineImageDimensions(content);
+
         gridLayout.addContent(content.getInstanceId(), new CellLayoutInfo(rect, bg));
         content.setFinishedTable(true);
       }
     }
   }
+
+  private void recordInlineImageDimensions(final RenderBox content)
+  {
+    recorder.process(content);
+  }
+
+  private static class Recorder extends IterateSimpleStructureProcessStep
+  {
+    private HashMap<InstanceID, FastHtmlImageBounds> recordedBounds;
+
+    private Recorder()
+    {
+      recordedBounds = new HashMap<InstanceID, FastHtmlImageBounds>();
+    }
+
+    private HashMap<InstanceID, FastHtmlImageBounds> getRecordedBounds()
+    {
+      return recordedBounds;
+    }
+
+    public void process(RenderNode box)
+    {
+      super.startProcessing(box);
+    }
+
+    protected boolean startBox(final RenderBox node)
+    {
+      if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
+      {
+        RenderableReplacedContentBox box = (RenderableReplacedContentBox) node;
+        final FastHtmlImageBounds cb = new FastHtmlImageBounds(node.getWidth(), node.getHeight(),
+            box.getContent().getContentWidth(), box.getContent().getContentHeight());
+        recordedBounds.put(node.getInstanceId(), cb);
+        return false;
+      }
+      return true;
+    }
+  }
+
+
 }

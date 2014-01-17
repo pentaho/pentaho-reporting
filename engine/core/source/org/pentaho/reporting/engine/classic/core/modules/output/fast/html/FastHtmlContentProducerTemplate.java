@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
@@ -29,17 +28,18 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.Ab
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastExportTemplateProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FormattedDataBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
 
 public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemplate
 {
-  private final OutputStream outputStream;
+  private FastHtmlContentItems contentItems;
   private FastHtmlPrinter htmlPrinter;
 
   public FastHtmlContentProducerTemplate(final SheetLayout sheetLayout,
-                                         final OutputStream outputStream)
+                                         final FastHtmlContentItems contentItems)
   {
     super(sheetLayout);
-    this.outputStream = outputStream;
+    this.contentItems = contentItems;
   }
 
   public void initialize(final ReportDefinition report,
@@ -47,8 +47,9 @@ public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemp
                          final boolean pagination)
   {
     super.initialize(report, runtime, pagination);
-    this.htmlPrinter = new FastHtmlPrinter(getSharedSheetLayout(), outputStream);
-    this.htmlPrinter.init(getMetaData(), runtime.getProcessingContext().getResourceManager(), report);
+    this.htmlPrinter = new FastHtmlPrinter(getSharedSheetLayout(),
+        runtime.getProcessingContext().getResourceManager(), contentItems);
+    this.htmlPrinter.init(getMetaData(), report);
   }
 
   protected void writeContent(final Band band,
@@ -56,7 +57,7 @@ public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemp
                               final FormattedDataBuilder messageFormatSupport)
       throws IOException, ReportProcessingException, ContentProcessingException
   {
-    messageFormatSupport.compute(band, runtime, outputStream);
+    messageFormatSupport.compute(band, runtime, null);
   }
 
   public void finishReport() throws ReportProcessingException
@@ -66,6 +67,10 @@ public class FastHtmlContentProducerTemplate extends AbstractContentProducerTemp
       this.htmlPrinter.close();
     }
     catch (IOException e)
+    {
+      throw new ReportProcessingException("Failed to close report", e);
+    }
+    catch (ContentIOException e)
     {
       throw new ReportProcessingException("Failed to close report", e);
     }

@@ -135,11 +135,12 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     {
       return;
     }
-
+/*
     if (styleKey.equals(ElementStyleKeys.VISIBLE))
     {
       valid = false;
     }
+    */
   }
 
   private boolean isCriticalLayoutStyle(final StyleKey styleKey)

@@ -91,6 +91,11 @@ public class FastGridLayout
     cellIndex.put(instanceId, new Point(layoutInfo.getX1(), layoutInfo.getY1()));
   }
 
+  public GridCell get (int row, int col)
+  {
+    return cells.getObject(row, col);
+  }
+
   public LongList getCellHeights()
   {
     return gridHeights;
@@ -99,6 +104,16 @@ public class FastGridLayout
   public Point getIndex(InstanceID id)
   {
     return cellIndex.get(id);
+  }
+
+  public int getRowCount()
+  {
+    return cells.getRowCount();
+  }
+
+  public int getColumnCount()
+  {
+    return cells.getColumnCount();
   }
 
   public List<InstanceID> getOrderedElements()

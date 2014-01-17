@@ -24,8 +24,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelColorProducer;
@@ -58,7 +58,7 @@ public class FastExcelTextExtractor extends FastTextExtractor
   }
 
   public Object compute(final ReportElement content,
-                        final ExpressionRuntime runtime)
+                        final ExpressionRuntime runtime) throws ContentProcessingException
   {
     this.formatBuffer.clear();
     super.compute(content, runtime);
@@ -88,7 +88,7 @@ public class FastExcelTextExtractor extends FastTextExtractor
     return ExcelTextExtractor.computeRichText(fontFactory, creationHelper, text, formatBuffer);
   }
 
-  protected boolean inspectStartSection(final Section box, final boolean inlineSection)
+  protected boolean inspectStartSection(final ReportElement box, final boolean inlineSection)
   {
     SimpleStyleSheet styleSheet = box.getComputedStyle();
     if (styleSheet.getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
@@ -125,7 +125,7 @@ public class FastExcelTextExtractor extends FastTextExtractor
     return true;
   }
 
-  protected void inspectEndSection(final Section box, final boolean inlineSection)
+  protected void inspectEndSection(final ReportElement box, final boolean inlineSection)
   {
     formatBufferStack.pop();
     if (formatBufferStack.isEmpty())

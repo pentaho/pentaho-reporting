@@ -92,7 +92,7 @@ public interface ReportElement extends Cloneable, Serializable
 
   public String[] getAttributeNames(String name);
 
-  public ReportAttributeMap getAttributes();
+  public ReportAttributeMap<Object> getAttributes();
 
   public ElementMetaData getMetaData();
 

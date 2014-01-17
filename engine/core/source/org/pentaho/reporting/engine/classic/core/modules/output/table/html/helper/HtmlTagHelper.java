@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SlimSheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlRowBackgroundStruct;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlTableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.util.HtmlColors;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -143,7 +144,7 @@ public class HtmlTagHelper
 
 
   public AttributeList createRowAttributes(final double rowHeight,
-                                           final HtmlPrinter.RowBackgroundStruct struct)
+                                           final HtmlRowBackgroundStruct struct)
   {
     final AttributeList attrList = new AttributeList();
     StyleBuilder styleBuilder = getStyleBuilder();
