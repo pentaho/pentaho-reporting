@@ -24,11 +24,6 @@ import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-/**
- * Creation-Date: 02.11.2007, 16:03:20
- *
- * @author Thomas Morgner
- */
 public interface HtmlContentGenerator
 {
   public ResourceManager getResourceManager();
@@ -40,6 +35,8 @@ public interface HtmlContentGenerator
   public boolean isRegistered(final ResourceKey source);
 
   public String getRegisteredName(final ResourceKey source);
+
+  public void setCopyExternalImages(final boolean copyExternalImages);
 
   public String writeRaw(final ResourceKey source) throws ContentIOException, IOException;
 

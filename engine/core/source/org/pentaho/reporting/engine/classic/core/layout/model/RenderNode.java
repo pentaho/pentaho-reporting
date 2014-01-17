@@ -165,7 +165,7 @@ public abstract class RenderNode implements Cloneable
     return nodeLayoutProperties.getElementType();
   }
 
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     return nodeLayoutProperties.getAttributes();
   }

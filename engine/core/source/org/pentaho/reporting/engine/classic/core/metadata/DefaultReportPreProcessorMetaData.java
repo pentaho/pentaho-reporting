@@ -33,6 +33,7 @@ public class DefaultReportPreProcessorMetaData extends AbstractMetaData implemen
   private transient SharedBeanInfo beanInfo;
   private boolean autoProcessor;
   private boolean executeInDesignMode;
+  private int executionPriority;
 
   public DefaultReportPreProcessorMetaData(final String bundleLocation,
                                            final boolean expert,
@@ -45,7 +46,8 @@ public class DefaultReportPreProcessorMetaData extends AbstractMetaData implemen
                                            final boolean autoProcessor,
                                            final boolean executeInDesignMode,
                                            final boolean experimental,
-                                           final int compatibilityLevel)
+                                           final int compatibilityLevel,
+                                           final int executionPriority)
   {
     super(expressionType.getName(), bundleLocation, "", expert,
         preferred, hidden, deprecated, experimental, compatibilityLevel);
@@ -58,6 +60,7 @@ public class DefaultReportPreProcessorMetaData extends AbstractMetaData implemen
       throw new NullPointerException();
     }
 
+    this.executionPriority = executionPriority;
     this.executeInDesignMode = executeInDesignMode;
     this.autoProcessor = autoProcessor;
     this.expressionType = expressionType;
@@ -132,5 +135,10 @@ public class DefaultReportPreProcessorMetaData extends AbstractMetaData implemen
     in.defaultReadObject();
     final Class c = (Class) in.readObject();
     beanInfo = new SharedBeanInfo(c);
+  }
+
+  public int getExecutionPriority()
+  {
+    return executionPriority;
   }
 }

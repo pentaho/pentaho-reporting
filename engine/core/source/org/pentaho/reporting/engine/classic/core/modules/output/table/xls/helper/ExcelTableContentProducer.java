@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 
-public class ExcelTableContentProducer extends TableContentProducer
+public class ExcelTableContentProducer extends TableContentProducer implements SheetPropertySource
 {
   private String pageHeaderCenter;
   private String pageFooterCenter;

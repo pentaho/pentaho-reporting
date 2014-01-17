@@ -30,77 +30,49 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.libraries.base.util.FastStack;
 
-/**
- * Creation-Date: 10.05.2007, 19:49:46
- *
- * @author Thomas Morgner
- */
 public class ExcelTextExtractor extends DefaultTextExtractor
 {
   private static final Log logger = LogFactory.getLog(ExcelTextExtractor.class);
 
-  private static class RichTextFormat
-  {
-    private int position;
-    private HSSFFontWrapper font;
-
-    protected RichTextFormat(final int position, final HSSFFontWrapper font)
-    {
-      if (font == null)
-      {
-        throw new NullPointerException();
-      }
-      this.position = position;
-      this.font = font;
-    }
-
-    public int getPosition()
-    {
-      return position;
-    }
-
-    public HSSFFontWrapper getFont()
-    {
-      return font;
-    }
-
-
-  }
-
-  private ArrayList buffer;
+  private ArrayList<RichTextFormat> formatBuffer;
+  private FastStack<RichTextFormat> formatBufferStack;
   private ExcelColorProducer colorProducer;
+  private CreationHelper creationHelper;
+  private ExcelFontFactory fontFactory;
 
   public ExcelTextExtractor(final OutputProcessorMetaData metaData,
-                            final ExcelColorProducer colorProducer)
+                            final ExcelColorProducer colorProducer,
+                            final CreationHelper creationHelper,
+                            final ExcelFontFactory fontFactory)
   {
     super(metaData);
+    this.creationHelper = creationHelper;
+    this.fontFactory = fontFactory;
     if (colorProducer == null)
     {
       throw new NullPointerException();
     }
     this.colorProducer = colorProducer;
-    buffer = new ArrayList();
+    this.formatBuffer = new ArrayList<RichTextFormat>();
+    this.formatBufferStack = new FastStack<RichTextFormat>();
   }
 
-  public Object compute(final RenderBox paraBox,
-                        final ExcelFontFactory fontFactory,
-                        final CreationHelper creationHelper)
+  public Object compute(final RenderBox paraBox)
   {
-    buffer.clear();
+    formatBuffer.clear();
     super.compute(paraBox);
 
-    final String text = getText();
-    if (buffer.size() <= 1)
+    if (formatBuffer.size() <= 1)
     {
       // A simple result. So there's no need to create a rich-text string.
       final Object rawResult = getRawResult();
       if (rawResult != null && rawResult instanceof String == false)
       {
-
         return rawResult;
       }
+      final String text = getText();
       if (text.length() > 32767)
       {
         ExcelTextExtractor.logger.warn(
@@ -113,7 +85,17 @@ public class ExcelTextExtractor extends DefaultTextExtractor
       }
       return null;
     }
-    else if (text.length() > 0)
+
+    final String text = getText();
+    return computeRichText(fontFactory, creationHelper, text, formatBuffer);
+  }
+
+  public static RichTextString computeRichText(final ExcelFontFactory fontFactory,
+                                               final CreationHelper creationHelper,
+                                               final String text,
+                                               final ArrayList<RichTextFormat> buffer)
+  {
+    if (text.length() > 0)
     {
       if (text.length() < 32768)
       {
@@ -121,7 +103,7 @@ public class ExcelTextExtractor extends DefaultTextExtractor
         final RichTextString rtStr = creationHelper.createRichTextString(text);
         for (int i = 0; i < buffer.size(); i++)
         {
-          final RichTextFormat o = (RichTextFormat) buffer.get(i);
+          final RichTextFormat o = buffer.get(i);
           final int position = o.getPosition();
           final HSSFFontWrapper font = o.getFont();
           if (i == (buffer.size() - 1))
@@ -131,7 +113,7 @@ public class ExcelTextExtractor extends DefaultTextExtractor
           }
           else
           {
-            final RichTextFormat next = (RichTextFormat) buffer.get(i + 1);
+            final RichTextFormat next = buffer.get(i + 1);
             rtStr.applyFont(position, next.getPosition(), fontFactory.getExcelFont(font));
           }
         }
@@ -146,7 +128,7 @@ public class ExcelTextExtractor extends DefaultTextExtractor
         final RichTextString rtStr = creationHelper.createRichTextString(realText);
         for (int i = 0; i < buffer.size(); i++)
         {
-          final RichTextFormat o = (RichTextFormat) buffer.get(i);
+          final RichTextFormat o = buffer.get(i);
           final int position = o.getPosition();
           if (position >= 32767)
           {
@@ -161,7 +143,7 @@ public class ExcelTextExtractor extends DefaultTextExtractor
           }
           else
           {
-            final RichTextFormat next = (RichTextFormat) buffer.get(i + 1);
+            final RichTextFormat next = buffer.get(i + 1);
             final int endPosition = Math.min(32767, next.getPosition());
             rtStr.applyFont(position, endPosition, fontFactory.getExcelFont(font));
           }
@@ -181,31 +163,47 @@ public class ExcelTextExtractor extends DefaultTextExtractor
 
     final StyleSheet styleSheet = box.getStyleSheet();
     final Color textColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
-    final String fontName = (String) styleSheet.getStyleProperty(TextStyleKeys.FONT);
-    final short fontSize = (short) styleSheet.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
-    final boolean bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD);
-    final boolean italic = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC);
-    final boolean underline = styleSheet.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
-    final boolean strikethrough = styleSheet.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
     final HSSFFontWrapper wrapper = new HSSFFontWrapper
-        (fontName, fontSize, bold, italic, underline, strikethrough, colorProducer.getNearestColor(textColor));
+        (styleSheet, colorProducer.getNearestColor(textColor));
     final RichTextFormat rtf = new RichTextFormat(getTextLength(), wrapper);
 
     // Check the style.
-    if (buffer.isEmpty())
+    if (formatBuffer.isEmpty())
     {
-      buffer.add(rtf);
+      formatBuffer.add(rtf);
     }
     else
     {
-      final RichTextFormat lastRtf = (RichTextFormat) buffer.get(buffer.size() - 1);
-      if (lastRtf.getFont().equals(rtf.getFont()) == false)
+      int lastIndex = formatBuffer.size() - 1;
+      final RichTextFormat lastRtf = formatBuffer.get(lastIndex);
+      if (lastRtf.getPosition() == rtf.getPosition())
       {
-        buffer.add(rtf);
+        formatBuffer.set(lastIndex, rtf);
+      }
+      else if (lastRtf.getFont().equals(rtf.getFont()) == false)
+      {
+        formatBuffer.add(rtf);
       }
     }
+
+    formatBufferStack.push(rtf);
 
     return true;
   }
 
+  protected void finishInlineBox(final InlineRenderBox box)
+  {
+    formatBufferStack.pop();
+    if (formatBufferStack.isEmpty())
+    {
+      return;
+    }
+
+    RichTextFormat rtf = formatBufferStack.peek();
+    final RichTextFormat lastRtf = formatBuffer.get(formatBuffer.size() - 1);
+    if (lastRtf.getFont().equals(rtf.getFont()) == false)
+    {
+      formatBuffer.add(new RichTextFormat(getTextLength(), rtf.getFont()));
+    }
+  }
 }
