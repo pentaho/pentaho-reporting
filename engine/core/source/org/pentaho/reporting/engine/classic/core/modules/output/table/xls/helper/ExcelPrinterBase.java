@@ -58,7 +58,7 @@ public abstract class ExcelPrinterBase
   private ExcelColorProducer colorProducer;
   private ExcelColorProducer fontColorProducer;
   private boolean useXlsxFormat;
-  private HSSFCellStyleProducer cellStyleProducer;
+  private CellStyleProducer cellStyleProducer;
   private ExcelImageHandler imageHandler;
   private Drawing patriarch;
 
@@ -206,11 +206,10 @@ public abstract class ExcelPrinterBase
     return scaleFactor;
   }
 
-  public HSSFCellStyleProducer getCellStyleProducer()
+  public CellStyleProducer getCellStyleProducer()
   {
     return cellStyleProducer;
   }
-
 
   protected Workbook createWorkbook()
   {
@@ -262,24 +261,28 @@ public abstract class ExcelPrinterBase
       if (dynamicColors)
       {
         final HSSFWorkbook hssfWorkbook = (HSSFWorkbook) workbook;
-        colorProducer = new DynamicExcelColorProducer(hssfWorkbook);
+        colorProducer = new CachingExcelColorSupport(new DynamicExcelColorProducer(hssfWorkbook));
       }
       else
       {
-        colorProducer = new StaticExcelColorSupport();
+        colorProducer = new CachingExcelColorSupport(new StaticExcelColorSupport());
       }
       fontColorProducer = colorProducer;
     }
     else
     {
       colorProducer = new XSSFExcelColorProducer();
-      fontColorProducer = new StaticExcelColorSupport();
+      fontColorProducer = new CachingExcelColorSupport(new StaticExcelColorSupport());
     }
 
+    cellStyleProducer = createCellStyleProducer(workbook);
+  }
+
+  protected CellStyleProducer createCellStyleProducer(final Workbook workbook)
+  {
     final boolean hardLimit = "true".equals(getConfig().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.xls.HardStyleCountLimit"));
-    cellStyleProducer = new HSSFCellStyleProducer(workbook, hardLimit, colorProducer, fontColorProducer);
-
+    return new HSSFCellStyleProducer(workbook, hardLimit, colorProducer, fontColorProducer);
   }
 
   protected Sheet openSheet(final String sheetName)

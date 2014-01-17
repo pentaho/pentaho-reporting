@@ -172,7 +172,8 @@ public class ExcelPrinter extends ExcelPrinterBase
 
           // A empty cell with a defined background ..
           final Cell cell = getCellAt(col, row);
-          final CellStyle style = getCellStyleProducer().createCellStyle(null, background);
+          final CellStyle style =
+              getCellStyleProducer().createCellStyle(null, null, background);
           if (style != null)
           {
             cell.setCellStyle(style);
@@ -201,7 +202,8 @@ public class ExcelPrinter extends ExcelPrinterBase
         // export the cell and all content ..
 
         final Cell cell = getCellAt(col, row);
-        final CellStyle style = getCellStyleProducer().createCellStyle(content.getStyleSheet(), fastBackground);
+        final CellStyle style =
+            getCellStyleProducer().createCellStyle(content.getInstanceId(), content.getStyleSheet(), fastBackground);
         if (style != null)
         {
           cell.setCellStyle(style);
@@ -256,7 +258,8 @@ public class ExcelPrinter extends ExcelPrinterBase
         final CellBackground bg = cellBackgroundProducer.getBackgroundForBox
             (logicalPage, sheetLayout, rectX + spannedCol, rectY + spannedRow, 1, 1, false, sectionType, content);
         final Cell regionCell = getCellAt((col + spannedCol), row + spannedRow);
-        final CellStyle spannedStyle = getCellStyleProducer().createCellStyle(content.getStyleSheet(), bg);
+        final CellStyle spannedStyle =
+            getCellStyleProducer().createCellStyle(content.getInstanceId(), content.getStyleSheet(), bg);
         if (spannedStyle != null)
         {
           regionCell.setCellStyle(spannedStyle);

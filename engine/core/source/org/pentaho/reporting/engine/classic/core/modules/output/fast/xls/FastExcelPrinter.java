@@ -50,6 +50,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.Sh
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.CellBackground;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.CellStyleProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelPrinterBase;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -128,7 +129,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
       int col = layoutInfo.getX1();
       int row = layoutInfo.getY1();
       final Cell cell = getCellAt(col, row);
-      final CellStyle style = getCellStyleProducer().createCellStyle(null, layoutInfo.getBackground());
+      final CellStyle style = getCellStyleProducer().createCellStyle(null, null, layoutInfo.getBackground());
       if (style != null)
       {
         cell.setCellStyle(style);
@@ -148,6 +149,11 @@ public class FastExcelPrinter extends ExcelPrinterBase
     }
   }
 
+  protected CellStyleProducer createCellStyleProducer(final Workbook workbook)
+  {
+    return new FastExcelCellStyleProducer(super.createCellStyleProducer(workbook));
+  }
+
   public void closeSheet()
   {
     sheet = null;
@@ -162,7 +168,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
     Cell cellAt = getCellAt(x, y);
 
     CellBackground bg = tableRectangle.getBackground();
-    CellStyle cellStyle = getCellStyleProducer().createCellStyle(element.getComputedStyle(), bg);
+    CellStyle cellStyle = getCellStyleProducer().createCellStyle(element.getObjectID(), element.getComputedStyle(), bg);
     if (cellStyle != null)
     {
       cellAt.setCellStyle(cellStyle);
@@ -290,11 +296,11 @@ public class FastExcelPrinter extends ExcelPrinterBase
   {
     final StyleSheet rawSource = content.getComputedStyle();
 
-    final StrictBounds contentBounds = sheetLayout.getBounds(rectangle);
     if (value instanceof Image)
     {
       try
       {
+        final StrictBounds contentBounds = sheetLayout.getBounds(rectangle);
         final ImageContainer imageContainer = new DefaultImageReference((Image) value);
         createImageCell(rawSource, imageContainer, sheetLayout, rectangle, contentBounds);
       }
@@ -308,13 +314,14 @@ public class FastExcelPrinter extends ExcelPrinterBase
     else if (value instanceof ImageContainer)
     {
       final ImageContainer imageContainer = (ImageContainer) value;
-      // todo: this is wrong ..
+      final StrictBounds contentBounds = sheetLayout.getBounds(rectangle);
       createImageCell(rawSource, imageContainer, sheetLayout, rectangle, contentBounds);
       return true;
     }
     else if (value instanceof DrawableWrapper)
     {
       final DrawableWrapper drawable = (DrawableWrapper) value;
+      final StrictBounds contentBounds = sheetLayout.getBounds(rectangle);
       final ImageContainer imageFromDrawable =
           RenderUtility.createImageFromDrawable(drawable, contentBounds, content.getComputedStyle(), getMetaData());
       createImageCell(rawSource, imageFromDrawable, sheetLayout, rectangle, contentBounds);

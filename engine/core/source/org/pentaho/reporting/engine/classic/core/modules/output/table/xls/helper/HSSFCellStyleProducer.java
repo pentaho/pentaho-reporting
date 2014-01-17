@@ -40,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 /**
@@ -48,7 +49,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public class HSSFCellStyleProducer
+public class HSSFCellStyleProducer implements CellStyleProducer
 {
   private static final Log logger = LogFactory.getLog(HSSFCellStyleProducer.class);
 
@@ -129,6 +130,7 @@ public class HSSFCellStyleProducer
      */
     private short dataStyle;
 
+    private Integer hashCode;
 
     /**
      * @param background   can be null
@@ -417,26 +419,30 @@ public class HSSFCellStyleProducer
 
     public int hashCode()
     {
-      int result = (int) color;
-      result = 29 * result + (int) borderStrokeTop;
-      result = 29 * result + (int) borderStrokeBottom;
-      result = 29 * result + (int) borderStrokeLeft;
-      result = 29 * result + (int) borderStrokeRight;
-      result = 29 * result + (int) colorTop;
-      result = 29 * result + (int) colorLeft;
-      result = 29 * result + (int) colorBottom;
-      result = 29 * result + (int) colorRight;
-      result = 29 * result + (wrapText ? 1 : 0);
-      result = 29 * result + (int) horizontalAlignment;
-      result = 29 * result + (int) verticalAlignment;
-      result = 29 * result + (int) font;
-      result = 29 * result + (int) dataStyle;
-      result = 29 * result + ((xColor == null) ? 0 : xColor.hashCode());
-      result = 29 * result + ((xColorTop == null) ? 0 : xColorTop.hashCode());
-      result = 29 * result + ((xColorLeft == null) ? 0 : xColorLeft.hashCode());
-      result = 29 * result + ((xColorBottom == null) ? 0 : xColorBottom.hashCode());
-      result = 29 * result + ((xColorRight == null) ? 0 : xColorRight.hashCode());
-      return result;
+      if (hashCode == null)
+      {
+        int result = (int) color;
+        result = 29 * result + (int) borderStrokeTop;
+        result = 29 * result + (int) borderStrokeBottom;
+        result = 29 * result + (int) borderStrokeLeft;
+        result = 29 * result + (int) borderStrokeRight;
+        result = 29 * result + (int) colorTop;
+        result = 29 * result + (int) colorLeft;
+        result = 29 * result + (int) colorBottom;
+        result = 29 * result + (int) colorRight;
+        result = 29 * result + (wrapText ? 1 : 0);
+        result = 29 * result + (int) horizontalAlignment;
+        result = 29 * result + (int) verticalAlignment;
+        result = 29 * result + (int) font;
+        result = 29 * result + (int) dataStyle;
+        result = 29 * result + ((xColor == null) ? 0 : xColor.hashCode());
+        result = 29 * result + ((xColorTop == null) ? 0 : xColorTop.hashCode());
+        result = 29 * result + ((xColorLeft == null) ? 0 : xColorLeft.hashCode());
+        result = 29 * result + ((xColorBottom == null) ? 0 : xColorBottom.hashCode());
+        result = 29 * result + ((xColorRight == null) ? 0 : xColorRight.hashCode());
+        hashCode = result;
+      }
+      return hashCode;
     }
 
     public short getColor()
@@ -616,7 +622,8 @@ public class HSSFCellStyleProducer
    * @param bg      the optional background style for the table cell.
    * @return the generated or cached HSSFCellStyle.
    */
-  public CellStyle createCellStyle(final StyleSheet element,
+  public CellStyle createCellStyle(final InstanceID id,
+                                   final StyleSheet element,
                                    final CellBackground bg)
   {
     // check, whether that style is already created
