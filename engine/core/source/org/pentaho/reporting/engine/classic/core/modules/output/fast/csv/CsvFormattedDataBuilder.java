@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
 public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
 {
@@ -43,15 +44,18 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
   private HashMap<String, Object> values;
   private final MessageFormatSupport messageFormatSupport;
   private CSVQuoter csvQuoter;
+  private String encoding;
   private FastTextExtractor textExtractor;
 
   public CsvFormattedDataBuilder(HashMap<InstanceID, String> idMapping,
                                  MessageFormatSupport messageFormatSupport,
-                                 CSVQuoter csvQuoter)
+                                 CSVQuoter csvQuoter,
+                                 String encoding)
   {
     this.idMapping = idMapping;
     this.messageFormatSupport = messageFormatSupport;
     this.csvQuoter = csvQuoter;
+    this.encoding = encoding;
     this.values = new HashMap<String, Object>();
   }
 
@@ -60,7 +64,7 @@ public class CsvFormattedDataBuilder extends AbstractFormattedDataBuilder
                       final OutputStream out) throws ReportProcessingException, ContentProcessingException, IOException
   {
     String text = messageFormatSupport.performFormat(computeData(band, runtime));
-    out.write(text.getBytes("UTF-8"));
+    out.write(text.getBytes(encoding));
   }
 
   protected DataRow computeData(Band band, ExpressionRuntime runtime)

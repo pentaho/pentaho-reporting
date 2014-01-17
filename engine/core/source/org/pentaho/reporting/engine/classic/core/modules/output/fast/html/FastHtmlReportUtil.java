@@ -32,7 +32,7 @@ import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 public class FastHtmlReportUtil
 {
   public static void processStreamHtml(MasterReport report,
-                                OutputStream out) throws ReportProcessingException, IOException
+                                       OutputStream out) throws ReportProcessingException, IOException
   {
     ReportStructureValidator validator = new ReportStructureValidator();
     if (validator.isValidForFastProcessing(report) == false)

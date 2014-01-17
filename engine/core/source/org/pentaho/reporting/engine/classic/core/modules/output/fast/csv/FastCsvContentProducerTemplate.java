@@ -32,11 +32,15 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 public class FastCsvContentProducerTemplate extends AbstractContentProducerTemplate
 {
   private final OutputStream outputStream;
+  private String encoding;
 
-  public FastCsvContentProducerTemplate(final SheetLayout sharedSheetLayout, final OutputStream outputStream)
+  public FastCsvContentProducerTemplate(final SheetLayout sharedSheetLayout,
+                                        final OutputStream outputStream,
+                                        final String encoding)
   {
     super(sharedSheetLayout);
     this.outputStream = outputStream;
+    this.encoding = encoding;
   }
 
   protected void writeContent(final Band band,
@@ -49,7 +53,7 @@ public class FastCsvContentProducerTemplate extends AbstractContentProducerTempl
 
   protected FastExportTemplateProducer createTemplateProducer()
   {
-    return new CsvTemplateProducer(getMetaData(), getSharedSheetLayout());
+    return new CsvTemplateProducer(getMetaData(), getSharedSheetLayout(), encoding);
   }
 
 }

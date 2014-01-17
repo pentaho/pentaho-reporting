@@ -28,10 +28,13 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGuiContext;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.xls.FastExcelExportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.FlowExcelOutputProcessor;
 import org.pentaho.reporting.libraries.base.util.Messages;
@@ -117,10 +120,21 @@ public class ExcelExportTask implements Runnable
         }
       }
       out = new BufferedOutputStream(new FileOutputStream(file));
-      final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor(report.getConfiguration(), out, report.getResourceManager());
-      target.setUseXlsxFormat(false);
-      final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+
+      ReportStructureValidator validator = new ReportStructureValidator();
+      ReportProcessor reportProcessor;
+      if (validator.isValidForFastProcessing(report) == false)
+      {
+        final FlowExcelOutputProcessor target =
+            new FlowExcelOutputProcessor(report.getConfiguration(), out, report.getResourceManager());
+        target.setUseXlsxFormat(false);
+        reportProcessor = new FlowReportProcessor(report, target);
+      }
+      else
+      {
+        reportProcessor = new FastExcelExportProcessor(report, out, false);
+      }
+
       if (progressDialog != null)
       {
         progressDialog.setModal(false);

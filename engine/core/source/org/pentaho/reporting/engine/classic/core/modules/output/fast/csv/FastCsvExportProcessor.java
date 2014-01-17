@@ -55,17 +55,27 @@ public class FastCsvExportProcessor extends AbstractReportProcessor
   }
 
   private OutputStream outputStream;
+  private final String encoding;
 
   public FastCsvExportProcessor(final MasterReport report,
                                 final OutputStream outputStream) throws ReportProcessingException
   {
+    this(report, outputStream, null);
+  }
+
+  public FastCsvExportProcessor(final MasterReport report,
+                                final OutputStream outputStream,
+                                final String encoding) throws ReportProcessingException
+  {
     super(report, new CSVDataOutputProcessor());
+
     this.outputStream = outputStream;
+    this.encoding = encoding;
   }
 
   protected OutputFunction createLayoutManager()
   {
-    return new FastExportOutputFunction(new FastCsvExportTemplate(outputStream));
+    return new FastExportOutputFunction(new FastCsvExportTemplate(outputStream, encoding));
   }
 
 
