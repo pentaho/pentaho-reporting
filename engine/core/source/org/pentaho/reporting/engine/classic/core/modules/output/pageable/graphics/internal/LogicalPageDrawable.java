@@ -1032,8 +1032,16 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
             {
               // The text node that is printed will overlap with the ellipse we need to print.
               //drawText(text, effectiveAreaX2);
-              final Graphics2D g2 = (Graphics2D) getGraphics().create();
-              text.getTextLayout().draw(g2, text.getX(), text.getY());
+              final Graphics2D g2;
+              if (getTextSpec() == null)
+              {
+                g2 = (Graphics2D) getGraphics().create();
+              }
+              else
+              {
+                g2 = getTextSpec().getGraphics();
+              }
+              text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(text.getX()), text.getY());
             }
           }
 
@@ -1115,7 +1123,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         drawText(text);
       }
     }
-    else if (type == LayoutNodeTypes.TYPE_NODE_TEXT) {
+    else if (type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
       final RenderableComplexText text = (RenderableComplexText) node;
       final long x1 = text.getX();
 
@@ -1126,8 +1134,16 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       else
       {
         // The text node that is printed will overlap with the ellipse we need to print.
-        final Graphics2D g2 = (Graphics2D) getGraphics().create();
-        text.getTextLayout().draw(g2, text.getX(), text.getY());
+        final Graphics2D g2;
+        if (getTextSpec() == null)
+        {
+          g2 = (Graphics2D) getGraphics().create();
+        }
+        else
+        {
+          g2 = getTextSpec().getGraphics();
+        }
+        text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(text.getX()), text.getY());
       }
     }
   }

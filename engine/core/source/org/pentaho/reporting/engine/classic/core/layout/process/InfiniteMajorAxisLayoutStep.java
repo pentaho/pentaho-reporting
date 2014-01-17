@@ -125,6 +125,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     if (breakState.isActive())
     {
+      if (complexText) {
+        return true;
+      }
+
       // No breakstate and not being suspended? Why this?
       if (breakState.isSuspended() == false)
       {
@@ -605,6 +609,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     if (breakState.isActive() == false || breakState.isSuspended())
     {
+      return;
+    }
+
+    if(complexText) {
       return;
     }
 

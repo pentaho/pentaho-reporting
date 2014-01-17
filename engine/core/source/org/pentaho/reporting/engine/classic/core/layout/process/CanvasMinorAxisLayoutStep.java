@@ -182,7 +182,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
 
       //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
-      RenderableComplexText text = null;//(RenderableComplexText) lineBoxContainer.derive(false);
+      RenderableComplexText text = (RenderableComplexText) lineBoxContainer.getFirstChild().derive(false);
       text.setTextLayout(textLayout);
 
       // Store the height and width, so that the other parts of the layouter have access to the information:
