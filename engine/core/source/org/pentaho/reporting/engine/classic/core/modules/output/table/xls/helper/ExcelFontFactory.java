@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
@@ -35,7 +35,7 @@ public class ExcelFontFactory
   /**
    * The list of fonts that we have used so far.
    */
-  private HashMap fonts;
+  private HashMap<HSSFFontWrapper, Font> fonts;
 
   /**
    * The workbook that is used to create the font.
@@ -59,7 +59,7 @@ public class ExcelFontFactory
       throw new NullPointerException();
     }
 
-    this.fonts = new HashMap();
+    this.fonts = new HashMap<HSSFFontWrapper, Font>();
     this.workbook = workbook;
 
     // read the fonts from the workbook ...
@@ -95,7 +95,7 @@ public class ExcelFontFactory
 
     if (fonts.containsKey(wrapper))
     {
-      return (Font) fonts.get(wrapper);
+      return fonts.get(wrapper);
     }
 
     // ok, we need a new one ...

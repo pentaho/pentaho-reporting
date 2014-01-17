@@ -165,6 +165,8 @@ public class AttributeNames
     public static final String COMAPTIBILITY_LEVEL = "compatibility-level";
     public static final String COMPUTED_STYLE = "computed-style";
 
+    public static final String FAST_EXPORT_DYNAMIC_STASH = "fast-export-dynamic-style-stash";
+    public static final String FAST_EXPORT_ELEMENT_STASH = "fast-export-element-style-stash";
     private Internal()
     {
     }
