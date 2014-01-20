@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
@@ -28,7 +28,6 @@ import java.util.Locale;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.util.HtmlColors;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.util.HtmlEncoderUtil;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
@@ -50,10 +49,11 @@ public final class DefaultStyleBuilder implements StyleBuilder
   private StyleCarrier[] usedStyles;
 
   private NumberFormat pointConverter;
-  private boolean safariLengthFix;
+  private StyleBuilderFactory factory;
 
-  public DefaultStyleBuilder()
+  public DefaultStyleBuilder(final StyleBuilderFactory factory)
   {
+    this.factory = factory;
     this.lineSeparator = StringUtils.getLineSeparator();
     this.cachedBorderStyle = new LFUMap<BorderEdge, String>(30);
     this.cachedCornerStyle = new LFUMap<BorderCorner, String>(30);
@@ -63,11 +63,9 @@ public final class DefaultStyleBuilder implements StyleBuilder
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack")))
     {
       pointConverter = new DecimalFormat("0", new DecimalFormatSymbols(Locale.US));
-      safariLengthFix = true;
     }
     else
     {
-      safariLengthFix = false;
       pointConverter = new DecimalFormat("0.####", new DecimalFormatSymbols(Locale.US));
     }
   }
@@ -211,8 +209,8 @@ public final class DefaultStyleBuilder implements StyleBuilder
       return cached;
     }
 
-    final String value = pointConverter.format(HtmlPrinter.fixLengthForSafari
-        (StrictGeomUtility.toExternalValue(width), safariLengthFix)) +
+    final String value = pointConverter.format(factory.fixLengthForSafari
+        (StrictGeomUtility.toExternalValue(width))) +
             "pt " + borderStyle.toString() + ' ' + HtmlColors.getColorString(edge.getColor());
     cachedBorderStyle.put(edge, value);
     return value;
@@ -228,11 +226,11 @@ public final class DefaultStyleBuilder implements StyleBuilder
     }
 
     final String value = (pointConverter.format
-        (HtmlPrinter.fixLengthForSafari
-            (StrictGeomUtility.toExternalValue(edge.getWidth()), safariLengthFix)) + "pt " +
+        (factory.fixLengthForSafari
+            (StrictGeomUtility.toExternalValue(edge.getWidth()))) + "pt " +
         pointConverter.format
-            (HtmlPrinter.fixLengthForSafari
-                (StrictGeomUtility.toExternalValue(edge.getHeight()), safariLengthFix)) + "pt ");
+            (factory.fixLengthForSafari
+                (StrictGeomUtility.toExternalValue(edge.getHeight()))) + "pt ");
     cachedCornerStyle.put(edge, value);
     return value;
   }

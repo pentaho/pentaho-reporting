@@ -51,4 +51,9 @@ public class ContentProcessingException extends Exception
   {
     super(message);
   }
+
+  public ContentProcessingException(final Throwable cause)
+  {
+    super(cause);
+  }
 }

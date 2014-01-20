@@ -46,6 +46,11 @@ public class InvalidReportStateException extends RuntimeException
     super(message);
   }
 
+  public InvalidReportStateException(final Throwable cause)
+  {
+    super(cause);
+  }
+
   public InvalidReportStateException()
   {
   }

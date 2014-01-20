@@ -1,26 +1,26 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.ss.usermodel.Font;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 /**
  * The HSSFFontWrapper is used to store excel style font informations.
@@ -73,6 +73,18 @@ public final class HSSFFontWrapper
    * the cached hashcode.
    */
   private int hashCode;
+
+  public HSSFFontWrapper(final StyleSheet contentStyle,
+                         final short colorIndex)
+  {
+    this.fontName = (String) contentStyle.getStyleProperty(TextStyleKeys.FONT);
+    this.fontHeight = contentStyle.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
+    this.bold = contentStyle.getBooleanStyleProperty(TextStyleKeys.BOLD);
+    this.italic = contentStyle.getBooleanStyleProperty(TextStyleKeys.ITALIC);
+    this.underline = contentStyle.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
+    this.strikethrough = contentStyle.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+    this.colorIndex = colorIndex;
+  }
 
   /**
    * Creates a new HSSFFontWrapper for the given font and color.

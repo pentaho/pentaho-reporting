@@ -104,7 +104,7 @@ public class FlowRenderer extends AbstractRenderer
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 50) // this is a magic number ..
+    if (floodPrevention < 5) // this is a magic number ..
     {
       return;
     }

@@ -187,6 +187,16 @@
                computed="false"
                value-type="java.lang.Double"
                value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="fast-export-dynamic-style-stash"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               computed="true"
+               transient="false"
+               value-type="java.lang.Object"
+               value-role="Value"/>
   </attribute-group>
 
   <attribute-group name="interactivity"
@@ -616,6 +626,17 @@
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
                name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.WizardItemHideFunction"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="fast-export-element-style-stash"
                mandatory="false"
                expert="false"
                hidden="true"

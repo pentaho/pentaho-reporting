@@ -33,9 +33,12 @@ import org.pentaho.reporting.designer.core.util.ExternalToolLauncher;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewParametersDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.csv.FastCsvExportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StreamCSVOutputProcessor;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -112,10 +115,21 @@ public final class PreviewCsvAction extends AbstractReportContextAction
         final FileOutputStream fout = new FileOutputStream(tempFile);
         try
         {
-          final BufferedOutputStream bout = new BufferedOutputStream(fout);
-          final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(bout);
 
-          final StreamReportProcessor reportProcessor = new StreamReportProcessor(report, target);
+          final BufferedOutputStream bout = new BufferedOutputStream(fout);
+
+          ReportProcessor reportProcessor;
+          ReportStructureValidator validator = new ReportStructureValidator();
+          if (validator.isValidForFastProcessing(report) == false)
+          {
+            final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(bout);
+            reportProcessor = new StreamReportProcessor(report, target);
+          }
+          else
+          {
+            reportProcessor = new FastCsvExportProcessor(report, bout);
+          }
+
           reportProcessor.addReportProgressListener(progressDialog);
           progressDialog.setVisibleInEDT(true);
 
