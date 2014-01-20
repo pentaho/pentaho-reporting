@@ -33,9 +33,12 @@ import org.pentaho.reporting.designer.core.util.ExternalToolLauncher;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewParametersDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.xls.FastExcelExportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.FlowExcelOutputProcessor;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -113,10 +116,19 @@ public final class PreviewXlsxAction extends AbstractReportContextAction
         try
         {
           final BufferedOutputStream bout = new BufferedOutputStream(fout);
-          final FlowExcelOutputProcessor target =
-              new FlowExcelOutputProcessor(report.getConfiguration(), bout, report.getResourceManager());
-          target.setUseXlsxFormat(true);
-          final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+          ReportStructureValidator validator = new ReportStructureValidator();
+          ReportProcessor reportProcessor;
+          if (validator.isValidForFastProcessing(report) == false)
+          {
+            final FlowExcelOutputProcessor target =
+                new FlowExcelOutputProcessor(report.getConfiguration(), bout, report.getResourceManager());
+            target.setUseXlsxFormat(true);
+            reportProcessor = new FlowReportProcessor(report, target);
+          }
+          else
+          {
+            reportProcessor = new FastExcelExportProcessor(report, bout, true);
+          }
 
           reportProcessor.addReportProgressListener(progressDialog);
           progressDialog.setVisibleInEDT(true);
