@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
+import java.awt.font.TextLayout;
+
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
@@ -24,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -163,6 +166,22 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
             drawText(text, effectiveAreaX2);
           }
         }
+        else if (clipOnWordBoundary == false &&
+            nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+        {
+          final RenderableComplexText text = (RenderableComplexText) node;
+          final long x1 = text.getX();
+
+          if (x1 >= contentAreaX2)
+          {
+            // Skip, the node will not be visible.
+          }
+          else
+          {
+            // The text node that is printed will overlap with the ellipse we need to print.
+            drawComplexText(text);
+          }
+        }
 
         final RenderBox parent = node.getParent();
         if (parent != null)
@@ -225,6 +244,49 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
         manualBreak = true;
       }
     }
+    else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+      final RenderableComplexText textNode = (RenderableComplexText) node;
+      if (isTextLineOverflow())
+      {
+        if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
+        {
+          return;
+        }
+
+        final long ellipseSize = extractEllipseSize(node);
+        final long x1 = node.getX();
+        final long x2 = x1 + node.getWidth();
+        final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+        if (x2 <= effectiveAreaX2)
+        {
+          // the text will be fully visible.
+          drawComplexText(textNode);
+        }
+        else if (x1 >= contentAreaX2)
+        {
+          // Skip, the node will not be visible.
+        }
+        else
+        {
+          // The text node that is printed will overlap with the ellipse we need to print.
+          drawComplexText(textNode);
+
+          final RenderBox parent = node.getParent();
+          if (parent != null)
+          {
+            final RenderBox textEllipseBox = parent.getTextEllipseBox();
+            if (textEllipseBox != null)
+            {
+              processBoxChilds(textEllipseBox);
+            }
+          }
+        }
+      }
+      else
+      {
+        drawComplexText(textNode);
+      }
+    }
     else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
     {
       final SpacerRenderNode spacer = (SpacerRenderNode) node;
@@ -253,6 +315,40 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     final GlyphList gs = renderableText.getGlyphs();
     final int maxLength = renderableText.computeMaximumTextSize(contentX2);
     this.text.append(gs.getText(renderableText.getOffset(), maxLength, codePointBuffer));
+  }
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+
+    final String text;
+    TextLayout textLayout = renderableComplexText.getTextLayout();
+    String debugInfo = textLayout.toString();
+    String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
+    int startPosIntValue = -1;
+
+    try {
+      startPosIntValue = Integer.parseInt(startPos);
+    }
+    catch (NumberFormatException e) {
+      // do nothing
+    }
+
+    // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
+    // in order to avoid duplicates of same source raw text on multiple lines
+    if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
+      text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
+    }
+    else {
+      text = renderableComplexText.getRawText();
+    }
+
+    if (text.length() == 0)
+    {
+      // This text is empty.
+      return;
+    }
+
+    this.text.append(text);
   }
 
   protected boolean startOtherBox(final RenderBox box)

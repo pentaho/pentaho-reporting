@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.internal;
 
 import java.awt.Color;
+import java.awt.font.TextLayout;
 import java.beans.PropertyEditor;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -46,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -649,6 +651,46 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
             pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
         xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
         xmlWriter.writeTextNormalized(text.getRawText(), true);
+        xmlWriter.writeCloseTag();
+
+      }
+      else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        final RenderableComplexText renderableComplexText = (RenderableComplexText) node;
+        final AttributeList attributeList = new AttributeList();
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
+
+        final String text;
+        TextLayout textLayout = renderableComplexText.getTextLayout();
+        String debugInfo = textLayout.toString();
+        String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
+        int startPosIntValue = -1;
+
+        try {
+          startPosIntValue = Integer.parseInt(startPos);
+        }
+        catch (NumberFormatException e) {
+          // do nothing
+        }
+
+        // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
+        // in order to avoid duplicates of same source raw text on multiple lines
+        if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
+          text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
+        }
+        else {
+          text = renderableComplexText.getRawText();
+        }
+
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
+        xmlWriter.writeTextNormalized(text, true);
         xmlWriter.writeCloseTag();
 
       }

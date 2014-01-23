@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -332,6 +333,10 @@ public class RTFTextExtractor extends DefaultTextExtractor
 
         context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
       }
+    }
+    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+      // todo: check if special text processing is required for RenderableComplexText nodes
+      return;
     }
   }
 

@@ -17,8 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.font.TextLayout;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -35,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -42,6 +48,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.LogicalPageDrawable;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessingException;
@@ -706,7 +713,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     try
     {
       final int nodeType = node.getNodeType();
-      if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
+      if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT || nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
       {
         super.processOtherNode(node);
         return;
@@ -1131,6 +1138,59 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       final GlyphList gs = renderableText.getGlyphs();
       final int maxLength = renderableText.computeMaximumTextSize(contentX2);
       text = gs.getText(renderableText.getOffset(), maxLength, getCodePointBuffer());
+
+      if (text.length() > 0)
+      {
+        xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+        if (text.trim().length() > 0)
+        {
+          result = true;
+        }
+        clearText();
+      }
+    }
+    catch (IOException ioe)
+    {
+      throw new InvalidReportStateException("Failed to write text", ioe);
+    }
+
+  }
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+    try
+    {
+
+      if (renderableComplexText.getRawText().length() == 0)
+      {
+        // This text is empty.
+        return;
+      }
+      if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
+      {
+        return;
+      }
+
+      final String text;
+      TextLayout textLayout = renderableComplexText.getTextLayout();
+      String debugInfo = textLayout.toString();
+      String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
+      int startPosIntValue = -1;
+
+      try {
+        startPosIntValue = Integer.parseInt(startPos);
+      }
+      catch (NumberFormatException e) {
+        // do nothing
+      }
+
+      // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
+      // in order to avoid duplicates of same source raw text on multiple lines
+      if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
+        text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
+      }
+      else {
+        text = renderableComplexText.getRawText();
+      }
 
       if (text.length() > 0)
       {

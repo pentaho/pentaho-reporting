@@ -1031,26 +1031,29 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
             else
             {
               // The text node that is printed will overlap with the ellipse we need to print.
-              //drawText(text, effectiveAreaX2);
               final Graphics2D g2;
               if (getTextSpec() == null)
               {
                 g2 = (Graphics2D) getGraphics().create();
+                final StyleSheet layoutContext = text.getStyleSheet();
+                configureGraphics(layoutContext, g2);
+                g2.setStroke(LogicalPageDrawable.DEFAULT_STROKE);
+
+                if (RenderUtility.isFontSmooth(layoutContext, metaData))
+                {
+                  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                }
+                else
+                {
+                  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                }
               }
               else
               {
                 g2 = getTextSpec().getGraphics();
               }
-              final long posX = text.getX();
-              final long posY = text.getY();
 
-              final FontMetrics fm = g2.getFontMetrics();
-              final Rectangle2D rect = fm.getMaxCharBounds(g2);
-              final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
-
-              final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
-
-              text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
+              drawComplexText(text, g2);
             }
           }
 
@@ -1147,21 +1150,25 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         if (getTextSpec() == null)
         {
           g2 = (Graphics2D) getGraphics().create();
+          final StyleSheet layoutContext = text.getStyleSheet();
+          configureGraphics(layoutContext, g2);
+          g2.setStroke(LogicalPageDrawable.DEFAULT_STROKE);
+
+          if (RenderUtility.isFontSmooth(layoutContext, metaData))
+          {
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+          }
+          else
+          {
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+          }
         }
         else
         {
           g2 = getTextSpec().getGraphics();
         }
-        final long posX = text.getX();
-        final long posY = text.getY();
 
-        final FontMetrics fm = g2.getFontMetrics();
-        final Rectangle2D rect = fm.getMaxCharBounds(g2);
-        final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
-
-        final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
-
-        text.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
+        drawComplexText(text,g2);
       }
     }
   }
@@ -1555,6 +1562,21 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         runningPos += RenderableText.convert(g.getWidth()) + g.getSpacing().getMinimum();
       }
     }
+    g2.dispose();
+  }
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2) {
+    final long posX = renderableComplexText.getX();
+    final long posY = renderableComplexText.getY();
+
+    final FontMetrics fm = g2.getFontMetrics();
+    final Rectangle2D rect = fm.getMaxCharBounds(g2);
+    final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
+
+    final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
+
+    renderableComplexText.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
+
     g2.dispose();
   }
 

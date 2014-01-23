@@ -17,8 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
@@ -57,6 +60,8 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
@@ -155,6 +160,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final RenderBox lineBoxContainer = box.getEffectiveLineboxContainer();
     AttributedString attributedString = null;
     StringBuilder poolText = new StringBuilder();
+    StyleSheet layoutContext = box.getStyleSheet();
 
     RenderNode node = lineBoxContainer.getFirstChild();
     while (node != null) {
@@ -171,13 +177,42 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     attributedString = new AttributedString(poolText.toString());
 
+    // determine font style
+    int fontStyle = Font.PLAIN;
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC) && (Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
+      fontStyle = Font.BOLD | Font.ITALIC;
+    }
+    else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
+      fontStyle = Font.BOLD;
+    }
+    else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC)) {
+      fontStyle = Font.ITALIC;
+    }
+
+    // create the FONT to be used with attributedString
+    Font font = new Font((String)layoutContext.getStyleProperty(TextStyleKeys.FONT), fontStyle, (Integer)layoutContext.getStyleProperty(TextStyleKeys.FONTSIZE));
+
+    attributedString.addAttribute(TextAttribute.FONT, font);
+
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.UNDERLINED)) {
+      attributedString.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+    }
+
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.STRIKETHROUGH)) {
+      attributedString.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+    }
+
+    // determine if anti-aliasing is required or not
+    final FontSmooth smoothing = (FontSmooth) layoutContext.getStyleProperty(TextStyleKeys.FONT_SMOOTH);
+    final boolean antiAliasing = FontSmooth.NEVER.equals(smoothing) ? false : true;
+
     // 3. Create a LineBreakMeasurer to break down that string into lines.
     AttributedCharacterIterator attributedCharacterIterator =  attributedString.getIterator();
-    // Check if FontRenderContext initialisation should be done using AbstractGraphics2D.getFontRenderContext()
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, false, false);
+    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
     LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(attributedCharacterIterator, fontRenderContext);
     float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
 
+    lineBreakMeasurer.setPosition(attributedCharacterIterator.getBeginIndex());
     while (lineBreakMeasurer.getPosition() < attributedCharacterIterator.getEndIndex()) {
       // 4. For each line produced by the LinebreakMeasurer
       TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
@@ -191,9 +226,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
 
       final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
-
-      //text.setCachedX(box.getTextAlignment() == ElementAlignment.RIGHT ? box.getCachedX() + StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()) : box.getCachedX());
-      //text.setCachedX(box.getCachedX());
       text.setCachedX(alignmentX + box.getCachedX());
 
       // Create a shallow copy of the paragraph-pool to act as a line container.
@@ -202,7 +234,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       line.setCachedWidth(box.getCachedWidth());
 
       // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-      //line.setCachedX(box.getCachedX());
       line.setCachedX(alignmentX + box.getCachedX());
 
       // and finally add the line to the paragraph
