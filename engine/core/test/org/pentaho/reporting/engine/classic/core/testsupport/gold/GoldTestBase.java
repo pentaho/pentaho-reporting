@@ -46,6 +46,7 @@ import javax.naming.spi.NamingManager;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLAssert;
@@ -114,15 +115,18 @@ public class GoldTestBase
 
   private class ExecuteReportRunner implements Runnable
   {
-    private String directory;
+    private File reportFile;
+    private File goldTemplate;
     private ReportProcessingMode processingMode;
     private List<Throwable> errors;
 
-    private ExecuteReportRunner(final String directory,
-                                final ReportProcessingMode processingMode,
-                                final List<Throwable> errors)
+    private ExecuteReportRunner(final File reportFile,
+                                final File goldTemplate,
+                                final List<Throwable> errors,
+                                final ReportProcessingMode processingMode)
     {
-      this.directory = directory;
+      this.reportFile = reportFile;
+      this.goldTemplate = goldTemplate;
       this.processingMode = processingMode;
       this.errors = errors;
     }
@@ -131,7 +135,9 @@ public class GoldTestBase
     {
       try
       {
-        processReports(directory, processingMode);
+        System.out.printf("Processing %s in mode=%s%n", reportFile, processingMode);
+        GoldTestBase.this.run(reportFile, goldTemplate, processingMode);
+        System.out.printf("Finished   %s in mode=%s%n", reportFile, processingMode);
       }
       catch (Throwable t)
       {
@@ -477,7 +483,8 @@ public class GoldTestBase
   protected void runAllGoldReports() throws Exception
   {
     final int numThreads = Math.max(1, ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads", 3));
+        ("org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads",
+            Math.max (1, Runtime.getRuntime().availableProcessors() - 1)));
 
     StopWatch w = new StopWatch();
     w.start();
@@ -502,11 +509,18 @@ public class GoldTestBase
   {
     initializeTestEnvironment();
 
-    processReports("reports", ReportProcessingMode.legacy);
-    processReports("reports", ReportProcessingMode.migration);
-    processReports("reports", ReportProcessingMode.current);
-    processReports("reports-4.0", ReportProcessingMode.migration);
-    processReports("reports-4.0", ReportProcessingMode.current);
+    List<Throwable> errors = Collections.synchronizedList(new ArrayList<Throwable>());
+    List<ExecuteReportRunner> reports = new ArrayList<ExecuteReportRunner>();
+    reports.addAll(collectReports("reports", ReportProcessingMode.legacy, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.current, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.current, errors));
+
+    for (ExecuteReportRunner report : reports)
+    {
+      report.run();
+    }
 
     System.out.println(findMarker());
   }
@@ -522,11 +536,17 @@ public class GoldTestBase
         new LinkedBlockingQueue<Runnable>(),
         new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
 
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.legacy, errors));
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.current, errors));
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.migration, errors));
-    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.current, errors));
-    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.migration, errors));
+    List<ExecuteReportRunner> reports = new ArrayList<ExecuteReportRunner>();
+    reports.addAll(collectReports("reports", ReportProcessingMode.legacy, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.current, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.current, errors));
+
+    for (ExecuteReportRunner report : reports)
+    {
+      threadPool.submit(report);
+    }
 
     threadPool.shutdown();
     while (threadPool.isTerminated() == false)
@@ -535,17 +555,18 @@ public class GoldTestBase
     }
     if (errors.isEmpty() == false)
     {
-      for (int i = 0; i < errors.size(); i++)
+      Log log = LogFactory.getLog(GoldTestBase.class);
+      for (Throwable throwable : errors)
       {
-        final Throwable throwable = errors.get(i);
-        throwable.printStackTrace();
-        LogFactory.getLog(GoldTestBase.class).error("Failed", throwable);
+        log.error("Failed", throwable);
       }
       Assert.fail();
     }
   }
 
-  private void processReports(final String sourceDirectoryName, final ReportProcessingMode mode) throws Exception
+  private List<ExecuteReportRunner> collectReports(final String sourceDirectoryName,
+                                                   final ReportProcessingMode mode,
+                                                   final List<Throwable> errors) throws Exception
   {
     final File marker = findMarker();
     final File reports = new File(marker, sourceDirectoryName);
@@ -571,6 +592,7 @@ public class GoldTestBase
       }
     }
 
+    List<ExecuteReportRunner> retval = new ArrayList<ExecuteReportRunner>();
     for (final File file : files)
     {
       if (file.isDirectory())
@@ -580,16 +602,14 @@ public class GoldTestBase
 
       try
       {
-        System.out.printf("Processing %s in mode=%s%n", file, mode);
-        run(file, gold, mode);
-        System.out.printf("Finished   %s in mode=%s%n", file, mode);
+        retval.add(new ExecuteReportRunner(file, gold, errors, mode));
       }
       catch (Throwable re)
       {
         throw new Exception("Failed at " + file, re);
       }
     }
-
+    return retval;
   }
 
   protected void runSingleGoldReport(final String file, final ReportProcessingMode mode) throws Exception
