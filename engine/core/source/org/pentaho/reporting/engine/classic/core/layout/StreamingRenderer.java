@@ -90,7 +90,7 @@ public class StreamingRenderer extends AbstractRenderer
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 150) // this is a magic number ..
+    if (floodPrevention < 50) // this is a magic number ..
     {
       return;
     }
