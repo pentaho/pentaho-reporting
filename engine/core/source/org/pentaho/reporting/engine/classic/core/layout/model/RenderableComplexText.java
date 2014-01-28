@@ -42,4 +42,12 @@ public class RenderableComplexText extends RenderNode
   {
     this.textLayout = textLayout;
   }
+
+//  public RenderableComplexText derive(final String text, final boolean deep)
+//  {
+//    final RenderableComplexText node = (RenderableComplexText) super.derive(deep);
+//
+//    node.text = text;
+//    return node;
+//  }
 }

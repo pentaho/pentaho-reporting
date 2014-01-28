@@ -17,6 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
+
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
@@ -26,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
@@ -34,10 +45,16 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRend
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.SimpleLinebreaker;
+import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TextWrap;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -89,7 +106,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       // text that has text-wrap style set to "None". For these lines, all normal
       // line breaking is disabled, but manual line/breaks (\n, \r or \r\n) are still
       // valid and honoured by the system.
-      return;
+
+//      return;
     }
 
     paragraphNesting.clear();
@@ -104,8 +122,100 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     }
   }
 
+  protected void processParagraphChilds(final ParagraphRenderBox box)
+  {
+    if (complexText) {
+      final RenderBox pool = box.getEffectiveLineboxContainer();
+      final StringBuilder poolText = new StringBuilder();
+
+      RenderNode node = pool.getFirstChild();
+      while (node != null) {
+        if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+        {
+          super.processParagraphChilds(box);
+          return;
+        }
+
+        final RenderableComplexText complexNode = (RenderableComplexText) node;
+        poolText.append(complexNode.getRawText());
+
+        node = node.getNext();
+      }
+      BufferedReader bufferedReaderCounter = null;
+      String complexLine;
+      int countLines = 0;
+
+      // count lines from buffered reader. if there aren't at least 2 lines, then there were no manual breaks in the source text
+      try {
+        bufferedReaderCounter = new BufferedReader(new StringReader(poolText.toString()));
+        while(bufferedReaderCounter.readLine() != null) {
+          countLines++;
+        }
+      } catch (Exception e) {
+        throw new IllegalStateException("Unexpected error while parsing complex paragraph.");
+      } finally {
+        try{
+          if(bufferedReaderCounter != null) {
+            bufferedReaderCounter.close();
+          }
+        }
+        catch(Exception e) {
+          throw new IllegalStateException("Unexpected error while closing buffer reader.");
+        }
+      }
+
+      // only if at least two lines are generated during parsing raw text continue processing
+      BufferedReader bufferedReader = null;
+      if(countLines >= 2) {
+        final RenderBox lineboxContainer = box.createLineboxContainer();
+        lineboxContainer.clear();
+        try {
+          bufferedReader = new BufferedReader(new StringReader(poolText.toString()));
+          while((complexLine = bufferedReader.readLine()) != null) {
+            //create new RenderableComplexText node with the current text line
+            final RenderableComplexText text1 = new RenderableComplexText(pool.getFirstChild().getStyleSheet()
+                                                                         ,pool.getFirstChild().getInstanceId()
+                                                                         ,pool.getFirstChild().getElementType()
+                                                                         ,pool.getFirstChild().getAttributes()
+                                                                         ,complexLine);
+
+            final RenderableComplexText text = (RenderableComplexText) text1.derive(false);
+//            final RenderableComplexText text = ((RenderableComplexText) pool.getFirstChild()).derive(complexLine + System.getProperty("line.separator"), false);
+//            final RenderableComplexText text = (RenderableComplexText) pool.getFirstChild().derive(false);
+
+            // Create a shallow copy of the paragraph-pool to act as a line container.
+            final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
+            line.addGeneratedChild(text);
+
+            // and finally add the line to the paragraph
+            lineboxContainer.addGeneratedChild(line);
+          }
+        } catch (Exception e) {
+          throw new IllegalStateException("Unexpected error while parsing complex paragraph.");
+        } finally {
+          try{
+            if(bufferedReader != null) {
+              bufferedReader.close();
+            }
+          }
+          catch(Exception e) {
+            throw new IllegalStateException("Unexpected error while closing buffered reader.");
+          }
+        }
+      }
+    }
+    else {
+      super.processParagraphChilds(box);
+    }
+  }
+
   protected boolean startBlockBox(final BlockRenderBox box)
   {
+    if(complexText) {
+      breakState = null;
+      return true;
+    }
+
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
@@ -228,6 +338,10 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   protected void finishBlockBox(final BlockRenderBox box)
   {
     box.setLinebreakAge(box.getChangeTracker());
+    if(complexText) {
+      breakState = null;
+      return;
+    }
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
