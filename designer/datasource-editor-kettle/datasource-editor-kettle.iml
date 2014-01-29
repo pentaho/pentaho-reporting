@@ -20,6 +20,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="libformula-ui" exported="" />
   </component>
   <component name="copyright">
     <Base>

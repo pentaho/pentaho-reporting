@@ -50,6 +50,7 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
 
   private String transformationFile;
 
+  @Deprecated
   public KettleTransFromFileProducer(final String repositoryName,
                                      final String transformationFile,
                                      final String stepName,
@@ -62,11 +63,31 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     this.transformationFile = transformationFile;
   }
 
+  public KettleTransFromFileProducer(final String repositoryName,
+                                     final String transformationFile,
+                                     final String stepName,
+                                     final String username,
+                                     final String password,
+                                     final FormulaArgument[] definedArgumentNames,
+                                     final FormulaParameter[] definedVariableNames)
+  {
+    super(repositoryName, stepName, username, password, definedArgumentNames, definedVariableNames);
+    this.transformationFile = transformationFile;
+  }
 
+  @Deprecated
   public KettleTransFromFileProducer(final String transformationFile,
                                      final String stepName,
                                      final String[] definedArgumentNames,
                                      final ParameterMapping[] definedVariableNames)
+  {
+    this("", transformationFile, stepName, null, null, definedArgumentNames, definedVariableNames);
+  }
+
+  public KettleTransFromFileProducer(final String transformationFile,
+                                     final String stepName,
+                                     final FormulaArgument[] definedArgumentNames,
+                                     final FormulaParameter[] definedVariableNames)
   {
     this("", transformationFile, stepName, null, null, definedArgumentNames, definedVariableNames);
   }
@@ -89,21 +110,6 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     }
 
     return resourceManager.createKey(new File(transformationFile));
-  }
-
-  protected String computeFullFilename(ResourceKey key)
-  {
-    while (key != null)
-    {
-      final Object identifier = key.getIdentifier();
-      if (identifier instanceof File)
-      {
-        final File file = (File) identifier;
-        return file.getAbsolutePath();
-      }
-      key = key.getParent();
-    }
-    return null;
   }
 
   protected TransMeta loadTransformation(final Repository repository,

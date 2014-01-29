@@ -626,7 +626,7 @@ public class FormulaEditorPanel extends JComponent implements FieldDefinitionSou
   private void refreshInformationPanel()
   {
     final FunctionInformation currentFunction = editorModel.getCurrentFunction();
-    System.out.println(currentFunction);
+
     final FunctionDescription description;
     if (currentFunction != null)
     {

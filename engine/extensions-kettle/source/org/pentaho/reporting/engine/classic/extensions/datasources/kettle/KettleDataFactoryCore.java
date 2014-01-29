@@ -43,8 +43,15 @@ public class KettleDataFactoryCore extends DefaultDataFactoryCore
     {
       return null;
     }
-    
-    return transformationProducer.getReferencedFields();
+
+    try
+    {
+      return transformationProducer.getReferencedFields();
+    }
+    catch (Exception e)
+    {
+      return null;
+    }
   }
 
   public Object getQueryHash(final DataFactoryMetaData dataFactoryMetaData,
