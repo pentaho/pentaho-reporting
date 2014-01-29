@@ -23,7 +23,6 @@ import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.repository.RepositoryDirectoryInterface;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -47,8 +46,8 @@ public class KettleTransFromRepositoryProducer extends AbstractKettleTransformat
                                            final String stepName,
                                            final String username,
                                            final String password,
-                                           final String[] definedArgumentNames,
-                                           final ParameterMapping[] definedVariableNames)
+                                           final FormulaArgument[] definedArgumentNames,
+                                           final FormulaParameter[] definedVariableNames)
   {
     super(repositoryName, stepName, username, password, definedArgumentNames, definedVariableNames);
     if (directoryName == null)

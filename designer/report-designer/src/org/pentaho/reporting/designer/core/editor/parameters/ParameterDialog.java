@@ -358,15 +358,8 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
         return resourceBundleFactory;
       }
       final MasterReport report = activeContext.getContextRoot();
-      try
-      {
-        return MasterReport.computeAndInitResourceBundleFactory
-            (report.getResourceBundleFactory(), report.getReportEnvironment());
-      }
-      catch (ReportProcessingException e)
-      {
-        return resourceBundleFactory;
-      }
+      return MasterReport.computeAndInitResourceBundleFactory
+          (report.getResourceBundleFactory(), report.getReportEnvironment());
     }
 
     public Configuration getConfiguration()

@@ -79,7 +79,7 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase
       ResourceKey key = mgr.createKey(getClass().getResource("embedded-row-gen.ktr"));
       final byte[] resource = mgr.load(key).getResource(mgr);
       final EmbeddedKettleTransformationProducer producer =
-          new EmbeddedKettleTransformationProducer(new String[0], new ParameterMapping[0], "dummy-id", resource);
+          new EmbeddedKettleTransformationProducer(new FormulaArgument[0], new FormulaParameter[0], "dummy-id", resource);
 
       final KettleDataFactory kettleDataFactory = new KettleDataFactory();
       kettleDataFactory.initialize(new DesignTimeDataFactoryContext());

@@ -24,6 +24,9 @@ import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterContext;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.ReportWriterException;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.AbstractKettleTransformationProducer;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
@@ -96,9 +99,8 @@ public class KettleDataFactoryWriteHandler implements DataFactoryWriteHandler
     coreAttrs.setAttribute(KettleDataFactoryModule.NAMESPACE, "step", fileProducer.getStepName());
     coreAttrs.setAttribute(KettleDataFactoryModule.NAMESPACE, "username", fileProducer.getUsername());
     coreAttrs.setAttribute(KettleDataFactoryModule.NAMESPACE, "password", fileProducer.getPassword());
-
-    final String[] definedArgumentNames = fileProducer.getDefinedArgumentNames();
-    final ParameterMapping[] parameterMappings = fileProducer.getDefinedVariableNames();
+    final FormulaArgument[] definedArgumentNames = fileProducer.getArguments();
+    final FormulaParameter[] parameterMappings = fileProducer.getParameter();
     if (definedArgumentNames.length == 0 && parameterMappings.length == 0)
     {
       xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "query-file", coreAttrs, XmlWriter.CLOSE);
@@ -106,24 +108,29 @@ public class KettleDataFactoryWriteHandler implements DataFactoryWriteHandler
     }
 
     xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "query-file", coreAttrs, XmlWriter.OPEN);
+    writeParameterAndArguments(xmlWriter, fileProducer);
+    xmlWriter.writeCloseTag();
+  }
+
+  private void writeParameterAndArguments(final XmlWriter xmlWriter,
+                                          final AbstractKettleTransformationProducer fileProducer) throws IOException
+  {
+    final FormulaArgument[] definedArgumentNames = fileProducer.getArguments();
+    final FormulaParameter[] parameterMappings = fileProducer.getParameter();
     for (int i = 0; i < definedArgumentNames.length; i++)
     {
-      final String argumentName = definedArgumentNames[i];
-      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "argument", "datarow-name", argumentName, XmlWriter.CLOSE);
+      final FormulaArgument arg = definedArgumentNames[i];
+      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "argument", "formula", arg.getFormula(), XmlWriter.CLOSE);
     }
 
     for (int i = 0; i < parameterMappings.length; i++)
     {
-      final ParameterMapping parameterMapping = parameterMappings[i];
+      final FormulaParameter parameterMapping = parameterMappings[i];
       final AttributeList paramAttr = new AttributeList();
-      paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "datarow-name", parameterMapping.getName());
-      if (parameterMapping.getName().equals(parameterMapping.getAlias()) == false)
-      {
-        paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "variable-name", parameterMapping.getAlias());
-      }
+      paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "variable-name", parameterMapping.getName());
+      paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "formula", parameterMapping.getFormula());
       xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "variable", paramAttr, XmlWriter.CLOSE);
     }
-    xmlWriter.writeCloseTag();
   }
 
   private void writeKettleRepositoryProducer(final XmlWriter xmlWriter,
@@ -147,25 +154,7 @@ public class KettleDataFactoryWriteHandler implements DataFactoryWriteHandler
       xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "query-repository", coreAttrs, XmlWriter.CLOSE);
       return;
     }
-
-    xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "query-repository", coreAttrs, XmlWriter.OPEN);
-    for (int i = 0; i < definedArgumentNames.length; i++)
-    {
-      final String argumentName = definedArgumentNames[i];
-      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "argument", "datarow-name", argumentName, XmlWriter.CLOSE);
-    }
-
-    for (int i = 0; i < parameterMappings.length; i++)
-    {
-      final ParameterMapping parameterMapping = parameterMappings[i];
-      final AttributeList paramAttr = new AttributeList();
-      paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "datarow-name", parameterMapping.getName());
-      if (parameterMapping.getName().equals(parameterMapping.getAlias()) == false)
-      {
-        paramAttr.setAttribute(KettleDataFactoryModule.NAMESPACE, "variable-name", parameterMapping.getAlias());
-      }
-      xmlWriter.writeTag(KettleDataFactoryModule.NAMESPACE, "variable", paramAttr, XmlWriter.CLOSE);
-    }
+    writeParameterAndArguments(xmlWriter, repositoryProducer);
     xmlWriter.writeCloseTag();
   }
 

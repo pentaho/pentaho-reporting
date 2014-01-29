@@ -58,9 +58,11 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
@@ -407,6 +409,11 @@ public class ProvisionDataSourcePanel extends JPanel
     public boolean isShowDeprecatedItems()
     {
       return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+    }
+
+    public DataFactoryContext getDataFactoryContext()
+    {
+      return new DesignTimeDataFactoryContext(reportDesignerContext.getActiveContext().getContextRoot());
     }
   }
 

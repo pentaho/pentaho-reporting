@@ -17,33 +17,34 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.math.BigDecimal;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import javax.swing.table.TableModel;
 
 import org.pentaho.di.core.exception.KettleException;
-import org.pentaho.di.core.exception.KettleStepException;
-import org.pentaho.di.core.exception.KettleValueException;
+import org.pentaho.di.core.parameters.UnknownParamException;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.RepositoryPluginType;
 import org.pentaho.di.core.row.RowMetaInterface;
-import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.repository.RepositoriesMeta;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.repository.RepositoryMeta;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.di.trans.step.RowListener;
+import org.pentaho.di.trans.step.StepInterface;
 import org.pentaho.di.trans.step.StepMetaDataCombi;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.FormulaContext;
+import org.pentaho.reporting.libraries.formula.parser.ParseException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -51,198 +52,34 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 {
   private static final long serialVersionUID = -2287953597208384424L;
 
-  protected static class TableProducer implements RowListener
-  {
-    private TypedTableModel tableModel;
-    private int rowsWritten;
-    private RowMetaInterface rowMeta;
-    private int queryLimit;
-    private boolean stopOnError;
-
-    private boolean firstCall;
-    private boolean error;
-
-    private TableProducer(final RowMetaInterface rowMeta, final int queryLimit, final boolean stopOnError)
-    {
-      this.rowMeta = rowMeta;
-      this.queryLimit = queryLimit;
-      this.stopOnError = stopOnError;
-      this.firstCall = true;
-    }
-
-    /**
-     * This method is called when a row is written to another step (even if there is no next step)
-     *
-     * @param rowMeta the metadata of the row
-     * @param row     the data of the row
-     * @throws KettleStepException an exception that can be thrown to hard stop the step
-     */
-    public void rowWrittenEvent(final RowMetaInterface rowMeta, final Object[] row) throws KettleStepException
-    {
-      if (firstCall)
-      {
-        this.tableModel = createTableModel(rowMeta);
-        firstCall = false;
-      }
-
-      if (queryLimit > 0 && rowsWritten > queryLimit)
-      {
-        return;
-      }
-
-      try
-      {
-        rowsWritten += 1;
-
-        final int count = tableModel.getColumnCount();
-        final Object dataRow[] = new Object[count];
-        for (int columnNo = 0; columnNo < count; columnNo++)
-        {
-          final ValueMetaInterface valueMeta = rowMeta.getValueMeta(columnNo);
-
-          switch (valueMeta.getType())
-          {
-            case ValueMetaInterface.TYPE_BIGNUMBER:
-              dataRow[columnNo] = rowMeta.getBigNumber(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_BOOLEAN:
-              dataRow[columnNo] = rowMeta.getBoolean(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_DATE:
-              dataRow[columnNo] = rowMeta.getDate(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_INTEGER:
-              dataRow[columnNo] = rowMeta.getInteger(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_NONE:
-              dataRow[columnNo] = rowMeta.getString(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_NUMBER:
-              dataRow[columnNo] = rowMeta.getNumber(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_STRING:
-              dataRow[columnNo] = rowMeta.getString(row, columnNo);
-              break;
-            case ValueMetaInterface.TYPE_BINARY:
-              dataRow[columnNo] = rowMeta.getBinary(row, columnNo);
-              break;
-            default:
-              dataRow[columnNo] = rowMeta.getString(row, columnNo);
-          }
-        }
-        tableModel.addRow(dataRow);
-      }
-      catch (KettleValueException kve)
-      {
-        throw new KettleStepException(kve);
-      }
-      catch (Exception e)
-      {
-        throw new KettleStepException(e);
-      }
-    }
-
-    private TypedTableModel createTableModel(final RowMetaInterface rowMeta)
-    {
-      final int colCount = rowMeta.size();
-      final String fieldNames[] = new String[colCount];
-      final Class<?> fieldTypes[] = new Class<?>[colCount];
-      for (int columnNo = 0; columnNo < colCount; columnNo++)
-      {
-        final ValueMetaInterface valueMeta = rowMeta.getValueMeta(columnNo);
-        fieldNames[columnNo] = valueMeta.getName();
-
-        switch (valueMeta.getType())
-        {
-          case ValueMetaInterface.TYPE_BIGNUMBER:
-            fieldTypes[columnNo] = BigDecimal.class;
-            break;
-          case ValueMetaInterface.TYPE_BOOLEAN:
-            fieldTypes[columnNo] = Boolean.class;
-            break;
-          case ValueMetaInterface.TYPE_DATE:
-            fieldTypes[columnNo] = Date.class;
-            break;
-          case ValueMetaInterface.TYPE_INTEGER:
-            fieldTypes[columnNo] = Integer.class;
-            break;
-          case ValueMetaInterface.TYPE_NONE:
-            fieldTypes[columnNo] = String.class;
-            break;
-          case ValueMetaInterface.TYPE_NUMBER:
-            fieldTypes[columnNo] = Double.class;
-            break;
-          case ValueMetaInterface.TYPE_STRING:
-            fieldTypes[columnNo] = String.class;
-            break;
-          case ValueMetaInterface.TYPE_BINARY:
-            fieldTypes[columnNo] = byte[].class;
-            break;
-          default:
-            fieldTypes[columnNo] = String.class;
-        }
-
-      }
-      return new TypedTableModel(fieldNames, fieldTypes);
-    }
-
-    /**
-     * This method is called when a row is read from another step
-     *
-     * @param rowMeta the metadata of the row
-     * @param row     the data of the row
-     * @throws KettleStepException an exception that can be thrown to hard stop the step
-     */
-    public void rowReadEvent(final RowMetaInterface rowMeta, final Object[] row) throws KettleStepException
-    {
-    }
-
-    /**
-     * This method is called when the error handling of a row is writing a row to the error stream.
-     *
-     * @param rowMeta the metadata of the row
-     * @param row     the data of the row
-     * @throws KettleStepException an exception that can be thrown to hard stop the step
-     */
-    public void errorRowWrittenEvent(final RowMetaInterface rowMeta, final Object[] row) throws KettleStepException
-    {
-      if (stopOnError)
-      {
-        throw new KettleStepException("Aborting transformation due to error detected");
-      }
-      error = true;
-    }
-
-    public TableModel getTableModel() throws ReportDataFactoryException
-    {
-      if (stopOnError && error)
-      {
-        throw new ReportDataFactoryException("Transformation produced an error.");
-      }
-
-      if (tableModel == null)
-      {
-        return createTableModel(rowMeta);
-      }
-      return tableModel;
-    }
-  }
-
   private String stepName;
   private String username;
   private String password;
   private String repositoryName;
-  private String[] definedArgumentNames;
-  private ParameterMapping[] definedVariableNames;
+  private FormulaArgument[] arguments;
+  private FormulaParameter[] parameter;
   private transient Trans currentlyRunningTransformation;
   private boolean stopOnError;
 
+  @Deprecated
   public AbstractKettleTransformationProducer(final String repositoryName,
                                               final String stepName,
                                               final String username,
                                               final String password,
                                               final String[] definedArgumentNames,
                                               final ParameterMapping[] definedVariableNames)
+  {
+    this(repositoryName, stepName, username, password,
+        FormulaArgument.convert(definedArgumentNames),
+        FormulaParameter.convert(definedVariableNames));
+  }
+
+  protected AbstractKettleTransformationProducer(final String repositoryName,
+                                                 final String stepName,
+                                                 final String username,
+                                                 final String password,
+                                                 final FormulaArgument[] definedArgumentNames,
+                                                 final FormulaParameter[] definedVariableNames)
   {
     if (repositoryName == null)
     {
@@ -261,8 +98,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     this.stepName = stepName;
     this.username = username;
     this.password = password;
-    this.definedArgumentNames = definedArgumentNames.clone();
-    this.definedVariableNames = definedVariableNames.clone();
+    this.arguments = definedArgumentNames.clone();
+    this.parameter = definedVariableNames.clone();
 
   }
 
@@ -298,12 +135,22 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
 
   public String[] getDefinedArgumentNames()
   {
-    return definedArgumentNames.clone();
+    return FormulaArgument.convert(arguments);
   }
 
   public ParameterMapping[] getDefinedVariableNames()
   {
-    return definedVariableNames.clone();
+    return FormulaParameter.convert(parameter);
+  }
+
+  public FormulaArgument[] getArguments()
+  {
+    return arguments.clone();
+  }
+
+  public FormulaParameter[] getParameter()
+  {
+    return parameter.clone();
   }
 
   public Object clone()
@@ -311,8 +158,8 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     try
     {
       final AbstractKettleTransformationProducer prod = (AbstractKettleTransformationProducer) super.clone();
-      prod.definedArgumentNames = definedArgumentNames.clone();
-      prod.definedVariableNames = definedVariableNames.clone();
+      prod.arguments = arguments.clone();
+      prod.parameter = parameter.clone();
       prod.currentlyRunningTransformation = null;
       return prod;
     }
@@ -322,10 +169,27 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
+  public TransMeta loadTransformation(final DataFactoryContext context)
+      throws KettleException, ReportDataFactoryException
+  {
+    final Repository repository = connectToRepository();
+    try
+    {
+      return loadTransformation(repository, context.getResourceManager(), context.getContextKey());
+    }
+    finally
+    {
+      currentlyRunningTransformation = null;
+      if (repository != null)
+      {
+        repository.disconnect();
+      }
+    }
+  }
+
   public TableModel performQuery(final DataRow parameters,
                                  final int queryLimit,
-                                 final ResourceManager resourceManager,
-                                 final ResourceKey resourceKey)
+                                 final DataFactoryContext context)
       throws KettleException, ReportDataFactoryException
   {
     if (getStepName() == null)
@@ -333,48 +197,29 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       throw new ReportDataFactoryException("No step name defined.");
     }
 
-    final String[] params = fillArguments(parameters);
-
     final Repository repository = connectToRepository();
     try
     {
-      final TransMeta transMeta = loadTransformation(repository, resourceManager, resourceKey);
-      transMeta.setArguments(params);
+      final TransMeta transMeta = loadTransformation(repository, context.getResourceManager(), context.getContextKey());
+      final FormulaContext formulaContext = new WrappingFormulaContext(context.getFormulaContext(), parameters);
+      final String[] params = fillArguments(formulaContext);
+
       final Trans trans = new Trans(transMeta);
-      for (int i = 0; i < definedVariableNames.length; i++)
-      {
-        final ParameterMapping mapping = definedVariableNames[i];
-        final String sourceName = mapping.getName();
-        final String variableName = mapping.getAlias();
-        final Object value = parameters.get(sourceName);
-        if (value != null)
-        {
-          trans.setParameterValue(variableName, String.valueOf(value));
-        }
-      }
-
+      trans.setArguments(params);
+      updateTransformationParameter(formulaContext, trans);
       transMeta.setInternalKettleVariables();
-      trans.prepareExecution(transMeta.getArguments());
+      trans.prepareExecution(params);
 
-      TableProducer tableProducer = null;
-      final List<StepMetaDataCombi> stepList = trans.getSteps();
-      for (int i = 0; i < stepList.size(); i++)
-      {
-        final StepMetaDataCombi metaDataCombi = (StepMetaDataCombi) stepList.get(i);
-        if (stepName.equals(metaDataCombi.stepname) == false)
-        {
-          continue;
-        }
-        final RowMetaInterface row = transMeta.getStepFields(stepName);
-        tableProducer = new TableProducer(row, queryLimit, stopOnError);
-        metaDataCombi.step.addRowListener(tableProducer);
-        break;
-      }
-
-      if (tableProducer == null)
+      StepInterface targetStep = findTargetStep(trans);
+      if (targetStep == null)
       {
         throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
       }
+
+      final RowMetaInterface row = transMeta.getStepFields(stepName);
+      TableProducer tableProducer = new TableProducer(row, queryLimit, stopOnError);
+      targetStep.addRowListener(tableProducer);
+
 
       currentlyRunningTransformation = trans;
       try
@@ -388,6 +233,14 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       }
       return tableProducer.getTableModel();
     }
+    catch (EvaluationException e)
+    {
+      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
+    }
+    catch (ParseException e)
+    {
+      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
+    }
     finally
     {
       currentlyRunningTransformation = null;
@@ -398,20 +251,54 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
-  private String[] fillArguments(final DataRow parameters)
+  private StepInterface findTargetStep(Trans trans)
   {
-    final String[] params = new String[definedArgumentNames.length];
-    for (int i = 0; i < definedArgumentNames.length; i++)
+    final List<StepMetaDataCombi> stepList = trans.getSteps();
+    for (int i = 0; i < stepList.size(); i++)
     {
-      final String name = definedArgumentNames[i];
-      final Object value = parameters.get(name);
-      if (value == null)
+      final StepMetaDataCombi metaDataCombi = stepList.get(i);
+      if (stepName.equals(metaDataCombi.stepname))
+      {
+        return metaDataCombi.step;
+      }
+    }
+    return null;
+  }
+
+  private void updateTransformationParameter(final FormulaContext formulaContext,
+                                             final Trans trans)
+      throws UnknownParamException, EvaluationException, ParseException
+  {
+    for (int i = 0; i < this.parameter.length; i++)
+    {
+      final FormulaParameter mapping = this.parameter[i];
+      final String sourceName = mapping.getName();
+      final Object value = mapping.compute(formulaContext);
+      if (value != null)
+      {
+        trans.setParameterValue(sourceName, String.valueOf(value));
+      }
+      else
+      {
+        trans.setParameterValue(sourceName, null);
+      }
+    }
+  }
+
+  private String[] fillArguments(final FormulaContext context) throws EvaluationException, ParseException
+  {
+    final String[] params = new String[arguments.length];
+    for (int i = 0; i < arguments.length; i++)
+    {
+      final FormulaArgument arg = arguments[i];
+      Object compute = arg.compute(context);
+      if (compute == null)
       {
         params[i] = null;
       }
       else
       {
-        params[i] = String.valueOf(value);
+        params[i] = String.valueOf(compute);
       }
     }
     return params;
@@ -471,14 +358,19 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
-  public String[] getReferencedFields()
+  public String[] getReferencedFields() throws ParseException
   {
     final LinkedHashSet<String> retval = new LinkedHashSet<String>();
-    retval.addAll(Arrays.asList(definedArgumentNames));
-    for (final ParameterMapping parameter : definedVariableNames)
+    HashSet<String> args = new HashSet<String>();
+    for (FormulaArgument argument : arguments)
     {
-      retval.add(parameter.getName());
+      args.addAll(Arrays.asList(argument.getReferencedFields()));
     }
+    for (FormulaParameter formulaParameter : parameter)
+    {
+      args.addAll(Arrays.asList(formulaParameter.getReferencedFields()));
+    }
+    retval.addAll(args);
     retval.add(DataFactory.QUERY_LIMIT);
     return retval.toArray(new String[retval.size()]);
   }
@@ -492,8 +384,23 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     retval.add(getStepName());
     retval.add(isStopOnError());
     retval.add(getRepositoryName());
-    retval.add(new ArrayList<String>(Arrays.asList(getDefinedArgumentNames())));
-    retval.add(new ArrayList<ParameterMapping>(Arrays.asList(getDefinedVariableNames())));
+    retval.add(new ArrayList<FormulaArgument>(Arrays.asList(getArguments())));
+    retval.add(new ArrayList<FormulaParameter>(Arrays.asList(getParameter())));
     return retval;
+  }
+
+  protected String computeFullFilename(ResourceKey key)
+  {
+    while (key != null)
+    {
+      final Object identifier = key.getIdentifier();
+      if (identifier instanceof File)
+      {
+        final File file = (File) identifier;
+        return file.getAbsolutePath();
+      }
+      key = key.getParent();
+    }
+    return null;
   }
 }

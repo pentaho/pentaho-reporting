@@ -59,7 +59,9 @@ public class FormulaFragmentCellRenderer implements TableCellRenderer, ListCellR
     if (StringUtils.isEmpty(sValue))
     {
       return tableCellRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    } else if (sValue.startsWith("=")) {
+    }
+    else if (sValue.startsWith("="))
+    {
       // User does not need to prepend equal sign as it gets prepended automatically
       // Strip off the equal sign and update expression editor and table cell.
       sValue = sValue.substring(1);

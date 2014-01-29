@@ -101,8 +101,6 @@ public class XulDrillDownUi implements DrillDownUi
           ("org.pentaho.reporting.designer.core.editor.drilldown.xul-document." + configurationTag, // NON-NLS
               "res://org/pentaho/reporting/designer/core/editor/drilldown/basic/basic-drilldown.xul"); // NON-NLS
 
-      // System.out.println("Loading " + xulDocument);
-
       final ResourceManager resourceManager = new ResourceManager();
       final Resource resource = resourceManager.createDirectly(xulDocument, Document.class);
       final Document document = (Document) resource.getResource();
