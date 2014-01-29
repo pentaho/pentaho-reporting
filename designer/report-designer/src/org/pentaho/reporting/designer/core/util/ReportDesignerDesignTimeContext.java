@@ -25,16 +25,13 @@ import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ReportDesignerDesignTimeContext implements DesignTimeContext
 {
   private ReportDesignerContext designerContext;
@@ -97,5 +94,10 @@ public class ReportDesignerDesignTimeContext implements DesignTimeContext
   public boolean isShowDeprecatedItems()
   {
     return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+  }
+
+  public DataFactoryContext getDataFactoryContext()
+  {
+    return new DesignTimeDataFactoryContext(activeContext.getContextRoot());
   }
 }

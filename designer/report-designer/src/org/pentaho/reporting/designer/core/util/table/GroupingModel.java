@@ -19,11 +19,6 @@ package org.pentaho.reporting.designer.core.util.table;
 
 import javax.swing.table.TableModel;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public interface GroupingModel extends TableModel
 {
   public GroupingHeader getGroupHeader(int index);
