@@ -18,8 +18,12 @@
 package org.pentaho.reporting.libraries.formula.util;
 
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.pentaho.reporting.libraries.base.util.LinkedMap;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.ContextLookup;
@@ -32,8 +36,6 @@ import org.pentaho.reporting.libraries.formula.parser.ParseException;
 public class FormulaUtil
 {
   private static final char QUOTE_CHAR = '"';
-  private static final char DEFAULT_CONTEXT_ID = '=';
-  private static final char FORMULA_CONTEXT_SEPARATOR = ':';
 
   private FormulaUtil()
   {
@@ -93,7 +95,7 @@ public class FormulaUtil
     return b.toString();
   }
 
-  public static Object[] getReferences(final String formula) throws ParseException
+  public static String[] getReferences(final String formula) throws ParseException
   {
     if (formula == null)
     {
@@ -107,19 +109,19 @@ public class FormulaUtil
     return getReferences(new Formula(formulaExpression));
   }
 
-  public static Object[] getReferences(final Formula formula)
+  public static String[] getReferences(final Formula formula)
   {
     if (formula == null)
     {
       throw new NullPointerException();
     }
-    final LinkedMap map = new LinkedMap();
+    final LinkedHashMap<String,Boolean> map = new LinkedHashMap<String, Boolean>();
     final LValue lValue = formula.getRootReference();
     collectReferences(lValue, map);
-    return map.keys();
+    return map.keySet().toArray(new String[map.size()]);
   }
 
-  private static void collectReferences(final LValue lval, final LinkedMap map)
+  private static void collectReferences(final LValue lval, final LinkedHashMap<String,Boolean> map)
   {
     if (lval instanceof Term)
     {
@@ -140,41 +142,8 @@ public class FormulaUtil
 
   public static String extractFormula(final String formula)
   {
-    if (formula == null)
-    {
-      return null;
-    }
-    else if (formula.length() > 0 && formula.charAt(0) == DEFAULT_CONTEXT_ID)
-    {
-      return formula.substring(1);
-    }
-    else
-    {
-      int separator = -1;
-      final char[] chars = formula.toCharArray();
-      for (int i = 0; i < chars.length; i++)
-      {
-        final char aChar = chars[i];
-        if (Character.isJavaIdentifierPart(aChar))
-        {
-          continue;
-        }
-        if (aChar == FORMULA_CONTEXT_SEPARATOR)
-        {
-          separator = i - 1;
-          break;
-        }
-      }
-      if (separator <= 0 || ((separator + 1) == formula.length()))
-      {
-        // error: invalid formula.
-        return null;
-      }
-      else
-      {
-        return formula.substring(separator + 1);
-      }
-    }
+    String[] strings = extractFormulaContext(formula);
+    return strings[1];
   }
 
   public static String extractStaticTextFromFormula(final String formula)
@@ -257,13 +226,15 @@ public class FormulaUtil
     }
     catch (Exception e)
     {
-      return formula.startsWith("=") ? formula : "=" + formula;
+      return formula;
     }
   }
 
   public static String createEditorTextFromFormula(final String formula,
                                                    final FormulaContext formulaContext)
   {
+    ArgumentNullException.validate("fomulaContext", formulaContext);
+
     try
     {
       final FormulaParser parser = new FormulaParser();
@@ -337,4 +308,40 @@ public class FormulaUtil
     return FormulaUtil.quoteString(formula);
   }
 
+  public static String[] extractFormulaContext(String formula)
+  {
+    String formulaNamespace;
+    String formulaExpression;
+    if (formula == null)
+    {
+      formulaNamespace = null;
+      formulaExpression = null;
+    }
+    else
+    {
+      if (formula.endsWith(";"))
+      {
+        DebugLog.log("A formula with a trailing semicolon is not valid. Auto-correcting the formula.");
+        formula = formula.substring(0, formula.length() - 1);
+      }
+
+      Pattern pattern = Pattern.compile("^((\\w+):|=)(.*)");
+      Matcher matcher = pattern.matcher(formula);
+      if (matcher.matches())
+      {
+        formulaNamespace = matcher.group(2);
+        if (formulaNamespace == null)
+        {
+          formulaNamespace = "report";
+        }
+        formulaExpression = matcher.group(3);
+      }
+      else
+      {
+        formulaNamespace = null;
+        formulaExpression = null;
+      }
+    }
+    return new String[] { formulaNamespace, formulaExpression};
+  }
 }
