@@ -234,7 +234,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
           text.setTextLayout(textLayout);
 
           // Store the height and width, so that the other parts of the layouter have access to the information:
-          text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
+//          text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
+          text.setCachedHeight(paragraph.getLineHeight());
           text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
 
           final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
@@ -243,8 +244,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
           // Create a shallow copy of the paragraph-pool to act as a line container.
           final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
           line.addGeneratedChild(text);
-          line.setCachedWidth(box.getCachedWidth());
 
+          line.setCachedWidth(box.getCachedWidth());
           // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
           line.setCachedX(alignmentX + box.getCachedX());
 
@@ -322,7 +323,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         text.setTextLayout(textLayout);
 
         // Store the height and width, so that the other parts of the layouter have access to the information:
-        text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
+//        text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
+        text.setCachedHeight(((ParagraphPoolBox)lineBoxContainer).getLineHeight());
         text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
 
         final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
@@ -331,8 +333,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         // Create a shallow copy of the paragraph-pool to act as a line container.
         final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
         line.addGeneratedChild(text);
-        line.setCachedWidth(box.getCachedWidth());
 
+        line.setCachedWidth(box.getCachedWidth());
         // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
         line.setCachedX(alignmentX + box.getCachedX());
 

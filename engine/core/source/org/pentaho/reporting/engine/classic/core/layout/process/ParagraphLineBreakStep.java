@@ -181,7 +181,9 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
             final RenderableComplexText text = (RenderableComplexText) text1.derive(false);
 //            final RenderableComplexText text = ((RenderableComplexText) pool.getFirstChild()).derive(complexLine + System.getProperty("line.separator"), false);
+//            final RenderableComplexText text = ((RenderableComplexText) pool.getFirstChild()).derive(complexLine, false);
 //            final RenderableComplexText text = (RenderableComplexText) pool.getFirstChild().derive(false);
+//            final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(complexLine.length()));
 
             // Create a shallow copy of the paragraph-pool to act as a line container.
             final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
