@@ -45,8 +45,8 @@ public class FormulaUtilTest
       else
       {
         Assert.assertTrue("Failure in " + v, (Boolean) objects[1]);
-        Assert.assertEquals("Failure in " + strings[0], objects[2]);
-        Assert.assertEquals("Failure in " + strings[1], objects[3]);
+        Assert.assertEquals("Failure in " + v, strings[0], objects[2]);
+        Assert.assertEquals("Failure in "+ v, strings[1], objects[3]);
       }
     }
   }
