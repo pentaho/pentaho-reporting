@@ -31,6 +31,8 @@
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}"
                 transitive="true"
                 changing="true"/>
+    <dependency org="${library.group}" name="libformula-ui" rev="${dependency.reporting-library.revision}"
+                transitive="true" changing="true"/>
 
     <!--  external dependencies -->
     <dependency org="${kettle.group}" name="kettle-ui-swt" rev="${dependency.kettle.revision}" transitive="false"
