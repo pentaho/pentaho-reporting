@@ -26,6 +26,9 @@ import java.io.BufferedReader;
 import java.io.StringReader;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
@@ -141,22 +144,22 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
         node = node.getNext();
       }
-      BufferedReader bufferedReaderCounter = null;
+      BufferedReader bufferedReader = null;
+      List<String> complexLinesList = new ArrayList<String>();
       String complexLine;
-      int countLines = 0;
 
-      // count lines from buffered reader. if there aren't at least 2 lines, then there were no manual breaks in the source text
+      // Add each new line to complex lines list
       try {
-        bufferedReaderCounter = new BufferedReader(new StringReader(poolText.toString()));
-        while(bufferedReaderCounter.readLine() != null) {
-          countLines++;
+        bufferedReader = new BufferedReader(new StringReader(poolText.toString()));
+        while((complexLine = bufferedReader.readLine()) != null) {
+          complexLinesList.add(complexLine);
         }
       } catch (Exception e) {
         throw new IllegalStateException("Unexpected error while parsing complex paragraph.");
       } finally {
         try{
-          if(bufferedReaderCounter != null) {
-            bufferedReaderCounter.close();
+          if(bufferedReader != null) {
+            bufferedReader.close();
           }
         }
         catch(Exception e) {
@@ -165,44 +168,34 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       }
 
       // only if at least two lines are generated during parsing raw text continue processing
-      BufferedReader bufferedReader = null;
-      if(countLines >= 2) {
+      if(complexLinesList.size() >= 2) {
         final RenderBox lineboxContainer = box.createLineboxContainer();
         lineboxContainer.clear();
-        try {
-          bufferedReader = new BufferedReader(new StringReader(poolText.toString()));
-          while((complexLine = bufferedReader.readLine()) != null) {
-            //create new RenderableComplexText node with the current text line
-            final RenderableComplexText text1 = new RenderableComplexText(pool.getFirstChild().getStyleSheet()
+        int j = 0;
+
+        while (complexLinesList.size() > j) {
+          //create new RenderableComplexText node with the current text line
+          final RenderableComplexText newText = new RenderableComplexText(pool.getFirstChild().getStyleSheet()
                                                                          ,pool.getFirstChild().getInstanceId()
                                                                          ,pool.getFirstChild().getElementType()
                                                                          ,pool.getFirstChild().getAttributes()
-                                                                         ,complexLine);
+                                                                         ,complexLinesList.get(j));
 
-            final RenderableComplexText text = (RenderableComplexText) text1.derive(false);
-//            final RenderableComplexText text = ((RenderableComplexText) pool.getFirstChild()).derive(complexLine + System.getProperty("line.separator"), false);
-//            final RenderableComplexText text = ((RenderableComplexText) pool.getFirstChild()).derive(complexLine, false);
-//            final RenderableComplexText text = (RenderableComplexText) pool.getFirstChild().derive(false);
-//            final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(complexLine.length()));
+          final RenderableComplexText text = (RenderableComplexText) newText.derive(false);
 
-            // Create a shallow copy of the paragraph-pool to act as a line container.
-            final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
-            line.addGeneratedChild(text);
+          // Add force line break flag to the ComplexText-nodes. It is only needed for complex paragraphs, and only if the line is not the last
+          //  line in the paragraph either
+          if(j < complexLinesList.size()) {
+            text.setForceLinebreak(true);
+          }
 
-            // and finally add the line to the paragraph
-            lineboxContainer.addGeneratedChild(line);
-          }
-        } catch (Exception e) {
-          throw new IllegalStateException("Unexpected error while parsing complex paragraph.");
-        } finally {
-          try{
-            if(bufferedReader != null) {
-              bufferedReader.close();
-            }
-          }
-          catch(Exception e) {
-            throw new IllegalStateException("Unexpected error while closing buffered reader.");
-          }
+          // Create a shallow copy of the paragraph-pool to act as a line container.
+          final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
+          line.addGeneratedChild(text);
+
+          // and finally add the line to the paragraph
+          lineboxContainer.addGeneratedChild(line);
+          j++;
         }
       }
     }

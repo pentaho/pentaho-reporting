@@ -12,6 +12,7 @@ public class RenderableComplexText extends RenderNode
 {
   private String text;
   private TextLayout textLayout;
+  private boolean forceLinebreak;
 
   public RenderableComplexText(final StyleSheet styleSheet,
                                final InstanceID instanceID,
@@ -21,6 +22,7 @@ public class RenderableComplexText extends RenderNode
   {
     super(new NodeLayoutProperties(styleSheet, attributes, instanceID, elementType));
     this.text = text;
+    this.forceLinebreak = false;
   }
 
   public int getNodeType()
@@ -43,11 +45,14 @@ public class RenderableComplexText extends RenderNode
     this.textLayout = textLayout;
   }
 
-//  public RenderableComplexText derive(final String text, final boolean deep)
-//  {
-//    final RenderableComplexText node = (RenderableComplexText) super.derive(deep);
-//
-//    node.text = text;
-//    return node;
-//  }
+  public void setForceLinebreak(final boolean forceLinebreak)
+  {
+    this.forceLinebreak = forceLinebreak;
+  }
+
+  public boolean isForceLinebreak()
+  {
+    return forceLinebreak;
+  }
+
 }

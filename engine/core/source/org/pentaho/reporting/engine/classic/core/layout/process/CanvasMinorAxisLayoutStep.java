@@ -155,13 +155,11 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected void processParagraphChildsComplex(final ParagraphRenderBox box)
   {
-    // 1. clear the paragraph to throw away previously layouted nodes. This leaves the paragraph's pool (where your original text is stored) untouched.
+    // Clear the paragraph to throw away previously layouted nodes. This leaves the paragraph's pool (where your original text is stored) untouched.
     box.clearLayout();
 
     if (box.isComplexParagraph()) {
-      // 2. Get your nodes and iterate over its children to build the AttributedString.
       final RenderBox lineBoxContainer = box.getLineboxContainer();
-      AttributedString attributedString = null;
       final StyleSheet layoutContext = box.getStyleSheet();
 
       RenderNode paragraphContainer = lineBoxContainer.getFirstChild();
@@ -172,175 +170,104 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         }
 
         final ParagraphPoolBox paragraph = (ParagraphPoolBox) paragraphContainer;
-        RenderNode node = paragraph.getFirstChild();
-
-        final StringBuilder poolText = new StringBuilder();
-        while (node != null) {
-          if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-          {
-            throw new IllegalStateException("Expected RenderableComplexText elements.");
-          }
-
-          final RenderableComplexText complexNode = (RenderableComplexText) node;
-          poolText.append(complexNode.getRawText());
-
-          node = node.getNext();
-        }
-
-        attributedString = new AttributedString(poolText.toString());
-
-        // determine font style
-        int fontStyle = Font.PLAIN;
-        if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC) && (Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
-          fontStyle = Font.BOLD | Font.ITALIC;
-        }
-        else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
-          fontStyle = Font.BOLD;
-        }
-        else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC)) {
-          fontStyle = Font.ITALIC;
-        }
-
-        // create the FONT to be used with attributedString
-        final Font font = new Font((String)layoutContext.getStyleProperty(TextStyleKeys.FONT), fontStyle, (Integer)layoutContext.getStyleProperty(TextStyleKeys.FONTSIZE));
-
-        attributedString.addAttribute(TextAttribute.FONT, font);
-
-        if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.UNDERLINED)) {
-          attributedString.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        }
-
-        if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.STRIKETHROUGH)) {
-          attributedString.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-        }
-
-        // determine if anti-aliasing is required or not
-        final FontSmooth smoothing = (FontSmooth) layoutContext.getStyleProperty(TextStyleKeys.FONT_SMOOTH);
-        final boolean antiAliasing = FontSmooth.NEVER.equals(smoothing) ? false : true;
-
-        // 3. Create a LineBreakMeasurer to break down that string into lines.
-        final AttributedCharacterIterator attributedCharacterIterator =  attributedString.getIterator();
-        final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-        final LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(attributedCharacterIterator, fontRenderContext);
-        final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
-
-        lineBreakMeasurer.setPosition(attributedCharacterIterator.getBeginIndex());
-        while (lineBreakMeasurer.getPosition() < attributedCharacterIterator.getEndIndex()) {
-          // 4. For each line produced by the LinebreakMeasurer
-          final TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
-
-          //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
-          final RenderableComplexText text = (RenderableComplexText) paragraph.getFirstChild().derive(false);
-          text.setTextLayout(textLayout);
-
-          // Store the height and width, so that the other parts of the layouter have access to the information:
-//          text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
-          text.setCachedHeight(paragraph.getLineHeight());
-          text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
-
-          final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
-          text.setCachedX(alignmentX + box.getCachedX());
-
-          // Create a shallow copy of the paragraph-pool to act as a line container.
-          final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
-          line.addGeneratedChild(text);
-
-          line.setCachedWidth(box.getCachedWidth());
-          // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-          line.setCachedX(alignmentX + box.getCachedX());
-
-          // and finally add the line to the paragraph
-          box.addGeneratedChild(line);
-        }
+        addGeneratedComplexTextLines(box, paragraph, layoutContext);
 
         paragraphContainer = paragraphContainer.getNext();
       }
     }
     else {
-      // 2. Get your nodes and iterate over its children to build the AttributedString.
       final RenderBox lineBoxContainer = box.getEffectiveLineboxContainer();
-      AttributedString attributedString = null;
-      final StringBuilder poolText = new StringBuilder();
       final StyleSheet layoutContext = box.getStyleSheet();
 
-      RenderNode node = lineBoxContainer.getFirstChild();
-      while (node != null) {
-        if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-        {
-          throw new IllegalStateException("Expected RenderableComplexText elements.");
-        }
+      addGeneratedComplexTextLines(box, lineBoxContainer, layoutContext);
+    }
+  }
 
-        final RenderableComplexText complexNode = (RenderableComplexText) node;
-        poolText.append(complexNode.getRawText());
+  private void addGeneratedComplexTextLines(final ParagraphRenderBox box,
+                                            final RenderBox lineBoxContainer,
+                                            final StyleSheet layoutContext)
+  {
+    RenderNode node = lineBoxContainer.getFirstChild();
+    final StringBuilder poolText = new StringBuilder();
 
-        node = node.getNext();
+    // Get your nodes and iterate over its children to build the AttributedString.
+    while (node != null) {
+      if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        throw new IllegalStateException("Expected RenderableComplexText elements.");
       }
 
-      attributedString = new AttributedString(poolText.toString());
+      final RenderableComplexText complexNode = (RenderableComplexText) node;
+      poolText.append(complexNode.getRawText());
 
-      // determine font style
-      int fontStyle = Font.PLAIN;
-      if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC) && (Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
-        fontStyle = Font.BOLD | Font.ITALIC;
-      }
-      else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
-        fontStyle = Font.BOLD;
-      }
-      else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC)) {
-        fontStyle = Font.ITALIC;
-      }
+      node = node.getNext();
+    }
 
-      // create the FONT to be used with attributedString
-      final Font font = new Font((String)layoutContext.getStyleProperty(TextStyleKeys.FONT), fontStyle, (Integer)layoutContext.getStyleProperty(TextStyleKeys.FONTSIZE));
+    // Create the attributed string from the string computed above
+    AttributedString attributedString = new AttributedString(poolText.toString());
 
-      attributedString.addAttribute(TextAttribute.FONT, font);
+    // Determine font style
+    int fontStyle = Font.PLAIN;
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC) && (Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
+      fontStyle = Font.BOLD | Font.ITALIC;
+    }
+    else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.BOLD)) {
+      fontStyle = Font.BOLD;
+    }
+    else if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.ITALIC)) {
+      fontStyle = Font.ITALIC;
+    }
 
-      if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.UNDERLINED)) {
-        attributedString.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-      }
+    // Create the FONT to be used with attributedString
+    final Font font = new Font((String)layoutContext.getStyleProperty(TextStyleKeys.FONT), fontStyle, (Integer)layoutContext.getStyleProperty(TextStyleKeys.FONTSIZE));
 
-      if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.STRIKETHROUGH)) {
-        attributedString.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
-      }
+    attributedString.addAttribute(TextAttribute.FONT, font);
 
-      // determine if anti-aliasing is required or not
-      final FontSmooth smoothing = (FontSmooth) layoutContext.getStyleProperty(TextStyleKeys.FONT_SMOOTH);
-      final boolean antiAliasing = FontSmooth.NEVER.equals(smoothing) ? false : true;
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.UNDERLINED)) {
+      attributedString.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+    }
 
-      // 3. Create a LineBreakMeasurer to break down that string into lines.
-      final AttributedCharacterIterator attributedCharacterIterator =  attributedString.getIterator();
-      final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-      final LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(attributedCharacterIterator, fontRenderContext);
-      final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
+    if((Boolean)layoutContext.getStyleProperty(TextStyleKeys.STRIKETHROUGH)) {
+      attributedString.addAttribute(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+    }
 
-      lineBreakMeasurer.setPosition(attributedCharacterIterator.getBeginIndex());
-      while (lineBreakMeasurer.getPosition() < attributedCharacterIterator.getEndIndex()) {
-        // 4. For each line produced by the LinebreakMeasurer
-        final TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
+    // Determine if anti-aliasing is required or not
+    final FontSmooth smoothing = (FontSmooth) layoutContext.getStyleProperty(TextStyleKeys.FONT_SMOOTH);
+    final boolean antiAliasing = FontSmooth.NEVER.equals(smoothing) ? false : true;
 
-        //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
-        final RenderableComplexText text = (RenderableComplexText) lineBoxContainer.getFirstChild().derive(false);
-        text.setTextLayout(textLayout);
+    // Create a LineBreakMeasurer to break down that string into lines.
+    final AttributedCharacterIterator attributedCharacterIterator =  attributedString.getIterator();
+    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
+    final LineBreakMeasurer lineBreakMeasurer = new LineBreakMeasurer(attributedCharacterIterator, fontRenderContext);
+    final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
 
-        // Store the height and width, so that the other parts of the layouter have access to the information:
+    lineBreakMeasurer.setPosition(attributedCharacterIterator.getBeginIndex());
+    while (lineBreakMeasurer.getPosition() < attributedCharacterIterator.getEndIndex()) {
+      // For each line produced by the LinebreakMeasurer
+      final TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth);
+
+      //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
+      final RenderableComplexText text = (RenderableComplexText) lineBoxContainer.getFirstChild().derive(false);
+      text.setTextLayout(textLayout);
+
+      // Store the height and width, so that the other parts of the layouter have access to the information
 //        text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
-        text.setCachedHeight(((ParagraphPoolBox)lineBoxContainer).getLineHeight());
-        text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
+      text.setCachedHeight(((ParagraphPoolBox)lineBoxContainer).getLineHeight());
+      text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
 
-        final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
-        text.setCachedX(alignmentX + box.getCachedX());
+      final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(), box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getBounds().getWidth()));
+      text.setCachedX(alignmentX + box.getCachedX());
 
-        // Create a shallow copy of the paragraph-pool to act as a line container.
-        final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
-        line.addGeneratedChild(text);
+      // Create a shallow copy of the paragraph-pool to act as a line container.
+      final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
+      line.addGeneratedChild(text);
 
-        line.setCachedWidth(box.getCachedWidth());
-        // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-        line.setCachedX(alignmentX + box.getCachedX());
+      // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
+      line.setCachedX(alignmentX + box.getCachedX());
+      line.setCachedWidth(box.getCachedWidth());
 
-        // and finally add the line to the paragraph
-        box.addGeneratedChild(line);
-      }
+      // and finally add the line to the paragraph
+      box.addGeneratedChild(line);
     }
   }
 

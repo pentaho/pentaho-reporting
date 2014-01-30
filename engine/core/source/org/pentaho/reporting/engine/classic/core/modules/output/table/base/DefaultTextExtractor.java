@@ -286,6 +286,10 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
       {
         drawComplexText(textNode);
       }
+      if (textNode.isForceLinebreak())
+      {
+        manualBreak = true;
+      }
     }
     else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
     {
