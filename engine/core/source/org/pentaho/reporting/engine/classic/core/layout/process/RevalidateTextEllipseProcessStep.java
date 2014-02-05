@@ -118,24 +118,6 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
 
   private RenderBox processTextEllipse(final RenderBox box, final long x2)
   {
-    if (complexTextFeature)
-    {
-      return processTextEllipseNormal(box, x2);
-    }
-    else
-    {
-      return processTextEllipseNormal(box, x2);
-    }
-  }
-
-  private RenderBox processTextEllipseComplex(final RenderBox box, final long x2)
-  {
-    // todo Implement Arabic support
-    return processTextEllipseNormal(box, x2);
-  }
-
-  private RenderBox processTextEllipseNormal(final RenderBox box, final long x2)
-  {
     final StyleSheet style = box.getStyleSheet();
     final String reslit = (String) style.getStyleProperty(TextStyleKeys.RESERVED_LITERAL, ellipseOverride);
     if (reslit == null || "".equals(reslit))
@@ -143,6 +125,29 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
       // oh, no ellipse. Thats nice.
       return null;
     }
+
+    if (complexTextFeature)
+    {
+      return processTextEllipseComplex(box, x2, reslit);
+    }
+    else
+    {
+      return processTextEllipseNormal(box, x2, reslit);
+    }
+  }
+
+  private RenderBox processTextEllipseComplex(final RenderBox box,
+                                              final long x2,
+                                              final String reslit)
+  {
+    // todo Implement Arabic support
+    return null;
+//    return processTextEllipseNormal(box, x2, reslit);
+  }
+
+  private RenderBox processTextEllipseNormal(final RenderBox box, final long x2, String reslit)
+  {
+    final StyleSheet style = box.getStyleSheet();
 
     final RenderBox textEllipse = (RenderBox) box.derive(false);
     final ReportAttributeMap map = box.getAttributes();

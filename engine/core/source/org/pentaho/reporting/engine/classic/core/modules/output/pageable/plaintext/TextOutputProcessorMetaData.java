@@ -42,6 +42,7 @@ public class TextOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     super.initialize(configuration);
     addFeature(OutputProcessorFeature.PAGE_SECTIONS);
     addFeature(OutputProcessorFeature.PAGEBREAKS);
+    removeFeature(OutputProcessorFeature.COMPLEX_TEXT);
 
     if ("true".equals(configuration.getConfigProperty(
         "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.AssumeOverflowX")))
