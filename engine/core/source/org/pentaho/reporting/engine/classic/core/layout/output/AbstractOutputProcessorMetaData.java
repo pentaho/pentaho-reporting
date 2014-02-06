@@ -408,6 +408,8 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     }
   }
 
+  public static final String COMPLEX_TEXT_CONFIG = "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
+
   private FontStorage fontStorage;
   private FontRegistry fontRegistry;
   private HashMap<OutputProcessorFeature.NumericOutputProcessorFeature, Double> numericFeatures;
@@ -478,8 +480,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     {
       addFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
     }
-    if (extendedConfig.getBoolProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout", false) == true)
+    if (extendedConfig.getBoolProperty(COMPLEX_TEXT_CONFIG, false) == true)
     {
       addFeature(OutputProcessorFeature.COMPLEX_TEXT);
     }
