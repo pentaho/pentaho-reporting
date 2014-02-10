@@ -64,6 +64,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   private Float posX;
   private ReportAttributeMap<Object> attributes;
   private ElementType elementType;
+  private boolean visible;
 
   private NodeLayoutProperties()
   {
@@ -133,6 +134,17 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     {
       verticalTextAlign = VerticalTextAlign.BASELINE;
     }
+    this.visible = true;
+  }
+
+  public void setVisible(final boolean visible)
+  {
+    this.visible = visible;
+  }
+
+  public boolean isVisible()
+  {
+    return visible;
   }
 
   public VerticalTextAlign getVerticalTextAlign()

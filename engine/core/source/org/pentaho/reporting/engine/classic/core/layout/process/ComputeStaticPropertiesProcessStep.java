@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
+import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
@@ -62,6 +63,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private StaticChunkWidthUpdate chunkWidthUpdate;
   private StaticChunkWidthUpdatePool chunkWidthUpdatePool;
   private boolean widowOrphanDefinitionsEncountered;
+  private boolean designTime;
 
   public ComputeStaticPropertiesProcessStep()
   {
@@ -76,6 +78,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.overflowYSupported = metaData.isFeatureSupported(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
     this.widowOrphanDefinitionsEncountered = false;
+    this.designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
   }
 
   public boolean isWidowOrphanDefinitionsEncountered()
@@ -251,6 +254,23 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private void computeResolvedStyleProperties(final RenderBox box, final StaticBoxLayoutProperties sblp)
   {
     final StyleSheet style = box.getStyleSheet();
+
+    NodeLayoutProperties nlp = box.getNodeLayoutProperties();
+    if (designTime)
+    {
+      // at design-time elements can be generated that are not visible in the final output
+      // the report designer needs them to create a smooth design experience.
+      RenderBox parent = box.getParent();
+      if (parent == null)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+      else if (parent.isEmptyNodesHaveSignificance() == false)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+    }
+
     final int nodeType = box.getLayoutNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_LINEBOX)
     {
@@ -366,7 +386,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     if (changeTracker == age)
     {
       // update the parent
-      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      if (box.isVisible())
+      {
+        chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      }
       return;
     }
 
@@ -376,7 +399,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     boxUpdate.finish();
 
     chunkWidthUpdate = chunkWidthUpdate.pop();
-    chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    if (box.isVisible())
+    {
+      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    }
   }
 
 

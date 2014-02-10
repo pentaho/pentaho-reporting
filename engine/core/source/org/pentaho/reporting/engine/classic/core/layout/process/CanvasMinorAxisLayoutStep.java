@@ -356,7 +356,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -367,7 +370,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -437,7 +443,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     node.setCachedX(computeCanvasPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishCanvasLevelBox(final RenderBox box)
@@ -446,7 +455,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -458,7 +470,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -484,8 +499,16 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final RenderNode prev = node.getPrev();
     if (prev != null)
     {
-      // we have a sibling. Position yourself directly to the right of your sibling ..
-      return prev.getCachedX() + prev.getCachedWidth();
+      if (prev.isVisible())
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX() + prev.getCachedWidth();
+      }
+      else
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX();
+      }
     }
     else
     {
@@ -535,7 +558,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     node.setCachedX(computeRowPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishRowLevelBox(final RenderBox box)
@@ -544,7 +570,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -556,7 +585,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         final long cachedWidth = MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode());
         box.setCachedWidth(cachedWidth);
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -704,7 +736,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -722,7 +757,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         box.setContentAreaX1(nodeContext.getX1());
         box.setContentAreaX2(nodeContext.getX2());
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally
@@ -765,7 +803,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       box.setContentAreaX2(nodeContext.getX2());
       box.setCachedWidth(resolveTableWidthOnFinish(box));
 
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -843,7 +884,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         // break-marker boxes etc.
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
       else
       {
@@ -856,7 +900,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         {
           table.getColumnModel().updateCellSize(cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets());
         }
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally
