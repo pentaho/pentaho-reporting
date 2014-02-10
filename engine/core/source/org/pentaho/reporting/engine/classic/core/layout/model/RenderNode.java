@@ -355,8 +355,6 @@ public abstract class RenderNode implements Cloneable
 
   protected final void setParent(final RenderBox parent)
   {
-    if (this instanceof ProgressMarkerRenderBox && parent instanceof TableCellRenderBox)
-      DebugLog.logHere();
     if (isParanoidModelChecks())
     {
       final RenderNode prev = getPrev();
@@ -1114,6 +1112,11 @@ public abstract class RenderNode implements Cloneable
   public final long getY2()
   {
     return y + height;
+  }
+
+  public boolean isVisible()
+  {
+    return nodeLayoutProperties.isVisible();
   }
 
   public boolean isContainsReservedContent()
