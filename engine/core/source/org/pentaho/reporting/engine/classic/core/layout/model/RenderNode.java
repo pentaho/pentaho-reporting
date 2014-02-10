@@ -1102,4 +1102,9 @@ public abstract class RenderNode implements Cloneable
   {
     return y + height;
   }
+
+  public boolean isVisible()
+  {
+    return nodeLayoutProperties.isVisible();
+  }
 }

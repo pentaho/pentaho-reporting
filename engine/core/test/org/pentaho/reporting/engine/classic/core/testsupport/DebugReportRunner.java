@@ -421,13 +421,14 @@ public class DebugReportRunner
       return logicalPageBox;
     }
   }
+
   private static class InterceptingXmlTableOutputProcessor extends XmlTableOutputProcessor
   {
     private LogicalPageBox logicalPageBox;
     private FlowSelector flowSelector;
 
     private InterceptingXmlTableOutputProcessor(final OutputStream outputStream,
-                                               final OutputProcessorMetaData metaData)
+                                                final OutputProcessorMetaData metaData)
     {
       super(outputStream, metaData);
     }
@@ -549,10 +550,27 @@ public class DebugReportRunner
     return layoutSingleBand(report, reportHeader, true, false);
   }
 
+  public static LogicalPageBox layoutSingleBandInDesignTime(final MasterReport report,
+                                                            final Band reportHeader)
+      throws ReportProcessingException, ContentProcessingException
+  {
+    return layoutSingleBand(report, reportHeader, true, false, true);
+  }
+
   public static LogicalPageBox layoutSingleBand(final MasterReport originalReport,
                                                 final Band reportHeader,
                                                 final boolean monospaced,
                                                 final boolean expectPageBreak)
+      throws ReportProcessingException, ContentProcessingException
+  {
+    return layoutSingleBand(originalReport, reportHeader, monospaced, expectPageBreak, false);
+  }
+
+  public static LogicalPageBox layoutSingleBand(final MasterReport originalReport,
+                                                final Band reportHeader,
+                                                final boolean monospaced,
+                                                final boolean expectPageBreak,
+                                                final boolean designTime)
       throws ReportProcessingException, ContentProcessingException
   {
     final FontStorage fontRegistry;
@@ -564,7 +582,7 @@ public class DebugReportRunner
     {
       fontRegistry = DebugOutputProcessorMetaData.getLocalFontStorage();
     }
-    return layoutSingleBand(originalReport, reportHeader, fontRegistry, expectPageBreak);
+    return layoutSingleBand(originalReport, reportHeader, fontRegistry, expectPageBreak, designTime);
   }
 
   public static LogicalPageBox layoutSingleBand(final MasterReport originalReport,
@@ -573,9 +591,20 @@ public class DebugReportRunner
                                                 final boolean expectPageBreak)
       throws ReportProcessingException, ContentProcessingException
   {
+    return layoutSingleBand(originalReport, reportHeader, fontRegistry, expectPageBreak, false);
+  }
+
+  public static LogicalPageBox layoutSingleBand(final MasterReport originalReport,
+                                                final Band reportHeader,
+                                                final FontStorage fontRegistry,
+                                                final boolean expectPageBreak,
+                                                final boolean designTime)
+      throws ReportProcessingException, ContentProcessingException
+  {
     final ReportStateKey stateKey = new ReportStateKey();
 
     final DebugOutputProcessorMetaData metaData = new DebugOutputProcessorMetaData(fontRegistry);
+    metaData.setDesignTime(designTime);
 
     final MasterReport report = originalReport.derive(true);
     resolveStyle(report);
