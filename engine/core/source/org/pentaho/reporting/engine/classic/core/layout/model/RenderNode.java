@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -29,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public abstract class RenderNode implements Cloneable
 {
@@ -107,7 +105,7 @@ public abstract class RenderNode implements Cloneable
                        final StyleSheet styleSheet,
                        final InstanceID instanceID,
                        final ElementType elementType,
-                       final ReportAttributeMap attributes)
+                       final ReportAttributeMap<Object> attributes)
   {
     this(new NodeLayoutProperties(majorAxis, minorAxis, styleSheet, attributes, instanceID, elementType));
   }
@@ -125,7 +123,7 @@ public abstract class RenderNode implements Cloneable
 
   protected void reinit(final StyleSheet styleSheet,
                         final ElementType elementType,
-                        final ReportAttributeMap attributes,
+                        final ReportAttributeMap<Object> attributes,
                         final InstanceID instanceId)
   {
     if (attributes == null)

@@ -76,7 +76,7 @@ public final class RenderableText extends RenderNode
   public RenderableText(final StyleSheet layoutContext,
                         final ElementType elementType,
                         final InstanceID instanceID,
-                        final ReportAttributeMap attributes,
+                        final ReportAttributeMap<Object> attributes,
                         final ExtendedBaselineInfo baselineInfo,
                         final GlyphList glyphs,
                         final int offset,
