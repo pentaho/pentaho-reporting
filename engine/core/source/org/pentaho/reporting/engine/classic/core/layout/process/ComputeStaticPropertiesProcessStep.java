@@ -260,7 +260,15 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     {
       // at design-time elements can be generated that are not visible in the final output
       // the report designer needs them to create a smooth design experience.
-      nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      RenderBox parent = box.getParent();
+      if (parent == null)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+      else if (parent.isEmptyNodesHaveSignificance() == false)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
     }
 
     final int nodeType = box.getLayoutNodeType();

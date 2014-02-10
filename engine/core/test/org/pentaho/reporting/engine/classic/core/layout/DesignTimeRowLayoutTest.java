@@ -48,6 +48,31 @@ public class DesignTimeRowLayoutTest
   }
 
   @Test
+  public void testRowLayoutAtDesignTimeInv() throws Exception
+  {
+    LogFactory.getLog("test").error("Test");
+    MasterReport report = new MasterReport();
+    ReportHeader reportHeader = report.getReportHeader();
+    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
+    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
+    reportHeader.addElement(createElement(true));
+    reportHeader.addElement(createElement(false));
+    reportHeader.addElement(createElement(true));
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime(report, reportHeader);
+
+    RenderNode[] elementsByElementType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
+    Assert.assertEquals(3, elementsByElementType.length);
+
+    Assert.assertEquals(0, elementsByElementType[0].getX());
+    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[0].getWidth());
+    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getX());
+    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getWidth());
+    Assert.assertEquals(StrictGeomUtility.toInternalValue(200), elementsByElementType[2].getX());
+    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[2].getWidth());
+  }
+
+  @Test
   public void testRowLayoutAtDesignTime() throws Exception
   {
     LogFactory.getLog("test").error("Test");
