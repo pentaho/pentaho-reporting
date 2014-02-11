@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType
 import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -43,6 +44,7 @@ public class Prd4071Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4071-Standalone.prpt");
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, true);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     ModelPrinter.INSTANCE.print(logicalPageBox);
@@ -61,6 +63,7 @@ public class Prd4071Test extends TestCase
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
     report.getItemBand().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
     report.setQueryLimit(100);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
@@ -80,6 +83,7 @@ public class Prd4071Test extends TestCase
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
     report.setQueryLimit(100);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
@@ -100,6 +104,7 @@ public class Prd4071Test extends TestCase
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 46);
 //    ModelPrinter.INSTANCE.print(logicalPageBox);

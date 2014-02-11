@@ -44,11 +44,6 @@ public class HeightComputationTest extends TestCase
   {
   }
 
-  public HeightComputationTest(final String s)
-  {
-    super(s);
-  }
-
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
@@ -92,9 +87,9 @@ public class HeightComputationTest extends TestCase
       }
       if (box instanceof ParagraphRenderBox)
       {
-        assertNotNull("Have at only one child", box.getFirstChild());
-        assertNotNull("Have at only one child", box.getLastChild());
-        assertSame("Have at only one child", box.getFirstChild(), box.getLastChild());
+        assertNotNull("Have at most one child", box.getFirstChild());
+        assertNotNull("Have at most one child", box.getLastChild());
+        assertSame("Have at most one child", box.getFirstChild(), box.getLastChild());
       }
 
       return true;

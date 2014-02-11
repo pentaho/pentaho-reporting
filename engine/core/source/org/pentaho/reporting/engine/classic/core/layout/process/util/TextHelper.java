@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 
 public class TextHelper
 {
@@ -101,6 +102,20 @@ public class TextHelper
       str.addAttributes(chunk.getAttributes(), startPosition, endIndex);
       startPosition = endIndex;
     }
+
+    Object ws = lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);
+    if (WhitespaceCollapse.PRESERVE_BREAKS.equals(ws)) {
+      // linebreaks disabled
+
+    }
+    else if (WhitespaceCollapse.COLLAPSE.equals(ws)) {
+      // normal linebreaks, but duplicate spaces removed
+    }
+    else if (WhitespaceCollapse.DISCARD.equals(ws)) {
+      // all whitespaces removed
+    }
+
+
     return str;
   }
 
