@@ -58,6 +58,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -188,8 +189,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
                                             final StyleSheet layoutContext)
   {
     TextHelper helper = new TextHelper();
-    AttributedString attributedString = helper.computeText(lineBoxContainer);
-
+    RichTextSpec richText = helper.computeText(lineBoxContainer);
+    AttributedString attributedString = richText.getAttributedString();
     // Determine if anti-aliasing is required or not
     final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
 
@@ -199,7 +200,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       final int endIndex = characterIterator.getEndIndex();
       final int startIndex = characterIterator.getBeginIndex();
-      final RenderableComplexText text = helper.create(lineBoxContainer, startIndex, endIndex);
+      final RenderableComplexText text = richText.create(lineBoxContainer, startIndex, endIndex);
       final TextLayout textLayout = new TextLayout(characterIterator, fontRenderContext);
 
       final RenderBox line = generateLine(box, lineBoxContainer, text, textLayout);
@@ -214,7 +215,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     lineBreakMeasurer.setPosition(characterIterator.getBeginIndex());
     BreakIterator wordInstance = BreakIterator.getWordInstance();
-    wordInstance.setText(helper.getText());
+    wordInstance.setText(richText.getText());
 
     while (lineBreakMeasurer.getPosition() < characterIterator.getEndIndex())
     {
@@ -251,7 +252,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         textLayout = textLayout.getJustifiedLayout(wrappingWidth);
       }
 
-      final RenderableComplexText text = helper.create(lineBoxContainer, start, end);
+      final RenderableComplexText text = richText.create(lineBoxContainer, start, end);
       final RenderBox line = generateLine(box, lineBoxContainer, text, textLayout);
       // and finally add the line to the paragraph
       box.addGeneratedChild(line);

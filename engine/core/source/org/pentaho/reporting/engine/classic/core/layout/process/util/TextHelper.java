@@ -21,7 +21,6 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexT
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class TextHelper
 {
@@ -41,10 +41,16 @@ public class TextHelper
   {
     private String text;
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
+    private RenderNode node;
 
     private AttributedStringChunk(final String text,
-                                  final Map<AttributedCharacterIterator.Attribute, Object> attributes)
+                                  final Map<AttributedCharacterIterator.Attribute, Object> attributes,
+                                  final RenderNode node)
     {
+      ArgumentNullException.validate("text", text);
+      ArgumentNullException.validate("attributes", attributes);
+      ArgumentNullException.validate("node", node);
+
       if (text.length() == 0)
       {
         this.text = "\u0200";
@@ -53,6 +59,7 @@ public class TextHelper
       {
         this.text = text;
       }
+      this.node = node;
       this.attributes = attributes;
     }
 
@@ -67,64 +74,62 @@ public class TextHelper
     }
   }
 
-  private String text;
-
-  public RenderableComplexText create(RenderBox lineBoxContainer,
-                                      int start, int end)
-  {
-    return new RenderableComplexText
-        (lineBoxContainer.getStyleSheet(), lineBoxContainer.getInstanceId(),
-            lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), text.substring(start, end));
-  }
-
-  public AttributedString computeText(RenderBox lineBoxContainer)
+  public RichTextSpec computeText(final RenderBox lineBoxContainer)
   {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
     computeText(lineBoxContainer, attr);
-    if (attr.isEmpty()) {
-      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet())));
+    if (attr.isEmpty())
+    {
+      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()), lineBoxContainer));
     }
 
+    attr = processWhitespaceRules(lineBoxContainer, attr);
+
     StringBuilder text = new StringBuilder();
-    for (AttributedStringChunk chunk : attr)
+    for (final AttributedStringChunk chunk : attr)
     {
       text.append(chunk.getText());
     }
 
-    this.text = text.toString();
+    return new RichTextSpec(text.toString(), convertNodes(attr));
+  }
 
-    AttributedString str = new AttributedString(text.toString());
+  private List<RichTextSpec.StyledChunk> convertNodes(final List<AttributedStringChunk> chunks)
+  {
+    ArrayList<RichTextSpec.StyledChunk> result = new ArrayList<RichTextSpec.StyledChunk>(chunks.size());
     int startPosition = 0;
-    for (AttributedStringChunk chunk : attr)
+    for (final AttributedStringChunk chunk : chunks)
     {
       int length = chunk.getText().length();
       int endIndex = startPosition + length;
-      str.addAttributes(chunk.getAttributes(), startPosition, endIndex);
+      result.add(new RichTextSpec.StyledChunk
+          (startPosition, endIndex, chunk.node, chunk.getAttributes(), chunk.getText()));
       startPosition = endIndex;
     }
+    return result;
+  }
 
+  private List<AttributedStringChunk> processWhitespaceRules(final RenderBox lineBoxContainer,
+                                                             final List<AttributedStringChunk> attrs)
+  {
     Object ws = lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);
-    if (WhitespaceCollapse.PRESERVE_BREAKS.equals(ws)) {
+    if (WhitespaceCollapse.PRESERVE_BREAKS.equals(ws))
+    {
       // linebreaks disabled
 
     }
-    else if (WhitespaceCollapse.COLLAPSE.equals(ws)) {
+    else if (WhitespaceCollapse.COLLAPSE.equals(ws))
+    {
       // normal linebreaks, but duplicate spaces removed
     }
-    else if (WhitespaceCollapse.DISCARD.equals(ws)) {
+    else if (WhitespaceCollapse.DISCARD.equals(ws))
+    {
       // all whitespaces removed
     }
-
-
-    return str;
+    return attrs;
   }
 
-  public String getText()
-  {
-    return text;
-  }
-
-  private void computeText(RenderBox box, List<AttributedStringChunk> chunks)
+  private void computeText(final RenderBox box, final List<AttributedStringChunk> chunks)
   {
     RenderNode node = box.getFirstChild();
     while (node != null)
@@ -132,7 +137,7 @@ public class TextHelper
       if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
       {
         final RenderableComplexText complexNode = (RenderableComplexText) node;
-        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet())));
+        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()), node));
       }
       else if (node instanceof RenderBox)
       {
@@ -142,7 +147,7 @@ public class TextHelper
     }
   }
 
-  private Map<AttributedCharacterIterator.Attribute, Object> computeStyle(StyleSheet layoutContext)
+  private Map<AttributedCharacterIterator.Attribute, Object> computeStyle(final StyleSheet layoutContext)
   {
     Map<AttributedCharacterIterator.Attribute, Object> result = new HashMap<AttributedCharacterIterator.Attribute, Object>();
     // Determine font style
