@@ -1,6 +1,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
 import java.awt.font.TextLayout;
+import java.text.BreakIterator;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
@@ -26,6 +27,7 @@ public class RenderableComplexText extends RenderNode
     this.text = text.getText();
     this.richText = text;
     this.forceLinebreak = false;
+    initialize(this.text);
   }
 
   public RenderableComplexText(final StyleSheet styleSheet,
@@ -38,6 +40,25 @@ public class RenderableComplexText extends RenderNode
     this.text = text;
     this.richText = null;
     this.forceLinebreak = false;
+    initialize(this.text);
+  }
+
+  /**
+   * Compute the 'minimum chunk width' (MCW)
+   * @param source
+   */
+  protected void initialize(String source) {
+    long minimumChunkWidth = 0;
+    BreakIterator wordInstance = BreakIterator.getWordInstance();
+    wordInstance.setText(source);
+
+    int start = wordInstance.first();
+    for (int end = wordInstance.next(); end != BreakIterator.DONE; start = end, end = wordInstance.next()) {
+       long wordMinChunkWidth = source.substring(start,end).length();
+       minimumChunkWidth = Math.max(minimumChunkWidth, wordMinChunkWidth);
+    }
+
+    setMinimumChunkWidth(minimumChunkWidth);
   }
 
   public int getNodeType()
