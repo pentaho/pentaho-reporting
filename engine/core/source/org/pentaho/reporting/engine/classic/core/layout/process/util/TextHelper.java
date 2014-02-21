@@ -171,6 +171,10 @@ public class TextHelper
     result.put(TextAttribute.SIZE, layoutContext.getIntStyleProperty(TextStyleKeys.FONTSIZE, 12));
     result.put(TextAttribute.UNDERLINE, layoutContext.getBooleanStyleProperty(TextStyleKeys.UNDERLINED));
     result.put(TextAttribute.STRIKETHROUGH, layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH));
+
+    // character spacing
+    result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0)/10);
+
     return result;
   }
 }
