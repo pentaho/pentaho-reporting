@@ -26,9 +26,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class RichTextSpec
@@ -40,27 +42,45 @@ public class RichTextSpec
     private RenderNode originatingTextNode;
     private String text;
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
+    private ReportAttributeMap originalAttributes;
+    private StyleSheet styleSheet;
 
     public StyledChunk(final int start,
                        final int end,
                        final RenderNode originatingTextNode,
                        final Map<AttributedCharacterIterator.Attribute, Object> attributes,
+                       final ReportAttributeMap originalAttributes,
+                       final StyleSheet styleSheet,
                        final String text)
     {
       ArgumentNullException.validate("originatingTextNode", originatingTextNode);
       ArgumentNullException.validate("attributes", attributes);
       ArgumentNullException.validate("text", text);
+      ArgumentNullException.validate("originalAttributes", originalAttributes);
+      ArgumentNullException.validate("styleSheet", styleSheet);
 
       this.start = start;
       this.end = end;
       this.originatingTextNode = originatingTextNode;
       this.attributes = Collections.unmodifiableMap(attributes);
+      this.originalAttributes = originalAttributes;
+      this.styleSheet = styleSheet;
       this.text = text;
     }
 
     public Map<AttributedCharacterIterator.Attribute, Object> getAttributes()
     {
       return attributes;
+    }
+
+    public ReportAttributeMap getOriginalAttributes()
+    {
+      return originalAttributes;
+    }
+
+    public StyleSheet getStyleSheet()
+    {
+      return styleSheet;
     }
 
     public String getText()
@@ -223,7 +243,7 @@ public class RichTextSpec
       }
 
       String clippedText = text.substring(textStart, textEnd);
-      clippedChunks.add(new StyledChunk(chunkStart, chunkEnd, chunk.originatingTextNode, chunk.attributes, clippedText));
+      clippedChunks.add(new StyledChunk(chunkStart, chunkEnd, chunk.originatingTextNode, chunk.attributes, chunk.originalAttributes, chunk.styleSheet, clippedText));
     }
     return new RichTextSpec(text.substring(start, end), clippedChunks);
   }

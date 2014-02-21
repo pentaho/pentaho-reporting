@@ -17,13 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.font.TextLayout;
 import java.io.IOException;
 import java.text.NumberFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -47,8 +43,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.LogicalPageDrawable;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessingException;
@@ -1170,36 +1166,73 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         return;
       }
 
-      final String text;
-      TextLayout textLayout = renderableComplexText.getTextLayout();
-      String debugInfo = textLayout.toString();
-      String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
-      int startPosIntValue = -1;
+      // check if we have to process inline text elements
+      if(renderableComplexText.getRichText().getStyleChunks().size() > 1) {
+        // iterate through all inline elements
+        for(RichTextSpec.StyledChunk styledChunk: renderableComplexText.getRichText().getStyleChunks()) {
+          final AttributeList attrList = new AttributeList();
+          HtmlPrinter.applyHtmlAttributes(styledChunk.getOriginalAttributes(), attrList);
 
-      try {
-        startPosIntValue = Integer.parseInt(startPos);
-      }
-      catch (NumberFormatException e) {
-        // do nothing
-      }
+          // build the style for the current inline element
+          final StyleBuilder style = HtmlPrinter.produceTextStyleFromStyleSheet
+              (styleBuilder, styledChunk.getStyleSheet(), true, safariLengthFix,
+                  useWhitespacePreWrap, processStack.getStyle());
+          styleManager.updateStyle(style, attrList);
 
-      // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
-      // in order to avoid duplicates of same source raw text on multiple lines
-      if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
-        text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
+          String text = styledChunk.getText();
+
+          if (text.length() > 0)
+          {
+            if (attrList.isEmpty() == false) {
+              xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, SPAN_TAG, attrList, XmlWriterSupport.OPEN);
+              xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+              xmlWriter.writeCloseTag();
+            }
+            else {
+              xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+            }
+
+            if (text.trim().length() > 0)
+            {
+              result = true;
+            }
+            clearText();
+          }
+        }
       }
       else {
-        text = renderableComplexText.getRawText();
-      }
+        // regular processing (no online elements)
+        final String text;
+        TextLayout textLayout = renderableComplexText.getTextLayout();
+        String debugInfo = textLayout.toString();
+        String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
+        int startPosIntValue = -1;
 
-      if (text.length() > 0)
-      {
-        xmlWriter.writeText(characterEntityParser.encodeEntities(text));
-        if (text.trim().length() > 0)
-        {
-          result = true;
+        try {
+          startPosIntValue = Integer.parseInt(startPos);
         }
-        clearText();
+        catch (NumberFormatException e) {
+          // do nothing
+        }
+
+        // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
+        // in order to avoid duplicates of same source raw text on multiple lines
+        if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
+          text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
+        }
+        else {
+          text = renderableComplexText.getRawText();
+        }
+
+        if (text.length() > 0)
+        {
+          xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+          if (text.trim().length() > 0)
+          {
+            result = true;
+          }
+          clearText();
+        }
       }
     }
     catch (IOException ioe)
