@@ -17,7 +17,9 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-public class StopWatch implements AutoCloseable
+import java.io.Closeable;
+
+public class StopWatch implements Closeable
 {
   private long elapsedTime;
   private long startTime;

@@ -289,7 +289,7 @@ public class StateUtilities
   {
     public int compare(final ReportPreProcessorMetaData o1, final ReportPreProcessorMetaData o2)
     {
-      return Integer.compare(o1.getExecutionPriority(), o2.getExecutionPriority());
+      return Integer.valueOf(o1.getExecutionPriority()).compareTo(o2.getExecutionPriority());
     }
   }
 

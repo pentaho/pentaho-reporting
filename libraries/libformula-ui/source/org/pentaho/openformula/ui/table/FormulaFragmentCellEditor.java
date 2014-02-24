@@ -129,7 +129,7 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
   private boolean nullable;
 
   private JButton ellipsisButton;
-  private JComboBox<String> comboBox;
+  private JComboBox comboBox;
   private transient Object originalValue;
   private volatile boolean filterEvents;
   private boolean formulaFragment;
@@ -147,7 +147,7 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
     ellipsisButton = new EllipsisButton("...");
     ellipsisButton.addActionListener(action);
 
-    comboBox = new JComboBox<String>();
+    comboBox = new JComboBox();
     final ComboBoxEditor boxEditor = comboBox.getEditor();
     if (boxEditor instanceof BasicComboBoxEditor)
     {
@@ -215,7 +215,7 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
     {
       filterEvents = true;
 
-      final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<String>();
+      final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
       final FieldDefinition[] definitions = getFields();
       for (int i = 0; i < definitions.length; i++)
       {

@@ -138,7 +138,7 @@ public class KettleDataSourceDialog extends CommonDialog
       {
         path = file.getPath();
       }
-      final KettleQueryEntry queryEntry = queryNameList.getSelectedValue();
+      final KettleQueryEntry queryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
       if (queryEntry instanceof FileKettleQueryEntry)
       {
         FileKettleQueryEntry fe = (FileKettleQueryEntry) queryEntry;
@@ -205,7 +205,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
 
       final String queryName = nameTextField.getText();
-      final KettleQueryEntry selectedQuery = queryNameList.getSelectedValue();
+      final KettleQueryEntry selectedQuery = (KettleQueryEntry) queryNameList.getSelectedValue();
       selectedQuery.setName(queryName);
       queryNameList.repaint();
     }
@@ -265,7 +265,7 @@ public class KettleDataSourceDialog extends CommonDialog
     public void run()
     {
       final String fileName = fileTextField.getText();
-      final KettleQueryEntry selectedQuery = queryNameList.getSelectedValue();
+      final KettleQueryEntry selectedQuery = (KettleQueryEntry) queryNameList.getSelectedValue();
       if (selectedQuery instanceof FileKettleQueryEntry == false)
       {
         return;
@@ -333,11 +333,11 @@ public class KettleDataSourceDialog extends CommonDialog
 
     public void valueChanged(final ListSelectionEvent aEvt)
     {
-      final KettleQueryEntry queryEntry = queryNameList.getSelectedValue();
+      final KettleQueryEntry queryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
       if (queryEntry instanceof FileKettleQueryEntry)
       {
         FileKettleQueryEntry fe = (FileKettleQueryEntry) queryEntry;
-        final StepMeta selectedValue = stepsList.getSelectedValue();
+        final StepMeta selectedValue = (StepMeta) stepsList.getSelectedValue();
         if (selectedValue != null)
         {
           fe.setSelectedStep(selectedValue.getName());
@@ -495,7 +495,7 @@ public class KettleDataSourceDialog extends CommonDialog
     {
       try
       {
-        final KettleQueryEntry kettleQueryEntry = queryNameList.getSelectedValue();
+        final KettleQueryEntry kettleQueryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
         final KettleTransformationProducer fileProducer = kettleQueryEntry.createProducer();
         final KettleDataFactory dataFactory = new KettleDataFactory();
         dataFactory.setQuery(kettleQueryEntry.getName(), fileProducer);
@@ -618,7 +618,7 @@ public class KettleDataSourceDialog extends CommonDialog
      */
     public void actionPerformed(final ActionEvent e)
     {
-      final KettleQueryEntry queryEntry = queryNameList.getSelectedValue();
+      final KettleQueryEntry queryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
       if (queryEntry == null)
       {
         return;
@@ -671,9 +671,9 @@ public class KettleDataSourceDialog extends CommonDialog
   private DesignTimeContext designTimeContext;
   private JTextField fileTextField;
   private JTextField nameTextField;
-  private JList<StepMeta> stepsList;
-  private JList<KettleQueryEntry> queryNameList;
-  private DefaultListModel<KettleQueryEntry> queryListModel;
+  private JList stepsList;
+  private JList queryNameList;
+  private DefaultListModel queryListModel;
   private boolean inUpdateFromList;
   private Action editParameterAction;
   private Action previewAction;
@@ -708,9 +708,9 @@ public class KettleDataSourceDialog extends CommonDialog
     editParameterAction = new EditParameterAction();
     editParameterAction.setEnabled(false);
 
-    queryListModel = new DefaultListModel<KettleQueryEntry>();
+    queryListModel = new DefaultListModel();
 
-    queryNameList = new JList<KettleQueryEntry>(queryListModel);
+    queryNameList = new JList(queryListModel);
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(getQueryNameListener());
@@ -719,7 +719,7 @@ public class KettleDataSourceDialog extends CommonDialog
     fileTextField.setEnabled(false);
     fileTextField.getDocument().addDocumentListener(new FileSyncHandler());
 
-    stepsList = new JList<StepMeta>();
+    stepsList = new JList();
     stepsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     stepsList.addListSelectionListener(new StepsListListener());
 
@@ -751,7 +751,7 @@ public class KettleDataSourceDialog extends CommonDialog
 
   protected KettleQueryEntry getSelectedQuery()
   {
-    return queryNameList.getSelectedValue();
+    return (KettleQueryEntry) queryNameList.getSelectedValue();
   }
 
   protected void updateQueryName(final String name)
@@ -970,7 +970,7 @@ public class KettleDataSourceDialog extends CommonDialog
     final HashSet<String> names = new HashSet<String>();
     for (int i = 0; i < queryListModel.getSize(); i++)
     {
-      final KettleQueryEntry o = queryListModel.getElementAt(i);
+      final KettleQueryEntry o = (KettleQueryEntry) queryListModel.getElementAt(i);
       names.add(o.getName());
     }
 

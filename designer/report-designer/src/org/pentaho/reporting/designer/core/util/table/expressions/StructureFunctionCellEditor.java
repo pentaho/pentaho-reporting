@@ -140,7 +140,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
 
 
   private JPanel carrierPanel;
-  private JComboBox<ExpressionMetaData> expressionEditor;
+  private JComboBox expressionEditor;
   private EventListenerList eventListenerList;
   private ReportDesignerContext designerContext;
   private ReportDocumentContext renderContext;
@@ -178,7 +178,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
       return;
     }
     initialized = true;
-    final DefaultComboBoxModel<ExpressionMetaData> model = new DefaultComboBoxModel<ExpressionMetaData>();
+    final DefaultComboBoxModel model = new DefaultComboBoxModel();
     model.addElement(null);
 
     final ExpressionMetaData[] datas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();

@@ -21,7 +21,7 @@ import javax.swing.AbstractListModel;
 
 import org.pentaho.openformula.ui.FieldDefinition;
 
-public class FieldListModel extends AbstractListModel<FieldDefinition>
+public class FieldListModel extends AbstractListModel
 {
   private FieldDefinition[] fields;
   private static final FieldDefinition[] EMPTY = new FieldDefinition[0];
