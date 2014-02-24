@@ -173,7 +173,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
     final EllipsisButton ellipsisButton = new EllipsisButton("...");
     ellipsisButton.addActionListener(new ExtendedEditorAction());
 
-    final DefaultComboBoxModel<ReportPreProcessorMetaData> model = new DefaultComboBoxModel<ReportPreProcessorMetaData>();
+    final DefaultComboBoxModel model = new DefaultComboBoxModel();
     final ReportPreProcessorMetaData[] datas = ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
     model.addElement(null);
     for (int i = 0; i < datas.length; i++)

@@ -84,7 +84,7 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
   }
 
   private PropertyChangeSupport propertyChangeSupport;
-  private DefaultComboBoxModel<JdbcConnectionDefinition> connections;
+  private DefaultComboBoxModel connections;
   private DataSetComboBoxModel<String> queries;
   private boolean previewPossible;
   private boolean connectionSelected;
@@ -103,7 +103,7 @@ public class NamedDataSourceDialogModel implements DataSourceDialogModel
   {
     this.connectionDefinitionManager = connectionDefinitionManager;
     propertyChangeSupport = new PropertyChangeSupport(this);
-    connections = new DefaultComboBoxModel<JdbcConnectionDefinition>();
+    connections = new DefaultComboBoxModel();
     connections.addListDataListener(new PreviewPossibleUpdateHandler());
     queries = new DataSetComboBoxModel<String>();
     queries.addListDataListener(new PreviewPossibleUpdateHandler());

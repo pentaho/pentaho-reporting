@@ -57,10 +57,10 @@ public abstract class QueryEditorPanel<T> extends JPanel
   private class QuerySelectedHandler implements ListSelectionListener
   {
     private QueryDialogModel<T> dialogModel;
-    private JList<Query<T>> queryNameList;
+    private JList queryNameList;
 
     private QuerySelectedHandler(final QueryDialogModel<T> dialogModel,
-                                 final JList<Query<T>> queryNameList)
+                                 final JList queryNameList)
     {
       this.dialogModel = dialogModel;
       this.queryNameList = queryNameList;
@@ -68,7 +68,7 @@ public abstract class QueryEditorPanel<T> extends JPanel
 
     public void valueChanged(final ListSelectionEvent e)
     {
-      dialogModel.setSelectedQuery(queryNameList.getSelectedValue());
+      dialogModel.setSelectedQuery((Query<T>) queryNameList.getSelectedValue());
     }
   }
 
@@ -259,7 +259,7 @@ public abstract class QueryEditorPanel<T> extends JPanel
   }
 
   private QueryDialogModel<T> dialogModel;
-  private JList<Query<T>> queryNameList;
+  private JList queryNameList;
   private JTextField queryNameTextField;
   private SmartComboBox globalLanguageField;
   private RSyntaxTextArea globalScriptTextArea;
@@ -285,7 +285,7 @@ public abstract class QueryEditorPanel<T> extends JPanel
     globalTemplateAction = new GlobalTemplateAction(this, dialogModel);
     queryTemplateAction = new QueryTemplateAction(this, dialogModel);
 
-    queryNameList = new JList<Query<T>>(dialogModel.getQueries());
+    queryNameList = new JList(dialogModel.getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.setCellRenderer(new QueryListCellRenderer());

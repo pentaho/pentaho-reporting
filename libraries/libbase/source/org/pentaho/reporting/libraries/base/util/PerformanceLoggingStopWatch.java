@@ -17,7 +17,9 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-public interface PerformanceLoggingStopWatch extends AutoCloseable
+import java.io.Closeable;
+
+public interface PerformanceLoggingStopWatch extends Closeable
 {
   long getLoggingThreshold();
 

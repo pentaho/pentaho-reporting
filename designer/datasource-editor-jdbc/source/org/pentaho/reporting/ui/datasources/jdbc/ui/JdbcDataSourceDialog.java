@@ -707,7 +707,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
   private JTextField queryNameTextField;
   private RSyntaxTextArea queryTextArea;
-  private JList<DataSetQuery<String>> queryNameList;
+  private JList queryNameList;
   private NamedDataSourceDialogModel dialogModel;
   private JdbcConnectionPanel connectionComponent;
   private DesignTimeContext designTimeContext;
@@ -922,7 +922,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     final QueryNameTextFieldDocumentListener updateHandler = new QueryNameTextFieldDocumentListener();
     dialogModel.getQueries().addListDataListener(updateHandler);
 
-    queryNameList = new JList<DataSetQuery<String>>(dialogModel.getQueries());
+    queryNameList = new JList(dialogModel.getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(new QuerySelectedHandler());
@@ -940,7 +940,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -950,7 +950,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
