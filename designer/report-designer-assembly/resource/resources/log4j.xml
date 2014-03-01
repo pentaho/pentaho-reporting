@@ -57,6 +57,10 @@
     <priority value="DEBUG"/>
   </category>
 
+  <category name="org.pentaho.ui.xul">
+    <priority value="ERROR"/>
+  </category>
+
   <category name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" additivity="false">
     <priority value="DEBUG"/>
     <appender-ref ref="PerformanceFileAppender"/>

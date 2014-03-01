@@ -21,8 +21,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,19 +48,37 @@ public class XulDialogHelper
   {
     public void propertyChange(final PropertyChangeEvent evt)
     {
-
+      // regardless what the input is, forward it to check whether the dialog is valid.
+      ChangeEvent event = new ChangeEvent(this);
+      for (int i = 0; i < changeListeners.size(); i++)
+      {
+        ChangeListener listener = changeListeners.get(i);
+        listener.stateChanged(event);
+      }
     }
   }
 
   private BaseStepGenericXulDialog dialog;
   private DesignTimeContext context;
   private TransMeta transformation;
+  private ArrayList<ChangeListener> changeListeners;
 
   public XulDialogHelper(final DesignTimeContext context,
                          final TransMeta transformation)
   {
     this.context = context;
     this.transformation = transformation;
+    this.changeListeners = new ArrayList<ChangeListener>();
+  }
+
+  public void addChangeListener(ChangeListener l)
+  {
+    this.changeListeners.add(l);
+  }
+
+  public void removeChangeListener(ChangeListener l)
+  {
+    this.changeListeners.remove(l);
   }
 
   public JComponent createEditor() throws ReportDataFactoryException
@@ -68,6 +89,7 @@ public class XulDialogHelper
       return new JPanel();
     }
 
+    // validate is a hardcoded name inside the xul dialogs
     dialog.addPropertyChangeListener(new ChangeHandler());
     dialog.validate();
 
@@ -80,7 +102,6 @@ public class XulDialogHelper
     dialog.setModalParent(panel);
     return panel;
   }
-
 
   private BaseStepGenericXulDialog createDialog()
       throws ReportDataFactoryException
@@ -121,13 +142,7 @@ public class XulDialogHelper
   {
     if (dialog != null)
     {
-      if (!dialog.validate())
-      {
-        int val = dialog.showPromptMessage("One or more queries are missing required information. \n\r"
-            + "This can cause these queries to fail when executing. \n\r"
-            + "Select OK to continue, or Cancel to return and correct the query.", "MongoDb Datasource Warning");
-        return (val == 0);
-      }
+      return dialog.validate();
     }
     return true;
   }
