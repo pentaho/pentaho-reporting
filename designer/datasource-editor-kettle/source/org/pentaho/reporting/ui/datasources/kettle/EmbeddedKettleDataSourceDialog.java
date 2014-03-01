@@ -25,6 +25,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionListener;
 
@@ -201,6 +202,14 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
       }
     }
 
+    if (valid == false && onConfirm == true)
+    {
+      int val = JOptionPane.showConfirmDialog(this,
+          Messages.getString("EmbeddedKettleDataSourceDialog.QueryErrorWarning"),
+          Messages.getString("EmbeddedKettleDataSourceDialog.QueryErrorTitle"), JOptionPane.OK_CANCEL_OPTION);
+      valid = (val == JOptionPane.OK_OPTION);
+    }
+
     return valid && super.validateInputs(onConfirm);
   }
 
@@ -264,7 +273,8 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
     try
     {
       EmbeddedKettleTransformationProducer prod = (EmbeddedKettleTransformationProducer) producer;
-      EmbeddedKettleQueryEntry entry = EmbeddedKettleQueryEntry.createFromExisting(queryName, prod, null, getDesignTimeContext());
+      EmbeddedKettleQueryEntry entry = EmbeddedKettleQueryEntry.createFromExisting(queryName, prod,
+              getDesignTimeContext().getDataFactoryContext(), getDesignTimeContext());
       entry.addPropertyChangeListener("validated", new PreviewChangeListener());
       return entry;
     }
