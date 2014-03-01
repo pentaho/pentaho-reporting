@@ -19,6 +19,8 @@ package org.pentaho.reporting.ui.datasources.kettle;
 
 import java.util.ArrayList;
 import javax.swing.JComponent;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +41,28 @@ import org.w3c.dom.Node;
 
 public class EmbeddedKettleQueryEntry extends KettleQueryEntry
 {
+  private class ValidatePropertyBinding implements ChangeListener
+  {
+    private boolean recursionPrevention;
+
+    public void stateChanged(final ChangeEvent e)
+    {
+      if (recursionPrevention)
+      {
+        return;
+      }
+      try
+      {
+        recursionPrevention = true;
+        setValidated(dialogHelper.validate());
+      }
+      finally
+      {
+        recursionPrevention = false;
+      }
+    }
+  }
+
   private static final Log logger = LogFactory.getLog(EmbeddedKettleQueryEntry.class);
   private static final String AUTO_GENERATED_PARAMETER = "AUTO.GENERATED.PARAMETER";
 
@@ -52,6 +76,7 @@ public class EmbeddedKettleQueryEntry extends KettleQueryEntry
 
     this.pluginId = pluginId;
     this.dialogHelper = dialogHelper;
+    this.dialogHelper.addChangeListener(new ValidatePropertyBinding());
   }
 
   public static EmbeddedKettleQueryEntry createFromExisting(String name,
