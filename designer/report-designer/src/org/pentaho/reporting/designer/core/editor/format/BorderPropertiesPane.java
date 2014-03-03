@@ -621,10 +621,10 @@ public class BorderPropertiesPane extends JPanel
     minimumWidth.setText(printLength((Number) styleSheet.getStyleProperty(ElementStyleKeys.MIN_WIDTH)));
     minimumHeight.setText(printLength((Number) styleSheet.getStyleProperty(ElementStyleKeys.MIN_HEIGHT)));
 
-    paddingTop.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_TOP, 0));
-    paddingLeft.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_LEFT, 0));
-    paddingBottom.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_BOTTOM, 0));
-    paddingRight.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_RIGHT, 0));
+    paddingTop.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_TOP, 0f));
+    paddingLeft.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_LEFT, 0f));
+    paddingBottom.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_BOTTOM, 0f));
+    paddingRight.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_RIGHT, 0f));
 
   }
 
