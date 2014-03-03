@@ -938,7 +938,12 @@ public class KettleDataSourceDialog extends CommonDialog
   protected boolean validateInputs(final boolean onConfirm)
   {
     getConfirmAction().setEnabled(queryNameList.getModel().getSize() > 0);
-    return super.validateInputs(onConfirm);
+    if (queryNameList.getModel().getSize() == 0)
+    {
+      return false;
+    }
+
+    return true;
   }
 
   protected KettleQueryEntry createNewQueryEntry(String queryName) throws KettleException
