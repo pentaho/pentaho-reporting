@@ -29,7 +29,6 @@ import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.AbstractKettleTransformationProducer;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.DocumentHelper;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
@@ -81,12 +80,10 @@ public class EmbeddedKettleQueryEntry extends KettleQueryEntry
 
   public static EmbeddedKettleQueryEntry createFromExisting(String name,
                                                             EmbeddedKettleTransformationProducer producer,
-                                                            DataFactoryContext dataFactoryContext,
-                                                            DesignTimeContext designTimeContext)
+                                                            DataFactoryContext dataFactoryContext)
       throws KettleException, ReportDataFactoryException
   {
-    XulDialogHelper dialogHelper =
-        new XulDialogHelper(designTimeContext, producer.loadTransformation(dataFactoryContext));
+    XulDialogHelper dialogHelper = new XulDialogHelper(producer.loadTransformation(dataFactoryContext));
     EmbeddedKettleQueryEntry entry = new EmbeddedKettleQueryEntry(name, producer.getPluginId(), dialogHelper);
     entry.setArguments(producer.getArguments());
     entry.setParameters(producer.getParameter());
@@ -94,12 +91,11 @@ public class EmbeddedKettleQueryEntry extends KettleQueryEntry
   }
 
   public static EmbeddedKettleQueryEntry createFromTemplate(String name,
-                                                            String pluginId,
-                                                            DesignTimeContext designTimeContext)
+                                                            String pluginId)
       throws KettleException
   {
 
-    XulDialogHelper dialogHelper = new XulDialogHelper(designTimeContext, loadTemplate(pluginId));
+    XulDialogHelper dialogHelper = new XulDialogHelper(loadTemplate(pluginId));
     return new EmbeddedKettleQueryEntry(name, pluginId, dialogHelper);
   }
 

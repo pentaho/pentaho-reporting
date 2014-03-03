@@ -35,7 +35,6 @@ import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.ui.trans.step.BaseStepGenericXulDialog;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleDataFactoryMetaData;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.swing.tags.SwingDialog;
@@ -59,14 +58,12 @@ public class XulDialogHelper
   }
 
   private BaseStepGenericXulDialog dialog;
-  private DesignTimeContext context;
   private TransMeta transformation;
   private ArrayList<ChangeListener> changeListeners;
+  private JComponent editor;
 
-  public XulDialogHelper(final DesignTimeContext context,
-                         final TransMeta transformation)
+  public XulDialogHelper(final TransMeta transformation)
   {
-    this.context = context;
     this.transformation = transformation;
     this.changeListeners = new ArrayList<ChangeListener>();
   }
@@ -83,10 +80,16 @@ public class XulDialogHelper
 
   public JComponent createEditor() throws ReportDataFactoryException
   {
+    if (editor != null)
+    {
+      return editor;
+    }
+
     dialog = createDialog();
     if (dialog == null)
     {
-      return new JPanel();
+      editor = new JPanel();
+      return editor;
     }
 
     // validate is a hardcoded name inside the xul dialogs
@@ -100,6 +103,7 @@ public class XulDialogHelper
     SwingDialog parent = (SwingDialog) root.getParent();
     JComponent panel = parent.getContainer();
     dialog.setModalParent(panel);
+    editor = panel;
     return panel;
   }
 

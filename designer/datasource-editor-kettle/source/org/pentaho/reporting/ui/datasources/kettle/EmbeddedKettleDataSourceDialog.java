@@ -110,6 +110,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
           datasourcePanel.removeAll();
           datasourcePanel.add(selectedQuery.createUI(), BorderLayout.CENTER);
           datasourcePanel.revalidate();
+          datasourcePanel.repaint();
         }
 
         editParameterAction.setEnabled(true);
@@ -257,7 +258,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
   protected EmbeddedKettleQueryEntry createNewQueryEntry(String queryName) throws KettleException
   {
     EmbeddedKettleQueryEntry entry =
-        EmbeddedKettleQueryEntry.createFromTemplate(queryName, datasourceId, getDesignTimeContext());
+        EmbeddedKettleQueryEntry.createFromTemplate(queryName, datasourceId);
     entry.addPropertyChangeListener("validated", new PreviewChangeListener());
     return entry;
   }
@@ -274,7 +275,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
     {
       EmbeddedKettleTransformationProducer prod = (EmbeddedKettleTransformationProducer) producer;
       EmbeddedKettleQueryEntry entry = EmbeddedKettleQueryEntry.createFromExisting(queryName, prod,
-              getDesignTimeContext().getDataFactoryContext(), getDesignTimeContext());
+              getDesignTimeContext().getDataFactoryContext());
       entry.addPropertyChangeListener("validated", new PreviewChangeListener());
       return entry;
     }
