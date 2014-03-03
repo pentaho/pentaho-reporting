@@ -896,11 +896,12 @@ public class ProcessState implements ReportState
 
   public SubReportProcessType getSubreportProcessingType()
   {
-    if (inlineProcess)
+    InlineSubreportMarker cm = getCurrentSubReportMarker();
+    if (cm == null)
     {
-      return SubReportProcessType.INLINE;
+      return SubReportProcessType.BANDED;
     }
-    return SubReportProcessType.BANDED;
+    return cm.getProcessType();
   }
 
   /**

@@ -44,5 +44,6 @@
 		<!-- testing dependencies -->
 		<dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default" />
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.7.3" conf="test->default" />
+		<dependency org="org.slf4j" name="slf4j-jcl" rev="1.7.3" conf="test->default" />
 	</dependencies>
 </ivy-module>
