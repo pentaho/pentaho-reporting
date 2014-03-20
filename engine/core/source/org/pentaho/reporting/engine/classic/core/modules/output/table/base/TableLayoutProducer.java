@@ -170,6 +170,11 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
 
   protected boolean startBox(final RenderBox box)
   {
+    if (box.isVisible() == false)
+    {
+      return false;
+    }
+
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
     {
       processRenderableContent((RenderableReplacedContentBox) box);
