@@ -51,11 +51,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.designtime.swing.ColorComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class BorderPropertiesPane extends JPanel
 {
   private class BorderSelectionUpdateHandler implements BorderSelectionListener
@@ -246,14 +241,14 @@ public class BorderPropertiesPane extends JPanel
     minimumWidth = new JTextField();
     minimumHeight = new JTextField();
 
-    paddingTop = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingLeft = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingBottom = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingRight = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    paddingTop = createStandardSpinner();
+    paddingLeft = createStandardSpinner();
+    paddingBottom = createStandardSpinner();
+    paddingRight = createStandardSpinner();
 
-    cornerWidth = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    cornerWidth = createStandardSpinner();
     cornerWidth.addChangeListener(updateHandler);
-    cornerHeight = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    cornerHeight = createStandardSpinner();
     cornerHeight.addChangeListener(updateHandler);
 
     borderEditorPanel = new BorderRenderPanel();
@@ -262,7 +257,7 @@ public class BorderPropertiesPane extends JPanel
     borderEditorPanel.setMaximumSize(new Dimension(250, 250));
     borderEditorPanel.getSelectionModel().addBorderSelectionListener(new BorderSelectionUpdateHandler());
 
-    borderWidth = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    borderWidth = createStandardSpinner();
     borderWidth.addChangeListener(updateHandler);
 
     final JPanel borderCornerCarrier = new JPanel(new GridBagLayout());
@@ -522,12 +517,14 @@ public class BorderPropertiesPane extends JPanel
     add(linestylePanel, gbc);
   }
 
+  @SuppressWarnings("UnnecessaryBoxing")
+  private JSpinner createStandardSpinner()
+  {
+    return new JSpinner(new SpinnerNumberModel(new Float(0), new Float(0), new Float(Short.MAX_VALUE), new Float(1)));
+  }
 
-  /**
-   * The model's item index matches the AWT-font-style flags.
-   *
-   * @return
-   */
+
+  @SuppressWarnings("unchecked")
   private DefaultListModel createBorderStyleModel()
   {
     final DefaultListModel model = new DefaultListModel();
@@ -548,6 +545,7 @@ public class BorderPropertiesPane extends JPanel
   }
 
 
+  @SuppressWarnings("UnnecessaryBoxing")
   protected void applyBorder(final BorderSelection borderSelection)
   {
     final ElementStyleSheet styleSheet = borderEditorPanel.getElementStyleSheet();
@@ -621,10 +619,10 @@ public class BorderPropertiesPane extends JPanel
     minimumWidth.setText(printLength((Number) styleSheet.getStyleProperty(ElementStyleKeys.MIN_WIDTH)));
     minimumHeight.setText(printLength((Number) styleSheet.getStyleProperty(ElementStyleKeys.MIN_HEIGHT)));
 
-    paddingTop.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_TOP, 0f));
-    paddingLeft.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_LEFT, 0f));
-    paddingBottom.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_BOTTOM, 0f));
-    paddingRight.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_RIGHT, 0f));
+    paddingTop.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_TOP, new Float(0)));
+    paddingLeft.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_LEFT, new Float(0)));
+    paddingBottom.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_BOTTOM, new Float(0)));
+    paddingRight.setValue(styleSheet.getStyleProperty(ElementStyleKeys.PADDING_RIGHT, new Float(0)));
 
   }
 
@@ -655,6 +653,7 @@ public class BorderPropertiesPane extends JPanel
     return -length.floatValue() + "%";
   }
 
+  @SuppressWarnings("UnnecessaryBoxing")
   public static Float parseLength(final Number value)
   {
     if (value instanceof Float)
@@ -688,7 +687,7 @@ public class BorderPropertiesPane extends JPanel
         return Float.parseFloat(tvalue);
       }
     }
-    catch (NumberFormatException e)
+    catch (final NumberFormatException e)
     {
       // ignore exception
       return null;
