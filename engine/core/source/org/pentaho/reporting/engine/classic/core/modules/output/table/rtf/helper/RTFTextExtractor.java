@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplaced
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -336,7 +337,32 @@ public class RTFTextExtractor extends DefaultTextExtractor
     }
     else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
       // todo: check if special text processing is required for RenderableComplexText nodes
-      return;
+//      return;
+      if (node.isVirtualNode())
+      {
+        return;
+      }
+
+      if ((node.getX() + node.getWidth()) > (paragraphBounds.getX() + paragraphBounds.getWidth()))
+      {
+        // This node will only be partially visible. The end-of-line marker will not apply.
+        return;
+      }
+      final RenderableComplexText text = (RenderableComplexText) node;
+      if (text.isForceLinebreak())
+      {
+        final StyleContext currentContext = getCurrentContext();
+        if (getTextLength() > 0)
+        {
+          currentContext.add(getText());
+          clearText();
+        }
+        context.pop();
+        final StyleContext cellContext = getCurrentContext();
+        cellContext.add(currentContext.getTarget());
+
+        context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
+      }
     }
   }
 
@@ -413,6 +439,39 @@ public class RTFTextExtractor extends DefaultTextExtractor
     }
     context.pop();
     getCurrentContext().add(currentContext.getTarget());
+  }
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+    if (renderableComplexText.getRawText().length() == 0)
+    {
+      // This text is empty.
+      return;
+    }
+    if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
+    {
+      return;
+    }
+
+    // check if we have to process inline text elements
+    if(renderableComplexText.getRichText().getStyleChunks().size() > 1) {
+      // iterate through all inline elements
+      for(RichTextSpec.StyledChunk styledChunk: renderableComplexText.getRichText().getStyleChunks()) {
+        // Add style for current styled chunk
+        final StyleContext boxContext = new StyleContext(getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData);
+        if (styledChunk.getText().length() > 0)
+        {
+          final String text = styledChunk.getText();
+          boxContext.add(text);
+          clearText();
+        }
+        context.pop();
+        context.push(boxContext);
+      }
+    }
+    else {
+      super.drawComplexText(renderableComplexText);
+    }
   }
 
 }
