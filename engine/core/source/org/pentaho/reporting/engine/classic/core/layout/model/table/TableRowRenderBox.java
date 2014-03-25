@@ -135,9 +135,9 @@ public class TableRowRenderBox extends RenderBox
     super.shiftCached(amount);
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(child, heightOffset);
+    return extendHeightInRowMode(child, heightOffset);
   }
 
   public void addChild(final RenderNode child)

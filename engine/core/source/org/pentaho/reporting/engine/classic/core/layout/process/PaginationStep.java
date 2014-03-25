@@ -226,7 +226,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
     shiftState.setShift(shift + fixedPositionDelta);
     box.setY(fixedPositionInFlow);
-    BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
   }
@@ -245,7 +244,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // for now, we will only apply the ordinary shift.
       box.setY(fixedPositionInFlow);
       shiftState.setShift(shift + fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKey(box);
       return true;
     }
@@ -257,7 +255,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
       // from here.
       BoxShifter.shiftBox(box, fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKeyDeep(box);
       return false;
     }
@@ -472,7 +469,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -743,7 +739,6 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
       }
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -810,7 +805,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
 
