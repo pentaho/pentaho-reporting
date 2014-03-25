@@ -63,8 +63,8 @@ public class RowRenderBox extends RenderBox
     return getNodeLayoutProperties().getStyleSheet().getBooleanStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(child, heightOffset);
+    return extendHeightInRowMode(child, heightOffset);
   }
 }
