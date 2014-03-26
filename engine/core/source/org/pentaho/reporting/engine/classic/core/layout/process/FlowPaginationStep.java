@@ -265,8 +265,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
   {
     box.setOverflowAreaHeight(0);
 
-    shiftState = shiftStatePool.create(box, shiftState);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
@@ -274,6 +272,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -282,6 +282,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
