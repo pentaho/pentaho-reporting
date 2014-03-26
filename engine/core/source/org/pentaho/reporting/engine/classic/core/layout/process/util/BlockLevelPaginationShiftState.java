@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class BlockLevelPaginationShiftState implements PaginationShiftState
 {
@@ -92,8 +93,13 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
     this.shift = value;
   }
 
-  public PaginationShiftState pop()
+  public PaginationShiftState pop(InstanceID id)
   {
+    if (id != box.getInstanceId())
+    {
+      throw new IllegalStateException();
+    }
+
     long effectiveShift = this.shift;
     if (box != null) {
 

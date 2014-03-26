@@ -219,7 +219,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       }
     }
 
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
   }
 
   // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
@@ -239,7 +239,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
@@ -257,7 +257,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
@@ -375,12 +375,12 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       switch (sectionRenderBox.getDisplayRole())
       {
         case HEADER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           paginationTableState.defineArtificialPageStart(box.getHeight() + paginationTableState.getPageOffset());
           break;
         case FOOTER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           break;
         case BODY:

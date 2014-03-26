@@ -17,9 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
 public interface PaginationShiftState
 {
-  PaginationShiftState pop();
+  PaginationShiftState pop(InstanceID id);
 
   long getShiftForNextChild();
 
