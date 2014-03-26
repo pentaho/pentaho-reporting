@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="4" row-count="5">
+    <cols>
+      <column width="69"/>
+      <column width="152"/>
+      <column width="56.539"/>
+      <column width="428.461"/>
+    </cols>
+    <row height="137.643">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="   Broken"/>
+        <attribute xml:id="header"/>
+        <line type="ParagraphPoolBox" x="277.539" y="137.643" width="31.67" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="277.539" y="137.643" width="31.67" height="10.0">Broken</text>
+        </line>
+      </cell>
+    </row>
+    <row height="394">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="62">
+      <empty-cell/>
+      <cell border-top-color="#999999" border-top-width="0.5" border-top-style="solid" border-left-color="#999999" border-left-width="0.5" border-left-style="solid" border-bottom-color="#999999" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="#999999" border-right-width="0.5" border-right-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Partially First Page"/>
+        <attribute xml:id="one"/>
+        <line type="ParagraphPoolBox" x="69.5" y="394.5" width="83.84" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="69.5" y="394.5" width="35.54" height="10.0">Partially</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="107.81" y="394.5" width="19.42" height="10.0">First</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="130.0" y="394.5" width="23.34" height="10.0">Page</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="18">
+      <empty-cell/>
+      <cell border-top-color="#999999" border-top-width="0.5" border-top-style="solid" border-left-color="#999999" border-left-width="0.5" border-left-style="solid" border-bottom-color="#999999" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="#999999" border-right-width="0.5" border-right-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Second Page"/>
+        <attribute xml:id="two"/>
+        <line type="ParagraphPoolBox" x="69.5" y="456.5" width="60.01" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="69.5" y="456.5" width="33.9" height="10.0">Second</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="106.17" y="456.5" width="23.34" height="10.0">Page</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

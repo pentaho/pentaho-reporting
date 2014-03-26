@@ -84,12 +84,12 @@ public class PaginationShiftStatePool
     if (isBlock(nodeType))
     {
       BlockLevelPaginationShiftState blockShiftState = blockPool.get();
-      blockShiftState.reuse(blockPool, parent);
+      blockShiftState.reuse(blockPool, parent, box);
       return blockShiftState;
     }
 
     RowLevelPaginationShiftState shiftState = rowPool.get();
-    shiftState.reuse(rowPool, parent);
+    shiftState.reuse(rowPool, parent, box);
     return shiftState;
   }
 }

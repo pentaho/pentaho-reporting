@@ -358,7 +358,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -626,9 +625,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         logger.debug("Automatic pagebreak                      : " + visualState);
       }
       final long nextShift = nextMinorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -671,9 +668,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         shiftedBoxY > nextMajorBreak)
     {
       final long nextShift = nextMajorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
     else
