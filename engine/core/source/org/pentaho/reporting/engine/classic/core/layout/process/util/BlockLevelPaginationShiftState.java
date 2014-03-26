@@ -95,7 +95,7 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
 
   public PaginationShiftState pop(InstanceID id)
   {
-    if (id != box.getInstanceId())
+    if (box != null && id != box.getInstanceId())
     {
       throw new IllegalStateException();
     }
