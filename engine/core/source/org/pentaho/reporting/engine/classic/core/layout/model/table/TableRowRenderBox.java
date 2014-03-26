@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ * Copyright (c) 2005-2014 Pentaho Corporation.  All rights reserved.
  */
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
@@ -134,8 +134,8 @@ public class TableRowRenderBox extends RenderBox
     super.shiftCached(amount);
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(child, heightOffset);
+    return extendHeightInRowMode(child, heightOffset);
   }
 }

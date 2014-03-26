@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2014 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
@@ -253,8 +253,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    shiftState = shiftStatePool.create(box, shiftState);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
@@ -262,6 +260,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -270,6 +270,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -346,7 +348,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -606,9 +607,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         logger.debug("Automatic pagebreak                      : " + visualState);
       }
       final long nextShift = nextMinorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -651,9 +650,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         shiftedBoxY > nextMajorBreak)
     {
       final long nextShift = nextMajorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
     else

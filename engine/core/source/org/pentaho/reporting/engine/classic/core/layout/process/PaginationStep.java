@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+ * Copyright (c) 2001 - 2014 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
@@ -224,7 +224,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
     shiftState.setShift(shift + fixedPositionDelta);
     box.setY(fixedPositionInFlow);
-    BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
   }
@@ -243,7 +242,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // for now, we will only apply the ordinary shift.
       box.setY(fixedPositionInFlow);
       shiftState.setShift(shift + fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKey(box);
       return true;
     }
@@ -255,7 +253,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
       // from here.
       BoxShifter.shiftBox(box, fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKeyDeep(box);
       return false;
     }
@@ -344,8 +341,6 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    shiftState = shiftStatePool.create(box, shiftState);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
@@ -353,6 +348,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -361,6 +358,8 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -433,7 +432,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -696,7 +694,6 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
       }
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -764,7 +761,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
 
