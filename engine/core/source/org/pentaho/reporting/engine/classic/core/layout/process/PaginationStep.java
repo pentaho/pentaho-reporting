@@ -349,8 +349,6 @@ public final class PaginationStep extends IterateVisualProcessStep
   {
     box.setOverflowAreaHeight(0);
 
-    shiftState = shiftStatePool.create(box, shiftState);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
@@ -358,6 +356,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -366,6 +366,8 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -382,21 +384,7 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     else
     {
-      if (box.isContainsReservedContent())
-      {
-        return true;
-      }
-      else
-      {
-        // todo: Can we safely mark auto-boxes as finished? Or shall we wait until the table itself finishes?
-/*
-        if (box.isCommited())
-        {
-          box.setFinishedPaginate(true);
-        }
-        */
-        return true;
-      }
+      return true;
     }
   }
 
