@@ -341,8 +341,6 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    shiftState = shiftStatePool.create(box, shiftState);
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       final TableSectionRenderBox sectionRenderBox = (TableSectionRenderBox) box;
@@ -350,6 +348,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -358,6 +358,8 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
