@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
+ * Copyright (c) 2005-2014 Pentaho Corporation.  All rights reserved.
  */
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
@@ -111,7 +111,7 @@ public class AutoRenderBox extends RenderBox
     return super.isEmptyNodesHaveSignificance();
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
     final int layoutNodeType = getLayoutNodeType();
     if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE ||
@@ -119,11 +119,11 @@ public class AutoRenderBox extends RenderBox
         (layoutNodeType & LayoutNodeTypes.MASK_BOX_CANVAS) == LayoutNodeTypes.MASK_BOX_CANVAS ||
         (layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW))
     {
-      extendHeightInRowMode(child, heightOffset);
+      return extendHeightInRowMode(child, heightOffset);
     }
     else
     {
-      extendHeightInBlockMode(child, heightOffset);
+      return extendHeightInBlockMode(child, heightOffset);
     }
   }
 
