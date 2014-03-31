@@ -17,7 +17,7 @@
 
   <dependencies defaultconf="default_internal->default">
     <!-- report designer dependencies -->
-    <dependency org="${ivy.artifact.group}" name="report-designer-configuration-editor" rev="${project.revision}"
+    <dependency org="${ivy.artifact.group}" name="report-designer-configuration-editor" rev="${dependency.reporting-library.revision}"
                 transitive="true" changing="true"/>
 
     <!-- library dependencies -->
