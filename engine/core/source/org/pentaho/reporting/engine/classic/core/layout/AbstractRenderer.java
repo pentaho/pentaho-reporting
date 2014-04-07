@@ -217,10 +217,10 @@ public abstract class AbstractRenderer implements Renderer
     this.validateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_VALIDATE);
     this.paginateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_PROCESS);
 
-    this.majorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.canvasMajorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.minorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.canvasMinorAxisLayoutStep.initialize(performanceMonitorContext);
+    this.majorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.canvasMajorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.minorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.canvasMinorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
 
     outputProcessor.processingStarted(report, processingContext);
 

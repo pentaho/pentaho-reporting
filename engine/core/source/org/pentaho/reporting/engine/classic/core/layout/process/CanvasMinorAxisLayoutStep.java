@@ -17,10 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineBreakMeasurer;
+import java.awt.font.TextLayout;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
+import java.text.BreakIterator;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -30,12 +38,15 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.TextAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineNodeSequenceElement;
@@ -48,9 +59,16 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 
 /**
@@ -81,9 +99,9 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     lineBreakState = new MinorAxisParagraphBreakState();
   }
 
-  public void initialize(final PerformanceMonitorContext monitorContext)
+  public void initializePerformanceMonitoring(final PerformanceMonitorContext monitorContext)
   {
-    super.initialize(monitorContext);
+    super.initializePerformanceMonitoring(monitorContext);
     paragraphLayoutWatch = monitorContext.createStopWatch
         (PerformanceTags.getSummaryTag(PerformanceTags.REPORT_LAYOUT_PROCESS_SUFFIX,
             getClass().getSimpleName() + ".ParagraphLayout"));
