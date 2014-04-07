@@ -80,7 +80,7 @@ public final class BoxShifter
     }
   }
 
-
+  @Deprecated()
   public static boolean extendHeight(final RenderBox parent, final RenderNode child, final long amountDelta)
   {
     if (amountDelta < 0)

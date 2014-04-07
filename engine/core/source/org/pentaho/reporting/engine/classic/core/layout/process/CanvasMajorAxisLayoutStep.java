@@ -668,7 +668,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       return false;
     }
 
-    final int strictNodeType = box.getNodeType();
     performStartTable(box);
 
     final long oldPosition = box.getCachedY();
@@ -757,6 +756,11 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   private long computeVerticalRowPosition(final RenderNode node)
   {
+    if (node.isVisible() == false)
+    {
+      return node.getCachedY();
+    }
+
     final RenderBox parent = node.getParent();
 
     if (parent != null)

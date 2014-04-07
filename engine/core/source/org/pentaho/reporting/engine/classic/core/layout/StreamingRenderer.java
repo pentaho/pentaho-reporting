@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.ApplyAutoCommitP
 import org.pentaho.reporting.engine.classic.core.layout.process.CleanFlowBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.CountBoxesStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.FillFlowPagesStep;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 
 /**
  * The streaming renderer streams all generated (and layouted) elements to the output processor. The output processor
@@ -70,10 +71,12 @@ public class StreamingRenderer extends AbstractRenderer
     return true;
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition report,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
     pageCount = 0;
-    super.startReport(report, processingContext);
+    super.startReport(report, processingContext, performanceMonitorContext);
   }
 
   public void processIncrementalUpdate(final boolean performOutput) throws ContentProcessingException
@@ -87,7 +90,7 @@ public class StreamingRenderer extends AbstractRenderer
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 150) // this is a magic number ..
+    if (floodPrevention < 50) // this is a magic number ..
     {
       return;
     }

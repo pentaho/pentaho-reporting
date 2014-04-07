@@ -277,8 +277,15 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final RenderNode prev = node.getPrev();
       if (prev != null)
       {
-        // we have a sibling. Position yourself directly below your sibling ..
-        return (marginTop + prev.getCachedY() + prev.getCachedHeight());
+        if (prev.isVisible())
+        {
+          // we have a silbling. Position yourself directly below your silbling ..
+          return (marginTop + prev.getCachedY() + prev.getCachedHeight());
+        }
+        else
+        {
+          return (marginTop + prev.getCachedY());
+        }
       }
       else
       {
@@ -328,7 +335,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     if (lastChildNode != null)
     {
       childY1 = box.getFirstChild().getCachedY();
-      childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+      if (lastChildNode.isVisible())
+      {
+        childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+      }
+      else
+      {
+        childY2 = lastChildNode.getCachedY();
+      }
       usedHeight = (childY2 - childY1);
     }
     else
@@ -433,9 +447,11 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       long maxChildY2 = 0;
       while (child != null)
       {
-        final long childY2 = child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom();
-        maxChildY2 = Math.max(childY2, maxChildY2);
-
+        if (child.isVisible())
+        {
+          final long childY2 = child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom();
+          maxChildY2 = Math.max(childY2, maxChildY2);
+        }
         child = child.getNext();
       }
       usedHeight = (maxChildY2 - box.getCachedY());
@@ -534,8 +550,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
-    // todo Arabic text
-
     if (checkCacheValid(box))
     {
       return false;

@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextLayout;
-import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
-import java.text.BreakIterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -37,15 +30,12 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
-import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.TextAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineNodeSequenceElement;
@@ -58,14 +48,9 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 
 /**
@@ -87,12 +72,27 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   private MinorAxisParagraphBreakState lineBreakState;
   private MinorAxisNodeContext nodeContext;
   private MinorAxisNodeContextPool nodeContextPool;
+  private PerformanceLoggingStopWatch paragraphLayoutWatch;
   private boolean complexText;
 
   public CanvasMinorAxisLayoutStep()
   {
     nodeContextPool = new MinorAxisNodeContextPool();
     lineBreakState = new MinorAxisParagraphBreakState();
+  }
+
+  public void initialize(final PerformanceMonitorContext monitorContext)
+  {
+    super.initialize(monitorContext);
+    paragraphLayoutWatch = monitorContext.createStopWatch
+        (PerformanceTags.getSummaryTag(PerformanceTags.REPORT_LAYOUT_PROCESS_SUFFIX,
+            getClass().getSimpleName() + ".ParagraphLayout"));
+  }
+
+  public void close()
+  {
+    super.close();
+    paragraphLayoutWatch.close();
   }
 
   public void initialize(final OutputProcessorMetaData metaData)
@@ -498,7 +498,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -509,7 +512,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -579,7 +585,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     node.setCachedX(computeCanvasPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishCanvasLevelBox(final RenderBox box)
@@ -588,7 +597,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -600,7 +612,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -626,8 +641,16 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     final RenderNode prev = node.getPrev();
     if (prev != null)
     {
-      // we have a sibling. Position yourself directly to the right of your sibling ..
-      return prev.getCachedX() + prev.getCachedWidth();
+      if (prev.isVisible())
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX() + prev.getCachedWidth();
+      }
+      else
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX();
+      }
     }
     else
     {
@@ -677,7 +700,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
     node.setCachedX(computeRowPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishRowLevelBox(final RenderBox box)
@@ -686,7 +712,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -698,7 +727,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         final long cachedWidth = MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode());
         box.setCachedWidth(cachedWidth);
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
 
       finishParagraphBox(box);
     }
@@ -816,7 +848,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     }
 
     lineBreakState.add(EndSequenceElement.INSTANCE, box);
-
   }
 
   // Table-sections or auto-boxes masking as tables (treated as table-sections nonetheless).
@@ -884,7 +915,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -902,7 +936,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         box.setContentAreaX1(nodeContext.getX1());
         box.setContentAreaX2(nodeContext.getX2());
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally
@@ -945,7 +982,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       box.setContentAreaX2(nodeContext.getX2());
       box.setCachedWidth(resolveTableWidthOnFinish(box));
 
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -1023,7 +1063,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         // break-marker boxes etc.
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
       else
       {
@@ -1036,7 +1079,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
         {
           table.getColumnModel().updateCellSize(cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets());
         }
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally

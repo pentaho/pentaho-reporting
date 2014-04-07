@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.ss.usermodel.Font;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 /**
  * The HSSFFontWrapper is used to store excel style font informations.
@@ -73,6 +73,18 @@ public final class HSSFFontWrapper
    * the cached hashcode.
    */
   private int hashCode;
+
+  public HSSFFontWrapper(final StyleSheet contentStyle,
+                         final short colorIndex)
+  {
+    this.fontName = (String) contentStyle.getStyleProperty(TextStyleKeys.FONT);
+    this.fontHeight = contentStyle.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
+    this.bold = contentStyle.getBooleanStyleProperty(TextStyleKeys.BOLD);
+    this.italic = contentStyle.getBooleanStyleProperty(TextStyleKeys.ITALIC);
+    this.underline = contentStyle.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
+    this.strikethrough = contentStyle.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+    this.colorIndex = colorIndex;
+  }
 
   /**
    * Creates a new HSSFFontWrapper for the given font and color.

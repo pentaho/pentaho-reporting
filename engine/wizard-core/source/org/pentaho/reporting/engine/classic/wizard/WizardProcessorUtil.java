@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.wizard;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.Group;
@@ -33,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.StateUtilities;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
@@ -74,39 +76,49 @@ public class WizardProcessorUtil
   public static SubReport materialize(final SubReport report,
                                       final WizardProcessor processor) throws ReportProcessingException
   {
-    final DefaultProcessingContext processingContext;
-    final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
-    if (masterReport != null)
-    {
-      processingContext = new DefaultProcessingContext(masterReport);
-    }
-    else
-    {
-      processingContext = new DefaultProcessingContext();
-    }
-
-    final DataSchemaDefinition definition = report.getDataSchemaDefinition();
-    final DefaultFlowController flowController = new DefaultFlowController(processingContext,
-        definition, StateUtilities.computeParameterValueSet(report));
-    final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
-    dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
-
+    final PerformanceMonitorContext performanceMonitorContext =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
     try
     {
-      final DefaultFlowController postQueryFlowController = flowController.performQuery
-          (dataFactory, report.getQuery(), report.getQueryLimit(),
-              report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+      final DefaultProcessingContext processingContext;
+      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+      if (masterReport != null)
+      {
+        processingContext = new DefaultProcessingContext(masterReport);
+      }
+      else
+      {
+        processingContext = new DefaultProcessingContext();
+      }
 
-      final Object originalEnable =
-          report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
-      report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
-      final SubReport subReport = processor.performPreProcessing(report, postQueryFlowController);
-      subReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
-      return subReport;
+      final DataSchemaDefinition definition = report.getDataSchemaDefinition();
+      final DefaultFlowController flowController =
+          new DefaultFlowController(processingContext, definition,
+              StateUtilities.computeParameterValueSet(report), performanceMonitorContext);
+      final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
+      dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
+
+      try
+      {
+        final DefaultFlowController postQueryFlowController = flowController.performQuery
+            (dataFactory, report.getQuery(), report.getQueryLimit(),
+                report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+
+        final Object originalEnable =
+            report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
+        report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
+        final SubReport subReport = processor.performPreProcessing(report, postQueryFlowController);
+        subReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
+        return subReport;
+      }
+      finally
+      {
+        dataFactory.close();
+      }
     }
     finally
     {
-      dataFactory.close();
+      performanceMonitorContext.close();
     }
   }
 
@@ -114,38 +126,47 @@ public class WizardProcessorUtil
   public static MasterReport materialize(final MasterReport report,
                                          final WizardProcessor processor) throws ReportProcessingException
   {
-    final DefaultProcessingContext processingContext = new DefaultProcessingContext(report);
-    final DataSchemaDefinition definition = report.getDataSchemaDefinition();
-    final DefaultFlowController flowController = new DefaultFlowController(processingContext,
-        definition, StateUtilities.computeParameterValueSet(report));
-    final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
-    dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
-
+    final PerformanceMonitorContext performanceMonitorContext =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
     try
     {
-      final DefaultFlowController postQueryFlowController = flowController.performQuery
-          (dataFactory, report.getQuery(), report.getQueryLimit(),
-              report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+      final DefaultProcessingContext processingContext = new DefaultProcessingContext(report);
+      final DataSchemaDefinition definition = report.getDataSchemaDefinition();
+      final DefaultFlowController flowController = new DefaultFlowController(processingContext,
+          definition, StateUtilities.computeParameterValueSet(report), performanceMonitorContext);
+      final CachingDataFactory dataFactory = new CachingDataFactory(report.getDataFactory(), isCacheEnabled(report));
+      dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
 
-      final Object originalEnable =
-          report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
-      report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
-      final MasterReport masterReport = processor.performPreProcessing(report, postQueryFlowController);
-      masterReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
+      try
+      {
+        final DefaultFlowController postQueryFlowController = flowController.performQuery
+            (dataFactory, report.getQuery(), report.getQueryLimit(),
+                report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
 
-      masterReport.setName(null);
-      DesignTimeUtil.resetDocumentMetaData(masterReport);
-      return masterReport;
+        final Object originalEnable =
+            report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
+        report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
+        final MasterReport masterReport = processor.performPreProcessing(report, postQueryFlowController);
+        masterReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
+
+        masterReport.setName(null);
+        DesignTimeUtil.resetDocumentMetaData(masterReport);
+        return masterReport;
+      }
+      finally
+      {
+        dataFactory.close();
+      }
     }
     finally
     {
-      dataFactory.close();
+      performanceMonitorContext.close();
     }
   }
 
   /**
-   * @deprecated Use DesignTimeUtil.resetTemplate(..) to reset the template properties.
    * @param masterReport
+   * @deprecated Use DesignTimeUtil.resetTemplate(..) to reset the template properties.
    */
   public static void resetDocumentMetaData(final MasterReport masterReport)
   {

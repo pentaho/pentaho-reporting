@@ -64,4 +64,9 @@ public class TestSolutionFileModel extends XmlSolutionFileModel
   {
     throw new FileSystemException("Not implemented");
   }
+  
+  @Override
+  public boolean delete( FileName name ) throws FileSystemException {
+	 throw new FileSystemException("Not implemented");
+  }
 }

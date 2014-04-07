@@ -256,4 +256,9 @@ public class LocalFileModel extends XmlSolutionFileModel
   {
     throw new FileSystemException("Not supported");
   }
+  
+  @Override
+  public boolean delete( FileName name ) throws FileSystemException {
+	 throw new FileSystemException("Not supported");
+  }
 }

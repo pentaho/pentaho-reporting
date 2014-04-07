@@ -382,6 +382,10 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     {
       return true;
     }
+    if (box.isVisible() == false)
+    {
+      return false;
+    }
 
     final long height = box.getHeight();
 //

@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -31,13 +32,17 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.states.LengthLimitingTableModel;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.libraries.base.util.FormattedMessage;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 public final class DefaultFlowController
 {
@@ -64,11 +69,16 @@ public final class DefaultFlowController
   private ProcessingContext reportContext;
   private ReportParameterValues parameters;
   private boolean storedAdvanceRequested;
+  private PerformanceMonitorContext performanceMonitorContext;
 
   public DefaultFlowController(final ProcessingContext reportContext,
                                final DataSchemaDefinition schemaDefinition,
-                               final ReportParameterValues parameters) throws ReportDataFactoryException
+                               final ReportParameterValues parameters,
+                               final PerformanceMonitorContext performanceMonitorContext)
+      throws ReportDataFactoryException
   {
+    ArgumentNullException.validate("performanceMonitorContext", performanceMonitorContext);
+
     if (reportContext == null)
     {
       throw new NullPointerException();
@@ -82,6 +92,7 @@ public final class DefaultFlowController
       throw new NullPointerException();
     }
 
+    this.performanceMonitorContext = performanceMonitorContext;
     this.reportContext = reportContext;
     this.exportDescriptor = reportContext.getExportDescriptor();
     this.expressionsStack = new FastStack<Integer>(10);
@@ -96,10 +107,10 @@ public final class DefaultFlowController
   private DefaultFlowController(final DefaultFlowController fc,
                                 final MasterDataRow dataRow)
   {
-    if (dataRow == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("fc", fc);
+    ArgumentNullException.validate("dataRow", dataRow);
+
+    this.performanceMonitorContext = fc.performanceMonitorContext;
     this.reportContext = fc.reportContext;
     this.exportDescriptor = fc.exportDescriptor;
     this.dataContextStack = fc.dataContextStack.clone();
@@ -218,13 +229,22 @@ public final class DefaultFlowController
       return new EmptyTableModel();
     }
 
-    final TableModel reportData = dataFactory.queryData
-        (query, new QueryDataRowWrapper(parameters, queryLimit, queryTimeout));
-    if (queryLimit > 0 && reportData.getRowCount() > queryLimit)
+    PerformanceLoggingStopWatch sw = performanceMonitorContext.createStopWatch
+            (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query));
+    try
     {
-      return new LengthLimitingTableModel(reportData, queryLimit);
+      final TableModel reportData = dataFactory.queryData
+          (query, new QueryDataRowWrapper(parameters, queryLimit, queryTimeout));
+      if (queryLimit > 0 && reportData.getRowCount() > queryLimit)
+      {
+        return new LengthLimitingTableModel(reportData, queryLimit);
+      }
+      return reportData;
     }
-    return reportData;
+    finally
+    {
+      sw.close();
+    }
   }
 
   public DefaultFlowController performInitSubreport(final DataFactory dataFactory,

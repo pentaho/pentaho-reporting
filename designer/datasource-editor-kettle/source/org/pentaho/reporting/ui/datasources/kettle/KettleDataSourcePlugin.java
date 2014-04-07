@@ -22,6 +22,7 @@ import java.awt.Window;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
@@ -49,8 +50,16 @@ public class KettleDataSourcePlugin implements DataSourcePlugin
                                  final String queryName,
                                  final DataFactoryChangeRecorder changeRecorder)
   {
-    final KettleDataSourceDialog editor = createKettleDataSourceDialog(context);
-     return editor.performConfiguration(context, (KettleDataFactory) input, queryName);
+    try
+    {
+      final KettleDataSourceDialog editor = createKettleDataSourceDialog(context);
+      return editor.performConfiguration(context, (KettleDataFactory) input, queryName);
+    }
+    catch (KettleException e)
+    {
+      context.error(e);
+      return input;
+    }
   }
 
   protected KettleDataSourceDialog createKettleDataSourceDialog(final DesignTimeContext context)

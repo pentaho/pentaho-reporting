@@ -39,4 +39,6 @@ public interface ReportPreProcessorMetaData extends MetaData
   public boolean isExecuteInDesignMode();
 
   public ReportPreProcessor create() throws InstantiationException;
+
+  public int getExecutionPriority();
 }

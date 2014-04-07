@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
 public class InitialPaginationShiftState implements PaginationShiftState
 {
   private long shift;
@@ -46,7 +48,7 @@ public class InitialPaginationShiftState implements PaginationShiftState
     return shift;
   }
 
-  public PaginationShiftState pop()
+  public PaginationShiftState pop(InstanceID id)
   {
     throw new UnsupportedOperationException();
   }

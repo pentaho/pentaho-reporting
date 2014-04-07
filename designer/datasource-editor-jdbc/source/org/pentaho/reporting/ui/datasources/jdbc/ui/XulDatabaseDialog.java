@@ -64,7 +64,6 @@ public class XulDatabaseDialog
   private static final String HSQLDB_MEM_PREFIX = "jdbc:hsqldb:mem:";
   private static final String HSQLDB_LOCAL_PREFIX  = "jdbc:hsqldb:.";
   private DesignTimeContext designTimeContext;
-  private boolean shared;
 
   public XulDatabaseDialog(final Window parent,
                            final DesignTimeContext designTimeContext) throws XulException
@@ -242,10 +241,9 @@ public class XulDatabaseDialog
     }
   }
 
-  public JdbcConnectionDefinition performEdit(final JdbcConnectionDefinition definition, final boolean shared)
+  public JdbcConnectionDefinition open(final JdbcConnectionDefinition definition)
   {
     setData(definition);
-    this.shared = shared;
     try
     {
       log.debug("showing database dialog");
@@ -282,7 +280,7 @@ public class XulDatabaseDialog
     {
       return new JndiConnectionDefinition(meta.getName(),
           meta.getDatabaseName(),
-          meta.getDatabaseInterface().getPluginName(), null, null, shared);
+          meta.getDatabaseInterface().getPluginName(), null, null);
     }
     else
     {

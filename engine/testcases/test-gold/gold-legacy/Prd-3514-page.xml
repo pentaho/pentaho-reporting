@@ -74,10 +74,6 @@
             </block>
             <block name="::group-0" type="BlockRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="72.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="72.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
               <block type="BlockRenderBox" x="0.0" y="72.0" width="772.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
                 <block name="Section-0" type="SectionRenderBox" x="0.0" y="72.0" width="772.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1121,14 +1117,6 @@
                       </line>
                     </p>
                   </canvas>
-                </block>
-                <block name="Section-0" type="SectionRenderBox" x="0.0" y="192.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <block type="ProgressMarkerRenderBox" x="0.0" y="192.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  </block>
-                </block>
-              </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="192.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="192.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 </block>
               </block>
             </block>
@@ -8410,10 +8398,6 @@
               </replaced-content>
             </canvas>
           </block>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="267.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="267.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            </block>
-          </block>
         </block>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="267.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="267.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -10556,10 +10540,6 @@
               </replaced-content>
             </canvas>
           </block>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="101.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="101.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            </block>
-          </block>
         </block>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="101.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="101.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -12595,10 +12575,6 @@
               </replaced-content>
             </canvas>
           </block>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="350.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="350.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            </block>
-          </block>
         </block>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="350.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="350.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -13414,10 +13390,6 @@
               </replaced-content>
             </canvas>
           </block>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="377.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="377.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            </block>
-          </block>
         </block>
         <block name="Section-0" type="SectionRenderBox" x="0.0" y="377.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <canvas type="CanvasRenderBox" x="0.0" y="377.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -13496,16 +13468,8 @@
         </block>
         <block name="::group-0" type="BlockRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="46.333" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="46.333" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            </block>
-          </block>
           <block type="BlockRenderBox" x="0.0" y="46.333" width="772.0" height="545.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
-            <block name="Section-0" type="SectionRenderBox" x="0.0" y="46.333" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <block type="ProgressMarkerRenderBox" x="0.0" y="46.333" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              </block>
-            </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="46.333" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="46.333" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
@@ -14704,32 +14668,32 @@
                 </p>
               </canvas>
             </block>
-            <block name="Common-Section" type="BlockRenderBox" x="0.0" y="462.0" width="772.0" height="130.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="462.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <canvas type="CanvasRenderBox" x="0.0" y="462.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
-                  <p type="ParagraphRenderBox" x="0.0" y="462.0" width="299.0" height="21.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="item-key"/>
-                    <line type="ParagraphPoolBox" x="0.0" y="467.5" width="140.74" height="10.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="0.0" y="467.5" width="35.37" height="10.0">America</text>
-                      <spacer width="3.12" height="0.0" preserve="true"/>
-                      <text x="38.49" y="467.5" width="22.07" height="10.0">West</text>
-                      <spacer width="3.12" height="0.0" preserve="true"/>
-                      <text x="63.68" y="467.5" width="31.72" height="10.0">Airlines</text>
-                      <spacer width="3.12" height="0.0" preserve="true"/>
-                      <text x="98.52" y="467.5" width="42.22" height="10.0">B757-200</text>
-                    </line>
-                  </p>
-                  <p type="ParagraphRenderBox" x="299.0" y="462.0" width="100.0" height="21.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
-                    <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="item-pages"/>
-                    <line type="ParagraphPoolBox" x="299.0" y="467.5" width="19.98" height="10.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                      <text x="299.0" y="467.5" width="19.98" height="10.0">9-10</text>
-                    </line>
-                  </p>
-                </canvas>
-              </block>
+            <block name="Section-0" type="SectionRenderBox" x="0.0" y="462.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas type="CanvasRenderBox" x="0.0" y="462.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+                <p type="ParagraphRenderBox" x="0.0" y="462.0" width="299.0" height="21.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="item-key"/>
+                  <line type="ParagraphPoolBox" x="0.0" y="467.5" width="140.74" height="10.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="0.0" y="467.5" width="35.37" height="10.0">America</text>
+                    <spacer width="3.12" height="0.0" preserve="true"/>
+                    <text x="38.49" y="467.5" width="22.07" height="10.0">West</text>
+                    <spacer width="3.12" height="0.0" preserve="true"/>
+                    <text x="63.68" y="467.5" width="31.72" height="10.0">Airlines</text>
+                    <spacer width="3.12" height="0.0" preserve="true"/>
+                    <text x="98.52" y="467.5" width="42.22" height="10.0">B757-200</text>
+                  </line>
+                </p>
+                <p type="ParagraphRenderBox" x="299.0" y="462.0" width="100.0" height="21.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+                  <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="item-pages"/>
+                  <line type="ParagraphPoolBox" x="299.0" y="467.5" width="19.98" height="10.0" color="black" font-face="Tahoma" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="299.0" y="467.5" width="19.98" height="10.0">9-10</text>
+                  </line>
+                </p>
+              </canvas>
+            </block>
+            <block name="Common-Section" type="BlockRenderBox" x="0.0" y="483.0" width="772.0" height="109.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <block name="Section-0" type="SectionRenderBox" x="0.0" y="483.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <canvas type="CanvasRenderBox" x="0.0" y="483.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
@@ -14899,7 +14863,7 @@
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
           <block type="BlockRenderBox" x="0.0" y="-1137.667" width="772.0" height="1326.667" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
-            <block name="Common-Section" type="BlockRenderBox" x="0.0" y="-130.0" width="772.0" height="319.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block name="Common-Section" type="BlockRenderBox" x="0.0" y="-109.0" width="772.0" height="298.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="772.0" height="21.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
@@ -15101,14 +15065,6 @@
                   </p>
                 </canvas>
               </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="189.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="189.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
-            </block>
-          </block>
-          <block name="Section-0" type="SectionRenderBox" x="0.0" y="189.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-            <block type="ProgressMarkerRenderBox" x="0.0" y="189.0" width="772.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             </block>
           </block>
         </block>

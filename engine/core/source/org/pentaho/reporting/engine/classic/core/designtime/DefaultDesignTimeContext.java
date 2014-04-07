@@ -20,12 +20,14 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 import java.awt.Window;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.settings.DefaultLocaleSettings;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
 public class DefaultDesignTimeContext implements DesignTimeContext
 {
+  private DesignTimeDataFactoryContext dataFactoryContext;
   private AbstractReportDefinition report;
   private Window parentWindow;
   private LocaleSettings localeSettings;
@@ -38,6 +40,7 @@ public class DefaultDesignTimeContext implements DesignTimeContext
     }
     this.report = report;
     this.localeSettings = new DefaultLocaleSettings();
+    this.dataFactoryContext = new DesignTimeDataFactoryContext();
   }
 
   /**
@@ -93,5 +96,10 @@ public class DefaultDesignTimeContext implements DesignTimeContext
   public boolean isShowDeprecatedItems()
   {
     return true;
+  }
+
+  public DesignTimeDataFactoryContext getDataFactoryContext()
+  {
+    return dataFactoryContext;
   }
 }

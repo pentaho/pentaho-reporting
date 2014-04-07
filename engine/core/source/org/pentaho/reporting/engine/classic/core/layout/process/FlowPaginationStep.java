@@ -69,6 +69,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
     PaginationStepLib.assertProgress(pageBox);
 
     this.unresolvedWidowReferenceEncountered = false;
@@ -123,6 +125,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     finally
     {
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;
@@ -215,7 +219,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       }
     }
 
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
   }
 
   // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
@@ -235,7 +239,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
@@ -253,15 +257,13 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
     box.setOverflowAreaHeight(0);
-
-    shiftState = shiftStatePool.create(box, shiftState);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
@@ -270,6 +272,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -278,6 +282,8 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new FlowPaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -354,7 +360,6 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -370,12 +375,12 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
       switch (sectionRenderBox.getDisplayRole())
       {
         case HEADER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           paginationTableState.defineArtificialPageStart(box.getHeight() + paginationTableState.getPageOffset());
           break;
         case FOOTER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           break;
         case BODY:
@@ -622,9 +627,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         logger.debug("Automatic pagebreak                      : " + visualState);
       }
       final long nextShift = nextMinorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -667,9 +670,7 @@ public final class FlowPaginationStep extends IterateVisualProcessStep
         shiftedBoxY > nextMajorBreak)
     {
       final long nextShift = nextMajorBreak - boxY;
-      final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
     else

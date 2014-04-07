@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import java.util.Arrays;
 
-public class TableCutList
+public class TableCutList implements Cloneable
 {
   private static final Boolean[] EMPTY_ENTRIES = new Boolean[0];
   private static final long[] EMPTY_KEYS = new long[0];
@@ -42,6 +42,20 @@ public class TableCutList
     entries = TableCutList.EMPTY_ENTRIES;
     keys = TableCutList.EMPTY_KEYS;
     this.enableQuickLookup = enableQuickLookup;
+  }
+
+  public TableCutList clone ()
+  {
+    try
+    {
+      TableCutList clone = (TableCutList) super.clone();
+      clone.entries = clone.entries.clone();
+      return clone;
+    }
+    catch (CloneNotSupportedException e)
+    {
+      throw new IllegalStateException();
+    }
   }
 
   public void clear()

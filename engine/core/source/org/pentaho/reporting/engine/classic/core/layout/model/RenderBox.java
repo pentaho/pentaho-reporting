@@ -1436,22 +1436,17 @@ public abstract class RenderBox extends RenderNode
    * @param child
    * @param heightOffset
    */
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInBlockMode(child, heightOffset);
+    return extendHeightInBlockMode(child, heightOffset);
   }
 
-  protected void extendHeightInBlockMode(final RenderNode child, final long heightOffset)
+  protected long extendHeightInBlockMode(final RenderNode child, final long heightOffset)
   {
     setHeight(getHeight() + heightOffset);
     setOverflowAreaHeight(getOverflowAreaHeight() + heightOffset);
     //updateCacheState(CACHE_DIRTY);
-
-    final RenderBox parent = getParent();
-    if (parent != null)
-    {
-      parent.extendHeight(this, heightOffset);
-    }
+    return heightOffset;
   }
 
   /**
@@ -1461,7 +1456,7 @@ public abstract class RenderBox extends RenderNode
    * @param child
    * @param heightOffset
    */
-  protected void extendHeightInRowMode(final RenderNode child, final long heightOffset)
+  protected long extendHeightInRowMode(final RenderNode child, final long heightOffset)
   {
     final long parentY2 = getY() + getHeight();
     final long childY2 = child.getY() + child.getHeight();
@@ -1470,19 +1465,14 @@ public abstract class RenderBox extends RenderNode
     {
       // child expands without expanding this parent band. There was enough space available to contain the
       // child inside the parent box.
-      return;
+      return 0;
     }
 
     final long delta = Math.min(deltaToBase, heightOffset);
     setHeight(getHeight() + delta);
     setOverflowAreaHeight(getOverflowAreaHeight() + delta);
     //updateCacheState(CACHE_DIRTY);
-
-    final RenderBox parent = getParent();
-    if (parent != null)
-    {
-      parent.extendHeight(this, delta);
-    }
+    return delta;
   }
 
   public int getChildCount()

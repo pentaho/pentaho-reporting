@@ -118,7 +118,7 @@ public class KettleDataFactory extends AbstractDataFactory
     try
     {
       currentlyRunningQuery = producer;
-      return producer.performQuery(parameters, queryLimit, getResourceManager(), getContextKey());
+      return producer.performQuery(parameters, queryLimit, getDataFactoryContext());
     }
     catch (ReportDataFactoryException rdfe)
     {

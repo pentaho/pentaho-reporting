@@ -19,8 +19,9 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parse
 
 import java.util.ArrayList;
 
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -36,8 +37,8 @@ public abstract class AbstractKettleTransformationProducerReadHandler
   private String username;
   private String password;
   private String repositoryName;
-  private String[] definedArgumentNames;
-  private ParameterMapping[] definedVariableNames;
+  private FormulaArgument[] definedArgumentNames;
+  private FormulaParameter[] definedVariableNames;
   private ArrayList<ArgumentReadHandler> argumentHandlers;
   private ArrayList<VariableReadHandler> variablesHandlers;
 
@@ -121,18 +122,18 @@ public abstract class AbstractKettleTransformationProducerReadHandler
    */
   protected void doneParsing() throws SAXException
   {
-    definedArgumentNames = new String[argumentHandlers.size()];
+    definedArgumentNames = new FormulaArgument[argumentHandlers.size()];
     for (int i = 0; i < definedArgumentNames.length; i++)
     {
-      final ArgumentReadHandler o = (ArgumentReadHandler) argumentHandlers.get(i);
-      definedArgumentNames[i] = o.getDataRowName();
+      final ArgumentReadHandler o = argumentHandlers.get(i);
+      definedArgumentNames[i] = o.getFormula();
     }
 
-    definedVariableNames = new ParameterMapping[variablesHandlers.size()];
+    definedVariableNames = new FormulaParameter[variablesHandlers.size()];
     for (int i = 0; i < definedVariableNames.length; i++)
     {
-      final VariableReadHandler readHandler = (VariableReadHandler) variablesHandlers.get(i);
-      definedVariableNames[i] = (ParameterMapping) readHandler.getObject();
+      final VariableReadHandler readHandler = variablesHandlers.get(i);
+      definedVariableNames[i] = readHandler.getObject();
     }
   }
 
@@ -156,12 +157,12 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     return repositoryName;
   }
 
-  public String[] getDefinedArgumentNames()
+  public FormulaArgument[] getDefinedArgumentNames()
   {
     return definedArgumentNames;
   }
 
-  public ParameterMapping[] getDefinedVariableNames()
+  public FormulaParameter[] getDefinedVariableNames()
   {
     return definedVariableNames;
   }

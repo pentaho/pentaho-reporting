@@ -210,7 +210,7 @@ public class MasterReport extends AbstractReportDefinition
 
   public static ResourceBundleFactory computeAndInitResourceBundleFactory
       (final ResourceBundleFactory resourceBundleFactory,
-       final ReportEnvironment environment) throws ReportProcessingException
+       final ReportEnvironment environment)
   {
     if (resourceBundleFactory instanceof ExtendedResourceBundleFactory == false)
     {
@@ -234,7 +234,7 @@ public class MasterReport extends AbstractReportDefinition
     }
     catch (CloneNotSupportedException e)
     {
-      throw new ReportProcessingException("Cannot clone resource-bundle factory");
+      throw new IllegalStateException("Cannot clone resource-bundle factory");
     }
   }
 

@@ -22,7 +22,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
-public class QueryDialogComboBoxModel<T> implements ComboBoxModel<Query<T>>
+public class QueryDialogComboBoxModel<T> implements ComboBoxModel
 {
   private class UpdateHandler implements QueryDialogModelListener<T>
   {

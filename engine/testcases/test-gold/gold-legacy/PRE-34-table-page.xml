@@ -1023,7 +1023,8 @@
     </row>
     <row height="8">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -2066,7 +2067,8 @@
     </row>
     <row height="6">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -4148,7 +4150,8 @@
     </row>
     <row height="6">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -5175,7 +5178,8 @@
     </row>
     <row height="8">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -6184,7 +6188,8 @@
     </row>
     <row height="12">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -7189,7 +7194,8 @@
     </row>
     <row height="12">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -8178,7 +8184,8 @@
     </row>
     <row height="14">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub1"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -10198,7 +10205,8 @@
     </row>
     <row height="12">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -11222,7 +11230,8 @@
       <empty-cell/>
     </row>
     <row height="10">
-      <empty-cell/>
+      <empty-cell>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -14247,7 +14256,8 @@
     </row>
     <row height="10">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>
@@ -15257,8 +15267,7 @@
       <empty-cell/>
     </row>
     <row height="12">
-      <empty-cell>
-      </empty-cell>
+      <empty-cell/>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -16258,7 +16267,8 @@
     </row>
     <row height="14">
       <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="sub2"/>
       </empty-cell>
       <empty-cell/>
       <empty-cell/>

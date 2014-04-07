@@ -17,62 +17,77 @@
 
 package org.pentaho.reporting.ui.datasources.kettle;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-import org.pentaho.di.core.Const;
 import org.pentaho.di.core.exception.KettleException;
-import org.pentaho.di.repository.Repository;
-import org.pentaho.di.trans.TransMeta;
-import org.pentaho.di.trans.step.StepMeta;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransFromFileProducer;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.AbstractKettleTransformationProducer;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
-import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.ui.datasources.kettle.embedded.KettleParameterInfo;
+import org.pentaho.reporting.ui.datasources.kettle.embedded.TransformationParameterHelper;
 
-public class KettleQueryEntry
+public abstract class KettleQueryEntry
 {
-  private static class InternalKettleTransFromFileProducer extends KettleTransFromFileProducer
-  {
-    public InternalKettleTransFromFileProducer(final String transformationFile)
-    {
-      super(transformationFile, null, new String[0], new ParameterMapping[0]);
-    }
-
-    public TransMeta loadTransformation(final Repository repository,
-                                        final ResourceManager resourceManager,
-                                        final ResourceKey contextKey) throws ReportDataFactoryException, KettleException
-    {
-      return super.loadTransformation(repository, resourceManager, contextKey);
-    }
-  }
-
-  private StepMeta[] cached;
   private String name;
-  private String file;
-  private String selectedStepName;
-  private String[] arguments;
-  private ParameterMapping[] parameters;
-  private String[] declaredParameters;
+  private FormulaArgument[] arguments;
+  private FormulaParameter[] parameters;
+  private TransformationParameterHelper parameterHelper;
+  private boolean validated;
+  private PropertyChangeSupport propertyChangeSupport;
 
   public KettleQueryEntry(final String aName)
   {
+    this.propertyChangeSupport = new PropertyChangeSupport(this);
     this.name = aName;
-    this.arguments = new String[0];
-    this.parameters = new ParameterMapping[0];
+    this.arguments = new FormulaArgument[0];
+    this.parameters = new FormulaParameter[0];
   }
 
-  protected void setDeclaredParameters(String[] declaredParameters) {
-    this.declaredParameters = declaredParameters;
+  public void addPropertyChangeListener(final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.addPropertyChangeListener(listener);
   }
-  
-  public boolean validate(){
-    return (!Const.isEmpty(name)) &&
-           (!Const.isEmpty(selectedStepName)) && 
-           (!Const.isEmpty(file));
+
+  public void removePropertyChangeListener(final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.removePropertyChangeListener(listener);
+  }
+
+  public void addPropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+  }
+
+  public void removePropertyChangeListener(final String propertyName, final PropertyChangeListener listener)
+  {
+    propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
+  }
+
+  public boolean isValidated()
+  {
+    return validated;
+  }
+
+  public void setValidated(final boolean validated)
+  {
+    boolean oldValid = this.validated;
+    this.validated = validated;
+    propertyChangeSupport.firePropertyChange("validated", oldValid, validated);
+  }
+
+  protected boolean validate()
+  {
+    return (!StringUtils.isEmpty(name));
+  }
+
+  protected void clearCachedEntries()
+  {
+    this.parameterHelper = null;
   }
 
   public String getName()
@@ -83,110 +98,47 @@ public class KettleQueryEntry
   public void setName(final String name)
   {
     this.name = name;
+    setValidated(validate());
   }
 
-  public String getFile()
-  {
-    return file;
-  }
-
-  public void setFile(final String file)
-  {
-    this.file = file;
-    this.declaredParameters = null;
-    this.cached = null;
-  }
-
-  public String getSelectedStep()
-  {
-    return selectedStepName;
-  }
-
-  public void setSelectedStep(final String selectedStep)
-  {
-    this.selectedStepName = selectedStep;
-  }
-
-  public String[] getArguments()
+  public FormulaArgument[] getArguments()
   {
     return arguments.clone();
   }
 
-  public void setArguments(final String[] arguments)
+  public void setArguments(final FormulaArgument[] arguments)
   {
     this.arguments = arguments.clone();
   }
 
-  public ParameterMapping[] getParameters()
+  public FormulaParameter[] getParameters()
   {
     return parameters.clone();
   }
 
-  public void setParameters(final ParameterMapping[] parameters)
+  public void setParameters(final FormulaParameter[] parameters)
   {
     this.parameters = parameters.clone();
   }
-  
-  public void addParameters(final ParameterMapping[] newParams){
-    int originalLength = this.parameters.length;
-    this.parameters = Arrays.copyOf(this.parameters, originalLength + newParams.length);
-    for (int i = 0; i < newParams.length; i++) {
-      this.parameters[originalLength + i] = newParams[i];
-    }
-  }
-  
 
   public String toString()
   {
     return name;
   }
 
-  public String[] getDeclaredParameters(final ResourceManager resourceManager,
-                                        final ResourceKey contextKey) throws KettleException, ReportDataFactoryException
+  public KettleParameterInfo[] getDeclaredParameters(final DataFactoryContext context)
+      throws KettleException, ReportDataFactoryException
   {
-    if (file == null)
+    if (parameterHelper == null)
     {
-      return new String[0];
+      parameterHelper = new TransformationParameterHelper(loadTransformation(context), context);
     }
-    if (cached == null)
-    {
-      loadTransformation(resourceManager, contextKey);
-    }
-    return declaredParameters;
+    return parameterHelper.getDeclaredParameter();
   }
 
-  protected void loadTransformation(final ResourceManager resourceManager, final ResourceKey contextKey)
-      throws ReportDataFactoryException, KettleException
-  {
-    final InternalKettleTransFromFileProducer transFromFileProducer =
-        new InternalKettleTransFromFileProducer(getFile());
-    final TransMeta transMeta = transFromFileProducer.loadTransformation(null, resourceManager, contextKey);
-    final List<StepMeta> theSteps = transMeta.getSteps();
-    declaredParameters = transMeta.listParameters();
-    cached = theSteps.toArray(new StepMeta[theSteps.size()]);
-  }
+  protected abstract AbstractKettleTransformationProducer loadTransformation(final DataFactoryContext context)
+      throws KettleException;
 
-  public StepMeta[] getSteps(final ResourceManager resourceManager,
-                             final ResourceKey contextKey) throws KettleException, ReportDataFactoryException
-  {
-    if (file == null)
-    {
-      return new StepMeta[0];
-    }
-    if (cached == null)
-    {
-      loadTransformation(resourceManager, contextKey);
-    }
-    return cached;
-  }
-
-  public KettleTransformationProducer createProducer()
-  {
-    final String[] argumentFields = getArguments();
-    final ParameterMapping[] varNames = getParameters();
-    final String file = getFile();
-    final String selectedStep = getSelectedStep();
-    return new KettleTransFromFileProducer(file, selectedStep, argumentFields, varNames);
-  }
+  public abstract KettleTransformationProducer createProducer() throws KettleException;
 
 }

@@ -72,21 +72,22 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   public PaginationResult performPagebreak(final LogicalPageBox pageBox)
   {
-    PaginationStepLib.assertProgress(pageBox);
+    getEventWatch().start();
+    getSummaryWatch().start();
+    try{
+      PaginationStepLib.assertProgress(pageBox);
 
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Start pagination ... " + pageBox.getPageOffset());
-    }
-    this.breakIndicatorEncountered = null;
-    this.visualState = null;
-    this.pageOffsetKey = pageBox.getPageOffset();
-    this.shiftState = new InitialPaginationShiftState();
-    this.breakPending = false;
-    this.usablePageHeight = Long.MAX_VALUE;
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("Start pagination ... " + pageBox.getPageOffset());
+      }
+      this.breakIndicatorEncountered = null;
+      this.visualState = null;
+      this.pageOffsetKey = pageBox.getPageOffset();
+      this.shiftState = new InitialPaginationShiftState();
+      this.breakPending = false;
+      this.usablePageHeight = Long.MAX_VALUE;
 
-    try
-    {
       final long[] allCurrentBreaks = pageBox.getPhysicalBreaks(RenderNode.VERTICAL_AXIS);
       if (allCurrentBreaks.length == 0)
       {
@@ -147,6 +148,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       this.paginationTableState = null;
       this.visualState = null;
       this.shiftState = null;
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
     }
   }
 
@@ -223,7 +226,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long fixedPositionDelta = fixedPositionInFlow - shiftedBoxPosition;
     shiftState.setShift(shift + fixedPositionDelta);
     box.setY(fixedPositionInFlow);
-    BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
     updateStateKey(box);
     return true;
   }
@@ -242,7 +244,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // for now, we will only apply the ordinary shift.
       box.setY(fixedPositionInFlow);
       shiftState.setShift(shift + fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKey(box);
       return true;
     }
@@ -254,7 +255,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       // As neither this box nor any of the children will cause a pagebreak, we can shift them and skip the processing
       // from here.
       BoxShifter.shiftBox(box, fixedPositionDelta);
-      BoxShifter.extendHeight(box.getParent(), box, fixedPositionDelta);
       updateStateKeyDeep(box);
       return false;
     }
@@ -293,7 +293,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       }
     }
 
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
   }
 
   // At a later point, we have to do some real page-breaking here. We should check, whether the box fits, and should
@@ -318,7 +318,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected void finishCanvasLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
@@ -341,15 +341,13 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected void finishRowLevelBox(final RenderBox box)
   {
-    shiftState = shiftState.pop();
+    shiftState = shiftState.pop(box.getInstanceId());
     uninstallTableContext(box);
   }
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
     box.setOverflowAreaHeight(0);
-
-    shiftState = shiftStatePool.create(box, shiftState);
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
@@ -358,6 +356,8 @@ public final class PaginationStep extends IterateVisualProcessStep
       {
         case HEADER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -366,6 +366,8 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
         case FOOTER:
         {
+          shiftState = shiftStatePool.create(box, shiftState);
+
           paginationTableState = new PaginationTableState(paginationTableState);
           paginationTableState.suspendVisualStateCollection(true);
 
@@ -382,21 +384,9 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     else
     {
-      if (box.isContainsReservedContent())
-      {
-        return true;
-      }
-      else
-      {
-        // todo: Can we safely mark auto-boxes as finished? Or shall we wait until the table itself finishes?
-/*
-        if (box.isCommited())
-        {
-          box.setFinishedPaginate(true);
-        }
-        */
-        return true;
-      }
+      shiftState = shiftStatePool.create(box, shiftState);
+
+      return true;
     }
   }
 
@@ -469,7 +459,6 @@ public final class PaginationStep extends IterateVisualProcessStep
     }
     BoxShifter.shiftBox(box, delta);
     updateStateKeyDeep(box);
-    BoxShifter.extendHeight(box.getParent(), box, headerShift);
     shiftState.increaseShift(headerShift);
     if (logger.isDebugEnabled())
     {
@@ -485,12 +474,12 @@ public final class PaginationStep extends IterateVisualProcessStep
       switch (sectionRenderBox.getDisplayRole())
       {
         case HEADER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           paginationTableState.defineArtificialPageStart(box.getHeight() + paginationTableState.getPageOffset());
           break;
         case FOOTER:
-          shiftState = shiftState.pop();
+          shiftState = shiftState.pop(box.getInstanceId());
           paginationTableState = paginationTableState.pop();
           break;
         case BODY:
@@ -740,7 +729,6 @@ public final class PaginationStep extends IterateVisualProcessStep
         }
       }
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
       updateStateKey(box);
       if (box.getY() < nextMinorBreak)
@@ -807,7 +795,6 @@ public final class PaginationStep extends IterateVisualProcessStep
       final long nextShift = nextMajorBreak - boxY;
       final long shiftDelta = nextShift - shift;
       box.setY(boxY + nextShift);
-      BoxShifter.extendHeight(box.getParent(), box, shiftDelta);
       boxContext.setShift(nextShift);
     }
 

@@ -65,6 +65,11 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
                                 final long pageStart,
                                 final long pageEnd)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
+
+    try
+    {
     this.contentStart = pagebox.getHeaderArea().getHeight();
     this.contentEnd = (pageEnd - pageStart) + contentStart;
 
@@ -74,7 +79,7 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
     //
     // For the sake of efficiency, we do *not* create private copies for each
     // physical page. This would be an total overkill.
-    final LogicalPageBox derived = (LogicalPageBox) pagebox.derive(true);
+    final LogicalPageBox derived = pagebox.derive(true);
 
     // first, shift the normal-flow content downwards.
     // The start of the logical pagebox might be in the negative range now
@@ -111,6 +116,12 @@ public final class FillFlowPagesStep extends IterateVisualProcessStep
     derived.setPageOffset(0);
     derived.setPageEnd(contentEnd + footerArea.getHeight() + repeatFooterArea.getHeight());
     return derived;
+    }
+    finally {
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
+
+    }
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)

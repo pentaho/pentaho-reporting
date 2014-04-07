@@ -25,14 +25,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.net.URL;
 import java.util.HashSet;
-
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -54,15 +52,20 @@ import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.trans.step.StepMeta;
-import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.openformula.ui.DefaultFieldDefinition;
+import org.pentaho.openformula.ui.FieldDefinition;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DataFactoryEditorSupport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
+import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
@@ -76,7 +79,9 @@ import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDi
 import org.pentaho.reporting.libraries.designtime.swing.background.PreviewWorker;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.CommonFileChooser;
 import org.pentaho.reporting.libraries.designtime.swing.filechooser.FileChooserService;
-import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.designtime.swing.icons.IconLoader;
+import org.pentaho.reporting.ui.datasources.kettle.embedded.KettleParameterInfo;
+import org.pentaho.reporting.ui.datasources.kettle.parameter.FormulaParameterDialog;
 
 /**
  * @author Ezequiel Cuellar
@@ -134,7 +139,11 @@ public class KettleDataSourceDialog extends CommonDialog
         path = file.getPath();
       }
       final KettleQueryEntry queryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
-      queryEntry.setFile(path);
+      if (queryEntry instanceof FileKettleQueryEntry)
+      {
+        FileKettleQueryEntry fe = (FileKettleQueryEntry) queryEntry;
+        fe.setFile(path);
+      }
       fileTextField.setText(path);
     }
 
@@ -257,40 +266,17 @@ public class KettleDataSourceDialog extends CommonDialog
     {
       final String fileName = fileTextField.getText();
       final KettleQueryEntry selectedQuery = (KettleQueryEntry) queryNameList.getSelectedValue();
-      selectedQuery.setFile(fileName);
-
-      final AbstractReportDefinition report = designTimeContext.getReport();
-      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
-      final ResourceKey contentBase;
-      if (masterReport == null)
+      if (selectedQuery instanceof FileKettleQueryEntry == false)
       {
-        contentBase = null;
+        return;
       }
-      else
-      {
-        contentBase = masterReport.getContentBase();
-      }
+      FileKettleQueryEntry fe = (FileKettleQueryEntry) selectedQuery;
+      fe.setFile(fileName);
 
       try
       {
         inUpdateFromList = true;
-        stepsList.setListData(selectedQuery.getSteps(report.getResourceManager(), contentBase));
-        final StepMeta[] data = selectedQuery.getSteps(report.getResourceManager(), contentBase);
-        stepsList.setListData(data);
-        final String selectedStepName = selectedQuery.getSelectedStep();
-        if (selectedStepName != null)
-        {
-          for (int i = 0; i < data.length; i++)
-          {
-            final StepMeta stepMeta = data[i];
-            if (selectedStepName.equals(stepMeta.getName()))
-            {
-              stepsList.setSelectedValue(stepMeta, true);
-              break;
-            }
-          }
-        }
-
+        refreshStepList(fe);
         stepsList.setEnabled(true);
         editParameterAction.setEnabled(true);
       }
@@ -320,6 +306,25 @@ public class KettleDataSourceDialog extends CommonDialog
     }
   }
 
+  private void refreshStepList(final FileKettleQueryEntry fe) throws KettleException, ReportDataFactoryException
+  {
+    DataFactoryContext dataFactoryContext = getDesignTimeContext().getDataFactoryContext();
+    final List<StepMeta> data = fe.getSteps(dataFactoryContext);
+    stepsList.setListData(data.toArray(new StepMeta[data.size()]));
+    final String selectedStepName = fe.getSelectedStep();
+    if (selectedStepName != null)
+    {
+      for (StepMeta stepMeta : data)
+      {
+        if (selectedStepName.equals(stepMeta.getName()))
+        {
+          stepsList.setSelectedValue(stepMeta, true);
+          break;
+        }
+      }
+    }
+  }
+
   private class StepsListListener implements ListSelectionListener
   {
     private StepsListListener()
@@ -329,11 +334,14 @@ public class KettleDataSourceDialog extends CommonDialog
     public void valueChanged(final ListSelectionEvent aEvt)
     {
       final KettleQueryEntry queryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
-      final Object selectedValue = stepsList.getSelectedValue();
-      if (selectedValue instanceof StepMeta)
+      if (queryEntry instanceof FileKettleQueryEntry)
       {
-        final StepMeta stepMeta = (StepMeta) selectedValue;
-        queryEntry.setSelectedStep(stepMeta.getName());
+        FileKettleQueryEntry fe = (FileKettleQueryEntry) queryEntry;
+        final StepMeta selectedValue = (StepMeta) stepsList.getSelectedValue();
+        if (selectedValue != null)
+        {
+          fe.setSelectedStep(selectedValue.getName());
+        }
       }
     }
   }
@@ -353,6 +361,7 @@ public class KettleDataSourceDialog extends CommonDialog
         fileTextField.setEnabled(false);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        handleSelection(value);
         return;
       }
 
@@ -362,6 +371,8 @@ public class KettleDataSourceDialog extends CommonDialog
 
       try
       {
+        nameTextField.setText(value.getName());
+        editParameterAction.setEnabled(true);
         handleSelection(value);
       }
       finally
@@ -372,40 +383,19 @@ public class KettleDataSourceDialog extends CommonDialog
 
     protected void handleSelection(KettleQueryEntry value)
     {
+      if (value instanceof FileKettleQueryEntry)
+      {
+        handleSelection((FileKettleQueryEntry) value);
+      }
+    }
+
+    protected void handleSelection(FileKettleQueryEntry selectedQuery)
+    {
       try
       {
-      final AbstractReportDefinition report = designTimeContext.getReport();
-      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
-      final ResourceKey contentBase;
-      if (masterReport == null)
-      {
-        contentBase = null;
-      }
-      else
-      {
-        contentBase = masterReport.getContentBase();
-      }
-
-        final KettleQueryEntry selectedQuery = (KettleQueryEntry) value;
         fileTextField.setText(selectedQuery.getFile());
-        nameTextField.setText(selectedQuery.getName());
-        final StepMeta[] data = selectedQuery.getSteps(report.getResourceManager(), contentBase);
-        stepsList.setListData(data);
-        final String selectedStepName = selectedQuery.getSelectedStep();
-        if (selectedStepName != null)
-        {
-          for (int i = 0; i < data.length; i++)
-          {
-            final StepMeta stepMeta = data[i];
-            if (selectedStepName.equals(stepMeta.getName()))
-            {
-              stepsList.setSelectedValue(stepMeta, true);
-              break;
-            }
-          }
-        }
+        refreshStepList(selectedQuery);
         stepsList.setEnabled(true);
-        editParameterAction.setEnabled(true);
       }
       catch (ReportDataFactoryException rdfe)
       {
@@ -432,42 +422,25 @@ public class KettleDataSourceDialog extends CommonDialog
   {
     public AddQueryAction()
     {
-      final URL resource = KettleDataSourceDialog.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/kettle/resources/Add.png");
-      if (resource != null)
-      {
-        putValue(Action.SMALL_ICON, new ImageIcon(resource));
-      }
-      else
-      {
-        putValue(Action.NAME, Messages.getString("KettleDataSourceDialog.AddQuery.Name"));
-      }
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getAddIcon());
       putValue(Action.SHORT_DESCRIPTION, Messages.getString("KettleDataSourceDialog.AddQuery.Description"));
     }
 
     public void actionPerformed(final ActionEvent e)
     {
-      final HashSet<String> names = new HashSet<String>();
-      for (int i = 0; i < queryListModel.getSize(); i++)
+      String queryName = findNextName();
+
+      try
       {
-        final KettleQueryEntry o = (KettleQueryEntry) queryListModel.getElementAt(i);
-        names.add(o.getName());
+        final KettleQueryEntry newQuery = createNewQueryEntry(queryName);
+        queryListModel.addElement(newQuery);
+        queryNameList.setSelectedValue(newQuery, true);
+      }
+      catch (KettleException e1)
+      {
+        getDesignTimeContext().error(e1);
       }
 
-      String queryName = Messages.getString("KettleDataSourceDialog.Query");
-      for (int i = 1; i < 1000; ++i)
-      {
-        final String newQuery = Messages.getString("KettleDataSourceDialog.Query") + " " + i;
-        if (names.contains(newQuery) == false)
-        {
-          queryName = newQuery;
-          break;
-        }
-      }
-
-      final KettleQueryEntry newQuery = createQueryEntry(queryName, null);
-      queryListModel.addElement(newQuery);
-      queryNameList.setSelectedValue(newQuery, true);
     }
   }
 
@@ -475,16 +448,7 @@ public class KettleDataSourceDialog extends CommonDialog
   {
     public RemoveQueryAction()
     {
-      final URL resource = KettleDataSourceDialog.class.getResource
-          ("/org/pentaho/reporting/ui/datasources/kettle/resources/Remove.png");
-      if (resource != null)
-      {
-        putValue(Action.SMALL_ICON, new ImageIcon(resource));
-      }
-      else
-      {
-        putValue(Action.NAME, Messages.getString("KettleDataSourceDialog.RemoveQuery.Name"));
-      }
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getDeleteIcon());
       putValue(Action.SHORT_DESCRIPTION, Messages.getString("KettleDataSourceDialog.RemoveQuery.Description"));
       setEnabled(false);
     }
@@ -529,13 +493,13 @@ public class KettleDataSourceDialog extends CommonDialog
 
     public void actionPerformed(final ActionEvent e)
     {
-      final KettleQueryEntry kettleQueryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
-      final KettleTransformationProducer fileProducer = kettleQueryEntry.createProducer();
-      final KettleDataFactory dataFactory = new KettleDataFactory();
-      dataFactory.setQuery(kettleQueryEntry.getName(), fileProducer);
-
       try
       {
+        final KettleQueryEntry kettleQueryEntry = (KettleQueryEntry) queryNameList.getSelectedValue();
+        final KettleTransformationProducer fileProducer = kettleQueryEntry.createProducer();
+        final KettleDataFactory dataFactory = new KettleDataFactory();
+        dataFactory.setQuery(kettleQueryEntry.getName(), fileProducer);
+
         DataFactoryEditorSupport.configureDataFactoryForPreview(dataFactory, designTimeContext);
 
         final DataPreviewDialog previewDialog = new DataPreviewDialog(KettleDataSourceDialog.this);
@@ -660,25 +624,16 @@ public class KettleDataSourceDialog extends CommonDialog
         return;
       }
 
-      final AbstractReportDefinition report = designTimeContext.getReport();
-      final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
-      final ResourceKey contentBase;
-      if (masterReport == null)
-      {
-        contentBase = null;
-      }
-      else
-      {
-        contentBase = masterReport.getContentBase();
-      }
-
       try
       {
-        final ParameterEditorDialog dialog = new ParameterEditorDialog(KettleDataSourceDialog.this);
-        final String[] reportFields = designTimeContext.getDataSchemaModel().getColumnNames();
-        final ParameterEditorDialog.EditResult editResult = dialog.performEdit
-            (queryEntry.getArguments(), queryEntry.getParameters(), reportFields,
-                queryEntry.getDeclaredParameters(report.getResourceManager(), contentBase));
+        final FormulaParameterDialog dialog = new FormulaParameterDialog(KettleDataSourceDialog.this, designTimeContext);
+        FieldDefinition[] fields = createFieldDefinitions();
+        FormulaParameter[] parameters = queryEntry.getParameters();
+        FormulaArgument[] arguments = queryEntry.getArguments();
+        KettleParameterInfo[] declaredParameters =
+            queryEntry.getDeclaredParameters(getDesignTimeContext().getDataFactoryContext());
+        final FormulaParameterDialog.EditResult editResult = dialog.performEdit
+            (arguments, parameters, fields, declaredParameters);
         if (editResult == null)
         {
           return;
@@ -695,6 +650,19 @@ public class KettleDataSourceDialog extends CommonDialog
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
       }
+    }
+
+    private FieldDefinition[] createFieldDefinitions()
+    {
+      DataSchemaModel dataSchemaModel = designTimeContext.getDataSchemaModel();
+      String[] reportFields = dataSchemaModel.getColumnNames();
+      FieldDefinition[] fields = new FieldDefinition[reportFields.length];
+      for (int i = 0; i < reportFields.length; i++)
+      {
+        String reportField = reportFields[i];
+        fields[i] = new DefaultFieldDefinition(reportField);
+      }
+      return fields;
     }
   }
 
@@ -765,7 +733,7 @@ public class KettleDataSourceDialog extends CommonDialog
 
     super.init();
   }
-  
+
   protected Action getPreviewAction()
   {
     return previewAction;
@@ -791,7 +759,8 @@ public class KettleDataSourceDialog extends CommonDialog
     nameTextField.setText(name);
   }
 
-  protected String getDialogTitle(){
+  protected String getDialogTitle()
+  {
     return Messages.getString("KettleDataSourceDialog.Title");
   }
 
@@ -803,8 +772,8 @@ public class KettleDataSourceDialog extends CommonDialog
   protected Component createContentPane()
   {
     previewAction = new PreviewAction();
-   
-    stepsList.addListSelectionListener((PreviewAction)previewAction);
+
+    stepsList.addListSelectionListener((PreviewAction) previewAction);
 
     final RemoveQueryAction removeQueryAction = new RemoveQueryAction();
     queryNameList.addListSelectionListener(removeQueryAction);
@@ -862,10 +831,11 @@ public class KettleDataSourceDialog extends CommonDialog
     panel.add(queryListPanel, BorderLayout.CENTER);
     return panel;
   }
-  
-  protected JPanel createDatasourcePanel(){
+
+  protected JPanel createDatasourcePanel()
+  {
     JPanel panel = new JPanel(new GridBagLayout());
-    
+
     final BrowseAction browseAction = new BrowseAction();
     queryNameList.addListSelectionListener(browseAction);
 
@@ -906,49 +876,41 @@ public class KettleDataSourceDialog extends CommonDialog
     gbc.weighty = 1;
     gbc.anchor = GridBagConstraints.WEST;
     panel.add(new JScrollPane(stepsList), gbc);
-    
+
     return panel;
 
   }
 
   public KettleDataFactory performConfiguration(DesignTimeContext context, final KettleDataFactory dataFactory,
-                                                final String queryName)
+                                                final String queryName) throws KettleException
   {
-    loadData(dataFactory, queryName);
-    if ((dataFactory == null) || (!dataFactory.queriesAreHomogeneous()))
+    configureFromDataFactory(dataFactory, queryName);
+    if (performEdit() == false)
     {
-      
-      if (performEdit() == false)
-      {
-        return null;
-      }
-      
-      final KettleDataFactory kettleDataFactory = new KettleDataFactory();
-      for (final KettleQueryEntry queryEntry: getQueryEntries())
-      {
-        final KettleTransformationProducer producer = queryEntry.createProducer();
-        kettleDataFactory.setQuery(queryEntry.getName(), producer);
-      }
-
-      return kettleDataFactory;
-
+      return null;
     }
-    // TODO: not sure about this yet... do we still need the if.. check above?
-    // Need to test with mixed mode, unrenderable templates to determine best logic...
-    return dataFactory;
+
+    final KettleDataFactory kettleDataFactory = new KettleDataFactory();
+    for (final KettleQueryEntry queryEntry : getQueryEntries())
+    {
+      final KettleTransformationProducer producer = queryEntry.createProducer();
+      kettleDataFactory.setQuery(queryEntry.getName(), producer);
+    }
+
+    return kettleDataFactory;
   }
-  
+
   protected KettleQueryEntry[] getQueryEntries()
   {
     final KettleQueryEntry[] data = new KettleQueryEntry[queryListModel.size()];
     queryListModel.copyInto(data);
     return data;
   }
-  
-  protected void loadData(final KettleDataFactory dataFactory, final String selectedQueryName)
+
+  protected void configureFromDataFactory(final KettleDataFactory dataFactory, final String selectedQueryName)
+      throws KettleException
   {
     queryListModel.clear();
-    
     if (dataFactory == null)
     {
       return;
@@ -963,10 +925,6 @@ public class KettleDataSourceDialog extends CommonDialog
       final KettleTransformationProducer producer = dataFactory.getQuery(queryName);
 
       final KettleQueryEntry dataSet = createQueryEntry(queryName, producer);
-      dataSet.setFile(producer.getTransformationFile());
-      dataSet.setSelectedStep(producer.getStepName());
-      dataSet.setArguments(producer.getDefinedArgumentNames());
-      dataSet.setParameters(producer.getDefinedVariableNames());
       queryListModel.addElement(dataSet);
       if (ObjectUtilities.equal(selectedQueryName, queryName))
       {
@@ -980,24 +938,58 @@ public class KettleDataSourceDialog extends CommonDialog
   protected boolean validateInputs(final boolean onConfirm)
   {
     getConfirmAction().setEnabled(queryNameList.getModel().getSize() > 0);
-    return super.validateInputs(onConfirm);
+    if (queryNameList.getModel().getSize() == 0)
+    {
+      return false;
+    }
+
+    return true;
   }
-  
-  protected KettleQueryEntry createQueryEntry(String queryName, KettleTransformationProducer producer)
+
+  protected KettleQueryEntry createNewQueryEntry(String queryName) throws KettleException
   {
-      return new KettleQueryEntry(queryName);
+    return new FileKettleQueryEntry(queryName);
+  }
+
+  protected KettleQueryEntry createQueryEntry(String queryName,
+                                              KettleTransformationProducer producer)
+      throws KettleException
+  {
+    return new FileKettleQueryEntry(queryName, producer);
   }
 
   protected ListSelectionListener getQueryNameListener()
   {
     return new QueryNameListSelectionListener();
   }
-  
+
   protected void clearComponents()
   {
     nameTextField.setText("");
     fileTextField.setText("");
-    stepsList.setListData(new Object[]{});
+    stepsList.setListData(new StepMeta[0]);
+  }
+
+  protected String findNextName()
+  {
+    final HashSet<String> names = new HashSet<String>();
+    for (int i = 0; i < queryListModel.getSize(); i++)
+    {
+      final KettleQueryEntry o = (KettleQueryEntry) queryListModel.getElementAt(i);
+      names.add(o.getName());
+    }
+
+    String queryName = Messages.getString("KettleDataSourceDialog.Query");
+    for (int i = 1; i < 1000; ++i)
+    {
+      final String newQuery = Messages.getString("KettleDataSourceDialog.Query") + " " + i;
+      if (names.contains(newQuery) == false)
+      {
+        queryName = newQuery;
+        break;
+      }
+    }
+    return queryName;
   }
 
 }

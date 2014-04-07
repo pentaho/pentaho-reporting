@@ -55,7 +55,8 @@ public class BandSectionLayoutModelBuilderContext implements LayoutModelBuilderC
     this.renderBox = renderBox;
     this.empty = true;
 
-    if (renderBox.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
+    if (renderBox.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ||
+        (strictCompatibilityMode && renderBox.getNodeType() == LayoutNodeTypes.TYPE_BOX_SECTION))
     {
       if (parent != null && renderBox.getParent() == null)
       {

@@ -36,11 +36,15 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
   private long pageEndPosition;
 
   private boolean unalignedPagebands;
-  private boolean strictLayout;
-  private boolean ellipseAsRectangle;
   private boolean processWatermark;
 
   public TableLayoutProducer(final OutputProcessorMetaData metaData)
+  {
+    initialize(metaData);
+    this.layout = new SheetLayout(metaData);
+  }
+
+  private void initialize(final OutputProcessorMetaData metaData)
   {
     if (metaData == null)
     {
@@ -48,9 +52,13 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
     }
     this.processWatermark = metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_SECTION);
     this.unalignedPagebands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
-    this.strictLayout = metaData.isFeatureSupported(AbstractTableOutputProcessor.STRICT_LAYOUT);
-    this.ellipseAsRectangle = metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE);
-    this.layout = new SheetLayout(strictLayout, ellipseAsRectangle);
+  }
+
+  public TableLayoutProducer(final OutputProcessorMetaData metaData,
+                             final SheetLayout sheetLayout)
+  {
+    initialize(metaData);
+    this.layout = sheetLayout;
   }
 
   public boolean isProcessWatermark()
@@ -165,6 +173,11 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
 
   protected boolean startBox(final RenderBox box)
   {
+    if (box.isVisible() == false)
+    {
+      return false;
+    }
+
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
     {
       processRenderableContent((RenderableReplacedContentBox) box);

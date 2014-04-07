@@ -17,24 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
 public class RowLevelPaginationShiftState implements PaginationShiftState
 {
   private PaginationShiftState parent;
   private long shift;
   private long shiftForChilds;
+  private long initialShift;
   private StackedObjectPool<RowLevelPaginationShiftState> pool;
+  private RenderBox box;
 
   public RowLevelPaginationShiftState()
   {
   }
 
-  public RowLevelPaginationShiftState(final PaginationShiftState parent)
-  {
-    reuse(null, parent);
-  }
-
-  public void reuse (final StackedObjectPool<RowLevelPaginationShiftState> pool,
-                     final PaginationShiftState parent)
+  public void reuse(final StackedObjectPool<RowLevelPaginationShiftState> pool,
+                    final PaginationShiftState parent,
+                    final RenderBox box)
   {
     if (parent == null)
     {
@@ -44,6 +45,8 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
     this.pool = pool;
     this.shiftForChilds = parent.getShiftForNextChild();
     this.shift = this.shiftForChilds;
+    this.initialShift = this.shift;
+    this.box = box;
   }
 
   public void suspendManualBreaks()
@@ -70,14 +73,35 @@ public class RowLevelPaginationShiftState implements PaginationShiftState
     return shiftForChilds;
   }
 
-  public PaginationShiftState pop()
+  public PaginationShiftState pop(InstanceID id)
   {
-    parent.updateShiftFromChild(shift);
+    if (box != null && id != box.getInstanceId())
+    {
+      throw new IllegalStateException();
+    }
+
+    long effectiveShift = this.shift;
+    if (box != null)
+    {
+
+      if (box.getParent() != null)
+      {
+        final long shiftRaw = shift - initialShift;
+        effectiveShift = box.getParent().extendHeight(box, shiftRaw) + initialShift;
+        if (effectiveShift != initialShift)
+        {
+          box.getParent().markApplyStateDirty();
+        }
+      }
+    }
+
+    parent.updateShiftFromChild(effectiveShift);
     if (this.pool != null)
     {
       this.pool.free(this);
       this.pool = null;
     }
+    this.box = null;
     return parent;
   }
 

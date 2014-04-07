@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.DefaultReportPreProces
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
@@ -40,6 +41,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
   private HashMap<String,ReportPreProcessorPropertyMetaData> properties;
   private boolean autoProcess;
   private boolean executeInDesignMode;
+  private int executionPriority;
 
   public ReportPreProcessorReadHandler()
   {
@@ -62,6 +64,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
   {
     super.startParsing(attrs);
     autoProcess = "true".equals(attrs.getValue(getUri(), "auto-process"));
+    executionPriority = ParserUtil.parseInt(attrs.getValue(getUri(), "priority"), 0);
     executeInDesignMode = "true".equals(attrs.getValue(getUri(), "execute-in-design-mode"));
 
     final String valueTypeText = attrs.getValue(getUri(), "class");
@@ -145,6 +148,6 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
     return new DefaultReportPreProcessorMetaData(getBundle(),
         isExpert(), isPreferred(), isHidden(), isDeprecated(),
         expressionClass, properties, beanInfo, autoProcess, executeInDesignMode,
-            isExperimental(), getCompatibilityLevel());
+            isExperimental(), getCompatibilityLevel(), executionPriority);
   }
 }

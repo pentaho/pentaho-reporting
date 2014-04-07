@@ -53,6 +53,7 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 public class DefaultOutputFunction extends AbstractFunction
@@ -78,6 +79,7 @@ public class DefaultOutputFunction extends AbstractFunction
   private int avoidedRepeatingFooter;
   private RepeatingFooterValidator repeatingFooterValidator;
   private boolean clearedFooter;
+  private ArrayList<InstanceID> subReportFooterTracker;
 
   /**
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
@@ -85,6 +87,7 @@ public class DefaultOutputFunction extends AbstractFunction
    */
   public DefaultOutputFunction()
   {
+    this.subReportFooterTracker = new ArrayList<InstanceID>();
     this.repeatingFooterValidator = new RepeatingFooterValidator();
     this.pagebreakHandler = new DefaultLayoutPagebreakHandler();
     this.inlineSubreports = new ArrayList<InlineSubreportMarker>();
@@ -126,7 +129,7 @@ public class DefaultOutputFunction extends AbstractFunction
       final ReportDefinition report = event.getReport();
       if (event.getState().isSubReportEvent() == false)
       {
-        renderer.startReport(report, getRuntime().getProcessingContext());
+        renderer.startReport(report, getRuntime().getProcessingContext(), event.getState().getPerformanceMonitorContext());
 
         final ReportState reportState = event.getState();
         final ExpressionRuntime runtime = getRuntime();
@@ -867,9 +870,41 @@ public class DefaultOutputFunction extends AbstractFunction
     }
 
     final LayouterLevel[] levels = DefaultOutputFunction.collectSubReportStates(event.getState(), getRuntime().getProcessingContext());
+    if (isSubReportConfigurationChanged(levels))
+    {
+      clearedFooter = true;
+      refreshSubReportFooterConfiguration(levels);
+    }
     updateRepeatingFooters(event, levels);
     updatePageFooter(event, levels);
     clearedFooter = false;
+  }
+
+  private void refreshSubReportFooterConfiguration(final LayouterLevel[] levels)
+  {
+    subReportFooterTracker.clear();
+    for (LayouterLevel level : levels)
+    {
+      subReportFooterTracker.add(level.getReportDefinition().getObjectID());
+    }
+  }
+
+  private boolean isSubReportConfigurationChanged(LayouterLevel[] levels)
+  {
+    if (levels.length != subReportFooterTracker.size())
+    {
+      return true;
+    }
+
+    for (int i = 0; i < subReportFooterTracker.size(); i++)
+    {
+      InstanceID instanceID = subReportFooterTracker.get(i);
+      if (levels[i].getReportDefinition().getObjectID() != instanceID)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   protected boolean updatePageFooter(final ReportEvent event,

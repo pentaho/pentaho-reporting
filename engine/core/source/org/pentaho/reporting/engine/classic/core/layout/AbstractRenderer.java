@@ -17,12 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -50,9 +54,12 @@ import org.pentaho.reporting.engine.classic.core.layout.process.ParagraphLineBre
 import org.pentaho.reporting.engine.classic.core.layout.process.RollbackStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.TableValidationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 /**
  * The LayoutSystem is a simplified version of the LibLayout-rendering system.
@@ -62,6 +69,14 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public abstract class AbstractRenderer implements Renderer
 {
+  private class CloseListener implements ChangeListener
+  {
+    public void stateChanged(final ChangeEvent e)
+    {
+      close();
+    }
+  }
+
   private static final Log logger = LogFactory.getLog(AbstractRenderer.class);
 
   private RenderModelBuilder renderModelBuilder;
@@ -94,6 +109,9 @@ public abstract class AbstractRenderer implements Renderer
   private boolean wrapProgressMarkerInSection;
 
   private LayoutResult lastValidateResult;
+  private PerformanceLoggingStopWatch validateStopWatch;
+  private PerformanceLoggingStopWatch paginateStopWatch;
+  private PerformanceMonitorContext performanceMonitorContext;
 
   protected AbstractRenderer(final OutputProcessor outputProcessor)
   {
@@ -180,17 +198,29 @@ public abstract class AbstractRenderer implements Renderer
     return staticPropertiesStep.isWidowOrphanDefinitionsEncountered();
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition report,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
-    if (report == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("report", report);
+    ArgumentNullException.validate("processingContext", processingContext);
+    ArgumentNullException.validate("performanceMonitorContext", performanceMonitorContext);
 
     if (readOnly)
     {
       throw new IllegalStateException();
     }
+
+    this.performanceMonitorContext = performanceMonitorContext;
+    this.performanceMonitorContext.addChangeListener(new CloseListener());
+
+    this.validateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_VALIDATE);
+    this.paginateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_PROCESS);
+
+    this.majorAxisLayoutStep.initialize(performanceMonitorContext);
+    this.canvasMajorAxisLayoutStep.initialize(performanceMonitorContext);
+    this.minorAxisLayoutStep.initialize(performanceMonitorContext);
+    this.canvasMinorAxisLayoutStep.initialize(performanceMonitorContext);
 
     outputProcessor.processingStarted(report, processingContext);
 
@@ -379,58 +409,66 @@ public abstract class AbstractRenderer implements Renderer
     {
       throw new IllegalStateException();
     }
-
-    final LogicalPageBox pageBox = getPageBox();
-    if (pageBox == null)
+    try
     {
-      // StartReport has not been called yet ..
-      lastValidateResult = LayoutResult.LAYOUT_UNVALIDATABLE;
-      return LayoutResult.LAYOUT_UNVALIDATABLE;
-    }
+      validateStopWatch.start();
 
-    if (!dirty && lastValidateResult != null)
-    {
-      return lastValidateResult;
-    }
-
-    setLastStateKey(null);
-    setPagebreaks(0);
-    if (validateModelStep.isLayoutable(pageBox) == false) // STRUCT
-    {
-      if (logger.isDebugEnabled())
+      final LogicalPageBox pageBox = getPageBox();
+      if (pageBox == null)
       {
-        logger.debug("Content-Ref# " + pageBox.getContentRefCount());
+        // StartReport has not been called yet ..
+        lastValidateResult = LayoutResult.LAYOUT_UNVALIDATABLE;
+        return LayoutResult.LAYOUT_UNVALIDATABLE;
       }
-      lastValidateResult = LayoutResult.LAYOUT_UNVALIDATABLE;
-      return LayoutResult.LAYOUT_UNVALIDATABLE;
+
+      if (!dirty && lastValidateResult != null)
+      {
+        return lastValidateResult;
+      }
+
+      setLastStateKey(null);
+      setPagebreaks(0);
+      if (validateModelStep.isLayoutable(pageBox) == false) // STRUCT
+      {
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Content-Ref# " + pageBox.getContentRefCount());
+        }
+        lastValidateResult = LayoutResult.LAYOUT_UNVALIDATABLE;
+        return LayoutResult.LAYOUT_UNVALIDATABLE;
+      }
+
+      // These structural processors will skip old nodes. These beasts cannot be cached otherwise.
+      tableValidationStep.validate(pageBox); // STRUCT
+      paragraphLineBreakStep.compute(pageBox); // STRUCT
+      staticPropertiesStep.compute(pageBox); // STRUCT
+
+      minorAxisLayoutStep.compute(pageBox); // VISUAL
+      canvasMinorAxisLayoutStep.compute(pageBox); // VISUAL
+      majorAxisLayoutStep.compute(pageBox); // VISUAL
+      canvasMajorAxisLayoutStep.compute(pageBox); // VISUAL
+
+      if (preparePagination(pageBox) == false)
+      {
+        return LayoutResult.LAYOUT_UNVALIDATABLE;
+      }
+
+      applyCachedValuesStep.compute(pageBox); // STRUCT
+
+      if (isPageFinished())
+      {
+        lastValidateResult = LayoutResult.LAYOUT_PAGEBREAK;
+        return LayoutResult.LAYOUT_PAGEBREAK;
+      }
+      else
+      {
+        lastValidateResult = LayoutResult.LAYOUT_NO_PAGEBREAK;
+        return LayoutResult.LAYOUT_NO_PAGEBREAK;
+      }
     }
-
-    // These structural processors will skip old nodes. These beasts cannot be cached otherwise.
-    tableValidationStep.validate(pageBox); // STRUCT
-    paragraphLineBreakStep.compute(pageBox); // STRUCT
-    staticPropertiesStep.compute(pageBox); // STRUCT
-
-    minorAxisLayoutStep.compute(pageBox); // VISUAL
-    canvasMinorAxisLayoutStep.compute(pageBox); // VISUAL
-    majorAxisLayoutStep.compute(pageBox); // VISUAL
-    canvasMajorAxisLayoutStep.compute(pageBox); // VISUAL
-
-    if (preparePagination(pageBox) == false)
+    finally
     {
-      return LayoutResult.LAYOUT_UNVALIDATABLE;
-    }
-
-    applyCachedValuesStep.compute(pageBox); // STRUCT
-
-    if (isPageFinished())
-    {
-      lastValidateResult = LayoutResult.LAYOUT_PAGEBREAK;
-      return LayoutResult.LAYOUT_PAGEBREAK;
-    }
-    else
-    {
-      lastValidateResult = LayoutResult.LAYOUT_NO_PAGEBREAK;
-      return LayoutResult.LAYOUT_NO_PAGEBREAK;
+      validateStopWatch.stop(true);
     }
   }
 
@@ -460,66 +498,76 @@ public abstract class AbstractRenderer implements Renderer
       throw new IllegalStateException();
     }
 
-    final LogicalPageBox pageBox = getPageBox();
-    if (pageBox == null)
+    try
     {
-      // StartReport has not been called yet ..
+      paginateStopWatch.start();
+
+      final LogicalPageBox pageBox = getPageBox();
+      if (pageBox == null)
+      {
+        // StartReport has not been called yet ..
 //      Log.debug ("PageBox null");
-      return false;
-    }
+        return false;
+      }
 
-    if (dirty == false)
-    {
+      if (dirty == false)
+      {
 //      Log.debug ("Not dirty");
-      return false;
-    }
+        return false;
+      }
 
-    setLastStateKey(null);
-    setPagebreaks(0);
-    if (validateModelStep.isLayoutable(pageBox) == false)
+      setLastStateKey(null);
+      setPagebreaks(0);
+      if (validateModelStep.isLayoutable(pageBox) == false)
+      {
+        logger.debug("Not layoutable");
+        return false;
+      }
+
+      // processes the current page
+      boolean repeat = true;
+      while (repeat)
+      {
+        if (handler != null)
+        {
+          // make sure we generate an up-to-date page-footer. This also implies that there
+          // are more page-finished than page-started events generated during the report processing.
+          handler.pageFinished();
+        }
+
+        if (outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.PAGEBREAKS))
+        {
+          createRollbackInformation();
+          applyRollbackInformation();
+          performParanoidModelCheck();
+        }
+
+        tableValidationStep.validate(pageBox); // STRUCT
+        paragraphLineBreakStep.compute(pageBox); // STRUCT
+        staticPropertiesStep.compute(pageBox); // VISUAL
+
+        minorAxisLayoutStep.compute(pageBox);
+        canvasMinorAxisLayoutStep.compute(pageBox);
+        majorAxisLayoutStep.compute(pageBox);
+        canvasMajorAxisLayoutStep.compute(pageBox);
+
+        if (preparePagination(pageBox) == false)
+        {
+          return (pagebreaks > 0);
+        }
+
+        applyCachedValuesStep.compute(pageBox);
+
+        repeat = performPagination(handler, performOutput);
+      }
+      clearDirty();
+      return (pagebreaks > 0);
+    }
+    finally
     {
-      logger.debug("Not layoutable");
-      return false;
+      validateStopWatch.stop(isOpen());
+      paginateStopWatch.stop(isOpen());
     }
-
-    // processes the current page
-    boolean repeat = true;
-    while (repeat)
-    {
-      if (handler != null)
-      {
-        // make sure we generate an up-to-date page-footer. This also implies that there
-        // are more page-finished than page-started events generated during the report processing.
-        handler.pageFinished();
-      }
-
-      if (outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.PAGEBREAKS))
-      {
-        createRollbackInformation();
-        applyRollbackInformation();
-        performParanoidModelCheck();
-      }
-
-      tableValidationStep.validate(pageBox); // STRUCT
-      paragraphLineBreakStep.compute(pageBox); // STRUCT
-      staticPropertiesStep.compute(pageBox); // VISUAL
-
-      minorAxisLayoutStep.compute(pageBox);
-      canvasMinorAxisLayoutStep.compute(pageBox);
-      majorAxisLayoutStep.compute(pageBox);
-      canvasMajorAxisLayoutStep.compute(pageBox);
-
-      if (preparePagination(pageBox) == false)
-      {
-        return (pagebreaks > 0);
-      }
-
-      applyCachedValuesStep.compute(pageBox);
-
-      repeat = performPagination(handler, performOutput);
-    }
-    clearDirty();
-    return (pagebreaks > 0);
   }
 
   protected abstract boolean performPagination(LayoutPagebreakHandler handler,
@@ -758,5 +806,31 @@ public abstract class AbstractRenderer implements Renderer
     fileName += ".xml";
 
     FileModelPrinter.print(fileName, getPageBox());
+  }
+
+  protected PerformanceLoggingStopWatch getValidateStopWatch()
+  {
+    return validateStopWatch;
+  }
+
+  protected PerformanceLoggingStopWatch getPaginateStopWatch()
+  {
+    return paginateStopWatch;
+  }
+
+  protected PerformanceMonitorContext getPerformanceMonitorContext()
+  {
+    return performanceMonitorContext;
+  }
+
+  protected void close()
+  {
+    this.majorAxisLayoutStep.close();
+    this.canvasMajorAxisLayoutStep.close();
+    this.minorAxisLayoutStep.close();
+    this.canvasMinorAxisLayoutStep.close();
+
+    validateStopWatch.close();
+    paginateStopWatch.close();
   }
 }

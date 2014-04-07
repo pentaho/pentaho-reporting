@@ -133,6 +133,12 @@
             <option name="TAB_SIZE" value="2" />
           </indentOptions>
           <arrangement>
+            <groups>
+              <group>
+                <type>GETTERS_AND_SETTERS</type>
+                <order>KEEP</order>
+              </group>
+            </groups>
             <rules>
               <rule>
                 <match>
@@ -357,7 +363,6 @@
           <option name="ELSE_ON_NEW_LINE" value="true" />
           <option name="WHILE_ON_NEW_LINE" value="true" />
           <option name="CATCH_ON_NEW_LINE" value="true" />
-          <option name="FINALLY_ON_NEW_LINE" value="true" />
           <option name="METHOD_PARAMETERS_WRAP" value="5" />
           <option name="EXTENDS_KEYWORD_WRAP" value="1" />
           <option name="IF_BRACE_FORCE" value="3" />

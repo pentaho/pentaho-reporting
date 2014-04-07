@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class PageableRenderer extends AbstractRenderer
@@ -63,9 +64,11 @@ public class PageableRenderer extends AbstractRenderer
     initialize();
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition report,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
-    super.startReport(report, processingContext);
+    super.startReport(report, processingContext, performanceMonitorContext);
     pageCount = 0;
     widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
   }
@@ -79,19 +82,22 @@ public class PageableRenderer extends AbstractRenderer
   protected void printConditional(final int page, final LogicalPageBox pageBox)
   {
     if (logger.isDebugEnabled() == false)
+    {
       return;
+    }
 
     logger.debug("Printing a page: " + pageCount);
     if (pageCount == page)
     {
       // leave the debug-code in until all of these cases are solved.
       logger.debug("1: **** Start Printing Page: " + pageCount);
-    //  ModelPrinter.INSTANCE.print(clone);
+      //  ModelPrinter.INSTANCE.print(clone);
       ModelPrinter.INSTANCE.print(pageBox);
       logger.debug("1: **** Stop  Printing Page: " + pageCount);
     }
 
   }
+
   protected boolean preparePagination(final LogicalPageBox pageBox)
   {
     if (widowsEnabled == false)
@@ -272,4 +278,19 @@ public class PageableRenderer extends AbstractRenderer
   {
     return true;
   }
+
+  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
+  {
+    super.initializeRendererOnStartReport(processingContext);
+    paginationStep.initialize(getPerformanceMonitorContext());
+    fillPhysicalPagesStep.initialize(getPerformanceMonitorContext());
+  }
+
+  protected void close()
+  {
+    super.close();
+    paginationStep.close();
+    fillPhysicalPagesStep.close();
+  }
+
 }
