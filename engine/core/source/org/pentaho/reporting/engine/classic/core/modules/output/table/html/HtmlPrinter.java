@@ -2137,6 +2137,129 @@ public abstract class HtmlPrinter implements HtmlContentGenerator
     return styleBuilder;
   }
 
+  /**
+   * Similar with produceTextStyle, but excluding the RenderBox processing
+   * @param styleBuilder
+   * @param styleSheet
+   * @param includeBorder
+   * @param fixLength
+   * @param useWhitespacePreWrap
+   * @param parentElementStyle
+   * @return
+   */
+  public static StyleBuilder produceTextStyleFromStyleSheet(StyleBuilder styleBuilder,
+                                                            final StyleSheet styleSheet,
+                                                            final boolean includeBorder,
+                                                            final boolean fixLength,
+                                                            final boolean useWhitespacePreWrap,
+                                                            final DefaultStyleBuilder.StyleCarrier[] parentElementStyle)
+  {
+    if (styleBuilder == null)
+    {
+      styleBuilder = new DefaultStyleBuilder();
+    }
+    styleBuilder.clear();
+
+    final FilterStyleBuilder filterStyleBuilder = new FilterStyleBuilder(styleBuilder, parentElementStyle);
+    final NumberFormat pointConverter = filterStyleBuilder.getPointConverter();
+    final Color textColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
+    final Color backgroundColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.BACKGROUND_COLOR);
+
+    if (includeBorder)
+    {
+      if (backgroundColor != null)
+      {
+        filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.BACKGROUND_COLOR, HtmlColors.getColorString(backgroundColor));
+      }
+    }
+    if (textColor != null)
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.COLOR, HtmlColors.getColorString(textColor));
+    }
+//    filterStyleBuilder.appendRaw(DefaultStyleBuilder.CSSKeys.FONT_FAMILY, translateFontFamily(box));
+    filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.FONT_SIZE, pointConverter.format
+        (fixLengthForSafari(styleSheet.getDoubleStyleProperty(TextStyleKeys.FONTSIZE, 0), fixLength)), "pt");
+    if (styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD))
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.FONT_WEIGHT, "bold");
+    }
+    else
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.FONT_WEIGHT, "normal");
+    }
+
+    if (styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC))
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.FONT_STYLE, "italic");
+    }
+    else
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.FONT_STYLE, "normal");
+    }
+
+    final boolean underlined = styleSheet.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
+    final boolean strikeThrough = styleSheet.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+    if (underlined && strikeThrough)
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.TEXT_DECORATION, "underline line-through");
+    }
+    else if (strikeThrough)
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.TEXT_DECORATION, "line-through");
+    }
+    if (underlined)
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.TEXT_DECORATION, "underline");
+    }
+    else
+    {
+      filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.TEXT_DECORATION, "none");
+    }
+
+    final ElementAlignment align = (ElementAlignment) styleSheet.getStyleProperty(ElementStyleKeys.ALIGNMENT);
+    filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.TEXT_ALIGN, translateHorizontalAlignment(align));
+
+    final double wordSpacing = styleSheet.getDoubleStyleProperty(TextStyleKeys.WORD_SPACING, 0);
+    filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.WORD_SPACING, pointConverter.format
+        (fixLengthForSafari(wordSpacing, fixLength)), "pt");
+
+    final double minLetterSpacing = styleSheet.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0);
+    final double maxLetterSpacing = styleSheet.getDoubleStyleProperty(TextStyleKeys.X_MAX_LETTER_SPACING, 0);
+    filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.LETTER_SPACING, pointConverter.format
+        (fixLengthForSafari(Math.min(minLetterSpacing, maxLetterSpacing), fixLength)), "pt");
+
+    if (true)
+    {
+      final WhitespaceCollapse wsCollapse = (WhitespaceCollapse)
+          styleSheet.getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);
+      if (WhitespaceCollapse.PRESERVE.equals(wsCollapse))
+      {
+        if (useWhitespacePreWrap)
+        {
+          // this style does not work for IE6 and IE7, but heck, in that case they just behave as if normal mode is
+          // selected. In that case multiple spaces are collapsed into a single space.
+          filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.WHITE_SPACE, "pre-wrap");
+        }
+        else
+        {
+          filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.WHITE_SPACE, "pre");
+        }
+      }
+      else if (WhitespaceCollapse.PRESERVE_BREAKS.equals(wsCollapse))
+      {
+        filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.WHITE_SPACE, "nowrap");
+      }
+      else
+      {
+        // discard is handled on the layouter level already;
+        // collapse is the normal way of handling whitespaces in the engine.
+        filterStyleBuilder.append(DefaultStyleBuilder.CSSKeys.WHITE_SPACE, "normal");
+      }
+    }
+
+    return styleBuilder;
+  }
+
   private static String translateFontFamily(final RenderBox box)
   {
     final String family = box.getStaticBoxLayoutProperties().getFontFamily();

@@ -121,11 +121,11 @@ public class RichTextSpecTest
     Map<AttributedCharacterIterator.Attribute, Object> attrs =
         new HashMap<AttributedCharacterIterator.Attribute, Object>();
     List<RichTextSpec.StyledChunk> chunks = new ArrayList<RichTextSpec.StyledChunk>();
-    chunks.add(new RichTextSpec.StyledChunk(0, 3, new SpacerRenderNode(), attrs, "ABC"));
-    chunks.add(new RichTextSpec.StyledChunk(3, 6, new SpacerRenderNode(), attrs, "def"));
-    chunks.add(new RichTextSpec.StyledChunk(6, 9, new SpacerRenderNode(), attrs, "GHI"));
-    chunks.add(new RichTextSpec.StyledChunk(9, 12, new SpacerRenderNode(), attrs, "jkl"));
-    chunks.add(new RichTextSpec.StyledChunk(12, 15, new SpacerRenderNode(), attrs, "MNO"));
+    chunks.add(new RichTextSpec.StyledChunk(0, 3, new SpacerRenderNode(), attrs, null, null, "ABC"));
+    chunks.add(new RichTextSpec.StyledChunk(3, 6, new SpacerRenderNode(), attrs, null, null, "def"));
+    chunks.add(new RichTextSpec.StyledChunk(6, 9, new SpacerRenderNode(), attrs, null, null, "GHI"));
+    chunks.add(new RichTextSpec.StyledChunk(9, 12, new SpacerRenderNode(), attrs, null, null, "jkl"));
+    chunks.add(new RichTextSpec.StyledChunk(12, 15, new SpacerRenderNode(), attrs, null, null, "MNO"));
     return new RichTextSpec("ABCdefGHIjklMNO", chunks);
   }
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -41,15 +42,21 @@ public class TextHelper
   {
     private String text;
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
+    private ReportAttributeMap originalAttributes;
+    private StyleSheet styleSheet;
     private RenderNode node;
 
     private AttributedStringChunk(final String text,
                                   final Map<AttributedCharacterIterator.Attribute, Object> attributes,
+                                  final ReportAttributeMap originalAttributes,
+                                  final StyleSheet styleSheet,
                                   final RenderNode node)
     {
       ArgumentNullException.validate("text", text);
       ArgumentNullException.validate("attributes", attributes);
       ArgumentNullException.validate("node", node);
+      ArgumentNullException.validate("originalAttributes", originalAttributes);
+      ArgumentNullException.validate("styleSheet", styleSheet);
 
       if (text.length() == 0)
       {
@@ -61,6 +68,8 @@ public class TextHelper
       }
       this.node = node;
       this.attributes = attributes;
+      this.originalAttributes = originalAttributes;
+      this.styleSheet = styleSheet;
     }
 
     public String getText()
@@ -72,6 +81,16 @@ public class TextHelper
     {
       return attributes;
     }
+
+    public ReportAttributeMap getOriginalAttributes()
+    {
+      return originalAttributes;
+    }
+
+    public StyleSheet getStyleSheet()
+    {
+      return styleSheet;
+    }
   }
 
   public RichTextSpec computeText(final RenderBox lineBoxContainer)
@@ -80,7 +99,7 @@ public class TextHelper
     computeText(lineBoxContainer, attr);
     if (attr.isEmpty())
     {
-      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()), lineBoxContainer));
+      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()), lineBoxContainer.getAttributes(), lineBoxContainer.getStyleSheet(), lineBoxContainer));
     }
 
     attr = processWhitespaceRules(lineBoxContainer, attr);
@@ -103,7 +122,7 @@ public class TextHelper
       int length = chunk.getText().length();
       int endIndex = startPosition + length;
       result.add(new RichTextSpec.StyledChunk
-          (startPosition, endIndex, chunk.node, chunk.getAttributes(), chunk.getText()));
+          (startPosition, endIndex, chunk.node, chunk.getAttributes(), chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getText()));
       startPosition = endIndex;
     }
     return result;
@@ -137,7 +156,7 @@ public class TextHelper
       if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
       {
         final RenderableComplexText complexNode = (RenderableComplexText) node;
-        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()), node));
+        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()), node.getAttributes(), node.getStyleSheet(), node));
       }
       else if (node instanceof RenderBox)
       {
@@ -171,6 +190,10 @@ public class TextHelper
     result.put(TextAttribute.SIZE, layoutContext.getIntStyleProperty(TextStyleKeys.FONTSIZE, 12));
     result.put(TextAttribute.UNDERLINE, layoutContext.getBooleanStyleProperty(TextStyleKeys.UNDERLINED));
     result.put(TextAttribute.STRIKETHROUGH, layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH));
+
+    // character spacing
+    result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0)/10);
+
     return result;
   }
 }
