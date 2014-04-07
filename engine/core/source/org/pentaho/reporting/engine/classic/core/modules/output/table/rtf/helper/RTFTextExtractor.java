@@ -30,8 +30,6 @@ import com.lowagie.text.TextElementArray;
 import com.lowagie.text.pdf.BaseFont;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
@@ -269,7 +267,7 @@ public class RTFTextExtractor extends DefaultTextExtractor
     {
       return false;
     }
-    
+
     // Compare the text style ..
     final StyleContext currentContext = getCurrentContext();
     final StyleContext boxContext = new StyleContext(currentContext.getTarget(), box.getStyleSheet(), metaData);
@@ -335,7 +333,8 @@ public class RTFTextExtractor extends DefaultTextExtractor
         context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
       }
     }
-    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
       // todo: check if special text processing is required for RenderableComplexText nodes
 //      return;
       if (node.isVirtualNode())
@@ -454,9 +453,11 @@ public class RTFTextExtractor extends DefaultTextExtractor
     }
 
     // check if we have to process inline text elements
-    if(renderableComplexText.getRichText().getStyleChunks().size() > 1) {
+    if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
+    {
       // iterate through all inline elements
-      for(RichTextSpec.StyledChunk styledChunk: renderableComplexText.getRichText().getStyleChunks()) {
+      for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
+      {
         // Add style for current styled chunk
         final StyleContext boxContext = new StyleContext(getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData);
         if (styledChunk.getText().length() > 0)
@@ -469,7 +470,8 @@ public class RTFTextExtractor extends DefaultTextExtractor
         context.push(boxContext);
       }
     }
-    else {
+    else
+    {
       super.drawComplexText(renderableComplexText);
     }
   }

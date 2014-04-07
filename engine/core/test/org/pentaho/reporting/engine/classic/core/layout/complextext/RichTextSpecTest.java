@@ -26,9 +26,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
+import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class RichTextSpecTest
 {
   @Before
@@ -121,11 +124,16 @@ public class RichTextSpecTest
     Map<AttributedCharacterIterator.Attribute, Object> attrs =
         new HashMap<AttributedCharacterIterator.Attribute, Object>();
     List<RichTextSpec.StyledChunk> chunks = new ArrayList<RichTextSpec.StyledChunk>();
-    chunks.add(new RichTextSpec.StyledChunk(0, 3, new SpacerRenderNode(), attrs, null, null, "ABC"));
-    chunks.add(new RichTextSpec.StyledChunk(3, 6, new SpacerRenderNode(), attrs, null, null, "def"));
-    chunks.add(new RichTextSpec.StyledChunk(6, 9, new SpacerRenderNode(), attrs, null, null, "GHI"));
-    chunks.add(new RichTextSpec.StyledChunk(9, 12, new SpacerRenderNode(), attrs, null, null, "jkl"));
-    chunks.add(new RichTextSpec.StyledChunk(12, 15, new SpacerRenderNode(), attrs, null, null, "MNO"));
+    chunks.add(new RichTextSpec.StyledChunk(0, 3, new SpacerRenderNode(), attrs,
+        new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), "ABC"));
+    chunks.add(new RichTextSpec.StyledChunk(3, 6, new SpacerRenderNode(), attrs,
+        new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), "def"));
+    chunks.add(new RichTextSpec.StyledChunk(6, 9, new SpacerRenderNode(), attrs,
+        new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), "GHI"));
+    chunks.add(new RichTextSpec.StyledChunk(9, 12, new SpacerRenderNode(), attrs,
+        new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), "jkl"));
+    chunks.add(new RichTextSpec.StyledChunk(12, 15, new SpacerRenderNode(), attrs,
+        new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), "MNO"));
     return new RichTextSpec("ABCdefGHIjklMNO", chunks);
   }
 }

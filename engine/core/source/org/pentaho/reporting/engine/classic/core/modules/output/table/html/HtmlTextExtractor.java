@@ -29,11 +29,14 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessingException;
@@ -43,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilder;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
@@ -58,15 +62,7 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 public class HtmlTextExtractor extends DefaultTextExtractor
 {
   private static final String DIV_TAG = "div";
-  private static final String TITLE_ATTR = "title";
   private static final String BR_TAG = "br";
-  private static final String SPAN_TAG = "span";
-  private static final String IMG_TAG = "img";
-  private static final String SRC_ATTR = "src";
-  private static final String USEMAP_ATTR = "usemap";
-  private static final String PT_UNIT = "pt";
-  private static final String PX_UNIT = "px";
-  private static final String ALT_ATTR = "alt";
 
   private XmlWriter xmlWriter;
   private StyleBuilder styleBuilder;
@@ -204,7 +200,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     {
       xmlWriter.writeText(" ");
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new HtmlOutputProcessingException("Failed to perform IO", e);
     }
@@ -216,7 +212,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     {
       xmlWriter.writeText(" ");
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new HtmlOutputProcessingException("Failed to perform IO", e);
     }
@@ -229,7 +225,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       result = true;
       xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, BR_TAG, XmlWriterSupport.CLOSE);
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new HtmlOutputProcessingException("Failed to perform IO", e);
     }
@@ -259,9 +255,6 @@ public class HtmlTextExtractor extends DefaultTextExtractor
   /**
    * Like a canvas box, a row-box should be split into several cells already. Therefore we treat it as a generic
    * content container instead.
-   *
-   * @param box
-   * @return
    */
   protected boolean startRowBox(final RenderBox box)
   {
@@ -330,7 +323,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         }
       }
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new RuntimeException("Failed", e);
     }
@@ -368,11 +361,11 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         xmlWriter.writeCloseTag();
       }
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new RuntimeException("Failed", e);
     }
-    catch (ContentIOException e)
+    catch (final ContentIOException e)
     {
       throw new RuntimeException("Failed", e);
     }
@@ -431,7 +424,66 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         clearText();
       }
     }
-    catch (IOException ioe)
+    catch (final IOException ioe)
+    {
+      throw new InvalidReportStateException("Failed to write text", ioe);
+    }
+  }
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+    try
+    {
+
+      if (renderableComplexText.getRawText().length() == 0)
+      {
+        // This text is empty.
+        return;
+      }
+      if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
+      {
+        return;
+      }
+
+      // check if we have to process inline text elements
+      if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
+      {
+        // iterate through all inline elements
+        for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
+        {
+          String text = styledChunk.getText();
+
+          if (text.length() > 0)
+          {
+            InstanceID dummy = new InstanceID();
+            textExtractorHelper.startInlineBox(dummy,
+                styledChunk.getOriginalAttributes(), styledChunk.getStyleSheet(), BoxDefinition.EMPTY);
+            xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+            textExtractorHelper.finishBox(dummy, styledChunk.getOriginalAttributes());
+
+            if (text.trim().length() > 0)
+            {
+              result = true;
+            }
+            clearText();
+          }
+        }
+      }
+      else
+      {
+        String text = renderableComplexText.getRawText();
+        if (text.length() > 0)
+        {
+          xmlWriter.writeText(characterEntityParser.encodeEntities(text));
+          if (text.trim().length() > 0)
+          {
+            result = true;
+          }
+          clearText();
+        }
+      }
+    }
+    catch (final IOException ioe)
     {
       throw new InvalidReportStateException("Failed to write text", ioe);
     }

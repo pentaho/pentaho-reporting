@@ -171,7 +171,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected void processParagraphChildsComplex(final ParagraphRenderBox box)
   {
-    // Clear the paragraph to throw away previously layouted nodes. This leaves the paragraph's pool (where your original text is stored) untouched.
+    // Clear the paragraph to throw away previously layouted nodes. This leaves the
+    // paragraph's pool (where your original text is stored) untouched.
     box.clearLayout();
 
     if (box.isComplexParagraph())

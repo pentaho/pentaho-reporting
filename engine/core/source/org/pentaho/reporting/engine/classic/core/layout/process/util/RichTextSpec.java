@@ -42,14 +42,14 @@ public class RichTextSpec
     private RenderNode originatingTextNode;
     private String text;
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
-    private ReportAttributeMap originalAttributes;
+    private ReportAttributeMap<Object> originalAttributes;
     private StyleSheet styleSheet;
 
     public StyledChunk(final int start,
                        final int end,
                        final RenderNode originatingTextNode,
                        final Map<AttributedCharacterIterator.Attribute, Object> attributes,
-                       final ReportAttributeMap originalAttributes,
+                       final ReportAttributeMap<Object> originalAttributes,
                        final StyleSheet styleSheet,
                        final String text)
     {
@@ -73,7 +73,7 @@ public class RichTextSpec
       return attributes;
     }
 
-    public ReportAttributeMap getOriginalAttributes()
+    public ReportAttributeMap<Object> getOriginalAttributes()
     {
       return originalAttributes;
     }

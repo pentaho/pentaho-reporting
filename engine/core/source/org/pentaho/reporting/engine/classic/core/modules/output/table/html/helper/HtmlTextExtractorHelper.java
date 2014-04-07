@@ -113,7 +113,7 @@ public class HtmlTextExtractorHelper
 
         if (forceTag || attrList.isEmpty() == false)
         {
-          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrList, XmlWriterSupport.OPEN);
+          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, tag, attrList, XmlWriterSupport.OPEN);
           processStack = new HtmlTextExtractorState(processStack, true);
         }
         else

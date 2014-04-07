@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
-import java.awt.font.TextLayout;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
@@ -323,29 +321,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
 
   protected void drawComplexText(final RenderableComplexText renderableComplexText)
   {
-
-    final String text;
-    TextLayout textLayout = renderableComplexText.getTextLayout();
-    String debugInfo = textLayout.toString();
-    String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
-    int startPosIntValue = -1;
-
-    try {
-      startPosIntValue = Integer.parseInt(startPos);
-    }
-    catch (NumberFormatException e) {
-      // do nothing
-    }
-
-    // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
-    // in order to avoid duplicates of same source raw text on multiple lines
-    if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
-      text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
-    }
-    else {
-      text = renderableComplexText.getRawText();
-    }
-
+    String text = renderableComplexText.getRawText();
     if (text.length() == 0)
     {
       // This text is empty.

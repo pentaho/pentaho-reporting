@@ -26,10 +26,13 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.RichTextString;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 public class ExcelTextExtractor extends DefaultTextExtractor
@@ -205,5 +208,47 @@ public class ExcelTextExtractor extends DefaultTextExtractor
     {
       formatBuffer.add(new RichTextFormat(getTextLength(), rtf.getFont()));
     }
+  }
+
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+    if (renderableComplexText.getRawText().length() == 0)
+    {
+      // This text is empty.
+      return;
+    }
+    if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
+    {
+      return;
+    }
+
+    // check if we have to process inline text elements
+    if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
+    {
+      int relativeLength = 0;
+      // iterate through all inline elements
+      for (RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
+      {
+        // Add style for current styled chunk
+        final StyleSheet styleSheet = styledChunk.getStyleSheet();
+        final Color textColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
+        final String fontName = (String) styleSheet.getStyleProperty(TextStyleKeys.FONT);
+        final short fontSize = (short) styleSheet.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
+        final boolean bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD);
+        final boolean italic = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC);
+        final boolean underline = styleSheet.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
+        final boolean strikethrough = styleSheet.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+        final HSSFFontWrapper wrapper = new HSSFFontWrapper
+            (fontName, fontSize, bold, italic, underline, strikethrough, colorProducer.getNearestColor(textColor));
+
+        final RichTextFormat rtf = new RichTextFormat(relativeLength, wrapper);
+        relativeLength += styledChunk.getText().length();
+
+        formatBuffer.add(rtf);
+      }
+    }
+
+    super.drawComplexText(renderableComplexText);
   }
 }
