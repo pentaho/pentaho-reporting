@@ -14,8 +14,6 @@
     <envs />
     <RunnerSettings RunnerId="JProfiler">
       <option name="WINDOW" value="false" />
-      <option name="JVMPI" value="false" />
-      <option name="INTERPRETED" value="false" />
     </RunnerSettings>
     <RunnerSettings RunnerId="Run" />
     <ConfigurationWrapper RunnerId="Run" />
