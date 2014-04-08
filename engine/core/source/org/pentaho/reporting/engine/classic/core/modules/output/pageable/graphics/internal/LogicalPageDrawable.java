@@ -918,7 +918,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     this.contentAreaX1 = box.getContentAreaX1();
     this.contentAreaX2 = box.getContentAreaX2();
     this.textSpec = null;
-    
+
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
@@ -1008,27 +1008,20 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
             final long x1 = text.getX();
             final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
 
-            if (x1 >= contentAreaX2)
-            {
-              // Skip, the node will not be visible.
-            }
-            else
+            if (x1 < contentAreaX2)
             {
               // The text node that is printed will overlap with the ellipse we need to print.
               drawText(text, effectiveAreaX2);
             }
           }
-          else if (isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+          else if (isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+          {
             final RenderableComplexText text = (RenderableComplexText) node;
             //final long ellipseSize = extractEllipseSize(node);
             final long x1 = text.getX();
             //final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
 
-            if (x1 >= contentAreaX2)
-            {
-              // Skip, the node will not be visible.
-            }
-            else
+            if (x1 < contentAreaX2)
             {
               // The text node that is printed will overlap with the ellipse we need to print.
               final Graphics2D g2;
@@ -1135,7 +1128,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         drawText(text);
       }
     }
-    else if (type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+    else if (type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
       final RenderableComplexText text = (RenderableComplexText) node;
       final long x1 = text.getX();
 
@@ -1168,7 +1162,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
           g2 = getTextSpec().getGraphics();
         }
 
-        drawComplexText(text,g2);
+        drawComplexText(text, g2);
       }
     }
   }
@@ -1565,7 +1559,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     g2.dispose();
   }
 
-  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2) {
+  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2)
+  {
     final long posX = renderableComplexText.getX();
     final long posY = renderableComplexText.getY();
 

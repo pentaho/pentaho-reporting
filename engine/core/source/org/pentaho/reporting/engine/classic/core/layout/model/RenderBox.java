@@ -1587,4 +1587,9 @@ public abstract class RenderBox extends RenderNode
     setFlag(FLAG_BOX_PREVENT_PAGINATION, preventPagination);
     updateChangeTracker();
   }
+
+  public boolean isRenderBox()
+  {
+    return true;
+  }
 }

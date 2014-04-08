@@ -48,7 +48,6 @@ public final class ParagraphPoolBox extends InlineRenderBox
   }
 
   private LineHeightWrapper lineHeightWrapper;
-  public boolean seen;
 
   public ParagraphPoolBox(final StyleSheet style, final InstanceID instanceID, final ReportStateKey stateKey)
   {

@@ -246,11 +246,11 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     final String rawText = gs.getText(text.getOffset(), maxLength, codePointBuffer);
 
     final int x = PlainTextPage.correctedDivisionFloor((text.getX() - drawArea.getX()),
-                                                       characterWidthInMicroPoint);
+        characterWidthInMicroPoint);
     final int y = PlainTextPage.correctedDivisionFloor((text.getY() - drawArea.getY()),
-                                                       characterHeightInMicroPoint);
-    int w = Math.min(maxLength,PlainTextPage.correctedDivisionFloor(text.getWidth(),
-                                                                    characterWidthInMicroPoint));
+        characterHeightInMicroPoint);
+    int w = Math.min(maxLength, PlainTextPage.correctedDivisionFloor(text.getWidth(),
+        characterWidthInMicroPoint));
 
     // filter out results that do not belong to the current physical page
     if (x + w > plainTextPage.getWidth())
@@ -272,7 +272,8 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     plainTextPage.addTextChunk(x, y, w, rawText, text.getStyleSheet());
   }
 
-  protected void drawComplexText(final RenderNode node) {
+  protected void drawComplexText(final RenderNode node)
+  {
     final RenderableComplexText renderableComplexText = (RenderableComplexText) node;
 
     // The text node that is printed will overlap with the ellipse we need to print.
@@ -289,22 +290,26 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     final String text;
     TextLayout textLayout = renderableComplexText.getTextLayout();
     String debugInfo = textLayout.toString();
-    String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
+    String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:", "");
     int startPosIntValue = -1;
 
-    try {
+    try
+    {
       startPosIntValue = Integer.parseInt(startPos);
     }
-    catch (NumberFormatException e) {
+    catch (NumberFormatException e)
+    {
       // do nothing
     }
 
     // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
     // in order to avoid duplicates of same source raw text on multiple lines
-    if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
+    if ((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0)
+    {
       text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
     }
-    else {
+    else
+    {
       text = renderableComplexText.getRawText();
     }
 
@@ -337,7 +342,8 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
 
   protected void processOtherNode(final RenderNode node)
   {
-    if ((node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) == false && (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) == false)
+    if ((node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) == false &&
+        (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) == false)
     {
       return;
     }
@@ -351,31 +357,25 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
 
       if (clipOnWordBoundary == false)
       {
-        if(node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) {
+        if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
+        {
           final RenderableText text = (RenderableText) node;
           final long ellipseSize = extractEllipseSize(node);
           final long x1 = text.getX();
           final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
 
-          if (x1 >= contentAreaX2)
-          {
-            // Skip, the node will not be visible.
-          }
-          else
+          if (x1 < contentAreaX2)
           {
             // The text node that is printed will overlap with the ellipse we need to print.
             drawText(text, effectiveAreaX2);
           }
         }
-        else if(node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+        else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+        {
           final RenderableComplexText text = (RenderableComplexText) node;
           final long x1 = text.getX();
 
-          if (x1 >= contentAreaX2)
-          {
-            // Skip, the node will not be visible.
-          }
-          else
+          if (x1 < contentAreaX2)
           {
             drawComplexText(node);
           }
@@ -417,10 +417,12 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
       if (x2 <= effectiveAreaX2)
       {
         // the text will be fully visible.
-        if(node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) {
+        if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
+        {
           drawText((RenderableText) node);
         }
-        else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+        else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+        {
           drawComplexText(node);
         }
       }
@@ -431,10 +433,12 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
       else
       {
         // The text node that is printed will overlap with the ellipse we need to print.
-        if(node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) {
+        if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
+        {
           drawText((RenderableText) node, effectiveAreaX2);
         }
-        else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+        else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+        {
           drawComplexText(node);
         }
 
@@ -452,10 +456,12 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     }
     else
     {
-      if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT) {
+      if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
+      {
         drawText((RenderableText) node);
       }
-      else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+      else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
         drawComplexText(node);
       }
     }

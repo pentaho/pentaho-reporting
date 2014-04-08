@@ -198,6 +198,11 @@ public class RichTextSpec
     return attributedString;
   }
 
+  public AttributedCharacterIterator createAttributedCharacterIterator()
+  {
+    return attributedString.getIterator();
+  }
+
   public List<StyledChunk> getStyleChunks()
   {
     return styleChunks;
@@ -206,7 +211,7 @@ public class RichTextSpec
   public RichTextSpec substring(final int start, final int end)
   {
     List<StyledChunk> clippedChunks = new ArrayList<StyledChunk>();
-    for (StyledChunk chunk : styleChunks)
+    for (final StyledChunk chunk : styleChunks)
     {
       if (chunk.end <= start)
       {
@@ -253,7 +258,7 @@ public class RichTextSpec
   {
     return new RenderableComplexText
         (lineBoxContainer.getStyleSheet(), lineBoxContainer.getInstanceId(),
-            lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), substring(start, end));
+            lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), this, start, end);
   }
 
   public boolean equals(final Object o)

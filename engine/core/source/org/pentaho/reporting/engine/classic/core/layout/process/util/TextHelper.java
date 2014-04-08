@@ -113,6 +113,22 @@ public class TextHelper
     return new RichTextSpec(text.toString(), convertNodes(attr));
   }
 
+  public RichTextSpec computeText(final RenderableComplexText textNode,
+                                  final String textChunk)
+  {
+    List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
+    attr.add(new AttributedStringChunk(textChunk,
+        computeStyle(textNode.getStyleSheet()), textNode.getAttributes(), textNode.getStyleSheet(), textNode));
+
+    StringBuilder text = new StringBuilder();
+    for (final AttributedStringChunk chunk : attr)
+    {
+      text.append(chunk.getText());
+    }
+
+    return new RichTextSpec(text.toString(), convertNodes(attr));
+  }
+
   private List<RichTextSpec.StyledChunk> convertNodes(final List<AttributedStringChunk> chunks)
   {
     ArrayList<RichTextSpec.StyledChunk> result = new ArrayList<RichTextSpec.StyledChunk>(chunks.size());

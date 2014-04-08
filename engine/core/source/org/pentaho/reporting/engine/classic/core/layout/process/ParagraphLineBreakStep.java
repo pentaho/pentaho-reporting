@@ -17,16 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import java.awt.Font;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextAttribute;
-import java.awt.font.TextLayout;
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.text.AttributedCharacterIterator;
-import java.text.AttributedString;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,16 +39,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRend
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.SimpleLinebreaker;
-import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.TextWrap;
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -95,24 +80,13 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     paragraphNesting = new FastStack<ParagraphLinebreaker>(50);
   }
 
-  public void initialize(OutputProcessorMetaData metaData)
+  public void initialize(final OutputProcessorMetaData metaData)
   {
     complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox root)
   {
-    if (complexText)
-    {
-      // todo Arabic text
-      // for a first draft, we can ignore this step. The line-break step matters for
-      // text that has text-wrap style set to "None". For these lines, all normal
-      // line breaking is disabled, but manual line/breaks (\n, \r or \r\n) are still
-      // valid and honoured by the system.
-
-//      return;
-    }
-
     paragraphNesting.clear();
     try
     {
@@ -125,88 +99,87 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     }
   }
 
+  private String extractText(final RenderBox pool)
+  {
+    final StringBuilder poolText = new StringBuilder();
+
+    RenderNode node = pool.getFirstChild();
+    while (node != null)
+    {
+      if (node.isRenderBox())
+      {
+        poolText.append(extractText((RenderBox) node));
+        node = node.getNext();
+        continue;
+      }
+
+      if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        node = node.getNext();
+        continue;
+      }
+
+      final RenderableComplexText complexNode = (RenderableComplexText) node;
+      poolText.append(complexNode.getRawText());
+      node = node.getNext();
+    }
+
+    return poolText.toString();
+  }
+
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    if (complexText) {
-      final RenderBox pool = box.getEffectiveLineboxContainer();
-      final StringBuilder poolText = new StringBuilder();
-
-      RenderNode node = pool.getFirstChild();
-      while (node != null) {
-        if (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-        {
-          super.processParagraphChilds(box);
-          return;
-        }
-
-        final RenderableComplexText complexNode = (RenderableComplexText) node;
-        poolText.append(complexNode.getRawText());
-
-        node = node.getNext();
-      }
-      BufferedReader bufferedReader = null;
-      List<String> complexLinesList = new ArrayList<String>();
-      String complexLine;
-
-      // Add each new line to complex lines list
-      try {
-        bufferedReader = new BufferedReader(new StringReader(poolText.toString()));
-        while((complexLine = bufferedReader.readLine()) != null) {
-          complexLinesList.add(complexLine);
-        }
-      } catch (Exception e) {
-        throw new IllegalStateException("Unexpected error while parsing complex paragraph.");
-      } finally {
-        try{
-          if(bufferedReader != null) {
-            bufferedReader.close();
-          }
-        }
-        catch(Exception e) {
-          throw new IllegalStateException("Unexpected error while closing buffer reader.");
-        }
-      }
+    if (complexText)
+    {
+      final RenderBox pool = box.getPool();
+      final String source = extractText(pool);
+      List<String> complexLinesList = performLineBreaking(source);
 
       // only if at least two lines are generated during parsing raw text continue processing
-      if(complexLinesList.size() >= 2) {
+      if (complexLinesList.size() >= 2)
+      {
         final RenderBox lineboxContainer = box.createLineboxContainer();
         lineboxContainer.clear();
-        int j = 0;
 
-        while (complexLinesList.size() > j) {
+        Iterator<String> lines = complexLinesList.iterator();
+        while (lines.hasNext())
+        {
+          String text = lines.next();
           //create new RenderableComplexText node with the current text line
-          final RenderableComplexText newText = new RenderableComplexText(pool.getFirstChild().getStyleSheet()
-                                                                         ,pool.getFirstChild().getInstanceId()
-                                                                         ,pool.getFirstChild().getElementType()
-                                                                         ,pool.getFirstChild().getAttributes()
-                                                                         ,complexLinesList.get(j));
-
-          final RenderableComplexText text = (RenderableComplexText) newText.derive(false);
+          final RenderNode template = pool.getFirstChild();
+          final RenderableComplexText newText = new RenderableComplexText(template.getStyleSheet(),
+              template.getInstanceId(), template.getElementType(),
+              template.getAttributes(), text);
 
           // Add force line break flag to the ComplexText-nodes. It is only needed for complex paragraphs, and only if the line is not the last
           //  line in the paragraph either
-          if(j < complexLinesList.size()) {
-            text.setForceLinebreak(true);
-          }
+          newText.setForceLinebreak(lines.hasNext());
 
           // Create a shallow copy of the paragraph-pool to act as a line container.
-          final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
-          line.addGeneratedChild(text);
+          final RenderBox line = (RenderBox) box.getPool().derive(false);
+          line.addGeneratedChild(newText);
 
           // and finally add the line to the paragraph
           lineboxContainer.addGeneratedChild(line);
-          j++;
         }
       }
     }
-    else {
+    else
+    {
       super.processParagraphChilds(box);
     }
   }
 
+  private List<String> performLineBreaking(final String source)
+  {
+    String[] split = source.split("[\\r\\n]");
+    return Arrays.asList(split);
+  }
+
   protected boolean startBlockBox(final BlockRenderBox box)
   {
-    if(complexText) {
+    if (complexText)
+    {
       breakState = null;
       return true;
     }
@@ -333,7 +306,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   protected void finishBlockBox(final BlockRenderBox box)
   {
     box.setLinebreakAge(box.getChangeTracker());
-    if(complexText) {
+    if (complexText)
+    {
       breakState = null;
       return;
     }

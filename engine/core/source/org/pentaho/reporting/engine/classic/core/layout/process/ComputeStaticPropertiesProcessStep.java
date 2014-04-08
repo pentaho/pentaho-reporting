@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
@@ -130,6 +131,12 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
   protected void processOtherNode(final RenderNode node)
   {
+    if (node instanceof RenderableComplexText)
+    {
+      RenderableComplexText t = (RenderableComplexText) node;
+      t.computeMinimumChunkWidth(metaData);
+    }
+
     chunkWidthUpdate.update(node.getMinimumChunkWidth());
   }
 

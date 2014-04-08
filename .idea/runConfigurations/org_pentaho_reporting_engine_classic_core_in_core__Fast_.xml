@@ -26,6 +26,8 @@
     <RunnerSettings RunnerId="JProfiler">
       <option name="WINDOW" value="false" />
     </RunnerSettings>
+    <RunnerSettings RunnerId="Run" />
+    <ConfigurationWrapper RunnerId="Run" />
     <method />
   </configuration>
 </component>
