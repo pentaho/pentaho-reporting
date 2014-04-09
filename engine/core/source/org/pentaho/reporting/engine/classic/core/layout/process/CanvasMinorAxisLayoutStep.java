@@ -330,7 +330,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     box.addGeneratedChild(line);
   }
 
-  private RenderBox generateLine(final ParagraphRenderBox box,
+  private RenderBox generateLine(final ParagraphRenderBox paragraph,
                                  final ParagraphPoolBox lineBoxContainer,
                                  final RenderableComplexText text,
                                  final TextLayout textLayout)
@@ -343,17 +343,18 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     text.setCachedHeight(lineBoxContainer.getLineHeight());
     text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
 
-    final long alignmentX = RenderUtility.computeHorizontalAlignment(box.getTextAlignment(),
-        box.getCachedWidth(), StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
-    text.setCachedX(alignmentX + box.getCachedX());
+    MinorAxisNodeContext nodeContext = getNodeContext();
+    final long alignmentX = RenderUtility.computeHorizontalAlignment(paragraph.getTextAlignment(),
+        nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
+    text.setCachedX(alignmentX + nodeContext.getX());
 
     // Create a shallow copy of the paragraph-pool to act as a line container.
-    final RenderBox line = (RenderBox) box.getPool().deriveFrozen(false);
+    final RenderBox line = (RenderBox) paragraph.getPool().deriveFrozen(false);
     line.addGeneratedChild(text);
 
     // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-    line.setCachedX(alignmentX + box.getCachedX());
-    line.setCachedWidth(box.getCachedWidth());
+    line.setCachedX(alignmentX + nodeContext.getX());
+    line.setCachedWidth(nodeContext.getContentAreaWidth());
     return line;
   }
 

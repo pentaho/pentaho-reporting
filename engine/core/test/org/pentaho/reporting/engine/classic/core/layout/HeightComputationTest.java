@@ -32,7 +32,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -53,12 +55,34 @@ public class HeightComputationTest extends TestCase
   {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
 
     final URL target = LayoutTest.class.getResource("layout-matrix.xml");
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
     final Resource directly = rm.createDirectly(target, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
+        (basereport, report.getReportHeader(), true, false);
+    // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
+    // and that only two lines exist for each
+    new ValidateRunner().startValidation(logicalPageBox);
+  }
+
+  public void testNestedRowsComplex() throws Exception
+  {
+    final MasterReport basereport = new MasterReport();
+    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+
+    final URL target = LayoutTest.class.getResource("layout-matrix.xml");
+    final ResourceManager rm = new ResourceManager();
+    rm.registerDefaults();
+    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
         (basereport, report.getReportHeader(), true, false);
