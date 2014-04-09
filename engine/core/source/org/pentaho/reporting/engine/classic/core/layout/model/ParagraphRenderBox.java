@@ -28,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * Creation-Date: 03.04.2007, 13:38:00
@@ -350,10 +349,6 @@ public final class ParagraphRenderBox extends BlockRenderBox
 
   public void setCachedWidth(final long cachedWidth)
   {
-    if ("canvas-ci".equals(getName()))
-    {
-      DebugLog.logHere();
-    }
     super.setCachedWidth(cachedWidth);
   }
 }
