@@ -166,9 +166,10 @@ public class AlignmentLeftTest extends TestCase
         {
           Assert.fail("X position is wrong: " + x);
         }
-        if (complexText)
+        if (complexText && wrapWord == false)
         {
-          Assert.assertTrue(box.getWidth() <= StrictGeomUtility.toInternalValue(40));
+          Assert.assertTrue("Box width of '" + box.getWidth() + "' is less than 40pt",
+              box.getWidth() <= StrictGeomUtility.toInternalValue(40));
         }
       }
       return super.startInlineBox(box);

@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.FlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
@@ -35,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllIt
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.PageableHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
@@ -78,6 +80,7 @@ public class Prd2324Test extends TestCase
   public void testPageFooterMissing() throws IOException, ReportProcessingException
   {
     final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
     addLabel("PageFooter", report.getPageFooter());
     addLabel("PageHeader", report.getPageHeader());
     addLabel("ReportHeader", report.getReportHeader());
@@ -86,7 +89,28 @@ public class Prd2324Test extends TestCase
     final byte[] bytes = generate(report);
     final String data = new String(bytes, "ISO-8859-1");
 
-    System.out.println(data);
+    DebugLog.log(data);
+
+    assertTrue("Found PageFooter", data.contains("PageFooter"));
+    assertTrue("Found PageHeader", data.contains("PageHeader"));
+    assertTrue("Found ReportFooter", data.contains("ReportFooter"));
+    assertTrue("Found ReportHeader", data.contains("ReportHeader"));
+
+  }
+
+  public void testPageFooterMissingComplex() throws IOException, ReportProcessingException
+  {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    addLabel("PageFooter", report.getPageFooter());
+    addLabel("PageHeader", report.getPageHeader());
+    addLabel("ReportHeader", report.getReportHeader());
+    addLabel("ReportFooter", report.getReportFooter());
+
+    final byte[] bytes = generate(report);
+    final String data = new String(bytes, "ISO-8859-1");
+
+    DebugLog.log(data);
 
     assertTrue("Found PageFooter", data.contains("PageFooter"));
     assertTrue("Found PageHeader", data.contains("PageHeader"));

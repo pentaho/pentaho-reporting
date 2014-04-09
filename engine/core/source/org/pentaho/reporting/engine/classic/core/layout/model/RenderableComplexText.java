@@ -7,12 +7,14 @@ import java.text.BreakIterator;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
@@ -64,6 +66,12 @@ public class RenderableComplexText extends RenderNode
   public void computeMinimumChunkWidth(final OutputProcessorMetaData data)
   {
     if (getMinimumChunkWidth() != 0)
+    {
+      return;
+    }
+
+    if (data.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) == false &&
+         getStyleSheet().getBooleanStyleProperty(TextStyleKeys.WORDBREAK) == false)
     {
       return;
     }
