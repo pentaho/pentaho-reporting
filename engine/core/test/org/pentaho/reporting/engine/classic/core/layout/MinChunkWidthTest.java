@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputPro
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -158,15 +157,10 @@ public class MinChunkWidthTest extends TestCase
       if (s.startsWith("test-"))
       {
         assertEquals("Width = 468: " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
-        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        assertEquals("Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
       }
       else if (s.startsWith("canvas-"))
       {
-        if (box.getWidth() == 0 || "canvas-ci".equals(s))
-        {
-          ModelPrinter.INSTANCE.print(box);
-          DebugLog.logHere();
-        }
         assertTrue("Width is not zero!: " + s, box.getWidth() != 0);
         assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
       }

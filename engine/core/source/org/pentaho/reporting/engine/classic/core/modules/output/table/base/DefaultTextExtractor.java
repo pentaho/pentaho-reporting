@@ -129,160 +129,30 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
 
   protected void processOtherNode(final RenderNode node)
   {
-    final int nodeType = node.getNodeType();
     if (isTextLineOverflow())
     {
-      if (node.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
+      if (handleOverflow(node))
       {
-        return;
-      }
-
-      if (node.isVirtualNode())
-      {
-
-        if (ellipseDrawn)
-        {
-          return;
-        }
-        ellipseDrawn = true;
-
-        if (clipOnWordBoundary == false &&
-            nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
-        {
-          final RenderableText text = (RenderableText) node;
-          final long ellipseSize = extractEllipseSize(node);
-          final long x1 = text.getX();
-          final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
-
-          if (x1 >= contentAreaX2)
-          {
-            // Skip, the node will not be visible.
-          }
-          else
-          {
-            // The text node that is printed will overlap with the ellipse we need to print.
-            drawText(text, effectiveAreaX2);
-          }
-        }
-        else if (clipOnWordBoundary == false &&
-            nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-        {
-          final RenderableComplexText text = (RenderableComplexText) node;
-          final long x1 = text.getX();
-
-          if (x1 >= contentAreaX2)
-          {
-            // Skip, the node will not be visible.
-          }
-          else
-          {
-            // The text node that is printed will overlap with the ellipse we need to print.
-            drawComplexText(text);
-          }
-        }
-
-        final RenderBox parent = node.getParent();
-        if (parent != null)
-        {
-          final RenderBox textEllipseBox = parent.getTextEllipseBox();
-          if (textEllipseBox != null)
-          {
-            processBoxChilds(textEllipseBox);
-          }
-        }
         return;
       }
     }
 
+    final int nodeType = node.getNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
     {
       final RenderableText textNode = (RenderableText) node;
-      if (isTextLineOverflow())
-      {
-        if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-        {
-          return;
-        }
-
-        final long ellipseSize = extractEllipseSize(node);
-        final long x1 = node.getX();
-        final long x2 = x1 + node.getWidth();
-        final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
-        if (x2 <= effectiveAreaX2)
-        {
-          // the text will be fully visible.
-          drawText(textNode, x2);
-        }
-        else if (x1 >= contentAreaX2)
-        {
-          // Skip, the node will not be visible.
-        }
-        else
-        {
-          // The text node that is printed will overlap with the ellipse we need to print.
-          drawText(textNode, effectiveAreaX2);
-          final RenderBox parent = node.getParent();
-          if (parent != null)
-          {
-            final RenderBox textEllipseBox = parent.getTextEllipseBox();
-            if (textEllipseBox != null)
-            {
-              processBoxChilds(textEllipseBox);
-            }
-          }
-        }
-
-      }
-      else
-      {
-        drawText(textNode, textNode.getX() + textNode.getWidth());
-      }
+      processStandardText(textNode);
       if (textNode.isForceLinebreak())
       {
         manualBreak = true;
       }
     }
-    else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT) {
+    else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
       final RenderableComplexText textNode = (RenderableComplexText) node;
-      if (isTextLineOverflow())
+      if (processComplexText(textNode))
       {
-        if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-        {
-          return;
-        }
-
-        final long ellipseSize = extractEllipseSize(node);
-        final long x1 = node.getX();
-        final long x2 = x1 + node.getWidth();
-        final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
-        if (x2 <= effectiveAreaX2)
-        {
-          // the text will be fully visible.
-          drawComplexText(textNode);
-        }
-        else if (x1 >= contentAreaX2)
-        {
-          // Skip, the node will not be visible.
-        }
-        else
-        {
-          // The text node that is printed will overlap with the ellipse we need to print.
-          drawComplexText(textNode);
-
-          final RenderBox parent = node.getParent();
-          if (parent != null)
-          {
-            final RenderBox textEllipseBox = parent.getTextEllipseBox();
-            if (textEllipseBox != null)
-            {
-              processBoxChilds(textEllipseBox);
-            }
-          }
-        }
-      }
-      else
-      {
-        drawComplexText(textNode);
+        return;
       }
       if (textNode.isForceLinebreak())
       {
@@ -298,6 +168,143 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
         this.text.append(' ');
       }
     }
+  }
+
+  private boolean processComplexText(final RenderableComplexText textNode)
+  {
+    if (isTextLineOverflow())
+    {
+      if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
+      {
+        return true;
+      }
+
+      final long ellipseSize = extractEllipseSize(textNode);
+      final long x1 = textNode.getX();
+      final long x2 = x1 + textNode.getWidth();
+      final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+      if (x2 <= effectiveAreaX2)
+      {
+        // the text will be fully visible.
+        drawComplexText(textNode);
+      }
+      else if (x1 < contentAreaX2)
+      {
+        // The text node that is printed will overlap with the ellipse we need to print.
+        drawComplexText(textNode);
+
+        final RenderBox parent = textNode.getParent();
+        if (parent != null)
+        {
+          final RenderBox textEllipseBox = parent.getTextEllipseBox();
+          if (textEllipseBox != null)
+          {
+            processBoxChilds(textEllipseBox);
+          }
+        }
+      }
+    }
+    else
+    {
+      drawComplexText(textNode);
+    }
+    return false;
+  }
+
+  private void processStandardText(final RenderableText textNode)
+  {
+    if (isTextLineOverflow())
+    {
+      if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
+      {
+        return;
+      }
+
+      final long ellipseSize = extractEllipseSize(textNode);
+      final long x1 = textNode.getX();
+      final long x2 = x1 + textNode.getWidth();
+      final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+      if (x2 <= effectiveAreaX2)
+      {
+        // the text will be fully visible.
+        drawText(textNode, x2);
+      }
+      else if (x1 < contentAreaX2)
+      {
+        // The text node that is printed will overlap with the ellipse we need to print.
+        drawText(textNode, effectiveAreaX2);
+        final RenderBox parent = textNode.getParent();
+        if (parent != null)
+        {
+          final RenderBox textEllipseBox = parent.getTextEllipseBox();
+          if (textEllipseBox != null)
+          {
+            processBoxChilds(textEllipseBox);
+          }
+        }
+      }
+    }
+    else
+    {
+      drawText(textNode, textNode.getX() + textNode.getWidth());
+    }
+  }
+
+  private boolean handleOverflow(final RenderNode node)
+  {
+    if (node.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
+    {
+      return true;
+    }
+
+    if (node.isVirtualNode())
+    {
+      if (ellipseDrawn)
+      {
+        return true;
+      }
+      ellipseDrawn = true;
+
+      final int nodeType = node.getNodeType();
+      if (clipOnWordBoundary == false &&
+          nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
+      {
+        final RenderableText text = (RenderableText) node;
+        final long ellipseSize = extractEllipseSize(node);
+        final long x1 = text.getX();
+        final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+
+        if (x1 < contentAreaX2)
+        {
+          // The text node that is printed will overlap with the ellipse we need to print.
+          drawText(text, effectiveAreaX2);
+        }
+      }
+      else if (clipOnWordBoundary == false &&
+          nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        final RenderableComplexText text = (RenderableComplexText) node;
+        final long x1 = text.getX();
+
+        if (x1 < contentAreaX2)
+        {
+          // The text node that is printed will overlap with the ellipse we need to print.
+          drawComplexText(text);
+        }
+      }
+
+      final RenderBox parent = node.getParent();
+      if (parent != null)
+      {
+        final RenderBox textEllipseBox = parent.getTextEllipseBox();
+        if (textEllipseBox != null)
+        {
+          processBoxChilds(textEllipseBox);
+        }
+      }
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -382,7 +389,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     {
       return false;
     }
-    
+
     return true;
   }
 

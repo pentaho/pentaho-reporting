@@ -18,12 +18,14 @@
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -72,6 +74,7 @@ public class Prd4295Test extends TestCase
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
     masterReport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    masterReport.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
     masterReport.setQueryLimit(1);
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
     final CrosstabCell element = crosstabCellBody.findElement(null, null);
@@ -90,9 +93,25 @@ public class Prd4295Test extends TestCase
     assertEquals(Boolean.TRUE,
         texts[0].getStyleSheet().getStyleProperty(TextStyleKeys.BOLD));
     assertTrue(texts[0].getWidth() > 0);
-    assertEquals(texts[0].getWidth(), texts[0].getMinimumChunkWidth());
+    // complex-text nodes no longer have a min-chunk width after line-breaking
+    assertEquals(texts[0].getWidth(), extractOriginalPool(texts[0]).getMinimumChunkWidth());
 
     DebugReportRunner.showDialog(masterReport);
+  }
+
+  private RenderNode extractOriginalPool(RenderNode n)
+  {
+    if (n instanceof ParagraphRenderBox)
+    {
+      ParagraphRenderBox para = (ParagraphRenderBox) n;
+      return para.getPool();
+    }
+    if (n.getParent() == null)
+    {
+      Assert.fail();
+      return null;
+    }
+    return extractOriginalPool(n.getParent());
   }
 
 }

@@ -302,7 +302,8 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     try
     {
       final int nodeType = node.getNodeType();
-      if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
+      if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ||
+          nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
       {
         super.processOtherNode(node);
         return;
