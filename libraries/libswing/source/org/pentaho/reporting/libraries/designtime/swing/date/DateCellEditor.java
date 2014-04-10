@@ -129,6 +129,7 @@ public class DateCellEditor extends JPanel implements TableCellEditor
 
         final Date date = convertValue(text);
         dateChooserPanel.setDate(date);
+        dateChooserPanel.setDateSelected(true);
       }
       catch (Exception e)
       {
@@ -209,7 +210,7 @@ public class DateCellEditor extends JPanel implements TableCellEditor
       if (dateChooserPanel.isDateSelected())
       {
         DebugLog.log("PropertyChange on DATE - about to close");
-        dateWindow.setVisible(false);
+        stopCellEditing();
       }
     }
   }
@@ -457,11 +458,14 @@ public class DateCellEditor extends JPanel implements TableCellEditor
    */
   public boolean stopCellEditing()
   {
+    if ((dateWindow == null || dateWindow.isVisible()) && dateChooserPanel.isDateSelected())
+    {
+      fireEditingStopped();
+    }
     if (dateWindow != null)
     {
       dateWindow.setVisible(false);
     }
-    fireEditingStopped();
     return true;
   }
 
