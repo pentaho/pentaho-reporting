@@ -315,7 +315,7 @@ public class DateChooserPanel extends JPanel
    *
    * @param theDate the new date.
    */
-  public void setDate(final Date theDate)
+  public void setDate(final Date theDate, boolean firePC)
   {
     final Date oldDate = this.selectedDate;
     this.selectedDate = theDate;
@@ -328,14 +328,21 @@ public class DateChooserPanel extends JPanel
       refreshYearSelector();
       refreshButtons();
     }
-    if (ObjectUtilities.equal(oldDate, theDate))
+    if (firePC)
     {
-      firePropertyChange(PROPERTY_DATE, null, theDate);
+      if (ObjectUtilities.equal(oldDate, theDate))
+      {
+        firePropertyChange(PROPERTY_DATE, null, theDate);
+      }
+      else
+      {
+        firePropertyChange(PROPERTY_DATE, oldDate, theDate);
+      }
     }
-    else
-    {
-      firePropertyChange(PROPERTY_DATE, oldDate, theDate);
-    }
+  }
+
+  public void setDate(final Date theDate) {
+    setDate(theDate, true);
   }
 
   /**
