@@ -68,7 +68,7 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
       outputFunction.addSubReportMarkers(renderer.endSection());
     }
 
-    if (numberOfRows == 0)
+    if (numberOfRows == 0 || outputFunction.getMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME))
     {
       // ups, we have no data. Lets signal that ...
       final NoDataBand noDataBand = event.getReport().getNoDataBand();
