@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 import org.pentaho.reporting.libraries.fonts.text.breaks.BreakOpportunityProducer;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -58,7 +59,7 @@ public final class RenderableText extends RenderNode
   static
   {
     final long value = StrictGeomUtility.toInternalValue(1);
-    conversionFactor = value / org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility.toInternalValue(1);
+    conversionFactor = value / FontStrictGeomUtility.toInternalValue(1);
   }
   
   private GlyphList glyphs;

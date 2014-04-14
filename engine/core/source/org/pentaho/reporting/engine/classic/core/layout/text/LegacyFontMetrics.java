@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.text;
 import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 15.04.2007, 14:40:35
@@ -36,7 +36,7 @@ public class LegacyFontMetrics implements FontMetrics
   public LegacyFontMetrics(final FontMetrics parent, final double fontHeight)
   {
     this.parent = parent;
-    this.fontHeight = StrictGeomUtility.toInternalValue(fontHeight);
+    this.fontHeight = FontStrictGeomUtility.toInternalValue(fontHeight);
     this.record = parent.getNativeContext();
   }
 

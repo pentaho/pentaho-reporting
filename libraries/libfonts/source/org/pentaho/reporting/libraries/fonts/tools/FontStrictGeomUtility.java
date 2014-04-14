@@ -23,7 +23,7 @@ package org.pentaho.reporting.libraries.fonts.tools;
  *
  * @author Thomas Morgner
  */
-public class StrictGeomUtility
+public class FontStrictGeomUtility
 {
   /**
    * This is the correction factor used to convert points into 'Micro-Points'.
@@ -33,7 +33,7 @@ public class StrictGeomUtility
   /**
    * Hidden, non usable constructor.
    */
-  private StrictGeomUtility ()
+  private FontStrictGeomUtility()
   {
   }
 
@@ -45,7 +45,7 @@ public class StrictGeomUtility
    */
   public static long toInternalValue (final double value)
   {
-    return (long) (value * StrictGeomUtility.CORRECTION_FACTOR);
+    return (long) (value * FontStrictGeomUtility.CORRECTION_FACTOR);
   }
 
   /**
@@ -56,11 +56,11 @@ public class StrictGeomUtility
    */
   public static double toExternalValue (final long value)
   {
-    return (value / StrictGeomUtility.CORRECTION_FACTOR);
+    return (value / FontStrictGeomUtility.CORRECTION_FACTOR);
   }
 
   public static long multiply (final long x, final long y)
   {
-    return (long) ((x * y) / StrictGeomUtility.CORRECTION_FACTOR);
+    return (long) ((x * y) / FontStrictGeomUtility.CORRECTION_FACTOR);
   }
 }

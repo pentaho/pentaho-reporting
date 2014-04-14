@@ -20,7 +20,7 @@ package org.pentaho.reporting.libraries.fonts.truetype;
 import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -84,7 +84,7 @@ public class TrueTypeFontMetrics implements FontMetrics
 
   public long getOverlinePosition()
   {
-    return getLeading() - Math.max (1000, StrictGeomUtility.toInternalValue(fontSize)/ 20);
+    return getLeading() - Math.max (1000, FontStrictGeomUtility.toInternalValue(fontSize)/ 20);
   }
 
   public long getUnderlinePosition()

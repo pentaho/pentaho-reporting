@@ -18,7 +18,7 @@
 package org.pentaho.reporting.libraries.fonts.text.font;
 
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creates a monospaced font from any given font by always returning the maximum
@@ -42,11 +42,11 @@ public class StaticFontSizeProducer implements FontSizeProducer
     }
     //this.fontMetrics = fontMetrics;
     this.maxHeight = (int) (0x7FFFFFFF &
-            StrictGeomUtility.toInternalValue(fontMetrics.getMaxHeight()));
+            FontStrictGeomUtility.toInternalValue(fontMetrics.getMaxHeight()));
     this.maxWidth = (int) (0x7FFFFFFF &
-            StrictGeomUtility.toInternalValue(fontMetrics.getMaxCharAdvance()));
-    this.baseLine = (int) (0x7FFFFFFF & StrictGeomUtility.toInternalValue
-            (fontMetrics.getMaxHeight() - fontMetrics.getMaxDescent()));
+            FontStrictGeomUtility.toInternalValue(fontMetrics.getMaxCharAdvance()));
+    this.baseLine = (int) (0x7FFFFFFF & FontStrictGeomUtility.toInternalValue
+        (fontMetrics.getMaxHeight() - fontMetrics.getMaxDescent()));
   }
 
   public StaticFontSizeProducer(final int maxWidth,

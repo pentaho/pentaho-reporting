@@ -24,7 +24,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugOutputProcessorMetaData;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 public class TestFontMetrics extends FontMetrics
 {
@@ -53,9 +53,9 @@ public class TestFontMetrics extends FontMetrics
     final org.pentaho.reporting.libraries.fonts.registry.FontMetrics fontMetrics =
         metaData.getFontMetrics(name, baseFont.getSize2D(), baseFont.isBold(), baseFont.isItalic(), "UTF-8", false, false);
     return new Rectangle2D.Double(0,
-        -StrictGeomUtility.toExternalValue(fontMetrics.getMaxAscent()),
-        StrictGeomUtility.toExternalValue(fontMetrics.getMaxCharAdvance()),
-        StrictGeomUtility.toExternalValue
+        -FontStrictGeomUtility.toExternalValue(fontMetrics.getMaxAscent()),
+        FontStrictGeomUtility.toExternalValue(fontMetrics.getMaxCharAdvance()),
+        FontStrictGeomUtility.toExternalValue
             (fontMetrics.getMaxAscent() + fontMetrics.getMaxDescent() + fontMetrics.getLeading()));
   }
 }

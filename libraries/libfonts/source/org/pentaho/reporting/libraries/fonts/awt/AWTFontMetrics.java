@@ -33,7 +33,7 @@ import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
 import org.pentaho.reporting.libraries.fonts.registry.FontContext;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 16.12.2005, 21:09:39
@@ -114,13 +114,13 @@ public class AWTFontMetrics implements FontMetrics
     this.uniformLineMetrics = fontMetrics.hasUniformLineMetrics();
 
     final Rectangle2D rect = this.font.getMaxCharBounds(frc);
-    this.maxCharAdvance = StrictGeomUtility.toInternalValue(rect.getWidth());
-    this.ascent = StrictGeomUtility.toInternalValue(-rect.getY());
-    this.descent = StrictGeomUtility.toInternalValue(rect.getHeight() + rect.getY());
+    this.maxCharAdvance = FontStrictGeomUtility.toInternalValue(rect.getWidth());
+    this.ascent = FontStrictGeomUtility.toInternalValue(-rect.getY());
+    this.descent = FontStrictGeomUtility.toInternalValue(rect.getHeight() + rect.getY());
 
     final GlyphVector gv = font.createGlyphVector(frc, "x");
     final Rectangle2D bounds = gv.getVisualBounds();
-    this.xheight = StrictGeomUtility.toInternalValue(bounds.getHeight());
+    this.xheight = FontStrictGeomUtility.toInternalValue(bounds.getHeight());
 
     this.cpBuffer = new char[4];
     this.cachedBaselines = new BaselineInfo[256 - 32];
@@ -165,7 +165,7 @@ public class AWTFontMetrics implements FontMetrics
 
   public long getLeading()
   {
-    return leading; //StrictGeomUtility.toInternalValue(fontMetrics.getLeading());
+    return leading; //FontStrictGeomUtility.toInternalValue(fontMetrics.getLeading());
   }
 
   /**
@@ -196,12 +196,12 @@ public class AWTFontMetrics implements FontMetrics
 
   public long getMaxAscent()
   {
-    return maxAscent; //StrictGeomUtility.toInternalValue(fontMetrics.getMaxAscent());
+    return maxAscent; //FontStrictGeomUtility.toInternalValue(fontMetrics.getMaxAscent());
   }
 
   public long getMaxDescent()
   {
-    return maxDescent; //StrictGeomUtility.toInternalValue(fontMetrics.getMaxDescent());
+    return maxDescent; //FontStrictGeomUtility.toInternalValue(fontMetrics.getMaxDescent());
   }
 
   public long getMaxHeight()
@@ -231,7 +231,7 @@ public class AWTFontMetrics implements FontMetrics
       if (retval > 0)
       {
         final Rectangle2D lm = font.getStringBounds(cpBuffer, 0, retval, frc);
-        final long width = StrictGeomUtility.toInternalValue(lm.getWidth());
+        final long width = FontStrictGeomUtility.toInternalValue(lm.getWidth());
         cachedWidths[index] = width;
         return width;
       }
@@ -247,7 +247,7 @@ public class AWTFontMetrics implements FontMetrics
     if (retval > 0)
     {
       final Rectangle2D lm = font.getStringBounds(cpBuffer, 0, retval, frc);
-      return StrictGeomUtility.toInternalValue(lm.getWidth());
+      return FontStrictGeomUtility.toInternalValue(lm.getWidth());
     }
     else
     {
@@ -275,8 +275,8 @@ public class AWTFontMetrics implements FontMetrics
     {
       final int limit = (retvalC1 + retvalC2);
       final GlyphVector gv = font.createGlyphVector(frc, new String(cpBuffer, 0, limit));
-      final long totalSize = StrictGeomUtility.toInternalValue(gv.getGlyphPosition(limit).getX());
-      final long renderedWidth = StrictGeomUtility.toInternalValue(gv.getOutline().getBounds2D().getWidth());
+      final long totalSize = FontStrictGeomUtility.toInternalValue(gv.getGlyphPosition(limit).getX());
+      final long renderedWidth = FontStrictGeomUtility.toInternalValue(gv.getOutline().getBounds2D().getWidth());
       return totalSize - renderedWidth;
     }
     else
@@ -325,7 +325,7 @@ public class AWTFontMetrics implements FontMetrics
     // The ascent is local - but we need the global baseline, relative to the
     // MaxAscent.
     final long maxAscent = getMaxAscent();
-    final long ascent = StrictGeomUtility.toInternalValue(lm.getAscent());
+    final long ascent = FontStrictGeomUtility.toInternalValue(lm.getAscent());
     final long delta = maxAscent - ascent;
     info.setBaseline(BaselineInfo.MATHEMATICAL, delta + maxAscent - getXHeight());
     info.setBaseline(BaselineInfo.IDEOGRAPHIC, getMaxHeight());
@@ -338,15 +338,15 @@ public class AWTFontMetrics implements FontMetrics
       case Font.CENTER_BASELINE:
       {
         info.setBaseline(BaselineInfo.CENTRAL, base);
-        info.setBaseline(BaselineInfo.ALPHABETIC, base + StrictGeomUtility.toInternalValue(bls[Font.ROMAN_BASELINE]));
-        info.setBaseline(BaselineInfo.HANGING, base + StrictGeomUtility.toInternalValue(bls[Font.HANGING_BASELINE]));
+        info.setBaseline(BaselineInfo.ALPHABETIC, base + FontStrictGeomUtility.toInternalValue(bls[Font.ROMAN_BASELINE]));
+        info.setBaseline(BaselineInfo.HANGING, base + FontStrictGeomUtility.toInternalValue(bls[Font.HANGING_BASELINE]));
         info.setDominantBaseline(BaselineInfo.CENTRAL);
         break;
       }
       case Font.HANGING_BASELINE:
       {
-        info.setBaseline(BaselineInfo.CENTRAL, base + StrictGeomUtility.toInternalValue(bls[Font.CENTER_BASELINE]));
-        info.setBaseline(BaselineInfo.ALPHABETIC, base + StrictGeomUtility.toInternalValue(bls[Font.ROMAN_BASELINE]));
+        info.setBaseline(BaselineInfo.CENTRAL, base + FontStrictGeomUtility.toInternalValue(bls[Font.CENTER_BASELINE]));
+        info.setBaseline(BaselineInfo.ALPHABETIC, base + FontStrictGeomUtility.toInternalValue(bls[Font.ROMAN_BASELINE]));
         info.setBaseline(BaselineInfo.HANGING, base);
         info.setDominantBaseline(BaselineInfo.HANGING);
         break;
@@ -354,8 +354,8 @@ public class AWTFontMetrics implements FontMetrics
       default: // ROMAN Base-line
       {
         info.setBaseline(BaselineInfo.ALPHABETIC, base);
-        info.setBaseline(BaselineInfo.CENTRAL, base + StrictGeomUtility.toInternalValue(bls[Font.CENTER_BASELINE]));
-        info.setBaseline(BaselineInfo.HANGING, base + StrictGeomUtility.toInternalValue(bls[Font.HANGING_BASELINE]));
+        info.setBaseline(BaselineInfo.CENTRAL, base + FontStrictGeomUtility.toInternalValue(bls[Font.CENTER_BASELINE]));
+        info.setBaseline(BaselineInfo.HANGING, base + FontStrictGeomUtility.toInternalValue(bls[Font.HANGING_BASELINE]));
         info.setDominantBaseline(BaselineInfo.ALPHABETIC);
         break;
       }
