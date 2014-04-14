@@ -202,7 +202,6 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return;
     }
 
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
     RenderNode node = paragraph.getFirstChild();
     ParagraphPoolBox prev = null;
     while (node != null)

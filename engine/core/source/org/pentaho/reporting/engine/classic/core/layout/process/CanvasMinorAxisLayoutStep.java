@@ -339,8 +339,10 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     text.setTextLayout(textLayout);
 
     // Store the height and width, so that the other parts of the layouter have access to the information
-//        text.setCachedHeight(StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()));
-    text.setCachedHeight(lineBoxContainer.getLineHeight());
+//        text.setCachedHeight();
+    text.setCachedHeight
+        (Math.max (StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()),
+        lineBoxContainer.getLineHeight()));
     text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
 
     MinorAxisNodeContext nodeContext = getNodeContext();
