@@ -107,7 +107,6 @@ public class WidthComputationTest extends TestCase
 
       if (name.startsWith("test-") && (box instanceof InlineRenderBox == false))
       {
-//        assertEquals("Computed-Width is same as page-width [BLOCK->*]", StrictGeomUtility.toInternalValue(468), box.getComputedWidth());
         assertEquals("Cached-Width is same as page-width [BLOCK->*]", StrictGeomUtility.toInternalValue(468), box.getCachedWidth());
       }
 

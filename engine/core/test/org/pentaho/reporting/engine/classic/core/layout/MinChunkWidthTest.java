@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -106,6 +107,7 @@ public class MinChunkWidthTest extends TestCase
     rm.registerDefaults();
     final Resource directly = rm.createDirectly(target, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
         (basereport, report.getReportHeader(), true, false);
