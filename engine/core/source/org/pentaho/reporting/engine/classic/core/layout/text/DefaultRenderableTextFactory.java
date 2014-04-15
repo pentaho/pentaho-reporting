@@ -102,7 +102,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   private WhitespaceCollapse whitespaceCollapseValue;
   private TextWrap breakOpportunityValue;
   private long wordSpacing;
-  private ReportAttributeMap attributeMap;
+  private ReportAttributeMap<Object> attributeMap;
   private ElementType elementType;
   private ExtendedBaselineInfo uniformBaselineInfo;
   private InstanceID instanceId;
@@ -133,7 +133,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
                                  final StyleSheet layoutContext,
                                  final ElementType elementType,
                                  final InstanceID instanceId,
-                                 final ReportAttributeMap attributeMap)
+                                 final ReportAttributeMap<Object> attributeMap)
   {
     this.instanceId = instanceId;
     if (layoutContext == null)

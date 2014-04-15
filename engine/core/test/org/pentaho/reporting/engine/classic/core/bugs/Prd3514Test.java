@@ -56,11 +56,6 @@ public class Prd3514Test extends TestCase
   {
   }
 
-  public Prd3514Test(final String name)
-  {
-    super(name);
-  }
-
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
@@ -76,10 +71,107 @@ public class Prd3514Test extends TestCase
     final CompoundDataFactory ccdf = new CascadingDataFactory();
     ccdf.add(caDf);
     ccdf.add(new StaticDataFactory());
-    
+
     assertTrue(ccdf.isQueryExecutable("static", new StaticDataRow()));
     assertNotNull(ccdf.queryData("static", new StaticDataRow()));
   }
+
+  public void testLineBreaksOnStart() throws ReportProcessingException, ContentProcessingException
+  {
+    Element textField = new Element();
+    textField.setName("textField");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONT, "Arial");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, 14);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.NONE);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, false);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 97f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 0f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 0f);
+    textField.setElementType(LabelType.INSTANCE);
+    textField.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "\nClassic Cars");
+
+    final MasterReport report = new MasterReport();
+    report.getReportHeader().addElement(textField);
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
+    RenderNode textFieldBox = MatchFactory.findElementByName(logicalPageBox, "textField");
+    assertNotNull(textFieldBox);
+
+    assertEquals(0, textFieldBox.getY());
+
+    // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
+    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+  }
+
+  public void testLineBreaksOnEnd() throws ReportProcessingException, ContentProcessingException
+  {
+    Element textField = new Element();
+    textField.setName("textField");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONT, "Arial");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, 14);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.NONE);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, false);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 97f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 0f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 0f);
+    textField.setElementType(LabelType.INSTANCE);
+    textField.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Classic Cars\n");
+
+    final MasterReport report = new MasterReport();
+    report.getReportHeader().addElement(textField);
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
+    RenderNode textFieldBox = MatchFactory.findElementByName(logicalPageBox, "textField");
+    assertNotNull(textFieldBox);
+
+    assertEquals(0, textFieldBox.getY());
+
+    // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
+    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+  }
+
+  public void testMultipleLineBreaks() throws ReportProcessingException, ContentProcessingException
+  {
+    Element textField = new Element();
+    textField.setName("textField");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONT, "Arial");
+    textField.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, 14);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.NONE);
+    textField.getStyle().setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, false);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 97f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 20f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 0f);
+    textField.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 0f);
+    textField.setElementType(LabelType.INSTANCE);
+    textField.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "\r\n\r\nClassic Cars");
+
+    final MasterReport report = new MasterReport();
+    report.getReportHeader().addElement(textField);
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
+    RenderNode textFieldBox = MatchFactory.findElementByName(logicalPageBox, "textField");
+    assertNotNull(textFieldBox);
+
+    assertEquals(0, textFieldBox.getY());
+
+    // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
+    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+  }
+
 
   public void testWeirdTocLayout() throws ReportProcessingException, ContentProcessingException
   {
@@ -110,8 +202,9 @@ public class Prd3514Test extends TestCase
     dotField.setElementType(LabelType.INSTANCE);
     dotField.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
         " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        ". . . . . . . . . . . . . . . . . .");
+            " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
+            ". . . . . . . . . . . . . . . . . ."
+    );
 
 
     Band band = new Band();
@@ -136,21 +229,12 @@ public class Prd3514Test extends TestCase
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);
     ModelPrinter.INSTANCE.print(logicalPageBox);
 
-    RenderBox outerBox = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "outer-box");
-    RenderNode dotFieldBox = MatchFactory.findElementByName(logicalPageBox, "dotField");
     RenderNode textFieldBox = MatchFactory.findElementByName(logicalPageBox, "textField");
-    assertNotNull(outerBox);
-    assertNotNull(dotFieldBox);
     assertNotNull(textFieldBox);
 
-    assertEquals(0, outerBox.getY());
-    assertEquals(0, dotFieldBox.getY());
     assertEquals(0, textFieldBox.getY());
 
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
-    assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getHeight());
-    assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getFirstChild().getHeight());
-    assertEquals(StrictGeomUtility.toInternalValue(14), dotFieldBox.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
   }
 
@@ -183,8 +267,9 @@ public class Prd3514Test extends TestCase
     dotField.setElementType(LabelType.INSTANCE);
     dotField.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
         " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
-        ". . . . . . . . . . . . . . . . . .");
+            " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . " +
+            ". . . . . . . . . . . . . . . . . ."
+    );
 
 
     Band band = new Band();

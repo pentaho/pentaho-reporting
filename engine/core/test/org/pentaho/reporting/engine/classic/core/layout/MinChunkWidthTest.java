@@ -71,7 +71,7 @@ public class MinChunkWidthTest extends TestCase
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(true).startValidation(logicalPageBox);
+    new ValidateRunner(true, false).startValidation(logicalPageBox);
   }
 
   public void testMinChunkWidthSimpleText() throws Exception
@@ -92,7 +92,7 @@ public class MinChunkWidthTest extends TestCase
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(false).startValidation(logicalPageBox);
+    new ValidateRunner(false, false).startValidation(logicalPageBox);
   }
 
   public void testMinChunkWidth() throws Exception
@@ -114,17 +114,20 @@ public class MinChunkWidthTest extends TestCase
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(false).startValidation(logicalPageBox);
+    new ValidateRunner(false, true).startValidation(logicalPageBox);
   }
 
   @SuppressWarnings("HardCodedStringLiteral")
   private static class ValidateRunner extends IterateStructuralProcessStep
   {
+    private final boolean complexText;
     private boolean legacyMode;
 
-    private ValidateRunner(final boolean legacyMode)
+    private ValidateRunner(final boolean legacyMode,
+                           final boolean complexText)
     {
       this.legacyMode = legacyMode;
+      this.complexText = complexText;
     }
 
     protected boolean startCanvasBox(final CanvasRenderBox box)
@@ -159,12 +162,18 @@ public class MinChunkWidthTest extends TestCase
       if (s.startsWith("test-"))
       {
         assertEquals("Width = 468: " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
-        assertEquals("Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        }
       }
       else if (s.startsWith("canvas-"))
       {
         assertTrue("Width is not zero!: " + s, box.getWidth() != 0);
-        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        }
       }
       else if (s.startsWith("label-b"))
       {
@@ -181,12 +190,18 @@ public class MinChunkWidthTest extends TestCase
         {
           assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
         }
-        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        }
       }
       else if (s.startsWith("label-"))
       {
         assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
-        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        }
       }
       return true;
     }

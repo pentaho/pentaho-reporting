@@ -65,7 +65,6 @@ public final class RenderableText extends RenderNode
   private GlyphList glyphs;
   private int offset;
   private int length;
-  private boolean ltr;
   private int script;
 
   private long minimumWidth;
@@ -109,7 +108,6 @@ public final class RenderableText extends RenderNode
     }
 
     this.baselineInfo = baselineInfo;
-    this.ltr = true; // this depends on the script value
     this.script = script;
 
     this.glyphs = glyphs;
@@ -195,11 +193,6 @@ public final class RenderableText extends RenderNode
   public boolean isForceLinebreak()
   {
     return forceLinebreak;
-  }
-
-  public boolean isLtr()
-  {
-    return ltr;
   }
 
   public GlyphList getGlyphs()
