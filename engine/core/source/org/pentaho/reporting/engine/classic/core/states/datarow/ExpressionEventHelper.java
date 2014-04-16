@@ -36,68 +36,56 @@ public abstract class ExpressionEventHelper
 
   protected void fireReportEvent(final ReportEvent event)
   {
-    if ((event.getType() & ReportEvent.PAGE_STARTED) ==
-        ReportEvent.PAGE_STARTED)
+    if ((event.getType() & ReportEvent.PAGE_STARTED) == ReportEvent.PAGE_STARTED)
     {
       firePageStartedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.PAGE_FINISHED) ==
-        ReportEvent.PAGE_FINISHED)
+    else if ((event.getType() & ReportEvent.PAGE_FINISHED) == ReportEvent.PAGE_FINISHED)
     {
       firePageFinishedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.ITEMS_ADVANCED) ==
-        ReportEvent.ITEMS_ADVANCED)
+    else if ((event.getType() & ReportEvent.ITEMS_ADVANCED) == ReportEvent.ITEMS_ADVANCED)
     {
       fireItemsAdvancedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.ITEMS_FINISHED) ==
-        ReportEvent.ITEMS_FINISHED)
+    else if ((event.getType() & ReportEvent.ITEMS_FINISHED) == ReportEvent.ITEMS_FINISHED)
     {
       fireItemsFinishedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.ITEMS_STARTED) ==
-        ReportEvent.ITEMS_STARTED)
+    else if ((event.getType() & ReportEvent.ITEMS_STARTED) == ReportEvent.ITEMS_STARTED)
     {
       fireItemsStartedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.GROUP_FINISHED) ==
-        ReportEvent.GROUP_FINISHED)
+    else if ((event.getType() & ReportEvent.GROUP_FINISHED) == ReportEvent.GROUP_FINISHED)
     {
       fireGroupFinishedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.GROUP_STARTED) ==
-        ReportEvent.GROUP_STARTED)
+    else if ((event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
     {
       fireGroupStartedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.REPORT_INITIALIZED) ==
-        ReportEvent.REPORT_INITIALIZED)
+    else if ((event.getType() & ReportEvent.REPORT_INITIALIZED) == ReportEvent.REPORT_INITIALIZED)
     {
       fireReportInitializedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.REPORT_DONE) ==
-        ReportEvent.REPORT_DONE)
+    else if ((event.getType() & ReportEvent.REPORT_DONE) == ReportEvent.REPORT_DONE)
     {
       fireReportDoneEvent(event);
     }
-    else if ((event.getType() & ReportEvent.REPORT_FINISHED) ==
-        ReportEvent.REPORT_FINISHED)
+    else if ((event.getType() & ReportEvent.REPORT_FINISHED) == ReportEvent.REPORT_FINISHED)
     {
       fireReportFinishedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.REPORT_STARTED) ==
-        ReportEvent.REPORT_STARTED)
+    else if ((event.getType() & ReportEvent.REPORT_STARTED) == ReportEvent.REPORT_STARTED)
     {
       fireReportStartedEvent(event);
     }
-    else if ((event.getType() & ReportEvent.SUMMARY_ROW) ==
-        ReportEvent.SUMMARY_ROW)
+    else if ((event.getType() & ReportEvent.SUMMARY_ROW) == ReportEvent.SUMMARY_ROW)
     {
       fireSummaryRowEvent(event);
     }
-    else if ((event.getType() & ReportEvent.GROUP_BODY_FINISHED) ==
-        ReportEvent.GROUP_BODY_FINISHED)
+    else //noinspection StatementWithEmptyBody
+      if ((event.getType() & ReportEvent.GROUP_BODY_FINISHED) == ReportEvent.GROUP_BODY_FINISHED)
     {
       // ignore, nothing we handle here
     }
@@ -134,7 +122,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -145,17 +133,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.itemsAdvanced(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.itemsAdvanced(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -189,7 +180,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -200,17 +191,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.itemsStarted(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.itemsStarted(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -245,7 +239,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -256,17 +250,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.itemsFinished(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.itemsFinished(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -300,7 +297,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -311,17 +308,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.groupStarted(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.groupStarted(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -355,7 +355,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -366,17 +366,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.groupFinished(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.groupFinished(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -410,7 +413,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -421,17 +424,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.summaryRowSelection(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.summaryRowSelection(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -465,7 +471,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -476,17 +482,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.reportStarted(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.reportStarted(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -520,7 +529,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -531,17 +540,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.reportDone(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.reportDone(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -575,7 +587,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -586,17 +598,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.reportFinished(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.reportFinished(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -630,7 +645,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -641,17 +656,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final Function e = (Function) expression;
         try
         {
-          e.reportInitialized(event);
+          if (expression instanceof Function)
+          {
+            final Function e = (Function) expression;
+            e.reportInitialized(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -685,7 +703,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getPageFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -696,17 +714,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final PageEventListener e = (PageEventListener) expression;
         try
         {
-          e.pageStarted(event);
+          if (expression instanceof PageEventListener)
+          {
+            final PageEventListener e = (PageEventListener) expression;
+            e.pageStarted(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -740,7 +761,7 @@ public abstract class ExpressionEventHelper
         break;
       }
 
-      final Iterator<Function> expressions = levelData.getPageFunctions();
+      final Iterator<Expression> expressions = levelData.getActiveExpressions();
       while (expressions.hasNext())
       {
         final Expression expression = expressions.next();
@@ -751,17 +772,20 @@ public abstract class ExpressionEventHelper
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
         expression.setRuntime(runtime);
-        final PageEventListener e = (PageEventListener) expression;
         try
         {
-          e.pageFinished(event);
+          if (expression instanceof PageEventListener)
+          {
+            final PageEventListener e = (PageEventListener) expression;
+            e.pageFinished(event);
+          }
           evaluateSingleExpression(expression);
         }
-        catch (InvalidReportStateException rse)
+        catch (final InvalidReportStateException rse)
         {
           throw rse;
         }
-        catch (Exception ex)
+        catch (final Exception ex)
         {
           if (logger.isDebugEnabled())
           {
@@ -827,11 +851,11 @@ public abstract class ExpressionEventHelper
         value = null;
       }
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       logger.info("Evaluation of expression '" + name + "'failed.", e);
       value = null;
