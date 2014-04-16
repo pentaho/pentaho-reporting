@@ -177,7 +177,7 @@ public class SubLayoutProcess extends ExpressionEventHelper implements LayoutPro
       }
       return lp;
     }
-    catch (CloneNotSupportedException cne)
+    catch (final CloneNotSupportedException cne)
     {
       throw new IllegalStateException(cne);
     }
@@ -198,11 +198,11 @@ public class SubLayoutProcess extends ExpressionEventHelper implements LayoutPro
       {
         super.fireReportEvent(event);
       }
-      catch (InvalidReportStateException exception)
+      catch (final InvalidReportStateException exception)
       {
         throw exception;
       }
-      catch (Throwable t)
+      catch (final Throwable t)
       {
         throw new InvalidReportStateException("Failed to fire report event for sub-layout-process", t);
       }

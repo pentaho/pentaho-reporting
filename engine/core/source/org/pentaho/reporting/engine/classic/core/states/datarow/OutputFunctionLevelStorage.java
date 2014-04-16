@@ -23,12 +23,43 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 import org.pentaho.reporting.libraries.base.util.EmptyIterator;
 
-public class OutputFunctionLevelStorage implements LevelStorage, Iterator<Function>
+public class OutputFunctionLevelStorage implements LevelStorage
 {
-  private int level;
-  private boolean pageListener;
-  private Function outputFunction;
-  private boolean hasNextElement;
+  private class GenericIterator<T> implements Iterator<T>
+  {
+    private boolean hasNextElement;
+    private T element;
+
+    private GenericIterator(T element)
+    {
+      this.hasNextElement = true;
+      this.element = element;
+    }
+
+    public boolean hasNext()
+    {
+      return hasNextElement;
+    }
+
+    public T next()
+    {
+      if (hasNextElement == false)
+      {
+        throw new IllegalStateException();
+      }
+      hasNextElement = false;
+      return element;
+    }
+
+    public void remove()
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
+
+  private final Function outputFunction;
+  private final int level;
+  private final boolean pageListener;
 
   public OutputFunctionLevelStorage(final int level,
                                     final Function outputFunction, final boolean pageListener)
@@ -49,45 +80,23 @@ public class OutputFunctionLevelStorage implements LevelStorage, Iterator<Functi
 
   public Iterator<Function> getFunctions()
   {
-    this.hasNextElement = true;
-    return this;
+    return new GenericIterator<Function>(outputFunction);
   }
 
   public Iterator<Function> getPageFunctions()
   {
     if (pageListener)
     {
-      this.hasNextElement = true;
+      return new GenericIterator<Function>(outputFunction);
     }
     else
     {
-      this.hasNextElement = false;
+      return EmptyIterator.emptyIterator();
     }
-    return this;
-  }
-
-  public boolean hasNext()
-  {
-    return hasNextElement;
-  }
-
-  public Function next()
-  {
-    if (hasNextElement == false)
-    {
-      throw new IllegalStateException();
-    }
-    hasNextElement = false;
-    return outputFunction;
-  }
-
-  public void remove()
-  {
-    throw new UnsupportedOperationException();
   }
 
   public Iterator<Expression> getActiveExpressions()
   {
-    return EmptyIterator.emptyIterator();
+    return new GenericIterator<Expression>(outputFunction);
   }
 }
