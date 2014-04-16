@@ -307,8 +307,8 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   public Expression getInstance()
   {
     final ItemAvgFunction function = (ItemAvgFunction) super.getInstance();
-    function.sum.clone();
-    function.itemCount.clone();
+    function.sum = function.sum.clone();
+    function.itemCount = function.itemCount.clone();
     function.lastGroupSequenceNumber = 0;
     return function;
   }
@@ -318,8 +318,8 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
     try
     {
       final ItemAvgFunction clone = (ItemAvgFunction) super.clone();
-      clone.sum.clone();
-      clone.itemCount.clone();
+      clone.sum = clone.sum.clone();
+      clone.itemCount = clone.itemCount.clone();
       return clone;
     }
     catch (CloneNotSupportedException e)
