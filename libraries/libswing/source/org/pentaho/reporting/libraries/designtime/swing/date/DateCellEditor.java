@@ -18,10 +18,10 @@
 package org.pentaho.reporting.libraries.designtime.swing.date;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -38,17 +38,14 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.TableCellEditor;
-import javax.swing.text.JTextComponent;
+import javax.swing.text.DateFormatter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -58,98 +55,6 @@ import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 
 public class DateCellEditor extends JPanel implements TableCellEditor
 {
-  private class TextComponentEditHandler implements Runnable, DocumentListener, ActionListener
-  {
-    private JTextComponent textComponent;
-    private DateChooserPanel dateChooserPanel;
-    private Color color;
-    private boolean inProgress;
-
-    public TextComponentEditHandler(final JTextComponent textComponent,
-                                    final DateChooserPanel dateChooserPanel)
-    {
-      this.textComponent = textComponent;
-      this.dateChooserPanel = dateChooserPanel;
-      this.color = this.textComponent.getBackground();
-    }
-
-    /**
-     * Gives notification that there was an insert into the document.  The range given by the DocumentEvent bounds the
-     * freshly inserted region.
-     *
-     * @param e the document event
-     */
-    public void insertUpdate(final DocumentEvent e)
-    {
-      convertParameterValue();
-    }
-
-    /**
-     * Gives notification that a portion of the document has been removed.  The range is given in terms of what the view
-     * last saw (that is, before updating sticky positions).
-     *
-     * @param e the document event
-     */
-    public void removeUpdate(final DocumentEvent e)
-    {
-      convertParameterValue();
-    }
-
-    /**
-     * Gives notification that an attribute or set of attributes changed.
-     *
-     * @param e the document event
-     */
-    public void changedUpdate(final DocumentEvent e)
-    {
-      convertParameterValue();
-    }
-
-    private void convertParameterValue()
-    {
-      if (inProgress)
-      {
-        return;
-      }
-      inProgress = true;
-      SwingUtilities.invokeLater(this);
-    }
-
-    public void run()
-    {
-      convert();
-    }
-
-    protected void convert()
-    {
-      try
-      {
-        final String text = textComponent.getText();
-        textComponent.setBackground(color);
-
-        final Date date = convertValue(text);
-        dateChooserPanel.setDate(date);
-      }
-      catch (Exception e)
-      {
-        // ignore, do not update (yet).
-        textComponent.setBackground(Color.RED);
-      }
-      finally
-      {
-        inProgress = false;
-      }
-    }
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(final ActionEvent e)
-    {
-      convert();
-    }
-  }
-
   private class PickDateListener extends AbstractAction
   {
 
@@ -198,26 +103,18 @@ public class DateCellEditor extends JPanel implements TableCellEditor
       }
 
       final Date date = (Date) changeEvent.getNewValue();
-      if (date == null)
-      {
-        dateField.setText(null);
-      }
-      else
-      {
-        dateField.setText(sdf.format(date));
-      }
+      dateField.setValue(date);
       if (dateChooserPanel.isDateSelected())
       {
         DebugLog.log("PropertyChange on DATE - about to close");
-        dateWindow.setVisible(false);
+        stopCellEditing();
       }
     }
   }
 
   private static final Log logger = LogFactory.getLog(DateCellEditor.class);
   private DateChooserPanel dateChooserPanel;
-  private JTextField dateField;
-  private DateFormat sdf;
+  private JFormattedTextField dateField;
   private DateChooserPopupMenu dateWindow;
   private JButton pickDateButton;
   private Class dateType;
@@ -237,7 +134,7 @@ public class DateCellEditor extends JPanel implements TableCellEditor
     }
 
     setLayout(new BorderLayout());
-    dateField = new JTextField();
+    dateField = new JFormattedTextField();
     dateField.setColumns(20);
     dateField.setEditable(true);
 
@@ -254,11 +151,22 @@ public class DateCellEditor extends JPanel implements TableCellEditor
       dateChooserPanel = new DateChooserPanel(Calendar.getInstance(), true);
       dateChooserPanel.addPropertyChangeListener(DateChooserPanel.PROPERTY_DATE, new InternalDateUpdateHandler());
 
-      final TextComponentEditHandler listener = new TextComponentEditHandler(dateField, dateChooserPanel);
-      dateField.getDocument().addDocumentListener(listener);
-      dateField.addActionListener(listener);
-
-      if (sdf == null)
+      dateField.addPropertyChangeListener("value", new PropertyChangeListener()
+      {
+        public void propertyChange(final PropertyChangeEvent evt)
+        {
+          dateChooserPanel.setDate((Date) evt.getNewValue(), false);
+          dateChooserPanel.setDateSelected(true);
+        }
+      });
+      dateField.addFocusListener(new FocusAdapter()
+      {
+        public void focusGained(final FocusEvent e)
+        {
+          dateChooserPanel.setDateSelected(false);
+        }
+      });
+      if (dateField.getFormatterFactory() == null)
       {
         setDateFormat(createDateFormat(DEFAULT_FORMAT, Locale.getDefault(), TimeZone.getDefault()));
       }
@@ -313,14 +221,11 @@ public class DateCellEditor extends JPanel implements TableCellEditor
         final String text = (String) value;
         if (StringUtils.isEmpty(text))
         {
-          dateChooserPanel.setDate(null);
           dateField.setText(null);
         }
         else
         {
-          final Date date = convertValue(text);
-          dateChooserPanel.setDate(date);
-          dateField.setText(sdf.format(date));
+          dateField.setValue(text);
         }
       }
       catch (Exception e)
@@ -331,8 +236,7 @@ public class DateCellEditor extends JPanel implements TableCellEditor
     else if (value instanceof Date)
     {
       final Date date = (Date) value;
-      dateChooserPanel.setDate(date);
-      dateField.setText(sdf.format(date));
+      dateField.setValue(date);
     }
     else
     {
@@ -341,27 +245,6 @@ public class DateCellEditor extends JPanel implements TableCellEditor
     }
   }
 
-
-  protected Date convertValue(final String text)
-  {
-    if (StringUtils.isEmpty(text))
-    {
-      return null;
-    }
-
-    try
-    {
-      final Date o = (Date) sdf.parseObject(text);
-      // this magic converts the date or number value to the real type.
-      // the formatter always returns doubles/bigdecimals or java.util.Dates
-      // but we may need sql-dates, long-objects etc ..
-      return DateConverter.convertToDateType(o, dateType);
-    }
-    catch (ParseException e)
-    {
-      throw new RuntimeException("Failed to format object");
-    }
-  }
 
   /**
    * Sets an initial <code>value</code> for the editor.  This will cause
@@ -457,11 +340,14 @@ public class DateCellEditor extends JPanel implements TableCellEditor
    */
   public boolean stopCellEditing()
   {
+    if (dateChooserPanel.isDateSelected())
+    {
+      fireEditingStopped();
+    }
     if (dateWindow != null)
     {
       dateWindow.setVisible(false);
     }
-    fireEditingStopped();
     return true;
   }
 
@@ -529,7 +415,20 @@ public class DateCellEditor extends JPanel implements TableCellEditor
       throw new NullPointerException();
     }
 
-    sdf = timeFormat;
+    dateField.setFormatterFactory(new JFormattedTextField.AbstractFormatterFactory()
+    {
+      public JFormattedTextField.AbstractFormatter getFormatter(final JFormattedTextField tf)
+      {
+        return new DateFormatter(timeFormat) {
+          // allow to clear the field
+          public Object stringToValue(final String text) throws ParseException
+          {
+            return "".equals(text) ? null : super.stringToValue(text);
+          }
+        };
+      }
+    });
+
     if (timeFormat instanceof SimpleDateFormat)
     {
       final SimpleDateFormat dateFormat = (SimpleDateFormat) timeFormat;
@@ -543,10 +442,5 @@ public class DateCellEditor extends JPanel implements TableCellEditor
     {
       setDate(getCellEditorValue());
     }
-  }
-
-  public DateFormat getDateFormat()
-  {
-    return sdf;
   }
 }
