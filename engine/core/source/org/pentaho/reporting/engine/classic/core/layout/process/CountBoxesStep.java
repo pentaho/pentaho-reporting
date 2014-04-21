@@ -65,6 +65,11 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
     return totalCount;
   }
 
+  public int getTotalCount()
+  {
+    return totalCount;
+  }
+
   public void process(final LogicalPageBox box)
   {
     if (!enabled)

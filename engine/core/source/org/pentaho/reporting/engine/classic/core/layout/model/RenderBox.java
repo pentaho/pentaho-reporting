@@ -90,6 +90,9 @@ public abstract class RenderBox extends RenderNode
   private long contentAge;
   private long overflowAreaWidth;
   private long overflowAreaHeight;
+  private long processKeyStepAge;
+  private ReportStateKey processKeyCached;
+  private boolean processKeyFinish;
 
   /**
    * Is the amount of space reserved for orphans beginning at the y-position of the box.
@@ -1586,5 +1589,27 @@ public abstract class RenderBox extends RenderNode
   {
     setFlag(FLAG_BOX_PREVENT_PAGINATION, preventPagination);
     updateChangeTracker();
+  }
+
+  public void setProcessKeyCached(final ReportStateKey processKeyCached)
+  {
+    this.processKeyStepAge = getChangeTracker();
+    this.processKeyCached = processKeyCached;
+    this.processKeyFinish = isFinishedPaginate();
+  }
+
+  public long getProcessKeyStepAge()
+  {
+    return processKeyStepAge;
+  }
+
+  public ReportStateKey getProcessKeyCached()
+  {
+    return processKeyCached;
+  }
+
+  public boolean isProcessKeyFinish()
+  {
+    return processKeyFinish;
   }
 }
