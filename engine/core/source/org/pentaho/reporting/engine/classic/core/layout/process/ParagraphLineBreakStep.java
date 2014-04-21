@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnG
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
@@ -69,7 +68,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   private FastStack<ParagraphLinebreaker> paragraphNesting;
   private ParagraphLinebreaker breakState;
   private SimpleLinebreaker reusableSimpleLinebreaker;
-  private boolean complexText;
 
   public ParagraphLineBreakStep()
   {
@@ -78,7 +76,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   public void initialize(final OutputProcessorMetaData metaData)
   {
-    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox root)
@@ -102,12 +99,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   protected boolean startBlockBox(final BlockRenderBox box)
   {
-    if (complexText)
-    {
-      breakState = null;
-      return true;
-    }
-
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
@@ -230,11 +221,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   protected void finishBlockBox(final BlockRenderBox box)
   {
     box.setLinebreakAge(box.getChangeTracker());
-    if (complexText)
-    {
-      breakState = null;
-      return;
-    }
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {

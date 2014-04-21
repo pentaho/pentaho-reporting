@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexT
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class TextHelper
@@ -42,14 +43,15 @@ public class TextHelper
   {
     private String text;
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
-    private ReportAttributeMap originalAttributes;
+    private ReportAttributeMap<Object> originalAttributes;
     private StyleSheet styleSheet;
+    private InstanceID instanceID;
     private RenderNode node;
 
     private AttributedStringChunk(final String text,
                                   final Map<AttributedCharacterIterator.Attribute, Object> attributes,
-                                  final ReportAttributeMap originalAttributes,
-                                  final StyleSheet styleSheet,
+                                  final ReportAttributeMap<Object> originalAttributes,
+                                  final StyleSheet styleSheet, final InstanceID instanceID,
                                   final RenderNode node)
     {
       ArgumentNullException.validate("text", text);
@@ -57,6 +59,7 @@ public class TextHelper
       ArgumentNullException.validate("node", node);
       ArgumentNullException.validate("originalAttributes", originalAttributes);
       ArgumentNullException.validate("styleSheet", styleSheet);
+      ArgumentNullException.validate("instanceID", instanceID);
 
       if (text.length() == 0)
       {
@@ -66,6 +69,7 @@ public class TextHelper
       {
         this.text = text;
       }
+      this.instanceID = instanceID;
       this.node = node;
       this.attributes = attributes;
       this.originalAttributes = originalAttributes;
@@ -82,7 +86,7 @@ public class TextHelper
       return attributes;
     }
 
-    public ReportAttributeMap getOriginalAttributes()
+    public ReportAttributeMap<Object> getOriginalAttributes()
     {
       return originalAttributes;
     }
@@ -90,6 +94,11 @@ public class TextHelper
     public StyleSheet getStyleSheet()
     {
       return styleSheet;
+    }
+
+    public InstanceID getInstanceID()
+    {
+      return instanceID;
     }
   }
 
@@ -99,7 +108,8 @@ public class TextHelper
     computeText(lineBoxContainer, attr);
     if (attr.isEmpty())
     {
-      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()), lineBoxContainer.getAttributes(), lineBoxContainer.getStyleSheet(), lineBoxContainer));
+      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()),
+          lineBoxContainer.getAttributes(), lineBoxContainer.getStyleSheet(), new InstanceID(), lineBoxContainer));
     }
 
     attr = processWhitespaceRules(lineBoxContainer, attr);
@@ -118,7 +128,8 @@ public class TextHelper
   {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
     attr.add(new AttributedStringChunk(textChunk,
-        computeStyle(textNode.getStyleSheet()), textNode.getAttributes(), textNode.getStyleSheet(), textNode));
+        computeStyle(textNode.getStyleSheet()), textNode.getAttributes(),
+        textNode.getStyleSheet(), textNode.getInstanceId(), textNode));
 
     StringBuilder text = new StringBuilder();
     for (final AttributedStringChunk chunk : attr)
@@ -137,8 +148,8 @@ public class TextHelper
     {
       int length = chunk.getText().length();
       int endIndex = startPosition + length;
-      result.add(new RichTextSpec.StyledChunk
-          (startPosition, endIndex, chunk.node, chunk.getAttributes(), chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getText()));
+      result.add(new RichTextSpec.StyledChunk(startPosition, endIndex, chunk.node, chunk.getAttributes(),
+          chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getInstanceID(), chunk.getText()));
       startPosition = endIndex;
     }
     return result;
@@ -172,7 +183,8 @@ public class TextHelper
       if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
       {
         final RenderableComplexText complexNode = (RenderableComplexText) node;
-        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()), node.getAttributes(), node.getStyleSheet(), node));
+        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()),
+            node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
       }
       else if (node instanceof RenderBox)
       {

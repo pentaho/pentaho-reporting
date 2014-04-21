@@ -146,9 +146,18 @@ public class RenderableComplexText extends RenderNode
       throw new IllegalStateException("Not from the same source");
     }
 
-    final RenderableComplexText text = new RenderableComplexText(getStyleSheet(),
-        getInstanceId(), getElementType(), getAttributes(), richText, start, suffix.end);
+    final RenderableComplexText text = (RenderableComplexText) derive(true);
+    text.end = suffix.end;
     text.setMinimumChunkWidth(Math.max (getMinimumChunkWidth(), suffix.getMinimumChunkWidth()));
     return text;
+  }
+
+  public boolean isSameSource(final RenderableComplexText suffix)
+  {
+    if (richText != suffix.richText)
+    {
+      return false;
+    }
+    return true;
   }
 }

@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldenSampleGenerator;
@@ -61,7 +62,7 @@ public class PagebreakTest
     final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");
     report.getReportHeader().addElement(table);
-    report.getReportHeader().setLayout("block");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
     assertPageValid(report, 0);
     assertPageValid(report, 1);
@@ -84,7 +85,7 @@ public class PagebreakTest
 
     table.setName("table");
     report.getReportHeader().addElement(table);
-    report.getReportHeader().setLayout("block");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-rowspan-output.pdf");
 /*
@@ -106,7 +107,7 @@ public class PagebreakTest
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Pre-Padding", 100, 10));
     report.getReportHeader().addElement(table);
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
-    report.getReportHeader().setLayout("block");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-block.pdf");
 

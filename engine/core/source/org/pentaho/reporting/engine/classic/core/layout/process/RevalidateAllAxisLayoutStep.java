@@ -734,7 +734,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
         if (n instanceof RenderableComplexText)
         {
           RenderableComplexText lastLine = (RenderableComplexText) n;
-          if (lastLine.getInstanceId() == childAsText.getInstanceId())
+          if (lastLine.isSameSource(childAsText))
           {
             lineBox.replaceChild(n, lastLine.merge(childAsText));
           }

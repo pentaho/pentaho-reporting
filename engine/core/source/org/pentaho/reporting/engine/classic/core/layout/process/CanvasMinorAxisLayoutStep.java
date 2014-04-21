@@ -22,6 +22,7 @@ import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
 import java.text.BreakIterator;
+import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -267,6 +268,11 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     BreakIterator wordInstance = BreakIterator.getWordInstance();
     wordInstance.setText(richText.getText());
 
+    ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
+    float ascent = 0;
+    float descent = 0;
+    float leading = 0;
+
     final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
     while (lineBreakMeasurer.getPosition() < characterIterator.getEndIndex())
     {
@@ -305,8 +311,19 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       }
 
       final RenderableComplexText text = richText.create(lineBoxContainer, start, end);
-      final RenderBox line = generateLine(box, lineBoxContainer, text, textLayout);
+      text.setTextLayout(textLayout);
       // and finally add the line to the paragraph
+      lines.add(text);
+
+      ascent = Math.max (ascent, textLayout.getAscent());
+      descent = Math.max (descent, textLayout.getDescent());
+      leading = Math.max (leading, textLayout.getLeading());
+    }
+
+    double height = ascent + descent + leading;
+    for (RenderableComplexText text : lines)
+    {
+      final RenderBox line = generateLine(box, lineBoxContainer, text, height);
       box.addGeneratedChild(line);
     }
   }
@@ -318,13 +335,16 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     TextHelper helper = new TextHelper();
     RichTextSpec richText = helper.computeText(lineBoxContainer);
     final AttributedCharacterIterator ci = richText.createAttributedCharacterIterator();
-    final RenderableComplexText text = richText.create(lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex());
 
     final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
     final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-    final TextLayout textLayout = new TextLayout(ci, fontRenderContext);
 
-    final RenderBox line = generateLine(box, lineBoxContainer, text, textLayout);
+    final RenderableComplexText text = richText.create(lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex());
+    TextLayout textLayout = new TextLayout(ci, fontRenderContext);
+    double height = textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
+    text.setTextLayout(textLayout);
+
+    final RenderBox line = generateLine(box, lineBoxContainer, text, height);
     // and finally add the line to the paragraph
     nodeContext.updateX2(line.getCachedX2());
     box.addGeneratedChild(line);
@@ -333,16 +353,14 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   private RenderBox generateLine(final ParagraphRenderBox paragraph,
                                  final ParagraphPoolBox lineBoxContainer,
                                  final RenderableComplexText text,
-                                 final TextLayout textLayout)
+                                 final double height)
   {
     //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
-    text.setTextLayout(textLayout);
+    TextLayout textLayout = text.getTextLayout();
 
     // Store the height and width, so that the other parts of the layouter have access to the information
 //        text.setCachedHeight();
-    text.setCachedHeight
-        (Math.max (StrictGeomUtility.toInternalValue(textLayout.getBounds().getHeight()),
-        lineBoxContainer.getLineHeight()));
+    text.setCachedHeight(Math.max (StrictGeomUtility.toInternalValue(height), lineBoxContainer.getLineHeight()));
     text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
 
     MinorAxisNodeContext nodeContext = getNodeContext();

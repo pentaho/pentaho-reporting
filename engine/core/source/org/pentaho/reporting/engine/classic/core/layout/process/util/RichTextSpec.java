@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class RichTextSpec
@@ -44,13 +45,14 @@ public class RichTextSpec
     private Map<AttributedCharacterIterator.Attribute, Object> attributes;
     private ReportAttributeMap<Object> originalAttributes;
     private StyleSheet styleSheet;
+    private InstanceID instanceID;
 
     public StyledChunk(final int start,
                        final int end,
                        final RenderNode originatingTextNode,
                        final Map<AttributedCharacterIterator.Attribute, Object> attributes,
                        final ReportAttributeMap<Object> originalAttributes,
-                       final StyleSheet styleSheet,
+                       final StyleSheet styleSheet, final InstanceID instanceID,
                        final String text)
     {
       ArgumentNullException.validate("originatingTextNode", originatingTextNode);
@@ -58,7 +60,9 @@ public class RichTextSpec
       ArgumentNullException.validate("text", text);
       ArgumentNullException.validate("originalAttributes", originalAttributes);
       ArgumentNullException.validate("styleSheet", styleSheet);
+      ArgumentNullException.validate("instanceID", instanceID);
 
+      this.instanceID = instanceID;
       this.start = start;
       this.end = end;
       this.originatingTextNode = originatingTextNode;
@@ -116,6 +120,10 @@ public class RichTextSpec
 
       final StyledChunk that = (StyledChunk) o;
 
+      if (instanceID != that.instanceID)
+      {
+        return false;
+      }
       if (end != that.end)
       {
         return false;
@@ -140,10 +148,16 @@ public class RichTextSpec
       return true;
     }
 
+    public InstanceID getInstanceID()
+    {
+      return instanceID;
+    }
+
     public int hashCode()
     {
       int result = start;
       result = 31 * result + end;
+      result = 31 * result + instanceID.hashCode();
       result = 31 * result + originatingTextNode.hashCode();
       result = 31 * result + text.hashCode();
       result = 31 * result + attributes.hashCode();
@@ -248,7 +262,8 @@ public class RichTextSpec
       }
 
       String clippedText = text.substring(textStart, textEnd);
-      clippedChunks.add(new StyledChunk(chunkStart, chunkEnd, chunk.originatingTextNode, chunk.attributes, chunk.originalAttributes, chunk.styleSheet, clippedText));
+      clippedChunks.add(new StyledChunk(chunkStart, chunkEnd, chunk.originatingTextNode,
+          chunk.attributes, chunk.originalAttributes, chunk.styleSheet, chunk.instanceID, clippedText));
     }
     return new RichTextSpec(text.substring(start, end), clippedChunks);
   }
