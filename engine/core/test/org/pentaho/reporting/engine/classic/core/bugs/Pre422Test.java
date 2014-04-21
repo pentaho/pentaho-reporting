@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -65,6 +66,8 @@ public class Pre422Test extends TestCase
 
 
     final MasterReport basereport = new MasterReport();
+    basereport.setCompatibilityLevel(null);
+    basereport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
 
     final Band band = report.getReportHeader();

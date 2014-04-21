@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -101,6 +102,8 @@ public class PagebreakTest
     final MasterReport report = new MasterReport();
     report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
     report.setQuery("query");
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
 
     final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");

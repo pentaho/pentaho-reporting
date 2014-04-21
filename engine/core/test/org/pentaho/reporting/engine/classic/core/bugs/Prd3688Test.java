@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -59,7 +60,9 @@ public class Prd3688Test extends TestCase
   public void testPrd3688() throws Exception
   {
     final MasterReport report = new MasterReport();
-    
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+
     final Element e1 = createDataItem("Header");
     e1.setName("E1");
     e1.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -37f);

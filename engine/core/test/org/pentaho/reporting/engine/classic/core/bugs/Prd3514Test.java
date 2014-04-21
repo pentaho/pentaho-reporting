@@ -105,7 +105,7 @@ public class Prd3514Test extends TestCase
     assertEquals(0, textFieldBox.getY());
 
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
-    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(28), textFieldBox.getHeight());
   }
 
   public void testLineBreaksOnEnd() throws ReportProcessingException, ContentProcessingException
@@ -137,7 +137,7 @@ public class Prd3514Test extends TestCase
     assertEquals(0, textFieldBox.getY());
 
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
-    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(20), textFieldBox.getHeight());
   }
 
   public void testMultipleLineBreaks() throws ReportProcessingException, ContentProcessingException
@@ -169,7 +169,7 @@ public class Prd3514Test extends TestCase
     assertEquals(0, textFieldBox.getY());
 
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
-    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(42), textFieldBox.getHeight());
   }
 
 
