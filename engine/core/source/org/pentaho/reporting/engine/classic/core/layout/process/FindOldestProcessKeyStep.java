@@ -32,8 +32,7 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
 
   public ReportStateKey find(final RenderBox box)
   {
-    if (box.getProcessKeyStepAge() == box.getChangeTracker() &&
-        box.isProcessKeyFinish() == box.isFinishedPaginate())
+    if (box.isProcessKeyCacheValid())
     {
       return box.getProcessKeyCached();
     }
@@ -67,8 +66,7 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
 
   protected boolean startBox(final RenderBox box)
   {
-    if (box.getProcessKeyStepAge() == box.getChangeTracker() &&
-        box.isProcessKeyFinish() == box.isFinishedPaginate())
+    if (box.isProcessKeyCacheValid())
     {
       key = box.getProcessKeyCached();
       return false;
@@ -77,9 +75,13 @@ public class FindOldestProcessKeyStep extends IterateSimpleStructureProcessStep
     processOtherNode(box);
     if (finishedPaginate == true)
     {
-      box.setFinishedPaginate(finishedPaginate);
+      box.setFinishedPaginate(true);
     }
-    box.setProcessKeyCached(key);
     return true;
+  }
+
+  protected void finishBox(final RenderBox box)
+  {
+    box.setProcessKeyCached(key);
   }
 }
