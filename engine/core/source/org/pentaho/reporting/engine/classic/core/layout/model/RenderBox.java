@@ -93,6 +93,7 @@ public abstract class RenderBox extends RenderNode
   private long processKeyStepAge;
   private ReportStateKey processKeyCached;
   private boolean processKeyFinish;
+  private int processKeyContentRefCount;
 
   /**
    * Is the amount of space reserved for orphans beginning at the y-position of the box.
@@ -1601,6 +1602,7 @@ public abstract class RenderBox extends RenderNode
     this.processKeyStepAge = getChangeTracker();
     this.processKeyCached = processKeyCached;
     this.processKeyFinish = isFinishedPaginate();
+    this.processKeyContentRefCount = getDescendantCount();
   }
 
   public long getProcessKeyStepAge()
@@ -1616,5 +1618,22 @@ public abstract class RenderBox extends RenderNode
   public boolean isProcessKeyFinish()
   {
     return processKeyFinish;
+  }
+
+  public boolean isProcessKeyCacheValid()
+  {
+    if (processKeyCached == null)
+    {
+      return false;
+    }
+    if (getContentRefCount() != 0)
+    {
+      // subreport content cannot be cached ..
+      return false;
+    }
+    return (getProcessKeyStepAge() == getChangeTracker() &&
+        isProcessKeyFinish() == isFinishedPaginate() &&
+        this.processKeyContentRefCount == getDescendantCount());
+
   }
 }
