@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 

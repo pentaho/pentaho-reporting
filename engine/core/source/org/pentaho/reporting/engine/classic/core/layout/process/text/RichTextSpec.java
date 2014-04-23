@@ -17,7 +17,7 @@
  *
  */
 
-package org.pentaho.reporting.engine.classic.core.layout.process.util;
+package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
@@ -266,6 +266,12 @@ public class RichTextSpec
           chunk.attributes, chunk.originalAttributes, chunk.styleSheet, chunk.instanceID, clippedText));
     }
     return new RichTextSpec(text.substring(start, end), clippedChunks);
+  }
+
+  public RenderableComplexText create(final RenderBox lineBoxContainer)
+  {
+    AttributedCharacterIterator ci = createAttributedCharacterIterator();
+    return create(lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex());
   }
 
   public RenderableComplexText create(final RenderBox lineBoxContainer,

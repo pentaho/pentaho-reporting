@@ -18,15 +18,12 @@
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
 import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
 import java.text.AttributedCharacterIterator;
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
@@ -40,9 +37,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.process.AbstractMinorAxisLayoutStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContext;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
@@ -52,9 +46,33 @@ import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
     implements TextMinorAxisLayoutStep
 {
-  private static final Log logger = LogFactory.getLog(ComplexTextMinorAxisLayoutStep.class);
+  private static class ParagraphFontMetrics
+  {
+    private float ascent = 0;
+    private float descent = 0;
+    private float leading = 0;
 
-  private OutputProcessorMetaData metaData;
+    public ParagraphFontMetrics()
+    {
+    }
+
+    public void update(TextLayout textLayout)
+    {
+      ascent = Math.max(ascent, textLayout.getAscent());
+      descent = Math.max(descent, textLayout.getDescent());
+      leading = Math.max(leading, textLayout.getLeading());
+    }
+
+    public float getLineHeight()
+    {
+      return ascent + descent + leading;
+    }
+  }
+
+  private static final Log logger = LogFactory.getLog(ComplexTextMinorAxisLayoutStep.class);
+  private final boolean strictCompatibility;
+  private final OutputProcessorMetaData metaData;
+
   private MinorAxisNodeContext nodeContext;
 
   public ComplexTextMinorAxisLayoutStep(final OutputProcessorMetaData metaData)
@@ -62,6 +80,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     ArgumentNullException.validate("metaData", metaData);
 
     this.metaData = metaData;
+    this.strictCompatibility = getMetaData().isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY);
   }
 
   public void process(final ParagraphRenderBox box, final MinorAxisNodeContext nodeContext, final PageGrid pageGrid)
@@ -114,43 +133,10 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     }
   }
 
-  private LineBreakMeasurer createLineBreakMeasurer(final AttributedCharacterIterator characterIterator,
-                                                    final StyleSheet layoutContext)
+  private FontRenderContext createFontRenderContext(final StyleSheet layoutContext)
   {
     final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-    return new LineBreakMeasurer(characterIterator, fontRenderContext);
-  }
-
-  private void updateNodeContextWidth(final ParagraphRenderBox paragraph)
-  {
-    MinorAxisNodeContext nodeContext = getNodeContext();
-    final long lineEnd;
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
-    if (overflowX)
-    {
-      lineEnd = nodeContext.getX1() + AbstractMinorAxisLayoutStep.OVERFLOW_DUMMY_WIDTH;
-    }
-    else
-    {
-      lineEnd = nodeContext.getX2();
-    }
-
-    long firstLineIndent = 0; // todo
-    long lineStart = Math.min(lineEnd, nodeContext.getX1() + firstLineIndent);
-    if (lineEnd - lineStart <= 0)
-    {
-      final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
-      nodeContext.updateX2(lineStart + minimumChunkWidth);
-      logger.warn("Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName());
-    }
-    else
-    {
-      if (overflowX == false)
-      {
-        nodeContext.updateX2(lineEnd);
-      }
-    }
+    return new FontRenderContext(null, antiAliasing, true);
   }
 
   private void addGeneratedComplexTextLines(final ParagraphRenderBox box,
@@ -162,77 +148,28 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     // Determine if anti-aliasing is required or not
     if (TextWrap.NONE.equals(box.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)))
     {
-      addUnbreakableText(box, lineBoxContainer, layoutContext);
+      addCompleteLine(box, lineBoxContainer, layoutContext);
       return;
     }
 
-    boolean breakOnWordBoundary =
-        getMetaData().isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) ||
-            lineBoxContainer.getStyleSheet().getBooleanStyleProperty(TextStyleKeys.WORDBREAK);
-
     // Create a LineBreakMeasurer to break down that string into lines.
-    RichTextSpec richText = new TextHelper().computeText(lineBoxContainer);
-    final AttributedCharacterIterator characterIterator = richText.createAttributedCharacterIterator();
-
-    final LineBreakMeasurer lineBreakMeasurer = createLineBreakMeasurer(characterIterator, layoutContext);
-
-    lineBreakMeasurer.setPosition(characterIterator.getBeginIndex());
-    BreakIterator wordInstance = BreakIterator.getWordInstance();
-    wordInstance.setText(richText.getText());
+    final RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer);
+    final LineBreakIterator lineIterator = createLineBreakIterator(box, layoutContext, richText);
 
     ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
-    float ascent = 0;
-    float descent = 0;
-    float leading = 0;
-
-    final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
-    while (lineBreakMeasurer.getPosition() < characterIterator.getEndIndex())
+    ParagraphFontMetrics metrics = new ParagraphFontMetrics();
+    while (lineIterator.hasNext())
     {
-      // For each line produced by the LinebreakMeasurer
-      int start = lineBreakMeasurer.getPosition();
-      // float is the worst option to have accurate layouts. So we have to 'adjust' for rounding errors
-      // and hope that no one notices ..
-      TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth + 0.5f, characterIterator.getEndIndex(), false);
-      int end = lineBreakMeasurer.getPosition();
+      final LineBreakIteratorState state = lineIterator.next();
 
-      if (breakOnWordBoundary)
-      {
-        if (wordInstance.isBoundary(end) == false)
-        {
-          int preceding = wordInstance.preceding(end);
-          if (preceding == start)
-          {
-            // single word does not fit on the line, so print full word
-            lineBreakMeasurer.setPosition(start);
-            textLayout = lineBreakMeasurer.nextLayout(100000000f, wordInstance.following(end), false);
-            end = lineBreakMeasurer.getPosition();
-          }
-          else
-          {
-            lineBreakMeasurer.setPosition(start);
-            textLayout = lineBreakMeasurer.nextLayout(100000000f, preceding, false);
-            end = lineBreakMeasurer.getPosition();
-          }
-        }
-      }
-
-      // check if the text must be justified
-      if (ElementAlignment.JUSTIFY.equals(box.getStyleSheet().getStyleProperty(ElementStyleKeys.ALIGNMENT)))
-      {
-        textLayout = textLayout.getJustifiedLayout(wrappingWidth);
-      }
-
-      final RenderableComplexText text = richText.create(lineBoxContainer, start, end);
-      text.setTextLayout(textLayout);
+      final RenderableComplexText text = richText.create(lineBoxContainer, state.getStart(), state.getEnd());
+      text.setTextLayout(state.getTextLayout());
+      metrics.update(state.getTextLayout());
       // and finally add the line to the paragraph
       lines.add(text);
-
-      ascent = Math.max(ascent, textLayout.getAscent());
-      descent = Math.max(descent, textLayout.getDescent());
-      leading = Math.max(leading, textLayout.getLeading());
     }
 
-    double height = ascent + descent + leading;
+    final double height = metrics.getLineHeight();
     for (RenderableComplexText text : lines)
     {
       final RenderBox line = generateLine(box, lineBoxContainer, text, height);
@@ -240,20 +177,36 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     }
   }
 
-  private void addUnbreakableText(final ParagraphRenderBox box,
-                                  final ParagraphPoolBox lineBoxContainer,
-                                  final StyleSheet layoutContext)
+  private LineBreakIterator createLineBreakIterator(final ParagraphRenderBox box,
+                                                    final StyleSheet layoutContext,
+                                                    final RichTextSpec richText)
   {
-    TextHelper helper = new TextHelper();
-    RichTextSpec richText = helper.computeText(lineBoxContainer);
     final AttributedCharacterIterator ci = richText.createAttributedCharacterIterator();
+    final FontRenderContext fontRenderContext = createFontRenderContext(layoutContext);
+    final boolean breakOnWordBoundary = strictCompatibility ||
+        layoutContext.getBooleanStyleProperty(TextStyleKeys.WORDBREAK);
 
-    final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
+    if (breakOnWordBoundary)
+    {
+      return new WordBreakingLineIterator(box, fontRenderContext, ci, richText.getText());
+    }
+    else
+    {
+      return new LineBreakIterator(box, fontRenderContext, ci);
+    }
+  }
 
-    final RenderableComplexText text = richText.create(lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex());
-    TextLayout textLayout = new TextLayout(ci, fontRenderContext);
+  private void addCompleteLine(final ParagraphRenderBox box,
+                               final ParagraphPoolBox lineBoxContainer,
+                               final StyleSheet layoutContext)
+  {
+    RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer);
+
+    final FontRenderContext fontRenderContext = createFontRenderContext(layoutContext);
+    final TextLayout textLayout = new TextLayout(richText.createAttributedCharacterIterator(), fontRenderContext);
     double height = textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
+
+    final RenderableComplexText text = richText.create(lineBoxContainer);
     text.setTextLayout(textLayout);
 
     final RenderBox line = generateLine(box, lineBoxContainer, text, height);
@@ -288,6 +241,37 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     line.setCachedX(alignmentX + nodeContext.getX());
     line.setCachedWidth(nodeContext.getContentAreaWidth());
     return line;
+  }
+
+  private void updateNodeContextWidth(final ParagraphRenderBox paragraph)
+  {
+    MinorAxisNodeContext nodeContext = getNodeContext();
+    final long lineEnd;
+    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
+    if (overflowX)
+    {
+      lineEnd = nodeContext.getX1() + AbstractMinorAxisLayoutStep.OVERFLOW_DUMMY_WIDTH;
+    }
+    else
+    {
+      lineEnd = nodeContext.getX2();
+    }
+
+    long firstLineIndent = 0; // todo
+    long lineStart = Math.min(lineEnd, nodeContext.getX1() + firstLineIndent);
+    if (lineEnd - lineStart <= 0)
+    {
+      final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
+      nodeContext.updateX2(lineStart + minimumChunkWidth);
+      logger.warn("Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName());
+    }
+    else
+    {
+      if (overflowX == false)
+      {
+        nodeContext.updateX2(lineEnd);
+      }
+    }
   }
 
 }

@@ -10,8 +10,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayout
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpecProducer;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -88,7 +88,7 @@ public class RenderableComplexText extends RenderNode
     {
       String word = text.substring(start, end);
       AttributedCharacterIterator attributedCharacterIterator =
-          new TextHelper().computeText(this, word).createAttributedCharacterIterator();
+          new RichTextSpecProducer().computeText(this, word).createAttributedCharacterIterator();
       TextLayout t = new TextLayout(attributedCharacterIterator, fontRenderContext);
       double width = t.getVisibleAdvance();
       final long wordMinChunkWidth = StrictGeomUtility.toInternalValue(width);

@@ -17,7 +17,7 @@
  *
  */
 
-package org.pentaho.reporting.engine.classic.core.layout.process.util;
+package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
 import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
@@ -37,7 +37,7 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
-public class TextHelper
+public class RichTextSpecProducer
 {
   private static class AttributedStringChunk
   {
@@ -102,6 +102,11 @@ public class TextHelper
     }
   }
 
+  public static RichTextSpec compute(final RenderBox lineBoxContainer)
+  {
+    return new RichTextSpecProducer().computeText(lineBoxContainer);
+  }
+
   public RichTextSpec computeText(final RenderBox lineBoxContainer)
   {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
@@ -158,6 +163,7 @@ public class TextHelper
   private List<AttributedStringChunk> processWhitespaceRules(final RenderBox lineBoxContainer,
                                                              final List<AttributedStringChunk> attrs)
   {
+    // todo
     Object ws = lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);
     if (WhitespaceCollapse.PRESERVE_BREAKS.equals(ws))
     {
@@ -185,6 +191,11 @@ public class TextHelper
         final RenderableComplexText complexNode = (RenderableComplexText) node;
         chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()),
             node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
+      }
+      else if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
+      {
+        final RenderableComplexText content = (RenderableComplexText) node;
+        // todo
       }
       else if (node instanceof RenderBox)
       {
