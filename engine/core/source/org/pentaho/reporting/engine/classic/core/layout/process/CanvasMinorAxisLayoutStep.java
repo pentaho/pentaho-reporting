@@ -17,28 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextLayout;
-import java.text.AttributedCharacterIterator;
-import java.text.BreakIterator;
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
-import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnNode;
@@ -46,29 +35,13 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
-import org.pentaho.reporting.engine.classic.core.layout.process.alignment.TextAlignmentProcessor;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.EndSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineNodeSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.ReplacedContentSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.SequenceList;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.SpacerSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.StartSequenceElement;
-import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.TextSequenceElement;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.ComplexTextMinorAxisLayoutStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.SimpleTextMinorAxisLayoutStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.TextMinorAxisLayoutStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContext;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNodeContextPool;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.RichTextSpec;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.TextHelper;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.TextWrap;
-import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
-import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 
@@ -88,16 +61,14 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 {
   private static final Log logger = LogFactory.getLog(CanvasMinorAxisLayoutStep.class);
 
-  private MinorAxisParagraphBreakState lineBreakState;
   private MinorAxisNodeContext nodeContext;
   private MinorAxisNodeContextPool nodeContextPool;
   private PerformanceLoggingStopWatch paragraphLayoutWatch;
-  private boolean complexText;
+  private TextMinorAxisLayoutStep textMinorAxisLayoutStep;
 
   public CanvasMinorAxisLayoutStep()
   {
     nodeContextPool = new MinorAxisNodeContextPool();
-    lineBreakState = new MinorAxisParagraphBreakState();
   }
 
   public void initializePerformanceMonitoring(final PerformanceMonitorContext monitorContext)
@@ -108,6 +79,7 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
             getClass().getSimpleName() + ".ParagraphLayout"));
   }
 
+
   public void close()
   {
     super.close();
@@ -117,421 +89,55 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
   public void initialize(final OutputProcessorMetaData metaData)
   {
     super.initialize(metaData);
-    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+    if (metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
+    {
+      textMinorAxisLayoutStep = new ComplexTextMinorAxisLayoutStep(metaData);
+    }
+    else
+    {
+      textMinorAxisLayoutStep = new SimpleTextMinorAxisLayoutStep(metaData);
+    }
   }
 
   public void compute(final LogicalPageBox root)
   {
-    getLineBreakState().clear();
     super.compute(root);
   }
 
   protected boolean startParagraphBox(final RenderBox box)
   {
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
+    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
     {
-      final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
-      if (paragraphBox.isLineBoxUnchanged())
-      {
-        nodeContext.updateX2(paragraphBox.getCachedMaxChildX2());
-        return false;
-      }
+      return true;
+    }
 
+    final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
+    if (paragraphBox.isLineBoxUnchanged())
+    {
+      nodeContext.updateX2(paragraphBox.getCachedMaxChildX2());
+      return false;
+    }
+
+    paragraphLayoutWatch.start();
+    try
+    {
       paragraphBox.clearLayout();
-      getLineBreakState().init(paragraphBox);
-    }
-    return true;
-  }
 
-  protected void finishParagraphBox(final RenderBox box)
-  {
-    final MinorAxisParagraphBreakState lineBreakState = getLineBreakState();
-    if (lineBreakState.isInsideParagraph())
-    {
-      if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-      {
-        final ParagraphRenderBox paragraph = (ParagraphRenderBox) box;
-        paragraph.updateMinorLayoutAge();
-        paragraph.setCachedMaxChildX2(nodeContext.getMaxChildX2());
-        lineBreakState.deinit();
-      }
+      textMinorAxisLayoutStep.process(paragraphBox, getNodeContext(), getPageGrid());
+
+      paragraphBox.updateMinorLayoutAge();
+      paragraphBox.setCachedMaxChildX2(nodeContext.getMaxChildX2());
     }
+    finally
+    {
+      paragraphLayoutWatch.stop(true);
+    }
+    return false;
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    if (complexText)
-    {
-      processParagraphChildsComplex(box);
-    }
-    else
-    {
-      processParagraphChildsNormal(box);
-    }
-  }
-
-  protected void processParagraphChildsComplex(final ParagraphRenderBox box)
-  {
-    // Clear the paragraph to throw away previously layouted nodes. This leaves the
-    // paragraph's pool (where your original text is stored) untouched.
-    box.clearLayout();
-
-    if (box.isComplexParagraph())
-    {
-      final RenderBox lineBoxContainer = box.getLineboxContainer();
-      final StyleSheet layoutContext = box.getStyleSheet();
-
-      RenderNode paragraphContainer = lineBoxContainer.getFirstChild();
-      while (paragraphContainer != null)
-      {
-        if (paragraphContainer.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
-        {
-          throw new IllegalStateException("Expected ParagraphPoolBox elements.");
-        }
-
-        final ParagraphPoolBox paragraph = (ParagraphPoolBox) paragraphContainer;
-        addGeneratedComplexTextLines(box, paragraph, layoutContext);
-
-        paragraphContainer = paragraphContainer.getNext();
-      }
-    }
-    else
-    {
-      final ParagraphPoolBox lineBoxContainer = (ParagraphPoolBox) box.getEffectiveLineboxContainer();
-      final StyleSheet layoutContext = box.getStyleSheet();
-
-      addGeneratedComplexTextLines(box, lineBoxContainer, layoutContext);
-    }
-  }
-
-  private LineBreakMeasurer createLineBreakMeasurer(final AttributedCharacterIterator characterIterator,
-                                                    final StyleSheet layoutContext) {
-    final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-    return new LineBreakMeasurer(characterIterator, fontRenderContext);
-  }
-
-  private void updateNodeContextWidth(final ParagraphRenderBox paragraph)
-  {
-    final long lineEnd;
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
-    if (overflowX)
-    {
-      lineEnd = nodeContext.getX1() + OVERFLOW_DUMMY_WIDTH;
-    }
-    else
-    {
-      lineEnd = nodeContext.getX2();
-    }
-
-    long firstLineIndent = 0; // todo
-    long lineStart = Math.min(lineEnd, nodeContext.getX1() + firstLineIndent);
-    if (lineEnd - lineStart <= 0)
-    {
-      final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
-      nodeContext.updateX2(lineStart + minimumChunkWidth);
-      logger.warn("Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName());
-    }
-    else
-    {
-      if (overflowX == false)
-      {
-        nodeContext.updateX2(lineEnd);
-      }
-    }
-  }
-
-  private void addGeneratedComplexTextLines(final ParagraphRenderBox box,
-                                            final ParagraphPoolBox lineBoxContainer,
-                                            final StyleSheet layoutContext)
-  {
-    updateNodeContextWidth(box);
-
-    // Determine if anti-aliasing is required or not
-    if (TextWrap.NONE.equals(box.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)))
-    {
-      addUnbreakableText(box, lineBoxContainer, layoutContext);
-      return;
-    }
-
-    boolean breakOnWordBoundary =
-        getMetaData().isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) ||
-            lineBoxContainer.getStyleSheet().getBooleanStyleProperty(TextStyleKeys.WORDBREAK);
-
-    // Create a LineBreakMeasurer to break down that string into lines.
-    RichTextSpec richText = new TextHelper().computeText(lineBoxContainer);
-    final AttributedCharacterIterator characterIterator = richText.createAttributedCharacterIterator();
-
-    final LineBreakMeasurer lineBreakMeasurer = createLineBreakMeasurer(characterIterator, layoutContext);
-
-    lineBreakMeasurer.setPosition(characterIterator.getBeginIndex());
-    BreakIterator wordInstance = BreakIterator.getWordInstance();
-    wordInstance.setText(richText.getText());
-
-    ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
-    float ascent = 0;
-    float descent = 0;
-    float leading = 0;
-
-    final float wrappingWidth = (float) StrictGeomUtility.toExternalValue(box.getCachedWidth());
-    while (lineBreakMeasurer.getPosition() < characterIterator.getEndIndex())
-    {
-      // For each line produced by the LinebreakMeasurer
-      int start = lineBreakMeasurer.getPosition();
-      // float is the worst option to have accurate layouts. So we have to 'adjust' for rounding errors
-      // and hope that no one notices ..
-      TextLayout textLayout = lineBreakMeasurer.nextLayout(wrappingWidth + 0.5f, characterIterator.getEndIndex(), false);
-      int end = lineBreakMeasurer.getPosition();
-
-      if (breakOnWordBoundary)
-      {
-        if (wordInstance.isBoundary(end) == false)
-        {
-          int preceding = wordInstance.preceding(end);
-          if (preceding == start)
-          {
-            // single word does not fit on the line, so print full word
-            lineBreakMeasurer.setPosition(start);
-            textLayout = lineBreakMeasurer.nextLayout(100000000f, wordInstance.following(end), false);
-            end = lineBreakMeasurer.getPosition();
-          }
-          else
-          {
-            lineBreakMeasurer.setPosition(start);
-            textLayout = lineBreakMeasurer.nextLayout(100000000f, preceding, false);
-            end = lineBreakMeasurer.getPosition();
-          }
-        }
-      }
-
-      // check if the text must be justified
-      if (ElementAlignment.JUSTIFY.equals(box.getStyleSheet().getStyleProperty(ElementStyleKeys.ALIGNMENT)))
-      {
-        textLayout = textLayout.getJustifiedLayout(wrappingWidth);
-      }
-
-      final RenderableComplexText text = richText.create(lineBoxContainer, start, end);
-      text.setTextLayout(textLayout);
-      // and finally add the line to the paragraph
-      lines.add(text);
-
-      ascent = Math.max (ascent, textLayout.getAscent());
-      descent = Math.max (descent, textLayout.getDescent());
-      leading = Math.max (leading, textLayout.getLeading());
-    }
-
-    double height = ascent + descent + leading;
-    for (RenderableComplexText text : lines)
-    {
-      final RenderBox line = generateLine(box, lineBoxContainer, text, height);
-      box.addGeneratedChild(line);
-    }
-  }
-
-  private void addUnbreakableText(final ParagraphRenderBox box,
-                                  final ParagraphPoolBox lineBoxContainer,
-                                  final StyleSheet layoutContext)
-  {
-    TextHelper helper = new TextHelper();
-    RichTextSpec richText = helper.computeText(lineBoxContainer);
-    final AttributedCharacterIterator ci = richText.createAttributedCharacterIterator();
-
-    final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
-
-    final RenderableComplexText text = richText.create(lineBoxContainer, ci.getBeginIndex(), ci.getEndIndex());
-    TextLayout textLayout = new TextLayout(ci, fontRenderContext);
-    double height = textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
-    text.setTextLayout(textLayout);
-
-    final RenderBox line = generateLine(box, lineBoxContainer, text, height);
-    // and finally add the line to the paragraph
-    nodeContext.updateX2(line.getCachedX2());
-    box.addGeneratedChild(line);
-  }
-
-  private RenderBox generateLine(final ParagraphRenderBox paragraph,
-                                 final ParagraphPoolBox lineBoxContainer,
-                                 final RenderableComplexText text,
-                                 final double height)
-  {
-    //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
-    TextLayout textLayout = text.getTextLayout();
-
-    // Store the height and width, so that the other parts of the layouter have access to the information
-//        text.setCachedHeight();
-    text.setCachedHeight(Math.max (StrictGeomUtility.toInternalValue(height), lineBoxContainer.getLineHeight()));
-    text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
-
-    MinorAxisNodeContext nodeContext = getNodeContext();
-    final long alignmentX = RenderUtility.computeHorizontalAlignment(paragraph.getTextAlignment(),
-        nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
-    text.setCachedX(alignmentX + nodeContext.getX());
-
-    // Create a shallow copy of the paragraph-pool to act as a line container.
-    final RenderBox line = (RenderBox) paragraph.getPool().deriveFrozen(false);
-    line.addGeneratedChild(text);
-
-    // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-    line.setCachedX(alignmentX + nodeContext.getX());
-    line.setCachedWidth(nodeContext.getContentAreaWidth());
-    return line;
-  }
-
-  protected void processParagraphChildsNormal(final ParagraphRenderBox box)
-  {
-    final MinorAxisNodeContext nodeContext = getNodeContext();
-    final MinorAxisParagraphBreakState breakState = getLineBreakState();
-
-    if (box.isComplexParagraph())
-    {
-      final RenderBox lineboxContainer = box.getLineboxContainer();
-      RenderNode node = lineboxContainer.getFirstChild();
-      while (node != null)
-      {
-        // all childs of the linebox container must be inline boxes. They
-        // represent the lines in the paragraph. Any other element here is
-        // a error that must be reported
-        if (node.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
-        {
-          throw new IllegalStateException("Expected ParagraphPoolBox elements.");
-        }
-
-        final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-        if (startLine(inlineRenderBox))
-        {
-          processBoxChilds(inlineRenderBox);
-          finishLine(inlineRenderBox, nodeContext, breakState);
-        }
-
-        node = node.getNext();
-      }
-    }
-    else
-    {
-      final ParagraphPoolBox node = box.getPool();
-
-      if (node.getFirstChild() == null)
-      {
-        return;
-      }
-
-      // all childs of the linebox container must be inline boxes. They
-      // represent the lines in the paragraph. Any other element here is
-      // a error that must be reported
-      if (startLine(node))
-      {
-        processBoxChilds(node);
-        finishLine(node, nodeContext, breakState);
-      }
-    }
-  }
-
-  private boolean startLine(final RenderBox inlineRenderBox)
-  {
-    final MinorAxisParagraphBreakState breakState = getLineBreakState();
-    if (breakState.isInsideParagraph() == false)
-    {
-      return false;
-    }
-
-    if (breakState.isSuspended())
-    {
-      return false;
-    }
-
-    breakState.clear();
-    breakState.add(StartSequenceElement.INSTANCE, inlineRenderBox);
-    return true;
-  }
-
-  private void finishLine(final RenderBox inlineRenderBox,
-                          final MinorAxisNodeContext nodeContext,
-                          final MinorAxisParagraphBreakState breakState)
-  {
-    if (breakState.isInsideParagraph() == false || breakState.isSuspended())
-    {
-      throw new IllegalStateException("No active breakstate, finish-line cannot continue.");
-    }
-
-    final PageGrid pageGrid = getPageGrid();
-    final OutputProcessorMetaData metaData = getMetaData();
-    breakState.add(EndSequenceElement.INSTANCE, inlineRenderBox);
-
-    final ParagraphRenderBox paragraph = breakState.getParagraph();
-
-    final ElementAlignment textAlignment = paragraph.getTextAlignment();
-    final long textIndent = paragraph.getTextIndent();
-    final long firstLineIndent = paragraph.getFirstLineIndent();
-    // This aligns all direct childs. Once that is finished, we have to
-    // check, whether possibly existing inner-paragraphs are still valid
-    // or whether moving them violated any of the inner-pagebreak constraints.
-    final TextAlignmentProcessor processor = create(textAlignment);
-
-    final SequenceList sequence = breakState.getSequence();
-
-    final long lineEnd;
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
-    if (overflowX)
-    {
-      lineEnd = nodeContext.getX1() + OVERFLOW_DUMMY_WIDTH;
-    }
-    else
-    {
-      lineEnd = nodeContext.getX2();
-    }
-
-    long lineStart = Math.min(lineEnd, nodeContext.getX1() + firstLineIndent);
-    if (lineEnd - lineStart <= 0)
-    {
-      final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
-      processor.initialize(metaData, sequence, lineStart, lineStart + minimumChunkWidth, pageGrid, overflowX);
-      nodeContext.updateX2(lineStart + minimumChunkWidth);
-      logger.warn("Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName());
-    }
-    else
-    {
-      processor.initialize(metaData, sequence, lineStart, lineEnd, pageGrid, overflowX);
-      if (overflowX == false)
-      {
-        nodeContext.updateX2(lineEnd);
-      }
-    }
-
-    while (processor.hasNext())
-    {
-      final RenderNode linebox = processor.next();
-      if (linebox.getLayoutNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
-      {
-        throw new IllegalStateException("Line must not be null");
-      }
-
-      paragraph.addGeneratedChild(linebox);
-
-      if (processor.hasNext())
-      {
-        lineStart = Math.min(lineEnd, nodeContext.getX1() + textIndent);
-
-        if (lineEnd - lineStart <= 0)
-        {
-          final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
-          processor.updateLineSize(lineStart, lineStart + minimumChunkWidth);
-          nodeContext.updateX2(lineStart + minimumChunkWidth);
-          logger.warn("Auto-Corrected zero-width text-line on paragraph continuation - " + paragraph.getName());
-        }
-        else
-        {
-          processor.updateLineSize(lineStart, lineEnd);
-          if (overflowX == false)
-          {
-            nodeContext.updateX2(lineEnd);
-          }
-        }
-
-      }
-    }
-
-    processor.deinitialize();
+    throw new IllegalStateException("Encountered a paragraph where no paragraph was expected.");
   }
 
   protected MinorAxisNodeContext getNodeContext()
@@ -539,18 +145,8 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     return nodeContext;
   }
 
-  protected MinorAxisParagraphBreakState getLineBreakState()
-  {
-    return lineBreakState;
-  }
-
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    if (lineBreakState.isInsideParagraph())
-    {
-      throw new InvalidReportStateException("A block-level element inside a paragraph is not allowed.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
     if (checkCacheValid(box))
@@ -609,8 +205,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         nodeContext.updateParentX2(box.getCachedX2());
       }
-
-      finishParagraphBox(box);
     }
     finally
     {
@@ -629,20 +223,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    if ("canvas-ci".equals(box.getName()))
-    {
-      DebugLog.logHere();
-    }
-
-    if (lineBreakState.isInsideParagraph())
-    {
-      // The break-state exists only while we are inside of an paragraph
-      // and suspend can only happen on inline elements.
-      // A block-element inside a paragraph cannot be (and if it does, it is
-      // a bug)
-      throw new IllegalStateException("This cannot be.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
     if (checkCacheValid(box))
@@ -714,8 +294,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         nodeContext.updateParentX2(box.getCachedX2());
       }
-
-      finishParagraphBox(box);
     }
     finally
     {
@@ -758,15 +336,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    if (lineBreakState.isInsideParagraph())
-    {
-      // The break-state exists only while we are inside of an paragraph
-      // and suspend can only happen on inline elements.
-      // A block-element inside a paragraph cannot be (and if it does, it is
-      // a bug)
-      throw new IllegalStateException("This cannot be.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
     if (checkCacheValid(box))
@@ -829,8 +398,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
       {
         nodeContext.updateParentX2(box.getCachedX2());
       }
-
-      finishParagraphBox(box);
     }
     finally
     {
@@ -840,126 +407,22 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
-    if (complexText)
-    {
-      return startInlineLevelBoxComplex(box);
-    }
-    else
-    {
-      return startInlineLevelBoxNormal(box);
-    }
-  }
-
-
-  protected boolean startInlineLevelBoxComplex(final RenderBox box)
-  {
-    // todo
-    return startInlineLevelBoxNormal(box);
-  }
-
-  protected boolean startInlineLevelBoxNormal(final RenderBox box)
-  {
-    if (lineBreakState.isInsideParagraph() == false)
-    {
-      throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
-    }
-
-    final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
-      lineBreakState.add(ReplacedContentSequenceElement.INSTANCE, box);
-      return false;
-    }
-
-    lineBreakState.add(StartSequenceElement.INSTANCE, box);
-    return true;
+    throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
   }
 
   protected void processInlineLevelNode(final RenderNode node)
   {
-    if (lineBreakState.isInsideParagraph() == false)
-    {
-      throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
-    }
-
-    final int nodeType = node.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
-      final FinishedRenderNode finNode = (FinishedRenderNode) node;
-      node.setCachedWidth(finNode.getLayoutedWidth());
-      return;
-    }
-
-    if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
-    {
-      lineBreakState.add(TextSequenceElement.INSTANCE, node);
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
-    {
-      final StyleSheet styleSheet = node.getStyleSheet();
-      if (WhitespaceCollapse.PRESERVE.equals(styleSheet.getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE)) &&
-          styleSheet.getBooleanStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT) == false)
-      {
-        // bug-alert: This condition could indicate a workaround for a logic-flaw in the text-processor
-        lineBreakState.add(SpacerSequenceElement.INSTANCE, node);
-      }
-      else if (lineBreakState.isContainsContent())
-      {
-        lineBreakState.add(SpacerSequenceElement.INSTANCE, node);
-      }
-    }
-    else
-    {
-      lineBreakState.add(InlineNodeSequenceElement.INSTANCE, node);
-    }
+    throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
   }
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
-    if (complexText)
-    {
-      finishInlineLevelBoxComplex(box);
-    }
-    else
-    {
-      finishInlineLevelBoxNormal(box);
-    }
-  }
-
-  private void finishInlineLevelBoxComplex(final RenderBox box)
-  {
-    // todo Arabic text
-    finishInlineLevelBoxNormal(box);
-  }
-
-  private void finishInlineLevelBoxNormal(final RenderBox box)
-  {
-    if (lineBreakState.isInsideParagraph() == false)
-    {
-      throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
-    }
-
-    final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
-      return;
-    }
-
-    lineBreakState.add(EndSequenceElement.INSTANCE, box);
+    throw new InvalidReportStateException("A inline-level box outside of a paragraph box is not allowed.");
   }
 
   // Table-sections or auto-boxes masking as tables (treated as table-sections nonetheless).
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    if (lineBreakState.isInsideParagraph())
-    {
-      // The break-state exists only while we are inside of an paragraph
-      // and suspend can only happen on inline elements.
-      // A block-element inside a paragraph cannot be (and if it does, it is
-      // a bug)
-      throw new IllegalStateException("This cannot be.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
     if (checkCacheValid(box))
@@ -1048,15 +511,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    if (lineBreakState.isInsideParagraph())
-    {
-      // The break-state exists only while we are inside of an paragraph
-      // and suspend can only happen on inline elements.
-      // A block-element inside a paragraph cannot be (and if it does, it is
-      // a bug)
-      throw new IllegalStateException("This cannot be.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, true);
 
     startTableSectionOrRow(box);
@@ -1106,15 +560,6 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (lineBreakState.isInsideParagraph())
-    {
-      // The break-state exists only while we are inside of an paragraph
-      // and suspend can only happen on inline elements.
-      // A block-element inside a paragraph cannot be (and if it does, it is
-      // a bug)
-      throw new IllegalStateException("This cannot be.");
-    }
-
     nodeContext = nodeContextPool.createContext(box, nodeContext, false);
 
     if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
