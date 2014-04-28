@@ -336,12 +336,20 @@ public final class GlobalMasterRow implements MasterDataRow
     dataRow.schemaCompiler = schemaCompiler;
     dataRow.schemaDefinition = schemaDefinition;
     dataRow.resourceBundleFactory = resourceBundleFactory;
-    dataRow.paddingData = paddingData.advance(deepTraversingOnly, dataRow.globalView);
+
+    if (environmentDataRow != null)
+    {
+      DataRowEventHelper.refreshDataRow(dataRow.environmentDataRow, dataRow.globalView);
+    }
+
     if (parameterDataRow != null)
     {
       dataRow.parameterDataRow = parameterDataRow;
       DataRowEventHelper.refreshDataRow(dataRow.parameterDataRow, dataRow.globalView);
     }
+
+    dataRow.paddingData = paddingData.advance(deepTraversingOnly, dataRow.globalView);
+
     if (expressionDataRow != null)
     {
       dataRow.expressionDataRow = expressionDataRow.derive(dataRow.globalView, dataRow, true);
