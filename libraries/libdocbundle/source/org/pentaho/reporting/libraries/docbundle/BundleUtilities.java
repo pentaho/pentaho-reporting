@@ -535,6 +535,14 @@ public class BundleUtilities
                               final DocumentBundle sourceBundle,
                               final String[] files) throws IOException
   {
+    copyInto(targetBundle, sourceBundle, files, false);
+  }
+
+  public static void copyInto(final WriteableDocumentBundle targetBundle,
+                              final DocumentBundle sourceBundle,
+                              final String[] files,
+                              final boolean ignoreSticky) throws IOException
+  {
     if (targetBundle == null)
     {
       throw new NullPointerException();
@@ -589,6 +597,10 @@ public class BundleUtilities
         continue;
       }
       if (fileSet.contains(entryName) == false)
+      {
+        continue;
+      }
+      if (ignoreSticky && "true".equals(bundleMetaData.getEntryAttribute(entryName, STICKY_FLAG)))
       {
         continue;
       }
