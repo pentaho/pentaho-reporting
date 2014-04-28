@@ -27,7 +27,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab"/>
         <block type="AutoRenderBox" x="0.0" y="0.0" width="1760.0" height="508.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-row-group-body"/>
-          <table type="TableRenderBox" x="0.0" y="0.0" width="1760.0" height="516.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <table type="TableRenderBox" x="0.0" y="0.0" width="1760.0" height="508.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
             <table-section type="TableSectionRenderBox" x="0.0" y="0.0" width="1760.0" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
@@ -5959,7 +5959,7 @@
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab"/>
         <block type="AutoRenderBox" x="0.0" y="-468.0" width="1760.0" height="768.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-row-group-body"/>
-          <table type="TableRenderBox" x="0.0" y="-468.0" width="1760.0" height="776.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <table type="TableRenderBox" x="0.0" y="-468.0" width="1760.0" height="768.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
             <table-section type="TableSectionRenderBox" x="0.0" y="0.0" width="1760.0" height="100.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
