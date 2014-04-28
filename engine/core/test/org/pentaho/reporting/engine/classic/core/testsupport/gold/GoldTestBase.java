@@ -521,6 +521,15 @@ public class GoldTestBase
     {
       report.run();
     }
+    if (errors.isEmpty() == false)
+    {
+      Log log = LogFactory.getLog(GoldTestBase.class);
+      for (Throwable throwable : errors)
+      {
+        log.error("Failed", throwable);
+      }
+      Assert.fail();
+    }
 
     System.out.println(findMarker());
   }
