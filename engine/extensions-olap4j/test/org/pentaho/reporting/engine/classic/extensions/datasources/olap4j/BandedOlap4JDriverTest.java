@@ -63,7 +63,7 @@ public class BandedOlap4JDriverTest extends DataSourceTestBase
         "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml");
     provider.setProperty("JdbcUser", "sa");
     provider.setProperty("JdbcPassword", "");
-    provider.setProperty("Jdbc", "jdbc:hsqldb:./sql/sampledata");
+    provider.setProperty("Jdbc", "jdbc:hsqldb:mem:SampleData");
     provider.setProperty("JdbcDrivers", "org.hsqldb.jdbcDriver");
     provider.setUrl("jdbc:mondrian:");
 
