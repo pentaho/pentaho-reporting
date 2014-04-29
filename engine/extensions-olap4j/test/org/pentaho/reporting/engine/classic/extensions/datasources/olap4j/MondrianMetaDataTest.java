@@ -24,7 +24,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections.DriverConnectionProvider;
 
 public class MondrianMetaDataTest extends TestCase
@@ -68,7 +67,7 @@ public class MondrianMetaDataTest extends TestCase
         "test/org/pentaho/reporting/engine/classic/extensions/datasources/olap4j/steelwheels.mondrian.xml");
     dcp.setProperty("JdbcUser", "sa");
     dcp.setProperty("JdbcPassword", "");
-    dcp.setProperty("Jdbc", "jdbc:hsqldb:./sql/sampledata");
+    dcp.setProperty("Jdbc", "jdbc:hsqldb:mem:SampleData");
     dcp.setProperty("JdbcDrivers", "org.hsqldb.jdbcDriver");
     dcp.setUrl("jdbc:mondrian:");
     return dcp;
