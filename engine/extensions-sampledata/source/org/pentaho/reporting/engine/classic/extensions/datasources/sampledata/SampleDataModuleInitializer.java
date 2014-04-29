@@ -26,6 +26,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -92,7 +93,7 @@ public class SampleDataModuleInitializer implements ModuleInitializer
           {
             try
             {
-              statement.execute(line);
+              statement.execute(StringEscapeUtils.unescapeJava(line));
             }
             catch (SQLException e)
             {

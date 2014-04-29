@@ -21,10 +21,11 @@
 
 		<!--  external dependencies -->
 		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="default_external->default" />
-    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
-                rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
+    <dependency org="org.apache.commons" name="commons-lang3" rev="3.0" transitive="false" conf="default_external->default" />
 
     <!-- Testing Dependencies -->
+    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
+                rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
 	</dependencies>
 </ivy-module>
