@@ -45,7 +45,6 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
   private static final Log logger = LogFactory.getLog( PentahoSolutionFileProvider.class );
 
   private boolean bypassAuthentication = false;
-  private JCRSolutionDirectFileSystem directFileSystem = null;
 
   public static final Collection capabilities = Collections.unmodifiableCollection( Arrays.asList
     ( Capability.GET_TYPE,
@@ -100,13 +99,8 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
 
   private FileSystem createJCRDirectFileSystem( final LayeredFileName genericRootName,
                                                 final FileSystemOptions fileSystemOptions ) throws FileSystemException {
-    if ( this.directFileSystem == null ) {
-      final JCRSolutionDirectFileModel model = new JCRSolutionDirectFileModel();
-      this.directFileSystem = new JCRSolutionDirectFileSystem( genericRootName, fileSystemOptions, model );
-    } else {
-      this.directFileSystem.getLocalFileModel().refresh();
-    }
-    return this.directFileSystem;
+    final JCRSolutionDirectFileModel model = new JCRSolutionDirectFileModel();
+    return new JCRSolutionDirectFileSystem( genericRootName, fileSystemOptions, model );
   }
 
   private FileSystem createJCRFileSystem( final LayeredFileName genericRootName,
