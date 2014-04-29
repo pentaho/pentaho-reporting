@@ -24,3 +24,4 @@ build-res/module-scripts/
 .idea/compiler.xml
 .idea/dictionaries/
 .idea/inspectionProfiles/
+*.lck
