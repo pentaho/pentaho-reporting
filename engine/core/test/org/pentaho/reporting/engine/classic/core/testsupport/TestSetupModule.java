@@ -29,6 +29,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
@@ -91,7 +92,7 @@ public class TestSetupModule extends AbstractModule
           {
             try
             {
-              statement.execute(line);
+              statement.execute(StringEscapeUtils.unescapeJava(line));
             }
             catch (SQLException e)
             {
