@@ -239,7 +239,7 @@ public abstract class AbstractRenderer implements Renderer
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
     paragraphLineBreakStep.initialize(metaData);
     staticPropertiesStep.initialize(metaData, processingContext);
-    canvasMinorAxisLayoutStep.initialize(metaData);
+    canvasMinorAxisLayoutStep.initialize(metaData, processingContext);
     minorAxisLayoutStep.initialize(metaData);
     canvasMajorAxisLayoutStep.initialize(metaData);
     majorAxisLayoutStep.initialize(metaData);

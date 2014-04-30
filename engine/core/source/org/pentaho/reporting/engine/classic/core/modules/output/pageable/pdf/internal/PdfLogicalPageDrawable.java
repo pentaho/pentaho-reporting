@@ -477,8 +477,24 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       cb.showText(textArray);
     }
   }
+/*
+  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2)
+  {
+    RichTextSpec text = renderableComplexText.getRichText();
+    Phrase p = new Phrase();
+    for (RichTextSpec.StyledChunk c: text.getStyleChunks())
+    {
+      // add chunks
+      BaseFont baseFont = null;// from framework
+      Font font = new Font(baseFont, size, style, color);
+      Chunk chunk = new Chunk(c.getText(), font);
+      p.add(chunk);
+    }
 
-
+    // TODO
+    super.drawComplexText(renderableComplexText, g2);
+  }
+*/
   protected boolean startInlineBox(final InlineRenderBox box)
   {
     if (box.getStaticBoxLayoutProperties().isVisible() == false)

@@ -19,8 +19,11 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
+import java.awt.Image;
+import java.awt.font.GraphicAttribute;
+import java.awt.font.ImageGraphicAttribute;
 import java.awt.font.TextAttribute;
-import java.text.AttributedCharacterIterator;
+import java.text.AttributedCharacterIterator.Attribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,25 +34,28 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class RichTextSpecProducer
 {
   private static class AttributedStringChunk
   {
     private String text;
-    private Map<AttributedCharacterIterator.Attribute, Object> attributes;
+    private Map<Attribute, Object> attributes;
     private ReportAttributeMap<Object> originalAttributes;
     private StyleSheet styleSheet;
     private InstanceID instanceID;
     private RenderNode node;
 
     private AttributedStringChunk(final String text,
-                                  final Map<AttributedCharacterIterator.Attribute, Object> attributes,
+                                  final Map<Attribute, Object> attributes,
                                   final ReportAttributeMap<Object> originalAttributes,
                                   final StyleSheet styleSheet, final InstanceID instanceID,
                                   final RenderNode node)
@@ -81,7 +87,7 @@ public class RichTextSpecProducer
       return text;
     }
 
-    public Map<AttributedCharacterIterator.Attribute, Object> getAttributes()
+    public Map<Attribute, Object> getAttributes()
     {
       return attributes;
     }
@@ -100,14 +106,29 @@ public class RichTextSpecProducer
     {
       return instanceID;
     }
+
+    public RenderNode getNode()
+    {
+      return node;
+    }
   }
 
-  public static RichTextSpec compute(final RenderBox lineBoxContainer)
+  public static RichTextSpec compute(final RenderBox lineBoxContainer,
+                                     final OutputProcessorMetaData metaData,
+                                     final ResourceManager resourceManager)
   {
-    return new RichTextSpecProducer().computeText(lineBoxContainer);
+    return new RichTextSpecProducer(metaData, resourceManager).computeText(lineBoxContainer);
   }
 
-  public RichTextSpec computeText(final RenderBox lineBoxContainer)
+  private RichTextImageProducer imageProducer;
+
+  public RichTextSpecProducer(final OutputProcessorMetaData metaData,
+                              final ResourceManager resourceManager)
+  {
+    imageProducer = new RichTextImageProducer(metaData, resourceManager);
+  }
+
+  private RichTextSpec computeText(final RenderBox lineBoxContainer)
   {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
     computeText(lineBoxContainer, attr);
@@ -153,7 +174,7 @@ public class RichTextSpecProducer
     {
       int length = chunk.getText().length();
       int endIndex = startPosition + length;
-      result.add(new RichTextSpec.StyledChunk(startPosition, endIndex, chunk.node, chunk.getAttributes(),
+      result.add(new RichTextSpec.StyledChunk(startPosition, endIndex, chunk.getNode(), chunk.getAttributes(),
           chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getInstanceID(), chunk.getText()));
       startPosition = endIndex;
     }
@@ -194,8 +215,9 @@ public class RichTextSpecProducer
       }
       else if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
       {
-        final RenderableComplexText content = (RenderableComplexText) node;
-        // todo
+        final RenderableReplacedContentBox contentBox = (RenderableReplacedContentBox) node;
+        chunks.add(new AttributedStringChunk("@", computeImageStyle(node.getStyleSheet(), contentBox),
+            node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
       }
       else if (node instanceof RenderBox)
       {
@@ -205,9 +227,21 @@ public class RichTextSpecProducer
     }
   }
 
-  private Map<AttributedCharacterIterator.Attribute, Object> computeStyle(final StyleSheet layoutContext)
+  private Map<Attribute, Object> computeImageStyle(final StyleSheet layoutContext,
+                                                   final RenderableReplacedContentBox content)
   {
-    Map<AttributedCharacterIterator.Attribute, Object> result = new HashMap<AttributedCharacterIterator.Attribute, Object>();
+    final Image image = imageProducer.createImagePlaceholder(content);
+    ImageGraphicAttribute iga =
+        new ImageGraphicAttribute(image, GraphicAttribute.BOTTOM_ALIGNMENT);
+
+    Map<Attribute, Object> attrs = computeStyle(layoutContext);
+    attrs.put(TextAttribute.CHAR_REPLACEMENT, iga);
+    return attrs;
+  }
+
+  private Map<Attribute, Object> computeStyle(final StyleSheet layoutContext)
+  {
+    Map<Attribute, Object> result = new HashMap<Attribute, Object>();
     // Determine font style
     if (layoutContext.getBooleanStyleProperty(TextStyleKeys.ITALIC))
     {
@@ -231,7 +265,7 @@ public class RichTextSpecProducer
     result.put(TextAttribute.STRIKETHROUGH, layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH));
 
     // character spacing
-    result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0)/10);
+    result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0) / 10);
 
     return result;
   }

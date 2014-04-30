@@ -46,6 +46,7 @@ public class GraphicsOutputProcessorMetaData extends AbstractOutputProcessorMeta
     addFeature(OutputProcessorFeature.PAGE_SECTIONS);
     addFeature(OutputProcessorFeature.PAGEBREAKS);
     addFeature(OutputProcessorFeature.SPACING_SUPPORTED);
+    addFeature(OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING);
 
     if ("true".equals(configuration.getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.WatermarkPrinted")))

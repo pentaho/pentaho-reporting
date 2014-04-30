@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.PerformanceTags;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -86,12 +87,12 @@ public final class CanvasMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
     paragraphLayoutWatch.close();
   }
 
-  public void initialize(final OutputProcessorMetaData metaData)
+  public void initialize(final OutputProcessorMetaData metaData, final ProcessingContext processingContext)
   {
     super.initialize(metaData);
     if (metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
     {
-      textMinorAxisLayoutStep = new ComplexTextMinorAxisLayoutStep(metaData);
+      textMinorAxisLayoutStep = new ComplexTextMinorAxisLayoutStep(metaData, processingContext.getResourceManager());
     }
     else
     {

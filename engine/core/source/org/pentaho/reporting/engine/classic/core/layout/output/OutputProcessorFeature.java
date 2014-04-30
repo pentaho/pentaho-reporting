@@ -163,6 +163,8 @@ public abstract class OutputProcessorFeature implements Serializable
       new BooleanOutputProcessorFeature("assume-overflow-x");
   public static final BooleanOutputProcessorFeature ASSUME_OVERFLOW_Y =
       new BooleanOutputProcessorFeature("assume-overflow-y");
+  public static final BooleanOutputProcessorFeature DIRECT_RICHTEXT_RENDERING =
+      new BooleanOutputProcessorFeature("direct-rich-text-rendering");
 
   private String name;
   private int hashCode;

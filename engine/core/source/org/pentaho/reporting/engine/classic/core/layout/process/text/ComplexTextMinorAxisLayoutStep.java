@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
     implements TextMinorAxisLayoutStep
@@ -72,11 +73,14 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
   private static final Log logger = LogFactory.getLog(ComplexTextMinorAxisLayoutStep.class);
   private final boolean strictCompatibility;
   private final OutputProcessorMetaData metaData;
+  private final ResourceManager resourceManager;
 
   private MinorAxisNodeContext nodeContext;
 
-  public ComplexTextMinorAxisLayoutStep(final OutputProcessorMetaData metaData)
+  public ComplexTextMinorAxisLayoutStep(final OutputProcessorMetaData metaData,
+                                        final ResourceManager resourceManager)
   {
+    this.resourceManager = resourceManager;
     ArgumentNullException.validate("metaData", metaData);
 
     this.metaData = metaData;
@@ -153,7 +157,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     }
 
     // Create a LineBreakMeasurer to break down that string into lines.
-    final RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer);
+    final RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer, metaData, resourceManager);
     final LineBreakIterator lineIterator = createLineBreakIterator(box, layoutContext, richText);
 
     ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
@@ -200,7 +204,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
                                final ParagraphPoolBox lineBoxContainer,
                                final StyleSheet layoutContext)
   {
-    RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer);
+    RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer, metaData, resourceManager);
 
     final FontRenderContext fontRenderContext = createFontRenderContext(layoutContext);
     final TextLayout textLayout = new TextLayout(richText.createAttributedCharacterIterator(), fontRenderContext);

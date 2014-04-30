@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Computes the width for all elements. This uses the CSS algorithm, percentages are resolved against the parent's
@@ -58,6 +59,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private static final StaticRootChunkWidthUpdate ROOT = new StaticRootChunkWidthUpdate();
 
   private OutputProcessorMetaData metaData;
+  private ResourceManager resourceManager;
   private boolean overflowXSupported;
   private boolean overflowYSupported;
   private boolean widowsEnabled;
@@ -80,6 +82,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
     this.widowOrphanDefinitionsEncountered = false;
     this.designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    this.resourceManager = processingContext.getResourceManager();
   }
 
   public boolean isWidowOrphanDefinitionsEncountered()
@@ -134,7 +137,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     if (node instanceof RenderableComplexText)
     {
       RenderableComplexText t = (RenderableComplexText) node;
-      t.computeMinimumChunkWidth(metaData);
+      t.computeMinimumChunkWidth(metaData, resourceManager);
     }
 
     chunkWidthUpdate.update(node.getMinimumChunkWidth());

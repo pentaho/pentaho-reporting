@@ -287,10 +287,10 @@ public class RenderUtility
     return createImageFromDrawable(drawable, rect, box.getStyleSheet(), metaData);
   }
 
-  public static ImageContainer createImageFromDrawable(final DrawableWrapper drawable,
-                                                       final StrictBounds rect,
-                                                       final StyleSheet box,
-                                                       final OutputProcessorMetaData metaData)
+  public static DefaultImageReference createImageFromDrawable(final DrawableWrapper drawable,
+                                                              final StrictBounds rect,
+                                                              final StyleSheet box,
+                                                              final OutputProcessorMetaData metaData)
   {
     final int imageWidth = (int) StrictGeomUtility.toExternalValue(rect.getWidth());
     final int imageHeight = (int) StrictGeomUtility.toExternalValue(rect.getHeight());
@@ -407,8 +407,8 @@ public class RenderUtility
   }
 
   private static ImageMap extractImageMap(final DrawableWrapper drawable,
-                                         final long width,
-                                         final long height)
+                                          final long width,
+                                          final long height)
   {
     final Object backend = drawable.getBackend();
     if (backend instanceof ReportDrawable)

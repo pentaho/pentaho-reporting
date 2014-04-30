@@ -1206,7 +1206,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   protected void drawReplacedContent(final RenderableReplacedContentBox content)
   {
     final Graphics2D g2 = getGraphics();
-
     final Object o = content.getContent().getRawObject();
     if (o instanceof Image)
     {

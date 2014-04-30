@@ -17,6 +17,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class RenderableComplexText extends RenderNode
 {
@@ -63,7 +64,8 @@ public class RenderableComplexText extends RenderNode
   }
 
 
-  public void computeMinimumChunkWidth(final OutputProcessorMetaData data)
+  public void computeMinimumChunkWidth(final OutputProcessorMetaData data,
+                                       final ResourceManager resourceManager)
   {
     if (getMinimumChunkWidth() != 0)
     {
@@ -88,7 +90,7 @@ public class RenderableComplexText extends RenderNode
     {
       String word = text.substring(start, end);
       AttributedCharacterIterator attributedCharacterIterator =
-          new RichTextSpecProducer().computeText(this, word).createAttributedCharacterIterator();
+          new RichTextSpecProducer(data, resourceManager).computeText(this, word).createAttributedCharacterIterator();
       TextLayout t = new TextLayout(attributedCharacterIterator, fontRenderContext);
       double width = t.getVisibleAdvance();
       final long wordMinChunkWidth = StrictGeomUtility.toInternalValue(width);
