@@ -16,10 +16,7 @@
 	</publications>
 
 	<dependencies defaultconf="default_internal->default">
-	
-	<!--  external dependencies -->
-    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false"/>
-	
+
 		<!--  internal dependencies -->
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-extensions" rev="${project.revision}" transitive="true"
                 changing="true"/>

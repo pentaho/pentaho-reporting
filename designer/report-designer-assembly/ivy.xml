@@ -69,5 +69,6 @@
 		<exclude org="commons-logging" module="commons-logging-api" />
 		<exclude org="stax"            module="stax-api" />
 		<exclude org="junit"/>
+    <exclude org="xml-apis" module="xml-apis"/>
 	</dependencies>
 </ivy-module>

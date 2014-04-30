@@ -25,8 +25,6 @@
     <!-- external dependencies -->
     <dependency org="jfree" name="jfreechart" rev="1.0.13" transitive="false" conf="default_external->default"/>
     <dependency org="jfree" name="jcommon" rev="1.0.16" transitive="false" conf="default_external->default"/>
-    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false"
-                conf="default_external->default"/>
 
     <!-- Testing Dependencies -->
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
