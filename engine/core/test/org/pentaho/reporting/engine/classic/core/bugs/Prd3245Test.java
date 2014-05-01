@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import java.awt.GraphicsEnvironment;
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -103,14 +104,15 @@ public class Prd3245Test extends TestCase
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
-    assertChildren(1, DebugReportRunner.layoutPage(report, 0));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 1));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 2));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 3));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 4));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 5));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 6));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 7));
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2, 3, 4, 5, 6, 7);
+    assertChildren(1, pages.get(0));
+    assertChildren(2, pages.get(1));
+    assertChildren(1, pages.get(2));
+    assertChildren(2, pages.get(3));
+    assertChildren(1, pages.get(4));
+    assertChildren(2, pages.get(5));
+    assertChildren(1, pages.get(6));
+    assertChildren(2, pages.get(7));
   }
 
   public void testGoldenSampleSubReportHeightLegacy () throws Exception
