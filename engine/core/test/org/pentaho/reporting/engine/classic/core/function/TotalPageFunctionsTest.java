@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.function;
 
 import java.awt.Color;
+import java.util.List;
 import javax.swing.table.TableModel;
 
 import junit.framework.AssertionFailedError;
@@ -156,8 +157,6 @@ public class TotalPageFunctionsTest extends TestCase
     validateRelationalReport(TotalPageSumFunction.class);
   }
 
-
-
   private void validateRelationalReport(final Class aggFun) throws Exception
   {
     final TableModel tableModel = createRelationalTableModel();
@@ -206,9 +205,11 @@ public class TotalPageFunctionsTest extends TestCase
 
     DebugReportRunner.showDialog(report);
 
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(report, 0, 1, 2);
+
     for (int page = 0; page < 3; page += 1)
     {
-      final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, page);
+      final LogicalPageBox logicalPageBox = logicalPageBoxes.get(page);
       validateItemBands(logicalPageBox);
       validateHeader(rowAHeaderValues[page], rowBHeaderValues[page], noGrpHeaderValues[page], page, logicalPageBox);
       validateFooter(rowAFooterValues[page], rowBFooterValues[page], noGrpHeaderValues[page], page, logicalPageBox);

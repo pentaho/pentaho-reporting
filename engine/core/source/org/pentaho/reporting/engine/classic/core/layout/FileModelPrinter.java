@@ -54,6 +54,11 @@ public class FileModelPrinter extends ModelPrinter
     writer = new BufferedWriter(new FileWriter(file));
   }
 
+  protected boolean isPrintingEnabled()
+  {
+    return true;
+  }
+
   protected void print(final String s)
   {
     try

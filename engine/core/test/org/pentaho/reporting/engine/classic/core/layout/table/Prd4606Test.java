@@ -155,7 +155,7 @@ public class Prd4606Test extends TestCase
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
 
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+//    ModelPrinter.INSTANCE.print(logicalPageBox);
 //    DebugReportRunner.showDialog(report);
   }
 

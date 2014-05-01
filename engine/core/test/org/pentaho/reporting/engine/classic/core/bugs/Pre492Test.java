@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -136,12 +137,14 @@ public class Pre492Test extends TestCase
   public void testPagebreakHonoredOnFirstPage() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-    final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
+
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
+    final LogicalPageBox page0 = logicalPageBoxes.get(0);
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
     assertEquals(31, elementsByElementType.length);
     assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[elementsByElementType.length - 1].getY());
 
-    final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 1);
+    final LogicalPageBox page1 = logicalPageBoxes.get(1);
     final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
     assertEquals(34, elementsPage1.length);
     assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[elementsPage1.length - 1].getY());

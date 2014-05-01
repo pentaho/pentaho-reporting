@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -96,11 +97,13 @@ public class Prd3239Test extends TestCase
   public void testGoldenSample() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3239.prpt");
-    final LogicalPageBox page1 = DebugReportRunner.layoutPage(masterReport, 0);
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
+
+    final LogicalPageBox page1 = logicalPageBoxes.get(0);
     assertNull(MatchFactory.findElementByName(page1, "Element@3459142"));
     assertNotNull(MatchFactory.findElementByName(page1, "TextField@18032083"));
 
-    final LogicalPageBox page2 = DebugReportRunner.layoutPage(masterReport, 1);
+    final LogicalPageBox page2 = logicalPageBoxes.get(1);
     assertNotNull(MatchFactory.findElementByName(page2, "Element@3459142"));
     assertNull(MatchFactory.findElementByName(page2, "TextField@18032083"));
 
