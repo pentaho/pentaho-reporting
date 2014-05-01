@@ -20,11 +20,16 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.in
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
+import com.lowagie.text.Chunk;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfAnnotation;
 import com.lowagie.text.pdf.PdfContentByte;
@@ -35,6 +40,7 @@ import com.lowagie.text.pdf.PdfOutline;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfTextArray;
 import com.lowagie.text.pdf.PdfWriter;
+import static java.text.AttributedCharacterIterator.Attribute;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -48,11 +54,13 @@ import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.text.Glyph;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.LogicalPageDrawable;
@@ -60,6 +68,7 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.util.TypedMapWrapper;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -130,11 +139,11 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
   private PdfWriter writer;
   private float globalHeight;
   private boolean globalEmbed;
-  private LFUMap<ResourceKey,com.lowagie.text.Image> imageCache;
+  private LFUMap<ResourceKey, com.lowagie.text.Image> imageCache;
   private char version;
 
   public PdfLogicalPageDrawable(final PdfWriter writer,
-                                final LFUMap<ResourceKey,com.lowagie.text.Image> imageCache,
+                                final LFUMap<ResourceKey, com.lowagie.text.Image> imageCache,
                                 final char version)
   {
     if (writer == null)
@@ -227,7 +236,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     {
       return false;
     }
-    
+
     final String attributeText = String.valueOf(attribute);
     final PdfAction action = PdfAction.javaScript(attributeText, writer, false);
 
@@ -242,7 +251,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     writer.addAnnotation(annotation);
     return true;
   }
-  
+
   protected void drawAnchor(final RenderNode content)
   {
     if (content.isNodeVisible(getDrawArea()) == false)
@@ -298,7 +307,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     final float rightX = translateX + (float) (StrictGeomUtility.toExternalValue(box.getX() + box.getWidth()));
     final float lowerY = (float) (globalHeight - StrictGeomUtility.toExternalValue(box.getY() + box.getHeight()));
     final float upperY = (float) (globalHeight - StrictGeomUtility.toExternalValue(box.getY()));
-    
+
     if (action != null)
     {
       final PdfAnnotation annotation = new PdfAnnotation(writer, leftX, lowerY, rightX, upperY, action);
@@ -477,24 +486,101 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       cb.showText(textArray);
     }
   }
-/*
+
   protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2)
   {
     RichTextSpec text = renderableComplexText.getRichText();
-    Phrase p = new Phrase();
-    for (RichTextSpec.StyledChunk c: text.getStyleChunks())
+    final PdfGraphics2D pg2 = (PdfGraphics2D) getGraphics();
+    final PdfContentByte cb = pg2.getRawContentByte();
+    final ColumnText p = new ColumnText(cb);
+
+    final float llx = (float) StrictGeomUtility.toExternalValue(renderableComplexText.getX());
+    final float urx = (float)
+        StrictGeomUtility.toExternalValue(renderableComplexText.getX() + renderableComplexText.getWidth());
+
+    final float y2 = (float) (StrictGeomUtility.toExternalValue(renderableComplexText.getY()));
+    final float lly = globalHeight - y2;
+    final float ury = (float)
+        (globalHeight - y2 - StrictGeomUtility.toExternalValue(renderableComplexText.getHeight()));
+    p.setSimpleColumn(llx, lly, urx, ury);
+
+    for (RichTextSpec.StyledChunk c : text.getStyleChunks())
     {
+      TypedMapWrapper<Attribute, Object> attributes = new TypedMapWrapper<Attribute, Object>(c.getAttributes());
+      final Number size = attributes.get(TextAttribute.SIZE, 10f, Number.class);
+      final PdfTextSpec pdfTextSpec = computeFont(c);
+      final int style = computeStyle(attributes, pdfTextSpec);
+
+      final Color paint = (Color) c.getStyleSheet().getStyleProperty(ElementStyleKeys.PAINT);
       // add chunks
-      BaseFont baseFont = null;// from framework
-      Font font = new Font(baseFont, size, style, color);
+      BaseFont baseFont = pdfTextSpec.getFontMetrics().getBaseFont();
+      Font font = new Font(baseFont, size.floatValue(), style, paint);
       Chunk chunk = new Chunk(c.getText(), font);
-      p.add(chunk);
+      p.addText(chunk);
     }
 
-    // TODO
-    super.drawComplexText(renderableComplexText, g2);
+    try
+    {
+      p.go();
+    }
+    catch (DocumentException e)
+    {
+      throw new InvalidReportStateException(e);
+    }
   }
-*/
+
+  private PdfTextSpec computeFont(final RichTextSpec.StyledChunk c)
+  {
+    final StyleSheet layoutContext = c.getStyleSheet();
+
+    final PdfGraphics2D g2 = (PdfGraphics2D) getGraphics();
+    final PdfContentByte cb = g2.getRawContentByte();
+
+    final TypedMapWrapper<Attribute, Object> attributes = new TypedMapWrapper<Attribute, Object>(c.getAttributes());
+    final String fontName = attributes.get(TextAttribute.FAMILY, String.class);
+    final Number fontSize = attributes.get(TextAttribute.SIZE, 10f, Number.class);
+    final String encoding = (String) layoutContext.getStyleProperty(TextStyleKeys.FONTENCODING);
+    final boolean embed = globalEmbed || layoutContext.getBooleanStyleProperty(TextStyleKeys.EMBEDDED_FONT);
+    final Float weightRaw = attributes.get(TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR, Float.class);
+    final Float italicsRaw = attributes.get(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE, Float.class);
+
+
+    final BaseFontFontMetrics fontMetrics = getMetaData().getBaseFontFontMetrics
+        (fontName, fontSize.doubleValue(), weightRaw >= TextAttribute.WEIGHT_DEMIBOLD,
+            italicsRaw >= TextAttribute.POSTURE_OBLIQUE, encoding, embed, false);
+    return new PdfTextSpec(layoutContext, getMetaData(), g2, fontMetrics, cb);
+  }
+
+  private int computeStyle(final TypedMapWrapper<Attribute, Object> attributes,
+                           final PdfTextSpec pdfTextSpec)
+  {
+    final Float weight = attributes.get(TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR, Float.class);
+    final Float italics = attributes.get(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE, Float.class);
+    final boolean underlined = attributes.exists(TextAttribute.UNDERLINE);
+    final boolean strikethrough = attributes.exists(TextAttribute.STRIKETHROUGH);
+
+    FontNativeContext nativeContext = pdfTextSpec.getFontMetrics().getNativeContext();
+
+    int style = 0;
+    if (nativeContext.isNativeBold() == false && weight >= TextAttribute.WEIGHT_DEMIBOLD)
+    {
+      style |= Font.BOLD;
+    }
+    if (nativeContext.isNativeItalics() == false && italics >= TextAttribute.POSTURE_OBLIQUE)
+    {
+      style |= Font.ITALIC;
+    }
+    if (underlined)
+    {
+      style |= Font.UNDERLINE;
+    }
+    if (strikethrough)
+    {
+      style |= Font.STRIKETHRU;
+    }
+    return style;
+  }
+
   protected boolean startInlineBox(final InlineRenderBox box)
   {
     if (box.getStaticBoxLayoutProperties().isVisible() == false)

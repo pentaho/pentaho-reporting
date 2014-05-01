@@ -121,10 +121,15 @@ public class RichTextSpecProducer
   }
 
   private RichTextImageProducer imageProducer;
+  private OutputProcessorMetaData metaData;
 
   public RichTextSpecProducer(final OutputProcessorMetaData metaData,
                               final ResourceManager resourceManager)
   {
+    ArgumentNullException.validate("metaData", metaData);
+    ArgumentNullException.validate("resourceManager", resourceManager);
+
+    this.metaData = metaData;
     imageProducer = new RichTextImageProducer(metaData, resourceManager);
   }
 
@@ -259,10 +264,19 @@ public class RichTextSpecProducer
     {
       result.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR);
     }
-    result.put(TextAttribute.FAMILY, layoutContext.getStyleProperty(TextStyleKeys.FONT));
+
+    final String fontNameRaw = (String) layoutContext.getStyleProperty(TextStyleKeys.FONT);
+    final String fontName = metaData.getNormalizedFontFamilyName(fontNameRaw);
+    result.put(TextAttribute.FAMILY, fontName);
     result.put(TextAttribute.SIZE, layoutContext.getIntStyleProperty(TextStyleKeys.FONTSIZE, 12));
-    result.put(TextAttribute.UNDERLINE, layoutContext.getBooleanStyleProperty(TextStyleKeys.UNDERLINED));
-    result.put(TextAttribute.STRIKETHROUGH, layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH));
+    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.UNDERLINED))
+    {
+      result.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+    }
+    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH))
+    {
+      result.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+    }
 
     // character spacing
     result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0) / 10);
