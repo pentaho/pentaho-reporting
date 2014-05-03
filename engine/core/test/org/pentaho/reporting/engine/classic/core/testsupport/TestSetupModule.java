@@ -80,8 +80,8 @@ public class TestSetupModule extends AbstractModule
     try
     {
       final InputStream in = new FileInputStream("sql/sampledata.script");
-      final InputStreamReader inReader = new InputStreamReader(in);
-      final BufferedReader bin = new BufferedReader(inReader);
+      final InputStreamReader inReader = new InputStreamReader(in, "ISO-8859-1");
+      final BufferedReader bin = new BufferedReader(inReader, 4096);
       try
       {
         final Statement statement = connection.createStatement();
@@ -90,22 +90,15 @@ public class TestSetupModule extends AbstractModule
           String line;
           while ((line = bin.readLine()) != null)
           {
-            try
+            if (line.startsWith("CREATE SCHEMA ") ||
+                line.startsWith("CREATE USER SA ") ||
+                line.startsWith("GRANT DBA TO SA"))
+            {
+              // ignore the error, HSQL sucks
+            }
+            else
             {
               statement.addBatch(StringEscapeUtils.unescapeJava(line));
-            }
-            catch (SQLException e)
-            {
-              if (line.startsWith("CREATE SCHEMA ") ||
-                  line.startsWith("CREATE USER SA ") ||
-                  line.startsWith("GRANT DBA TO SA"))
-              {
-                // ignore the error, HSQL sucks
-              }
-              else
-              {
-                throw e;
-              }
             }
           }
           statement.executeBatch();
