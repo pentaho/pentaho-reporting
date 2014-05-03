@@ -40,7 +40,6 @@ public class Prd4313Test extends TestCase
     ClassicEngineBoot.getInstance().start();
     System.setOut(out);
     System.setErr(err);
-    runPerformanceTestInternal();
   }
 
   public void testEventNotification()
@@ -91,7 +90,7 @@ public class Prd4313Test extends TestCase
 
   private void run(final Element mrLabel2, final SharedElementRenderer sharedRenderer)
   {
-    for (int i = 0; i < 1000; i += 1)
+    for (int i = 0; i < 1; i += 1)
     {
       mrLabel2.getStyle().setStyleProperty(ElementStyleKeys.ANCHOR_NAME, String.valueOf(Math.random()));
 //      mrLabel2.getStyle().setStyleProperty(ElementStyleKeys.POS_Y, new Float(100f * Math.random()));
