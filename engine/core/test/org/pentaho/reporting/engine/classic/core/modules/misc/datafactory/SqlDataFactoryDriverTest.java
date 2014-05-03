@@ -21,7 +21,6 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
@@ -141,7 +140,7 @@ public class SqlDataFactoryDriverTest extends DataSourceTestBase
   {
     final DriverConnectionProvider drc = new DriverConnectionProvider();
     drc.setDriver("org.hsqldb.jdbcDriver");
-    drc.setUrl("jdbc:hsqldb:./sql/sampledata");
+    drc.setUrl("jdbc:hsqldb:mem:SampleData");
     drc.setProperty("user", "sa");
     drc.setProperty("password", "");
     final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory(drc);
