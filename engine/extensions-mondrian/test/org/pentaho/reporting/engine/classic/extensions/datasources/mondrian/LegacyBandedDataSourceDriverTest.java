@@ -59,7 +59,7 @@ public class LegacyBandedDataSourceDriverTest extends DataSourceTestBase
   {
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
     provider.setDriver("org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:hsqldb:./sql/sampledata");
+    provider.setUrl("jdbc:hsqldb:mem:SampleData");
 
     final LegacyBandedMDXDataFactory mondrianDataFactory = new LegacyBandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider

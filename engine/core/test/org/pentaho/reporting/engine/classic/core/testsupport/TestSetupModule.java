@@ -29,6 +29,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
@@ -79,8 +80,8 @@ public class TestSetupModule extends AbstractModule
     try
     {
       final InputStream in = new FileInputStream("sql/sampledata.script");
-      final InputStreamReader inReader = new InputStreamReader(in);
-      final BufferedReader bin = new BufferedReader(inReader);
+      final InputStreamReader inReader = new InputStreamReader(in, "ISO-8859-1");
+      final BufferedReader bin = new BufferedReader(inReader, 4096);
       try
       {
         final Statement statement = connection.createStatement();
@@ -89,24 +90,18 @@ public class TestSetupModule extends AbstractModule
           String line;
           while ((line = bin.readLine()) != null)
           {
-            try
+            if (line.startsWith("CREATE SCHEMA ") ||
+                line.startsWith("CREATE USER SA ") ||
+                line.startsWith("GRANT DBA TO SA"))
             {
-              statement.execute(line);
+              // ignore the error, HSQL sucks
             }
-            catch (SQLException e)
+            else
             {
-              if (line.startsWith("CREATE SCHEMA ") ||
-                  line.startsWith("CREATE USER SA ") ||
-                  line.startsWith("GRANT DBA TO SA"))
-              {
-                // ignore the error, HSQL sucks
-              }
-              else
-              {
-                throw e;
-              }
+              statement.addBatch(StringEscapeUtils.unescapeJava(line));
             }
           }
+          statement.executeBatch();
         }
         finally
         {

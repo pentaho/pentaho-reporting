@@ -24,7 +24,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 
 public class MondrianMetaDataTest extends TestCase
 {
@@ -63,7 +62,7 @@ public class MondrianMetaDataTest extends TestCase
   {
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
     provider.setDriver("org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:hsqldb:./sql/sampledata");
+    provider.setUrl("jdbc:hsqldb:mem:SampleData");
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider
@@ -111,7 +110,7 @@ public class MondrianMetaDataTest extends TestCase
   {
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
     provider.setDriver("org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:hsqldb:./sql/sampledata");
+    provider.setUrl("jdbc:hsqldb:mem:SampleData");
 
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider
