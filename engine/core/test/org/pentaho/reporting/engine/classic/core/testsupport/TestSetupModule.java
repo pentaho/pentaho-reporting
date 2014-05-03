@@ -92,7 +92,7 @@ public class TestSetupModule extends AbstractModule
           {
             try
             {
-              statement.execute(StringEscapeUtils.unescapeJava(line));
+              statement.addBatch(StringEscapeUtils.unescapeJava(line));
             }
             catch (SQLException e)
             {
@@ -108,6 +108,7 @@ public class TestSetupModule extends AbstractModule
               }
             }
           }
+          statement.executeBatch();
         }
         finally
         {
