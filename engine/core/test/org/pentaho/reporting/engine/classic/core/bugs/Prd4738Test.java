@@ -2,14 +2,11 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
@@ -35,7 +32,6 @@ public class Prd4738Test extends TestCase
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX", "true");
     final LogicalPageBox box = DebugReportRunner.layoutTablePage(report, 0);
-    ModelPrinter.INSTANCE.print(box);
 
     final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(box, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
     for (int i = 0; i < elementsByNodeType.length; i++)
@@ -43,7 +39,5 @@ public class Prd4738Test extends TestCase
       RenderNode renderNode = elementsByNodeType[i];
       assertEquals(10000000, renderNode.getWidth());
     }
-
-    // ExcelReportUtil.createXLS(report, "test-output/Prd4738.xls");
   }
 }

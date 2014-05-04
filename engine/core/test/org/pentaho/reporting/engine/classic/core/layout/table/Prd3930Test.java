@@ -321,9 +321,6 @@ public class Prd3930Test extends TestCase
     XmlTableReportUtil.createFlowXML(report, bout);
     final String text = bout.toString("UTF-8");
 
-    System.out.println (text);
-    System.out.flush();
-
     for (int i = 0; i < 100; i += 1)
     {
       assertTrue("Found data-0 cell", text.contains("value=\"Data-" + i + "-0"));

@@ -3,7 +3,6 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -26,7 +25,7 @@ public class Prd4849Test extends TestCase
     report.getPageFooter().setName("PRD-4849");
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+
     RenderNode elementByName = MatchFactory.findElementByName(logicalPageBox, "PRD-4849");
     assertNotNull(elementByName);
   }

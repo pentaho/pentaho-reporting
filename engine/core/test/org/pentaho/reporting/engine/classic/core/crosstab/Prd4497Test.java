@@ -23,18 +23,11 @@ public class Prd4497Test extends TestCase
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testEmptyPageGenerated() throws Exception
-  {
-    // this report should generate only two pages of content. With the bug still active, it generates 3.
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4497.prpt");
-    assertEquals(2, DebugReportRunner.execGraphics2D(report));
-  }
-
   public void testLayout() throws Exception
   {
     // this report should generate only two pages of content. With the bug still active, it generates 3.
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4497.prpt");
-    LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox pageBox = DebugReportRunner.layoutPageStrict(report, 2, 0);
     Assert.assertEquals(StrictGeomUtility.toInternalValue(784), pageBox.getPageEnd());
     RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
     Assert.assertEquals(1, elementsByNodeType.length);
