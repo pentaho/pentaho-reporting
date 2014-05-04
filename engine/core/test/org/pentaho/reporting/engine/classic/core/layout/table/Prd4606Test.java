@@ -5,7 +5,6 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -154,18 +153,5 @@ public class Prd4606Test extends TestCase
     sequence.setParameter("limit", 10);
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
-
-//    ModelPrinter.INSTANCE.print(logicalPageBox);
-//    DebugReportRunner.showDialog(report);
-  }
-
-  public void testCacheInvalidation() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Crosstab-List.prpt");
-    report.setCompatibilityLevel(null);
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-
-    ModelPrinter.INSTANCE.print(logicalPageBox);
-
   }
 }

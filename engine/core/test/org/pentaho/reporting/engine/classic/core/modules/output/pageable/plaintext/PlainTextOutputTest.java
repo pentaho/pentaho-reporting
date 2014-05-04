@@ -30,7 +30,6 @@ import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.elementfactory.LabelElementFactory;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -85,7 +84,7 @@ public class PlainTextOutputTest extends TestCase
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(10, 6)), false);
-    ModelPrinter.INSTANCE.print(pageBox);
+
     final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName(pageBox, "LabelElement");
     assertEquals(StrictGeomUtility.toInternalValue(26), labelElement.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(4), labelElement.getY());

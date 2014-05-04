@@ -21,11 +21,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -54,17 +50,7 @@ public class BrokeCellsTest extends TestCase
     manager.registerDefaults();
     final Resource res = manager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) res.getResource();
-
-    final ReportElement[] cells = report.getChildElementsByType(CrosstabCellType.INSTANCE);
-    for (int i = 0; i < cells.length; i++)
-    {
-      final CrosstabCell cell = (CrosstabCell) cells[i];
-//      cell.getElement(0).getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    }
-
     final LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(box);
-
 //    DebugReportRunner.showDialog(report);
   }
 }

@@ -37,13 +37,11 @@ import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
-import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -191,8 +189,7 @@ public class CrosstabDataTest extends TestCase
     report.addExpression(new ValidateExpression(false));
 
     DebugReportRunner.showDialog(report);
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    //ModelPrinter.print(pageBox);
+    DebugReportRunner.layoutPage(report, 0);
   }
 
   public void testDiagonalReverseReportProcessing() throws Exception
@@ -210,8 +207,7 @@ public class CrosstabDataTest extends TestCase
     report.addExpression(new ValidateExpression(true));
 
     DebugReportRunner.showDialog(report);
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    //ModelPrinter.print(pageBox);
+    DebugReportRunner.layoutPage(report, 0);
   }
 
   private static class ValidateExpression extends AbstractExpression
@@ -278,7 +274,7 @@ public class CrosstabDataTest extends TestCase
         return false;
       }
       final int currentRow = getRuntime().getCurrentRow();
-      DebugLog.log("ValidateFunction: " + currentRow);
+
       final Object row = getDataRow().get("Rows");
       final Object col = getDataRow().get("Cols");
       final Object data = getDataRow().get("Data");
@@ -311,9 +307,7 @@ public class CrosstabDataTest extends TestCase
     report.setRootGroup(createCrosstab());
     report.addExpression(new ValidateExpression(false));
 
-    DebugReportRunner.showDialog(report);
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, 0);
-    //ModelPrinter.print(pageBox);
+    DebugReportRunner.layoutPage(report, 0);
   }
 
 }

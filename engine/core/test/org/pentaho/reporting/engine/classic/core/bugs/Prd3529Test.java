@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import junit.framework.TestCase;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -31,13 +33,10 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class Prd3529Test extends TestCase
 {
+  private static final Log logger = LogFactory.getLog(Prd3529Test.class);
+
   public Prd3529Test()
   {
-  }
-
-  public Prd3529Test(final String name)
-  {
-    super(name);
   }
 
   protected void setUp() throws Exception
@@ -54,20 +53,10 @@ public class Prd3529Test extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final byte[] bytes = DebugReportRunner.createXmlTablePageable(report);
-    System.out.println (new String(bytes, "UTF-8"));
-  }
-
-  public void testReport() throws ResourceException, IOException, ReportProcessingException
-  {
-    final URL url = getClass().getResource("Prd-3529.prpt");
-    assertNotNull(url);
-    final ResourceManager resourceManager = new ResourceManager();
-    resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
-    final MasterReport report = (MasterReport) directly.getResource();
-
-    final byte[] bytes = DebugReportRunner.createXmlTablePageable(report);
-    System.out.println (new String(bytes, "UTF-8"));
+    if (logger.isDebugEnabled())
+    {
+      final byte[] bytes = DebugReportRunner.createXmlTablePageable(report);
+      logger.debug(new String(bytes, "UTF-8"));
+    }
   }
 }
