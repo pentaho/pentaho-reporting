@@ -111,4 +111,6 @@ public class TextStyleKeys
   public static final StyleKey TEXT_INDENT = StyleKey.getStyleKey("text-indent", Float.class);
 
   public static final StyleKey FIRST_LINE_INDENT = StyleKey.getStyleKey("first-line-indent", Float.class);
+
+  public static final StyleKey DIRECTION = StyleKey.getStyleKey("direction", TextDirection.class);
 }

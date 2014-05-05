@@ -1563,11 +1563,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long posX = renderableComplexText.getX();
     final long posY = renderableComplexText.getY();
 
-    final FontMetrics fm = g2.getFontMetrics();
-    final Rectangle2D rect = fm.getMaxCharBounds(g2);
-    final long awtBaseLine = StrictGeomUtility.toInternalValue(-rect.getY());
-
-    final float y = (float) StrictGeomUtility.toExternalValue(posY + awtBaseLine);
+    float baseline = renderableComplexText.getParagraphFontMetrics().getBaseline();
+    final float y = (float) StrictGeomUtility.toExternalValue(posY) + baseline;
 
     renderableComplexText.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
 
@@ -1582,16 +1579,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   protected boolean isNormalTextSpacing(final RenderableText text)
   {
     return text.isNormalTextSpacing();
-//    final Glyph[] glyphs = text.getGlyphs();
-//    for (int i = 0; i < glyphs.length; i++)
-//    {
-//      final Glyph glyph = glyphs[i];
-//      if (Spacing.EMPTY_SPACING.equals(glyph.getSpacing()) == false)
-//      {
-//        return false;
-//      }
-//    }
-//    return true;
   }
 
   protected void configureStroke(final StyleSheet layoutContext, final Graphics2D g2)

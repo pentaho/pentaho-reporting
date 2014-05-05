@@ -47,28 +47,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
     implements TextMinorAxisLayoutStep
 {
-  private static class ParagraphFontMetrics
-  {
-    private float ascent = 0;
-    private float descent = 0;
-    private float leading = 0;
-
-    public ParagraphFontMetrics()
-    {
-    }
-
-    public void update(TextLayout textLayout)
-    {
-      ascent = Math.max(ascent, textLayout.getAscent());
-      descent = Math.max(descent, textLayout.getDescent());
-      leading = Math.max(leading, textLayout.getLeading());
-    }
-
-    public float getLineHeight()
-    {
-      return ascent + descent + leading;
-    }
-  }
 
   private static final Log logger = LogFactory.getLog(ComplexTextMinorAxisLayoutStep.class);
   private final boolean strictCompatibility;
@@ -161,7 +139,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     final LineBreakIterator lineIterator = createLineBreakIterator(box, layoutContext, richText);
 
     ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
-    ParagraphFontMetrics metrics = new ParagraphFontMetrics();
+    ParagraphFontMetricsImpl metrics = new ParagraphFontMetricsImpl();
     while (lineIterator.hasNext())
     {
       final LineBreakIteratorState state = lineIterator.next();
@@ -176,7 +154,7 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     final double height = metrics.getLineHeight();
     for (RenderableComplexText text : lines)
     {
-      final RenderBox line = generateLine(box, lineBoxContainer, text, height);
+      final RenderBox line = generateLine(box, lineBoxContainer, text, height, metrics);
       box.addGeneratedChild(line);
     }
   }
@@ -212,8 +190,9 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
 
     final RenderableComplexText text = richText.create(lineBoxContainer);
     text.setTextLayout(textLayout);
-
-    final RenderBox line = generateLine(box, lineBoxContainer, text, height);
+    ParagraphFontMetricsImpl metrics = new ParagraphFontMetricsImpl();
+    metrics.update(textLayout);
+    final RenderBox line = generateLine(box, lineBoxContainer, text, height, metrics);
     // and finally add the line to the paragraph
     getNodeContext().updateX2(line.getCachedX2());
     box.addGeneratedChild(line);
@@ -222,7 +201,8 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
   private RenderBox generateLine(final ParagraphRenderBox paragraph,
                                  final ParagraphPoolBox lineBoxContainer,
                                  final RenderableComplexText text,
-                                 final double height)
+                                 final double height,
+                                 final ParagraphFontMetricsImpl metrics)
   {
     //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
     TextLayout textLayout = text.getTextLayout();
@@ -231,6 +211,8 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
 //        text.setCachedHeight();
     text.setCachedHeight(Math.max(StrictGeomUtility.toInternalValue(height), lineBoxContainer.getLineHeight()));
     text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
+    text.setParagraphFontMetrics(metrics);
+
 
     MinorAxisNodeContext nodeContext = getNodeContext();
     final long alignmentX = RenderUtility.computeHorizontalAlignment(paragraph.getTextAlignment(),

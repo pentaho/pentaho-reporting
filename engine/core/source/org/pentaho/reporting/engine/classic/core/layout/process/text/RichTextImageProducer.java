@@ -65,8 +65,8 @@ public class RichTextImageProducer
 
     if (metaData.isFeatureSupported(OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING))
     {
-      final Image img = processRenderableReplacedContent(content.getStyleSheet(), width, height,
-          content.getContent().getRawObject());
+      final Image img = processRenderableReplacedContent
+          (content.getStyleSheet(), width, height, content.getContent().getRawObject());
       if (img != null)
       {
         return img;

@@ -1289,6 +1289,8 @@
 
     <style name="text-wrap" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor"/>
+    <style name="direction" expert="true" hidden="false" mandatory="false"
+           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor"/>
     <style name="trim-text-content" expert="true" hidden="false" mandatory="false"/>
     <style name="vertical-text-alignment" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.VerticalTextAlignmentPropertyEditor"/>

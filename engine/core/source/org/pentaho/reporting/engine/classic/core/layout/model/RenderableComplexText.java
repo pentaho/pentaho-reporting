@@ -10,6 +10,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayout
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.ParagraphFontMetrics;
 import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpecProducer;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
@@ -27,6 +28,7 @@ public class RenderableComplexText extends RenderNode
   private String text;
   private TextLayout textLayout;
   private boolean forceLinebreak;
+  private ParagraphFontMetrics paragraphFontMetrics;
 
   public RenderableComplexText(final StyleSheet styleSheet,
                                final InstanceID instanceID,
@@ -161,5 +163,15 @@ public class RenderableComplexText extends RenderNode
       return false;
     }
     return true;
+  }
+
+  public void setParagraphFontMetrics(final ParagraphFontMetrics paragraphFontMetrics)
+  {
+    this.paragraphFontMetrics = paragraphFontMetrics;
+  }
+
+  public ParagraphFontMetrics getParagraphFontMetrics()
+  {
+    return paragraphFontMetrics;
   }
 }

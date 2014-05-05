@@ -69,6 +69,7 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
     setStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE, WhitespaceCollapse.PRESERVE);
     setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, Boolean.FALSE);
     setStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.WRAP);
+    setStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
 
     setStyleProperty(ElementStyleKeys.PAINT, ElementDefaultStyleSheet.DEFAULT_PAINT);
     setStyleProperty(ElementStyleKeys.STROKE, ElementDefaultStyleSheet.DEFAULT_STROKE);

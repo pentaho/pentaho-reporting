@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
@@ -38,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyL
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.SimpleLinebreaker;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -95,6 +97,14 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
     super.processParagraphChilds(box);
+  }
+
+  protected void processRenderableContent(final RenderableReplacedContentBox box)
+  {
+    if (breakState != null)
+    {
+      breakState.addNode(box);
+    }
   }
 
   protected boolean startBlockBox(final BlockRenderBox box)
@@ -367,6 +377,10 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   private boolean startBox(final RenderBox box)
   {
+    if (box instanceof RenderableReplacedContentBox)
+    {
+      DebugLog.logHere();
+    }
     if (breakState == null)
     {
       if (box.isLinebreakCacheValid())

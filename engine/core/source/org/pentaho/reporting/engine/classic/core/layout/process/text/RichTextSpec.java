@@ -19,6 +19,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
+import java.awt.font.TextAttribute;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
@@ -168,12 +170,16 @@ public class RichTextSpec
   private String text;
   private AttributedString attributedString;
   private List<StyledChunk> styleChunks;
+  private TextDirection runDirection;
 
   public RichTextSpec(final String text,
+                      final TextDirection runDirection,
                       final List<StyledChunk> styleChunks)
   {
     ArgumentNullException.validate("text", text);
     ArgumentNullException.validate("styleChunks", styleChunks);
+    ArgumentNullException.validate("runDirection", runDirection);
+
     if (styleChunks.isEmpty())
     {
       throw new IllegalStateException("Need at least one style chunk");
@@ -183,6 +189,7 @@ public class RichTextSpec
       throw new IllegalStateException("Text must not be empty.");
     }
 
+    this.runDirection = runDirection;
     this.text = text;
     this.styleChunks = Collections.unmodifiableList(new ArrayList<StyledChunk>(styleChunks));
     this.attributedString = createText();
@@ -191,6 +198,7 @@ public class RichTextSpec
   private AttributedString createText()
   {
     AttributedString str = new AttributedString(text);
+    str.addAttribute(TextAttribute.RUN_DIRECTION, TextDirection.RTL.equals(runDirection));
     int startPosition = 0;
     for (final StyledChunk chunk : styleChunks)
     {
@@ -265,7 +273,7 @@ public class RichTextSpec
       clippedChunks.add(new StyledChunk(chunkStart, chunkEnd, chunk.originatingTextNode,
           chunk.attributes, chunk.originalAttributes, chunk.styleSheet, chunk.instanceID, clippedText));
     }
-    return new RichTextSpec(text.substring(start, end), clippedChunks);
+    return new RichTextSpec(text.substring(start, end), runDirection, clippedChunks);
   }
 
   public RenderableComplexText create(final RenderBox lineBoxContainer)

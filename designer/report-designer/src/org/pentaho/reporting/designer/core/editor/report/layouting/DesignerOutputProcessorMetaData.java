@@ -40,6 +40,7 @@ public class DesignerOutputProcessorMetaData extends AbstractOutputProcessorMeta
     addFeature(OutputProcessorFeature.WATERMARK_SECTION);
     addFeature(OutputProcessorFeature.DESIGNTIME);
     addFeature(OutputProcessorFeature.PAGE_SECTIONS);
+    addFeature(OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING);
   }
 
   public String getExportDescriptor()

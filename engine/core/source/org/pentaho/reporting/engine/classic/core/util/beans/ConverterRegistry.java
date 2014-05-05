@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
 import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
@@ -90,6 +91,7 @@ public final class ConverterRegistry
     registeredClasses.put(BorderStyle.class, new BorderStyleValueConverter());
     registeredClasses.put(FontSmooth.class, new FontSmoothValueConverter());
     registeredClasses.put(TextWrap.class, new TextWrapValueConverter());
+    registeredClasses.put(TextDirection.class, new TextDirectionValueConverter());
     registeredClasses.put(java.sql.Date.class, new SQLDateValueConverter());
     registeredClasses.put(Time.class, new SQLTimeValueConverter());
     registeredClasses.put(Timestamp.class, new SQLTimestampValueConverter());

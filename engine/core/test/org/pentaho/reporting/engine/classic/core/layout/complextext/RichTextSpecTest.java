@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 @SuppressWarnings("HardCodedStringLiteral")
@@ -136,6 +137,6 @@ public class RichTextSpecTest
         new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "jkl"));
     chunks.add(new RichTextSpec.StyledChunk(12, 15, new SpacerRenderNode(), attrs,
         new ReportAttributeMap<Object>(), ElementDefaultStyleSheet.getDefaultStyle(), new InstanceID(), "MNO"));
-    return new RichTextSpec("ABCdefGHIjklMNO", chunks);
+    return new RichTextSpec("ABCdefGHIjklMNO", TextDirection.LTR, chunks);
   }
 }

@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexT
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
@@ -151,7 +152,9 @@ public class RichTextSpecProducer
       text.append(chunk.getText());
     }
 
-    return new RichTextSpec(text.toString(), convertNodes(attr));
+    TextDirection direction = (TextDirection)
+        lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
+    return new RichTextSpec(text.toString(), direction, convertNodes(attr));
   }
 
   public RichTextSpec computeText(final RenderableComplexText textNode,
@@ -168,7 +171,9 @@ public class RichTextSpecProducer
       text.append(chunk.getText());
     }
 
-    return new RichTextSpec(text.toString(), convertNodes(attr));
+    TextDirection direction = (TextDirection)
+        textNode.getStyleSheet().getStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
+    return new RichTextSpec(text.toString(), direction, convertNodes(attr));
   }
 
   private List<RichTextSpec.StyledChunk> convertNodes(final List<AttributedStringChunk> chunks)
