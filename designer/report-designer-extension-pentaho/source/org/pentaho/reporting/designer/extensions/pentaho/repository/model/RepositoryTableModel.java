@@ -17,7 +17,10 @@
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
+
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.vfs.FileObject;
@@ -191,7 +194,7 @@ public class RepositoryTableModel extends AbstractTableModel
         case 0:
           return node1.getContent().getAttribute("localized-name");
         case 1:
-          return node1.getName().getBaseName();
+          return URLDecoder.decode(node1.getName().getBaseName().replaceAll("\\+", "%2B"), "UTF-8");
         case 2:
           final long lastModifiedTime = node1.getContent().getLastModifiedTime();
           if (lastModifiedTime == -1)
@@ -209,6 +212,9 @@ public class RepositoryTableModel extends AbstractTableModel
     {
       // ignre the exception, assume the file is not valid
       UncaughtExceptionsModel.getInstance().addException(fse);
+      return null;
+    } catch (UnsupportedEncodingException e) {
+      UncaughtExceptionsModel.getInstance().addException(e);
       return null;
     }
   }
