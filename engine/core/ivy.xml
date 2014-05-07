@@ -89,5 +89,6 @@
       <dependency org="xmlunit" name="xmlunit" rev="1.3" conf="test->default"/>
       <dependency org="org.databene" name="contiperf" rev="2.2.0" conf="test->default"/>
       <dependency org="${library.group}" name="libformula-test" rev="${dependency.reporting-library.revision}" transitive="false" changing="false" conf="test->default"/>
+      <dependency org="org.apache.commons" name="commons-lang3" rev="3.0" transitive="false" conf="test->default"/>
     </dependencies>
 </ivy-module>

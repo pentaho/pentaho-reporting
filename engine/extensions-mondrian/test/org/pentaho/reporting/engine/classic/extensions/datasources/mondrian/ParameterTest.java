@@ -66,7 +66,7 @@ public class ParameterTest extends TestCase
     final BandedMDXDataFactory mondrianDataFactory = new BandedMDXDataFactory();
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
     provider.setDriver("org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:hsqldb:./sql/sampledata");
+    provider.setUrl("jdbc:hsqldb:mem:SampleData");
     mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider
         ("test/org/pentaho/reporting/engine/classic/extensions/datasources/mondrian/steelwheels.mondrian.xml"));
     mondrianDataFactory.setDataSourceProvider(provider);

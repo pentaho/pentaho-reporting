@@ -529,7 +529,7 @@ public class MasterReport extends AbstractReportDefinition
 
       final MemoryDocumentBundle mem = new MemoryDocumentBundle();
       BundleUtilities.copyStickyInto(mem, bundle);
-      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles());
+      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true);
       BundleUtilities.copyMetaData(mem, bundle);
       mem.getWriteableDocumentMetaData().setBundleType("application/vnd.pentaho.serialized-bundle");
       final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -568,7 +568,7 @@ public class MasterReport extends AbstractReportDefinition
 
       final MemoryDocumentBundle mem = new MemoryDocumentBundle(getContentBase());
       BundleUtilities.copyStickyInto(mem, bundle);
-      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles());
+      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true);
       BundleUtilities.copyMetaData(mem, bundle);
       mem.getWriteableDocumentMetaData().setBundleType(bundleType);
       setBundle(mem);

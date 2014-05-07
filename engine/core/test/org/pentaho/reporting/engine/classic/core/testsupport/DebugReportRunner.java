@@ -24,6 +24,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 
 import junit.framework.Assert;
@@ -52,6 +57,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
 import org.pentaho.reporting.engine.classic.core.modules.output.csv.CSVDataReportUtil;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageFlowSelector;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.SinglePageFlowSelector;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
@@ -395,12 +401,13 @@ public class DebugReportRunner
 
   private static class InterceptingXmlPageOutputProcessor extends XmlPageOutputProcessor
   {
-    private LogicalPageBox logicalPageBox;
+    private List<LogicalPageBox> logicalPageBox;
 
     private InterceptingXmlPageOutputProcessor(final OutputStream outputStream,
                                                final OutputProcessorMetaData metaData)
     {
       super(outputStream, metaData);
+      this.logicalPageBox = new ArrayList<LogicalPageBox>();
     }
 
     protected void processPhysicalPage(final PageGrid pageGrid,
@@ -409,18 +416,30 @@ public class DebugReportRunner
                                        final int col,
                                        final PhysicalPageKey pageKey) throws ContentProcessingException
     {
-      logicalPageBox = logicalPage.derive(true);
+      logicalPageBox.add(logicalPage.derive(true));
     }
 
     protected void processLogicalPage(final LogicalPageKey key,
                                       final LogicalPageBox logicalPage) throws ContentProcessingException
     {
-      logicalPageBox = logicalPage.derive(true);
+      logicalPageBox.add(logicalPage.derive(true));
     }
 
     public LogicalPageBox getLogicalPageBox()
     {
-      return logicalPageBox;
+      if (logicalPageBox.size() == 1)
+      {
+        return logicalPageBox.get(0);
+      }
+      else
+      {
+        throw new IllegalStateException();
+      }
+    }
+
+    public List<LogicalPageBox> getPages()
+    {
+      return Collections.unmodifiableList(logicalPageBox);
     }
   }
 
@@ -475,6 +494,23 @@ public class DebugReportRunner
     }
 
     return outputProcessor.getLogicalPageBox();
+  }
+
+  public static List<LogicalPageBox> layoutPages(final MasterReport report, final int... page) throws Exception
+  {
+    final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+
+    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
+        (new NullOutputStream(), new XmlPageOutputProcessorMetaData(localFontRegistry));
+    outputProcessor.setFlowSelector(new MultiPageFlowSelector(false, page));
+    final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
+    proc.processReport();
+
+
+    List<LogicalPageBox> pages = outputProcessor.getPages();
+    Assert.assertEquals("Pages have been generated", page.length, pages.size());
+    return pages;
   }
 
   public static LogicalPageBox layoutTablePage(final MasterReport report, final int page) throws Exception
@@ -694,11 +730,51 @@ public class DebugReportRunner
   public static boolean isSkipLongRunTest()
   {
     if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-            ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
     {
       return true;
     }
     return false;
+  }
+
+  private static class MultiPageFlowSelector implements PageFlowSelector
+  {
+    private Set<Integer> acceptedPage;
+    private boolean logicalPage;
+
+    public MultiPageFlowSelector(final boolean logicalPage, final int... acceptedPage)
+    {
+
+      this.acceptedPage = new HashSet<Integer>();
+      for (int page : acceptedPage)
+      {
+        this.acceptedPage.add(page);
+      }
+      this.logicalPage = logicalPage;
+    }
+
+    public MultiPageFlowSelector(final int acceptedPage)
+    {
+      this(true, acceptedPage);
+    }
+
+    public boolean isPhysicalPageAccepted(final PhysicalPageKey key)
+    {
+      if (key == null)
+      {
+        return false;
+      }
+      return logicalPage == false && acceptedPage.contains(key.getSequentialPageNumber());
+    }
+
+    public boolean isLogicalPageAccepted(final LogicalPageKey key)
+    {
+      if (key == null)
+      {
+        return false;
+      }
+      return logicalPage && acceptedPage.contains(key.getPosition());
+    }
   }
 
   public static File createTestOutputFile()

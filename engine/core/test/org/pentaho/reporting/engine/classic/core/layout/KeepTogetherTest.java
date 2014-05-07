@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -88,47 +90,48 @@ public class KeepTogetherTest extends TestCase
     group1.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
 
     //PdfReportUtil.createPDF(report, "/tmp/WidowTest.pdf");
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2, 3, 4, 5, 6, 7);
 
-    final LogicalPageBox page1 = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox page1 = pages.get(0);
     assertElementExists("outer-header-field", page1);
     assertElementExists("inner-footer-field", page1);
     assertElementExists("row-0", page1);
     assertElementExists("inner-header-field", page1);
 
-    final LogicalPageBox page2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox page2 = pages.get(1);
     assertElementExists("inner-header-field", page2);
     assertElementExists("row-1", page2);
     assertElementExists("inner-footer-field", page2);
     assertElementExists("outer-footer-field", page2);
     assertElementExists("outer-header-field", page2);
 
-    final LogicalPageBox page3 = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox page3 = pages.get(2);
     assertElementExists("inner-header-field", page3);
     assertElementExists("row-2", page3);
     assertElementExists("inner-footer-field", page3);
     assertElementDoesNotExist("row-3", page3);
 
-    final LogicalPageBox page4 = DebugReportRunner.layoutPage(report, 3);
+    final LogicalPageBox page4 = pages.get(3);
     assertElementExists("inner-header-field", page4);
     assertElementExists("row-5", page4);
     assertElementDoesNotExist("row-6", page4);
 
-    final LogicalPageBox page5 = DebugReportRunner.layoutPage(report, 4);
+    final LogicalPageBox page5 = pages.get(4);
     assertElementExists("inner-header-field", page5);
     assertElementExists("row-6", page5);
     assertElementDoesNotExist("row-7", page5);
 
-    final LogicalPageBox page6 = DebugReportRunner.layoutPage(report, 5);
+    final LogicalPageBox page6 = pages.get(5);
     assertElementExists("inner-header-field", page6);
     assertElementExists("row-7", page6);
     assertElementDoesNotExist("row-8", page6);
 
-    final LogicalPageBox page7 = DebugReportRunner.layoutPage(report, 6);
+    final LogicalPageBox page7 = pages.get(6);
     assertElementExists("inner-header-field", page7);
     assertElementExists("row-8", page7);
     assertElementDoesNotExist("row-9", page7);
 
-    final LogicalPageBox page8 = DebugReportRunner.layoutPage(report, 7);
+    final LogicalPageBox page8 = pages.get(7);
     assertElementExists("inner-header-field", page8);
     assertElementExists("row-9", page8);
     assertElementExists("inner-footer-field", page8);

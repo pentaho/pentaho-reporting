@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import java.io.File;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import org.junit.Assert;
@@ -25,7 +26,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
@@ -34,9 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfReportUtil;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldenSampleGenerator;
@@ -47,14 +45,11 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class PagebreakTest
 {
-
-  private File testOutputDir;
-
   @Before
   public void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
-    testOutputDir = DebugReportRunner.createTestOutputFile();
+    new File("test-output").mkdir();
   }
 
   @Test
@@ -67,11 +62,12 @@ public class PagebreakTest
     final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");
     report.getReportHeader().addElement(table);
-    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
+    report.getReportHeader().setLayout("block");
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
   }
 
   @Test
@@ -90,9 +86,9 @@ public class PagebreakTest
 
     table.setName("table");
     report.getReportHeader().addElement(table);
-    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
+    report.getReportHeader().setLayout("block");
 
-    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-rowspan-output.pdf"));
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-rowspan-output.pdf");
 /*
     assertPageValid(report, 0);
     assertPageValid(report, 1);
@@ -106,21 +102,20 @@ public class PagebreakTest
     final MasterReport report = new MasterReport();
     report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
     report.setQuery("query");
-    report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Pre-Padding", 100, 10));
     report.getReportHeader().addElement(table);
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
-    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
+    report.getReportHeader().setLayout("block");
 
-    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-block.pdf"));
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-block.pdf");
 
-    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0, StrictGeomUtility.toInternalValue(10));
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
 //    assertPageValid(report, 3);
 //    assertPageValid(report, 4);
   }
@@ -140,11 +135,12 @@ public class PagebreakTest
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
     report.getReportHeader().setLayout("row");
 
-    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-row.pdf"));
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-row.pdf");
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
 //    assertPageValid(report, 3);
 //    assertPageValid(report, 4);
   }
@@ -189,11 +185,12 @@ public class PagebreakTest
     report.getReportHeader().addElement(postPaddingItem);
     report.getReportHeader().setLayout("canvas");
 
-    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-canvas.pdf"));
+    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-canvas.pdf");
 
-    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0, StrictGeomUtility.toInternalValue(10));
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
   }
 
   @Test
@@ -207,18 +204,19 @@ public class PagebreakTest
     final Resource res = manager.createDirectly(file, MasterReport.class);
     final MasterReport report = (MasterReport) res.getResource();
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
   }
 
-  private void assertPageValid(final MasterReport report, final int page) throws Exception
+  private void assertPageValid(final List<LogicalPageBox> pages, final int page) throws Exception
   {
-    assertPageValid(report, page, 0);
+    assertPageValid(pages, page, 0);
   }
 
-  private void assertPageValid(final MasterReport report, final int page, final long offset) throws Exception
+  private void assertPageValid(final List<LogicalPageBox> pages, final int page, final long offset) throws Exception
   {
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, page);
+    final LogicalPageBox pageBox = pages.get(page);
     final long pageOffset = pageBox.getPageOffset();
 
     //ModelPrinter.INSTANCE.print(pageBox);

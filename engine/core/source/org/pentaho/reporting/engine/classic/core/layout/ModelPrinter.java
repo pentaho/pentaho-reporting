@@ -85,6 +85,11 @@ public class ModelPrinter
 
   public void print(final RenderNode box)
   {
+    if (!isPrintingEnabled())
+    {
+      return;
+    }
+
     if (box instanceof RenderBox)
     {
       printBox((RenderBox) box, 0);
@@ -95,12 +100,21 @@ public class ModelPrinter
     }
   }
 
+  protected boolean isPrintingEnabled()
+  {
+    return logger.isDebugEnabled();
+  }
+
   public void print(final RenderBox box)
   {
+    if (!isPrintingEnabled())
+    {
+      return;
+    }
     printBox(box, 0);
   }
 
-  public void printBox(final RenderBox box, final int level)
+  protected void printBox(final RenderBox box, final int level)
   {
     printBoxDetails(box, level);
 

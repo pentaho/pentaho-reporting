@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -144,7 +146,8 @@ public class WidowOrphanTest extends TestCase
     header.addElement(createBand("placeholder", 60));
     header.addElement(band);
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox = pages.get(0);
     // if keep-together works, then we avoid the pagebreak between the inner-group-header and the first itemband.
     // therefore the first page only contains the placeholder element.
     final RenderNode grHOut = MatchFactory.findElementByName(logicalPageBox, "group-header-outside");
@@ -152,7 +155,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
     assertNull(grOut);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-header-outside");
     assertNotNull(grHOut2);
     final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-outside");
@@ -160,7 +163,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3_miss = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3_miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox3, "ib3");
     assertNotNull(ib3);
 //    ModelPrinter.INSTANCE.print(logicalPageBox3);
@@ -277,7 +280,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -290,7 +294,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNotNull(ib3);
@@ -346,7 +350,8 @@ public class WidowOrphanTest extends TestCase
     report.getReportHeader().addElement(createBand("Dummy", 15));
     report.getReportHeader().addElement(band);
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -359,7 +364,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNotNull(ib3);
@@ -418,7 +423,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -431,7 +437,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNotNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3);
@@ -440,10 +446,10 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib7miss = MatchFactory.findElementByName(logicalPageBox1, "ib7");
     assertNull(ib7miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     ModelPrinter.INSTANCE.print(logicalPageBox3);
     final RenderNode ib7 = MatchFactory.findElementByName(logicalPageBox3, "ib7");
-    assertNull(ib7);
+    assertNotNull(ib7);
   }
 
   public void testKeepTogetherEffectPagebreakLarger() throws Exception
@@ -488,7 +494,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -501,7 +508,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNotNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3);
@@ -510,7 +517,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib7miss = MatchFactory.findElementByName(logicalPageBox2, "ib7");
     assertNull(ib7miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     final RenderNode ib7 = MatchFactory.findElementByName(logicalPageBox3, "ib7");
     assertNotNull(ib7);
   }
