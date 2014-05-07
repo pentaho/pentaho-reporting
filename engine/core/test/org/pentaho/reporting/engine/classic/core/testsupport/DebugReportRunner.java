@@ -856,6 +856,12 @@ public class DebugReportRunner
   {
     return createTestOutputFile(null);
   }
+
+  public static boolean isSafeToTestComplexText()
+  {
+    return "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("dont.try.this.at.home.-.testing.complex.text"));
+  }
   
   public static File createTestOutputFile(String name)
   {

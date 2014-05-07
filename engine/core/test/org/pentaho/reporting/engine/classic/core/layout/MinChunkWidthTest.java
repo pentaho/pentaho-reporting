@@ -70,7 +70,7 @@ public class MinChunkWidthTest extends TestCase
         (basereport, report.getReportHeader(), true, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner(true, false).startValidation(logicalPageBox);
   }
 
@@ -91,12 +91,17 @@ public class MinChunkWidthTest extends TestCase
         (basereport, report.getReportHeader(), true, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner(false, false).startValidation(logicalPageBox);
   }
 
   public void testMinChunkWidth() throws Exception
   {
+    if (DebugReportRunner.isSafeToTestComplexText() == false)
+    {
+      return;
+    }
+
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
     basereport.setCompatibilityLevel(null);
@@ -111,7 +116,7 @@ public class MinChunkWidthTest extends TestCase
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
         (basereport, report.getReportHeader(), true, false);
-    // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
+    // simple test, we assert that all paragraph-poolboxes are on either 485 or 400
     // and that only two lines exist for each
     ModelPrinter.INSTANCE.print(logicalPageBox);
     new ValidateRunner(false, true).startValidation(logicalPageBox);

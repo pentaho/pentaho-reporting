@@ -57,7 +57,7 @@ public class RichTextImageProducer
   public Image createImagePlaceholder(final RenderableReplacedContentBox content)
   {
     final long bcw = ProcessUtility.computeBlockContextWidth(content);
-    final long width = ReplacedContentUtil.computeWidthInternal(content, bcw);
+    final long width = ReplacedContentUtil.computeWidth(content);
     final long height = ReplacedContentUtil.computeHeight(content, bcw, width);
 
     final int w = (int) Math.max(1, StrictGeomUtility.toExternalValue(width));

@@ -296,6 +296,7 @@ public class RichTextRenderingTest
     URL resource = getClass().getResource("rich-text-sample1.prpt");
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     RenderNode first = MatchFactory.findElementByName(logicalPageBox, "first");
@@ -328,6 +329,7 @@ public class RichTextRenderingTest
     URL resource = getClass().getResource("rich-text-sample1.prpt");
     ResourceManager mgr = new ResourceManager();
     MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     report.getReportHeader().removeElement(report.getReportHeader().getElement(0));
     report.getReportHeader().getElement(0).getStyle().setStyleProperty(TextStyleKeys.DIRECTION, TextDirection.RTL);
 
