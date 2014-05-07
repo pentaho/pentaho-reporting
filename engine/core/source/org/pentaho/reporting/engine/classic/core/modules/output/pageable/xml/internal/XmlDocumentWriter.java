@@ -667,28 +667,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
             pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
 
-        final String text;
-        TextLayout textLayout = renderableComplexText.getTextLayout();
-        String debugInfo = textLayout.toString();
-        String startPos = debugInfo.substring(debugInfo.indexOf("[start:"), debugInfo.indexOf(", len:")).replace("[start:","");
-        int startPosIntValue = -1;
-
-        try {
-          startPosIntValue = Integer.parseInt(startPos);
-        }
-        catch (NumberFormatException e) {
-          // do nothing
-        }
-
-        // workaround for line breaking (since the text cannot be extracted directly from textLayout as stream or String)
-        // in order to avoid duplicates of same source raw text on multiple lines
-        if((renderableComplexText.getRawText().length() > textLayout.getCharacterCount()) && startPosIntValue >= 0) {
-          text = renderableComplexText.getRawText().substring(startPosIntValue, textLayout.getCharacterCount() + startPosIntValue);
-        }
-        else {
-          text = renderableComplexText.getRawText();
-        }
-
+        final String text = renderableComplexText.getRawText();
         xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
         xmlWriter.writeTextNormalized(text, true);
         xmlWriter.writeCloseTag();

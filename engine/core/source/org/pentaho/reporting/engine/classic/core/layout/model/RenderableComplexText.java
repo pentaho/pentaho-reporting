@@ -18,6 +18,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class RenderableComplexText extends RenderNode
@@ -34,21 +35,15 @@ public class RenderableComplexText extends RenderNode
                                final InstanceID instanceID,
                                final ElementType elementType,
                                final ReportAttributeMap<Object> attributes,
-                               final RichTextSpec text,
-                               final int start,
-                               final int end)
+                               final RichTextSpec text)
   {
     super(new NodeLayoutProperties(styleSheet, attributes, instanceID, elementType));
-    if (start >= end)
-    {
-      throw new IllegalArgumentException();
-    }
-
-    this.text = text.getText().substring(start, end);
+    DebugLog.log("Created " + text.getText());
+    this.text = text.getText();
     this.richText = text;
     this.forceLinebreak = false;
-    this.start = start;
-    this.end = end;
+    this.start = 0;
+    this.end = text.length();
   }
 
   public RenderableComplexText(final StyleSheet styleSheet,

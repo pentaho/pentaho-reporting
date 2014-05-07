@@ -242,10 +242,12 @@ public class ExcelTextExtractor extends DefaultTextExtractor
         final HSSFFontWrapper wrapper = new HSSFFontWrapper
             (fontName, fontSize, bold, italic, underline, strikethrough, colorProducer.getNearestColor(textColor));
 
-        final RichTextFormat rtf = new RichTextFormat(relativeLength, wrapper);
-        relativeLength += styledChunk.getText().length();
-
-        formatBuffer.add(rtf);
+        if (styledChunk.getOriginatingTextNode() instanceof RenderableComplexText)
+        {
+          final RichTextFormat rtf = new RichTextFormat(relativeLength, wrapper);
+          relativeLength += styledChunk.getText().length();
+          formatBuffer.add(rtf);
+        }
       }
     }
 

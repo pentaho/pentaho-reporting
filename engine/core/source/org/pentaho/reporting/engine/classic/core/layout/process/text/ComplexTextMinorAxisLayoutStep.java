@@ -210,13 +210,13 @@ public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProces
     // Store the height and width, so that the other parts of the layouter have access to the information
 //        text.setCachedHeight();
     text.setCachedHeight(Math.max(StrictGeomUtility.toInternalValue(height), lineBoxContainer.getLineHeight()));
-    text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
+    text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getAdvance()));
     text.setParagraphFontMetrics(metrics);
 
 
     MinorAxisNodeContext nodeContext = getNodeContext();
     final long alignmentX = RenderUtility.computeHorizontalAlignment(paragraph.getTextAlignment(),
-        nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue(textLayout.getVisibleAdvance()));
+        nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue(textLayout.getAdvance()));
     text.setCachedX(alignmentX + nodeContext.getX());
 
     // Create a shallow copy of the paragraph-pool to act as a line container.

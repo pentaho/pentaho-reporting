@@ -23,6 +23,7 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
@@ -67,7 +68,7 @@ public class Pre422Test extends TestCase
 
     final MasterReport basereport = new MasterReport();
     basereport.setCompatibilityLevel(null);
-    basereport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
 
     final Band band = report.getReportHeader();

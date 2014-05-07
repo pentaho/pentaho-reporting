@@ -121,7 +121,9 @@ public class FastTextExtractor
         final ReportElement element = section.getElement(i);
         if (element instanceof SubReport)
         {
+          inspectStartSection(element,  inlineSection);
           inspectElement(element, inlineSection);
+          inspectEndSection(element,  inlineSection);
         }
         else if (element instanceof Section)
         {
@@ -129,7 +131,9 @@ public class FastTextExtractor
         }
         else
         {
+          inspectStartSection(element,  inlineSection);
           inspectElement(element, inlineSection);
+          inspectEndSection(element,  inlineSection);
         }
       }
     }
@@ -173,10 +177,12 @@ public class FastTextExtractor
       return;
     }
 
-    handleValueContent(element, value);
+    handleValueContent(element, value, inlineSection);
   }
 
-  protected void handleValueContent(final ReportElement element, final Object value) throws ContentProcessingException
+  protected void handleValueContent(final ReportElement element,
+                                    final Object value,
+                                    final boolean inlineSection) throws ContentProcessingException
   {
     if (value instanceof String)
     {

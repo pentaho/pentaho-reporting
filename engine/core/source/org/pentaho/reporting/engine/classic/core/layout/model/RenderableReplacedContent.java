@@ -35,7 +35,6 @@ public final class RenderableReplacedContent
   private transient Object contentCached;
   private Object content;
   private ResourceKey source;
-  private boolean imageResolutionMapping;
   private long contentWidth;
   private long contentHeight;
   private boolean keepAspectRatio;
@@ -85,7 +84,14 @@ public final class RenderableReplacedContent
 
     if (content instanceof ImageContainer)
     {
-      this.imageResolutionMapping = metaData.isFeatureSupported(OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING);
+      final boolean imageResolutionMapping;
+      if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY))
+      {
+        imageResolutionMapping = metaData.isFeatureSupported(OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING);
+      }
+      else{
+        imageResolutionMapping = false;
+      }
       final double displayResolution = metaData.getNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION);
       final double correctionFactorPxToPoint = 72.0 / displayResolution;
 
@@ -169,9 +175,10 @@ public final class RenderableReplacedContent
     return requestedHeight;
   }
 
+  @Deprecated
   public boolean isImageResolutionMapping()
   {
-    return imageResolutionMapping;
+    return false;
   }
 
   public Object getContentCached()
@@ -192,9 +199,7 @@ public final class RenderableReplacedContent
   public String toString()
   {
     return "RenderableReplacedContent{" +
-//        "content=" + content +
         ", source=" + source +
-        ", imageResolutionMapping=" + imageResolutionMapping +
         ", contentWidth=" + contentWidth +
         ", contentHeight=" + contentHeight +
         ", requestedWidth=" + requestedWidth +

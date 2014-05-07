@@ -21,11 +21,11 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -85,7 +85,7 @@ public class Prd3857Test extends TestCase
     final Resource directly = mgr.createDirectly(file, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     final RenderNode[] itembands = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);

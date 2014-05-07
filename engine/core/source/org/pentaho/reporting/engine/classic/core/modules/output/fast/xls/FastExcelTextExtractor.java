@@ -125,6 +125,14 @@ public class FastExcelTextExtractor extends FastTextExtractor
     return true;
   }
 
+  @Override
+  protected void handleValueContent(final ReportElement element,
+                                    final Object value,
+                                    final boolean inlineSection) throws ContentProcessingException
+  {
+    super.handleValueContent(element, value, inlineSection);
+  }
+
   protected void inspectEndSection(final ReportElement box, final boolean inlineSection)
   {
     formatBufferStack.pop();

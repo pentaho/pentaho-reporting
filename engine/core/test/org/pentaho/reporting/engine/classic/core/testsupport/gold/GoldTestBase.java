@@ -66,6 +66,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Strea
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal.XmlTableOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -353,8 +354,8 @@ public class GoldTestBase
   {
     try
     {
-      new File("test-output").mkdir();
-      final FileOutputStream w = new FileOutputStream("test-output/gold-failure-" + goldSample.getName());
+      File testOutputFile = DebugReportRunner.createTestOutputFile();
+      final FileOutputStream w = new FileOutputStream(new File(testOutputFile, "gold-failure-" + goldSample.getName()));
       try
       {
         w.write(reportOutput);

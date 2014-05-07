@@ -41,12 +41,12 @@ public class HtmlTagHelper
   public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";
 
   private Configuration configuration;
-  private DefaultStyleBuilderFactory styleBuilderFactory;
+  private StyleBuilderFactory styleBuilderFactory;
   private StyleBuilder styleBuilder;
   private StyleManager styleManager;
 
   public HtmlTagHelper(final Configuration configuration,
-                       final DefaultStyleBuilderFactory styleBuilderFactory)
+                       final StyleBuilderFactory styleBuilderFactory)
   {
     this.configuration = configuration;
     this.styleBuilderFactory = styleBuilderFactory;
@@ -58,7 +58,7 @@ public class HtmlTagHelper
     return styleBuilder;
   }
 
-  public DefaultStyleBuilderFactory getStyleBuilderFactory()
+  public StyleBuilderFactory getStyleBuilderFactory()
   {
     return styleBuilderFactory;
   }
@@ -148,7 +148,7 @@ public class HtmlTagHelper
   {
     final AttributeList attrList = new AttributeList();
     StyleBuilder styleBuilder = getStyleBuilder();
-    DefaultStyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
+    StyleBuilderFactory styleBuilderFactory = getStyleBuilderFactory();
 
     if (isTableRowBorderDefinition())
     {

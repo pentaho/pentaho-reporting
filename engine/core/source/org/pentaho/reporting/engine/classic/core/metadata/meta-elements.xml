@@ -344,6 +344,16 @@
                value-type="org.pentaho.reporting.engine.classic.core.style.css.ElementStyleDefinition"
                value-role="Value"/>
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="complex-text"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>

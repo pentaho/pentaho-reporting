@@ -287,7 +287,7 @@ public class RichTextSpec
   {
     return new RenderableComplexText
         (lineBoxContainer.getStyleSheet(), lineBoxContainer.getInstanceId(),
-            lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), this, start, end);
+            lineBoxContainer.getElementType(), lineBoxContainer.getAttributes(), this.substring(start, end));
   }
 
   public boolean equals(final Object o)
@@ -319,5 +319,15 @@ public class RichTextSpec
     int result = text.hashCode();
     result = 31 * result + styleChunks.hashCode();
     return result;
+  }
+
+  public int length()
+  {
+    return text.length();
+  }
+
+  public boolean isEmpty()
+  {
+    return styleChunks.isEmpty();
   }
 }

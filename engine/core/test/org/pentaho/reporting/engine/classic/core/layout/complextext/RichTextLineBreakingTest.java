@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -105,7 +106,7 @@ public class RichTextLineBreakingTest
     final MasterReport report = new MasterReport();
     report.getReportHeader().addElement(band);
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader(), false, false);

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
@@ -33,11 +31,11 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 
 public class FastHtmlExportProcessor extends AbstractReportProcessor
 {
-  private static class ExcelDataOutputProcessor extends AbstractOutputProcessor
+  private static class HtmlDataOutputProcessor extends AbstractOutputProcessor
   {
     private OutputProcessorMetaData metaData;
 
-    private ExcelDataOutputProcessor()
+    private HtmlDataOutputProcessor()
     {
       metaData = new HtmlOutputProcessorMetaData(HtmlOutputProcessorMetaData.PAGINATION_NONE);
     }
@@ -54,13 +52,12 @@ public class FastHtmlExportProcessor extends AbstractReportProcessor
     }
   }
 
-  private OutputStream outputStream;
   private FastHtmlContentItems contentItems;
 
   public FastHtmlExportProcessor(final MasterReport report,
                                  final FastHtmlContentItems contentItems) throws ReportProcessingException
   {
-    super(report, new ExcelDataOutputProcessor());
+    super(report, new HtmlDataOutputProcessor());
     this.contentItems = contentItems;
   }
 

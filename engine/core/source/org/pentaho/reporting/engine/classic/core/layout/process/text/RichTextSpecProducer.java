@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.process.util.ReplacedContentUtil;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -226,6 +227,13 @@ public class RichTextSpecProducer
       else if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
       {
         final RenderableReplacedContentBox contentBox = (RenderableReplacedContentBox) node;
+        final long width = ReplacedContentUtil.computeWidth(contentBox);
+        final long height = ReplacedContentUtil.computeHeight(contentBox, 0, width);
+        contentBox.setCachedWidth(width);
+        contentBox.setCachedHeight(height);
+        contentBox.setWidth(width);
+        contentBox.setHeight(height);
+
         chunks.add(new AttributedStringChunk("@", computeImageStyle(node.getStyleSheet(), contentBox),
             node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
       }

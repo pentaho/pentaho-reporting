@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ItemBand;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -33,7 +34,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugRenderer;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportProcessor;
@@ -89,7 +89,7 @@ public class Prd3133Test extends TestCase
   public void testPageSum() throws Exception
   {
     final MasterReport report = createReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final DebugRenderer renderer = new DebugRenderer();
     renderer.setValidator(new Prd3133ReportValidator(false));
@@ -100,7 +100,7 @@ public class Prd3133Test extends TestCase
   public void testPageSumComplex() throws Exception
   {
     final MasterReport report = createReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
 
     final DebugRenderer renderer = new DebugRenderer();
     renderer.setValidator(new Prd3133ReportValidator(true));

@@ -25,6 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
@@ -46,11 +47,14 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class PagebreakTest
 {
+
+  private File testOutputDir;
+
   @Before
   public void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
-    new File("test-output").mkdir();
+    testOutputDir = DebugReportRunner.createTestOutputFile();
   }
 
   @Test
@@ -88,7 +92,7 @@ public class PagebreakTest
     report.getReportHeader().addElement(table);
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
-    PdfReportUtil.createPDF(report, "test-output/PRD-3857-rowspan-output.pdf");
+    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-rowspan-output.pdf"));
 /*
     assertPageValid(report, 0);
     assertPageValid(report, 1);
@@ -103,7 +107,7 @@ public class PagebreakTest
     report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(10, 1)));
     report.setQuery("query");
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Band table = TableTestUtil.createTable(1, 1, 6, true);
     table.setName("table");
@@ -112,7 +116,7 @@ public class PagebreakTest
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
-    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-block.pdf");
+    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-block.pdf"));
 
     assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
     assertPageValid(report, 1);
@@ -136,7 +140,7 @@ public class PagebreakTest
     report.getReportHeader().addElement(TableTestUtil.createDataItem("Post-Padding", 100, 10));
     report.getReportHeader().setLayout("row");
 
-    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-row.pdf");
+    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-row.pdf"));
 
     assertPageValid(report, 0);
     assertPageValid(report, 1);
@@ -185,7 +189,7 @@ public class PagebreakTest
     report.getReportHeader().addElement(postPaddingItem);
     report.getReportHeader().setLayout("canvas");
 
-    PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-canvas.pdf");
+    PdfReportUtil.createPDF(report, new File(testOutputDir, "PRD-3857-output-canvas.pdf"));
 
     assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
     assertPageValid(report, 1);

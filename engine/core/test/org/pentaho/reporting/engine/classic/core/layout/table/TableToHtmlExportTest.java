@@ -23,6 +23,7 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
@@ -30,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -66,7 +66,7 @@ public class TableToHtmlExportTest extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Group rootGroup = report.getRootGroup();
     assertTrue(rootGroup instanceof CrosstabGroup);
@@ -96,7 +96,7 @@ public class TableToHtmlExportTest extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
 
     final Group rootGroup = report.getRootGroup();
     assertTrue(rootGroup instanceof CrosstabGroup);

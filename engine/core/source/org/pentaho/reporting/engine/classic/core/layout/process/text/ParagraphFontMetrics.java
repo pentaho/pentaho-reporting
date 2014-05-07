@@ -21,5 +21,6 @@ public interface ParagraphFontMetrics
 {
   float getLineHeight();
   float getBaseline();
+  float getAscent();
 
 }

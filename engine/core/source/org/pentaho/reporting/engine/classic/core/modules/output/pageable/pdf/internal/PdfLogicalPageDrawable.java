@@ -26,7 +26,9 @@ import java.awt.geom.Rectangle2D;
 
 import com.lowagie.text.Chunk;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.ColumnText;
@@ -52,6 +54,7 @@ import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMapEntry;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
@@ -67,9 +70,11 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphic
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.TypedMapWrapper;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
@@ -78,7 +83,6 @@ import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
 import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
-import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
@@ -141,6 +145,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
   private boolean globalEmbed;
   private LFUMap<ResourceKey, com.lowagie.text.Image> imageCache;
   private char version;
+  private PdfImageHandler imageHandler;
 
   public PdfLogicalPageDrawable(final PdfWriter writer,
                                 final LFUMap<ResourceKey, com.lowagie.text.Image> imageCache,
@@ -183,6 +188,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       this.globalHeight = rootBox.getPageHeight();
     }
     this.globalEmbed = getMetaData().isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS);
+    this.imageHandler = new PdfImageHandler(metaData, resourceManager, imageCache);
   }
 
   public PdfOutputProcessorMetaData getMetaData()
@@ -487,23 +493,237 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     }
   }
 
-  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2)
+  private ParagraphRenderBox paragraphContext;
+
+  protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    RichTextSpec text = renderableComplexText.getRichText();
-    final PdfGraphics2D pg2 = (PdfGraphics2D) getGraphics();
-    final PdfContentByte cb = pg2.getRawContentByte();
-    final ColumnText p = new ColumnText(cb);
+    try
+    {
+      paragraphContext = box;
+      super.processParagraphChilds(box);
+    }
+    finally
+    {
+      paragraphContext = null;
+    }
+  }
 
-    final float llx = (float) StrictGeomUtility.toExternalValue(renderableComplexText.getX());
-    final float urx = (float)
-        StrictGeomUtility.toExternalValue(renderableComplexText.getX() + renderableComplexText.getWidth());
+  private float computeLeadingSafetyMargin(final RenderableComplexText node)
+  {
+    if (paragraphContext == null)
+    {
+      return -SAFETY_MARGIN;
+    }
 
-    final float y2 = (float) (StrictGeomUtility.toExternalValue(renderableComplexText.getY()));
+    ElementAlignment alignment;
+    if (node.getNext() == null)
+    {
+      alignment = paragraphContext.getLastLineAlignment();
+    }
+    else
+    {
+      alignment = paragraphContext.getTextAlignment();
+    }
+    if (ElementAlignment.LEFT.equals(alignment))
+    {
+      return 0;
+    }
+    else if (ElementAlignment.RIGHT.equals(alignment))
+    {
+      return -SAFETY_MARGIN * 2;
+    }
+    else if (ElementAlignment.CENTER.equals(alignment))
+    {
+      return -SAFETY_MARGIN;
+    }
+    else
+    {
+      if (computeRunDirection(node) == PdfWriter.RUN_DIRECTION_RTL)
+      {
+        return -SAFETY_MARGIN * 2;
+      }
+      else
+      {
+        return 0f;
+      }
+    }
+  }
+  private static final float SAFETY_MARGIN = 0.1f;
+
+  private float computeTrailingSafetyMargin(final RenderableComplexText node)
+  {
+    if (paragraphContext == null)
+    {
+      return SAFETY_MARGIN;
+    }
+
+    ElementAlignment alignment;
+    if (node.getNext() == null)
+    {
+      alignment = paragraphContext.getLastLineAlignment();
+    }
+    else
+    {
+      alignment = paragraphContext.getTextAlignment();
+    }
+    if (ElementAlignment.LEFT.equals(alignment))
+    {
+      return SAFETY_MARGIN * 2;
+    }
+    else if (ElementAlignment.RIGHT.equals(alignment))
+    {
+      return 0;
+    }
+    else if (ElementAlignment.CENTER.equals(alignment))
+    {
+      return SAFETY_MARGIN;
+    }
+    else
+    {
+      if (computeRunDirection(node) == PdfWriter.RUN_DIRECTION_RTL)
+      {
+        return 0f;
+      }
+      else
+      {
+        return SAFETY_MARGIN * 2;
+      }
+    }
+  }
+
+  private int mapAlignment(final RenderableComplexText node)
+  {
+    ElementAlignment alignment;
+    if (node.getNext() == null)
+    {
+      alignment = paragraphContext.getLastLineAlignment();
+    }
+    else
+    {
+      alignment = paragraphContext.getTextAlignment();
+    }
+    DebugLog.log(alignment);
+    if (ElementAlignment.LEFT.equals(alignment))
+    {
+      return Element.ALIGN_LEFT;
+    }
+    else if (ElementAlignment.RIGHT.equals(alignment))
+    {
+      return Element.ALIGN_RIGHT;
+    }
+    else if (ElementAlignment.CENTER.equals(alignment))
+    {
+      return Element.ALIGN_CENTER;
+    }
+    else
+    {
+      return Element.ALIGN_JUSTIFIED;
+    }
+  }
+
+  protected void drawComplexText(final RenderableComplexText node, final Graphics2D g2)
+  {
+    try
+    {
+      final Phrase p = createPhrase(node);
+      final ColumnConfig cc = createColumnText(node);
+
+      final PdfGraphics2D pg2 = (PdfGraphics2D) getGraphics();
+      final PdfContentByte cb = pg2.getRawContentByte();
+      ColumnText ct = cc.reconfigure(cb, p);
+      ct.setText(p);
+      if (ct.go(false) == ColumnText.NO_MORE_COLUMN)
+      {
+        DebugLog.log("!Width:" + ct.getFilledWidth());
+        throw new InvalidReportStateException
+            ("iText signaled an error when printing text. Failing to prevent silent data-loss");
+      }
+      DebugLog.log(" Width:" + ct.getFilledWidth());
+    }
+    catch (DocumentException e)
+    {
+      throw new InvalidReportStateException(e);
+    }
+  }
+
+  private static class ColumnConfig
+  {
+    private float llx;
+    private float lly;
+    private float urx;
+    private float ury;
+    private float leading;
+    private int alignment;
+    private int runDirection;
+
+    private ColumnConfig(final float llx,
+                         final float lly,
+                         final float urx,
+                         final float ury,
+                         final float leading,
+                         final int alignment,
+                         final int runDirection)
+    {
+      this.llx = llx;
+      this.lly = lly;
+      this.urx = urx;
+      this.ury = ury;
+      this.leading = leading;
+      this.alignment = alignment;
+      this.runDirection = runDirection;
+    }
+
+    public ColumnText reconfigure(PdfContentByte cb, Phrase p)
+    {
+      float filledWidth = ColumnText.getWidth(p, runDirection, 0) + 0.5f;
+      DebugLog.log("Width:" + filledWidth);
+      ColumnText ct = new ColumnText(cb);
+      ct.setRunDirection(runDirection);
+      if (alignment == Element.ALIGN_LEFT)
+      {
+        ct.setSimpleColumn(llx, lly, llx + filledWidth, ury, leading, alignment);
+      }
+      else if (alignment == Element.ALIGN_RIGHT)
+      {
+        ct.setSimpleColumn(urx - filledWidth, lly, urx, ury, leading, alignment);
+      }
+      else if (alignment == Element.ALIGN_CENTER)
+      {
+        float delta = ((urx - llx) - filledWidth) / 2;
+        ct.setSimpleColumn(urx + delta, lly, urx - delta, ury, leading, alignment);
+      }
+      else {
+        ct.setSimpleColumn(llx, lly, urx, ury, leading, alignment);
+      }
+      DebugLog.log(String.format("Conf: %s, %s, %s, %s, %s, %s", llx, lly, urx, ury, leading, alignment));
+      return ct;
+    }
+  }
+
+  private ColumnConfig createColumnText(final RenderableComplexText node)
+  {
+    final AffineTransform affineTransform = getGraphics().getTransform();
+    final float translateX = (float) affineTransform.getTranslateX();
+    final float width = (float) StrictGeomUtility.toExternalValue(node.getWidth());
+    final float nodeX = (float) StrictGeomUtility.toExternalValue(node.getX());
+    float marginLeft = width * computeLeadingSafetyMargin(node);
+    final float llx = translateX + nodeX + marginLeft;
+    float marginRight = width * computeTrailingSafetyMargin(node);
+    final float urx = translateX + nodeX + width + marginRight;
+
+    final float y2 = (float) (StrictGeomUtility.toExternalValue(node.getY()));
     final float lly = globalHeight - y2;
-    final float ury = (float)
-        (globalHeight - y2 - StrictGeomUtility.toExternalValue(renderableComplexText.getHeight()));
-    p.setSimpleColumn(llx, lly, urx, ury);
+    final float ury = (float) (lly - 1.2 * StrictGeomUtility.toExternalValue(node.getHeight()));
 
+    final ColumnConfig ct = new ColumnConfig(llx, lly, urx, ury,
+        node.getParagraphFontMetrics().getAscent(), mapAlignment(node), computeRunDirection(node));
+    return ct;
+  }
+
+  private Phrase createPhrase(final RenderableComplexText node)
+  {
+    Phrase p = new Phrase();
+    RichTextSpec text = node.getRichText();
     for (RichTextSpec.StyledChunk c : text.getStyleChunks())
     {
       TypedMapWrapper<Attribute, Object> attributes = new TypedMapWrapper<Attribute, Object>(c.getAttributes());
@@ -515,17 +735,38 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       // add chunks
       BaseFont baseFont = pdfTextSpec.getFontMetrics().getBaseFont();
       Font font = new Font(baseFont, size.floatValue(), style, paint);
-      Chunk chunk = new Chunk(c.getText(), font);
-      p.addText(chunk);
-    }
 
-    try
-    {
-      p.go();
+      if (c.getOriginatingTextNode() instanceof RenderableReplacedContentBox)
+      {
+        RenderableReplacedContentBox content = (RenderableReplacedContentBox) c.getOriginatingTextNode();
+        com.lowagie.text.Image image = imageHandler.createImage(content);
+        if (image != null)
+        {
+          Chunk chunk = new Chunk(image, 0, 0);
+        //  chunk.setFont(font);
+          p.add(chunk);
+        }
+      }
+      else
+      {
+        String textToPrint = c.getText();
+        Chunk chunk = new Chunk(textToPrint, font);
+        p.add(chunk);
+      }
     }
-    catch (DocumentException e)
+    return p;
+  }
+
+  private int computeRunDirection(final RenderableComplexText node)
+  {
+    Object styleProperty = node.getStyleSheet().getStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
+    if (TextDirection.RTL.equals(styleProperty))
     {
-      throw new InvalidReportStateException(e);
+      return PdfWriter.RUN_DIRECTION_RTL;
+    }
+    else
+    {
+      return PdfWriter.RUN_DIRECTION_LTR;
     }
   }
 
@@ -636,54 +877,25 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     if (o instanceof URLImageContainer)
     {
       final URLImageContainer imageContainer = (URLImageContainer) o;
-      if (imageContainer.isLoadable() == false)
+      com.lowagie.text.Image instance = imageHandler.createImage(imageContainer);
+      if (instance != null)
       {
-        PdfLogicalPageDrawable.logger.info
-            ("URL-image cannot be rendered, as it was declared to be not loadable: " +
-                imageContainer.getSourceURLString());
-      }
-      else
-      {
-        final ResourceKey resource = imageContainer.getResourceKey();
-        if (resource == null)
+        try
         {
-          PdfLogicalPageDrawable.logger.info("URL-image cannot be rendered, as it did not return a valid URL.");
+          ResourceManager resourceManager = getResourceManager();
+          ResourceKey resource = imageContainer.getResourceKey();
+          final Resource imageWrapped = resourceManager.create(resource, null, Image.class);
+          final Image image = (Image) imageWrapped.getResource();
+
+          if (drawImage(content, image, instance))
+          {
+            drawImageMap(content);
+          }
+          return;
         }
-        else
+        catch (Exception e)
         {
-          try
-          {
-            final ResourceManager resourceManager = getResourceManager();
-            final com.lowagie.text.Image instance;
-            final com.lowagie.text.Image maybeImage = imageCache.get(resource);
-            if (maybeImage != null)
-            {
-              instance = maybeImage;
-            }
-            else
-            {
-              final ResourceData data = resourceManager.load(resource);
-              instance = com.lowagie.text.Image.getInstance(data.getResource(resourceManager));
-              imageCache.put(resource, instance);
-            }
-
-            final Resource imageWrapped = resourceManager.create(resource, null, Image.class);
-            final Image image = (Image) imageWrapped.getResource();
-
-            if (drawImage(content, image, instance))
-            {
-              drawImageMap(content);
-            }
-            return;
-          }
-          catch (InvalidReportStateException re)
-          {
-            throw re;
-          }
-          catch (Exception e)
-          {
-            PdfLogicalPageDrawable.logger.info("URL-image cannot be rendered, as the image was not loadable.", e);
-          }
+          PdfLogicalPageDrawable.logger.info("URL-image cannot be rendered, as the image was not loadable.", e);
         }
       }
     }

@@ -235,7 +235,8 @@ public class Prd3930Test extends TestCase
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-//      new FileModelPrinter("Prd-3930-page-" + page + "-", new File("test-output")).print(logicalPageBox);
+
+//      new FileModelPrinter("Prd-3930-page-" + page + "-", DebugReportRunner.createTestOutputFile()).print(logicalPageBox);
 
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)

@@ -20,11 +20,11 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -45,7 +45,7 @@ public class Prd4661Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4661-minimal.prpt");
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final LogicalPageBox box = DebugReportRunner.layoutSingleBand(report, report.getItemBand(), false, false);
     Assert.assertEquals(1100000, box.getLastChild().getY2());
@@ -68,7 +68,7 @@ public class Prd4661Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4661-minimal.prpt");
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getItemBand().getStyle().setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, 40f);
     report.getItemBand().setLayout(BandStyleKeys.LAYOUT_ROW);
     report.getItemBand().setName("itemband");
@@ -83,7 +83,7 @@ public class Prd4661Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4661-minimal.prpt");
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getItemBand().getStyle().setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, 40f);
     report.getItemBand().setLayout(BandStyleKeys.LAYOUT_BLOCK);
     report.getItemBand().setName("itemband");
@@ -98,7 +98,7 @@ public class Prd4661Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4661-minimal.prpt");
     report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getItemBand().getStyle().setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, 40f);
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.POS_X, 0f);
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.POS_Y, 0f);

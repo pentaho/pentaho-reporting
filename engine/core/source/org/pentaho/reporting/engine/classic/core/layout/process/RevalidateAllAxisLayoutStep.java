@@ -103,6 +103,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   private OutputProcessorMetaData metaData;
   private VerticalAlignmentProcessor verticalAlignmentProcessor;
   private boolean complexText;
+  private boolean strictTextProcessing;
 
   public RevalidateAllAxisLayoutStep()
   {
@@ -113,6 +114,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   {
     this.metaData = metaData;
     complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+    strictTextProcessing = metaData.isFeatureSupported(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
   }
 
   public void processBoxChilds(final ParagraphRenderBox box, final PageGrid pageGrid)
@@ -563,7 +565,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return rebuildLastLine(nextBox, (ParagraphPoolBox) nextBox.getNext());
     }
 
-    if (nextBox == null)
+    if (nextBox == null || strictTextProcessing)
     {
       // Linebox is finished, no need to do any merging anymore..
       return lineBox;

@@ -101,6 +101,9 @@ public class ClassicEngineCoreModule extends AbstractModule
   public static final String STRICT_ERROR_HANDLING_KEY
       = "org.pentaho.reporting.engine.classic.core.StrictErrorHandling";
 
+  public static final String COMPLEX_TEXT_CONFIG_OVERRIDE_KEY =
+      "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
+
   /**
    * Creates a new module definition based on the 'coremodule.properties' file of this package.
    *

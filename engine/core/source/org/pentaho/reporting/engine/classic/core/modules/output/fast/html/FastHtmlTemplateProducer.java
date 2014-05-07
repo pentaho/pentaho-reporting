@@ -24,10 +24,12 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.CellLayoutInfo;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastExportTemplateProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FastGridLayout;
@@ -173,6 +175,22 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
         return false;
       }
       return true;
+    }
+
+    protected void processOtherNode(final RenderNode node)
+    {
+      if (node instanceof RenderableComplexText)
+      {
+        RenderableComplexText text = (RenderableComplexText) node;
+        for (RichTextSpec.StyledChunk c: text.getRichText().getStyleChunks())
+        {
+          if (c.getOriginatingTextNode() instanceof RenderableReplacedContentBox)
+          {
+            RenderBox box = (RenderBox) c.getOriginatingTextNode();
+            startBox(box);
+          }
+        }
+      }
     }
   }
 

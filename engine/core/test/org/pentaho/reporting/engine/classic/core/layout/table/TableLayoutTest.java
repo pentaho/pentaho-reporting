@@ -22,13 +22,13 @@ import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -205,7 +205,7 @@ public class TableLayoutTest extends TestCase
 
     final MasterReport report = new MasterReport();
     report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 
@@ -264,7 +264,7 @@ public class TableLayoutTest extends TestCase
     tableSection.addElement(tableRow2);
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 
@@ -331,7 +331,7 @@ public class TableLayoutTest extends TestCase
     tableSection.addElement(tableRow2);
 
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 
@@ -404,7 +404,7 @@ public class TableLayoutTest extends TestCase
 
     final MasterReport report = new MasterReport();
     report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 

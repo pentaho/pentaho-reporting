@@ -99,7 +99,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     setRawResult(null);
     result = false;
     processStack = new HtmlTextExtractorState(null, false, cellStyle);
-    textExtractorHelper.setFirstElement(content.getInstanceId());
+    textExtractorHelper.setFirstElement(content.getInstanceId(), processStack);
 
     try
     {
@@ -132,7 +132,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
    * @param box the canvas box
    * @return true, if the child content will be processed, false otherwise.
    */
-  public boolean startCanvasBox(final CanvasRenderBox box)
+  protected boolean startCanvasBox(final CanvasRenderBox box)
   {
     if (box.getStaticBoxLayoutProperties().isVisible() == false)
     {
@@ -143,7 +143,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         (box.getInstanceId(), box.getAttributes(), box.getStyleSheet(), box.getBoxDefinition(), false);
   }
 
-  public void finishCanvasBox(final CanvasRenderBox box)
+  protected void finishCanvasBox(final CanvasRenderBox box)
   {
     if (box.getStaticBoxLayoutProperties().isVisible() == false)
     {
@@ -436,7 +436,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     try
     {
 
-      if (renderableComplexText.getRawText().length() == 0)
+      if (renderableComplexText.getRichText().isEmpty())
       {
         // This text is empty.
         return;
@@ -446,42 +446,30 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         return;
       }
 
-      // check if we have to process inline text elements
-      if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
+      // iterate through all inline elements
+      for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
       {
-        // iterate through all inline elements
-        for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
+        RenderNode node = styledChunk.getOriginatingTextNode();
+        InstanceID dummy = node.getInstanceId();
+        textExtractorHelper.startInlineBox(dummy,
+            styledChunk.getOriginalAttributes(), styledChunk.getStyleSheet(), BoxDefinition.EMPTY);
+        if (node instanceof RenderableReplacedContentBox)
+        {
+          processRenderableContent((RenderableReplacedContentBox) node);
+          result = true;
+        }
+        else
         {
           String text = styledChunk.getText();
-
-          if (text.length() > 0)
-          {
-            InstanceID dummy = new InstanceID();
-            textExtractorHelper.startInlineBox(dummy,
-                styledChunk.getOriginalAttributes(), styledChunk.getStyleSheet(), BoxDefinition.EMPTY);
-            xmlWriter.writeText(characterEntityParser.encodeEntities(text));
-            textExtractorHelper.finishBox(dummy, styledChunk.getOriginalAttributes());
-
-            if (text.trim().length() > 0)
-            {
-              result = true;
-            }
-            clearText();
-          }
-        }
-      }
-      else
-      {
-        String text = renderableComplexText.getRawText();
-        if (text.length() > 0)
-        {
           xmlWriter.writeText(characterEntityParser.encodeEntities(text));
           if (text.trim().length() > 0)
           {
             result = true;
           }
-          clearText();
         }
+        textExtractorHelper.finishBox(dummy, styledChunk.getOriginalAttributes());
+        clearText();
+
       }
     }
     catch (final IOException ioe)

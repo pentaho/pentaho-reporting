@@ -23,13 +23,13 @@ import java.net.URL;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
@@ -137,7 +137,7 @@ public class Pre492Test extends TestCase
   public void testPagebreakHonoredOnFirstPage() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
 //    ModelPrinter.INSTANCE.print(page0);
 
@@ -155,7 +155,7 @@ public class Pre492Test extends TestCase
   public void testPagebreakHonoredOnFirstPageSimple() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox page0 = DebugReportRunner.layoutPage(masterReport, 0);
 //    ModelPrinter.INSTANCE.print(page0);
 

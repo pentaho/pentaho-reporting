@@ -24,11 +24,11 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.FlowSelector;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
@@ -80,7 +80,7 @@ public class Prd2324Test extends TestCase
   public void testPageFooterMissing() throws IOException, ReportProcessingException
   {
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     addLabel("PageFooter", report.getPageFooter());
     addLabel("PageHeader", report.getPageHeader());
     addLabel("ReportHeader", report.getReportHeader());
@@ -101,7 +101,7 @@ public class Prd2324Test extends TestCase
   public void testPageFooterMissingComplex() throws IOException, ReportProcessingException
   {
     final MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     addLabel("PageFooter", report.getPageFooter());
     addLabel("PageHeader", report.getPageHeader());
     addLabel("ReportHeader", report.getReportHeader());

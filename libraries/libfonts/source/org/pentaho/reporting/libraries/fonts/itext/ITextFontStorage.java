@@ -19,7 +19,9 @@ package org.pentaho.reporting.libraries.fonts.itext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.fonts.cache.FirstLevelFontCache;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.FontContext;
 import org.pentaho.reporting.libraries.fonts.registry.FontIdentifier;
 import org.pentaho.reporting.libraries.fonts.registry.FontKey;
@@ -144,17 +146,32 @@ public class ITextFontStorage implements FontStorage
 
   public ITextFontStorage(final ITextFontRegistry registry)
   {
-    this(registry, null);
+    this(registry, EncodingRegistry.getPlatformDefaultEncoding());
   }
 
   public ITextFontStorage(final ITextFontRegistry registry,
                           final String encoding)
   {
+    ArgumentNullException.validate("registry", registry);
+    ArgumentNullException.validate("encoding", encoding);
+
     this.lookupKey = new EncodingFontKey();
     this.knownMetrics = new FirstLevelFontCache(registry.getSecondLevelCache());
     this.registry = registry;
     this.defaultEncoding = encoding;
     this.metricsFactory = (ITextFontMetricsFactory) registry.createMetricsFactory();
+  }
+
+  public String getDefaultEncoding()
+  {
+    return defaultEncoding;
+  }
+
+  public void setDefaultEncoding(final String defaultEncoding)
+  {
+    ArgumentNullException.validate("defaultEncoding", defaultEncoding);
+
+    this.defaultEncoding = defaultEncoding;
   }
 
   public FontRegistry getFontRegistry()

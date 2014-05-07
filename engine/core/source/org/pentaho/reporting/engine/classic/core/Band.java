@@ -24,9 +24,7 @@ import java.util.Iterator;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.ElementDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
@@ -244,6 +242,11 @@ public class Band extends Section
     allElements.remove(e);
     allElementsCached = null;
     notifyNodeChildRemoved(e);
+  }
+
+  public void removeElement(int index)
+  {
+    removeElement(getElement(index));
   }
 
   public void setElementAt(final int position, final Element element)

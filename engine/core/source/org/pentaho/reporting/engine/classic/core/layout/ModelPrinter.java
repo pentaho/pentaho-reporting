@@ -190,6 +190,8 @@ public class ModelPrinter
     b.append(box.getHeight());
     b.append(", min-chunk-width=");
     b.append(box.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(box.getX() + box.getWidth());
     b.append(", y2=");
     b.append(box.getY2());
     b.append(", y2-overflow=");
@@ -477,6 +479,8 @@ public class ModelPrinter
     b.append(node.getHeight());
     b.append(", min-chunk-width=");
     b.append(node.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(node.getX() + node.getWidth());
     b.append(", y2=");
     b.append(node.getY() + node.getHeight());
     print(b.toString());

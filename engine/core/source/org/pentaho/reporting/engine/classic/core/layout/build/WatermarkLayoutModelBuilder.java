@@ -83,6 +83,7 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
       return backend.produceRenderBox(band, style, layoutType, stateKey);
     }
 
+    @Deprecated
     public RenderBox createAutoParagraph(final ReportStateKey stateKey)
     {
       return backend.createAutoParagraph(stateKey);

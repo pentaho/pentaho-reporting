@@ -1563,7 +1563,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long posX = renderableComplexText.getX();
     final long posY = renderableComplexText.getY();
 
-    float baseline = renderableComplexText.getParagraphFontMetrics().getBaseline();
+    float baseline = renderableComplexText.getParagraphFontMetrics().getAscent();
     final float y = (float) StrictGeomUtility.toExternalValue(posY) + baseline;
 
     renderableComplexText.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);

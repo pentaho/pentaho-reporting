@@ -348,7 +348,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     return (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT);
   }
 
-  public boolean startCanvasBox(final CanvasRenderBox box)
+  protected boolean startCanvasBox(final CanvasRenderBox box)
   {
     return true;
   }

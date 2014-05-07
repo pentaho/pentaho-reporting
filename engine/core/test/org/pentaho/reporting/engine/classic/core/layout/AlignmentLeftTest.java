@@ -25,6 +25,7 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -35,7 +36,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -61,7 +61,7 @@ public class AlignmentLeftTest extends TestCase
   {
     final MasterReport report = createReport(false);
 
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
@@ -72,7 +72,7 @@ public class AlignmentLeftTest extends TestCase
   {
     final MasterReport report = createReport(true);
 
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
@@ -83,7 +83,7 @@ public class AlignmentLeftTest extends TestCase
   {
     final MasterReport report = createReport(false);
 
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
@@ -94,7 +94,7 @@ public class AlignmentLeftTest extends TestCase
   {
     final MasterReport report = createReport(true);
 
-    report.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each

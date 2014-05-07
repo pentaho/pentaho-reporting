@@ -84,12 +84,11 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
     this.sharedSheetLayout = sharedSheetLayout;
     this.contentItems = contentItems;
     boxDefinitionFactory = new BoxDefinitionFactory();
-
   }
 
   public String rewriteContentDataItem(final ContentItem item) throws URLRewriteException
   {
-    return null;
+    return contentItems.getUrlRewriter().rewrite(documentContentItem, item);
   }
 
   protected ContentUrlReWriteService getContentReWriteService()

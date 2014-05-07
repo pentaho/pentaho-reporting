@@ -2,6 +2,7 @@ package org.pentaho.reporting.engine.classic.core.layout.complextext;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -46,7 +47,7 @@ public class RunReportsTest extends TestCase
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3529.prpt");
     // to enable the complex-processing mode, set this configuration option to true
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout", "true");
+        (ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
 
     ReportHeader reportHeader = report.getReportHeader();
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);

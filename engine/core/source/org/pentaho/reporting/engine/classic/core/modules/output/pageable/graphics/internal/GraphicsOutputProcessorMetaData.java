@@ -72,6 +72,10 @@ public class GraphicsOutputProcessorMetaData extends AbstractOutputProcessorMeta
       addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     }
 
+    if (isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
+    {
+      addFeature(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
+    }
   }
 
   public String getExportDescriptor()

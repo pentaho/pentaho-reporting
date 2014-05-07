@@ -230,6 +230,8 @@ public class AttributeNames
     public static final String STYLE_SHEET = "style-sheet";
     public static final String STYLE_CLASS = "style-class";
 
+    public static final String COMPLEX_TEXT = "complex-text";
+
     private Core()
     {
     }

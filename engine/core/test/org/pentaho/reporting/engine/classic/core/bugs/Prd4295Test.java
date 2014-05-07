@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -27,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.output.AbstractOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -46,7 +46,7 @@ public class Prd4295Test extends TestCase
   public void testBold() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "false");
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     masterReport.setQueryLimit(1);
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
     final CrosstabCell element = crosstabCellBody.findElement(null, null);
@@ -73,7 +73,7 @@ public class Prd4295Test extends TestCase
   public void testBoldComplex() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(AbstractOutputProcessorMetaData.COMPLEX_TEXT_CONFIG, "true");
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     masterReport.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
     masterReport.setQueryLimit(1);
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();

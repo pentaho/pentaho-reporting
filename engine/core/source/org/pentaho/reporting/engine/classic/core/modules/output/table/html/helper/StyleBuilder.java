@@ -33,7 +33,7 @@ public interface StyleBuilder
     private String value;
     private String unit;
 
-    protected StyleCarrier(final CSSKeys key, final String value, final String unit)
+    public StyleCarrier(final CSSKeys key, final String value, final String unit)
     {
       if (key == null)
       {

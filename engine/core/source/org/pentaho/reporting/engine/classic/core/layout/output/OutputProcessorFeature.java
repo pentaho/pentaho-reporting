@@ -64,9 +64,11 @@ public abstract class OutputProcessorFeature implements Serializable
   public static final BooleanOutputProcessorFeature ITERATIVE_RENDERING =
       new BooleanOutputProcessorFeature("iterative-rendering");
 
-
   public static final BooleanOutputProcessorFeature FAST_FONTRENDERING =
       new BooleanOutputProcessorFeature("fast-font-rendering");
+
+  public static final BooleanOutputProcessorFeature STRICT_TEXT_PROCESSING =
+      new BooleanOutputProcessorFeature("strict-text-processing");
 
   public static final BooleanOutputProcessorFeature SPACING_SUPPORTED =
       new BooleanOutputProcessorFeature("spacing-supported");

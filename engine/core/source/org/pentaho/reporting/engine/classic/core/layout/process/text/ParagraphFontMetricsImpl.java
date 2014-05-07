@@ -45,4 +45,9 @@ public class ParagraphFontMetricsImpl implements ParagraphFontMetrics
   {
     return ascent + leading;
   }
+
+  public float getAscent()
+  {
+    return ascent;
+  }
 }

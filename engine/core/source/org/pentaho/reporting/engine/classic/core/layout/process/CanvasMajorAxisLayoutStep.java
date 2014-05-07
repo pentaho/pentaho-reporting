@@ -697,7 +697,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
     }
     else
     {
-
       final long cachedHeight = computeCanvasHeight(box, false);
       box.setCachedHeight(cachedHeight);
     }
