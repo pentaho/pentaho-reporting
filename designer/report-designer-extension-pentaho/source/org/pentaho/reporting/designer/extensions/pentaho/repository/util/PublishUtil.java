@@ -22,14 +22,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Locale;
+import java.net.URLDecoder;
 import java.text.MessageFormat;
+import java.util.Locale;
+
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.FileSystemOptions;
 import org.apache.commons.vfs.VFS;
 import org.apache.commons.vfs.auth.StaticUserAuthenticator;
+import org.pentaho.platform.util.RepositoryPathEncoder;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.global.OpenReportAction;
@@ -44,13 +47,13 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
 import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-import  org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 public class PublishUtil
 {
@@ -60,19 +63,13 @@ public class PublishUtil
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
-  private static final String SLASH = "/";
-  private static final String COLON_SEP = ":";
   private static final int HTTP_RESPONSE_FAIL = 504; //RepresentS an unknown rest failure as this code
   private static final int HTTP_RESPONSE_OK = 200;
-
-
-
 
   private static final String TIMEOUT = "timeout";
 
   private PublishUtil()
   {
-
   }
 
   public static ReportRenderContext openReport(final ReportDesignerContext context,
@@ -85,7 +82,7 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
-    final String urlPath =  URLEncoder.encode(path,"UTF-8");
+    final String urlPath =  URLEncoder.encodeUTF8(path.replaceAll("%2B", "+")).replaceAll("\\!", "%21");
     final FileObject connection = createVFSConnection(loginData);
     final FileObject object = connection.resolveFile(urlPath);
     if (object.exists() == false)
@@ -133,9 +130,7 @@ public class PublishUtil
     final String urlMessage = config.getConfigProperty
         ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
 
-    final MessageFormat fmt = new MessageFormat(urlMessage);
-    final String urlPath = path.replace(SLASH,COLON_SEP);
-    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(urlPath, "UTF-8"));
+    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(RepositoryPathEncoder.encodeRepositoryPath(path), "UTF-8"));
     final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL(url);

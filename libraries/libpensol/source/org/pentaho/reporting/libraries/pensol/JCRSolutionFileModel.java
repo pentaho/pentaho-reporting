@@ -19,20 +19,17 @@ package org.pentaho.reporting.libraries.pensol;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.MessageFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,8 +37,16 @@ import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileSystemException;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileDto;
 import org.pentaho.platform.repository2.unified.webservices.RepositoryFileTreeDto;
+import org.pentaho.platform.util.RepositoryPathEncoder;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 
 public class JCRSolutionFileModel implements SolutionFileModel
 {
@@ -66,11 +71,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
       "Please file a bug report at http://jira.pentaho.org/browse/BISERVER !";
   private static final String FILE_NOT_FOUND = "The specified file name does not exist: {0}";
   //this is required to retrieve a prpt - if true we get z ZIP file with .locale info
-  private static final String WITH_MANIFEST_FALSE = "?withManifest=false";
   private static final String SLASH = "/";
-  private static final String COLON = ":";
-  private static final String SPACE = " ";
-  private static final String URL_SPACE = "%20";
 
   private Client client;
   private String url;
@@ -119,7 +120,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
   {
     try
     {
-      final String path = URLEncoder.encodeUTF8( normalizePath(file.getPath()) );
+      final String path = URLEncoder.encodeUTF8(URLDecoder.decode(normalizePath(file.getPath().replaceAll("\\+", "%2B")), "UTF-8")).replaceAll("\\!", "%21");
       final String service = MessageFormat.format(CREATE_FOLDER_SERVICE, path);
 
       final WebResource resource = client.resource(url + service);
@@ -145,7 +146,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
 
   private static String normalizePath(final String path)
   {
-    return path.replace(SLASH, COLON);
+    return RepositoryPathEncoder.encodeRepositoryPath( path );
   }
 
   public RepositoryFileTreeDto getRoot() throws IOException
@@ -277,7 +278,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     }
 
     final String restName = normalizePath(file.getPath());
-    return MessageFormat.format(urlService, URLEncoder.encodeUTF8(restName));
+    return MessageFormat.format(urlService, URLEncoder.encodeUTF8(restName).replaceAll("\\!", "%21").replaceAll("\\+", "%2B"));
   }
 
   public String getUrl(final FileName file) throws FileSystemException
@@ -359,7 +360,12 @@ public class JCRSolutionFileModel implements SolutionFileModel
     final FastStack<String> stack = new FastStack<String>();
     while (file != null)
     {
-      final String name = file.getBaseName().trim();
+      String name;
+      try {
+        name = URLDecoder.decode(file.getBaseName().trim().replaceAll("\\+", "%2B"), "UTF-8");
+      } catch ( UnsupportedEncodingException e ) {
+        name = file.getBaseName().trim();
+      }
       if (!"".equals(name))
       {
         stack.push(name);
@@ -392,7 +398,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
     }
     final String path = normalizePath(fileDto.getPath());
     String urlPath = path;
-    try{urlPath = URLEncoder.encode(path,"UTF-8");}catch(Exception ex){}//tcb
+    try{urlPath = URLEncoder.encodeUTF8(path).replaceAll("\\!", "%21").replaceAll("\\+", "%2B");}catch(Exception ex){}//tcb
     final String service = MessageFormat.format(DOWNLOAD_SERVICE, urlPath);
 
     return client.resource(url + service).accept(MediaType.APPLICATION_XML_TYPE).get(byte[].class);
@@ -411,7 +417,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
       b.append(fileName[i]);
     }
 
-    final String service = MessageFormat.format(UPLOAD_SERVICE, URLEncoder.encodeUTF8( normalizePath(b.toString()) ) );
+    String service = MessageFormat.format(UPLOAD_SERVICE, URLEncoder.encodeUTF8(normalizePath(b.toString()).replaceAll("\\!", "%21").replaceAll("\\+", "%2B")));
     final WebResource resource = client.resource(url + service);
     final ByteArrayInputStream stream = new ByteArrayInputStream(data);
     final ClientResponse response = resource.put(ClientResponse.class, stream);
@@ -449,7 +455,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
       {
         throw new FileSystemException(BI_SERVER_NULL_OBJECT);
       }
-      childrenArray[i] = file.getName();
+      childrenArray[i] = URLEncoder.encodeUTF8(file.getName()).replaceAll("\\!", "%21").replaceAll("\\+", "%2B");
     }
     return childrenArray;
   }

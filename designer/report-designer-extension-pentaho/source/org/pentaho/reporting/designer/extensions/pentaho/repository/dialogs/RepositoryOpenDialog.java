@@ -31,8 +31,15 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Pattern;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ComboBoxModel;
@@ -65,6 +72,7 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.util.Publish
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
@@ -307,10 +315,13 @@ public class RepositoryOpenDialog extends CommonDialog
       {
         if (selectedFileObject.getType() == FileType.FILE)
         {
-          fileNameTextField.setText(selectedFileObject.getName().getBaseName());
+          fileNameTextField.setText(URLDecoder.decode(selectedFileObject.getName().getBaseName().replaceAll("\\+", "%2B"), "UTF-8"));
         }
       }
       catch (FileSystemException e1)
+      {
+        // ignore ..
+      } catch ( UnsupportedEncodingException e1 ) 
       {
         // ignore ..
       }
@@ -417,6 +428,39 @@ public class RepositoryOpenDialog extends CommonDialog
   private FileObject fileSystemRoot;
   private FileObject selectedView;
 
+  protected static final List<Character> reservedChars = Collections.unmodifiableList( Arrays.asList( new Character[] {
+    '/', '\\', '\t', '\r', '\n' } ) );
+
+  protected static final String reservedCharStr = "/, \\, TAB, CR, LF";
+  
+  private static final Pattern containsReservedCharsPattern = makePattern( reservedChars );
+  
+  private static Pattern makePattern( List<Character> list) {
+    // escape all reserved characters as they may have special meaning to regex engine
+    StringBuilder buf = new StringBuilder();
+    buf.append( ".*[" ); //$NON-NLS-1$
+    for ( Character ch : list ) {
+      buf.append( "\\" ); //$NON-NLS-1$
+      buf.append( ch );
+    }
+    buf.append( "]+.*" ); //$NON-NLS-1$
+    return Pattern.compile( buf.toString() );
+  }  
+  
+  /**
+   * Checks for presence of black listed chars as well as illegal permutations of legal chars.
+   */
+  public static boolean validateName(final String name) {
+    return !StringUtils.isEmpty(name, true) && 
+      name.trim().equals( name ) && // no leading or trailing whitespace
+      !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
+      !".".equals( name ) && // no . //$NON-NLS-1$
+      !"..".equals( name ) ;  // no .. //$NON-NLS-1$
+  }  
+  
+
+  
+  
   public RepositoryOpenDialog()
   {
     init();
@@ -483,7 +527,7 @@ public class RepositoryOpenDialog extends CommonDialog
         if (selectedView.getType() == FileType.FILE)
         {
           logger.debug("Setting filename in selected view to " + selectedView.getName().getBaseName());
-          this.fileNameTextField.setText(selectedView.getName().getBaseName());
+          this.fileNameTextField.setText(URLDecoder.decode(selectedView.getName().getBaseName(), "UTF-8"));
         }
       }
       catch (Exception e)
@@ -546,7 +590,7 @@ public class RepositoryOpenDialog extends CommonDialog
   }
 
   public String performOpen(final AuthenticationData loginData,
-                            final String previousSelection) throws FileSystemException
+                            final String previousSelection) throws FileSystemException, UnsupportedEncodingException
   {
     fileSystemRoot = PublishUtil.createVFSConnection(VFS.getManager(), loginData);
     if (previousSelection == null)
@@ -594,7 +638,7 @@ public class RepositoryOpenDialog extends CommonDialog
   }
 
   protected String getSelectedFile()
-      throws FileSystemException
+      throws FileSystemException, UnsupportedEncodingException
   {
     if (StringUtils.isEmpty(fileNameTextField.getText()))
     {
@@ -605,7 +649,7 @@ public class RepositoryOpenDialog extends CommonDialog
     	selectedView = selectedView.getParent();
     }
        
-    final FileObject targetFile = selectedView.resolveFile(fileNameTextField.getText());
+    final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(fileNameTextField.getText()).replaceAll("\\!", "%21"));
     return targetFile.getName().getPathDecoded();
   }
 
