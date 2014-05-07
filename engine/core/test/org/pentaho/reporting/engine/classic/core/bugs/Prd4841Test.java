@@ -21,7 +21,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
@@ -38,13 +37,6 @@ public class Prd4841Test
   {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4841.prpt");
     LogicalPageBox page = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(page);
-  }
-  @Test
-  public void testGoldenSample2() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-Keep-Together-0.prpt");
-    LogicalPageBox page = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(page);
+    // This test should not throw an exception
   }
 }

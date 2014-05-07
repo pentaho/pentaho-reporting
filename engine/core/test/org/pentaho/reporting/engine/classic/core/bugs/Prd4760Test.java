@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -64,7 +63,7 @@ public class Prd4760Test extends TestCase
     reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
 
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+
     RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
     Assert.assertEquals(0, elementsByNodeType.length);
   }

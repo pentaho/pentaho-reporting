@@ -496,6 +496,25 @@ public class DebugReportRunner
     return outputProcessor.getLogicalPageBox();
   }
 
+  public static LogicalPageBox layoutPageStrict(final MasterReport report, final int maxPage, final int page) throws Exception
+  {
+    final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+
+    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
+        (new NullOutputStream(), new XmlPageOutputProcessorMetaData(localFontRegistry));
+    outputProcessor.setFlowSelector(new StrictMultiPageFlowSelector(false, maxPage, page));
+    final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
+    proc.processReport();
+
+    if (outputProcessor.getLogicalPageBox() == null)
+    {
+      Assert.fail("Did not find the requested page");
+    }
+
+    return outputProcessor.getLogicalPageBox();
+  }
+
   public static List<LogicalPageBox> layoutPages(final MasterReport report, final int... page) throws Exception
   {
     final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
@@ -507,6 +526,23 @@ public class DebugReportRunner
     final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
     proc.processReport();
 
+
+    List<LogicalPageBox> pages = outputProcessor.getPages();
+    Assert.assertEquals("Pages have been generated", page.length, pages.size());
+    return pages;
+  }
+
+  public static List<LogicalPageBox> layoutPagesStrict(final MasterReport report,
+                                                       final int maxPage, final int... page) throws Exception
+  {
+    final LocalFontRegistry localFontRegistry = new LocalFontRegistry();
+    localFontRegistry.initialize();
+
+    final InterceptingXmlPageOutputProcessor outputProcessor = new InterceptingXmlPageOutputProcessor
+        (new NullOutputStream(), new XmlPageOutputProcessorMetaData(localFontRegistry));
+    outputProcessor.setFlowSelector(new StrictMultiPageFlowSelector(false, maxPage, page));
+    final PageableReportProcessor proc = new PageableReportProcessor(report, outputProcessor);
+    proc.processReport();
 
     List<LogicalPageBox> pages = outputProcessor.getPages();
     Assert.assertEquals("Pages have been generated", page.length, pages.size());
@@ -744,13 +780,17 @@ public class DebugReportRunner
 
     public MultiPageFlowSelector(final boolean logicalPage, final int... acceptedPage)
     {
-
       this.acceptedPage = new HashSet<Integer>();
       for (int page : acceptedPage)
       {
         this.acceptedPage.add(page);
       }
       this.logicalPage = logicalPage;
+    }
+
+    public boolean isLogicalPage()
+    {
+      return logicalPage;
     }
 
     public MultiPageFlowSelector(final int acceptedPage)
@@ -774,6 +814,41 @@ public class DebugReportRunner
         return false;
       }
       return logicalPage && acceptedPage.contains(key.getPosition());
+    }
+  }
+
+  private static class StrictMultiPageFlowSelector extends MultiPageFlowSelector
+  {
+    private int maxPage;
+
+    private StrictMultiPageFlowSelector(final boolean logicalPage, final int maxPage, final int... acceptedPage)
+    {
+      super(logicalPage, acceptedPage);
+      this.maxPage = maxPage;
+    }
+
+    public boolean isPhysicalPageAccepted(final PhysicalPageKey key)
+    {
+      if (!isLogicalPage())
+      {
+        if (key.getSequentialPageNumber() > maxPage)
+        {
+          Assert.fail("Maximum expected page number exceeded: " + key.getSequentialPageNumber());
+        }
+      }
+      return super.isPhysicalPageAccepted(key);
+    }
+
+    public boolean isLogicalPageAccepted(final LogicalPageKey key)
+    {
+      if (isLogicalPage())
+      {
+        if (key.getPosition() > maxPage)
+        {
+          Assert.fail("Maximum expected page number exceeded: " + key.getPosition());
+        }
+      }
+      return super.isLogicalPageAccepted(key);
     }
   }
 

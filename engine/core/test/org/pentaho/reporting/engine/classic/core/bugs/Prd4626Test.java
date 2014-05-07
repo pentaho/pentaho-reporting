@@ -28,17 +28,16 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
+import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal.PdfDocumentWriter;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal.PdfLogicalPageDrawable;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal.PdfOutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.NullOutputStream;
@@ -68,13 +67,6 @@ public class Prd4626Test extends TestCase
     final Resource parsed = mgr.createDirectly(resource, MasterReport.class);
     final MasterReport report = (MasterReport) parsed.getResource();
 
-    final PrintReportProcessor pr = new PrintReportProcessor(report);
-    final int numberOfPages = pr.getNumberOfPages();
-    assertEquals(4, numberOfPages);
-
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
-
     final PdfOutputProcessor outputProcessor =
         new TestPdfOutputProcessor(report.getConfiguration(), new NullOutputStream());
     final PageableReportProcessor reportProcessor = new PageableReportProcessor(report, outputProcessor);
@@ -87,6 +79,16 @@ public class Prd4626Test extends TestCase
                                    final OutputStream outputStream)
     {
       super(configuration, outputStream);
+    }
+
+    protected void processLogicalPage(final LogicalPageKey key,
+                                      final LogicalPageBox logicalPage) throws ContentProcessingException
+    {
+      if (key.getPosition() >= 4)
+      {
+        Assert.fail("More than 4 pages");
+      }
+      super.processLogicalPage(key, logicalPage);
     }
 
     protected PdfDocumentWriter createPdfDocumentWriter()

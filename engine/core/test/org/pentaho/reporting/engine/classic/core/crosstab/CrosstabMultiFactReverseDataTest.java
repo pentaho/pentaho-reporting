@@ -41,7 +41,6 @@ import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecifi
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * @noinspection HardCodedStringLiteral
@@ -224,7 +223,7 @@ public class CrosstabMultiFactReverseDataTest extends TestCase
         return false;
       }
       final int currentRow = getRuntime().getCurrentRow();
-      DebugLog.log("ValidateFunction: " + currentRow);
+
       final Object row = getDataRow().get("Rows");
       final Object col = getDataRow().get("Cols");
       final Object data = getDataRow().get("Data");
