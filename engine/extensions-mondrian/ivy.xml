@@ -30,6 +30,7 @@
       <exclude org="javax.servlet" module="jsp-api"/>
       <exclude org="javax.servlet" module="servlet-api"/>
       <exclude org="commons-logging" module="commons-logging"/>
+      <exclude org="org.apache.ant" module="ant"/>
     </dependency>
 
     <!-- Mondrian needs xerces and xalan for XMLA support, but ships with a ancient version -->
