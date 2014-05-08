@@ -35,6 +35,8 @@ public class TextOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     super(new DefaultFontStorage(new MonospaceFontRegistry(lpi, cpi)));
     setNumericFeatureValue(TextOutputProcessorMetaData.CHAR_WIDTH, 72.0 / cpi);
     setNumericFeatureValue(TextOutputProcessorMetaData.CHAR_HEIGHT, 72.0 / lpi);
+    // the plain text target does not support arabic text at all.
+    removeFeature(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void initialize(final Configuration configuration)
@@ -42,6 +44,7 @@ public class TextOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     super.initialize(configuration);
     addFeature(OutputProcessorFeature.PAGE_SECTIONS);
     addFeature(OutputProcessorFeature.PAGEBREAKS);
+    removeFeature(OutputProcessorFeature.COMPLEX_TEXT);
 
     if ("true".equals(configuration.getConfigProperty(
         "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.AssumeOverflowX")))

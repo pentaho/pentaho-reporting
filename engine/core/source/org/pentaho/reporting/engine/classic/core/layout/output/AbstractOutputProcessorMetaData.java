@@ -22,6 +22,7 @@ import java.util.HashSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.text.ExtendedBaselineInfo;
@@ -477,6 +478,10 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
         ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", true) == false)
     {
       addFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
+    }
+    if (extendedConfig.getBoolProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, false) == true)
+    {
+      addFeature(OutputProcessorFeature.COMPLEX_TEXT);
     }
     if (extendedConfig.getBoolProperty("org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping", true))
     {

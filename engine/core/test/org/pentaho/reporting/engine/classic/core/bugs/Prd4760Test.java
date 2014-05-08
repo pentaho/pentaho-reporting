@@ -21,6 +21,7 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportHeader;
@@ -55,6 +56,7 @@ public class Prd4760Test extends TestCase
     b.setVisible(false);
 
     MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
     reportHeader.addElement(b);
@@ -74,6 +76,7 @@ public class Prd4760Test extends TestCase
     b.setVisible(false);
 
     MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
     reportHeader.addElement(b);
@@ -86,6 +89,7 @@ public class Prd4760Test extends TestCase
   public void testSimpleReport() throws ReportProcessingException, ContentProcessingException
   {
     MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
     reportHeader.addElement(TableTestUtil.createDataItem("Test"));
@@ -103,6 +107,7 @@ public class Prd4760Test extends TestCase
     test.setVisible(false);
 
     MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     ReportHeader reportHeader = report.getReportHeader();
     reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
     reportHeader.addElement(test);
@@ -117,6 +122,21 @@ public class Prd4760Test extends TestCase
   public void testGoldenSample() throws Exception
   {
     MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4760.prpt");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
+    Assert.assertEquals(4, elementsByNodeType.length);
+    for (RenderNode renderNode : elementsByNodeType)
+    {
+      if (renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue(100))
+        Assert.fail();
+    }
+  }
+
+  public void testGoldenSampleComplex() throws Exception
+  {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4760.prpt");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
     RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
     Assert.assertEquals(4, elementsByNodeType.length);

@@ -36,7 +36,7 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 
 public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
 {
-  private LFUMap normalizedFontNameCache;
+  private LFUMap<String, String> normalizedFontNameCache;
 
   public PdfOutputProcessorMetaData(final ITextFontStorage fontStorage)
   {
@@ -82,7 +82,18 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
       addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     }
 
-    normalizedFontNameCache = new LFUMap(500);
+    if (isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
+    {
+      addFeature(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
+    }
+
+    String defaultEncoding = configuration.getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding");
+    if (!StringUtils.isEmpty(defaultEncoding))
+    {
+      getITextFontStorage().setDefaultEncoding(defaultEncoding);
+    }
+    normalizedFontNameCache = new LFUMap<String, String>(500);
   }
 
   public String getNormalizedFontFamilyName(final String name)
@@ -170,7 +181,7 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     {
       return false;
     }
-    
+
     final Object o = attributes.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
     if (o instanceof MasterReportType)
     {

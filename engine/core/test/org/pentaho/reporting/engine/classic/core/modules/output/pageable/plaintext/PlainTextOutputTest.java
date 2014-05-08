@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -109,6 +110,7 @@ public class PlainTextOutputTest extends TestCase
     final int cpi = 6;
 
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(lpi, cpi)), false);
 
@@ -147,6 +149,8 @@ public class PlainTextOutputTest extends TestCase
   {
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(PageSize.A4,  PageFormat.LANDSCAPE, new Insets(72, 72, 72, 72)));
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Band pageHeader = report.getPageHeader();
     final LabelElementFactory labelFactory = new LabelElementFactory();

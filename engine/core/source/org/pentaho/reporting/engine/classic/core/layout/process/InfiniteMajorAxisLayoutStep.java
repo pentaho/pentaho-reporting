@@ -34,6 +34,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MajorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
@@ -57,12 +59,18 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 {
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
+  private boolean complexText;
 
   public InfiniteMajorAxisLayoutStep()
   {
     super(false);
     this.breakState = new MajorAxisParagraphBreakState();
     this.processor = new VerticalAlignmentProcessor();
+  }
+
+  public void initialize(OutputProcessorMetaData metaData)
+  {
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox pageBox)
@@ -111,12 +119,16 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
 
     performStartTable(box);
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalBlockPosition(box));
 
     if (breakState.isActive())
     {
+      if (complexText) {
+        return true;
+      }
+
       // No breakstate and not being suspended? Why this?
       if (breakState.isSuspended() == false)
       {
@@ -469,23 +481,29 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    // Process the direct childs of the paragraph
-    // Each direct child represents a line ..
+    // todo Arabic text
+    if(complexText) {
+      processBoxChilds(box);
+    }
+    else {
+      // Process the direct childs of the paragraph
+      // Each direct child represents a line ..
 
-    RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      // all childs of the linebox container must be inline boxes. They
-      // represent the lines in the paragraph. Any other element here is
-      // a error that must be reported
-      final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-      if (startLine(inlineRenderBox))
+      RenderNode node = box.getFirstChild();
+      while (node != null)
       {
-        processBoxChilds(inlineRenderBox);
-        finishLine(inlineRenderBox);
-      }
+        // all childs of the linebox container must be inline boxes. They
+        // represent the lines in the paragraph. Any other element here is
+        // a error that must be reported
+        final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
+        if (startLine(inlineRenderBox))
+        {
+          processBoxChilds(inlineRenderBox);
+          finishLine(inlineRenderBox);
+        }
 
-      node = node.getNext();
+        node = node.getNext();
+      }
     }
   }
 
@@ -608,6 +626,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return;
     }
 
+    if(complexText) {
+      return;
+    }
+
     if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
     {
       breakState.getCurrentLine().addChild(new TextElementAlignContext((RenderableText) node));
@@ -621,6 +643,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
+    // todo Arabic text
+
     if (checkCacheValid(box))
     {
       return;
@@ -938,7 +962,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     performStartTable(box);
 
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalRowPosition(box));
 

@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 import org.pentaho.reporting.libraries.fonts.text.breaks.BreakOpportunityProducer;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -58,13 +59,12 @@ public final class RenderableText extends RenderNode
   static
   {
     final long value = StrictGeomUtility.toInternalValue(1);
-    conversionFactor = value / org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility.toInternalValue(1);
+    conversionFactor = value / FontStrictGeomUtility.toInternalValue(1);
   }
   
   private GlyphList glyphs;
   private int offset;
   private int length;
-  private boolean ltr;
   private int script;
 
   private long minimumWidth;
@@ -108,7 +108,6 @@ public final class RenderableText extends RenderNode
     }
 
     this.baselineInfo = baselineInfo;
-    this.ltr = true; // this depends on the script value
     this.script = script;
 
     this.glyphs = glyphs;
@@ -194,11 +193,6 @@ public final class RenderableText extends RenderNode
   public boolean isForceLinebreak()
   {
     return forceLinebreak;
-  }
-
-  public boolean isLtr()
-  {
-    return ltr;
   }
 
   public GlyphList getGlyphs()

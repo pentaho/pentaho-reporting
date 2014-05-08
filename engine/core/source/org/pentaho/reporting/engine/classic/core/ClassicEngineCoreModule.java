@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.Border
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.BoxSizingPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.ElementTypePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.StagingModePropertyEditor;
+import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TimeZonePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.VerticalTextAlignmentPropertyEditor;
@@ -51,6 +52,7 @@ import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
@@ -98,6 +100,9 @@ public class ClassicEngineCoreModule extends AbstractModule
    */
   public static final String STRICT_ERROR_HANDLING_KEY
       = "org.pentaho.reporting.engine.classic.core.StrictErrorHandling";
+
+  public static final String COMPLEX_TEXT_CONFIG_OVERRIDE_KEY =
+      "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
 
   /**
    * Creates a new module definition based on the 'coremodule.properties' file of this package.
@@ -160,6 +165,7 @@ public class ClassicEngineCoreModule extends AbstractModule
     PropertyEditorManager.registerEditor(ElementType.class, ElementTypePropertyEditor.class);
     PropertyEditorManager.registerEditor(StagingMode.class, StagingModePropertyEditor.class);
     PropertyEditorManager.registerEditor(TextWrap.class, TextWrapPropertyEditor.class);
+    PropertyEditorManager.registerEditor(TextDirection.class, TextDirectionPropertyEditor.class);
     PropertyEditorManager.registerEditor(TimeZone.class, TimeZonePropertyEditor.class);
     PropertyEditorManager.registerEditor(VerticalTextAlign.class, VerticalTextAlignmentPropertyEditor.class);
     PropertyEditorManager.registerEditor(WhitespaceCollapse.class, WhitespaceCollapsePropertyEditor.class);

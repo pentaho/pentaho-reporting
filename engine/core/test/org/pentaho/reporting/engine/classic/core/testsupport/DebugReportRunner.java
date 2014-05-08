@@ -91,6 +91,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.base.util.NullOutputStream;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
@@ -851,4 +852,26 @@ public class DebugReportRunner
     }
   }
 
+  public static File createTestOutputFile()
+  {
+    return createTestOutputFile(null);
+  }
+
+  public static boolean isSafeToTestComplexText()
+  {
+    return "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ("dont.try.this.at.home.-.testing.complex.text"));
+  }
+  
+  public static File createTestOutputFile(String name)
+  {
+    final File file = new File("test-output");
+    //noinspection ResultOfMethodCallIgnored
+    file.mkdir();
+    if (StringUtils.isEmpty(name, true))
+    {
+      return file;
+    }
+    return new File(file, name);
+  }
 }

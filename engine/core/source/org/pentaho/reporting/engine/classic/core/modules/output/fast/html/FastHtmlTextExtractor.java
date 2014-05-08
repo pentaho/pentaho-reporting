@@ -82,7 +82,7 @@ public class FastHtmlTextExtractor extends FastTextExtractor
     setRawResult(null);
     result = false;
     processStack = new HtmlTextExtractorState(null, false, cellStyle);
-    textExtractorHelper.setFirstElement(content.getObjectID());
+    textExtractorHelper.setFirstElement(content.getObjectID(), processStack);
 
     try
     {
@@ -144,13 +144,6 @@ public class FastHtmlTextExtractor extends FastTextExtractor
     processStack = processStack.getParent();
   }
 
-  protected void inspectElement(final ReportElement element, final boolean inlineSection) throws ContentProcessingException
-  {
-    inspectStartSection(element, inlineSection);
-    super.inspectElement(element, inlineSection);
-    inspectEndSection(element, inlineSection);
-  }
-
   protected boolean inspectStartSection(final ReportElement box, final boolean inlineSection)
   {
     BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(box.getComputedStyle());
@@ -171,16 +164,18 @@ public class FastHtmlTextExtractor extends FastTextExtractor
     textExtractorHelper.finishBox(section.getObjectID(), section.getAttributes());
   }
 
-  protected void handleValueContent(final ReportElement element, final Object value) throws ContentProcessingException
+  @Override
+  protected void handleValueContent(final ReportElement element,
+                                    final Object value,
+                                    final boolean inlineSection) throws ContentProcessingException
   {
-    super.handleValueContent(element, value);
+    super.handleValueContent(element, value, inlineSection);
 
     if (value instanceof Shape)
     {
       handleShape(element, (Shape) value);
     }
-    else if (value instanceof ImageContainer ||
-             value instanceof DrawableWrapper)
+    else if (value instanceof ImageContainer || value instanceof DrawableWrapper)
     {
       handleImage(element, value);
     }

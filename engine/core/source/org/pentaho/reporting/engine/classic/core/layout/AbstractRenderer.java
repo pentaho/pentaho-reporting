@@ -217,10 +217,10 @@ public abstract class AbstractRenderer implements Renderer
     this.validateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_VALIDATE);
     this.paginateStopWatch = performanceMonitorContext.createStopWatch(PerformanceTags.REPORT_LAYOUT_PROCESS);
 
-    this.majorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.canvasMajorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.minorAxisLayoutStep.initialize(performanceMonitorContext);
-    this.canvasMinorAxisLayoutStep.initialize(performanceMonitorContext);
+    this.majorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.canvasMajorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.minorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
+    this.canvasMinorAxisLayoutStep.initializePerformanceMonitoring(performanceMonitorContext);
 
     outputProcessor.processingStarted(report, processingContext);
 
@@ -237,10 +237,12 @@ public abstract class AbstractRenderer implements Renderer
         processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false;
     this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
+    paragraphLineBreakStep.initialize(metaData);
     staticPropertiesStep.initialize(metaData, processingContext);
-    canvasMinorAxisLayoutStep.initialize(metaData);
+    canvasMinorAxisLayoutStep.initialize(metaData, processingContext);
     minorAxisLayoutStep.initialize(metaData);
     canvasMajorAxisLayoutStep.initialize(metaData);
+    majorAxisLayoutStep.initialize(metaData);
   }
 
   public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint)

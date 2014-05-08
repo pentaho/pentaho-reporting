@@ -45,6 +45,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -867,6 +868,25 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
             pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
         xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
         xmlWriter.writeTextNormalized(text.getRawText(), true);
+        xmlWriter.writeCloseTag();
+
+      }
+      else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        final RenderableComplexText renderableComplexText = (RenderableComplexText) node;
+        final AttributeList attributeList = new AttributeList();
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
+
+        final String text = renderableComplexText.getRawText();
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
+        xmlWriter.writeTextNormalized(text, true);
         xmlWriter.writeCloseTag();
 
       }

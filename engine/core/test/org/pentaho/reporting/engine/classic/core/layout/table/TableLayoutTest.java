@@ -18,9 +18,11 @@
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -31,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TableLayout;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -178,6 +181,66 @@ public class TableLayoutTest extends TestCase
 
   }
 
+  public void testFixedSizeTableCellsRelativeSizeComplex() throws Exception
+  {
+
+    final Band tableCell1 = TableTestUtil.createCell(0, 0, 100, 10, TableTestUtil.createDataItem("Text", -100, -100));
+    tableCell1.setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, Integer.valueOf(2));
+    final Band tableCell2 = TableTestUtil.createCell(0, 1, 100, 10, TableTestUtil.createDataItem("Text2", -100, -100));
+
+    final Band tableRow = new Band();
+    tableRow.setLayout(BandStyleKeys.LAYOUT_TABLE_ROW);
+    tableRow.addElement(tableCell1);
+    tableRow.addElement(tableCell2);
+
+    final Band tableCell3 = TableTestUtil.createCell(1, 1, 100, 10, TableTestUtil.createDataItem("Text3", -100, -100));
+    final Band tableRow2 = new Band();
+    tableRow2.setLayout(BandStyleKeys.LAYOUT_TABLE_ROW);
+    tableRow2.addElement(tableCell3);
+
+    final Band tableSection = new Band();
+    tableSection.setLayout(BandStyleKeys.LAYOUT_TABLE_BODY);
+    tableSection.addElement(tableRow);
+    tableSection.addElement(tableRow2);
+
+    final MasterReport report = new MasterReport();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
+    report.getReportHeader().addElement(tableSection);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    //ModelPrinter.print(logicalPageBox);
+
+    final RenderNode renderedCell1 = MatchFactory.findElementByName(logicalPageBox, "c-0-0");
+    assertNotNull(renderedCell1);
+    long heightCell00 = renderedCell1.getHeight();
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell1.getWidth());
+
+    final RenderNode renderedCell2 = MatchFactory.findElementByName(logicalPageBox, "c-0-1");
+    assertNotNull(renderedCell2);
+    long heightCell01 = renderedCell2.getHeight();
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell2.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getWidth());
+
+    final RenderNode renderedCell3 = MatchFactory.findElementByName(logicalPageBox, "c-1-1");
+    assertNotNull(renderedCell3);
+    long heightCell11 = renderedCell3.getHeight();
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getWidth());
+
+    Assert.assertTrue(heightCell00 > 0);
+    Assert.assertTrue(heightCell01 > 0);
+    Assert.assertTrue(heightCell11 > 0);
+
+    // Validate that tableCell1 has a layouted height of 40 (2* 20)
+    assertEquals(heightCell00, heightCell01 + heightCell11);
+
+  }
+
   public void testFixedSizeTableCellsRelativeSize() throws Exception
   {
 
@@ -201,6 +264,7 @@ public class TableLayoutTest extends TestCase
     tableSection.addElement(tableRow2);
 
     final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 
@@ -244,7 +308,6 @@ public class TableLayoutTest extends TestCase
 
   public void testFixedSizeTableCellsRelativeSizeCanvas() throws Exception
   {
-
     final Band tableCell1 = TableTestUtil.createCell(0, 0, 100, 10,
         wrapInCanvas(TableTestUtil.createDataItem("Text", -100, -100)));
     tableCell1.setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, 2);
@@ -268,6 +331,7 @@ public class TableLayoutTest extends TestCase
     tableSection.addElement(tableRow2);
 
     final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
     report.getReportHeader().addElement(tableSection);
 
@@ -312,6 +376,79 @@ public class TableLayoutTest extends TestCase
 
     // Validate that tableCell1 has a layouted height of 40 (2* 20)
 
+  }
+
+  public void testFixedSizeTableCellsRelativeSizeCanvasComplex() throws Exception
+  {
+    final Band tableCell1 = TableTestUtil.createCell(0, 0, 100, 10,
+        wrapInCanvas(TableTestUtil.createDataItem("Text", -100, -100)));
+    tableCell1.setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, 2);
+    final Band tableCell2 = TableTestUtil.createCell(0, 1, 100, 10,
+        wrapInCanvas(TableTestUtil.createDataItem("Text2", -100, -100)));
+
+    final Band tableRow = new Band();
+    tableRow.setLayout(BandStyleKeys.LAYOUT_TABLE_ROW);
+    tableRow.addElement(tableCell1);
+    tableRow.addElement(tableCell2);
+
+    final Band tableCell3 = TableTestUtil.createCell(1, 1, 100, 10,
+        wrapInCanvas(TableTestUtil.createDataItem("Text3", -100, -100)));
+    final Band tableRow2 = new Band();
+    tableRow2.setLayout(BandStyleKeys.LAYOUT_TABLE_ROW);
+    tableRow2.addElement(tableCell3);
+
+    final Band tableSection = new Band();
+    tableSection.setLayout(BandStyleKeys.LAYOUT_TABLE_BODY);
+    tableSection.addElement(tableRow);
+    tableSection.addElement(tableRow2);
+
+    final MasterReport report = new MasterReport();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_TABLE);
+    report.getReportHeader().addElement(tableSection);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    //ModelPrinter.print(logicalPageBox);
+
+    final RenderBox renderedCell1 = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "c-0-0");
+    assertNotNull(renderedCell1);
+    long heightCell00 = renderedCell1.getHeight();
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getX());
+    assertTrue(heightCell00 > StrictGeomUtility.toInternalValue(20));
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell1.getWidth());
+
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getFirstChild().getY());
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell1.getFirstChild().getX());
+    assertEquals(heightCell00, renderedCell1.getFirstChild().getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell1.getFirstChild().getWidth());
+
+    final RenderBox renderedCell2 = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "c-0-1");
+    assertNotNull(renderedCell2);
+    long heightCell01 = renderedCell2.getHeight();
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell2.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getWidth());
+
+    assertEquals(StrictGeomUtility.toInternalValue(0), renderedCell2.getFirstChild().getY());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getFirstChild().getX());
+    assertEquals(heightCell01, renderedCell2.getFirstChild().getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell2.getFirstChild().getWidth());
+
+    final RenderBox renderedCell3 = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "c-1-1");
+    long heightCell11 = renderedCell3.getHeight();
+    assertNotNull(renderedCell3);
+    assertEquals(heightCell01, renderedCell3.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getWidth());
+
+    assertEquals(heightCell01, renderedCell3.getFirstChild().getY());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getFirstChild().getX());
+    assertEquals(StrictGeomUtility.toInternalValue(234), renderedCell3.getFirstChild().getWidth());
+
+    // Validate that tableCell1 has a layouted height of 40 (2* 20)
+    assertEquals(heightCell00, heightCell01 + heightCell11);
   }
 
   public static Band createTable(final int[][] layout, final int headerRows)

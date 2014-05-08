@@ -282,8 +282,8 @@ public class PageableRenderer extends AbstractRenderer
   protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
   {
     super.initializeRendererOnStartReport(processingContext);
-    paginationStep.initialize(getPerformanceMonitorContext());
-    fillPhysicalPagesStep.initialize(getPerformanceMonitorContext());
+    paginationStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
+    fillPhysicalPagesStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
   }
 
   protected void close()

@@ -56,6 +56,7 @@ import org.pentaho.reporting.libraries.fonts.text.whitespace.DiscardWhiteSpaceFi
 import org.pentaho.reporting.libraries.fonts.text.whitespace.PreserveBreaksWhiteSpaceFilter;
 import org.pentaho.reporting.libraries.fonts.text.whitespace.PreserveWhiteSpaceFilter;
 import org.pentaho.reporting.libraries.fonts.text.whitespace.WhiteSpaceFilter;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 03.04.2007, 16:43:48
@@ -101,7 +102,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   private WhitespaceCollapse whitespaceCollapseValue;
   private TextWrap breakOpportunityValue;
   private long wordSpacing;
-  private ReportAttributeMap attributeMap;
+  private ReportAttributeMap<Object> attributeMap;
   private ElementType elementType;
   private ExtendedBaselineInfo uniformBaselineInfo;
   private InstanceID instanceId;
@@ -132,7 +133,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
                                  final StyleSheet layoutContext,
                                  final ElementType elementType,
                                  final InstanceID instanceId,
-                                 final ReportAttributeMap attributeMap)
+                                 final ReportAttributeMap<Object> attributeMap)
   {
     this.instanceId = instanceId;
     if (layoutContext == null)
@@ -167,7 +168,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
 
     if (metaData.isFeatureSupported(OutputProcessorFeature.SPACING_SUPPORTED))
     {
-      this.wordSpacing = org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility.toInternalValue
+      this.wordSpacing = FontStrictGeomUtility.toInternalValue
           (layoutContext.getDoubleStyleProperty(TextStyleKeys.WORD_SPACING, 0));
     }
     else

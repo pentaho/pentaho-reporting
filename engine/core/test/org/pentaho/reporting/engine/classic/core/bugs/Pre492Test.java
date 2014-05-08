@@ -24,6 +24,7 @@ import java.util.List;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
@@ -137,9 +138,30 @@ public class Pre492Test extends TestCase
   public void testPagebreakHonoredOnFirstPage() throws Exception
   {
     final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
     List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
     final LogicalPageBox page0 = logicalPageBoxes.get(0);
+//    ModelPrinter.INSTANCE.print(page0);
+
+    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
+    assertEquals(28, elementsByElementType.length);
+    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[27].getY());
+
+    final LogicalPageBox page1 = logicalPageBoxes.get(1);
+    final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
+    assertEquals(31, elementsPage1.length);
+    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[30].getY());
+    //  ModelPrinter.INSTANCE.print(page1);
+  }
+
+  public void testPagebreakHonoredOnFirstPageSimple() throws Exception
+  {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
+    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
+    final LogicalPageBox page0 = logicalPageBoxes.get(0);
+//    ModelPrinter.INSTANCE.print(page0);
+
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
     assertEquals(31, elementsByElementType.length);
     assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[elementsByElementType.length - 1].getY());

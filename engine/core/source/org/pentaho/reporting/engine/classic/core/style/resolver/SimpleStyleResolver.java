@@ -65,12 +65,6 @@ public class SimpleStyleResolver implements StyleResolver
     resolverTarget.addDefault(element.getDefaultStyleSheet());
   }
 
-  private void add(final ReportElement e)
-  {
-    final String elementType = e.getElementType().getClass().getName();
-    extendedCounter.increaseCounter(elementType, e.getChangeTracker());
-  }
-
   public void resolveParent(final ReportElement element,
                             final ElementStyleSheet resolverTarget)
   {

@@ -27,11 +27,13 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.SpacerRenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.CenterAlignmentProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.process.alignment.JustifyAlignmentProcessor;
@@ -100,6 +102,8 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   private PageGrid pageGrid;
   private OutputProcessorMetaData metaData;
   private VerticalAlignmentProcessor verticalAlignmentProcessor;
+  private boolean complexText;
+  private boolean strictTextProcessing;
 
   public RevalidateAllAxisLayoutStep()
   {
@@ -109,6 +113,8 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
   public void initialize(final OutputProcessorMetaData metaData)
   {
     this.metaData = metaData;
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+    strictTextProcessing = metaData.isFeatureSupported(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
   }
 
   public void processBoxChilds(final ParagraphRenderBox box, final PageGrid pageGrid)
@@ -116,7 +122,14 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     try
     {
       this.pageGrid = pageGrid;
-      processParagraphChilds(box);
+      if (complexText)
+      {
+        processComplexText(box);
+      }
+      else
+      {
+        processSimpleText(box);
+      }
     }
     finally
     {
@@ -165,7 +178,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     }
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox paragraph)
+  protected void processComplexText(final ParagraphRenderBox paragraph)
   {
     if (paragraph.getStaticBoxLayoutProperties().isOverflowY() == true)
     {
@@ -173,11 +186,6 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return;
     }
 
-    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
-
-    // Process the direct childs of the paragraph
-    // Each direct child represents a line ..
-    final long paragraphBottom = paragraph.getCachedY() + paragraph.getCachedHeight();
 
     final RenderNode lastLine = paragraph.getLastChild();
     if (lastLine == null)
@@ -186,12 +194,87 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return;
     }
 
+
+    // Process the direct childs of the paragraph
+    // Each direct child represents a line ..
+    final long paragraphBottom = paragraph.getCachedY() + paragraph.getCachedHeight();
+    if ((lastLine.getCachedY() + lastLine.getCachedHeight()) <= paragraphBottom)
+    {
+      // Already perfectly aligned.
+      return;
+    }
+
+    RenderNode node = paragraph.getFirstChild();
+    ParagraphPoolBox prev = null;
+    while (node != null)
+    {
+      // all childs of the linebox container must be inline boxes. They
+      // represent the lines in the paragraph. Any other element here is
+      // a error that must be reported
+      if (node.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
+      {
+        throw new IllegalStateException("Encountered " + node.getClass());
+      }
+
+      // Process the current line.
+      final long y = node.getCachedY();
+      final long height = node.getCachedHeight();
+      if (y + height <= paragraphBottom)
+      {
+
+        // Node will fit, so we can allow it ..
+        prev = (ParagraphPoolBox) node;
+        node = node.getNext();
+        continue;
+      }
+
+      // Encountered a line that will not fully fit into the paragraph.
+      // Merge it with the previous line-paragraph.
+      if (prev == null)
+      {
+        // none of the lines fits fully, so get the first one at least
+        rebuildLastLineComplex((ParagraphPoolBox) node, (RenderBox) node.getNext());
+      }
+      else
+      {
+        rebuildLastLineComplex(prev, (ParagraphPoolBox) node);
+      }
+      // now remove all pending lineboxes (they should be empty anyway).
+      while (node != null)
+      {
+        final RenderNode oldNode = node;
+        node = node.getNext();
+        paragraph.remove(oldNode);
+      }
+    }
+  }
+
+  protected void processSimpleText(final ParagraphRenderBox paragraph)
+  {
+    if (paragraph.getStaticBoxLayoutProperties().isOverflowY() == true)
+    {
+      performVerticalBlockAlignment(paragraph);
+      return;
+    }
+
+    final RenderNode lastLine = paragraph.getLastChild();
+    if (lastLine == null)
+    {
+      // Empty paragraph, no need to do anything ...
+      return;
+    }
+
+
+    // Process the direct childs of the paragraph
+    // Each direct child represents a line ..
+    final long paragraphBottom = paragraph.getCachedY() + paragraph.getCachedHeight();
     if ((lastLine.getCachedY() + lastLine.getCachedHeight()) <= paragraphBottom)
     {
       // Already perfectly aligned. 
       return;
     }
 
+    final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
     RenderNode node = paragraph.getFirstChild();
     ParagraphPoolBox prev = null;
     while (node != null)
@@ -217,7 +300,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
         continue;
       }
 
-      // Encountered a paragraph that will not fully fit into the paragraph.
+      // Encountered a line that will not fully fit into the paragraph.
       // Merge it with the previous line-paragraph.
       final ParagraphPoolBox mergedLine = rebuildLastLine(prev, inlineRenderBox);
 
@@ -482,7 +565,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       return rebuildLastLine(nextBox, (ParagraphPoolBox) nextBox.getNext());
     }
 
-    if (nextBox == null)
+    if (nextBox == null || strictTextProcessing)
     {
       // Linebox is finished, no need to do any merging anymore..
       return lineBox;
@@ -508,7 +591,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
         staticBoxLayoutProperties.setSpaceWidth(spaceWidth);
       }
 
-      if ((next.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
+      if (next.isRenderBox())
       {
         final RenderBox nBox = (RenderBox) next;
         final RenderNode firstChild = nBox.getFirstChild();
@@ -518,7 +601,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
           next = firstChild;
 
           final RenderNode writeContextLastChild = writeContext.getLastChild();
-          if ((writeContextLastChild.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
+          if (writeContextLastChild.isRenderBox())
           {
             if (writeContextLastChild.getInstanceId() == nBox.getInstanceId())
             {
@@ -614,5 +697,66 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     }
 
     return rebuildLastLine(lineBox, (ParagraphPoolBox) nextBox.getNext());
+  }
+
+  private RenderBox rebuildLastLineComplex(final RenderBox lineBox,
+                                           final RenderBox nextBox)
+  {
+    if (lineBox == null)
+    {
+      throw new NullPointerException();
+    }
+    if (nextBox == null)
+    {
+      return lineBox;
+    }
+
+    RenderNode child = nextBox.getFirstChild();
+    while (child != null)
+    {
+      if (child.isRenderBox())
+      {
+        if (lineBox.getLastChild().isRenderBox() &&
+            lineBox.getLastChild().getInstanceId() == child.getInstanceId())
+        {
+          rebuildLastLineComplex((RenderBox) lineBox.getLastChild(), (RenderBox) child);
+        }
+        else
+        {
+          RenderBox lineBoxChild = (RenderBox) child.derive(false);
+          rebuildLastLineComplex(lineBoxChild, (RenderBox) child);
+          lineBoxChild.close();
+          lineBox.addGeneratedChild(lineBoxChild);
+        }
+      }
+      else if (child instanceof RenderableComplexText)
+      {
+        RenderableComplexText childAsText = (RenderableComplexText) child;
+        RenderNode n = lineBox.getLastChild();
+        if (n instanceof RenderableComplexText)
+        {
+          RenderableComplexText lastLine = (RenderableComplexText) n;
+          if (lastLine.isSameSource(childAsText))
+          {
+            lineBox.replaceChild(n, lastLine.merge(childAsText));
+          }
+          else
+          {
+            lineBox.addGeneratedChild(child);
+          }
+        }
+        else
+        {
+          lineBox.addGeneratedChild(child);
+        }
+      }
+      else
+      {
+        lineBox.addGeneratedChild(child);
+      }
+
+      child = child.getNext();
+    }
+    return null;
   }
 }

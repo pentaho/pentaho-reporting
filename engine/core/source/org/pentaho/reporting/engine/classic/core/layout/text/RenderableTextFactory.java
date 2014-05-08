@@ -48,7 +48,7 @@ public interface RenderableTextFactory
                                  final StyleSheet layoutContext,
                                  final ElementType elementType,
                                  final InstanceID instanceId,
-                                 final ReportAttributeMap attributeMap);
+                                 final ReportAttributeMap<Object> attributeMap);
 
   public RenderNode[] finishText();
 

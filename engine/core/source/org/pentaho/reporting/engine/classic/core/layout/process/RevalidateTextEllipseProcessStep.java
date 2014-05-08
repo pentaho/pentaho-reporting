@@ -25,7 +25,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.text.ComplexTextFactory;
 import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.layout.text.RenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -40,6 +42,7 @@ import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
  */
 public final class RevalidateTextEllipseProcessStep extends IterateStructuralProcessStep
 {
+  private final boolean complexTextFeature;
   private long contentAreaX1;
   private long contentAreaX2;
   private TextCache textCache;
@@ -52,7 +55,15 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
   {
     this.bufferArray = new int[500];
     this.textCache = new TextCache(500);
-    this.textFactory = new DefaultRenderableTextFactory(metaData);
+    this.complexTextFeature = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+    if (complexTextFeature)
+    {
+      this.textFactory = new ComplexTextFactory();
+    }
+    else
+    {
+      this.textFactory = new DefaultRenderableTextFactory(metaData);
+    }
   }
 
   public String getEllipseOverride()
@@ -104,6 +115,7 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     return true;
   }
 
+
   private RenderBox processTextEllipse(final RenderBox box, final long x2)
   {
     final StyleSheet style = box.getStyleSheet();
@@ -113,6 +125,29 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
       // oh, no ellipse. Thats nice.
       return null;
     }
+
+    if (complexTextFeature)
+    {
+      return processTextEllipseComplex(box, x2, reslit);
+    }
+    else
+    {
+      return processTextEllipseNormal(box, x2, reslit);
+    }
+  }
+
+  private RenderBox processTextEllipseComplex(final RenderBox box,
+                                              final long x2,
+                                              final String reslit)
+  {
+    // todo Implement Arabic support
+    return null;
+//    return processTextEllipseNormal(box, x2, reslit);
+  }
+
+  private RenderBox processTextEllipseNormal(final RenderBox box, final long x2, String reslit)
+  {
+    final StyleSheet style = box.getStyleSheet();
 
     final RenderBox textEllipse = (RenderBox) box.derive(false);
     final ReportAttributeMap map = box.getAttributes();

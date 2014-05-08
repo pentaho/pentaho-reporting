@@ -44,6 +44,7 @@ public interface RenderNodeFactory extends Cloneable
                                     final String layoutType,
                                     final ReportStateKey stateKey);
 
+  @Deprecated
   public RenderBox createAutoParagraph(final ReportStateKey stateKey);
 
   public RenderBox createAutoParagraph(final ReportElement band,

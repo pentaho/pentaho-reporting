@@ -1146,4 +1146,8 @@ public abstract class RenderNode implements Cloneable
     return 0;
   }
 
+  public boolean isRenderBox()
+  {
+    return false;
+  }
 }

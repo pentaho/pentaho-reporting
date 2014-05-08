@@ -41,20 +41,15 @@ public class TextStyleKeys
   public static final StyleKey TEXT_WRAP =
       StyleKey.getStyleKey("text-wrap", TextWrap.class, false, true);
 
-  public static final StyleKey X_MIN_LETTER_SPACING =
-      StyleKey.getStyleKey("min-letter-spacing", Float.class, false, true);
-  public static final StyleKey X_OPTIMUM_LETTER_SPACING =
-      StyleKey.getStyleKey("optimum-letter-spacing", Float.class, false, true);
-  public static final StyleKey X_MAX_LETTER_SPACING =
-      StyleKey.getStyleKey("max-letter-spacing", Float.class, false, true);
-  public static final StyleKey WORD_SPACING =
-      StyleKey.getStyleKey("word-spacing", Float.class, false, true);
+  public static final StyleKey X_MIN_LETTER_SPACING = StyleKey.getStyleKey("min-letter-spacing", Float.class);
+  public static final StyleKey X_OPTIMUM_LETTER_SPACING = StyleKey.getStyleKey("optimum-letter-spacing", Float.class);
+  public static final StyleKey X_MAX_LETTER_SPACING = StyleKey.getStyleKey("max-letter-spacing", Float.class);
+  public static final StyleKey WORD_SPACING = StyleKey.getStyleKey("word-spacing", Float.class);
 
-  public static final StyleKey FONT_SMOOTH =
-      StyleKey.getStyleKey("font-smooth", FontSmooth.class, false, true);
+  public static final StyleKey FONT_SMOOTH = StyleKey.getStyleKey("font-smooth", FontSmooth.class);
   public static final StyleKey VERTICAL_TEXT_ALIGNMENT =
       StyleKey.getStyleKey("vertical-text-alignment", VerticalTextAlign.class);
-
+  public static final StyleKey WORDBREAK = StyleKey.getStyleKey("word-break", Boolean.class);
 
   /**
    * A key for the 'font family' used to draw element text.
@@ -116,4 +111,6 @@ public class TextStyleKeys
   public static final StyleKey TEXT_INDENT = StyleKey.getStyleKey("text-indent", Float.class);
 
   public static final StyleKey FIRST_LINE_INDENT = StyleKey.getStyleKey("first-line-indent", Float.class);
+
+  public static final StyleKey DIRECTION = StyleKey.getStyleKey("direction", TextDirection.class);
 }

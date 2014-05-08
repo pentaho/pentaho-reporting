@@ -40,7 +40,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessStep
 {
-  protected static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
+  public static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
 
   private OutputProcessorMetaData metaData;
   private boolean strictLegacyMode;

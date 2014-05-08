@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParse
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
@@ -162,6 +163,12 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
       styleSheet.setStyleProperty(TextStyleKeys.TEXT_WRAP, parseTextWrap(textWrap));
     }
 
+    final String textDirection = attrs.getValue(getUri(), "direction");
+    if (textDirection != null)
+    {
+      styleSheet.setStyleProperty(TextStyleKeys.DIRECTION, parseTextDirection(textDirection));
+    }
+
     final String fontSmooth = attrs.getValue(getUri(), "font-smooth");
     if (fontSmooth != null)
     {
@@ -278,6 +285,19 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
       return TextWrap.NONE;
     }
     return TextWrap.WRAP;
+  }
+
+  private TextDirection parseTextDirection(final String o)
+  {
+    if (TextDirection.LTR.toString().equalsIgnoreCase(o))
+    {
+      return TextDirection.LTR;
+    }
+    if (TextDirection.RTL.toString().equalsIgnoreCase(o))
+    {
+      return TextDirection.RTL;
+    }
+    return TextDirection.LTR;
   }
 
   /**

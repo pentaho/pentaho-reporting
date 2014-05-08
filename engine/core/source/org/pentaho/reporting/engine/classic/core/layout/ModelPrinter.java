@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
@@ -203,6 +204,8 @@ public class ModelPrinter
     b.append(box.getHeight());
     b.append(", min-chunk-width=");
     b.append(box.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(box.getX() + box.getWidth());
     b.append(", y2=");
     b.append(box.getY2());
     b.append(", y2-overflow=");
@@ -490,6 +493,8 @@ public class ModelPrinter
     b.append(node.getHeight());
     b.append(", min-chunk-width=");
     b.append(node.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(node.getX() + node.getWidth());
     b.append(", y2=");
     b.append(node.getY() + node.getHeight());
     print(b.toString());
@@ -537,6 +542,20 @@ public class ModelPrinter
         b.append("   ");
       }
       b.append("- text='");
+      b.append(text.getRawText());
+      b.append("'");
+      print(b.toString());
+    }
+
+    if (node instanceof RenderableComplexText)
+    {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- complex-text='");
       b.append(text.getRawText());
       b.append("'");
       print(b.toString());

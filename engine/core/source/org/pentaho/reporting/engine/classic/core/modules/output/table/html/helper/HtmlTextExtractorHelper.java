@@ -20,6 +20,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -57,6 +58,11 @@ public class HtmlTextExtractorHelper
                                  final OutputProcessorMetaData metaData,
                                  final HtmlContentGenerator contentGenerator)
   {
+    ArgumentNullException.validate("tagHelper", tagHelper);
+    ArgumentNullException.validate("metaData", metaData);
+    ArgumentNullException.validate("contentGenerator", contentGenerator);
+    ArgumentNullException.validate("xmlWriter", xmlWriter);
+
     this.tagHelper = tagHelper;
     this.metaData = metaData;
     this.contentGenerator = contentGenerator;
@@ -70,9 +76,11 @@ public class HtmlTextExtractorHelper
     return enableInheritedLinkStyle;
   }
 
-  public void setFirstElement(final InstanceID firstElement)
+  public void setFirstElement(final InstanceID firstElement,
+                              final HtmlTextExtractorState processStack)
   {
     this.firstElement = firstElement;
+    this.processStack = processStack;
   }
 
 
@@ -113,7 +121,7 @@ public class HtmlTextExtractorHelper
 
         if (forceTag || attrList.isEmpty() == false)
         {
-          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrList, XmlWriterSupport.OPEN);
+          xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, tag, attrList, XmlWriterSupport.OPEN);
           processStack = new HtmlTextExtractorState(processStack, true);
         }
         else
@@ -266,7 +274,7 @@ public class HtmlTextExtractorHelper
     StyleBuilder styleBuilder = tagHelper.getStyleBuilder();
     styleBuilder.clear(); // cuts down on object creation
 
-    DefaultStyleBuilderFactory styleBuilderFactory = tagHelper.getStyleBuilderFactory();
+    StyleBuilderFactory styleBuilderFactory = tagHelper.getStyleBuilderFactory();
     final NumberFormat pointConverter = styleBuilder.getPointConverter();
     styleBuilder.append(DefaultStyleBuilder.CSSKeys.OVERFLOW, "hidden"); //NON-NLS
     styleBuilder.append(DefaultStyleBuilder.CSSKeys.WIDTH, pointConverter.format//NON-NLS
@@ -287,7 +295,7 @@ public class HtmlTextExtractorHelper
   {
     StyleBuilder styleBuilder = tagHelper.getStyleBuilder();
     styleBuilder.clear(); // cuts down on object creation
-    DefaultStyleBuilderFactory styleBuilderFactory = tagHelper.getStyleBuilderFactory();
+    StyleBuilderFactory styleBuilderFactory = tagHelper.getStyleBuilderFactory();
     final NumberFormat pointConverter = styleBuilder.getPointConverter();
     final double scale = RenderUtility.getNormalizationScale(metaData);
 

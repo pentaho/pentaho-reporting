@@ -101,10 +101,12 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.LongSequence;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
+import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.wizard.ProxyDataSchemaDefinition;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
@@ -231,7 +233,8 @@ public class ProcessState implements ReportState
     final DefaultParameterContext parameterContext = new DefaultParameterContext(report);
 
     // pre-init the output-processor-metadata.
-    processingContext.getOutputProcessorMetaData().initialize(wrapForCompatibility(processingContext));
+    initializeProcessingContext(processingContext, report);
+
     this.designtime =
         processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
     final ReportParameterValues parameterValues;
@@ -366,6 +369,40 @@ public class ProcessState implements ReportState
       this.recorder = new EmptyGroupSizeRecorder();
     }
     this.processKey = createKey();
+  }
+
+  private void initializeProcessingContext(final ProcessingContext processingContext, final MasterReport report)
+  {
+    Configuration configuration = wrapForCompatibility(processingContext);
+    processingContext.getOutputProcessorMetaData().initialize(mapStaticMetaData(configuration, report));
+  }
+
+  private Configuration mapStaticMetaData(final Configuration configuration, final MasterReport report)
+  {
+    HierarchicalConfiguration hc = new HierarchicalConfiguration(configuration);
+
+    setConfigurationIfDefined(hc,
+        "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout",
+        report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.COMPLEX_TEXT));
+
+    return hc;
+  }
+
+  private void setConfigurationIfDefined(ModifiableConfiguration config, String configKey, Object value)
+  {
+    if (value == null)
+    {
+      return;
+    }
+    try
+    {
+      String valueText = ConverterRegistry.toAttributeValue(value);
+      config.setConfigProperty(configKey, valueText);
+    }
+    catch (BeanException e)
+    {
+      logger.info(String.format("Ignoring invalid attribute-value override for configuration '%s' with value '%s'", configKey, value));
+    }
   }
 
   private Configuration wrapForCompatibility(final ProcessingContext processingContext)

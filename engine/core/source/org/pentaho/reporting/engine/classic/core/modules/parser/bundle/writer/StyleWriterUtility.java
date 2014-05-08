@@ -622,6 +622,11 @@ public class StyleWriterUtility
       final Object value = style.getStyleProperty(TextStyleKeys.TEXT_WRAP);
       bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "text-wrap", value.toString());
     }
+    if (style.isLocalKey(TextStyleKeys.DIRECTION))
+    {
+      final Object value = style.getStyleProperty(TextStyleKeys.DIRECTION);
+      bandStyleAtts.setAttribute(BundleNamespaces.STYLE, "direction", value.toString());
+    }
     if (style.isLocalKey(TextStyleKeys.WHITE_SPACE_COLLAPSE))
     {
       final Object value = style.getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);

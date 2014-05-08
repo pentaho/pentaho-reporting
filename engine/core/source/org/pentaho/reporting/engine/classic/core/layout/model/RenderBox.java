@@ -755,7 +755,7 @@ public abstract class RenderBox extends RenderNode
 
   /**
    * Derive creates a disconnected node that shares all the properties of the original node. The derived node will no
-   * longer have any parent, silbling, child or any other relationships with other nodes.
+   * longer have any parent, sibling, child or any other relationships with other nodes.
    *
    * @return
    */
@@ -1404,7 +1404,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaWidth()
   {
-    return Math.max (getWidth(), overflowAreaWidth);
+    return Math.max(getWidth(), overflowAreaWidth);
   }
 
   public void setOverflowAreaWidth(final long overflowAreaWidth)
@@ -1590,6 +1590,11 @@ public abstract class RenderBox extends RenderNode
   {
     setFlag(FLAG_BOX_PREVENT_PAGINATION, preventPagination);
     updateChangeTracker();
+  }
+
+  public boolean isRenderBox()
+  {
+    return true;
   }
 
   public void setProcessKeyCached(final ReportStateKey processKeyCached)

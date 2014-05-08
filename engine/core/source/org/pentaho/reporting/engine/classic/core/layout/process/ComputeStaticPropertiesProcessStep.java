@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
@@ -41,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Computes the width for all elements. This uses the CSS algorithm, percentages are resolved against the parent's
@@ -57,6 +59,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private static final StaticRootChunkWidthUpdate ROOT = new StaticRootChunkWidthUpdate();
 
   private OutputProcessorMetaData metaData;
+  private ResourceManager resourceManager;
   private boolean overflowXSupported;
   private boolean overflowYSupported;
   private boolean widowsEnabled;
@@ -79,6 +82,7 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
     this.widowOrphanDefinitionsEncountered = false;
     this.designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    this.resourceManager = processingContext.getResourceManager();
   }
 
   public boolean isWidowOrphanDefinitionsEncountered()
@@ -130,6 +134,12 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
   protected void processOtherNode(final RenderNode node)
   {
+    if (node instanceof RenderableComplexText)
+    {
+      RenderableComplexText t = (RenderableComplexText) node;
+      t.computeMinimumChunkWidth(metaData, resourceManager);
+    }
+
     chunkWidthUpdate.update(node.getMinimumChunkWidth());
   }
 

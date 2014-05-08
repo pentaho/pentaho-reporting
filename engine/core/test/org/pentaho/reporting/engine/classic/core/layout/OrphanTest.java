@@ -39,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -66,7 +67,7 @@ public class OrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body-1");
     detailBody.addElement(createBand("ib1"));
     detailBody.addElement(createBand("ib2"));
@@ -74,14 +75,14 @@ public class OrphanTest extends TestCase
 
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band detailBody2 = new Band();
-    detailBody2.setLayout("block");
+    detailBody2.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody2.setName("detail-body-2");
     detailBody2.addElement(createBand("ib1"));
     detailBody2.addElement(createBand("ib2"));
@@ -89,21 +90,21 @@ public class OrphanTest extends TestCase
 
     final Band insideGroup2 = new Band();
     insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
-    insideGroup2.setLayout("block");
+    insideGroup2.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup2.setName("group-inside");
     insideGroup2.addElement(createBand("group-header-inside"));
     insideGroup2.addElement(detailBody2);
     insideGroup2.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
     outsideBody.addElement(insideGroup2);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.addElement(createBand("group-header-outside"));
@@ -132,7 +133,7 @@ public class OrphanTest extends TestCase
 
     final Band detailBody = new Band();
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body-1");
     detailBody.addElement(createBand("ib1"));
     detailBody.addElement(createBand("ib2"));
@@ -140,7 +141,7 @@ public class OrphanTest extends TestCase
 
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
@@ -148,7 +149,7 @@ public class OrphanTest extends TestCase
 
     final Band detailBody2 = new Band();
     detailBody2.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
-    detailBody2.setLayout("block");
+    detailBody2.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody2.setName("detail-body-2");
     detailBody2.addElement(createBand("ib1"));
     detailBody2.addElement(createBand("ib2"));
@@ -156,21 +157,21 @@ public class OrphanTest extends TestCase
 
     final Band insideGroup2 = new Band();
     insideGroup2.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
-    insideGroup2.setLayout("block");
+    insideGroup2.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup2.setName("group-inside");
     insideGroup2.addElement(createBand("group-header-inside"));
     insideGroup2.addElement(detailBody2);
     insideGroup2.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
     outsideBody.addElement(insideGroup2);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.addElement(createBand("group-header-outside"));

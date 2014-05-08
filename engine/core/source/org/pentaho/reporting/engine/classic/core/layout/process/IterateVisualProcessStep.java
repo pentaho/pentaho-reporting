@@ -45,7 +45,7 @@ public abstract class IterateVisualProcessStep
     eventWatch = EmptyPerformanceLoggingStopWatch.INSTANCE;
   }
 
-  public void initialize(PerformanceMonitorContext monitorContext)
+  public void initializePerformanceMonitoring(final PerformanceMonitorContext monitorContext)
   {
     summaryWatch.stop();
     eventWatch.stop();

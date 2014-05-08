@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
@@ -63,6 +64,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   private boolean paranoidChecks = true;
   private RevalidateAllAxisLayoutStep revalidateAllAxisLayoutStep;
   private PageGrid pageGrid;
+  private boolean complexText;
 
   public CanvasMajorAxisLayoutStep()
   {
@@ -88,6 +90,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   public void initialize(final OutputProcessorMetaData metaData)
   {
     revalidateAllAxisLayoutStep.initialize(metaData);
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -694,7 +697,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
     }
     else
     {
-
       final long cachedHeight = computeCanvasHeight(box, false);
       box.setCachedHeight(cachedHeight);
     }

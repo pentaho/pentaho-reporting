@@ -346,4 +346,9 @@ public final class ParagraphRenderBox extends BlockRenderBox
   {
     this.cachedMaxChildX2 = cachedMaxChildX2;
   }
+
+  public void setCachedWidth(final long cachedWidth)
+  {
+    super.setCachedWidth(cachedWidth);
+  }
 }

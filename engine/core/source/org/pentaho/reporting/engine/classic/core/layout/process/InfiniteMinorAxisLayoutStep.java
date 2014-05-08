@@ -63,7 +63,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    nodeContext.updateX2(box.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth());
+    nodeContext.updateX2(nodeContext.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth());
   }
 
   protected MinorAxisNodeContext getNodeContext()

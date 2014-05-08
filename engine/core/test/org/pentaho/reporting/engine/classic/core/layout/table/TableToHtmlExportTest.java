@@ -23,6 +23,7 @@ import java.net.URL;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
@@ -34,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlR
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
@@ -64,6 +66,7 @@ public class TableToHtmlExportTest extends TestCase
     final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
     report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Group rootGroup = report.getRootGroup();
     assertTrue(rootGroup instanceof CrosstabGroup);
@@ -76,6 +79,37 @@ public class TableToHtmlExportTest extends TestCase
     HtmlReportUtil.createStreamHTML(report, outputStream);
 
     final String htmlText = new String(outputStream.toByteArray(), "UTF-8");
+    DebugLog.log(htmlText);
+    assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2003</td>"));
+    assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2004</td>"));
+    assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2005</td>"));
+    assertTrue(htmlText.contains("<td valign=\"top\" class=\"style-3\">Product Line</td>"));
+    assertTrue(htmlText.contains("<td valign=\"top\" class=\"style-3\">Market</td>"));
+  }
+
+  public void testHtmlExportFullComplexText () throws Exception
+  {
+    final URL url = getClass().getResource("Prd-3931.prpt");
+    assertNotNull(url);
+    final ResourceManager resourceManager = new ResourceManager();
+    resourceManager.registerDefaults();
+    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+
+    final Group rootGroup = report.getRootGroup();
+    assertTrue(rootGroup instanceof CrosstabGroup);
+
+    final CrosstabGroup ct = (CrosstabGroup) rootGroup;
+    ct.setPrintColumnTitleHeader(true);
+    ct.setPrintDetailsHeader(false);
+
+    final MemoryByteArrayOutputStream outputStream = new MemoryByteArrayOutputStream();
+    HtmlReportUtil.createStreamHTML(report, outputStream);
+
+    final String htmlText = new String(outputStream.toByteArray(), "UTF-8");
+    DebugLog.log(htmlText);
     assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2003</td>"));
     assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2004</td>"));
     assertTrue(htmlText.contains("<td colspan=\"2\" valign=\"top\" class=\"style-1\">2005</td>"));
