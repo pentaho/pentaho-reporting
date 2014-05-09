@@ -57,10 +57,6 @@
        ====================================================================-->
    <target name="continuous-junit" depends="build,publish" />
 
-   <!-- Until CM-466 is fixed, hot-patch it -->
-   <target name="install-ivy" depends="subfloor.install-ivy">
-     <ivy:settings url="${ivy.settingsurl}" />
-   </target>
 
      <!--
        AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
