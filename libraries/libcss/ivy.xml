@@ -17,8 +17,6 @@
 
 	<dependencies defaultconf="default_internal->default">
 		<!--  internal dependencies -->
-		<dependency org="${ivy.artifact.group}" name="libbase" rev="${project.revision}" transitive="true" changing="true" />
-		<dependency org="${ivy.artifact.group}" name="libloader" rev="${project.revision}" transitive="true" changing="true" />
 		<dependency org="${ivy.artifact.group}" name="libfonts" rev="${project.revision}" transitive="true" changing="true" />
 		<dependency org="${ivy.artifact.group}" name="flute" rev="${project.revision}" transitive="true" changing="true" />
 
