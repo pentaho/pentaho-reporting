@@ -7,7 +7,7 @@
   
   See build-res/subfloor.xml for more details
 ============================================================================-->
-<project name="libcss" basedir="." default="default">
+<project name="libcss" basedir="." default="default" xmlns:ivy="antlib:org.apache.ivy.ant">
 	
   <description>
  	  This build file is used to create the libformula project
