@@ -32,10 +32,14 @@
       <exclude org="org.eclipse"/>
       <exclude org="org.eclipse.equinox"/>
       <exclude org="org.eclipse.jdt"/>
+      <exclude org="org.mortbay.jetty"/>
       <exclude org="mysql"/>
       <exclude org="hsqldb"/>
+      <exclude org="monetdb"/>
+      <exclude org="postgresql"/>
       <exclude org="commons-logging"/>
       <exclude org="xml-apis"/>
+      <exclude org="pentaho" module="mondrian"/>
       <exclude org="${library.group}"/>
       <exclude org="${ivy.artifact.group}"/>
     </dependency>
