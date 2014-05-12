@@ -85,11 +85,34 @@
 
     <!-- Kettle -->
     <dependency org="${dependency.kettle.group}" name="kettle-engine" rev="${dependency.kettle.revision}"
-                transitive="true" changing="true"/>
-    <dependency org="${dependency.kettle.group}" name="kettle-core" rev="${dependency.kettle.revision}"
-                transitive="true" changing="true"/>
+                transitive="true" changing="true">
+      <!-- Exclude Kettle's JDBC drivers from the dependency list. They should be only in the assembly -->
+      <exclude org="org.apache.derby" name="derby"/>
+      <exclude org="org.apache.derby" name="derbyclient"/>
+      <exclude org="com.h2database" name="h2"/>
+      <exclude org="hsqldb" name="hsqldb"/>
+      <exclude org="infobright" name="infobright-core"/>
+      <exclude org="org.firebirdsql.jdbc" name="jaybird"/>
+      <exclude org="net.sf.jt400" name="jt400"/>
+      <exclude org="jtds" name="jtds"/>
+      <exclude org="luciddb" name="LucidDbClient-minimal"/>
+      <exclude org="monetdb" name="monetdb-jdbc"/>
+      <exclude org="postgresql" name="postgresql"/>
+      <exclude org="com.sap" name="sapdbc"/>
+      <exclude org="org.xerial" name="sqlite-jdbc"/>
+      <exclude org="org.eclipse.core"/>
+      <exclude org="org.eclipse"/>
+      <exclude org="org.eclipse.equinox"/>
+      <exclude org="org.eclipse.jdt"/>
+      <exclude org="org.mortbay.jetty"/>
+      <exclude org="commons-logging"/>
+      <exclude org="xml-apis"/>
+      <exclude org="pentaho" module="mondrian"/>
+      <exclude org="${library.group}"/>
+      <exclude org="${ivy.artifact.group}"/>
+    </dependency>
     <dependency org="${dependency.kettle.group}" name="kettle5-log4j-plugin" rev="${dependency.kettle.revision}"
-                transitive="true" changing="true"/>
+                transitive="false" changing="true"/>
 
     <!-- Kettle big-data plugin -->
     <dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin.revision}"
