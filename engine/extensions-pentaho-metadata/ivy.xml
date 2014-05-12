@@ -29,12 +29,24 @@
       <exclude org="javax.activation" module="activation"/>
       <exclude org="xml-apis" module="xml-apis"/>
       <exclude org="org.mortbay.jetty"/>
-      <exclude org="mysql"/>
-      <exclude org="hsqldb"/>
-      <exclude org="monetdb"/>
-      <exclude org="postgresql"/>
       <exclude org="commons-logging"/>
       <exclude org="pentaho" module="mondrian"/>
+
+      <!-- Exclude Kettle's JDBC drivers from the dependency list. They should be only in the assembly -->
+      <exclude org="org.apache.derby" name="derby"/>
+      <exclude org="org.apache.derby" name="derbyclient"/>
+      <exclude org="com.h2database" name="h2"/>
+      <exclude org="hsqldb" name="hsqldb"/>
+      <exclude org="infobright" name="infobright-core"/>
+      <exclude org="org.firebirdsql.jdbc" name="jaybird"/>
+      <exclude org="net.sf.jt400" name="jt400"/>
+      <exclude org="jtds" name="jtds"/>
+      <exclude org="luciddb" name="LucidDbClient-minimal"/>
+      <exclude org="monetdb" name="monetdb-jdbc"/>
+      <exclude org="postgresql" name="postgresql"/>
+      <exclude org="com.sap" name="sapdbc"/>
+      <exclude org="org.xerial" name="sqlite-jdbc"/>
+
     </dependency>
 
     <dependency org="log4j" name="log4j" rev="1.2.14" transitive="false" conf="default_external->default"/>

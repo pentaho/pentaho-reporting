@@ -1,74 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
-	<info organisation="${ivy.artifact.group}" module="${ivy.artifact.id}" revision="${project.revision}" />
+  <info organisation="${ivy.artifact.group}" module="${ivy.artifact.id}" revision="${project.revision}"/>
 
-	<configurations>
-		<conf name="default" />
-		<conf name="test" visibility="private" />
-		<conf name="source" />
-		<conf name="runtime" />
-		<conf name="drivers" />
-		<conf name="plugin" />
-	</configurations>
+  <configurations>
+    <conf name="default"/>
+    <conf name="test" visibility="private"/>
+    <conf name="source"/>
+    <conf name="runtime"/>
+    <conf name="drivers"/>
+    <conf name="plugin"/>
+  </configurations>
 
-	<publications>
-		<artifact name="${ivy.artifact.id}" type="jar" conf="default" />
-		<artifact name="${ivy.artifact.id}" m:classifier="sources" type="source" ext="jar" conf="source" />
-	</publications>
+  <publications>
+    <artifact name="${ivy.artifact.id}" type="jar" conf="default"/>
+    <artifact name="${ivy.artifact.id}" m:classifier="sources" type="source" ext="jar" conf="source"/>
+  </publications>
 
-	<dependencies defaultconf="default->default">
-		<!-- report designer dependencies -->
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-cda" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-external" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-jdbc" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-table" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-kettle" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-mondrian" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-olap4j" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-openerp" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-        <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-pmd" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-reflection" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-scriptable" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-xpath" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-extensions-sampledata" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-        <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-legacy-functions" rev="${dependency.reporting-engine.revision}" transitive="true" changing="true" />
-		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-legacy-charts" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
-		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-pentaho" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
-		<dependency org="${ivy.artifact.group}"     name="report-designer-ext-wizard" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
-        <dependency org="${ivy.artifact.group}"     name="report-designer-ext-toc" rev="${dependency.report-designer.revision}" transitive="true" changing="true" />
+  <dependencies defaultconf="default->default">
+    <!-- report designer dependencies -->
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-cda"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-external"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-jdbc"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-table"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-kettle"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-mondrian"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-olap4j"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-openerp"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-pmd"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-reflection"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-scriptable"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-datasource-editor-xpath"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-classic-extensions-sampledata"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${reporting-engine.group}" name="pentaho-reporting-engine-legacy-functions"
+                rev="${dependency.reporting-engine.revision}" transitive="true" changing="true"/>
+    <dependency org="${ivy.artifact.group}" name="report-designer-ext-legacy-charts"
+                rev="${dependency.report-designer.revision}" transitive="true" changing="true"/>
+    <dependency org="${ivy.artifact.group}" name="report-designer-ext-pentaho"
+                rev="${dependency.report-designer.revision}" transitive="true" changing="true"/>
+    <dependency org="${ivy.artifact.group}" name="report-designer-ext-wizard"
+                rev="${dependency.report-designer.revision}" transitive="true" changing="true"/>
+    <dependency org="${ivy.artifact.group}" name="report-designer-ext-toc" rev="${dependency.report-designer.revision}"
+                transitive="true" changing="true"/>
 
-		<!-- launcher -->
-		<dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}" transitive="true" changing="true" conf="runtime->default" />
+    <!-- launcher -->
+    <dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}"
+                transitive="true" changing="true" conf="runtime->default"/>
 
-        <!-- slf4j impl requires at least log4j 1.2.12-->
-        <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.3" />
-        <dependency org="log4j" name="log4j" rev="1.2.15"/>
+    <!-- slf4j impl requires at least log4j 1.2.12-->
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.3"/>
+    <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
-		<!-- driver dependencies -->
-		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="drivers->default" />
-		<dependency org="com.h2database" name="h2" rev="1.0.20070617" transitive="false" conf="drivers->default" />
-		<dependency org="pentaho" name="pentaho-hadoop-hive-jdbc-shim" rev="${dependency.pentaho-hadoop-hive-jdbc-shim.revision}" conf="drivers->default" changing="true"  transitive="false"/>
-		
-		<!-- Kettle big-data plugin -->
-		<dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
-			<artifact name="pentaho-big-data-plugin" type="zip"/>
-		</dependency>
-    <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
+    <!-- driver dependencies -->
+    <!-- Third-party JDBC dependencies (same as Kettle-Assembly -->
+    <dependency org="org.apache.derby" name="derby" rev="10.2.1.6" transitive="false" conf="drivers->default"/>
+    <dependency org="org.apache.derby" name="derbyclient" rev="10.2.1.6" transitive="false" conf="drivers->default"/>
+    <dependency org="com.h2database" name="h2" rev="1.2.131" transitive="false" conf="drivers->default"/>
+    <dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" transitive="false" conf="drivers->default"/>
+    <dependency org="infobright" name="infobright-core" rev="3.4" transitive="false" conf="drivers->default"/>
+    <dependency org="org.firebirdsql.jdbc" name="jaybird" rev="2.1.6" transitive="false" conf="drivers->default"/>
+    <dependency org="net.sf.jt400" name="jt400" rev="6.1" transitive="false" conf="drivers->default"/>
+    <dependency org="jtds" name="jtds" rev="1.2.5" transitive="false" conf="drivers->default"/>
+    <dependency org="luciddb" name="LucidDbClient-minimal" rev="0.9.4" transitive="false" conf="drivers->default"/>
+    <dependency org="monetdb" name="monetdb-jdbc" rev="2.1" transitive="false" conf="drivers->default"/>
+    <dependency org="postgresql" name="postgresql" rev="9.1-902.jdbc4" transitive="false" conf="drivers->default"/>
+    <dependency org="com.sap" name="sapdbc" rev="7.4.4" transitive="false" conf="drivers->default"/>
+    <dependency org="org.xerial" name="sqlite-jdbc" rev="3.7.2" transitive="false" conf="drivers->default"/>
+
+    <dependency org="pentaho" name="pentaho-hadoop-hive-jdbc-shim"
+                rev="${dependency.pentaho-hadoop-hive-jdbc-shim.revision}" conf="drivers->default" changing="true"
+                transitive="false"/>
+
+    <!-- Kettle -->
+    <dependency org="${dependency.kettle.group}" name="kettle-engine" rev="${dependency.kettle.revision}"
+                transitive="true" changing="true"/>
+    <dependency org="${dependency.kettle.group}" name="kettle-core" rev="${dependency.kettle.revision}"
+                transitive="true" changing="true"/>
+    <dependency org="${dependency.kettle.group}" name="kettle5-log4j-plugin" rev="${dependency.kettle.revision}"
+                transitive="true" changing="true"/>
+
+    <!-- Kettle big-data plugin -->
+    <dependency org="pentaho" name="pentaho-big-data-plugin" rev="${dependency.pentaho-big-data-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
+      <artifact name="pentaho-big-data-plugin" type="zip"/>
+    </dependency>
+    <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-mongodb-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}" conf="plugin->default" changing="true" transitive="false">
+    <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-cassandra-plugin" type="zip"/>
     </dependency>
 
-		<!-- JSON dependencies -->
-		<dependency org="com.googlecode.json-simple" name="json-simple" rev="${dependency.json.simple.revision}" transitive="false" conf="default->default" changing="false"/>
-		<dependency org="jsonpath" name="jsonpath" rev="${dependency.jsonpath.revision}" transitive="false" conf="default->default" changing="false"/>
+    <!-- JSON dependencies -->
+    <dependency org="com.googlecode.json-simple" name="json-simple" rev="${dependency.json.simple.revision}"
+                transitive="false" conf="default->default" changing="false"/>
+    <dependency org="jsonpath" name="jsonpath" rev="${dependency.jsonpath.revision}" transitive="false"
+                conf="default->default" changing="false"/>
 
-		<!-- Prevent the inclusion of jars that should not make it into the final assembly -->
-		<exclude org="javax.servlet"   module="servlet-api" />
-		<exclude org="commons-logging" module="commons-logging-api" />
-		<exclude org="stax"            module="stax-api" />
-		<exclude org="junit"/>
+    <!-- Prevent the inclusion of jars that should not make it into the final assembly -->
+    <exclude org="javax.servlet" module="servlet-api"/>
+    <exclude org="commons-logging" module="commons-logging-api"/>
+    <exclude org="stax" module="stax-api"/>
+    <exclude org="junit"/>
     <exclude org="xml-apis" module="xml-apis"/>
-	</dependencies>
+  </dependencies>
 </ivy-module>
