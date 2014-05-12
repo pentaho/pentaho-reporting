@@ -18,6 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
@@ -27,19 +28,12 @@ import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 26.04.2009
- * Time: 20:51:09
- *
- * @author Thomas Morgner.
- */
 public class SelectionOverlayRenderer implements OverlayRenderer
 {
   private Section rootElement;
   private ReportDocumentContext context;
   private double zoomFactor;
+  private double offset;
 
   public SelectionOverlayRenderer(final Element defaultElement)
   {
@@ -49,8 +43,9 @@ public class SelectionOverlayRenderer implements OverlayRenderer
     }
   }
 
-  public void validate(final ReportDocumentContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
   {
+    this.offset = sectionOffset.getY();
     this.context = context;
     this.zoomFactor = zoomFactor;
   }
@@ -62,7 +57,7 @@ public class SelectionOverlayRenderer implements OverlayRenderer
       return;
     }
 
-    graphics.translate(bounds.getX(), bounds.getY());
+    graphics.translate(bounds.getX(), bounds.getY() - offset);
     
     for (final Element visualElement : context.getSelectionModel().getSelectedElementsOfType(Element.class))
     {

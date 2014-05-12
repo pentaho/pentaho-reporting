@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.editor.report;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
@@ -28,14 +29,6 @@ import org.pentaho.reporting.designer.core.model.lineal.GuideLine;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 26.04.2009
- * Time: 21:04:40
- *
- * @author Thomas Morgner.
- */
 public class GuidelineOverlayRenderer implements OverlayRenderer
 {
   private double scaleFactor;
@@ -48,7 +41,7 @@ public class GuidelineOverlayRenderer implements OverlayRenderer
     this.verticalLinealModel = verticalLinealModel;
   }
 
-  public void validate(final ReportDocumentContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
   {
     this.scaleFactor = zoomFactor;
   }

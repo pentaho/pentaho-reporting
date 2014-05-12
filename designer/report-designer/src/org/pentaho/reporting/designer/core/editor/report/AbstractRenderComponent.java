@@ -1044,7 +1044,7 @@ public abstract class AbstractRenderComponent extends JComponent
     {
     }
 
-    public void validate(final ReportDocumentContext context, final double zoomFactor)
+    public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
     {
     }
 
@@ -1372,10 +1372,7 @@ public abstract class AbstractRenderComponent extends JComponent
       final OverlayRenderer renderer = renderers[i];
       final Graphics2D selectionG2 = (Graphics2D) g.create();
 
-      // TODO: Check if this is a no-op due to negative offset
-      selectionG2.translate(0, -offset.getY() * scaleFactor);
-
-      renderer.validate(getRenderContext(), scaleFactor);
+      renderer.validate(getRenderContext(), scaleFactor, offset);
       renderer.draw(selectionG2, new Rectangle2D.Double(getLeftBorder(), getTopBorder(), getWidth(), getHeight()), this);
       selectionG2.dispose();
     }

@@ -18,6 +18,7 @@
 package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
@@ -32,6 +33,6 @@ import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
  */
 public interface OverlayRenderer
 {
-  public void validate(final ReportDocumentContext context, final double zoomFactor);
+  public void validate(final ReportDocumentContext context, final double zoomFactor, Point2D sectionOffset);
   public void draw(final Graphics2D graphics, final Rectangle2D bounds, final ImageObserver obs);
 }
