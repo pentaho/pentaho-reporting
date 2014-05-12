@@ -31,13 +31,16 @@ public class FormulaRootElement extends FormulaElement
     this.elements.add(new FormulaTextElement(document, this, ""));
   }
 
-  protected String getText()
+  public String getText()
   {
-    final StringBuffer b = new StringBuffer(getEndOffset());
+    final StringBuilder b = new StringBuilder(getEndOffset());
     for (int i = 0; i < elements.size(); i++)
     {
       final FormulaElement element = elements.get(i);
-      b.append(element.getText());
+      if (element != null)
+      {
+        b.append(element.getText());
+      }
     }
     return b.toString();
   }

@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
@@ -63,6 +64,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   private boolean paranoidChecks = true;
   private RevalidateAllAxisLayoutStep revalidateAllAxisLayoutStep;
   private PageGrid pageGrid;
+  private boolean complexText;
 
   public CanvasMajorAxisLayoutStep()
   {
@@ -88,6 +90,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
   public void initialize(final OutputProcessorMetaData metaData)
   {
     revalidateAllAxisLayoutStep.initialize(metaData);
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   private long resolveParentHeight(final RenderNode node)
@@ -565,6 +568,12 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
           final long childConsumedHeight = parentAvailableHeight - node.getCachedHeight();
           if (childConsumedHeight < 0)
           {
+            if (parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
+                parent.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW )
+            {
+              // row-spanned cells consistently exceed the parent height ..
+              return 0;
+            }
             logger.warn
                 ("A child cannot exceed the area of the parent: " + node.getName() +
                     " Parent: " + parentAvailableHeight + " Child: " + childConsumedHeight);
@@ -659,7 +668,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       return false;
     }
 
-    final int strictNodeType = box.getNodeType();
     performStartTable(box);
 
     final long oldPosition = box.getCachedY();
@@ -689,7 +697,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
     }
     else
     {
-
       final long cachedHeight = computeCanvasHeight(box, false);
       box.setCachedHeight(cachedHeight);
     }
@@ -748,6 +755,11 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   private long computeVerticalRowPosition(final RenderNode node)
   {
+    if (node.isVisible() == false)
+    {
+      return node.getCachedY();
+    }
+
     final RenderBox parent = node.getParent();
 
     if (parent != null)
@@ -784,11 +796,6 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return false;
-    }
-
     final long oldPosition = box.getCachedY();
     final long newYPosition = computeVerticalRowPosition(box);
     CacheBoxShifter.shiftBox(box, Math.max(0, newYPosition - oldPosition));
@@ -802,16 +809,14 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
       final long blockHeight = computeTableHeightAndAlign(box, false);
       box.setCachedHeight(blockHeight);
     }
+
+    markAllChildsDirty(box);
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
-    if (checkCacheValid(box))
-    {
-      return;
-    }
-
+    clearAllChildsDirtyMarker(box);
     if (box instanceof TableCellRenderBox)
     {
       final long blockHeight = computeTableHeightAndAlign(box, true);
@@ -887,16 +892,7 @@ public final class CanvasMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box instanceof TableRowRenderBox)
-    {
-      final long blockHeight = computeRowHeightAndAlign(box, 0, true);
-      box.setCachedHeight(blockHeight);
-    }
-    else
-    {
-      final long blockHeight = computeTableHeightAndAlign(box, true);
-      box.setCachedHeight(blockHeight);
-    }
+    box.setCachedHeight(0);
   }
 
   private static long computeTableHeightAndAlign(final RenderBox box, final boolean align)

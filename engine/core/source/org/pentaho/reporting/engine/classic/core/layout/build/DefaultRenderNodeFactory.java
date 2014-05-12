@@ -230,6 +230,7 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
         attributes, stateKey);
   }
 
+  @Deprecated
   public RenderBox createAutoParagraph(final ReportStateKey stateKey)
   {
     return new ParagraphRenderBox(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(),

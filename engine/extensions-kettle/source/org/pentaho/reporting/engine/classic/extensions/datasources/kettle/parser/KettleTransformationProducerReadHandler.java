@@ -17,7 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
@@ -32,9 +33,9 @@ public interface KettleTransformationProducerReadHandler extends XmlReadHandler
   public String getPassword();
   public String getRepositoryName();
 
-  public String[] getDefinedArgumentNames();
+  public FormulaArgument[] getDefinedArgumentNames();
 
-  public ParameterMapping[] getDefinedVariableNames();
+  public FormulaParameter[] getDefinedVariableNames();
 
   public KettleTransformationProducer getTransformationProducer() throws SAXException;
 }

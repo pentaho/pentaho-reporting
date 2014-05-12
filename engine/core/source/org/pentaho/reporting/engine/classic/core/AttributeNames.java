@@ -165,6 +165,8 @@ public class AttributeNames
     public static final String COMAPTIBILITY_LEVEL = "compatibility-level";
     public static final String COMPUTED_STYLE = "computed-style";
 
+    public static final String FAST_EXPORT_DYNAMIC_STASH = "fast-export-dynamic-style-stash";
+    public static final String FAST_EXPORT_ELEMENT_STASH = "fast-export-element-style-stash";
     private Internal()
     {
     }
@@ -227,6 +229,8 @@ public class AttributeNames
     public static final String STYLE_SHEET_REFERENCE = "style-sheet-reference";
     public static final String STYLE_SHEET = "style-sheet";
     public static final String STYLE_CLASS = "style-class";
+
+    public static final String COMPLEX_TEXT = "complex-text";
 
     private Core()
     {

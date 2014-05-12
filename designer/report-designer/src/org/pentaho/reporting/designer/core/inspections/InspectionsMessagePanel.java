@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 
 public class InspectionsMessagePanel extends JPanel
 {
@@ -80,7 +80,7 @@ public class InspectionsMessagePanel extends JPanel
 
   private InspectionResultTableModel dataModel;
   private InspectionResultTable table;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
@@ -111,7 +111,7 @@ public class InspectionsMessagePanel extends JPanel
     }
 
     final LocationInfo[] locationInfos = inspectionResult.getLocationInfos();
-    final ArrayList selections = new ArrayList(locationInfos.length);
+    final ArrayList<Object> selections = new ArrayList<Object>(locationInfos.length);
     for (int i = 0; i < locationInfos.length; i++)
     {
       final LocationInfo locationInfo = locationInfos[i];
@@ -136,12 +136,12 @@ public class InspectionsMessagePanel extends JPanel
     return dataModel;
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  public void setReportRenderContext(final ReportRenderContext reportRenderContext)
+  public void setReportRenderContext(final ReportDocumentContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
   }

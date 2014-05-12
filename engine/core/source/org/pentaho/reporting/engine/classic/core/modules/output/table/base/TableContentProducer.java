@@ -269,6 +269,8 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
       filledRows = getRowCount();
     }
 
+    logicalPage.setProcessedTableOffset(sheetLayout.getYPosition(filledRows));
+
     if (iterativeUpdate == false)
     {
       headerProcessed = false;
@@ -379,6 +381,10 @@ public class TableContentProducer extends IterateSimpleStructureProcessStep
     if (isProcessed(box))
     {
       return true;
+    }
+    if (box.isVisible() == false)
+    {
+      return false;
     }
 
     final long height = box.getHeight();

@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleDataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -88,7 +87,6 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(), 
                                                     getDefinedVariableNames(), 
                                                     pluginId, 
-                                                    EmbeddedKettleDataFactoryMetaData.DATA_RETRIEVAL_STEP, 
                                                     bytes);
   }
 

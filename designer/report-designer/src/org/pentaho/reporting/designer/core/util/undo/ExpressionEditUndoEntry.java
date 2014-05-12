@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.util.undo;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
@@ -39,7 +39,7 @@ public class ExpressionEditUndoEntry implements UndoEntry
     this.expression = expression;
   }
 
-  public void undo(final ReportRenderContext renderContext)
+  public void undo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition definition = renderContext.getReportDefinition();
     definition.getExpressions().set(position, oldExpression);
@@ -47,7 +47,7 @@ public class ExpressionEditUndoEntry implements UndoEntry
     definition.notifyNodeChildAdded(oldExpression);
   }
 
-  public void redo(final ReportRenderContext renderContext)
+  public void redo(final ReportDocumentContext renderContext)
   {
     final AbstractReportDefinition definition = renderContext.getReportDefinition();
     definition.getExpressions().set(position, expression);

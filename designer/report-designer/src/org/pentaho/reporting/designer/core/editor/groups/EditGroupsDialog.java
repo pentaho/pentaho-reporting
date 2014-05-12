@@ -37,7 +37,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -172,7 +172,7 @@ public class EditGroupsDialog extends CommonDialog
 
   private JTable table;
   private GroupDataTableModel tableModel;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private GroupDataEntryCellEditor groupDataEntryCellEditor;
 
   public EditGroupsDialog()
@@ -242,12 +242,12 @@ public class EditGroupsDialog extends CommonDialog
     return panel;
   }
 
-  protected ReportRenderContext getReportRenderContext()
+  protected ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  protected GroupDataEntry[] editGroups(final ReportRenderContext reportRenderContext,
+  protected GroupDataEntry[] editGroups(final ReportDocumentContext reportRenderContext,
                                         final GroupDataEntry[] groupData)
   {
     if (reportRenderContext == null)
@@ -293,7 +293,7 @@ public class EditGroupsDialog extends CommonDialog
     }
   }
 
-  public boolean editGroups(final ReportRenderContext context)
+  public boolean editGroups(final ReportDocumentContext context)
   {
     if (context == null)
     {

@@ -17,10 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.swing.table.TableModel;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.logging.Log;
@@ -32,8 +29,6 @@ import org.pentaho.di.core.exception.KettleXMLException;
 import org.pentaho.di.core.xml.XMLHandler;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.TransMeta;
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -43,22 +38,19 @@ import org.w3c.dom.Node;
 
 public class EmbeddedKettleTransformationProducer extends AbstractKettleTransformationProducer
 {
-
   private static final long serialVersionUID = 1900310938438244134L;
-
   private static final Log logger = LogFactory.getLog(EmbeddedKettleTransformationProducer.class);
 
   private String pluginId;
-
   private byte[] rawBytes;
 
-  public EmbeddedKettleTransformationProducer(final String[] definedArgumentNames,
-                                              final ParameterMapping[] definedVariableNames,
+  public EmbeddedKettleTransformationProducer(final FormulaArgument[] definedArgumentNames,
+                                              final FormulaParameter[] definedVariableNames,
                                               final String pluginId,
-                                              final String stepName,
                                               final byte[] transformationRaw)
   {
-    super("", stepName, null, null, definedArgumentNames, definedVariableNames);
+    super("", EmbeddedKettleDataFactoryMetaData.DATA_RETRIEVAL_STEP,
+        null, null, definedArgumentNames, definedVariableNames);
 
     this.pluginId = pluginId;
     if (transformationRaw == null)
@@ -103,21 +95,6 @@ public class EmbeddedKettleTransformationProducer extends AbstractKettleTransfor
       meta.setFilename(filename);
     }
     return meta;
-  }
-
-  protected String computeFullFilename(ResourceKey key)
-  {
-    while (key != null)
-    {
-      final Object identifier = key.getIdentifier();
-      if (identifier instanceof File)
-      {
-        final File file = (File) identifier;
-        return file.getAbsolutePath();
-      }
-      key = key.getParent();
-    }
-    return null;
   }
 
   public Object getQueryHash(final ResourceManager resourceManager, final ResourceKey resourceKey)

@@ -27,7 +27,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -53,6 +55,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlT
 import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.RTFTableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelTableModule;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
@@ -100,14 +103,22 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         return;
       }
 
-      if (!StringUtils.isEmpty(newFolderDialog.getName()))
+      while (!validateName(newFolderDialog.getFolderName())) {
+        JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", newFolderDialog.getFolderName(), reservedCharStr),
+            Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
+        if (!newFolderDialog.performEdit())
       {
+          return;
+        }
+      }
+      
         final Component glassPane = SwingUtilities.getRootPane(RepositoryPublishDialog.this).getGlassPane();
         try
         {
           glassPane.setVisible(true);
           glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-          final FileObject child = treeNode.resolveFile(newFolderDialog.getFolderName());
+        final FileObject child = treeNode.resolveFile(URLEncoder.encodeUTF8(newFolderDialog.getFolderName()).replaceAll("\\!", "%21"));
           child.createFolder();
           if (child instanceof WebSolutionFileObject)
           {
@@ -127,7 +138,6 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         }
       }
     }
-  }
 
   private class FileSelectionHandler implements ListSelectionListener
   {
@@ -419,7 +429,16 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         return false;
       }
 
-      final FileObject targetFile = selectedView.resolveFile(getFileNameTextField().getText());
+      String filename = getFileNameTextField().getText();
+      if (!validateName(filename)) {
+        JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", filename, reservedCharStr),
+            Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
+        return false;
+      }
+      
+      
+      final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(getFileNameTextField().getText()).replaceAll("\\+", "%2B").replaceAll("\\!", "%21"));
       final FileObject fileObject = selectedView.getFileSystem().resolveFile(targetFile.getName());
       if (fileObject.getType() == FileType.IMAGINARY)
       {
@@ -434,6 +453,9 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
     catch (FileSystemException fse)
     {
       UncaughtExceptionsModel.getInstance().addException(fse);
+      return false;
+    } catch ( UnsupportedEncodingException uee ) {
+      UncaughtExceptionsModel.getInstance().addException(uee);
       return false;
     }
   }

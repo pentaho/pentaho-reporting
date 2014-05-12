@@ -42,19 +42,19 @@ public class CommandFactory
   /**
    * A global collection of all known record types.
    */
-  private HashMap recordTypes;
+  private HashMap<Integer,MfCmd> recordTypes;
 
   /**
    * Registers all known command types to the standard factory.
    */
-  public void registerAllKnownTypes()
+  public synchronized void registerAllKnownTypes()
   {
     if (recordTypes != null)
     {
       return;
     }
 
-    recordTypes = new HashMap();
+    recordTypes = new HashMap<Integer, MfCmd>();
 
     registerCommand(new MfCmdAnimatePalette());
     registerCommand(new MfCmdArc());
@@ -127,12 +127,13 @@ public class CommandFactory
 
   private void registerCommand(final MfCmd command)
   {
-    if (recordTypes.get(new Integer(command.getFunction())) != null)
+    MfCmd cmd = recordTypes.get(new Integer(command.getFunction()));
+    if (cmd != null)
     {
-      throw new IllegalArgumentException("Already registered");
+      throw new IllegalArgumentException("Already registered command " + command + " -> was: " + cmd);
     }
 
-    recordTypes.put(new Integer(command.getFunction()), command);
+    recordTypes.put(command.getFunction(), command);
   }
 
   public MfCmd getCommand(final int function)
@@ -142,7 +143,7 @@ public class CommandFactory
       registerAllKnownTypes();
     }
 
-    final MfCmd cmd = (MfCmd) recordTypes.get(new Integer(function));
+    final MfCmd cmd = recordTypes.get(new Integer(function));
     if (cmd == null)
     {
       final MfCmdUnknownCommand ucmd = new MfCmdUnknownCommand();

@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -39,7 +40,7 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
 /**
  * The sheet layout is used to build the background map and to collect the x- and y-cell-borders.
  */
-public final class SheetLayout
+public final class SheetLayout implements SlimSheetLayout, Cloneable
 {
 
   private static final SheetLayoutTableCellDefinition MARKER_DEFINITION = new SheetLayoutTableCellDefinition();
@@ -55,11 +56,11 @@ public final class SheetLayout
   /**
    * The XBounds, all vertical cell boundaries (as CoordinateMappings).
    */
-  private final TableCutList xBounds;
+  private TableCutList xBounds;
   /**
    * The YBounds, all vertical cell boundaries (as CoordinateMappings).
    */
-  private final TableCutList yBounds;
+  private TableCutList yBounds;
   /**
    * The right border of the grid. This is needed when not being in the strict mode.
    */
@@ -86,6 +87,33 @@ public final class SheetLayout
     this.yMaxBounds = 0;
     this.ensureXMapping(0, Boolean.FALSE);
     this.ensureYMapping(0, Boolean.FALSE);
+  }
+
+  public SheetLayout (OutputProcessorMetaData metaData)
+  {
+    this(metaData.isFeatureSupported(AbstractTableOutputProcessor.STRICT_LAYOUT),
+        metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE));
+  }
+  public SheetLayout derive()
+  {
+    SheetLayout clone = clone();
+    clone.clearVerticalInfo();
+    return clone;
+  }
+
+  public SheetLayout clone()
+  {
+    try
+    {
+      SheetLayout clone = (SheetLayout) super.clone();
+      clone.xBounds = xBounds.clone();
+      clone.yBounds = yBounds.clone();
+      return clone;
+    }
+    catch (CloneNotSupportedException e)
+    {
+      throw new IllegalStateException();
+    }
   }
 
   private SheetLayoutTableCellDefinition createBackground(final RenderBox box)
@@ -464,7 +492,7 @@ public final class SheetLayout
     xBounds.put(coordinate, aux);
   }
 
-  private void ensureYMapping(final long coordinate, final Boolean aux)
+  public void ensureYMapping(final long coordinate, final Boolean aux)
   {
     yBounds.put(coordinate, aux);
   }
@@ -757,6 +785,12 @@ public final class SheetLayout
     xBounds.clear();
     xMaxBounds = 0;
 
+    yBounds.clear();
+    yMaxBounds = 0;
+  }
+
+  public void clearVerticalInfo()
+  {
     yBounds.clear();
     yMaxBounds = 0;
   }

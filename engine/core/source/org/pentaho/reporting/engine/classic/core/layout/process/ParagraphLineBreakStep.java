@@ -26,16 +26,20 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphPoolBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnGroupNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.SimpleLinebreaker;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -72,6 +76,10 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     paragraphNesting = new FastStack<ParagraphLinebreaker>(50);
   }
 
+  public void initialize(final OutputProcessorMetaData metaData)
+  {
+  }
+
   public void compute(final LogicalPageBox root)
   {
     paragraphNesting.clear();
@@ -83,6 +91,19 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     {
       paragraphNesting.clear();
       breakState = null;
+    }
+  }
+
+  protected void processParagraphChilds(final ParagraphRenderBox box)
+  {
+    super.processParagraphChilds(box);
+  }
+
+  protected void processRenderableContent(final RenderableReplacedContentBox box)
+  {
+    if (breakState != null)
+    {
+      breakState.addNode(box);
     }
   }
 
@@ -356,6 +377,10 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   private boolean startBox(final RenderBox box)
   {
+    if (box instanceof RenderableReplacedContentBox)
+    {
+      DebugLog.logHere();
+    }
     if (breakState == null)
     {
       if (box.isLinebreakCacheValid())
@@ -376,20 +401,8 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     return true;
   }
 
-  protected void processOtherNode(final RenderNode node)
+  private void processText(final RenderableText text)
   {
-    if (breakState == null || breakState.isWritable() == false)
-    {
-      return;
-    }
-    if (breakState.isSuspended() ||
-        (node.getNodeType() != LayoutNodeTypes.TYPE_NODE_TEXT))
-    {
-      breakState.addNode(node);
-      return;
-    }
-
-    final RenderableText text = (RenderableText) node;
     breakState.addNode(text);
     if (text.isForceLinebreak() == false)
     {
@@ -404,11 +417,11 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     // OK, someone requested a manual linebreak.
     // Fill a stack with the current context ..
     // Check if we are at the end of the line
-    if (node.getNext() == null)
+    if (text.getNext() == null)
     {
       // OK, if we are at the end of the line (for all contexts), so we
       // dont have to perform a break. The text will end anyway ..
-      if (isEndOfLine(node))
+      if (isEndOfLine(text))
       {
         return;
       }
@@ -421,6 +434,69 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     }
 
     performBreak();
+  }
+
+  private void processText(final RenderableComplexText text)
+  {
+    breakState.addNode(text);
+    if (text.isForceLinebreak() == false)
+    {
+      return;
+    }
+
+    if (breakState.isBreakRequested())
+    {
+      performBreak();
+    }
+
+    // OK, someone requested a manual linebreak.
+    // Fill a stack with the current context ..
+    // Check if we are at the end of the line
+    if (text.getNext() == null)
+    {
+      // OK, if we are at the end of the line (for all contexts), so we
+      // dont have to perform a break. The text will end anyway ..
+      if (isEndOfLine(text))
+      {
+        return;
+      }
+
+      // as soon as we are no longer the last element - break!
+      // According to the flow rules, that will happen in one of the next
+      // finishInlineBox events ..
+      breakState.setBreakRequested(true);
+      return;
+    }
+
+    performBreak();
+  }
+
+  protected void processOtherNode(final RenderNode node)
+  {
+    if (breakState == null || breakState.isWritable() == false)
+    {
+      return;
+    }
+
+    if (breakState.isSuspended())
+    {
+      breakState.addNode(node);
+    }
+    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
+    {
+      final RenderableText text = (RenderableText) node;
+      processText(text);
+    }
+    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      processText(text);
+    }
+    else
+    {
+      breakState.addNode(node);
+    }
+
   }
 
   private boolean isEndOfLine(RenderNode node)
@@ -502,7 +578,7 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
       return true;
     }
-    
+
     if (breakState.isWritable() == false)
     {
       return false;

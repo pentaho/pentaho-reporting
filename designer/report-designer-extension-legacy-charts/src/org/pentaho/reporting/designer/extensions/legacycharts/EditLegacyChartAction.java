@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -80,7 +80,7 @@ public class EditLegacyChartAction extends AbstractElementSelectionAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getSelectionModel();
     if (selectionModel == null)
     {
       return;

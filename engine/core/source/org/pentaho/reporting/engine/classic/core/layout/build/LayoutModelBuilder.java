@@ -40,7 +40,7 @@ public interface LayoutModelBuilder extends Cloneable
 
   public void updateState(final ReportStateKey stateKey);
 
-  public void startBox(ReportElement element);
+  public InstanceID startBox(ReportElement element);
 
   public void startSection();
 

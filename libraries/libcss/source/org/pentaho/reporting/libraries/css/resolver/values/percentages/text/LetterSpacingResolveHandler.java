@@ -29,7 +29,7 @@ import org.pentaho.reporting.libraries.css.values.CSSNumericType;
 import org.pentaho.reporting.libraries.css.values.CSSNumericValue;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 21.12.2005, 15:12:04
@@ -83,7 +83,7 @@ public class LetterSpacingResolveHandler implements ResolveHandler
       return;
     }
 
-    final double width = StrictGeomUtility.toExternalValue(fm.getCharWidth(0x20));
+    final double width = FontStrictGeomUtility.toExternalValue(fm.getCharWidth(0x20));
     final CSSNumericValue percentageBase =
         CSSNumericValue.createValue(CSSNumericType.PT, width);
     final CSSNumericValue min = StyleSheetUtility.convertLength

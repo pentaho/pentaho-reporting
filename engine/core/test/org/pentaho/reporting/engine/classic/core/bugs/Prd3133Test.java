@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ItemBand;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -31,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugRenderer;
@@ -43,6 +45,13 @@ public class Prd3133Test extends TestCase
 {
   private class Prd3133ReportValidator implements DebugReportValidator
   {
+    private boolean complexText;
+
+    private Prd3133ReportValidator(final boolean complexText)
+    {
+      this.complexText = complexText;
+    }
+
     public void processPageContent(final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage)
     {
       final BlockRenderBox footerArea = logicalPage.getFooterArea();
@@ -51,10 +60,20 @@ public class Prd3133Test extends TestCase
       assertTrue(p1 instanceof ParagraphRenderBox);
       final ParagraphRenderBox p = (ParagraphRenderBox) p1;
       final RenderNode firstChild = p.getPool().getFirstChild();
-      assertTrue(firstChild instanceof RenderableText);
-      final RenderableText text = (RenderableText) firstChild;
-      final int val = Integer.parseInt(text.getRawText());
-      assertTrue("Value " + val + " is either 15 or 10", val == 15 || val == 10);
+      if (complexText)
+      {
+        assertTrue(firstChild instanceof RenderableComplexText);
+        final RenderableComplexText text = (RenderableComplexText) firstChild;
+        final int val = Integer.parseInt(text.getRawText());
+        assertTrue("Value " + val + " is either 15 or 10", val == 15 || val == 10);
+      }
+      else
+      {
+        assertTrue(firstChild instanceof RenderableText);
+        final RenderableText text = (RenderableText) firstChild;
+        final int val = Integer.parseInt(text.getRawText());
+        assertTrue("Value " + val + " is either 15 or 10", val == 15 || val == 10);
+      }
     }
   }
 
@@ -70,15 +89,23 @@ public class Prd3133Test extends TestCase
   public void testPageSum() throws Exception
   {
     final MasterReport report = createReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final DebugRenderer renderer = new DebugRenderer();
-    renderer.setValidator(new Prd3133ReportValidator());
+    renderer.setValidator(new Prd3133ReportValidator(false));
     final DebugReportProcessor reportProcessor = new DebugReportProcessor(report, renderer);
     reportProcessor.processReport();
+  }
 
-//    PreviewDialog d = new PreviewDialog(report);
-//    d.setModal(true);
-//    d.setVisible(true);
+  public void testPageSumComplex() throws Exception
+  {
+    final MasterReport report = createReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+
+    final DebugRenderer renderer = new DebugRenderer();
+    renderer.setValidator(new Prd3133ReportValidator(true));
+    final DebugReportProcessor reportProcessor = new DebugReportProcessor(report, renderer);
+    reportProcessor.processReport();
   }
 
 

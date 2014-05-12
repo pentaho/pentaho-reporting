@@ -26,6 +26,7 @@ import org.pentaho.reporting.engine.classic.core.NoDataBand;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
 
 public class RelationalGroupOutputHandler implements GroupOutputHandler
@@ -67,7 +68,7 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
       outputFunction.addSubReportMarkers(renderer.endSection());
     }
 
-    if (numberOfRows == 0)
+    if (numberOfRows == 0 || outputFunction.getMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME))
     {
       // ups, we have no data. Lets signal that ...
       final NoDataBand noDataBand = event.getReport().getNoDataBand();
@@ -108,7 +109,8 @@ public class RelationalGroupOutputHandler implements GroupOutputHandler
     if (detailsFooter != null)
     {
       renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      outputFunction.print(outputFunction.getRuntime(), detailsFooter);
+      ExpressionRuntime runtime = outputFunction.getRuntime();
+      outputFunction.print(runtime, detailsFooter);
       outputFunction.addSubReportMarkers(renderer.endSection());
     }
   }

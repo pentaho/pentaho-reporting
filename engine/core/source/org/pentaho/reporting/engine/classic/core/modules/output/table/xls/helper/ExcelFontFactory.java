@@ -35,7 +35,7 @@ public class ExcelFontFactory
   /**
    * The list of fonts that we have used so far.
    */
-  private HashMap fonts;
+  private HashMap<HSSFFontWrapper, Font> fonts;
 
   /**
    * The workbook that is used to create the font.
@@ -59,7 +59,7 @@ public class ExcelFontFactory
       throw new NullPointerException();
     }
 
-    this.fonts = new HashMap();
+    this.fonts = new HashMap<HSSFFontWrapper, Font>();
     this.workbook = workbook;
 
     // read the fonts from the workbook ...
@@ -95,7 +95,7 @@ public class ExcelFontFactory
 
     if (fonts.containsKey(wrapper))
     {
-      return (Font) fonts.get(wrapper);
+      return fonts.get(wrapper);
     }
 
     // ok, we need a new one ...

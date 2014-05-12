@@ -19,16 +19,21 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 
 import java.awt.GraphicsEnvironment;
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.designtime.compat.CompatibilityUpdater;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -94,20 +99,53 @@ public class Prd3245Test extends TestCase
 
   public void testGoldenSample () throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
-    assertChildren(1, DebugReportRunner.layoutPage(report, 0));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 1));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 2));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 3));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 4));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 5));
-    assertChildren(1, DebugReportRunner.layoutPage(report, 6));
-    assertChildren(2, DebugReportRunner.layoutPage(report, 7));
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2, 3, 4, 5, 6, 7);
+    assertChildren(1, pages.get(0));
+    assertChildren(2, pages.get(1));
+    assertChildren(1, pages.get(2));
+    assertChildren(2, pages.get(3));
+    assertChildren(1, pages.get(4));
+    assertChildren(2, pages.get(5));
+    assertChildren(1, pages.get(6));
+    assertChildren(2, pages.get(7));
+  }
+
+  public void testGoldenSampleSubReportHeightLegacy () throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    RenderNode elementByName = MatchFactory.findElementByName
+        (logicalPageBox, "Subreport 1.1.1");
+    assertTrue("SubReport height of " + StrictGeomUtility.toExternalValue(elementByName.getHeight()) +
+        " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue(600));
+  }
+
+  public void testGoldenSampleSubReportHeightMigrated () throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
+
+    // migrate to latest version
+    final CompatibilityUpdater updater = new CompatibilityUpdater();
+    updater.performUpdate(report);
+    report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null);
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    RenderNode elementByName = MatchFactory.findElementByName
+        (logicalPageBox, "Subreport 1.1.1");
+    assertTrue("SubReport height of " + StrictGeomUtility.toExternalValue(elementByName.getHeight()) +
+        " is greater than 600pt", elementByName.getHeight() > StrictGeomUtility.toInternalValue(600));
+  }
+
+  public void testBandedPageSubreport() throws Exception
+  {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3245.prpt");
+    LogicalPageBox box = DebugReportRunner.layoutPage(report, 2);
+    assertNull(MatchFactory.findElementByName(box, "Subreport 1.1"));
   }
 
   private void assertChildren(final int expected, final LogicalPageBox box)

@@ -20,8 +20,11 @@ package org.pentaho.reporting.engine.classic.core.layout;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.text.ComplexTextFactory;
 import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTextFactory;
+import org.pentaho.reporting.engine.classic.core.layout.text.RenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
@@ -29,14 +32,21 @@ import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
 public class TextProducer
 {
   private CodePointBuffer buffer;
-  private DefaultRenderableTextFactory textFactory;
+  private RenderableTextFactory textFactory;
   private TextCache textCache;
   private int[] bufferArray;
   private Utf16LE utf16LE;
 
   public TextProducer(final OutputProcessorMetaData metaData)
   {
-    this.textFactory = new DefaultRenderableTextFactory(metaData);
+    if (metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
+    {
+      this.textFactory = new ComplexTextFactory();
+    }
+    else
+    {
+      this.textFactory = new DefaultRenderableTextFactory(metaData);
+    }
     this.textCache = new TextCache(500);
     this.bufferArray = new int[500];
     this.utf16LE = Utf16LE.getInstance();
@@ -84,7 +94,7 @@ public class TextProducer
       textCache.store(elementStyle.getId(), elementStyle.getChangeTracker(), attrs.getChangeTracker(), text,
           elementStyle, attrs, renderNodes, finishNodes);
     }
-    
+
     if (renderNodes.length == 0)
     {
       return finishNodes;

@@ -29,14 +29,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
 public class AlignmentOptionsDialog extends CommonDialog
 {
   private PageDefinition pageDefinition;
-  private ReportRenderContext context;
+  private ReportDocumentContext context;
 
   private JRadioButton leftButton;
   private JRadioButton centerButton;
@@ -44,14 +44,14 @@ public class AlignmentOptionsDialog extends CommonDialog
   private JRadioButton proportionalButton;
   private JRadioButton noneButton;
 
-  public AlignmentOptionsDialog(final ReportRenderContext context,
+  public AlignmentOptionsDialog(final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     init(context, pageDefinition);
   }
 
   public AlignmentOptionsDialog(final Dialog parent,
-                                final ReportRenderContext context,
+                                final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     super(parent);
@@ -59,14 +59,14 @@ public class AlignmentOptionsDialog extends CommonDialog
   }
 
   public AlignmentOptionsDialog(final Frame parent,
-                                final ReportRenderContext context,
+                                final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     super(parent);
     init(context, pageDefinition);
   }
 
-  private void init(final ReportRenderContext reportRenderContext,
+  private void init(final ReportDocumentContext reportRenderContext,
                     final PageDefinition pageDefinition)
   {
     if (reportRenderContext == null)

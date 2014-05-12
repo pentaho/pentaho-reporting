@@ -21,24 +21,21 @@ import java.awt.Component;
 import java.awt.Window;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ReportDesignerDesignTimeContext implements DesignTimeContext
 {
   private ReportDesignerContext designerContext;
-  private ReportRenderContext activeContext;
+  private ReportDocumentContext activeContext;
 
   public ReportDesignerDesignTimeContext(final ReportDesignerContext designerContext)
   {
@@ -61,7 +58,7 @@ public class ReportDesignerDesignTimeContext implements DesignTimeContext
 
   public Window getParentWindow()
   {
-    final Component component = designerContext.getParent();
+    final Component component = designerContext.getView().getParent();
     if (component instanceof Window)
     {
       return (Window) component;
@@ -97,5 +94,10 @@ public class ReportDesignerDesignTimeContext implements DesignTimeContext
   public boolean isShowDeprecatedItems()
   {
     return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+  }
+
+  public DataFactoryContext getDataFactoryContext()
+  {
+    return new DesignTimeDataFactoryContext(activeContext.getContextRoot());
   }
 }

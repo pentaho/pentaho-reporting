@@ -35,17 +35,28 @@ public class FunctionParameterContext
     switchParameterEditor = true;
   }
 
+  @Deprecated
   public FunctionParameterContext(final FunctionDescription function,
                                   final String[] parameterValues,
                                   final FunctionInformation fn,
                                   final boolean switchParameterEditor,
                                   final FormulaEditorModel editorModel)
   {
-    this.function = function;
+    // todo: remove me in next major release
+    this(function, fn, switchParameterEditor, editorModel);
     this.parameterValues = parameterValues;
+  }
+
+  public FunctionParameterContext(final FunctionDescription function,
+                                  final FunctionInformation fn,
+                                  final boolean switchParameterEditor,
+                                  final FormulaEditorModel editorModel)
+  {
+    this.function = function;
     this.functionInformation = fn;
     this.switchParameterEditor = switchParameterEditor;
     this.editorModel = editorModel;
+    this.parameterValues = fn.getParameters();
   }
 
   public FormulaEditorModel getEditorModel()
@@ -63,15 +74,6 @@ public class FunctionParameterContext
     return function;
   }
 
-  public int getFunctionParameterStartPosition()
-  {
-    if (functionInformation == null)
-    {
-      return -1;
-    }
-    return functionInformation.getFunctionParameterStart();
-  }
-
   public String[] getParameterValues()
   {
     return parameterValues;
@@ -87,23 +89,9 @@ public class FunctionParameterContext
     this.switchParameterEditor = switchParameterEditor;
   }
 
-  public static boolean isSameFunctionDescription(final FunctionDescription d1,
-                                                   final FunctionDescription d2)
-  {
-    if (d1 == null || d2 == null)
-    {
-      return false;
-    }
-    if (d1.getClass().equals(d2.getClass()))
-    {
-      return true;
-    }
-    return false;
-  }
-
   public String toString()
   {
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append("FunctionParameterContext");
     sb.append("{function=").append(function);
     sb.append(", parameterValues=").append(parameterValues == null ? "null" : Arrays.asList(parameterValues).toString());

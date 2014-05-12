@@ -24,6 +24,7 @@ import java.util.Arrays;
 /**
  * Needed for the BeanUtilityTest class.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class TestBean
 {
   private String simpleString;
@@ -31,14 +32,14 @@ public class TestBean
   private boolean simpleBool;
   private double simpleDouble;
   private Color simpleColor;
-  private ArrayList fullyIndexed;
+  private ArrayList<String> fullyIndexed;
   private String[] arrayOnly;
-  private ArrayList indexOnly;
+  private ArrayList<String> indexOnly;
 
   public TestBean ()
   {
-    indexOnly = new ArrayList();
-    fullyIndexed = new ArrayList();
+    indexOnly = new ArrayList<String>();
+    fullyIndexed = new ArrayList<String>();
   }
 
   public String[] getArrayOnly ()
@@ -53,7 +54,7 @@ public class TestBean
 
   public String[] getFullyIndexed ()
   {
-    return (String[]) fullyIndexed.toArray(new String [fullyIndexed.size()]);
+    return fullyIndexed.toArray(new String [fullyIndexed.size()]);
   }
 
   public void setFullyIndexed (final String[] fullyIndexed)
@@ -67,7 +68,7 @@ public class TestBean
 
   public String getFullyIndexed (final int idx)
   {
-    return (String) fullyIndexed.get(idx);
+    return fullyIndexed.get(idx);
   }
 
   public void setFullyIndexed (final int idx, final String indexOnly)
@@ -84,7 +85,7 @@ public class TestBean
 
   public String getIndexOnly (final int idx)
   {
-    return (String) indexOnly.get(idx);
+    return indexOnly.get(idx);
   }
 
   public void setIndexOnly (final int idx, final String indexOnly)

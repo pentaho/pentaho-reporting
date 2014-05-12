@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,7 +40,6 @@ import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportParameterValidationException;
-import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -48,6 +50,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.filter.types.ExternalElementType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
@@ -79,6 +82,7 @@ import org.pentaho.reporting.engine.classic.core.states.GroupingState;
 import org.pentaho.reporting.engine.classic.core.states.IgnoreEverythingReportErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.InitialLayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ProcessStateHandle;
 import org.pentaho.reporting.engine.classic.core.states.ReportDefinitionImpl;
 import org.pentaho.reporting.engine.classic.core.states.ReportProcessingErrorHandler;
@@ -97,154 +101,82 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.LongSequence;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
+import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.ProxyDataSchemaDefinition;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class ProcessState implements ReportState
 {
   private static class InternalProcessHandle implements ProcessStateHandle
   {
+    private PerformanceMonitorContext monitorContext;
     private DataFactoryManager manager;
 
-    private InternalProcessHandle(final DataFactoryManager manager)
+    private InternalProcessHandle(final DataFactoryManager manager,
+                                  final PerformanceMonitorContext monitorContext)
     {
       this.manager = manager;
+      this.monitorContext = monitorContext;
     }
 
     public void close()
     {
       // close the data-factory manager ...
+      monitorContext.close();
       manager.close();
     }
   }
 
+  private static class InternalPerformanceMonitorContext implements PerformanceMonitorContext
+  {
+    private PerformanceMonitorContext parent;
+    private EventListenerList listeners;
+
+    private InternalPerformanceMonitorContext(final PerformanceMonitorContext parent)
+    {
+      this.parent = parent;
+      this.listeners = new EventListenerList();
+    }
+
+    public PerformanceLoggingStopWatch createStopWatch(final String tag)
+    {
+      return parent.createStopWatch(tag);
+    }
+
+    public PerformanceLoggingStopWatch createStopWatch(final String tag, final Object message)
+    {
+      return parent.createStopWatch(tag, message);
+    }
+
+    public void addChangeListener(final ChangeListener listener)
+    {
+      listeners.add(ChangeListener.class, listener);
+    }
+
+    public void removeChangeListener(final ChangeListener listener)
+    {
+      listeners.remove(ChangeListener.class, listener);
+    }
+
+    public void close()
+    {
+      ChangeEvent event = new ChangeEvent(this);
+      for (ChangeListener changeListener : listeners.getListeners(ChangeListener.class))
+      {
+        changeListener.stateChanged(event);
+      }
+    }
+  }
 
   public static final int ARTIFICIAL_EVENT_CODE = ReportEvent.ARTIFICIAL_EVENT_CODE;
   private static final Log logger = LogFactory.getLog(ProcessState.class);
-
-  private static class MasterReportProcessPreprocessor
-  {
-    private final DefaultFlowController startFlowController;
-    private DefaultFlowController flowController;
-    private ReportPreProcessor[] processors;
-    private boolean designtime;
-
-    public MasterReportProcessPreprocessor(final DefaultFlowController startFlowController)
-    {
-      this.startFlowController = startFlowController;
-      final OutputProcessorMetaData md = startFlowController.getReportContext().getOutputProcessorMetaData();
-      this.designtime = md.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
-    }
-
-    public DefaultFlowController getFlowController()
-    {
-      return flowController;
-    }
-
-    public MasterReport invokePreDataProcessing(final MasterReport report) throws ReportProcessingException
-    {
-      flowController = startFlowController;
-      processors = StateUtilities.getAllPreProcessors(report, designtime);
-      DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
-      MasterReport fullReport = report;
-      for (int i = 0; i < processors.length; i++)
-      {
-        final ReportPreProcessor processor = processors[i];
-        fullReport = processor.performPreDataProcessing(fullReport, flowController);
-        if (fullReport.getDataSchemaDefinition() != fullDefinition)
-        {
-          fullDefinition = fullReport.getDataSchemaDefinition();
-          flowController = flowController.updateDataSchema(fullDefinition);
-        }
-      }
-      return fullReport;
-    }
-
-    public MasterReport invokePreProcessing(final MasterReport report) throws ReportProcessingException
-    {
-      flowController = startFlowController;
-
-      processors = StateUtilities.getAllPreProcessors(report, designtime);
-      DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
-      MasterReport fullReport = report;
-      for (int i = 0; i < processors.length; i++)
-      {
-        final ReportPreProcessor processor = processors[i];
-        fullReport = processor.performPreProcessing(fullReport, flowController);
-        if (fullReport.getDataSchemaDefinition() != fullDefinition)
-        {
-          fullDefinition = fullReport.getDataSchemaDefinition();
-          flowController = flowController.updateDataSchema(fullDefinition);
-        }
-      }
-      return fullReport;
-    }
-  }
-
-  private static class SubReportProcessPreprocessor
-  {
-    private final DefaultFlowController startFlowController;
-    private DefaultFlowController flowController;
-    private ReportPreProcessor[] processors;
-    private boolean designtime;
-
-    public SubReportProcessPreprocessor(final DefaultFlowController startFlowController)
-    {
-      this.startFlowController = startFlowController;
-      final OutputProcessorMetaData md = startFlowController.getReportContext().getOutputProcessorMetaData();
-      this.designtime = md.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
-    }
-
-    public DefaultFlowController getFlowController()
-    {
-      return flowController;
-    }
-
-    public SubReport invokePreDataProcessing(final SubReport report) throws ReportProcessingException
-    {
-      flowController = startFlowController;
-
-      processors = StateUtilities.getAllPreProcessors(report, designtime);
-      DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
-      SubReport fullReport = report;
-      for (int i = 0; i < processors.length; i++)
-      {
-        final ReportPreProcessor processor = processors[i];
-        fullReport = processor.performPreDataProcessing(fullReport, flowController);
-        if (fullReport.getDataSchemaDefinition() != fullDefinition)
-        {
-          fullDefinition = fullReport.getDataSchemaDefinition();
-          flowController = flowController.updateDataSchema(fullDefinition);
-        }
-      }
-      return fullReport;
-    }
-
-    public SubReport invokePreProcessing(final SubReport report) throws ReportProcessingException
-    {
-      flowController = startFlowController;
-
-      processors = StateUtilities.getAllPreProcessors(report, designtime);
-      DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
-      SubReport fullReport = report;
-      for (int i = 0; i < processors.length; i++)
-      {
-        final ReportPreProcessor processor = processors[i];
-        fullReport = processor.performPreProcessing(fullReport, flowController);
-        if (fullReport.getDataSchemaDefinition() != fullDefinition)
-        {
-          fullDefinition = fullReport.getDataSchemaDefinition();
-          flowController = flowController.updateDataSchema(fullDefinition);
-        }
-      }
-      return fullReport;
-    }
-  }
 
   private int currentGroupIndex;
   private int currentPresentationGroupIndex;
@@ -281,6 +213,7 @@ public class ProcessState implements ReportState
   private LongSequence groupSequenceCounter;
   private LongSequence crosstabColumnSequenceCounter;
   private boolean designtime;
+  private PerformanceMonitorContext performanceMonitorContext;
 
   public ProcessState()
   {
@@ -289,27 +222,19 @@ public class ProcessState implements ReportState
 
   public void initializeForMasterReport(final MasterReport report,
                                         final ProcessingContext processingContext,
-                                        final InitialLayoutProcess layoutProcess)
+                                        final OutputFunction outputFunction)
       throws ReportProcessingException
   {
-    if (layoutProcess == null)
-    {
-      throw new NullPointerException("LayoutProcess must not be null.");
-    }
-    if (report == null)
-    {
-      throw new NullPointerException("Report must not be null");
-    }
-    if (processingContext == null)
-    {
-      throw new NullPointerException("ProcessingContext must not be null.");
-    }
+    ArgumentNullException.validate("report", report);
+    ArgumentNullException.validate("processingContext", processingContext);
+    ArgumentNullException.validate("outputFunction", outputFunction);
 
     final ReportParameterDefinition parameters = report.getParameterDefinition();
     final DefaultParameterContext parameterContext = new DefaultParameterContext(report);
 
     // pre-init the output-processor-metadata.
-    processingContext.getOutputProcessorMetaData().initialize(wrapForCompatibility(processingContext));
+    initializeProcessingContext(processingContext, report);
+
     this.designtime =
         processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
     final ReportParameterValues parameterValues;
@@ -337,6 +262,11 @@ public class ProcessState implements ReportState
       parameterValues = new ReportParameterValues();
     }
 
+    final PerformanceMonitorContext rawPerformanceMonitorContext =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
+    this.performanceMonitorContext = new InternalPerformanceMonitorContext(rawPerformanceMonitorContext);
+    final InitialLayoutProcess layoutProcess = new InitialLayoutProcess(outputFunction, performanceMonitorContext);
+
     this.reportInstancesShareConnection = "true".equals(processingContext.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections"));
     this.processLevels = new HashSet<Integer>();
@@ -353,13 +283,14 @@ public class ProcessState implements ReportState
         (null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false, false);
     this.dataFactoryManager = new DataFactoryManager();
     this.subReportStorage = new SubReportStorage();
-    this.processHandle = new InternalProcessHandle(dataFactoryManager);
+    this.processHandle = new InternalProcessHandle(dataFactoryManager, performanceMonitorContext);
     this.crosstabColumnSequenceCounter = new LongSequence(10, -1);
     this.groupSequenceCounter = new LongSequence(10, -1);
     this.groupSequenceCounter.set(0, -1);
 
-    final DefaultFlowController startFlowController = new DefaultFlowController(processingContext,
-        report.getDataSchemaDefinition(), StateUtilities.computeParameterValueSet(report, parameterValues));
+    final DefaultFlowController startFlowController =
+        new DefaultFlowController(processingContext, report.getDataSchemaDefinition(),
+            StateUtilities.computeParameterValueSet(report, parameterValues), performanceMonitorContext);
 
     final MasterReportProcessPreprocessor processPreprocessor = new MasterReportProcessPreprocessor(startFlowController);
     final MasterReport processedReport = processPreprocessor.invokePreDataProcessing(report);
@@ -438,6 +369,40 @@ public class ProcessState implements ReportState
       this.recorder = new EmptyGroupSizeRecorder();
     }
     this.processKey = createKey();
+  }
+
+  private void initializeProcessingContext(final ProcessingContext processingContext, final MasterReport report)
+  {
+    Configuration configuration = wrapForCompatibility(processingContext);
+    processingContext.getOutputProcessorMetaData().initialize(mapStaticMetaData(configuration, report));
+  }
+
+  private Configuration mapStaticMetaData(final Configuration configuration, final MasterReport report)
+  {
+    HierarchicalConfiguration hc = new HierarchicalConfiguration(configuration);
+
+    setConfigurationIfDefined(hc,
+        "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout",
+        report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.COMPLEX_TEXT));
+
+    return hc;
+  }
+
+  private void setConfigurationIfDefined(ModifiableConfiguration config, String configKey, Object value)
+  {
+    if (value == null)
+    {
+      return;
+    }
+    try
+    {
+      String valueText = ConverterRegistry.toAttributeValue(value);
+      config.setConfigProperty(configKey, valueText);
+    }
+    catch (BeanException e)
+    {
+      logger.info(String.format("Ignoring invalid attribute-value override for configuration '%s' with value '%s'", configKey, value));
+    }
   }
 
   private Configuration wrapForCompatibility(final ProcessingContext processingContext)
@@ -968,11 +933,12 @@ public class ProcessState implements ReportState
 
   public SubReportProcessType getSubreportProcessingType()
   {
-    if (inlineProcess)
+    InlineSubreportMarker cm = getCurrentSubReportMarker();
+    if (cm == null)
     {
-      return SubReportProcessType.INLINE;
+      return SubReportProcessType.BANDED;
     }
-    return SubReportProcessType.BANDED;
+    return cm.getProcessType();
   }
 
   /**
@@ -1530,5 +1496,10 @@ public class ProcessState implements ReportState
   public void crosstabIncrementColumnCounter()
   {
     crosstabColumnSequenceCounter.increment(currentGroupIndex);
+  }
+
+  public PerformanceMonitorContext getPerformanceMonitorContext()
+  {
+    return performanceMonitorContext;
   }
 }

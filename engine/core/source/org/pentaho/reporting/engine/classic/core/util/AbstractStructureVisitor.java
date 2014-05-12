@@ -77,6 +77,11 @@ public abstract class AbstractStructureVisitor
 
   protected void traverseSection(final Section section)
   {
+    traverseSectionWithSubReports(section);
+  }
+
+  protected void traverseSectionWithSubReports(final Section section)
+  {
     final int count = section.getElementCount();
     for (int i = 0; i < count; i++)
     {
@@ -98,6 +103,28 @@ public abstract class AbstractStructureVisitor
             inspect(rlb.getSubReport(sr));
           }
         }
+      }
+      else
+      {
+        inspectElement(element);
+      }
+    }
+  }
+
+  protected void traverseSectionWithoutSubReports(final Section section)
+  {
+    final int count = section.getElementCount();
+    for (int i = 0; i < count; i++)
+    {
+      final ReportElement element = section.getElement(i);
+      if (element instanceof SubReport)
+      {
+        inspectElement(element);
+      }
+      else if (element instanceof Section)
+      {
+        inspectElement(element);
+        traverseSection((Section) element);
       }
       else
       {

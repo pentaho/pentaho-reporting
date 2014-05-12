@@ -40,7 +40,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessStep
 {
-  protected static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
+  public static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
 
   private OutputProcessorMetaData metaData;
   private boolean strictLegacyMode;
@@ -51,7 +51,6 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   private TextAlignmentProcessor leftProcessor;
   private TextAlignmentProcessor justifyProcessor;
   private MinorAxisTableContext tableContext;
-  private boolean cacheDeepDirty;
 
   protected AbstractMinorAxisLayoutStep()
   {
@@ -80,33 +79,28 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
 
   protected boolean checkCacheValid(final RenderNode node)
   {
-    if (cacheDeepDirty)
-    {
-      return false;
-    }
     final RenderNode.CacheState cacheState = node.getCacheState();
     if (cacheState == RenderNode.CacheState.CLEAN)
     {
       return true;
-    }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
     }
     return false;
   }
 
   public void compute(final LogicalPageBox root)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
     try
     {
-      cacheDeepDirty = false;
       pageGrid = root.getPageGrid();
       startProcessing(root);
     }
     finally
     {
       pageGrid = null;
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
     }
   }
 

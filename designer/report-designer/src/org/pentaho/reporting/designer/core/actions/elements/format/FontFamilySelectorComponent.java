@@ -18,7 +18,7 @@
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
 import java.awt.Dimension;
-import javax.swing.DefaultComboBoxModel;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -53,8 +53,8 @@ public final class FontFamilySelectorComponent extends FontFamilyComboBox implem
       else
       {
 
-        final Element[] visualElements = getSelectionModel().getSelectedVisualElements();
-        if (visualElements.length == 0)
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
+        if (visualElements.isEmpty())
         {
           setValueFromModel(null);
           setEnabled(false);
@@ -62,11 +62,11 @@ public final class FontFamilySelectorComponent extends FontFamilyComboBox implem
         }
         else
         {
-          lastSelection = visualElements[0];
+          lastSelection = visualElements.get(0);
           final Object color = lastSelection.getStyle().getStyleProperty(TextStyleKeys.FONT);
-          for (int i = 1; i < visualElements.length; i++)
+          for (int i = 1; i < visualElements.size(); i++)
           {
-            final Element element = visualElements[i];
+            final Element element = visualElements.get(i);
             final Object otherColor = element.getStyle().getStyleProperty(TextStyleKeys.FONT);
             if (ObjectUtilities.equal(color, otherColor) == false)
             {

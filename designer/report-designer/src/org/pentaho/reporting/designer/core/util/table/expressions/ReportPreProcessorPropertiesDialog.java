@@ -87,7 +87,6 @@ public class ReportPreProcessorPropertiesDialog extends CommonDialog
 
     protected void updateActiveContext(final ReportRenderContext newContext)
     {
-      dataModel.setActiveContext(newContext);
       if (newContext == null)
       {
         dataModel.setData(null);

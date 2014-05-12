@@ -21,7 +21,7 @@ import java.awt.Component;
 import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.actions.AuthenticatedServerTask;
@@ -36,12 +36,12 @@ public class SelectDrillTargetTask implements AuthenticatedServerTask
   private SelectFileFromRepositoryTask selectFileFromRepositoryTask;
   private Component uiContext;
   private Runnable triggerRefreshParameterTask;
-  private ReportRenderContext activeContext;
+  private ReportDocumentContext activeContext;
 
   public SelectDrillTargetTask(final PentahoPathModel wrapper,
                                final Component uiContext,
                                final Runnable triggerRefreshParameterTask,
-                               final ReportRenderContext activeContext)
+                               final ReportDocumentContext activeContext)
   {
     this.uiContext = uiContext;
     this.triggerRefreshParameterTask = triggerRefreshParameterTask;

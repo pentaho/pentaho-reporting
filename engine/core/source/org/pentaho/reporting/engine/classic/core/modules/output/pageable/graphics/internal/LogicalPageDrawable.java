@@ -47,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
@@ -312,8 +313,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   @Deprecated
   public LogicalPageDrawable(final LogicalPageBox rootBox,
-                   final OutputProcessorMetaData metaData,
-                   final ResourceManager resourceManager)
+                             final OutputProcessorMetaData metaData,
+                             final ResourceManager resourceManager)
   {
     this();
     init(rootBox, metaData, resourceManager);
@@ -731,10 +732,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     renderBoxBorderAndBackground(box);
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
 
     final FontDecorationSpec newUnderlineSpec = computeUnderline(box, underline);
@@ -893,10 +895,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
       underline = computeUnderline(box, null);
     }
 
+    TextSpec textSpec = getTextSpec();
     if (textSpec != null)
     {
       textSpec.close();
-      textSpec = null;
+      setTextSpec(null);
     }
   }
 
@@ -914,12 +917,18 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   {
     this.contentAreaX1 = box.getContentAreaX1();
     this.contentAreaX2 = box.getContentAreaX2();
+    this.textSpec = null;
 
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
       processTextLine(lineBox, contentAreaX1, contentAreaX2);
       lineBox = (RenderBox) lineBox.getNext();
+    }
+
+    if (textSpec != null)
+    {
+      throw new IllegalStateException();
     }
   }
 
@@ -999,14 +1008,45 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
             final long x1 = text.getX();
             final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
 
-            if (x1 >= contentAreaX2)
-            {
-              // Skip, the node will not be visible.
-            }
-            else
+            if (x1 < contentAreaX2)
             {
               // The text node that is printed will overlap with the ellipse we need to print.
               drawText(text, effectiveAreaX2);
+            }
+          }
+          else if (isClipOnWordBoundary() == false && type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+          {
+            final RenderableComplexText text = (RenderableComplexText) node;
+            //final long ellipseSize = extractEllipseSize(node);
+            final long x1 = text.getX();
+            //final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+
+            if (x1 < contentAreaX2)
+            {
+              // The text node that is printed will overlap with the ellipse we need to print.
+              final Graphics2D g2;
+              if (getTextSpec() == null)
+              {
+                g2 = (Graphics2D) getGraphics().create();
+                final StyleSheet layoutContext = text.getStyleSheet();
+                configureGraphics(layoutContext, g2);
+                g2.setStroke(LogicalPageDrawable.DEFAULT_STROKE);
+
+                if (RenderUtility.isFontSmooth(layoutContext, metaData))
+                {
+                  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                }
+                else
+                {
+                  g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+                }
+              }
+              else
+              {
+                g2 = getTextSpec().getGraphics();
+              }
+
+              drawComplexText(text, g2);
             }
           }
 
@@ -1088,6 +1128,43 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         drawText(text);
       }
     }
+    else if (type == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      final long x1 = text.getX();
+
+      if (x1 >= contentAreaX2)
+      {
+        // Skip, the node will not be visible.
+      }
+      else
+      {
+        // The text node that is printed will overlap with the ellipse we need to print.
+        final Graphics2D g2;
+        if (getTextSpec() == null)
+        {
+          g2 = (Graphics2D) getGraphics().create();
+          final StyleSheet layoutContext = text.getStyleSheet();
+          configureGraphics(layoutContext, g2);
+          g2.setStroke(LogicalPageDrawable.DEFAULT_STROKE);
+
+          if (RenderUtility.isFontSmooth(layoutContext, metaData))
+          {
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+          }
+          else
+          {
+            g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+          }
+        }
+        else
+        {
+          g2 = getTextSpec().getGraphics();
+        }
+
+        drawComplexText(text, g2);
+      }
+    }
   }
 
   protected void processRenderableContent(final RenderableReplacedContentBox box)
@@ -1129,7 +1206,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   protected void drawReplacedContent(final RenderableReplacedContentBox content)
   {
     final Graphics2D g2 = getGraphics();
-
     final Object o = content.getContent().getRawObject();
     if (o instanceof Image)
     {
@@ -1420,7 +1496,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     final long posY = renderableText.getY();
 
     final Graphics2D g2;
-    if (textSpec == null)
+    if (getTextSpec() == null)
     {
       g2 = (Graphics2D) getGraphics().create();
       final StyleSheet layoutContext = renderableText.getStyleSheet();
@@ -1438,7 +1514,7 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     }
     else
     {
-      g2 = textSpec.getGraphics();
+      g2 = getTextSpec().getGraphics();
     }
 
     // This shifting is necessary to make sure that all text is rendered like in the previous versions.
@@ -1482,6 +1558,19 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     g2.dispose();
   }
 
+  protected void drawComplexText(final RenderableComplexText renderableComplexText, final Graphics2D g2)
+  {
+    final long posX = renderableComplexText.getX();
+    final long posY = renderableComplexText.getY();
+
+    float baseline = renderableComplexText.getParagraphFontMetrics().getAscent();
+    final float y = (float) StrictGeomUtility.toExternalValue(posY) + baseline;
+
+    renderableComplexText.getTextLayout().draw(g2, (float) StrictGeomUtility.toExternalValue(posX), y);
+
+    g2.dispose();
+  }
+
   protected final CodePointBuffer getCodePointBuffer()
   {
     return codePointBuffer;
@@ -1490,16 +1579,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
   protected boolean isNormalTextSpacing(final RenderableText text)
   {
     return text.isNormalTextSpacing();
-//    final Glyph[] glyphs = text.getGlyphs();
-//    for (int i = 0; i < glyphs.length; i++)
-//    {
-//      final Glyph glyph = glyphs[i];
-//      if (Spacing.EMPTY_SPACING.equals(glyph.getSpacing()) == false)
-//      {
-//        return false;
-//      }
-//    }
-//    return true;
   }
 
   protected void configureStroke(final StyleSheet layoutContext, final Graphics2D g2)

@@ -548,11 +548,6 @@ public final class ResourceManager
     {
       final ObjectFactory objectFactory = LibLoaderBoot.getInstance().getObjectFactory();
       final ResourceBundleDataCacheProvider maybeDataCacheProvider = objectFactory.get(ResourceBundleDataCacheProvider.class);
-      if (maybeDataCacheProvider == null)
-      {
-        return;
-      }
-
       final ResourceBundleDataCache cache = maybeDataCacheProvider.createBundleDataCache();
       if (cache != null)
       {
@@ -579,11 +574,6 @@ public final class ResourceManager
     {
       final ObjectFactory objectFactory = LibLoaderBoot.getInstance().getObjectFactory();
       final ResourceDataCacheProvider maybeDataCacheProvider = objectFactory.get(ResourceDataCacheProvider.class);
-      if (maybeDataCacheProvider == null)
-      {
-        return;
-      }
-
       final ResourceDataCache cache = maybeDataCacheProvider.createDataCache();
       if (cache != null)
       {
@@ -610,11 +600,6 @@ public final class ResourceManager
     {
       final ObjectFactory objectFactory = LibLoaderBoot.getInstance().getObjectFactory();
       final ResourceFactoryCacheProvider maybeDataCacheProvider = objectFactory.get(ResourceFactoryCacheProvider.class);
-      if (maybeDataCacheProvider == null)
-      {
-        return;
-      }
-
       final ResourceFactoryCache cache = maybeDataCacheProvider.createFactoryCache();
       if (cache != null)
       {

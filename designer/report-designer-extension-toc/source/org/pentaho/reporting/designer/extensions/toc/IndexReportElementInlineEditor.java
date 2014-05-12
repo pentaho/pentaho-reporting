@@ -45,7 +45,7 @@ public class IndexReportElementInlineEditor extends AbstractCellEditor implement
       final ReportRenderContext rrc = context.getReportRenderContext(i);
       if (rrc.getReportDefinition() == value)
       {
-        context.setActiveContext(rrc);
+        context.setActiveDocument(rrc);
         return null;
       }
     }

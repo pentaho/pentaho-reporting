@@ -17,14 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 public class ArgumentReadHandler extends AbstractXmlReadHandler
 {
-  private String dataRowName;
+  private String formula;
 
   public ArgumentReadHandler()
   {
@@ -38,10 +40,16 @@ public class ArgumentReadHandler extends AbstractXmlReadHandler
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    dataRowName = attrs.getValue(getUri(), "datarow-name");
-    if (dataRowName == null)
+    this.formula = attrs.getValue(getUri(), "formula");
+    if (formula == null)
     {
-      throw new ParseException("Required attribute 'datarow-name' is not defined");
+      String dataRowName = attrs.getValue(getUri(), "datarow-name");
+      if (dataRowName == null)
+      {
+        throw new ParseException("Required attribute 'datarow-name' is not defined");
+      }
+
+      this.formula = '=' + FormulaUtil.quoteReference(dataRowName);
     }
   }
 
@@ -54,11 +62,11 @@ public class ArgumentReadHandler extends AbstractXmlReadHandler
    */
   public Object getObject() throws SAXException
   {
-    return dataRowName;
+    return getFormula();
   }
 
-  public String getDataRowName()
+  public FormulaArgument getFormula()
   {
-    return dataRowName;
+    return new FormulaArgument(formula);
   }
 }

@@ -23,7 +23,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.styles.styleeditor.StyleDefinitionEditorContext;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
@@ -132,7 +132,7 @@ public class SimpleStyleEditorPanel extends SidePanel
     headerPanel.setEnabled(enabled);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
   }
 

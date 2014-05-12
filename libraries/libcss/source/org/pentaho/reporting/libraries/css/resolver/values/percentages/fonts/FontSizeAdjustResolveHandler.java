@@ -27,7 +27,7 @@ import org.pentaho.reporting.libraries.css.values.CSSNumericType;
 import org.pentaho.reporting.libraries.css.values.CSSNumericValue;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 18.12.2005, 19:46:43
@@ -87,7 +87,7 @@ public class FontSizeAdjustResolveHandler implements ResolveHandler
       return; // no font metrics means no valid font...
     }
 
-    final double actualFontXHeight = StrictGeomUtility.toExternalValue(fontMetrics.getXHeight());
+    final double actualFontXHeight = FontStrictGeomUtility.toExternalValue(fontMetrics.getXHeight());
     final double fontSize = fontMetrics.getAscent();
     final double aspectRatio = actualFontXHeight / fontSize;
     final double result = (fontSize * (adjustFactor / aspectRatio));

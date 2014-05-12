@@ -26,7 +26,7 @@ import javax.swing.JFrame;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionChooserDialog;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.ExpressionAddedUndoEntry;
@@ -57,13 +57,13 @@ public final class AddExpressionsAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final ExpressionChooserDialog dialog;
     if (window instanceof JDialog)

@@ -17,16 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.layout.model.FinishedRenderNode;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
-import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 
 /**
  * Updates the row heights in the model for a table. This is slightly more complex than the row-layout
@@ -110,9 +106,11 @@ public class TableRowHeightCalculation
 
   private TableInfoStructure currentTable;
   private boolean secondPass;
+  private TableRowHeightApplyStep applyStep;
 
   public TableRowHeightCalculation(final boolean secondPass)
   {
+    this.applyStep = new TableRowHeightApplyStep();
     this.secondPass = secondPass;
   }
 
@@ -146,7 +144,6 @@ public class TableRowHeightCalculation
       long size = 0;
       for (int i = 0; i < box.getRowSpan(); i += 1)
       {
-//        final TableRow row = currentTable.getRow(i);
         size += currentTable.getPreferredRowSize(i);
       }
 
@@ -157,7 +154,6 @@ public class TableRowHeightCalculation
       long size = 0;
       for (int i = 0; i < box.getRowSpan(); i += 1)
       {
-//        final TableRow row = currentTable.getRow(i);
         size += currentTable.getValidatedRowSize(i);
       }
 
@@ -189,99 +185,18 @@ public class TableRowHeightCalculation
     currentTable.setRowNumber(box.getRowIndex());
   }
 
-  /// todo: This can be split up into an incremental process on "finishTableRow"
   public void finishTableSection(final TableSectionRenderBox section)
   {
-    validateTableSection(section);
-    // OK; a complete section is a coolness factor. Lets compute something.
-    // Grab the model of all available rows ..
     final TableRowModel rowModel = section.getRowModel();
-    rowModel.validateActualSizes();
-
-    // Second step: Apply the row heights to all cells.
-    // + Align all cells.
-//    final TableRow[] rows = rowModel.getRows();
-    final RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(section);
-    boolean firstRow = true;
-
-    final long sectionPosY = section.getCachedY();
-    long usedTableBodyHeight = 0;
-
-    while (it.hasNext())
+    if (section.getRowModelAge() != section.getChangeTracker())
     {
-      final RenderNode rowNode = it.next();
-      if (rowNode instanceof TableRowRenderBox == false)
-      {
-        validateAndPositionOtherNode(sectionPosY + usedTableBodyHeight, rowNode);
-        if (rowNode instanceof FinishedRenderNode)
-        {
-          final FinishedRenderNode node = (FinishedRenderNode) rowNode;
-          usedTableBodyHeight += node.getLayoutedHeight();
-        }
-        continue;
-      }
-      final TableRowRenderBox rowBox = (TableRowRenderBox) rowNode;
-      if (firstRow)
-      {
-        firstRow = false;
-      }
-      else
-      {
-        usedTableBodyHeight += rowModel.getRowSpacing();
-      }
-
-      final long validatedRowHeight = validateAndPositionTableRow(sectionPosY + usedTableBodyHeight, rowModel, rowBox);
-      usedTableBodyHeight += validatedRowHeight;
+      rowModel.validateActualSizes();
+      section.setRowModelAge(section.getChangeTracker());
     }
 
-    section.setCachedHeight(usedTableBodyHeight);
+    final long usedTableBodyHeight = applyStep.start(section);
 
-    // We do not perform a real shift, as this would be to expensive.
-    // we simply store the location--
     currentTable.setFilledHeight(usedTableBodyHeight + currentTable.getFilledHeight());
     currentTable.setRowModel(null);
   }
-
-  private void validateTableSection(final TableSectionRenderBox section)
-  {
-    RenderNode c = section.getFirstChild();
-    long y = section.getCachedY();
-    while (c != null)
-    {
-      if (c.getCachedY() != y)
-      {
-        //throw new IllegalArgumentException();
-      }
-      y = c.getCachedY2();
-
-      c = c.getNext();
-    }
-  }
-
-  private long validateAndPositionTableRow(final long position,
-                                           final TableRowModel rows,
-                                           final TableRowRenderBox rowBox)
-  {
-    final long validatedRowHeight = rows.getValidatedRowSize(rowBox.getRowIndex());
-
-    final long oldPosition = rowBox.getCachedY();
-    final long shift = position - oldPosition;
-    if (shift < 0)
-    {
-      throw new IllegalStateException
-          (String.format("Shift-back is not allowed: shift=%d: old=%d -> new=%d (%s)", shift, oldPosition, position, rowBox));
-    }
-
-    CacheBoxShifter.shiftBox(rowBox, shift);
-    rowBox.setCachedHeight(validatedRowHeight);
-    return validatedRowHeight;
-  }
-
-  private void validateAndPositionOtherNode(final long position, final RenderNode rowBox)
-  {
-    final long oldPosition = rowBox.getCachedY();
-    final long shift = position - oldPosition;
-    CacheBoxShifter.shiftBoxUnchecked(rowBox, shift);
-  }
-
 }

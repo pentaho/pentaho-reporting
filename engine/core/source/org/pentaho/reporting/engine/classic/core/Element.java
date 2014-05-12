@@ -350,7 +350,7 @@ public class Element implements DataTarget, ReportElement
    *
    * @return the unmodifiable attribute collection
    */
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     if (cachedAttributes != null)
     {
@@ -1316,7 +1316,7 @@ public class Element implements DataTarget, ReportElement
   {
     if (contextType.isInstance(elementContext))
     {
-      return (T) elementContext;
+      return contextType.cast(elementContext);
     }
 
     try
@@ -1331,7 +1331,7 @@ public class Element implements DataTarget, ReportElement
     }
   }
 
-  public void copyAttributes(final ReportAttributeMap attributes)
+  public void copyAttributes(final ReportAttributeMap<Object> attributes)
   {
     //noinspection unchecked
     this.attributes.putAll(attributes);

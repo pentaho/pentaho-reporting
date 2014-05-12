@@ -53,7 +53,7 @@ public final class RunAsPopupAction extends AbstractReportContextAction
     }
     else
     {
-      final Component parent = getReportDesignerContext().getParent();
+      final Component parent = getReportDesignerContext().getView().getParent();
       menu.show(parent, 0, 0);
     }
   }

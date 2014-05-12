@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="2" row-count="3">
+  <table col-count="2" row-count="2">
     <cols>
       <column width="3"/>
       <column width="552"/>
@@ -12,7 +12,7 @@
       </empty-cell>
       <empty-cell/>
     </row>
-    <row height="16">
+    <row height="770">
       <empty-cell/>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
@@ -23,13 +23,6 @@
           <text x="53.676" y="32.0" width="36.0" height="12.0">Report</text>
         </line>
       </cell>
-    </row>
-    <row height="754">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="default"/>
-      </empty-cell>
-      <empty-cell/>
     </row>
   </table>
   <table col-count="1" row-count="3">

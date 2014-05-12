@@ -33,13 +33,12 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  */
 public final class SimpleLinebreaker implements ParagraphLinebreaker
 {
-  private static final int MTH_START_BLOCK = 0;
-  private static final int MTH_FINISH_BLOCK = 1;
-  private static final int MTH_START_INLINE = 2;
-  private static final int MTH_FINISH_INLINE = 3;
-  private static final int MTH_ADD_NODE = 4;
+  private enum BreakMethod
+  {
+    StartBlock, FinishBlock, StartInline, FinishInline, Node
+  }
 
-  private int[] methods;
+  private BreakMethod[] methods;
   private Object[] parameters;
   private int counter;
 
@@ -51,7 +50,7 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
   {
     this.paragraphRenderBox = paragraphRenderBox;
     final int poolSize = Math.max(20, paragraphRenderBox.getPoolSize());
-    this.methods = new int[poolSize];
+    this.methods = new BreakMethod[poolSize];
     this.parameters = new Object[poolSize];
   }
 
@@ -72,19 +71,19 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
     final int poolSize = this.paragraphRenderBox.getPoolSize();
     if (poolSize > this.methods.length)
     {
-      this.methods = new int[poolSize];
+      this.methods = new BreakMethod[poolSize];
       this.parameters = new Object[poolSize];
     }
   }
 
 
-  private void add(final int method, final Object parameter)
+  private void add(final BreakMethod method, final Object parameter)
   {
     if (methods.length == counter)
     {
       // Grow the arrays ..
       final int nextSize = Math.max(30, (methods.length * 2));
-      final int[] newMethods = new int[nextSize];
+      final BreakMethod[] newMethods = new BreakMethod[nextSize];
       System.arraycopy(methods, 0, newMethods, 0, methods.length);
 
       final Object[] newParameters = new Object[nextSize];
@@ -109,31 +108,31 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
     final FullLinebreaker fullBreaker = new FullLinebreaker(paragraphRenderBox);
     for (int i = 0; i < counter; i++)
     {
-      final int method = methods[i];
+      final BreakMethod method = methods[i];
       final Object parameter = parameters[i];
       switch (method)
       {
-        case SimpleLinebreaker.MTH_START_BLOCK:
+        case StartBlock:
         {
           fullBreaker.startBlockBox((RenderBox) parameter);
           break;
         }
-        case SimpleLinebreaker.MTH_FINISH_BLOCK:
+        case FinishBlock:
         {
           fullBreaker.finishBlockBox((RenderBox) parameter);
           break;
         }
-        case SimpleLinebreaker.MTH_START_INLINE:
+        case StartInline:
         {
           fullBreaker.startInlineBox((InlineRenderBox) parameter);
           break;
         }
-        case SimpleLinebreaker.MTH_FINISH_INLINE:
+        case FinishInline:
         {
           fullBreaker.finishInlineBox((InlineRenderBox) parameter);
           break;
         }
-        case SimpleLinebreaker.MTH_ADD_NODE:
+        case Node:
         {
           fullBreaker.addNode((RenderNode) parameter);
           break;
@@ -157,7 +156,7 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
       suspendItem = child.getInstanceId();
     }
 
-    add(SimpleLinebreaker.MTH_START_BLOCK, child);
+    add(BreakMethod.StartBlock, child);
   }
 
   public void finishBlockBox(final RenderBox box)
@@ -167,7 +166,7 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
       suspendItem = null;
     }
 
-    add(SimpleLinebreaker.MTH_FINISH_BLOCK, box);
+    add(BreakMethod.FinishBlock, box);
   }
 
   public ParagraphLinebreaker startParagraphBox(final ParagraphRenderBox box)
@@ -195,12 +194,12 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
 
   public void startInlineBox(final InlineRenderBox box)
   {
-    add(SimpleLinebreaker.MTH_START_INLINE, box);
+    add(BreakMethod.StartInline, box);
   }
 
   public void finishInlineBox(final InlineRenderBox box)
   {
-    add(SimpleLinebreaker.MTH_FINISH_INLINE, box);
+    add(BreakMethod.FinishInline, box);
   }
 
   public boolean isBreakRequested()
@@ -210,7 +209,7 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
 
   public void addNode(final RenderNode node)
   {
-    add(SimpleLinebreaker.MTH_ADD_NODE, node);
+    add(BreakMethod.Node, node);
   }
 
   public void setBreakRequested(final boolean breakRequested)

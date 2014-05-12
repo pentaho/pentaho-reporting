@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.Band;
 
@@ -28,7 +29,7 @@ import org.pentaho.reporting.engine.classic.core.Band;
 public class RootBandRenderer extends AbstractElementRenderer
 {
   public RootBandRenderer(final Band visualReportElement,
-                          final ReportRenderContext renderContext)
+                          final ReportDocumentContext renderContext)
   {
     super(visualReportElement, renderContext);
   }

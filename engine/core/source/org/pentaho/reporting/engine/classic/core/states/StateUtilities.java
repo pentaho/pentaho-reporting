@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.states;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -260,6 +261,7 @@ public class StateUtilities
     }
 
     final ReportPreProcessorMetaData[] allProcessors = registry.getAllReportPreProcessorMetaDatas();
+    Arrays.sort(allProcessors, new PreProcessorComparator());
     for (int i = 0; i < allProcessors.length; i++)
     {
       final ReportPreProcessorMetaData processor = allProcessors[i];
@@ -281,6 +283,14 @@ public class StateUtilities
       }
     }
     return preProcessors.toArray(new ReportPreProcessor[preProcessors.size()]);
+  }
+
+  private static class PreProcessorComparator implements Comparator<ReportPreProcessorMetaData>
+  {
+    public int compare(final ReportPreProcessorMetaData o1, final ReportPreProcessorMetaData o2)
+    {
+      return Integer.valueOf(o1.getExecutionPriority()).compareTo(o2.getExecutionPriority());
+    }
   }
 
 }

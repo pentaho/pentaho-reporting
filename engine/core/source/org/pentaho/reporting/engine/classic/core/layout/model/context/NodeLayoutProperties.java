@@ -62,8 +62,9 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   private InstanceID instanceId;
   private Float posY;
   private Float posX;
-  private ReportAttributeMap attributes;
+  private ReportAttributeMap<Object> attributes;
   private ElementType elementType;
+  private boolean visible;
 
   private NodeLayoutProperties()
   {
@@ -72,7 +73,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   }
 
   public NodeLayoutProperties(final StyleSheet styleSheet,
-                              final ReportAttributeMap attributes,
+                              final ReportAttributeMap<Object> attributes,
                               final InstanceID instanceID,
                               final ElementType elementType)
   {
@@ -82,7 +83,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   public NodeLayoutProperties(final int majorAxis,
                               final int minorAxis,
                               final StyleSheet styleSheet,
-                              final ReportAttributeMap attributes,
+                              final ReportAttributeMap<Object> attributes,
                               final InstanceID instanceID,
                               final ElementType elementType)
   {
@@ -133,6 +134,17 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     {
       verticalTextAlign = VerticalTextAlign.BASELINE;
     }
+    this.visible = true;
+  }
+
+  public void setVisible(final boolean visible)
+  {
+    this.visible = visible;
+  }
+
+  public boolean isVisible()
+  {
+    return visible;
   }
 
   public VerticalTextAlign getVerticalTextAlign()
@@ -208,7 +220,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     return posX.doubleValue();
   }
 
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     return attributes;
   }

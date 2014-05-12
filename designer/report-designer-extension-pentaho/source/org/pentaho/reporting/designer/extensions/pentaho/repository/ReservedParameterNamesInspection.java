@@ -20,7 +20,7 @@ package org.pentaho.reporting.designer.extensions.pentaho.repository;
 import java.util.HashSet;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
@@ -35,6 +35,7 @@ public class ReservedParameterNamesInspection implements Inspection
 {
   private HashSet<String> reservedParameterNames;
 
+  @SuppressWarnings("HardCodedStringLiteral")
   public ReservedParameterNamesInspection()
   {
     reservedParameterNames = new HashSet<String>();
@@ -73,7 +74,7 @@ public class ReservedParameterNamesInspection implements Inspection
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     final AbstractReportDefinition abstractReportDefinition = reportRenderContext.getReportDefinition();

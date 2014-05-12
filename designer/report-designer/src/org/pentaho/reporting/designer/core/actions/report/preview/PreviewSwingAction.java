@@ -80,9 +80,9 @@ public final class PreviewSwingAction extends AbstractReportContextAction
       return;
     }
 
-    final MasterReport reportElement = getActiveContext().getMasterReportElement();
+    final MasterReport reportElement = getActiveContext().getContextRoot();
 
-    final Component parent = getReportDesignerContext().getParent();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final PreviewDialog dialog;
     if (window instanceof JDialog)

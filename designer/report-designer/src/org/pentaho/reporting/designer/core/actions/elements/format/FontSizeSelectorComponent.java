@@ -17,17 +17,15 @@
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
-import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.ElementSelectionComponentSupport;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
@@ -60,8 +58,8 @@ public final class FontSizeSelectorComponent extends SmartComboBox implements De
       else
       {
 
-        final Element[] visualElements = getSelectionModel().getSelectedVisualElements();
-        if (visualElements.length == 0)
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
+        if (visualElements.isEmpty())
         {
           setValueFromModel(null);
           setEnabled(false);
@@ -69,11 +67,11 @@ public final class FontSizeSelectorComponent extends SmartComboBox implements De
         }
         else
         {
-          lastSelection = visualElements[0];
+          lastSelection = visualElements.get(0);
           final Object color = lastSelection.getStyle().getStyleProperty(TextStyleKeys.FONTSIZE);
-          for (int i = 1; i < visualElements.length; i++)
+          for (int i = 1; i < visualElements.size(); i++)
           {
-            final Element element = visualElements[i];
+            final Element element = visualElements.get(i);
             final Object otherColor = element.getStyle().getStyleProperty(TextStyleKeys.FONTSIZE);
             if (ObjectUtilities.equal(color, otherColor) == false)
             {

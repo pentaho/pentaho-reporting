@@ -22,6 +22,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
@@ -30,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -56,6 +58,7 @@ public class MinChunkWidthTest extends TestCase
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
     basereport.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
     final ResourceManager rm = new ResourceManager();
@@ -67,15 +70,16 @@ public class MinChunkWidthTest extends TestCase
         (basereport, report.getReportHeader(), true, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    //ModelPrinter.print(logicalPageBox);
-    new ValidateRunner(true).startValidation(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    new ValidateRunner(true, false).startValidation(logicalPageBox);
   }
 
-  public void testMinChunkWidth() throws Exception
+  public void testMinChunkWidthSimpleText() throws Exception
   {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
     basereport.setCompatibilityLevel(null);
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
     final ResourceManager rm = new ResourceManager();
@@ -87,18 +91,48 @@ public class MinChunkWidthTest extends TestCase
         (basereport, report.getReportHeader(), true, false);
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    //ModelPrinter.print(logicalPageBox);
-    new ValidateRunner(false).startValidation(logicalPageBox);
+    //ModelPrinter.INSTANCE.print(logicalPageBox);
+    new ValidateRunner(false, false).startValidation(logicalPageBox);
+  }
+
+  public void testMinChunkWidth() throws Exception
+  {
+    if (DebugReportRunner.isSafeToTestComplexText() == false)
+    {
+      return;
+    }
+
+    final MasterReport basereport = new MasterReport();
+    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setCompatibilityLevel(null);
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+
+    final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
+    final ResourceManager rm = new ResourceManager();
+    rm.registerDefaults();
+    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
+        (basereport, report.getReportHeader(), true, false);
+    // simple test, we assert that all paragraph-poolboxes are on either 485 or 400
+    // and that only two lines exist for each
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+    new ValidateRunner(false, true).startValidation(logicalPageBox);
   }
 
   @SuppressWarnings("HardCodedStringLiteral")
   private static class ValidateRunner extends IterateStructuralProcessStep
   {
+    private final boolean complexText;
     private boolean legacyMode;
 
-    private ValidateRunner(final boolean legacyMode)
+    private ValidateRunner(final boolean legacyMode,
+                           final boolean complexText)
     {
       this.legacyMode = legacyMode;
+      this.complexText = complexText;
     }
 
     protected boolean startCanvasBox(final CanvasRenderBox box)
@@ -133,12 +167,18 @@ public class MinChunkWidthTest extends TestCase
       if (s.startsWith("test-"))
       {
         assertEquals("Width = 468: " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
-        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        }
       }
       else if (s.startsWith("canvas-"))
       {
         assertTrue("Width is not zero!: " + s, box.getWidth() != 0);
-        assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+        }
       }
       else if (s.startsWith("label-b"))
       {
@@ -155,12 +195,18 @@ public class MinChunkWidthTest extends TestCase
         {
           assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
         }
-        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        }
       }
       else if (s.startsWith("label-"))
       {
         assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
-        assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        if (!complexText)
+        {
+          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+        }
       }
       return true;
     }

@@ -51,7 +51,6 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchemaDefinition;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
@@ -290,7 +289,7 @@ public class CrosstabMultiFactDataTest extends TestCase
         return false;
       }
       final int currentRow = getRuntime().getCurrentRow();
-      DebugLog.log("ValidateFunction: " + currentRow);
+
       final Object row = getDataRow().get("Rows");
       final Object col = getDataRow().get("Cols");
       final Object data = getDataRow().get("Data");

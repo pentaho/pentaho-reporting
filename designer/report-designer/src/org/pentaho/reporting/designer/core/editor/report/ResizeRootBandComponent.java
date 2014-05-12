@@ -29,7 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
 import org.pentaho.reporting.designer.core.util.CanvasImageLoader;
 
@@ -45,12 +45,12 @@ public class ResizeRootBandComponent extends JPanel
   private Border hoverBorder;
   private Border normalBorder;
   private ElementRenderer rootBandRenderer;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private boolean linealComponent;
 
   public ResizeRootBandComponent(final boolean linealComponent,
                                  final ElementRenderer renderer,
-                                 final ReportRenderContext renderContext)
+                                 final ReportDocumentContext renderContext)
   {
     if (renderer == null)
     {
@@ -142,7 +142,7 @@ public class ResizeRootBandComponent extends JPanel
     return rootBandRenderer;
   }
 
-  public ReportRenderContext getRenderContext()
+  protected ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }

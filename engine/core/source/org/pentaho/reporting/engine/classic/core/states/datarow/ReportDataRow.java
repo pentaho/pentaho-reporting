@@ -19,12 +19,6 @@ package org.pentaho.reporting.engine.classic.core.states.datarow;
 
 import javax.swing.table.TableModel;
 
-import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.states.LengthLimitingTableModel;
-import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
-
 public final class ReportDataRow
 {
   private String[] names;
@@ -67,36 +61,6 @@ public final class ReportDataRow
 
     this.cursor = reportDataRow.cursor + 1;
     this.names = reportDataRow.names;
-  }
-
-  public static ReportDataRow createDataRow(final DataFactory dataFactory,
-                                            final String query,
-                                            final int queryLimit,
-                                            final int queryTimeout,
-                                            final DataRow parameters)
-      throws ReportDataFactoryException
-  {
-    if (dataFactory == null)
-    {
-      throw new NullPointerException();
-    }
-    if (parameters == null)
-    {
-      throw new NullPointerException();
-    }
-    
-    if (query == null)
-    {
-      return new ReportDataRow(new EmptyTableModel());
-    }
-
-    final TableModel reportData = dataFactory.queryData
-        (query, new QueryDataRowWrapper(parameters, queryLimit, queryTimeout));
-    if (queryLimit > 0 && reportData.getRowCount() > queryLimit)
-    {
-      return new ReportDataRow(new LengthLimitingTableModel(reportData, queryLimit));
-    }
-    return new ReportDataRow(reportData);
   }
 
   /**

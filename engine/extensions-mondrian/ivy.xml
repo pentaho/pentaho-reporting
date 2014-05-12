@@ -30,6 +30,7 @@
       <exclude org="javax.servlet" module="jsp-api"/>
       <exclude org="javax.servlet" module="servlet-api"/>
       <exclude org="commons-logging" module="commons-logging"/>
+      <exclude org="org.apache.ant" module="ant"/>
     </dependency>
 
     <!-- Mondrian needs xerces and xalan for XMLA support, but ships with a ancient version -->
@@ -46,7 +47,8 @@
     <dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="test->default"/>
     <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test"
                 rev="${project.revision}" transitive="false" changing="true" conf="test->default"/>
-    <dependency org="org.slf4j" name="slf4j-jcl" rev="1.6.4" transitive="false" conf="test->default"/>
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.3" transitive="false" conf="test->default"/>
     <dependency org="simple-jndi" name="simple-jndi" rev="0.11.3" transitive="false" conf="test->default"/>
+    <dependency org="org.apache.commons" name="commons-lang3" rev="3.0" transitive="false" conf="test->default"/>
   </dependencies>
 </ivy-module>

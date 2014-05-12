@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -30,7 +30,7 @@ public class SubReportDataTreeModel extends AbstractReportDataTreeModel
   private SubReport reportElement;
   private SubReportParametersNode reportParametersNode;
 
-  public SubReportDataTreeModel(final ReportRenderContext renderContext)
+  public SubReportDataTreeModel(final ReportDocumentContext renderContext)
   {
     super(renderContext);
     if (renderContext.getReportDefinition() instanceof SubReport == false)

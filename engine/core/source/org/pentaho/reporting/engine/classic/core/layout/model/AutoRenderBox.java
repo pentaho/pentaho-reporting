@@ -30,10 +30,16 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 public class AutoRenderBox extends RenderBox
 {
   private static StyleSheet DEFAULT_STYLE = new SimpleStyleSheet(new UseMinChunkWidthStyleSheet(true));
+  private int rowIndex;
 
   public AutoRenderBox()
   {
     this(new InstanceID(), null, ReportAttributeMap.EMPTY_MAP);
+  }
+
+  public AutoRenderBox(final StyleSheet styleSheet)
+  {
+    this(new InstanceID(), null, styleSheet, ReportAttributeMap.EMPTY_MAP);
   }
 
   public AutoRenderBox(final InstanceID instanceId,
@@ -48,9 +54,7 @@ public class AutoRenderBox extends RenderBox
                        final StyleSheet styleSheet,
                        final ReportAttributeMap attributes)
   {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-        styleSheet, instanceId, BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-        attributes, stateKey);
+    this(instanceId, stateKey, styleSheet, attributes, AutoLayoutBoxType.INSTANCE);
   }
 
   public AutoRenderBox(final InstanceID instanceId,
@@ -59,9 +63,7 @@ public class AutoRenderBox extends RenderBox
                        final ReportAttributeMap attributes,
                        final ElementType elementType)
   {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-        styleSheet, instanceId, BoxDefinition.EMPTY, elementType,
-        attributes, stateKey);
+    this(instanceId, stateKey, styleSheet, BoxDefinition.EMPTY, attributes, elementType);
   }
 
   public AutoRenderBox(final InstanceID instanceId,
@@ -111,7 +113,7 @@ public class AutoRenderBox extends RenderBox
     return super.isEmptyNodesHaveSignificance();
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
     final int layoutNodeType = getLayoutNodeType();
     if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE ||
@@ -119,11 +121,11 @@ public class AutoRenderBox extends RenderBox
         (layoutNodeType & LayoutNodeTypes.MASK_BOX_CANVAS) == LayoutNodeTypes.MASK_BOX_CANVAS ||
         (layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW))
     {
-      extendHeightInRowMode(child, heightOffset);
+      return extendHeightInRowMode(child, heightOffset);
     }
     else
     {
-      extendHeightInBlockMode(child, heightOffset);
+      return extendHeightInBlockMode(child, heightOffset);
     }
   }
 
@@ -135,5 +137,30 @@ public class AutoRenderBox extends RenderBox
       return true;
     }
     return parent.isBlockForPagebreakPurpose();
+  }
+
+  public void setCachedY(final long cachedY)
+  {
+    super.setCachedY(cachedY);
+  }
+
+  public void shiftCached(final long amount)
+  {
+    super.shiftCached(amount);
+  }
+
+  public void setCachedHeight(final long cachedHeight)
+  {
+    super.setCachedHeight(cachedHeight);
+  }
+
+  public int getRowIndex()
+  {
+    return rowIndex;
+  }
+
+  public void setRowIndex(final int rowIndex)
+  {
+    this.rowIndex = rowIndex;
   }
 }

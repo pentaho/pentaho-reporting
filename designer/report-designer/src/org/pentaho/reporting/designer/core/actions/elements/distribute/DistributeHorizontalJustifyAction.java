@@ -20,7 +20,9 @@ package org.pentaho.reporting.designer.core.actions.elements.distribute;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
@@ -29,7 +31,7 @@ import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
@@ -77,51 +79,50 @@ public final class DistributeHorizontalJustifyAction extends AbstractElementSele
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel model = getSelectionModel();
+    final DocumentContextSelectionModel model = getSelectionModel();
     if (model == null)
     {
       return;
     }
-    final Element[] visualElements = model.getSelectedVisualElements();
-    if (visualElements.length <= 2)
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
+    if (visualElements.size() <= 2)
     {
       return;
     }
 
-    final Element[] reportElements = ModelUtility.filterParents(visualElements);
-    if (reportElements.length <= 2)
+    final List<Element> reportElements = ModelUtility.filterParents(visualElements);
+    if (reportElements.size() <= 2)
     {
       return;
     }
 
-    Arrays.sort(reportElements, new ElementPositionComparator());
+    Collections.sort(reportElements, new ElementPositionComparator());
     final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder(reportElements);
     final Element[] carrier = new Element[1];
 
     long totalHeight = 0;
     long topmostY = Long.MAX_VALUE;
     long bottommostY = Long.MIN_VALUE;
-    for (int i = 0; i < reportElements.length; i++)
+
+    for (Element element : reportElements)
     {
-      final Element element = reportElements[i];
       final CachedLayoutData layoutData = ModelUtility.getCachedLayoutData(element);
       totalHeight += layoutData.getWidth();
       topmostY = Math.min(topmostY, layoutData.getX());
       bottommostY = Math.max(bottommostY, layoutData.getX() + layoutData.getWidth());
     }
 
-    final long gap = (bottommostY - topmostY - totalHeight) / (reportElements.length - 1);
+    final long gap = (bottommostY - topmostY - totalHeight) / (reportElements.size() - 1);
     long currentY = topmostY;
-    for (int i = 0; i < reportElements.length; i++)
+    for (Element reportElement : reportElements)
     {
-      final Element reportElement = reportElements[i];
       final CachedLayoutData layoutData = ModelUtility.getCachedLayoutData(reportElement);
       final long height = layoutData.getWidth();
 
       carrier[0] = reportElement;
       final Point2D.Double originPoint = new Point2D.Double(StrictGeomUtility.toExternalValue(layoutData.getX()), 0);
       final MoveDragOperation mop = new MoveDragOperation
-          (carrier, originPoint, EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
+          (Arrays.asList(carrier), originPoint, EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
       mop.update(new Point2D.Double(StrictGeomUtility.toExternalValue(currentY), 0), 1);
       mop.finish();
 

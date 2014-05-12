@@ -78,8 +78,8 @@ public class GoldSerializeTest extends GoldTestBase
     {
       return;
     }
-//    runSingleGoldReports();
-    runAllGoldReports();
+    runSingleGoldReport("Prd-5044.prpt", ReportProcessingMode.migration);
+//    runAllGoldReports();
   }
 
 }

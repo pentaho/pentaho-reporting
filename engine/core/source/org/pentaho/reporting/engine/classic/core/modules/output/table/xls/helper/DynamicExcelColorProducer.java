@@ -30,7 +30,7 @@ public class DynamicExcelColorProducer implements ExcelColorProducer
   private short lastUsedColor = 0x8; // this magic constant stands for first color index in a palette
 
   private HSSFWorkbook workbook;
-  private Map usedTripplets;
+  private Map<String,HSSFColor> usedTripplets;
 
   public DynamicExcelColorProducer(final HSSFWorkbook workbook)
   {
@@ -39,7 +39,7 @@ public class DynamicExcelColorProducer implements ExcelColorProducer
       throw new NullPointerException();
     }
     this.workbook = workbook;
-    this.usedTripplets = new HashMap();
+    this.usedTripplets = new HashMap<String,HSSFColor>();
   }
 
   public HSSFColor getColor(final short index)

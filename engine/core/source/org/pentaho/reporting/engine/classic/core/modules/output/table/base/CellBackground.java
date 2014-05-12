@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
 public class CellBackground
 {
-  private ReportAttributeMap attributes;
+  private ReportAttributeMap<Object> attributes;
   private ArrayList<Color> collectedColors;
   private Color backgroundColor;
   private ArrayList<String> anchors;
@@ -43,6 +43,7 @@ public class CellBackground
   private BorderCorner bottomRight;
   private boolean origin;
   private ElementType elementType;
+  private transient Integer hashCode;
   private static final String[] EMPTY_ANCHORS = new String[0];
 
   public CellBackground()
@@ -51,7 +52,7 @@ public class CellBackground
     this.left = BorderEdge.EMPTY;
     this.bottom = BorderEdge.EMPTY;
     this.right = BorderEdge.EMPTY;
-    this.attributes = new ReportAttributeMap();
+    this.attributes = new ReportAttributeMap<Object>();
 
     this.topLeft = new BorderCorner(0, 0);
     this.topRight = new BorderCorner(0, 0);
@@ -67,9 +68,10 @@ public class CellBackground
   public void setOrigin(final boolean origin)
   {
     this.origin = origin;
+    this.hashCode = null;
   }
 
-  public void addAttributes(final ReportAttributeMap attrs)
+  public void addAttributes(final ReportAttributeMap<Object> attrs)
   {
     if (attrs == null)
     {
@@ -91,9 +93,10 @@ public class CellBackground
         }
       }
     }
+    this.hashCode = null;
   }
 
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     return attributes;
   }
@@ -114,6 +117,7 @@ public class CellBackground
     if (backgroundColor == null)
     {
       backgroundColor = color;
+      this.hashCode = null;
       return;
     }
 
@@ -125,6 +129,7 @@ public class CellBackground
       {
         collectedColors.clear();
       }
+      this.hashCode = null;
       return;
     }
 
@@ -138,6 +143,7 @@ public class CellBackground
     }
 
     collectedColors.add(color);
+    this.hashCode = null;
   }
 
   public Color getBackgroundColor()
@@ -216,6 +222,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.top = top;
+    this.hashCode = null;
   }
 
   public BorderEdge getLeft()
@@ -230,6 +237,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.left = left;
+    this.hashCode = null;
   }
 
   public BorderEdge getBottom()
@@ -244,6 +252,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.bottom = edge;
+    this.hashCode = null;
   }
 
   public BorderEdge getRight()
@@ -258,6 +267,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.right = edge;
+    this.hashCode = null;
   }
 
   public void setTopLeft(final BorderCorner topLeft)
@@ -267,6 +277,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.topLeft = topLeft;
+    this.hashCode = null;
   }
 
   public void setTopRight(final BorderCorner topRight)
@@ -276,6 +287,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.topRight = topRight;
+    this.hashCode = null;
   }
 
   public void setBottomLeft(final BorderCorner bottomLeft)
@@ -285,6 +297,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.bottomLeft = bottomLeft;
+    this.hashCode = null;
   }
 
   public void setBottomRight(final BorderCorner bottomRight)
@@ -294,6 +307,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.bottomRight = bottomRight;
+    this.hashCode = null;
   }
 
   public BorderCorner getTopLeft()
@@ -327,6 +341,7 @@ public class CellBackground
       anchors = new ArrayList<String>();
     }
     anchors.add(anchor);
+    this.hashCode = null;
   }
 
   public String[] getAnchors()
@@ -345,6 +360,7 @@ public class CellBackground
       throw new NullPointerException();
     }
     this.elementType = type;
+    this.hashCode = null;
   }
 
   public ElementType getElementType()
@@ -423,5 +439,28 @@ public class CellBackground
     }
 
     return true;
+  }
+
+  public int hashCode()
+  {
+    if (hashCode == null)
+    {
+      int result = attributes != null ? attributes.hashCode() : 0;
+      result = 31 * result + (collectedColors != null ? collectedColors.hashCode() : 0);
+      result = 31 * result + (backgroundColor != null ? backgroundColor.hashCode() : 0);
+      result = 31 * result + (anchors != null ? anchors.hashCode() : 0);
+      result = 31 * result + (top != null ? top.hashCode() : 0);
+      result = 31 * result + (left != null ? left.hashCode() : 0);
+      result = 31 * result + (bottom != null ? bottom.hashCode() : 0);
+      result = 31 * result + (right != null ? right.hashCode() : 0);
+      result = 31 * result + (topLeft != null ? topLeft.hashCode() : 0);
+      result = 31 * result + (topRight != null ? topRight.hashCode() : 0);
+      result = 31 * result + (bottomLeft != null ? bottomLeft.hashCode() : 0);
+      result = 31 * result + (bottomRight != null ? bottomRight.hashCode() : 0);
+      result = 31 * result + (origin ? 1 : 0);
+      result = 31 * result + (elementType != null ? elementType.hashCode() : 0);
+      hashCode = result;
+    }
+    return hashCode;
   }
 }

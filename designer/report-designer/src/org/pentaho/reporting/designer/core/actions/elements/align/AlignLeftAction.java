@@ -19,6 +19,8 @@ package org.pentaho.reporting.designer.core.actions.elements.align;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
@@ -27,7 +29,7 @@ import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
@@ -57,25 +59,24 @@ public final class AlignLeftAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel model = getSelectionModel();
+    final DocumentContextSelectionModel model = getSelectionModel();
     if (model == null)
     {
       return;
     }
-    final Element[] visualElements = model.getSelectedVisualElements();
-    if (visualElements.length <= 1)
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
+    if (visualElements.size() <= 1)
     {
       return;
     }
 
     final Element[] carrier = new Element[1];
-    final Element[] objects = ModelUtility.filterParents(visualElements);
+    final List<Element> objects = ModelUtility.filterParents(visualElements);
     final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder(objects);
 
     long minX = Long.MAX_VALUE;
-    for (int j = 0; j < objects.length; j++)
+    for (Element object : objects)
     {
-      final Element object = objects[j];
       final CachedLayoutData data = ModelUtility.getCachedLayoutData(object);
       final long x1 = data.getX();
       if (x1 < minX)
@@ -84,9 +85,8 @@ public final class AlignLeftAction extends AbstractElementSelectionAction
       }
     }
 
-    for (int j = 0; j < objects.length; j++)
+    for (Element object : objects)
     {
-      final Element object = objects[j];
       final CachedLayoutData data = ModelUtility.getCachedLayoutData(object);
       final long elementCenter = data.getX();
       final long delta = minX - elementCenter;
@@ -97,7 +97,7 @@ public final class AlignLeftAction extends AbstractElementSelectionAction
 
       carrier[0] = object;
       final MoveDragOperation mop = new MoveDragOperation
-          (carrier, ORIGIN_POINT, EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
+          (Arrays.asList(carrier), ORIGIN_POINT, EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
       mop.update(new Point2D.Double(StrictGeomUtility.toExternalValue(delta), 0), 1);
       mop.finish();
     }

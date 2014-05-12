@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
 {
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
   private LayoutModelBuilder normalFlow;
   private LayoutModelBuilder header;
   private LayoutModelBuilder footer;
@@ -188,7 +189,8 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
                   final Band band) throws ReportProcessingException
   {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
-    builderStrategy.add(runtime, getLayoutModelBuilder(), band, collectedSubReportMarker);
+    LayoutModelBuilder layoutModelBuilder = getLayoutModelBuilder();
+    builderStrategy.add(runtime, layoutModelBuilder, band, collectedSubReportMarker);
   }
 
   public void addToNormalFlow(final ExpressionRuntime runtime,
@@ -207,7 +209,11 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
   {
     final boolean empty = getLayoutModelBuilder().isEmpty();
     getLayoutModelBuilder().endSection();
-    final InlineSubreportMarker[] markers = collectedSubReportMarker.toArray
+    final InlineSubreportMarker[] markers;
+    if (collectedSubReportMarker.isEmpty())
+    markers = EMPTY_SUBREPORT_MARKERS;
+      else
+    markers = collectedSubReportMarker.toArray
         (new InlineSubreportMarker[collectedSubReportMarker.size()]);
 
     activeSection = Renderer.SectionType.NORMALFLOW;

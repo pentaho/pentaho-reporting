@@ -246,10 +246,10 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
       catch (Throwable e)
       {
         handleError(e);
-        this.dataSchema = new DefaultDataSchema();
         this.dataFactoryException = e;
-        this.query = parent.getQuery();
+        this.dataSchema = new DefaultDataSchema();
       }
+      this.query = parent.getQuery();
 
       updateChangeTrackers();
     }

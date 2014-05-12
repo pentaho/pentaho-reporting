@@ -26,7 +26,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
+import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
@@ -40,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Computes the width for all elements. This uses the CSS algorithm, percentages are resolved against the parent's
@@ -56,12 +59,14 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private static final StaticRootChunkWidthUpdate ROOT = new StaticRootChunkWidthUpdate();
 
   private OutputProcessorMetaData metaData;
+  private ResourceManager resourceManager;
   private boolean overflowXSupported;
   private boolean overflowYSupported;
   private boolean widowsEnabled;
   private StaticChunkWidthUpdate chunkWidthUpdate;
   private StaticChunkWidthUpdatePool chunkWidthUpdatePool;
   private boolean widowOrphanDefinitionsEncountered;
+  private boolean designTime;
 
   public ComputeStaticPropertiesProcessStep()
   {
@@ -76,6 +81,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.overflowYSupported = metaData.isFeatureSupported(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
     this.widowOrphanDefinitionsEncountered = false;
+    this.designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    this.resourceManager = processingContext.getResourceManager();
   }
 
   public boolean isWidowOrphanDefinitionsEncountered()
@@ -127,6 +134,12 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
   protected void processOtherNode(final RenderNode node)
   {
+    if (node instanceof RenderableComplexText)
+    {
+      RenderableComplexText t = (RenderableComplexText) node;
+      t.computeMinimumChunkWidth(metaData, resourceManager);
+    }
+
     chunkWidthUpdate.update(node.getMinimumChunkWidth());
   }
 
@@ -251,6 +264,23 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private void computeResolvedStyleProperties(final RenderBox box, final StaticBoxLayoutProperties sblp)
   {
     final StyleSheet style = box.getStyleSheet();
+
+    NodeLayoutProperties nlp = box.getNodeLayoutProperties();
+    if (designTime)
+    {
+      // at design-time elements can be generated that are not visible in the final output
+      // the report designer needs them to create a smooth design experience.
+      RenderBox parent = box.getParent();
+      if (parent == null)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+      else if (parent.isEmptyNodesHaveSignificance() == false)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+    }
+
     final int nodeType = box.getLayoutNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_LINEBOX)
     {
@@ -366,7 +396,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     if (changeTracker == age)
     {
       // update the parent
-      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      if (box.isVisible())
+      {
+        chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      }
       return;
     }
 
@@ -376,7 +409,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     boxUpdate.finish();
 
     chunkWidthUpdate = chunkWidthUpdate.pop();
-    chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    if (box.isVisible())
+    {
+      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    }
   }
 
 

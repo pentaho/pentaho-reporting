@@ -19,13 +19,13 @@ package org.pentaho.reporting.designer.core.actions.elements.format;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.JComboBox;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.StyleEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
@@ -61,22 +61,16 @@ public final class ApplyFontFamilyAction extends AbstractElementSelectionAction
       return;
     }
     final String font = (String) o;
-    final ReportRenderContext activeContext = getActiveContext();
-    if (activeContext == null)
-    {
-      return;
-    }
 
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
-    if (selectionModel1 == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-    final Element[] visualElements = selectionModel1.getSelectedVisualElements();
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
     final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
-    for (int i = 0; i < visualElements.length; i++)
+    for (Element visualElement : visualElements)
     {
-      final Element visualElement = visualElements[i];
       undos.add(StyleEditUndoEntry.createConditional(visualElement, TextStyleKeys.FONT, font));
       visualElement.getStyle().setStyleProperty(TextStyleKeys.FONT, font);
       visualElement.notifyNodePropertiesChanged();

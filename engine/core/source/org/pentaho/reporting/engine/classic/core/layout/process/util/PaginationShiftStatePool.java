@@ -22,6 +22,39 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
 public class PaginationShiftStatePool
 {
+  private static class BlockPool extends StackedObjectPool<BlockLevelPaginationShiftState>
+  {
+    private BlockPool()
+    {
+    }
+
+    protected BlockLevelPaginationShiftState create()
+    {
+      return new BlockLevelPaginationShiftState();
+    }
+  }
+
+  private static class RowPool extends StackedObjectPool<RowLevelPaginationShiftState>
+  {
+    private RowPool()
+    {
+    }
+
+    protected RowLevelPaginationShiftState create()
+    {
+      return new RowLevelPaginationShiftState();
+    }
+  }
+
+  private StackedObjectPool<BlockLevelPaginationShiftState> blockPool;
+  private StackedObjectPool<RowLevelPaginationShiftState> rowPool;
+
+  public PaginationShiftStatePool()
+  {
+    blockPool = new BlockPool();
+    rowPool = new RowPool();
+  }
+
   protected boolean isBlock(final int nodeType)
   {
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
@@ -50,8 +83,13 @@ public class PaginationShiftStatePool
     final int nodeType = box.getLayoutNodeType();
     if (isBlock(nodeType))
     {
-      return new BlockLevelPaginationShiftState(parent);
+      BlockLevelPaginationShiftState blockShiftState = blockPool.get();
+      blockShiftState.reuse(blockPool, parent, box);
+      return blockShiftState;
     }
-    return new RowLevelPaginationShiftState(parent);
+
+    RowLevelPaginationShiftState shiftState = rowPool.get();
+    shiftState.reuse(rowPool, parent, box);
+    return shiftState;
   }
 }

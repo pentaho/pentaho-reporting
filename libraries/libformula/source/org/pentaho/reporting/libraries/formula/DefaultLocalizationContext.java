@@ -167,11 +167,9 @@ public class DefaultLocalizationContext implements LocalizationContext, Serializ
 
       datetimeFormats.add(DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, activeLocale));
       dateFormats.add(DateFormat.getDateInstance(DateFormat.FULL, activeLocale));
-      timeFormats.add(DateFormat.getTimeInstance(DateFormat.FULL, activeLocale));
 
       datetimeFormats.add(DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, activeLocale));
       dateFormats.add(DateFormat.getDateInstance(DateFormat.LONG, activeLocale));
-      timeFormats.add(DateFormat.getTimeInstance(DateFormat.LONG, activeLocale));
 
       datetimeFormats.add(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, activeLocale));
       dateFormats.add(DateFormat.getDateInstance(DateFormat.MEDIUM, activeLocale));

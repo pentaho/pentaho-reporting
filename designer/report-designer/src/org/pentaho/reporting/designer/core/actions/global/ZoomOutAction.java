@@ -22,7 +22,7 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ZoomModel;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.internal.PreviewPaneUtilities;
 
@@ -45,7 +45,7 @@ public class ZoomOutAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;

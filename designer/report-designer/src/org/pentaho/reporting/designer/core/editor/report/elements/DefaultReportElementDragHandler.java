@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.report.elements;
 
 import java.util.Locale;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.AbstractReportElementDragHandler;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
@@ -43,7 +44,7 @@ public class DefaultReportElementDragHandler extends AbstractReportElementDragHa
 
   protected Element createElement(final ElementMetaData elementMetaData,
                                   final String fieldName,
-                                  final ReportRenderContext context) throws InstantiationException
+                                  final ReportDocumentContext context) throws InstantiationException
   {
     final ElementType type = elementMetaData.create();
     final Element visualElement = (Element) type.create();
@@ -64,7 +65,7 @@ public class DefaultReportElementDragHandler extends AbstractReportElementDragHa
   }
 
   private void configureWizardProperties(final String fieldName,
-                                         final ReportRenderContext context,
+                                         final ReportDocumentContext context,
                                          final Element visualElement)
   {
     final ReportDataSchemaModel model = context.getReportDataSchemaModel();

@@ -17,9 +17,13 @@
 
 package org.pentaho.reporting.libraries.formula;
 
+import java.util.Locale;
+
 import junit.framework.TestCase;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formula.common.TestFormulaContext;
+import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 
 public abstract class FormulaTestBase extends TestCase
 {
@@ -123,4 +127,16 @@ public abstract class FormulaTestBase extends TestCase
     return b.toString();
   }
 
+  protected void performTranslationTest(String function)
+  {
+    FunctionDescription functionDesc = context.getFunctionRegistry().getMetaData(function);
+    assertFalse(StringUtils.isEmpty(functionDesc.getDisplayName(Locale.ENGLISH)));
+    assertFalse(StringUtils.isEmpty(functionDesc.getDescription(Locale.ENGLISH)));
+    int count = functionDesc.getParameterCount();
+    for (int x = 0; x < count; x++)
+    {
+      assertFalse(StringUtils.isEmpty(functionDesc.getParameterDescription(x, Locale.ENGLISH)));
+      assertFalse(StringUtils.isEmpty(functionDesc.getParameterDisplayName(x, Locale.ENGLISH)));
+    }
+  }
 }

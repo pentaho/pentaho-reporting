@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import java.io.File;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 import org.junit.Assert;
@@ -63,9 +64,10 @@ public class PagebreakTest
     report.getReportHeader().addElement(table);
     report.getReportHeader().setLayout("block");
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
   }
 
   @Test
@@ -110,9 +112,10 @@ public class PagebreakTest
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-block.pdf");
 
-    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0, StrictGeomUtility.toInternalValue(10));
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
 //    assertPageValid(report, 3);
 //    assertPageValid(report, 4);
   }
@@ -133,10 +136,11 @@ public class PagebreakTest
     report.getReportHeader().setLayout("row");
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-row.pdf");
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
 //    assertPageValid(report, 3);
 //    assertPageValid(report, 4);
   }
@@ -183,9 +187,10 @@ public class PagebreakTest
 
     PdfReportUtil.createPDF(report, "test-output/PRD-3857-output-canvas.pdf");
 
-    assertPageValid(report, 0, StrictGeomUtility.toInternalValue(10));
-    assertPageValid(report, 1);
-    assertPageValid(report, 2);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    assertPageValid(pages, 0, StrictGeomUtility.toInternalValue(10));
+    assertPageValid(pages, 1);
+    assertPageValid(pages, 2);
   }
 
   @Test
@@ -199,18 +204,19 @@ public class PagebreakTest
     final Resource res = manager.createDirectly(file, MasterReport.class);
     final MasterReport report = (MasterReport) res.getResource();
 
-    assertPageValid(report, 0);
-    assertPageValid(report, 1);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    assertPageValid(pages, 0);
+    assertPageValid(pages, 1);
   }
 
-  private void assertPageValid(final MasterReport report, final int page) throws Exception
+  private void assertPageValid(final List<LogicalPageBox> pages, final int page) throws Exception
   {
-    assertPageValid(report, page, 0);
+    assertPageValid(pages, page, 0);
   }
 
-  private void assertPageValid(final MasterReport report, final int page, final long offset) throws Exception
+  private void assertPageValid(final List<LogicalPageBox> pages, final int page, final long offset) throws Exception
   {
-    final LogicalPageBox pageBox = DebugReportRunner.layoutPage(report, page);
+    final LogicalPageBox pageBox = pages.get(page);
     final long pageOffset = pageBox.getPageOffset();
 
     //ModelPrinter.INSTANCE.print(pageBox);

@@ -26,7 +26,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs.RepositoryLoginDialog;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishSettings;
@@ -74,10 +74,10 @@ public class LoginTask implements Runnable
     }
     else
     {
-      final ReportRenderContext reportRenderContext = designerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = designerContext.getActiveContext();
       if (reportRenderContext != null)
       {
-        final Object o = reportRenderContext.getProperty("pentaho-login-url");
+        final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
         if (o != null)
         {
           // prepopulate the dialog with the correct login data, but do not skip login completely.
@@ -170,7 +170,7 @@ public class LoginTask implements Runnable
 
     if (loginDialog != null && loginDialog.isRememberSettings())
     {
-      final ReportRenderContext reportRenderContext = designerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = designerContext.getActiveContext();
       if (reportRenderContext != null)
       {
         final AuthenticationStore store = reportRenderContext.getAuthenticationStore();

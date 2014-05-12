@@ -18,7 +18,7 @@
 package org.pentaho.reporting.designer.core.inspections;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
 /**
@@ -36,6 +36,6 @@ public interface Inspection
   public boolean isInlineInspection();
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException;
 }

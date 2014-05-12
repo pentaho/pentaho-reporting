@@ -716,7 +716,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
   protected static final Log logger = LogFactory.getLog(MondrianDataSourceEditor.class);
 
-  private JList<DataSetQuery<String>> queryNameList;
+  private JList queryNameList;
   private JTextField queryNameTextField;
   private JTextField filenameField;
   private JTextField cubeConnectionNameField;
@@ -803,7 +803,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     queryTextArea.setRows(5);
     queryTextArea.getDocument().addDocumentListener(new QueryDocumentListener());
 
-    queryNameList = new JList<DataSetQuery<String>>(getDialogModel().getQueries());
+    queryNameList = new JList(getDialogModel().getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(new QuerySelectedHandler());
@@ -811,7 +811,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -821,7 +821,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 

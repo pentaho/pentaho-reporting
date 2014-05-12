@@ -24,10 +24,6 @@
       </block>
       <block name="::group-0" type="BlockRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-        <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          </block>
-        </block>
         <block type="BlockRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
           <block name="Advertising" type="BlockRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -41,20 +37,12 @@
             </block>
             <block type="BlockRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
               </canvas>
             </block>
-          </block>
-        </block>
-        <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           </block>
         </block>
       </block>

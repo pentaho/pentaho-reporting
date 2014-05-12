@@ -59,7 +59,7 @@ public class DenormalizedDataSourceDriverTest extends DataSourceTestBase
   {
     final DriverDataSourceProvider provider = new DriverDataSourceProvider();
     provider.setDriver("org.hsqldb.jdbcDriver");
-    provider.setUrl("jdbc:hsqldb:./sql/sampledata");
+    provider.setUrl("jdbc:hsqldb:mem:SampleData");
 
     final DenormalizedMDXDataFactory mondrianDataFactory = new DenormalizedMDXDataFactory();
     mondrianDataFactory.setCubeFileProvider(new DefaultCubeFileProvider

@@ -32,7 +32,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.int
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal.PdfOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.support.itext.BaseFontModule;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 import org.pentaho.reporting.libraries.fonts.itext.ITextFontStorage;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -84,10 +83,7 @@ public class PdfOutputProcessor extends AbstractPageableOutputProcessor
     // This is less accurate than using the iText fonts, but completing
     // the TrueType registry or implementing an iText registry is too expensive
     // for now.
-    final String encoding = configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding",
-            EncodingRegistry.getPlatformDefaultEncoding());
-    final ITextFontStorage fontStorage = new ITextFontStorage(BaseFontModule.getFontRegistry(), encoding);
+    final ITextFontStorage fontStorage = new ITextFontStorage(BaseFontModule.getFontRegistry());
 
     metaData = new PdfOutputProcessorMetaData(fontStorage);
 

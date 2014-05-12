@@ -27,9 +27,9 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.groups.EditGroupDetailsDialog;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
@@ -56,7 +56,7 @@ public final class EditGroupAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getSelectionModel();
     if (selectionModel == null)
     {
       return;
@@ -76,7 +76,7 @@ public final class EditGroupAction extends AbstractElementSelectionAction
     final EditGroupUndoEntry groupUndoEntry = performEditGroup(getReportDesignerContext(), selectedElement, false);
     if (groupUndoEntry != null)
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       groupUndoEntry.redo(activeContext);
     }
   }
@@ -85,7 +85,7 @@ public final class EditGroupAction extends AbstractElementSelectionAction
                                                     final Object selectedElement,
                                                     final boolean addGroup)
   {
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final EditGroupDetailsDialog dialog;
     if (window instanceof JDialog)

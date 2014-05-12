@@ -48,15 +48,17 @@ public abstract class RenderBox extends RenderNode
     UNRESTRICTED, RESTRICTED, LEAF
   }
 
-  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED2 = 0x1000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED3 = 0x2000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED4 = 0x4000000;
   protected static final int FLAG_BOX_TABLE_SECTION_RESERVED5 = 0x8000000;
   protected static final int FLAG_BOX_INVALID_WIDOW_ORPHAN_NODE = 0x10000000;
+  protected static final int FLAG_BOX_CONTAINS_PRESERVED_CONTENT = 0x20000000;
+  private static final int FLAG_BOX_PREVENT_PAGINATION = 0x40000000;
   private static final int FLAG_BOX_OPEN = 0x10000;
   private static final int FLAG_BOX_MARKED_OPEN = 0x20000;
   private static final int FLAG_BOX_APPLIED_OPEN = 0x40000;
+  protected static final int FLAG_BOX_TABLE_SECTION_RESERVED = 0x80000;
   private static final int FLAG_BOX_MARKED_SEEN = 0x100000;
   private static final int FLAG_BOX_APPLIED_SEEN = 0x200000;
   private static final int FLAG_BOX_DEEP_FINISHED = 0x400000;
@@ -88,6 +90,10 @@ public abstract class RenderBox extends RenderNode
   private long contentAge;
   private long overflowAreaWidth;
   private long overflowAreaHeight;
+  private long processKeyStepAge;
+  private ReportStateKey processKeyCached;
+  private boolean processKeyFinish;
+  private int processKeyContentRefCount;
 
   /**
    * Is the amount of space reserved for orphans beginning at the y-position of the box.
@@ -749,7 +755,7 @@ public abstract class RenderBox extends RenderNode
 
   /**
    * Derive creates a disconnected node that shares all the properties of the original node. The derived node will no
-   * longer have any parent, silbling, child or any other relationships with other nodes.
+   * longer have any parent, sibling, child or any other relationships with other nodes.
    *
    * @return
    */
@@ -1257,7 +1263,10 @@ public abstract class RenderBox extends RenderNode
     setMarkedOpen(isAppliedOpen());
     this.markedContentRefCount = appliedContentRefCount;
     this.markedPinPosition = appliedPinPosition;
-    resetCacheState(deepDirty);
+    this.overflowAreaHeight = 0;
+    this.overflowAreaWidth = 0;
+    // todo PRD-4606
+    resetCacheState(false);
 
     validateDescendantCounter();
   }
@@ -1385,7 +1394,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaHeight()
   {
-    return overflowAreaHeight;
+    return Math.max (getHeight(), overflowAreaHeight);
   }
 
   public void setOverflowAreaHeight(final long overflowAreaHeight)
@@ -1395,7 +1404,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaWidth()
   {
-    return overflowAreaWidth;
+    return Math.max(getWidth(), overflowAreaWidth);
   }
 
   public void setOverflowAreaWidth(final long overflowAreaWidth)
@@ -1418,10 +1427,9 @@ public abstract class RenderBox extends RenderNode
   public void apply()
   {
     super.apply();
+    this.overflowAreaHeight = 0;
     this.staticBoxPropertiesAge = getChangeTracker();
     this.tableValidationAge = getChangeTracker();
-    overflowAreaWidth = getCachedWidth();
-    overflowAreaHeight = getCachedHeight();
   }
 
   /**
@@ -1432,22 +1440,17 @@ public abstract class RenderBox extends RenderNode
    * @param child
    * @param heightOffset
    */
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInBlockMode(child, heightOffset);
+    return extendHeightInBlockMode(child, heightOffset);
   }
 
-  protected void extendHeightInBlockMode(final RenderNode child, final long heightOffset)
+  protected long extendHeightInBlockMode(final RenderNode child, final long heightOffset)
   {
     setHeight(getHeight() + heightOffset);
     setOverflowAreaHeight(getOverflowAreaHeight() + heightOffset);
-    updateCacheState(CACHE_DEEP_DIRTY);
-
-    final RenderBox parent = getParent();
-    if (parent != null)
-    {
-      parent.extendHeight(this, heightOffset);
-    }
+    //updateCacheState(CACHE_DIRTY);
+    return heightOffset;
   }
 
   /**
@@ -1457,7 +1460,7 @@ public abstract class RenderBox extends RenderNode
    * @param child
    * @param heightOffset
    */
-  protected void extendHeightInRowMode(final RenderNode child, final long heightOffset)
+  protected long extendHeightInRowMode(final RenderNode child, final long heightOffset)
   {
     final long parentY2 = getY() + getHeight();
     final long childY2 = child.getY() + child.getHeight();
@@ -1466,19 +1469,14 @@ public abstract class RenderBox extends RenderNode
     {
       // child expands without expanding this parent band. There was enough space available to contain the
       // child inside the parent box.
-      return;
+      return 0;
     }
 
     final long delta = Math.min(deltaToBase, heightOffset);
     setHeight(getHeight() + delta);
     setOverflowAreaHeight(getOverflowAreaHeight() + delta);
-    updateCacheState(CACHE_DEEP_DIRTY);
-
-    final RenderBox parent = getParent();
-    if (parent != null)
-    {
-      parent.extendHeight(this, delta);
-    }
+    //updateCacheState(CACHE_DIRTY);
+    return delta;
   }
 
   public int getChildCount()
@@ -1571,5 +1569,71 @@ public abstract class RenderBox extends RenderNode
     final long insetBottom = staticBoxLayoutProperties.getBorderBottom() + boxDefinition.getPaddingBottom();
     final long insetTop = staticBoxLayoutProperties.getBorderTop() + boxDefinition.getPaddingTop();
     return insetBottom + insetTop;
+  }
+
+  public boolean isContainsReservedContent()
+  {
+    return isFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT);
+  }
+
+  public void setContainsReservedContent(final boolean containsReservedContent)
+  {
+    setFlag(FLAG_BOX_CONTAINS_PRESERVED_CONTENT, containsReservedContent);
+  }
+
+  public boolean isPreventPagination()
+  {
+    return isFlag(FLAG_BOX_PREVENT_PAGINATION);
+  }
+
+  public void setPreventPagination(final boolean preventPagination)
+  {
+    setFlag(FLAG_BOX_PREVENT_PAGINATION, preventPagination);
+    updateChangeTracker();
+  }
+
+  public boolean isRenderBox()
+  {
+    return true;
+  }
+
+  public void setProcessKeyCached(final ReportStateKey processKeyCached)
+  {
+    this.processKeyStepAge = getChangeTracker();
+    this.processKeyCached = processKeyCached;
+    this.processKeyFinish = isFinishedPaginate();
+    this.processKeyContentRefCount = getDescendantCount();
+  }
+
+  public long getProcessKeyStepAge()
+  {
+    return processKeyStepAge;
+  }
+
+  public ReportStateKey getProcessKeyCached()
+  {
+    return processKeyCached;
+  }
+
+  public boolean isProcessKeyFinish()
+  {
+    return processKeyFinish;
+  }
+
+  public boolean isProcessKeyCacheValid()
+  {
+    if (processKeyCached == null)
+    {
+      return false;
+    }
+    if (getContentRefCount() != 0)
+    {
+      // subreport content cannot be cached ..
+      return false;
+    }
+    return (getProcessKeyStepAge() == getChangeTracker() &&
+        isProcessKeyFinish() == isFinishedPaginate() &&
+        this.processKeyContentRefCount == getDescendantCount());
+
   }
 }

@@ -64,11 +64,11 @@ public class FileConfigStoreModuleInitializer implements ModuleInitializer
   {
     final String userBaseDirectory =
         ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-            (FileConfigStoreModuleInitializer.USER_BASEDIR_CONFIG_KEY, "~/.jfreereport/user"); //$NON-NLS-1$
+            (FileConfigStoreModuleInitializer.USER_BASEDIR_CONFIG_KEY, "~/.pentaho/classic-engine/user"); //$NON-NLS-1$
 
     final String systemBaseDirectory =
         ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-            (FileConfigStoreModuleInitializer.SYSTEM_BASEDIR_CONFIG_KEY, "~/.jfreereport/system"); //$NON-NLS-1$
+            (FileConfigStoreModuleInitializer.SYSTEM_BASEDIR_CONFIG_KEY, "~/.pentaho/classic-engine/system"); //$NON-NLS-1$
 
     final ConfigFactory factory = ConfigFactory.getInstance();
     factory.defineUserStorage(new FileConfigStorage(getStoragePath(userBaseDirectory)));

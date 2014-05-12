@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
+import java.util.List;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
@@ -77,9 +78,9 @@ public class Prd3930Test extends TestCase
     report.getReportHeader().addElement(table);
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
-    for (int page = 0; page < 3; page += 1)
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    for (final LogicalPageBox logicalPageBox: pages)
     {
-      final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, page);
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)
       {
@@ -117,9 +118,9 @@ public class Prd3930Test extends TestCase
     report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
 
     // Test whether the final page has out-of-bounds boxes. The FillPhysicalPages step should have removed them
-    for (int page = 0; page < 3; page += 1)
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    for (final LogicalPageBox logicalPageBox: pages)
     {
-      final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, page);
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)
       {
@@ -235,7 +236,8 @@ public class Prd3930Test extends TestCase
       final PhysicalPageDrawable pageDrawable = (PhysicalPageDrawable) rp.getPageDrawable(page);
       final LogicalPageBox logicalPageBox = pageDrawable.getPageDrawable().getLogicalPageBox();
 
-//      new FileModelPrinter("Prd-3930-page-" + page + "-", new File("test-output")).print(logicalPageBox);
+
+//      new FileModelPrinter("Prd-3930-page-" + page + "-", DebugReportRunner.createTestOutputFile()).print(logicalPageBox);
 
       final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(TableRowRenderBox.class));
       for (int i = 0; i < all.length; i += 1)
@@ -319,12 +321,13 @@ public class Prd3930Test extends TestCase
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
     XmlTableReportUtil.createFlowXML(report, bout);
     final String text = bout.toString("UTF-8");
+
     for (int i = 0; i < 100; i += 1)
     {
-      assertTrue(text.contains("value=\"Data-" + i + "-0"));
-      assertTrue(text.contains("value=\"Data-" + i + "-1"));
-      assertTrue(text.contains(">Data-" + i + "-0</text>"));
-      assertTrue(text.contains(">Data-" + i + "-1</text>"));
+      assertTrue("Found data-0 cell", text.contains("value=\"Data-" + i + "-0"));
+      assertTrue("Found data-1 cell", text.contains("value=\"Data-" + i + "-1"));
+      assertTrue("Found data-0 label", text.contains(">Data-" + i + "-0</text>"));
+      assertTrue("Found data-1 label", text.contains(">Data-" + i + "-1</text>"));
     }
 
     // count table-tags.
@@ -387,7 +390,6 @@ public class Prd3930Test extends TestCase
       }
     }
 
-    // todo: Bug-fixing needed. Creates empty pages when manual-breaking..
     assertEquals(numberOfPagebreaks + 1, count);
   }
 

@@ -54,6 +54,18 @@ public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
     }
   }
 
+  public void setDesignTime(boolean designTime)
+  {
+    if (designTime)
+    {
+      addFeature(OutputProcessorFeature.DESIGNTIME);
+    }
+    else
+    {
+      removeFeature(OutputProcessorFeature.DESIGNTIME);
+    }
+  }
+
   /**
    * The export descriptor is a string that describes the output characteristics. For libLayout outputs, it should start
    * with the output class (one of 'pageable', 'flow' or 'stream'), followed by '/liblayout/' and finally followed by

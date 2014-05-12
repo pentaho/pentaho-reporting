@@ -33,10 +33,10 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <table-row type="TableRowRenderBox" x="0.0" y="0.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="0.0" width="100.0" height="80.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="0.0" width="100.0" height="80.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="4" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="100.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -49,7 +49,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="400.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -62,7 +62,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="700.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -75,7 +75,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1000.0" y="0.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -91,7 +91,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="20.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="100.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="100.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -104,7 +104,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="400.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -117,7 +117,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="700.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -130,7 +130,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="3" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1000.0" y="20.0" width="300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -146,7 +146,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="40.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -159,7 +159,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -172,7 +172,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="300.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -185,7 +185,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="400.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -198,7 +198,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="500.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -211,7 +211,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="600.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -224,7 +224,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="700.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -237,7 +237,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="800.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -250,7 +250,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="900.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -263,7 +263,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1000.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -276,7 +276,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1100.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -289,7 +289,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1200.0" y="40.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -305,7 +305,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="60.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -318,7 +318,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -331,7 +331,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="300.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -344,7 +344,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="400.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -357,7 +357,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="500.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -370,7 +370,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="600.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -383,7 +383,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="700.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -396,7 +396,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="800.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -409,7 +409,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="900.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -422,7 +422,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1000.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -435,7 +435,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1100.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -448,7 +448,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1200.0" y="60.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -464,7 +464,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="80.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-title-header"/>
@@ -477,73 +477,73 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="100.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="200.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="300.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="400.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="500.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="600.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="700.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="800.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="900.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1000.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1100.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="80.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="1200.0" y="80.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
@@ -555,7 +555,7 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
               <table-row type="TableRowRenderBox" x="0.0" y="100.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -570,7 +570,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -585,7 +585,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -600,7 +600,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -615,7 +615,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -630,7 +630,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -645,7 +645,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -660,7 +660,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -675,7 +675,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -690,7 +690,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -705,7 +705,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -720,7 +720,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -735,7 +735,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="100.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -753,7 +753,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="120.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -766,7 +766,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -781,7 +781,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -796,7 +796,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -811,7 +811,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -826,7 +826,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -841,7 +841,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -856,7 +856,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -871,7 +871,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -886,7 +886,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -901,7 +901,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -916,7 +916,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -931,7 +931,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="120.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -949,7 +949,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="140.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -962,7 +962,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -977,7 +977,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -992,7 +992,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1007,7 +1007,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1022,7 +1022,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1037,7 +1037,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1052,7 +1052,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1067,7 +1067,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1082,7 +1082,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="140.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="140.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1090,7 +1090,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1105,7 +1105,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1120,7 +1120,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="140.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1138,7 +1138,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="160.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -1151,7 +1151,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="160.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="160.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1159,7 +1159,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1174,7 +1174,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1189,7 +1189,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1204,7 +1204,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1219,7 +1219,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1234,7 +1234,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1249,7 +1249,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1264,7 +1264,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1279,7 +1279,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1294,7 +1294,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1309,7 +1309,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="160.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1327,7 +1327,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="180.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -1340,7 +1340,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1355,7 +1355,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1370,7 +1370,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="180.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="180.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1378,7 +1378,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1393,7 +1393,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1408,7 +1408,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1423,7 +1423,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1438,7 +1438,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="180.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="180.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1446,7 +1446,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1461,7 +1461,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1476,7 +1476,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1491,7 +1491,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="180.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1509,7 +1509,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="200.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -1526,7 +1526,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1541,7 +1541,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1556,7 +1556,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1571,7 +1571,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1586,7 +1586,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1601,7 +1601,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1616,7 +1616,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1631,7 +1631,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1646,7 +1646,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="200.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="200.0" width="100.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1654,7 +1654,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1669,7 +1669,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1684,7 +1684,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="200.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1702,7 +1702,7 @@
               </table-row>
               <table-row type="TableRowRenderBox" x="0.0" y="220.0" width="1300.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
-                <table-cell type="TableCellRenderBox" x="0.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="0.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="0">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <canvas type="CanvasRenderBox" x="0.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="crosstab-header"/>
@@ -1717,7 +1717,7 @@
                     </p>
                   </canvas>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="1">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1732,7 +1732,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="2">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1747,7 +1747,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="300.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="300.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="3">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="300.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="300.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1762,7 +1762,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="400.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="400.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="4">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="400.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="400.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1777,7 +1777,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="500.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="500.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="5">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="500.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="500.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1792,7 +1792,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="600.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="600.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="6">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="600.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="600.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1807,7 +1807,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="700.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="700.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="7">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="700.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="700.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1822,7 +1822,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="800.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="800.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="8">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="800.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="800.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1837,7 +1837,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="900.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="900.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="9">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="900.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="900.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1852,7 +1852,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1000.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1000.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="10">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1000.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1000.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1867,7 +1867,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="11">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1100.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1882,7 +1882,7 @@
                     </canvas>
                   </auto>
                 </table-cell>
-                <table-cell type="TableCellRenderBox" x="1200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <table-cell type="TableCellRenderBox" x="1200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" col-span="1" row-span="1" col-index="12">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="legacy-element"/>
                   <auto name="Section-0" type="AutoRenderBox" x="1200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                     <canvas type="CanvasRenderBox" x="1200.0" y="220.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

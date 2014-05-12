@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
@@ -59,11 +60,11 @@ public class RowRenderBox extends RenderBox
 
   public boolean isEmptyNodesHaveSignificance()
   {
-    return true;
+    return getNodeLayoutProperties().getStyleSheet().getBooleanStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(child, heightOffset);
+    return extendHeightInRowMode(child, heightOffset);
   }
 }

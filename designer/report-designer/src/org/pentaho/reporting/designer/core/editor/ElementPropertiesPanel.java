@@ -27,7 +27,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.attributes.VisualAttributeEditorPanel;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionPropertiesEditorPanel;
 import org.pentaho.reporting.designer.core.editor.styles.StyleEditorPanel;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -99,14 +99,14 @@ public class ElementPropertiesPanel extends SidePanel
     this.allowExpressionCard = allowExpressionCard;
   }
 
-  public void reset(final ReportSelectionModel model)
+  public void reset(final DocumentContextSelectionModel model)
   {
     // clear selections
     cardLayout.show(this, BLANK_CARD);
     updateSelection(model);
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
     datasourceCarrier.removeAll();
     if (model.getSelectionCount() < 1)

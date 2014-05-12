@@ -39,7 +39,7 @@ import org.apache.commons.vfs.VFS;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationHelper;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterRefreshEvent;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterRefreshListener;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterTable;
@@ -104,11 +104,11 @@ public class PentahoParameterRefreshHandler implements DrillDownParameterRefresh
         return;
       }
 
-      final ReportRenderContext reportRenderContext = reportDesignerContext.getActiveContext();
-      final Object o = reportRenderContext.getProperty("pentaho-login-url");
+      final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
+      final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
       if (o == null)
       {
-        reportRenderContext.setProperty("pentaho-login-url", loginData.getUrl());
+        reportRenderContext.getProperties().put("pentaho-login-url", loginData.getUrl());
       }
 
       final Thread loginThread = new Thread(requestParamsFromServerTask);

@@ -52,7 +52,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
@@ -344,7 +344,7 @@ public class EditGroupDetailsDialog extends CommonDialog
 
   public boolean editGroupData(final String name,
                                final String[] groupFields,
-                               final ReportRenderContext reportRenderContext)
+                               final ReportDocumentContext reportRenderContext)
   {
     if (reportRenderContext == null)
     {
@@ -372,7 +372,7 @@ public class EditGroupDetailsDialog extends CommonDialog
   }
 
   public EditGroupUndoEntry editGroup(final RelationalGroup group,
-                                      final ReportRenderContext reportRenderContext,
+                                      final ReportDocumentContext reportRenderContext,
                                       final boolean addGroup)
   {
     if (addGroup)

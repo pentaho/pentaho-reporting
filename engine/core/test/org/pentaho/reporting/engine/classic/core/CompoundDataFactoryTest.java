@@ -87,7 +87,7 @@ public class CompoundDataFactoryTest extends TestCase
     catch (MetaDataLookupException e)
     {
       // we no longer allow data-factories without metadata in the system.
-      e.printStackTrace();
+      // e.printStackTrace();
     }
 
   }

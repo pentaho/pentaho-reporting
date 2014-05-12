@@ -46,6 +46,7 @@ public class FormulaEditorPanelTest extends TestCase
     }
 
     final FormulaEditorPanel panel = new FormulaEditorPanel();
+//    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
     panel.setFormulaText("=COUNT()");
     panel.getFunctionTextArea().setCaretPosition(2);
 
@@ -65,7 +66,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testCountWithFunctionInFirstParameterField()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=COUNT()");
 
@@ -82,7 +82,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testCountWithFunctionInSecondParameterField()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=COUNT()");
 
@@ -99,7 +98,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testCountWithFunctionInSecondWithMultipleEmbeddedParameterField()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=COUNT()");
 
@@ -117,7 +115,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testCountFunctionWithThreeParameters()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=COUNT()");
 
@@ -136,7 +133,6 @@ public class FormulaEditorPanelTest extends TestCase
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
     panel.init();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=(1 + SUM())");
     panel.getFunctionTextArea().setCaretPosition(7);
@@ -155,7 +151,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testAddAdditionalParameterToSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1;2)");
     panel.getFunctionTextArea().setCaretPosition(2);
@@ -171,7 +166,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testAddMultipleAdditionalParameterToSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getFunctionTextArea().setCaretPosition(2);
@@ -187,7 +181,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testReplaceSingleParameterEmbeddedSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -203,7 +196,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testReplaceSingleParameterEmbeddedCOUNTFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -219,7 +211,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testUpdateSingleParameterForSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -235,7 +226,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testReplaceSUMFirstParameterWithCOUNTFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1;2)");
     panel.getEditorModel().setCaretPosition(2);
@@ -252,7 +242,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testEmbeddedSingleParameterToSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -268,7 +257,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testEmbeddedFunctionWithMultipleParametersToSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -284,7 +272,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testEmbeddedMultipleFunctionWithMultipleParametersToSUMFunction()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -302,7 +289,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testEmbeddedMultipleFunctionWithLastParameterSameAsFirst()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1)");
     panel.getEditorModel().setCaretPosition(2);
@@ -325,7 +311,6 @@ public class FormulaEditorPanelTest extends TestCase
   public void testTwoSeparateFunctions()
   {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=SUM(1;2) + COUNT(1;2)");
     panel.getEditorModel().setCaretPosition(2);
@@ -349,7 +334,6 @@ public class FormulaEditorPanelTest extends TestCase
     final String ifFormula = "=IF(Logical;Any;Any)";
 
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText(ifFormula);
 
@@ -372,7 +356,6 @@ public class FormulaEditorPanelTest extends TestCase
    **/
   public void testReplaceDummyIFParamWithIF() {
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=IF(Logical;Any;Any)");
 
@@ -388,7 +371,6 @@ public class FormulaEditorPanelTest extends TestCase
   {
     final String drillDownFormulaBase = "DRILLDOWN(\"local-sugar\"; NA(); {\"::pentaho-path\";";
     FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.setFormulaText("=" + drillDownFormulaBase + " \"/public/bi-developers/steel-wheels-old/reports/Top N Analysis.prpt\"})");
 
@@ -411,9 +393,89 @@ public class FormulaEditorPanelTest extends TestCase
     final String fieldNoFormula = "[PRODUCTNAME]";
 
     final FormulaEditorPanel panel = new FormulaEditorPanel();
-    panel.getFunctionTextArea().getDocument().removeDocumentListener(panel.getDocSyncHandler());
 
     panel.insertText(fieldNoFormula);
     assertEquals("=[PRODUCTNAME]", panel.getFormulaText());
+  }
+
+  // Validates PRD-4691
+  public void testNestedFunctionOuterFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "IF(1;2;3)");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "4");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3);4", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+
+    panel.setFormulaText("=IF()");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "IF(1;2;3");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "4");    // Other clause
+    assertEquals("=IF(1;IF(1;2;3);4", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionFirstInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "IF(1;2;3)");    // Then clause
+    assertEquals("=IF(IF(1;2;3)", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "4");    // Other clause
+    assertEquals("=IF(IF(1;2;3);4", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "5");    // Other clause
+    assertEquals("=IF(IF(1;2;3);4;5", panel.getFormulaText());
+  }
+
+  public void testNestedFunctionLastInnerFunctionMissingParenthesis()
+  {
+    final FormulaEditorPanel panel = new FormulaEditorPanel();
+
+    panel.setFormulaText("=IF(");
+    panel.getEditorModel().setCaretPosition(2);
+
+    final MultiplexFunctionParameterEditor functionParameterEditor = panel.getFunctionParameterEditor();
+    final DefaultFunctionParameterEditor activeEditor = functionParameterEditor.getDefaultEditor();
+
+    activeEditor.fireParameterUpdate(0, "1");    // Then clause
+    assertEquals("=IF(1", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(1, "4");    // Other clause
+    assertEquals("=IF(1;4", panel.getFormulaText());
+
+    activeEditor.fireParameterUpdate(2, "IF(1;2;3)");    // Other clause
+    assertEquals("=IF(1;4;IF(1;2;3)", panel.getFormulaText());
   }
 }

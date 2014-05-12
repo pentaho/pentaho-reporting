@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionUtil;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
@@ -196,7 +197,12 @@ public class ExpressionEditorPane extends JPanel
     {
       return null;
     }
-    return reportDesignerContext.getActiveContext();
+    ReportDesignerDocumentContext activeContext = reportDesignerContext.getActiveContext();
+    if (activeContext instanceof ReportRenderContext)
+    {
+      return (ReportRenderContext) activeContext;
+    }
+    return null;
   }
 
   public ReportDesignerContext getReportDesignerContext()

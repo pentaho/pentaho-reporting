@@ -27,8 +27,8 @@ import javax.swing.ImageIcon;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -135,7 +135,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
 
   protected void updateSelection()
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       setEnabled(false);
@@ -143,7 +143,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
     }
 
     Object selectedElement = null;
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       setEnabled(false);
@@ -185,7 +185,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
   public void actionPerformed(final ActionEvent e)
   {
     Object selectedElement = null;
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       return;
@@ -230,7 +230,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
       type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
 
-      final ReportRenderContext context = getActiveContext();
+      final ReportDocumentContext context = getActiveContext();
       final UndoManager undo = context.getUndo();
       undo.addChange(ActionMessages.getString("InsertElementAction.UndoName"),
           new ElementEditUndoEntry(band.getObjectID(), band.getElementCount(), null, visualElement));

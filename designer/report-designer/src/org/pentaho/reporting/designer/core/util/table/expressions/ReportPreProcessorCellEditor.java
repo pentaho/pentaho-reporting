@@ -38,7 +38,7 @@ import javax.swing.event.EventListenerList;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.openformula.ui.FieldDefinition;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
@@ -161,7 +161,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
   private JPanel carrierPanel;
   private JComboBox expressionEditor;
   private EventListenerList eventListenerList;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
   private DefaultDataAttributeContext dataAttributeContext;
 
@@ -197,7 +197,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
       }
       model.addElement(metaData);
     }
-    expressionEditor = new SmartComboBox(model);
+    expressionEditor = new SmartComboBox<ReportPreProcessorMetaData>(model);
     expressionEditor.addActionListener(new SelectionAction());
     expressionEditor.setEditor(new ValuePassThroughCellEditor(expressionEditor, new ReportPreProcessorListCellRenderer()));
     expressionEditor.setRenderer(new ReportPreProcessorListCellRenderer());
@@ -212,12 +212,7 @@ public class ReportPreProcessorCellEditor implements TableCellEditor
 
   }
 
-  public ReportRenderContext getRenderContext()
-  {
-    return renderContext;
-  }
-
-  public void setRenderContext(final ReportRenderContext renderContext)
+  public void setRenderContext(final ReportDocumentContext renderContext)
   {
     this.renderContext = renderContext;
   }

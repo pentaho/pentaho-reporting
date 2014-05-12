@@ -21,10 +21,8 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlReportUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -53,7 +51,7 @@ public class Prd2087Test extends TestCase
     // masterReport.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
 //    DebugReportRunner.createXmlTablePageable(masterReport);
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(masterReport, 3);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+//    ModelPrinter.INSTANCE.print(logicalPageBox);
   }
 
   public void testOrphan1Crash() throws Exception
@@ -85,8 +83,7 @@ public class Prd2087Test extends TestCase
 
   public void testSeq1Crash2() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

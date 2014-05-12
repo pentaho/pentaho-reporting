@@ -36,6 +36,7 @@ public final class LogicalPageBox extends BlockRenderBox
   private PageBreakPositionList allVerticalBreaks;
   private long pageOffset;
   private long pageEnd;
+  private long processedTableOffset;
 
   private WatermarkAreaBox watermarkArea;
   private PageAreaBox headerArea;
@@ -303,6 +304,16 @@ public final class LogicalPageBox extends BlockRenderBox
     footerArea = ((PageAreaBox) savedFooterArea.derive(true));
     repeatFooterArea = ((PageAreaBox) savedRepeatFooterArea.derive(true));
     watermarkArea = ((WatermarkAreaBox) savedWatermarkArea.derive(true));
+  }
+
+  public long getProcessedTableOffset()
+  {
+    return processedTableOffset;
+  }
+
+  public void setProcessedTableOffset(final long processedTableOffset)
+  {
+    this.processedTableOffset = processedTableOffset;
   }
 }
 

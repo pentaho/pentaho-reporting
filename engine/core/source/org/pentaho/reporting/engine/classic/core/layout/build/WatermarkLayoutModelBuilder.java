@@ -83,6 +83,7 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
       return backend.produceRenderBox(band, style, layoutType, stateKey);
     }
 
+    @Deprecated
     public RenderBox createAutoParagraph(final ReportStateKey stateKey)
     {
       return backend.createAutoParagraph(stateKey);
@@ -163,10 +164,11 @@ public class WatermarkLayoutModelBuilder extends LayoutModelBuilderWrapper
   {
   }
 
-  public void startBox(final ReportElement element)
+  public InstanceID startBox(final ReportElement element)
   {
-    getParent().startBox(element);
+    InstanceID instanceID = getParent().startBox(element);
     inBoxDepth += 1;
+    return instanceID;
   }
 
   public void startSection(final ReportElement element, final int sectionSize)

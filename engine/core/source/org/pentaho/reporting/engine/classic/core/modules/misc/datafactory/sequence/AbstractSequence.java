@@ -42,7 +42,9 @@ public abstract class AbstractSequence implements Sequence
   {
     try
     {
-      return super.clone();
+      final AbstractSequence clone = (AbstractSequence) super.clone();
+      clone.parameter = (HashMap<String, Object>) parameter.clone();
+      return clone;
     }
     catch (CloneNotSupportedException e)
     {

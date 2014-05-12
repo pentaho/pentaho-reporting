@@ -19,12 +19,14 @@ package org.pentaho.reporting.designer.core.actions.elements.move;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -49,8 +51,13 @@ public final class MoveUpOneAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final Element[] visualElements = getSelectionModel().getSelectedVisualElements();
-    if (visualElements.length == 0)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
+    {
+      return;
+    }
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
+    if (visualElements.isEmpty())
     {
       return;
     }

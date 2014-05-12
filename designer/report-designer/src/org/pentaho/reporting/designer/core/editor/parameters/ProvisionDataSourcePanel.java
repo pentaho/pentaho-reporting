@@ -40,7 +40,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.event.TreeSelectionEvent;
@@ -48,8 +47,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.pentaho.reporting.designer.core.ReportDesigner;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.actions.global.DeleteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
@@ -59,9 +58,11 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
@@ -324,11 +325,34 @@ public class ProvisionDataSourcePanel extends JPanel
       availableDataSourcesModel.add(new DataFactoryWrapper(null, dataFactory));
 
       expandAllNodes();
-      SwingUtilities.invokeLater(new ReportDesigner.DataTabSetVisible(reportDesignerContext.getActiveContext()));
+      SwingUtilities.invokeLater(new DataTabSetVisible(reportDesignerContext, reportDesignerContext.getActiveContext()));
     }
-
   }
 
+
+  private static class DataTabSetVisible implements Runnable
+  {
+    private ReportDesignerContext designerContext;
+    private ReportDesignerDocumentContext<?> activeContext;
+
+    public DataTabSetVisible(final ReportDesignerContext designerContext,
+                             final ReportDesignerDocumentContext<?> activeContext)
+    {
+      this.designerContext = designerContext;
+      this.activeContext = activeContext;
+    }
+
+    public void run()
+    {
+      if (this.activeContext == null)
+      {
+        return;
+      }
+
+      designerContext.setActiveDocument(activeContext);
+      designerContext.getView().showDataTree();
+    }
+  }
 
   private class DataSourceDesignTimeContext implements DesignTimeContext
   {
@@ -343,7 +367,7 @@ public class ProvisionDataSourcePanel extends JPanel
      */
     public AbstractReportDefinition getReport()
     {
-      return reportDesignerContext.getActiveContext().getMasterReportElement();
+      return reportDesignerContext.getActiveContext().getContextRoot();
     }
 
     /**
@@ -385,6 +409,11 @@ public class ProvisionDataSourcePanel extends JPanel
     public boolean isShowDeprecatedItems()
     {
       return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+    }
+
+    public DataFactoryContext getDataFactoryContext()
+    {
+      return new DesignTimeDataFactoryContext(reportDesignerContext.getActiveContext().getContextRoot());
     }
   }
 

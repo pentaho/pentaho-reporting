@@ -27,7 +27,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.bundle.BundledResourceEditor;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
@@ -60,14 +60,14 @@ public class EditResourcesAction extends AbstractReportContextAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
     final ReportDesignerContext context = getReportDesignerContext();
-    final Component parent = context.getParent();
+    final Component parent = context.getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     final BundledResourceEditor dialog;
     if (window instanceof JDialog)
@@ -86,7 +86,7 @@ public class EditResourcesAction extends AbstractReportContextAction
 
     if (dialog.editResources())
     {
-      final MasterReport masterReportElement = activeContext.getMasterReportElement();
+      final MasterReport masterReportElement = activeContext.getContextRoot();
       masterReportElement.fireModelLayoutChanged
           (masterReportElement, ReportModelEvent.NODE_PROPERTIES_CHANGED, masterReportElement.getBundle());
     }

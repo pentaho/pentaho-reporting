@@ -108,7 +108,7 @@ public class FieldSelectorDialog extends CommonDialog
 
   protected String getDialogId()
   {
-    return "LibFormula.FieldSelector";
+    return "LibFormula.FieldSelector"; // NON-NLS
   }
 
   protected Component createContentPane()

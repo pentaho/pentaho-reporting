@@ -46,6 +46,9 @@ public abstract class OutputProcessorFeature implements Serializable
   public static final BooleanOutputProcessorFeature PRD_3750 =
       new BooleanOutputProcessorFeature("prd-3750-compatibility");
 
+  public static final BooleanOutputProcessorFeature COMPLEX_TEXT =
+      new BooleanOutputProcessorFeature("complex-text-layout");
+
   public static final BooleanOutputProcessorFeature STRICT_COMPATIBILITY =
       new BooleanOutputProcessorFeature("strict-compatibility");
 
@@ -61,9 +64,11 @@ public abstract class OutputProcessorFeature implements Serializable
   public static final BooleanOutputProcessorFeature ITERATIVE_RENDERING =
       new BooleanOutputProcessorFeature("iterative-rendering");
 
-
   public static final BooleanOutputProcessorFeature FAST_FONTRENDERING =
       new BooleanOutputProcessorFeature("fast-font-rendering");
+
+  public static final BooleanOutputProcessorFeature STRICT_TEXT_PROCESSING =
+      new BooleanOutputProcessorFeature("strict-text-processing");
 
   public static final BooleanOutputProcessorFeature SPACING_SUPPORTED =
       new BooleanOutputProcessorFeature("spacing-supported");
@@ -160,6 +165,8 @@ public abstract class OutputProcessorFeature implements Serializable
       new BooleanOutputProcessorFeature("assume-overflow-x");
   public static final BooleanOutputProcessorFeature ASSUME_OVERFLOW_Y =
       new BooleanOutputProcessorFeature("assume-overflow-y");
+  public static final BooleanOutputProcessorFeature DIRECT_RICHTEXT_RENDERING =
+      new BooleanOutputProcessorFeature("direct-rich-text-rendering");
 
   private String name;
   private int hashCode;

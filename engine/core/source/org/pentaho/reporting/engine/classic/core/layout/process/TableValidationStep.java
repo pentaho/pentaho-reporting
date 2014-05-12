@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
@@ -59,8 +60,9 @@ public class TableValidationStep extends IterateStructuralProcessStep
     private IntList rowSpans;
     private TableRowModel rowModel;
     protected int tableCellPosition;
-    protected int rowCount;
+    protected int rowIndex;
     private boolean bodySection;
+    private boolean headerOrFooterSection;
 
     public TableInfoStructure(final TableRenderBox table, final TableInfoStructure parent)
     {
@@ -143,13 +145,24 @@ public class TableValidationStep extends IterateStructuralProcessStep
       {
         this.rowModel = sectionRenderBox.getRowModel();
         this.bodySection = (sectionRenderBox.getDisplayRole() == TableSectionRenderBox.Role.BODY);
+        this.headerOrFooterSection = !bodySection;
       }
       else
       {
         this.rowModel = null;
         this.bodySection = false;
       }
-      this.rowCount = -1;
+      this.rowIndex = -1;
+    }
+
+    public boolean isHeaderOrFooterSection()
+    {
+      return headerOrFooterSection;
+    }
+
+    public void setHeaderOrFooterSection(final boolean headerOrFooterSection)
+    {
+      this.headerOrFooterSection = headerOrFooterSection;
     }
 
     public boolean isBodySection()
@@ -169,7 +182,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
 
     public void updateDefinedSize(final int rowSpan, final long preferredSize)
     {
-      rowModel.updateDefinedSize(rowCount, rowSpan, preferredSize);
+      rowModel.updateDefinedSize(rowIndex, rowSpan, preferredSize);
     }
   }
 
@@ -236,9 +249,21 @@ public class TableValidationStep extends IterateStructuralProcessStep
   {
     if (currentTable != null)
     {
+      if (box.getParent().getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
+      {
+        currentTable.setHeaderOrFooterSection(false);
+      }
       return true;
     }
     return abortIfNoTable(box);
+  }
+
+  protected void finishAutoBox(final RenderBox box)
+  {
+    if (currentTable != null)
+    {
+      box.setContainsReservedContent(currentTable.isHeaderOrFooterSection());
+    }
   }
 
   protected boolean startTableBox(final TableRenderBox table)
@@ -263,7 +288,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
       return;
     }
 
-  //  currentTable.columnModel.validateSizes(table);
+  //  currentTable.columnModel.validatePreferredSizes(table);
     table.setTableValidationAge(age);
     table.setPredefinedColumnsValidated(true);
     currentTable = currentTable.pop();
@@ -346,6 +371,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
     }
 
     currentTable.setSectionRenderBox(box);
+    box.setContainsReservedContent(box.getDisplayRole() != TableSectionRenderBox.Role.BODY);
     box.getRowModel().initialize(currentTable.getTable());
     return true;
   }
@@ -377,7 +403,7 @@ public class TableValidationStep extends IterateStructuralProcessStep
       currentTable.rowModel.addRow();
     }
 
-    box.getRowModel().validateSizes();
+    box.getRowModel().validatePreferredSizes();
     currentTable.setSectionRenderBox(null);
   }
 
@@ -396,18 +422,18 @@ public class TableValidationStep extends IterateStructuralProcessStep
     box.setBodySection(currentTable.isBodySection());
 
     // check if this is the first row ...
-    if (currentTable.rowCount == -1)
+    if (currentTable.rowIndex == -1)
     {
       if (box.getRowIndex() != -1)
       {
-        currentTable.rowCount = box.getRowIndex();
+        currentTable.rowIndex = box.getRowIndex();
         return true;
       }
     }
 
-    currentTable.rowCount += 1;
-    box.setRowIndex(currentTable.rowCount);
-    if (currentTable.rowCount <= currentTable.rowModel.getRowCount())
+    currentTable.rowIndex += 1;
+    box.setRowIndex(currentTable.rowIndex);
+    if (currentTable.rowModel.getRowCount() <= currentTable.rowIndex)
     {
       currentTable.rowModel.addRow();
     }
@@ -471,4 +497,6 @@ public class TableValidationStep extends IterateStructuralProcessStep
     currentTable.updateDefinedSize(rowSpan, preferredSize);
     return true;
   }
+
+
 }

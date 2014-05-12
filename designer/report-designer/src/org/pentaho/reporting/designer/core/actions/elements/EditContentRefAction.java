@@ -105,7 +105,7 @@ public class EditContentRefAction extends AbstractElementSelectionAction
     }
 
     final CustomPropertyEditorDialog editorDialog;
-  	final Component window = getReportDesignerContext().getParent();
+  	final Component window = getReportDesignerContext().getView().getParent();
     
     if (window instanceof Frame)
     {

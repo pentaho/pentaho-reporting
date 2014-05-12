@@ -27,7 +27,7 @@ import java.awt.geom.Point2D;
 import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -64,7 +64,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
                          final String fieldName)
   {
     final Container representationContainer = dragContext.getRepresentationContainer();
-    final ReportRenderContext renderContext = dragContext.getRenderContext();
+    final ReportDocumentContext renderContext = dragContext.getRenderContext();
     final Point pos = event.getLocation();
     final Point2D point = dragContext.normalize(pos);
     if (point.getX() < 0 || point.getY() < 0)
@@ -133,7 +133,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
         return;
       }
 
-      final ReportRenderContext context = dragContext.getRenderContext();
+      final ReportDocumentContext context = dragContext.getRenderContext();
       final Element visualElement = createElement(elementMetaData, fieldName, context);
       final ElementStyleSheet styleSheet = visualElement.getStyle();
 
@@ -165,7 +165,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
                                  final ReportElementEditorContext dragContext,
                                  final Point2D point)
   {
-    final ReportRenderContext context = dragContext.getRenderContext();
+    final ReportDocumentContext context = dragContext.getRenderContext();
     final UndoManager undo = context.getUndo();
     undo.addChange(Messages.getString("DefaultReportElementDragHandler.AddElementUndoEntry"),
         new ElementEditUndoEntry(target.getObjectID(), target.getElementCount(), null, visualElement));
@@ -174,7 +174,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
 
   protected abstract Element createElement(final ElementMetaData elementMetaData,
                                            final String fieldName,
-                                           final ReportRenderContext context) throws InstantiationException;
+                                           final ReportDocumentContext context) throws InstantiationException;
 
 
   protected Band getInsertionBand(final DropTargetDropEvent event,

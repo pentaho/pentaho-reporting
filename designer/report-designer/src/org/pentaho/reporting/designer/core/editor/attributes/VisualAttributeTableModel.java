@@ -27,7 +27,7 @@ import javax.swing.SwingUtilities;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
 import org.pentaho.reporting.designer.core.util.table.GroupingHeader;
 import org.pentaho.reporting.designer.core.util.table.GroupingModel;
@@ -302,7 +302,7 @@ public class VisualAttributeTableModel extends AbstractAttributeTableModel imple
       return false;
     }
 
-    final ReportRenderContext reportRenderContext = getReportRenderContext();
+    final ReportDocumentContext reportRenderContext = getReportRenderContext();
     if (reportRenderContext == null)
     {
       throw new IllegalStateException("No report render context? Thats bad.");
@@ -381,7 +381,7 @@ public class VisualAttributeTableModel extends AbstractAttributeTableModel imple
 
     if (changed)
     {
-      final ReportRenderContext reportRenderContext = getReportRenderContext();
+      final ReportDocumentContext reportRenderContext = getReportRenderContext();
       if (reportRenderContext == null)
       {
         throw new IllegalStateException("No report render context? Thats bad.");

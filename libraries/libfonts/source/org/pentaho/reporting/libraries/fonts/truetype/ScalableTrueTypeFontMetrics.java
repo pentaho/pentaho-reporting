@@ -20,7 +20,7 @@ package org.pentaho.reporting.libraries.fonts.truetype;
 import java.io.IOException;
 
 import org.pentaho.reporting.libraries.fonts.LibFontsDefaults;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -59,7 +59,7 @@ public class ScalableTrueTypeFontMetrics
       throw new IllegalStateException("Font has no HEAD table and is not a usable font.");
     }
     final int unitsPerEm = head.getUnitsPerEm();
-    final long strictScaleFactor = StrictGeomUtility.toInternalValue(1); 
+    final long strictScaleFactor = FontStrictGeomUtility.toInternalValue(1);
     maxAscent = (strictScaleFactor * head.getyMax()) / unitsPerEm;
     maxDescent = (strictScaleFactor * -head.getyMin()) / unitsPerEm;
     // prefer the mac table, as at least for the old version of Arial
@@ -82,7 +82,7 @@ public class ScalableTrueTypeFontMetrics
         (PostscriptInformationTable) font.getTable(PostscriptInformationTable.TABLE_ID);
     if (postTable != null)
     {
-      this.italicAngle = StrictGeomUtility.toInternalValue(postTable.getItalicAngle());
+      this.italicAngle = FontStrictGeomUtility.toInternalValue(postTable.getItalicAngle());
       this.underlinePosition = getAscent() +
          (strictScaleFactor * (-postTable.getUnderlinePosition() + (postTable.getUnderlineThickness() / 2))) / unitsPerEm;
     }
@@ -101,7 +101,7 @@ public class ScalableTrueTypeFontMetrics
     this.leading = (scaleFactor * hhea.getLineGap()) / unitsPerEm;
     this.xHeight = (long) (ascent * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE / LibFontsDefaults.DEFAULT_ASCENT_SIZE);
     this.strikethroughPosition = getMaxAscent() - (long) (this.xHeight * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
-    this.italicAngle = StrictGeomUtility.toInternalValue
+    this.italicAngle = FontStrictGeomUtility.toInternalValue
         (-StrictMath.atan2(hhea.getCaretSlopeRun(), hhea.getCaretSlopeRise()) * 180 / Math.PI);
   }
 

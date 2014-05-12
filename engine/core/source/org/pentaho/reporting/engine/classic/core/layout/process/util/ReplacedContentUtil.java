@@ -45,7 +45,7 @@ public final class ReplacedContentUtil
         (replacedContent.getMinimumHeight().resolve(bcw), replacedContent.getMaximumHeight().resolve(bcw), height);
   }
 
-  public static long computeWidthInternal(final RenderableReplacedContentBox contentBox,
+  private static long computeWidthInternal(final RenderableReplacedContentBox contentBox,
                                           final long blockContextWidth)
   {
     final RenderableReplacedContent content = contentBox.getContent();

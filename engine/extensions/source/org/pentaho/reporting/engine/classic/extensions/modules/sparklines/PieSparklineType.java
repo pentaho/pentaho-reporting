@@ -51,12 +51,12 @@ public class PieSparklineType extends ContentType
   public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
   {
     final Object retval = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    final Number numbers = (Number) retval;
-    if (numbers == null)
+    if (retval instanceof Number == false)
     {
       final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
       return filter(runtime, element, nullValue);
     }
+    final Number numbers = (Number) retval;
 
     final int startAngle = ElementTypeUtils.getIntAttribute
         (element, SparklineAttributeNames.NAMESPACE, SparklineAttributeNames.START_ANGLE, 0);

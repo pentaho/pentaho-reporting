@@ -40,6 +40,7 @@ public class FileResourceData extends AbstractResourceData
 {
   private ResourceKey key;
   private File file;
+  private volatile int length;
   private static final long serialVersionUID = -5719048997437795736L;
 
   public FileResourceData(final ResourceKey key) throws ResourceLoadingException
@@ -76,7 +77,8 @@ public class FileResourceData extends AbstractResourceData
     }
     try
     {
-      return new BufferedInputStream(new FileInputStream(file));
+      final int buffer = (int) Math.max(4096, Math.min(file.length(), 128 * 1024));
+      return new BufferedInputStream(new FileInputStream(file), buffer);
     }
     catch (FileNotFoundException e)
     {

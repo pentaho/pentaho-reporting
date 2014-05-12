@@ -33,7 +33,7 @@ public class FieldListModel extends AbstractListModel
 
   public FieldListModel(final FieldDefinition[] fields)
   {
-    this.fields = (FieldDefinition[]) fields.clone();
+    this.fields = fields.clone();
   }
 
   public FieldDefinition getField(final int index)
@@ -41,7 +41,7 @@ public class FieldListModel extends AbstractListModel
     return fields[index];
   }
 
-  public Object getElementAt(final int index)
+  public FieldDefinition getElementAt(final int index)
   {
     return fields[index];
   }

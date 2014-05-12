@@ -25,12 +25,12 @@ import java.io.ByteArrayOutputStream;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.elementfactory.LabelElementFactory;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -85,7 +85,7 @@ public class PlainTextOutputTest extends TestCase
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(10, 6)), false);
-    ModelPrinter.INSTANCE.print(pageBox);
+
     final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName(pageBox, "LabelElement");
     assertEquals(StrictGeomUtility.toInternalValue(26), labelElement.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(4), labelElement.getY());
@@ -110,6 +110,7 @@ public class PlainTextOutputTest extends TestCase
     final int cpi = 6;
 
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(lpi, cpi)), false);
 
@@ -148,6 +149,8 @@ public class PlainTextOutputTest extends TestCase
   {
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(PageSize.A4,  PageFormat.LANDSCAPE, new Insets(72, 72, 72, 72)));
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Band pageHeader = report.getPageHeader();
     final LabelElementFactory labelFactory = new LabelElementFactory();

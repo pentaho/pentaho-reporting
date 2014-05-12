@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.ValidationResult;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
@@ -38,12 +39,16 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     private boolean needCheck;
     private boolean seenBody;
     private int seenRow;
+    private int requiredAdditionalRows;
+    private int currentRowMaxRowSpan;
     private boolean inMainBody;
+    private boolean seenRowInMainBody;
     private TableValidationInfo parent;
 
     private TableValidationInfo(final TableValidationInfo parent)
     {
       this.parent = parent;
+      this.requiredAdditionalRows = 0;
     }
 
     public TableValidationInfo pop()
@@ -51,14 +56,15 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return parent;
     }
 
-    public boolean isInMainBody()
-    {
-      return inMainBody;
-    }
-
     public void setInMainBody(final boolean inMainBody)
     {
+      this.requiredAdditionalRows = 0;
       this.inMainBody = inMainBody;
+    }
+
+    public boolean isRequireAdditionalRows()
+    {
+      return requiredAdditionalRows > 0;
     }
 
     public boolean isNeedCheck()
@@ -71,24 +77,47 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       this.needCheck = needCheck;
     }
 
-    public boolean isSeenBody()
+    public boolean isSeenTableBody()
     {
       return seenBody;
     }
 
-    public void setSeenBody(final boolean seenBody)
+    public void startTableSection(final boolean seenBody)
     {
+      this.requiredAdditionalRows = 0;
       this.seenBody = seenBody;
     }
 
-    public boolean isSeenRow()
+    public boolean isSeenRowInMainBody()
     {
-      return seenRow > 0;
+      return seenRowInMainBody;
     }
 
     public void addSeenRow()
     {
+      if (inMainBody)
+      {
+        seenRowInMainBody = true;
+      }
+
       this.seenRow += 1;
+      this.currentRowMaxRowSpan = 0;
+      if (this.requiredAdditionalRows > 0)
+      {
+        // if we have spanned rows pending, reduce the span with each new row started, until every row is consumed.
+        this.requiredAdditionalRows -= 1;
+      }
+    }
+
+    public void rowFinished()
+    {
+      this.requiredAdditionalRows += this.currentRowMaxRowSpan;
+      this.requiredAdditionalRows -= 1;
+    }
+
+    public void seenTableCell(final int rowSpan)
+    {
+      this.currentRowMaxRowSpan = Math.max(rowSpan, this.currentRowMaxRowSpan);
     }
 
     public String toString()
@@ -103,11 +132,12 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       sb.append('}');
       return sb.toString();
     }
+
   }
 
   private static final Log logger = LogFactory.getLog(ValidateModelStep.class);
 
-  private boolean result;
+  private ValidationResult result;
   private TableValidationInfo validationInfo;
 
   public ValidateModelStep()
@@ -117,24 +147,31 @@ public class ValidateModelStep extends IterateStructuralProcessStep
   public boolean isLayoutable(final LogicalPageBox root)
   {
     validationInfo = null;
-    result = true;
+    setResult(ValidationResult.OK);
     // do not validate the header or footer or watermark sections..
     processBoxChilds(root);
     if (logger.isDebugEnabled())
-    logger.debug("Validation result: " + result);
-    return result;
+    {
+      logger.debug("Validation result: " + getResult());
+    }
+    return getResult() == ValidationResult.OK;
+  }
+
+  public void setResult(final ValidationResult result)
+  {
+    this.result = result;
   }
 
   protected boolean startCanvasBox(final CanvasRenderBox box)
   {
-    if (result == false)
+    if (getResult() != ValidationResult.OK)
     {
       return false;
     }
 
     if (box.isValidateModelCacheValid())
     {
-      result = box.isValidateModelResult();
+      setResult(box.isValidateModelResult());
       return false;
     }
 
@@ -144,7 +181,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       {
         logger.debug("Canvas: Box is open: " + box);
       }
-      result = false;
+      setResult(ValidationResult.CANVAS_BOX_OPEN);
+      box.setValidateModelResult(getResult());
       return false;
     }
 
@@ -158,19 +196,23 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishCanvasBox(final CanvasRenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   protected boolean validateBlockOrAutoBox(final RenderBox box)
   {
-    if (result == false)
+    if (getResult() != ValidationResult.OK)
     {
       return false;
     }
 
     if (box.isValidateModelCacheValid())
     {
-      result = box.isValidateModelResult();
+      setResult(box.isValidateModelResult());
       return false;
     }
 
@@ -183,7 +225,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         {
           logger.debug("Block: Box is open with next element pending : " + box);
         }
-        result = false;
+        setResult(ValidationResult.BOX_OPEN_NEXT_PENDING);
+        box.setValidateModelResult(getResult());
         return false;
       }
       else if (box.getStaticBoxLayoutProperties().isPlaceholderBox())
@@ -194,7 +237,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
           {
             logger.debug("Block: Open Box is placeholder : " + box);
           }
-          result = false;
+          setResult(ValidationResult.PLACEHOLDER_BOX_OPEN);
+          box.setValidateModelResult(getResult());
           return false;
         }
       }
@@ -204,7 +248,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         {
           logger.debug("Block: Paragraph is open: " + box);
         }
-        result = false;
+        setResult(ValidationResult.PARAGRAPH_BOX_OPEN);
+        box.setValidateModelResult(getResult());
         return false;
       }
     }
@@ -213,6 +258,7 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       return false;
     }
 
+    // pending complex content, must validate childs, but in itself it is not a indicator for invalid content.
     return true;
   }
 
@@ -223,7 +269,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishBlockBox(final BlockRenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   protected boolean startAutoBox(final RenderBox box)
@@ -232,31 +282,35 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     {
       return validateBlockOrAutoBox(box);
     }
+
     if ((box.getLayoutNodeType() & LayoutNodeTypes.TYPE_BOX_TABLE) == LayoutNodeTypes.TYPE_BOX_TABLE ||
         (box.getLayoutNodeType() & LayoutNodeTypes.TYPE_BOX_TABLE_SECTION) == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
       return true;
     }
 
-    // todo: Handle tables properly
     return validateInlineRowOrTableCellBox(box);
   }
 
   protected void finishAutoBox(final RenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   private boolean validateInlineRowOrTableCellBox(final RenderBox box)
   {
-    if (result == false)
+    if (getResult() != ValidationResult.OK)
     {
       return false;
     }
 
     if (box.isValidateModelCacheValid())
     {
-      result = box.isValidateModelResult();
+      setResult(box.isValidateModelResult());
       return false;
     }
 
@@ -266,7 +320,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       {
         logger.debug("Inline: Box is open : " + box);
       }
-      result = false;
+      setResult(ValidationResult.CELL_BOX_OPEN);
+      box.setValidateModelResult(getResult());
       return false;
     }
     if (box.getAppliedContentRefCount() == 0 && box.getTableRefCount() == 0)
@@ -278,12 +333,18 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected boolean startTableCellBox(final TableCellRenderBox box)
   {
+    int rowSpan = box.getRowSpan();
+    validationInfo.seenTableCell(rowSpan);
     return validateInlineRowOrTableCellBox(box);
   }
 
   protected void finishTableCellBox(final TableCellRenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   protected boolean startInlineBox(final InlineRenderBox box)
@@ -293,7 +354,11 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishInlineBox(final InlineRenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   protected boolean startRowBox(final RenderBox box)
@@ -303,21 +368,25 @@ public class ValidateModelStep extends IterateStructuralProcessStep
 
   protected void finishRowBox(final RenderBox box)
   {
-    box.setValidateModelResult(result);
+    if (getResult() != ValidationResult.OK)
+    {
+      return;
+    }
+    box.setValidateModelResult(getResult());
   }
 
   protected boolean startTableBox(final TableRenderBox table)
   {
     validationInfo = new TableValidationInfo(this.validationInfo);
 
-    if (result == false)
+    if (getResult() != ValidationResult.OK)
     {
       return false;
     }
 
     if (table.isValidateModelCacheValid())
     {
-      result = table.isValidateModelResult();
+      setResult(table.isValidateModelResult());
       return true;
     }
 
@@ -332,7 +401,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
           logger.debug("Table: Open Table and AutoLayout: " + table);
         }
 
-        result = false;
+        setResult(ValidationResult.TABLE_BOX_OPEN);
+        table.setValidateModelResult(getResult());
         return false;
       }
       else if (table.getColumnModel().isIncrementalModeSupported() == false)
@@ -341,29 +411,24 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         {
           logger.debug("Table: Open Table and incremental mode not supported: " + table);
         }
-        result = false;
+        setResult(ValidationResult.TABLE_BOX_OPEN);
+        table.setValidateModelResult(getResult());
+        return false;
+      }
+      else if (table.isPreventPagination())
+      {
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("Table: Open Table and incremental mode not supported: " + table);
+        }
+        setResult(ValidationResult.TABLE_BOX_PREVENTS_PAGINATION);
+        table.setValidateModelResult(getResult());
         return false;
       }
     }
 
     validationInfo.setNeedCheck(true);
     return true;
-  }
-
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
-    {
-      validationInfo.setInMainBody(true);
-    }
-
-    validationInfo.setSeenBody(true);
-    return true;
-  }
-
-  protected void finishTableSectionBox(final TableSectionRenderBox box)
-  {
-    validationInfo.setInMainBody(false);
   }
 
   protected void finishTableBox(final TableRenderBox table)
@@ -375,15 +440,23 @@ public class ValidateModelStep extends IterateStructuralProcessStep
         return;
       }
 
-      table.setValidateModelResult(result);
+      if (getResult() != ValidationResult.OK)
+      {
+        return;
+      }
 
       if (validationInfo.isNeedCheck() == false)
       {
         return;
       }
 
-      if (validationInfo.isSeenBody() && validationInfo.isSeenRow())
+      if (table.isOpen() &&
+          validationInfo.isSeenTableBody() == false &&
+          validationInfo.isSeenRowInMainBody() == false)
       {
+        // A table that is open, cannot be processed until it has at least a body and one real row of data in it.
+        setResult(ValidationResult.TABLE_BOX_MISSING_DATA);
+        table.setValidateModelResult(getResult());
         return;
       }
 
@@ -391,13 +464,36 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       {
         logger.debug("Table-Box: " + validationInfo);
       }
-      result = false;
+
+      table.setValidateModelResult(getResult());
     }
     finally
     {
       this.validationInfo = validationInfo.pop();
     }
   }
+
+  protected boolean startTableSectionBox(final TableSectionRenderBox box)
+  {
+    if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
+    {
+      validationInfo.setInMainBody(true);
+    }
+
+    validationInfo.startTableSection(true);
+    return true;
+  }
+
+  protected void finishTableSectionBox(final TableSectionRenderBox box)
+  {
+    if (box.isOpen() && validationInfo.isRequireAdditionalRows())
+    {
+      setResult(ValidationResult.TABLE_BODY_MISSING_ROWS);
+      box.setValidateModelResult(getResult());
+    }
+    validationInfo.setInMainBody(false);
+  }
+
 
   protected boolean startTableRowBox(final TableRowRenderBox row)
   {
@@ -407,7 +503,8 @@ public class ValidateModelStep extends IterateStructuralProcessStep
       {
         logger.debug("Table-Row: Box is open.");
       }
-      result = false;
+      setResult(ValidationResult.TABLE_ROW_OPEN);
+      row.setValidateModelResult(getResult());
       return false;
     }
 
@@ -415,18 +512,18 @@ public class ValidateModelStep extends IterateStructuralProcessStep
     return true;
   }
 
+  protected void finishTableRowBox(final TableRowRenderBox box)
+  {
+    validationInfo.rowFinished();
+  }
+
   protected boolean startOtherBox(final RenderBox box)
   {
-    return result;
+    return (getResult() == ValidationResult.OK);
   }
 
-  protected boolean isResult()
+  protected ValidationResult getResult()
   {
     return result;
-  }
-
-  protected void setResult(final boolean result)
-  {
-    this.result = result;
   }
 }

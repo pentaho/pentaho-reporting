@@ -29,7 +29,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -94,7 +94,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
     final CommonFileChooser fileChooser = FileChooserService.getInstance().getFileChooser("report");//NON-NLS
     fileChooser.setFilters(new FileFilter[]{filter});
     fileChooser.setAllowMultiSelection(true);
-    if (fileChooser.showDialog(getReportDesignerContext().getParent(), JFileChooser.OPEN_DIALOG) == false)
+    if (fileChooser.showDialog(getReportDesignerContext().getView().getParent(), JFileChooser.OPEN_DIALOG) == false)
     {
       return;
     }
@@ -142,7 +142,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
     final Thread loadThread = new Thread(target);
     loadThread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog
-        (loadThread, null, context.getParent(), ActionMessages.getString("OpenReportAction.LoadReportMessage"));
+        (loadThread, null, context.getView().getParent(), ActionMessages.getString("OpenReportAction.LoadReportMessage"));
     final AbstractReportDefinition report = target.getReport();
     if (report instanceof MasterReport)
     {
@@ -151,10 +151,10 @@ public final class OpenReportAction extends AbstractDesignerContextAction
         context.addMasterReport((MasterReport) report);
         context.getRecentFilesModel().addFile(selectedFile);
 
-        final ReportRenderContext theReportRenderContext = context.getActiveContext();
-        if (theReportRenderContext != null)
+        final ReportDocumentContext activeContext = context.getActiveContext();
+        if (activeContext != null)
         {
-          theReportRenderContext.resetChangeTracker();
+          activeContext.resetChangeTracker();
         }
       }
       catch (ReportDataFactoryException e)
@@ -167,7 +167,7 @@ public final class OpenReportAction extends AbstractDesignerContextAction
       final Exception exception = target.getException();
       if (exception instanceof ResourceCreationException)
       {
-        ExceptionDialog.showExceptionDialog(context.getParent(), ActionMessages.getString("FailedToOpen.Error.Title"),
+        ExceptionDialog.showExceptionDialog(context.getView().getParent(), ActionMessages.getString("FailedToOpen.Error.Title"),
             ActionMessages.getString("FailedToOpen.Error.Message"), exception);
         UncaughtExceptionsModel.getInstance().addException(exception);
       }

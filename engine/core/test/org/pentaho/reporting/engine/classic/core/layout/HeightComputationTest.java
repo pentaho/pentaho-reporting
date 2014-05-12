@@ -22,6 +22,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
@@ -33,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -44,11 +46,6 @@ public class HeightComputationTest extends TestCase
   {
   }
 
-  public HeightComputationTest(final String s)
-  {
-    super(s);
-  }
-
   protected void setUp() throws Exception
   {
     ClassicEngineBoot.getInstance().start();
@@ -58,12 +55,34 @@ public class HeightComputationTest extends TestCase
   {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final URL target = LayoutTest.class.getResource("layout-matrix.xml");
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
     final Resource directly = rm.createDirectly(target, MasterReport.class);
     final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
+        (basereport, report.getReportHeader(), true, false);
+    // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
+    // and that only two lines exist for each
+    new ValidateRunner().startValidation(logicalPageBox);
+  }
+
+  public void testNestedRowsComplex() throws Exception
+  {
+    final MasterReport basereport = new MasterReport();
+    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+
+    final URL target = LayoutTest.class.getResource("layout-matrix.xml");
+    final ResourceManager rm = new ResourceManager();
+    rm.registerDefaults();
+    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
         (basereport, report.getReportHeader(), true, false);
@@ -92,9 +111,9 @@ public class HeightComputationTest extends TestCase
       }
       if (box instanceof ParagraphRenderBox)
       {
-        assertNotNull("Have at only one child", box.getFirstChild());
-        assertNotNull("Have at only one child", box.getLastChild());
-        assertSame("Have at only one child", box.getFirstChild(), box.getLastChild());
+        assertNotNull("Have at most one child", box.getFirstChild());
+        assertNotNull("Have at most one child", box.getLastChild());
+        assertSame("Have at most one child", box.getFirstChild(), box.getLastChild());
       }
 
       return true;

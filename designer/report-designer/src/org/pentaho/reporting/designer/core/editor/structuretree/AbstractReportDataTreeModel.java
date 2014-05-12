@@ -24,7 +24,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
@@ -40,18 +40,18 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
 {
   private EventListenerList eventListenerList;
   private ReportFunctionNode reportFunctionNode;
-  private ReportRenderContext context;
+  private ReportDocumentContext context;
   private ReportEnvironmentDataRow reportEnvironmentDataRow;
   private Expression[] cachedExpressions;
 
-  protected AbstractReportDataTreeModel(final ReportRenderContext context)
+  protected AbstractReportDataTreeModel(final ReportDocumentContext context)
   {
     if (context == null)
     {
       throw new NullPointerException();
     }
     this.context = context;
-    this.reportEnvironmentDataRow = new ReportEnvironmentDataRow(context.getMasterReportElement().getReportEnvironment());
+    this.reportEnvironmentDataRow = new ReportEnvironmentDataRow(context.getContextRoot().getReportEnvironment());
     this.eventListenerList = new EventListenerList();
     this.reportFunctionNode = new ReportFunctionNode();
     refreshExpressionsCache();
@@ -67,7 +67,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     return reportEnvironmentDataRow;
   }
 
-  protected ReportRenderContext getContext()
+  protected ReportDocumentContext getContext()
   {
     return context;
   }

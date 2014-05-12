@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.DefaultReportPreProces
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
@@ -33,7 +34,6 @@ import org.xml.sax.SAXException;
 /** @noinspection HardCodedStringLiteral*/
 public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
 {
-  private String bundleName;
   private Class expressionClass;
 
   private ArrayList<ReportPreProcessorPropertyReadHandler> attributeHandlers;
@@ -41,6 +41,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
   private HashMap<String,ReportPreProcessorPropertyMetaData> properties;
   private boolean autoProcess;
   private boolean executeInDesignMode;
+  private int executionPriority;
 
   public ReportPreProcessorReadHandler()
   {
@@ -62,8 +63,8 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-    bundleName = attrs.getValue(getUri(), "bundle-name");
     autoProcess = "true".equals(attrs.getValue(getUri(), "auto-process"));
+    executionPriority = ParserUtil.parseInt(attrs.getValue(getUri(), "priority"), 0);
     executeInDesignMode = "true".equals(attrs.getValue(getUri(), "execute-in-design-mode"));
 
     final String valueTypeText = attrs.getValue(getUri(), "class");
@@ -73,7 +74,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
     }
     try
     {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(ExpressionReadHandler.class);
+      final ClassLoader loader = ObjectUtilities.getClassLoader(ReportPreProcessorReadHandler.class);
       expressionClass = Class.forName(valueTypeText, false, loader);
       if (ReportPreProcessor.class.isAssignableFrom(expressionClass) == false)
       {
@@ -113,7 +114,7 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
     if ("property".equals(tagName))
     {
       final ReportPreProcessorPropertyReadHandler readHandler =
-          new ReportPreProcessorPropertyReadHandler(beanInfo, bundleName);
+          new ReportPreProcessorPropertyReadHandler(beanInfo, getBundle());
       attributeHandlers.add(readHandler);
       return readHandler;
     }
@@ -144,9 +145,9 @@ public class ReportPreProcessorReadHandler extends AbstractMetaDataReadHandler
    */
   public Object getObject() throws SAXException
   {
-    return new DefaultReportPreProcessorMetaData(bundleName, 
+    return new DefaultReportPreProcessorMetaData(getBundle(),
         isExpert(), isPreferred(), isHidden(), isDeprecated(),
         expressionClass, properties, beanInfo, autoProcess, executeInDesignMode,
-            isExperimental(), getCompatibilityLevel());
+            isExperimental(), getCompatibilityLevel(), executionPriority);
   }
 }

@@ -28,7 +28,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ConfigurationEditorDialog;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.undo.EditReportConfigUndoEntry;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -53,7 +53,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
     if (activeContext == null)
     {
       // has no effect
@@ -62,7 +62,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
 
     final ConfigurationEditorDialog dialog;
 
-    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
     if (window instanceof JDialog)
     {
       dialog = new ConfigurationEditorDialog((JDialog) window);
@@ -77,7 +77,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
     }
 
     final HierarchicalConfiguration config =
-        (HierarchicalConfiguration) activeContext.getMasterReportElement().getReportConfiguration();
+        (HierarchicalConfiguration) activeContext.getContextRoot().getReportConfiguration();
     final HashMap oldConfig = copyConfig(config);
 
     if (dialog.performEdit(config))
@@ -85,7 +85,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
       final HashMap newConfig = copyConfig(config);
       activeContext.getUndo().addChange(ActionMessages.getString("EditReportConfigurationAction.Text"),
           new EditReportConfigUndoEntry(oldConfig, newConfig));
-      activeContext.getMasterReportElement().notifyNodeStructureChanged();
+      activeContext.getContextRoot().notifyNodeStructureChanged();
     }
 
 

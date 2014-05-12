@@ -27,7 +27,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFieldNode;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
@@ -40,11 +40,6 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class FieldSelectorPanel extends SidePanel
 {
   private class ReportModelChangeHandler implements ReportModelListener, SettingsListener
@@ -56,7 +51,7 @@ public class FieldSelectorPanel extends SidePanel
     public void nodeChanged(final ReportModelEvent event)
     {
       final ReportDesignerContext designerContext = getReportDesignerContext();
-      final ReportRenderContext activeContext = designerContext.getActiveContext();
+      final ReportDocumentContext activeContext = designerContext.getActiveContext();
       if (activeContext == null)
       {
         return;
@@ -72,7 +67,7 @@ public class FieldSelectorPanel extends SidePanel
     public void settingsChanged()
     {
       final ReportDesignerContext designerContext = getReportDesignerContext();
-      final ReportRenderContext activeContext = designerContext.getActiveContext();
+      final ReportDocumentContext activeContext = designerContext.getActiveContext();
       if (activeContext == null)
       {
         return;
@@ -106,7 +101,7 @@ public class FieldSelectorPanel extends SidePanel
     add(new JScrollPane(table));
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     super.updateActiveContext(oldContext, newContext);
     if (report != null)

@@ -20,9 +20,6 @@ package org.pentaho.reporting.designer.core.util;
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 
-/**
- * User: Martin Date: 27.10.2005 Time: 15:45:56
- */
 public class IconLoader
 {
 

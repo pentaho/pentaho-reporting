@@ -42,7 +42,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishSettings;
@@ -129,7 +129,7 @@ public class RepositoryLoginDialog extends CommonDialog
   public static AuthenticationData getStoredLoginData(final String baseUrl,
                                                       final ReportDesignerContext context)
   {
-    final ReportRenderContext reportRenderContext = context.getActiveContext();
+    final ReportDocumentContext reportRenderContext = context.getActiveContext();
     final AuthenticationStore authStore;
     if (reportRenderContext == null)
     {
@@ -164,7 +164,7 @@ public class RepositoryLoginDialog extends CommonDialog
 
     urlModel.removeAllElements();
     final String[] urls;
-    final ReportRenderContext reportRenderContext = context.getActiveContext();
+    final ReportDocumentContext reportRenderContext = context.getActiveContext();
     if (reportRenderContext == null)
     {
       urls = context.getGlobalAuthenticationStore().getKnownURLs();

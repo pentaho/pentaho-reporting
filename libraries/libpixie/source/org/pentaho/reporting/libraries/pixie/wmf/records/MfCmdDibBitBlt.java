@@ -24,7 +24,6 @@ import java.io.IOException;
 
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
-import org.pentaho.reporting.libraries.pixie.wmf.ROPConstants;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 import org.pentaho.reporting.libraries.pixie.wmf.bitmap.DIBReader;
 
@@ -106,7 +105,7 @@ public class MfCmdDibBitBlt extends MfCmd
   public String toString()
   {
     final StringBuffer b = new StringBuffer();
-    b.append("[BIT_BLT] records=");
+    b.append("[DIB_BIT_BLT] records=");
     b.append(getOperation());
     b.append(" source=");
     b.append(getOrigin());

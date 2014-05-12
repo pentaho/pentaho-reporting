@@ -37,6 +37,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
+@SuppressWarnings("UnnecessaryBoxing")
 public class URLResourceData extends AbstractResourceData
 {
   private static final Log logger = LogFactory.getLog(URLResourceData.class);
@@ -198,7 +199,10 @@ public class URLResourceData extends AbstractResourceData
       }
       catch (IOException e)
       {
-        logger.info("No response metadata could be read from the input stream", e);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("No response metadata could be read from the input stream", e);
+        }
         return null;
       }
     }
@@ -214,7 +218,10 @@ public class URLResourceData extends AbstractResourceData
       }
       catch (IOException e)
       {
-        logger.info("No response metadata could be read from the input stream", e);
+        if (logger.isDebugEnabled())
+        {
+          logger.debug("No response metadata could be read from the input stream", e);
+        }
         return null;
       }
     }
@@ -233,7 +240,10 @@ public class URLResourceData extends AbstractResourceData
     }
     catch (IOException e)
     {
-      logger.info("No response metadata could be read from the input stream", e);
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("No response metadata could be read from the input stream", e);
+      }
       return -1;
     }
   }

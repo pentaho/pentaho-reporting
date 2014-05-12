@@ -17,15 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
+import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
-import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 public class VariableReadHandler extends AbstractXmlReadHandler
 {
-  private String dataRowName;
+  private String formula;
   private String variableName;
 
   public VariableReadHandler()
@@ -40,16 +41,27 @@ public class VariableReadHandler extends AbstractXmlReadHandler
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    dataRowName = attrs.getValue(getUri(), "datarow-name");
-    if (dataRowName == null)
+    this.formula = attrs.getValue(getUri(), "formula");
+    if (formula == null)
     {
-      throw new ParseException("Required attribute 'datarow-name' is not defined");
+      String dataRowName = attrs.getValue(getUri(), "datarow-name");
+      if (dataRowName == null)
+      {
+        throw new ParseException("Required attribute 'datarow-name' is not defined");
+      }
+
+      this.formula = '=' + FormulaUtil.quoteReference(dataRowName);
     }
 
     variableName = attrs.getValue(getUri(), "variable-name");
     if (variableName == null)
     {
-      variableName = dataRowName;
+      variableName = attrs.getValue(getUri(), "datarow-name");
+      if (variableName == null)
+      {
+        throw new ParseException
+            ("Required attribute 'variable-name' is not defined, and legacy 'data-row' name is also undefined.");
+      }
     }
   }
 
@@ -60,18 +72,8 @@ public class VariableReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
+  public FormulaParameter getObject() throws SAXException
   {
-    return new ParameterMapping(dataRowName, variableName);
-  }
-
-  public String getVariableName()
-  {
-    return variableName;
-  }
-
-  public String getDataRowName()
-  {
-    return dataRowName;
+    return new FormulaParameter(variableName, formula);
   }
 }

@@ -17,20 +17,20 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.percentages.text;
 
-import org.pentaho.reporting.libraries.css.resolver.values.ResolveHandler;
-import org.pentaho.reporting.libraries.css.model.StyleKey;
-import org.pentaho.reporting.libraries.css.keys.font.FontStyleKeys;
-import org.pentaho.reporting.libraries.css.keys.text.TextStyleKeys;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.css.StyleSheetUtility;
+import org.pentaho.reporting.libraries.css.dom.DocumentContext;
 import org.pentaho.reporting.libraries.css.dom.LayoutElement;
 import org.pentaho.reporting.libraries.css.dom.LayoutStyle;
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
-import org.pentaho.reporting.libraries.css.values.CSSValue;
-import org.pentaho.reporting.libraries.css.values.CSSNumericValue;
+import org.pentaho.reporting.libraries.css.keys.font.FontStyleKeys;
+import org.pentaho.reporting.libraries.css.keys.text.TextStyleKeys;
+import org.pentaho.reporting.libraries.css.model.StyleKey;
+import org.pentaho.reporting.libraries.css.resolver.values.ResolveHandler;
 import org.pentaho.reporting.libraries.css.values.CSSNumericType;
-import org.pentaho.reporting.libraries.css.StyleSheetUtility;
+import org.pentaho.reporting.libraries.css.values.CSSNumericValue;
+import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 21.12.2005, 15:12:04
@@ -81,7 +81,7 @@ public class WordSpacingResolveHandler implements ResolveHandler
       DebugLog.log ("FontFamily is " + value + " but has not been set?" + currentNode);
       return;
     }
-    final double width = StrictGeomUtility.toExternalValue(fm.getCharWidth(0x20));
+    final double width = FontStrictGeomUtility.toExternalValue(fm.getCharWidth(0x20));
     final CSSNumericValue percentageBase =
             CSSNumericValue.createValue(CSSNumericType.PT, width);
     final CSSNumericValue min = StyleSheetUtility.convertLength

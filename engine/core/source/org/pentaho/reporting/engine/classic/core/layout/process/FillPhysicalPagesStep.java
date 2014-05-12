@@ -103,6 +103,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
   }
 
   private PageContext pageContext;
+  private boolean secondPage;
 
   public FillPhysicalPagesStep()
   {
@@ -113,9 +114,14 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
                                 final long pageEnd)
   {
 
+    getEventWatch().start();
+    getSummaryWatch().start();
+    try{
     final long contentStart = pagebox.getHeaderArea().getHeight();
     final long contentEnd = (pageEnd - pageStart) + contentStart;
     pageContext = new PageContext(contentStart, contentEnd);
+
+    secondPage = pagebox.getPageOffset() != 0;
 
     // This is a simple strategy.
     // Copy and relocate, then prune. (I whished we could prune first, but
@@ -123,7 +129,7 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     //
     // For the sake of efficiency, we do *not* create private copies for each
     // physical page. This would be an total overkill.
-    final LogicalPageBox derived = (LogicalPageBox) pagebox.derive(true);
+    final LogicalPageBox derived = pagebox.derive(true);
 
     // first, shift the normal-flow content downwards.
     // The start of the logical pagebox might be in the negative range now
@@ -154,6 +160,11 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     derived.setPageOffset(0);
     derived.setPageEnd(contentEnd + footerArea.getHeight() + repeatFooterArea.getHeight());
     return derived;
+    }
+    finally {
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
+    }
   }
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
@@ -175,6 +186,12 @@ public final class FillPhysicalPagesStep extends IterateVisualProcessStep
     {
       if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX &&
           node.isIgnorableForRendering())
+      {
+        node = node.getNext();
+        continue;
+      }
+
+      if (node.isContainsReservedContent())
       {
         node = node.getNext();
         continue;

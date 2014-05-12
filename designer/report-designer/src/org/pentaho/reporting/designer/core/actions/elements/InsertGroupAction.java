@@ -22,9 +22,9 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
@@ -51,13 +51,13 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
       report.setRootGroup(oldRootGroup);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final AbstractReportDefinition report = renderContext.getReportDefinition();
       final SubGroupBody body = new SubGroupBody();
@@ -85,7 +85,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       this.newRootGroup = newRootGroup;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -99,7 +99,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       subGroupBodyReportElement.setGroup(oldRootGroup);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -137,7 +137,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       this.newGroup = newGroup;
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -157,7 +157,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
       selectedGroup.setBody(maybeDataBody);
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
@@ -194,7 +194,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -274,7 +274,7 @@ public final class InsertGroupAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getSelectionModel();
     if (selectionModel == null)
     {
       setEnabled(false);

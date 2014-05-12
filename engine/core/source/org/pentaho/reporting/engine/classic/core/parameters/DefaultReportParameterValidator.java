@@ -25,14 +25,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -101,6 +104,11 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
     {
       // not needed..
     }
+
+    public PerformanceMonitorContext getPerformanceMonitorContext()
+    {
+      return context.getPerformanceMonitorContext();
+    }
   }
 
   private static final Log logger = LogFactory.getLog(DefaultReportParameterValidator.class);
@@ -128,19 +136,29 @@ public class DefaultReportParameterValidator implements ReportParameterValidator
       result = new ValidationResult();
     }
 
-    final TrustedParameterContext trustedParameterContext = new TrustedParameterContext(parameterContext);
-    final ParameterDefinitionEntry[] parameterDefinitionEntries = parameterDefinition.getParameterDefinitions();
-
-    for (int i = 0; i < parameterDefinitionEntries.length; i++)
+    PerformanceLoggingStopWatch sw =
+                 parameterContext.getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PARAMETER);
+    try
     {
-      final ParameterDefinitionEntry parameterDefinitionEntry = parameterDefinitionEntries[i];
-      final String parameterName = parameterDefinitionEntry.getName();
-      final Object untrustedValue = parameterContext.getParameterData().get(parameterName);
+      sw.start();
 
-      validateSingleParameter(result, trustedParameterContext, parameterDefinitionEntry, untrustedValue);
+      final TrustedParameterContext trustedParameterContext = new TrustedParameterContext(parameterContext);
+      final ParameterDefinitionEntry[] parameterDefinitionEntries = parameterDefinition.getParameterDefinitions();
+
+      for (int i = 0; i < parameterDefinitionEntries.length; i++)
+      {
+        final ParameterDefinitionEntry parameterDefinitionEntry = parameterDefinitionEntries[i];
+        final String parameterName = parameterDefinitionEntry.getName();
+        final Object untrustedValue = parameterContext.getParameterData().get(parameterName);
+
+        validateSingleParameter(result, trustedParameterContext, parameterDefinitionEntry, untrustedValue);
+      }
+      result.setParameterValues(trustedParameterContext.getTrustedValues());
+      return result;
     }
-    result.setParameterValues(trustedParameterContext.getTrustedValues());
-    return result;
+    finally{
+      sw.close();
+    }
   }
 
   private void validateSingleParameter(final ValidationResult result,

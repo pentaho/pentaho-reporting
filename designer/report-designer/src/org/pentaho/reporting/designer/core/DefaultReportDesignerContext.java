@@ -17,43 +17,10 @@
 
 package org.pentaho.reporting.designer.core;
 
-import java.awt.Component;
-import javax.swing.JComponent;
-import javax.swing.JPopupMenu;
-
-import org.pentaho.reporting.designer.core.xul.XulDesignerFrame;
-import org.pentaho.ui.xul.XulException;
-
 public class DefaultReportDesignerContext extends AbstractReportDesignerContext
 {
-  private XulDesignerFrame xulDesignerFrame;
-  private Component parent;
-
-  public DefaultReportDesignerContext(final Component parent, final ReportDesignerView view) throws XulException
+  public DefaultReportDesignerContext(final ReportDesignerView view)
   {
     super(view);
-    this.parent = parent;
-    this.xulDesignerFrame = new XulDesignerFrame();
-    this.xulDesignerFrame.setReportDesignerContext(this);
-  }
-
-  public XulDesignerFrame getXulDesignerFrame()
-  {
-    return xulDesignerFrame;
-  }
-
-  public JPopupMenu getPopupMenu(final String id)
-  {
-    return xulDesignerFrame.getPopupMenu(id);
-  }
-
-  public JComponent getToolBar(final String id)
-  {
-    return xulDesignerFrame.getToolBar(id);
-  }
-
-  public Component getParent()
-  {
-    return parent;
   }
 }

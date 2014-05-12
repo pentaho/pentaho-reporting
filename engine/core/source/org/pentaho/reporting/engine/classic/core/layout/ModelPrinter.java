@@ -25,10 +25,14 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class ModelPrinter
@@ -36,6 +40,7 @@ public class ModelPrinter
   public static final ModelPrinter INSTANCE = new ModelPrinter();
   private static final Log logger = LogFactory.getLog(ModelPrinter.class);
   private static final boolean PRINT_LINEBOX_CONTENTS = false;
+  private static final boolean PRINT_TABLE_CELL_CONTENTS = true;
 
   public ModelPrinter()
   {
@@ -80,6 +85,11 @@ public class ModelPrinter
 
   public void print(final RenderNode box)
   {
+    if (!isPrintingEnabled())
+    {
+      return;
+    }
+
     if (box instanceof RenderBox)
     {
       printBox((RenderBox) box, 0);
@@ -90,12 +100,21 @@ public class ModelPrinter
     }
   }
 
+  protected boolean isPrintingEnabled()
+  {
+    return logger.isDebugEnabled();
+  }
+
   public void print(final RenderBox box)
   {
+    if (!isPrintingEnabled())
+    {
+      return;
+    }
     printBox(box, 0);
   }
 
-  public void printBox(final RenderBox box, final int level)
+  protected void printBox(final RenderBox box, final int level)
   {
     printBoxDetails(box, level);
 
@@ -185,8 +204,12 @@ public class ModelPrinter
     b.append(box.getHeight());
     b.append(", min-chunk-width=");
     b.append(box.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(box.getX() + box.getWidth());
     b.append(", y2=");
-    b.append(box.getY() + box.getHeight());
+    b.append(box.getY2());
+    b.append(", y2-overflow=");
+    b.append(box.getY() + box.getOverflowAreaHeight());
     print(b.toString());
 
     b = new StringBuilder();
@@ -299,6 +322,27 @@ public class ModelPrinter
       print(b.toString());
     }
 
+    if (box instanceof TableRenderBox)
+    {
+      final TableRenderBox pageBox = (TableRenderBox) box;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- Layout: ");
+      Object styleProperty = pageBox.getStyleSheet().getStyleProperty(BandStyleKeys.TABLE_LAYOUT);
+      if (TableLayout.auto.equals(styleProperty))
+      {
+        b.append(TableLayout.auto);
+      }
+      else
+      {
+        b.append(TableLayout.fixed);
+      }
+      print(b.toString());
+    }
+
     if (box instanceof TableSectionRenderBox)
     {
       final TableSectionRenderBox pageBox = (TableSectionRenderBox) box;
@@ -401,8 +445,11 @@ public class ModelPrinter
 
   private void printChilds(final RenderBox box, final int level)
   {
-    if (box instanceof TableCellRenderBox)
+    if (PRINT_TABLE_CELL_CONTENTS == false && box instanceof TableCellRenderBox)
+    {
       return;
+    }
+
     RenderNode childs = box.getFirstChild();
     while (childs != null)
     {
@@ -446,6 +493,8 @@ public class ModelPrinter
     b.append(node.getHeight());
     b.append(", min-chunk-width=");
     b.append(node.getMinimumChunkWidth());
+    b.append(", x2=");
+    b.append(node.getX() + node.getWidth());
     b.append(", y2=");
     b.append(node.getY() + node.getHeight());
     print(b.toString());
@@ -493,6 +542,20 @@ public class ModelPrinter
         b.append("   ");
       }
       b.append("- text='");
+      b.append(text.getRawText());
+      b.append("'");
+      print(b.toString());
+    }
+
+    if (node instanceof RenderableComplexText)
+    {
+      final RenderableComplexText text = (RenderableComplexText) node;
+      b = new StringBuilder();
+      for (int i = 0; i < level; i++)
+      {
+        b.append("   ");
+      }
+      b.append("- complex-text='");
       b.append(text.getRawText());
       b.append("'");
       print(b.toString());

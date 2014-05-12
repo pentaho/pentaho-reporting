@@ -23,9 +23,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.EmptyReportException;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportEventException;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -36,8 +38,8 @@ import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
 import org.pentaho.reporting.engine.classic.core.states.CollectingReportErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.IgnoreEverythingReportErrorHandler;
-import org.pentaho.reporting.engine.classic.core.states.InitialLayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ProcessStateHandle;
 import org.pentaho.reporting.engine.classic.core.states.ReportProcessingErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
@@ -47,6 +49,7 @@ import org.pentaho.reporting.engine.classic.core.states.process.RestartOnNewPage
 import org.pentaho.reporting.engine.classic.core.util.IntList;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentMetaData;
@@ -89,6 +92,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
   private IntList physicalMapping;
   private IntList logicalMapping;
   private boolean paranoidChecks;
+  private PerformanceMonitorContext performanceMonitorContext;
+
   /**
    * A flag controlling whether we save page-states to make browsing pages easier and faster.
    */
@@ -167,6 +172,15 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     return outputProcessor.getMetaData();
   }
 
+  private PerformanceMonitorContext getPerformanceMonitorContext()
+  {
+    if (this.performanceMonitorContext == null)
+    {
+      this.performanceMonitorContext =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
+    }
+    return performanceMonitorContext;
+  }
 
   /**
    * Adds a repagination listener. This listener will be informed of pagination events.
@@ -206,7 +220,6 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     listeners.remove(l);
   }
 
-
   /**
    * Sends a repagination update to all registered listeners.
    *
@@ -230,7 +243,6 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     }
   }
 
-
   /**
    * Sends a repagination update to all registered listeners.
    *
@@ -253,7 +265,6 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       l.reportProcessingStarted(state);
     }
   }
-
 
   /**
    * Sends a repagination update to all registered listeners.
@@ -455,118 +466,133 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       return;
     }
 
-    final long start = System.currentTimeMillis();
-
-    // every report processing starts with an StartState.
-    final DefaultProcessingContext processingContext = createProcessingContext();
-    final MasterReport report = getReport();
-    final OutputFunction lm = createLayoutManager();
-
-    final ProcessState startState = new ProcessState();
+    PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE);
     try
     {
-      startState.initializeForMasterReport
-          (report, processingContext, new InitialLayoutProcess((OutputFunction) lm.getInstance()));
-    }
-    finally
-    {
-      activeDataFactory = startState.getProcessHandle();
-    }
-    ProcessState state = startState;
-    final int maxRows = startState.getNumberOfRows();
+      sw.start();
+      // every report processing starts with an StartState.
+      final DefaultProcessingContext processingContext = createProcessingContext();
+      final MasterReport report = getReport();
+      final OutputFunction lm = createLayoutManager();
 
-    // the report processing can be split into 2 separate processes.
-    // The first is the ReportPreparation; all function values are resolved and
-    // a dummy run is done to calculate the final layout. This dummy run is
-    // also necessary to resolve functions which use or depend on the PageCount.
-
-    // the second process is the printing of the report, this is done in the
-    // processReport() method.
-    processingContext.setPrepareRun(true);
-
-    // now process all function levels.
-    // there is at least one level defined, as we added the PageLayouter
-    // to the report.
-    // the levels are defined from +inf to 0
-    // we don't draw and we do not collect states in a StateList yet
-    final int[] levels;
-    int index;
-    if (state.isStructuralPreprocessingNeeded())
-    {
-      state = performStructuralPreprocessing(state, processingContext);
-      levels = state.getRequiredRuntimeLevels();
-      index = 1;
-    }
-    else
-    {
-      levels = state.getRequiredRuntimeLevels();
-      index = 0;
-    }
-
-    if (levels.length == 0)
-    {
-      throw new IllegalStateException("Assertation Failed: No functions defined, invalid implementation.");
-    }
-    processingContext.setProgressLevelCount(levels.length);
-    int level = levels[index];
-    // outer loop: process all function levels
-    boolean hasNext;
-    do
-    {
-      processingContext.setProcessingLevel(level);
-      processingContext.setProgressLevel(index);
-
-      // if the current level is the output-level, then save the report state.
-      // The state is used later to restart the report processing.
-      if (level == LayoutProcess.LEVEL_PAGINATE)
+      final ProcessState startState = new ProcessState();
+      try
       {
-        if (isFullStreamingProcessor())
-        {
-          stateList = new FastPageStateList(this);
-        }
-        else
-        {
-          stateList = new DefaultPageStateList(this);
-        }
-        physicalMapping = new IntList(40);
-        logicalMapping = new IntList(20);
-        AbstractReportProcessor.logger.debug("Pagination started ..");
-        state = processPaginationLevel(state, stateList, maxRows);
+        startState.initializeForMasterReport
+            (report, processingContext, (OutputFunction) lm.getInstance());
+      }
+      finally
+      {
+        activeDataFactory = startState.getProcessHandle();
+      }
+      ProcessState state = startState;
+      final int maxRows = startState.getNumberOfRows();
+
+      // the report processing can be split into 2 separate processes.
+      // The first is the ReportPreparation; all function values are resolved and
+      // a dummy run is done to calculate the final layout. This dummy run is
+      // also necessary to resolve functions which use or depend on the PageCount.
+
+      // the second process is the printing of the report, this is done in the
+      // processReport() method.
+      processingContext.setPrepareRun(true);
+
+      // now process all function levels.
+      // there is at least one level defined, as we added the PageLayouter
+      // to the report.
+      // the levels are defined from +inf to 0
+      // we don't draw and we do not collect states in a StateList yet
+      final int[] levels;
+      int index;
+      if (state.isStructuralPreprocessingNeeded())
+      {
+        state = performStructuralPreprocessing(state, processingContext);
+        levels = state.getRequiredRuntimeLevels();
+        index = 1;
       }
       else
       {
-        state = processPrepareLevels(state, maxRows);
+        levels = state.getRequiredRuntimeLevels();
+        index = 0;
       }
 
-      // if there is an other level to process, then use the finish state to
-      // create a new start state, which will continue the report processing on
-      // the next higher level.
-      hasNext = (index < (levels.length - 1));
-      if (hasNext)
+      if (levels.length == 0)
       {
-        index += 1;
-        level = levels[index];
-        processingContext.setProcessingLevel(level);
-        processingContext.setProgressLevel(index);
-        if (state.isFinish())
-        {
-          state = state.restart();
-        }
-        else
-        {
-          throw new IllegalStateException(
-              "Repaginate did not produce an finish state");
-        }
+        throw new IllegalStateException("Assertation Failed: No functions defined, invalid implementation.");
       }
+      final PerformanceLoggingStopWatch preDataSw =
+                     getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_DATA);
+      try
+      {
+        preDataSw.start();
+
+        processingContext.setProgressLevelCount(levels.length);
+        int level = levels[index];
+        // outer loop: process all function levels
+        boolean hasNext;
+        do
+        {
+          processingContext.setProcessingLevel(level);
+          processingContext.setProgressLevel(index);
+
+          // if the current level is the output-level, then save the report state.
+          // The state is used later to restart the report processing.
+          if (level == LayoutProcess.LEVEL_PAGINATE)
+          {
+            if (isFullStreamingProcessor())
+            {
+              stateList = new FastPageStateList(this);
+            }
+            else
+            {
+              stateList = new DefaultPageStateList(this);
+            }
+            physicalMapping = new IntList(40);
+            logicalMapping = new IntList(20);
+            AbstractReportProcessor.logger.debug("Pagination started ..");
+            state = processPaginationLevel(state, stateList, maxRows);
+          }
+          else
+          {
+            preDataSw.start();
+            state = processPrepareLevels(state, maxRows);
+            preDataSw.stop(true);
+          }
+
+          // if there is an other level to process, then use the finish state to
+          // create a new start state, which will continue the report processing on
+          // the next higher level.
+          hasNext = (index < (levels.length - 1));
+          if (hasNext)
+          {
+            index += 1;
+            level = levels[index];
+            processingContext.setProcessingLevel(level);
+            processingContext.setProgressLevel(index);
+            if (state.isFinish())
+            {
+              state = state.restart();
+            }
+            else
+            {
+              throw new IllegalStateException(
+                  "Repaginate did not produce an finish state");
+            }
+          }
+        }
+        while (hasNext == true);
+      }
+      finally
+      {
+        preDataSw.close();
+      }
+      // finally return the saved page states.
+      processingContext.setPrepareRun(false);
     }
-    while (hasNext == true);
-
-    // finally return the saved page states.
-    processingContext.setPrepareRun(false);
-
-    final long end = System.currentTimeMillis();
-    AbstractReportProcessor.logger.debug("Pagination-Time: " + (end - start));
-
+    finally
+    {
+      sw.close();
+    }
   }
 
   public void setFullStreamingProcessor(final boolean fullStreamingProcessor)
@@ -583,20 +609,30 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                                                       final DefaultProcessingContext processingContext)
       throws ReportProcessingException
   {
-    processingContext.setProcessingLevel(LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING);
-    processingContext.setProgressLevel(-1);
+    PerformanceLoggingStopWatch sw =
+        getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PREPARE_CROSSTAB);
+    try
+    {
+      sw.start();
+      processingContext.setProcessingLevel(LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING);
+      processingContext.setProgressLevel(-1);
 
-    final int maxRows = startState.getNumberOfRows();
-    ProcessState state = processPrepareLevels(startState, maxRows);
-    if (state.isFinish())
-    {
-      state = state.restart();
+      final int maxRows = startState.getNumberOfRows();
+      ProcessState state = processPrepareLevels(startState, maxRows);
+      if (state.isFinish())
+      {
+        state = state.restart();
+      }
+      else
+      {
+        throw new IllegalStateException("Repaginate did not produce an finish state");
+      }
+      return state;
     }
-    else
+    finally
     {
-      throw new IllegalStateException("Repaginate did not produce an finish state");
+      sw.close();
     }
-    return state;
   }
 
 
@@ -615,8 +651,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
                                               final int maxRows)
       throws ReportProcessingException
   {
+    PerformanceLoggingStopWatch sw = getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PAGINATE);
     try
     {
+      sw.start();
       final boolean failOnError = isStrictErrorHandling(getReport().getReportConfiguration());
       final ReportProcessingErrorHandler errorHandler = new CollectingReportErrorHandler();
       final DefaultLayoutPagebreakHandler pagebreakHandler = new DefaultLayoutPagebreakHandler();
@@ -1090,6 +1128,10 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     {
       throw new ReportProcessingException("Content-Processing failed.", e);
     }
+    finally
+    {
+      sw.close();
+    }
   }
 
   @SuppressWarnings("UnusedDeclaration")
@@ -1221,8 +1263,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
       ReportStateKey rollbackPageState = null;
 
       ProcessState state = startState.deriveForStorage();
-      ProcessState fallBackState = pagebreaksSupported ? state.deriveForPagebreak(): null;
-      final ProcessState globalState = pagebreaksSupported ? state.deriveForStorage(): null;
+      ProcessState fallBackState = pagebreaksSupported ? state.deriveForPagebreak() : null;
+      final ProcessState globalState = pagebreaksSupported ? state.deriveForStorage() : null;
       state.setErrorHandler(errorHandler);
 
       boolean isInRollBackMode = false;
@@ -1649,71 +1691,91 @@ public abstract class AbstractReportProcessor implements ReportProcessor
 
   public void processReport() throws ReportProcessingException
   {
-    if (AbstractReportProcessor.logger.isDebugEnabled())
-    {
-      AbstractReportProcessor.logger.debug(new MemoryUsageMessage(System.identityHashCode(
-          Thread.currentThread()) + ": Report processing time: Starting: "));
-    }
+    PerformanceLoggingStopWatch swGlobal =
+        getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_PROCESSING);
     try
     {
-      final long startTime = System.currentTimeMillis();
-
-      fireProcessingStarted(new ReportProgressEvent(this));
-
-      if (isPaginated() == false)
-      {
-        // Processes the whole report ..
-        prepareReportProcessing();
-      }
-
-      final long paginateTime = System.currentTimeMillis();
+      swGlobal.start();
       if (AbstractReportProcessor.logger.isDebugEnabled())
       {
-        AbstractReportProcessor.logger.debug(new MemoryUsageMessage
-            (System.identityHashCode(Thread.currentThread()) +
-                ": Report processing time: Pagination time: " + ((paginateTime - startTime) / 1000.0)));
+        AbstractReportProcessor.logger.debug(new MemoryUsageMessage(System.identityHashCode(
+            Thread.currentThread()) + ": Report processing time: Starting: "));
       }
-      if (getLogicalPageCount() == 0)
+      try
       {
-        throw new EmptyReportException("Report did not generate any content.");
-      }
+        final long startTime = System.currentTimeMillis();
 
-      // Start from scratch ...
-      PageState state = getLogicalPageState(0);
-      while (state != null)
-      {
-        state = processPage(state, true);
+        fireProcessingStarted(new ReportProgressEvent(this));
+
+        if (isPaginated() == false)
+        {
+          // Processes the whole report ..
+          prepareReportProcessing();
+        }
+        PerformanceLoggingStopWatch sw =
+            getPerformanceMonitorContext().createStopWatch(PerformanceTags.REPORT_GENERATE);
+        try
+        {
+          sw.start();
+          final long paginateTime = System.currentTimeMillis();
+          if (AbstractReportProcessor.logger.isDebugEnabled())
+          {
+            AbstractReportProcessor.logger.debug(new MemoryUsageMessage
+                (System.identityHashCode(Thread.currentThread()) +
+                    ": Report processing time: Pagination time: " + ((paginateTime - startTime) / 1000.0)));
+          }
+          if (getLogicalPageCount() == 0)
+          {
+            throw new EmptyReportException("Report did not generate any content.");
+          }
+
+          // Start from scratch ...
+          PageState state = getLogicalPageState(0);
+          while (state != null)
+          {
+            state = processPage(state, true);
+          }
+          final long endTime = System.currentTimeMillis();
+          if (AbstractReportProcessor.logger.isDebugEnabled())
+          {
+            AbstractReportProcessor.logger.debug(new MemoryUsageMessage
+                (System.identityHashCode(Thread.currentThread()) +
+                    ": Report processing time: " + ((endTime - startTime) / 1000.0)));
+          }
+        }
+        finally
+        {
+          sw.close();
+        }
       }
-      final long endTime = System.currentTimeMillis();
+      catch (EmptyReportException re)
+      {
+        throw re;
+      }
+      catch (ReportProcessingException re)
+      {
+        AbstractReportProcessor.logger.error(System.identityHashCode(
+            Thread.currentThread()) + ": Report processing failed.", re);
+        throw re;
+      }
+      catch (Exception e)
+      {
+        AbstractReportProcessor.logger.error(System.identityHashCode(
+            Thread.currentThread()) + ": Report processing failed.", e);
+        throw new ReportProcessingException("Failed to process the report", e);
+      }
+      fireProcessingFinished(new ReportProgressEvent(this, getPhysicalPageCount()));
       if (AbstractReportProcessor.logger.isDebugEnabled())
       {
-        AbstractReportProcessor.logger.debug(new MemoryUsageMessage
-            (System.identityHashCode(Thread.currentThread()) +
-                ": Report processing time: " + ((endTime - startTime) / 1000.0)));
+        AbstractReportProcessor.logger.debug(System.identityHashCode(
+            Thread.currentThread()) + ": Report processing finished.");
       }
     }
-    catch (EmptyReportException re)
+    finally
     {
-      throw re;
+      swGlobal.close();
     }
-    catch (ReportProcessingException re)
-    {
-      AbstractReportProcessor.logger.error(System.identityHashCode(
-          Thread.currentThread()) + ": Report processing failed.", re);
-      throw re;
-    }
-    catch (Exception e)
-    {
-      AbstractReportProcessor.logger.error(System.identityHashCode(
-          Thread.currentThread()) + ": Report processing failed.", e);
-      throw new ReportProcessingException("Failed to process the report", e);
-    }
-    fireProcessingFinished(new ReportProgressEvent(this, getPhysicalPageCount()));
-    if (AbstractReportProcessor.logger.isDebugEnabled())
-    {
-      AbstractReportProcessor.logger.debug(System.identityHashCode(
-          Thread.currentThread()) + ": Report processing finished.");
-    }
+
   }
 
   public int getLogicalPageCount()

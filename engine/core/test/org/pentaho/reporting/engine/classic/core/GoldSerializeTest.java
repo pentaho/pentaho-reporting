@@ -25,6 +25,7 @@ import java.io.ObjectOutputStream;
 
 import static junit.framework.Assert.assertNotNull;
 import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 
@@ -63,8 +64,7 @@ public class GoldSerializeTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

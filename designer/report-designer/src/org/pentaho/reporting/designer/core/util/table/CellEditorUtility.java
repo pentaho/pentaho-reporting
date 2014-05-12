@@ -24,7 +24,7 @@ import java.util.LinkedHashSet;
 
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
@@ -74,7 +74,7 @@ public class CellEditorUtility
       return new String[0];
     }
 
-    final ReportRenderContext reportContext = designerContext.getActiveContext();
+    final ReportDocumentContext reportContext = designerContext.getActiveContext();
     if (reportContext == null)
     {
       return new String[0];
@@ -114,7 +114,7 @@ public class CellEditorUtility
       return new FieldDefinition[0];
     }
 
-    final ReportRenderContext reportContext = designerContext.getActiveContext();
+    final ReportDocumentContext reportContext = designerContext.getActiveContext();
     if (reportContext == null)
     {
       return new FieldDefinition[0];
@@ -159,7 +159,7 @@ public class CellEditorUtility
       return extraFields.clone();
     }
 
-    final ReportRenderContext reportContext = designerContext.getActiveContext();
+    final ReportDocumentContext reportContext = designerContext.getActiveContext();
     if (reportContext == null)
     {
       return extraFields.clone();
@@ -202,7 +202,7 @@ public class CellEditorUtility
       return new String[0];
     }
 
-    final ReportRenderContext reportContext = designerContext.getActiveContext();
+    final ReportDocumentContext reportContext = designerContext.getActiveContext();
     if (reportContext == null)
     {
       return new String[0];

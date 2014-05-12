@@ -9,9 +9,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="libbase" exported="" />
-    <orderEntry type="module" module-name="libloader" exported="" />
     <orderEntry type="module" module-name="libfonts" exported="" />
+    <orderEntry type="module" module-name="flute" exported="" />
   </component>
   <component name="copyright">
     <Base>

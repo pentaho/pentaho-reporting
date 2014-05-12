@@ -43,9 +43,9 @@ public final class LoadReportFromRepositoryAction extends AbstractDesignerContex
   {
     final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
     final OpenFileFromRepositoryTask openFileFromRepositoryTask =
-        new OpenFileFromRepositoryTask(reportDesignerContext, reportDesignerContext.getParent());
+        new OpenFileFromRepositoryTask(reportDesignerContext, reportDesignerContext.getView().getParent());
     final LoginTask loginTask = new LoginTask
-        (reportDesignerContext, reportDesignerContext.getParent(), openFileFromRepositoryTask);
+        (reportDesignerContext, reportDesignerContext.getView().getParent(), openFileFromRepositoryTask);
 
     SwingUtilities.invokeLater(loginTask);
   }

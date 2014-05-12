@@ -19,13 +19,14 @@ package org.pentaho.reporting.designer.core.actions.elements.barcode;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
@@ -34,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilt
 import org.pentaho.reporting.engine.classic.core.designtime.ReportModelEventFilterFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesAttributeNames;
+import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesType;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class BarcodeTypeAction extends AbstractElementSelectionAction implements ToggleStateAction
@@ -76,24 +78,24 @@ public class BarcodeTypeAction extends AbstractElementSelectionAction implements
   {
     super.updateSelection();
 
-    final ReportSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-    final Element[] visualElements = filterBarcodeElements(selectionModel.getSelectedVisualElements());
+
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
 
     boolean selected;
-    if (visualElements.length == 0)
+    if (visualElements.isEmpty())
     {
       selected = false;
     }
     else
     {
       selected = true;
-      for (int i = 0; i < visualElements.length; i++)
+      for (Element visualElement : visualElements)
       {
-        final Element visualElement = visualElements[i];
         final Object oldValue = visualElement.getAttribute
             (SimpleBarcodesAttributeNames.NAMESPACE, SimpleBarcodesAttributeNames.TYPE_ATTRIBUTE);
         selected &= ObjectUtilities.equal(oldValue, type);
@@ -107,17 +109,18 @@ public class BarcodeTypeAction extends AbstractElementSelectionAction implements
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportSelectionModel selectionModel = getSelectionModel();
-    if (selectionModel == null)
+    final DocumentContextSelectionModel model = getSelectionModel();
+    if (model == null)
     {
       return;
     }
-    final Element[] visualElements = filterBarcodeElements(selectionModel.getSelectedVisualElements());
+
+    final Element[] visualElements = filterBarcodeElements(model);
     if (visualElements.length == 0)
     {
       return;
     }
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -140,13 +143,14 @@ public class BarcodeTypeAction extends AbstractElementSelectionAction implements
   }
 
 
-  private Element[] filterBarcodeElements(final Element[] elements)
+  private Element[] filterBarcodeElements(final DocumentContextSelectionModel model)
   {
+    final List<Element> visualElements = model.getSelectedElementsOfType(Element.class);
     final ArrayList<Element> retval = new ArrayList<Element>();
-    for (int i = 0; i < elements.length; i++)
+    String name = SimpleBarcodesType.INSTANCE.getMetaData().getName();
+    for (Element element : visualElements)
     {
-      final Element element = elements[i];
-      if ("simple-barcodes".equals(element.getElementTypeName()))
+      if (name.equals(element.getElementTypeName()))
       {
         retval.add(element);
       }

@@ -20,9 +20,12 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.SeparateColumnModel;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
@@ -151,5 +154,64 @@ public class TableRenderBox extends BlockRenderBox
       throw new IllegalStateException("Clone failed for some reason.");
     }
   }
+
+  public void addChild(final RenderNode child)
+  {
+    if (isValid(child) == false)
+    {
+      TableSectionRenderBox tsrb = new TableSectionRenderBox();
+      tsrb.addChild(child);
+      addChild(tsrb);
+      tsrb.close();
+      return;
+    }
+
+    super.addChild(child);
+  }
+
+  private boolean isValid(final RenderNode child)
+  {
+    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
+    {
+      return true;
+    }
+    return false;
+  }
+
+  public RenderBox create(final StyleSheet styleSheet)
+  {
+    return new AutoRenderBox(styleSheet);
+  }
+
 
 }

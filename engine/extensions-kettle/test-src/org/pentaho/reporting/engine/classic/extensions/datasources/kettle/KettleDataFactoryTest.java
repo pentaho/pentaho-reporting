@@ -23,7 +23,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 
 public class KettleDataFactoryTest extends DataSourceTestBase

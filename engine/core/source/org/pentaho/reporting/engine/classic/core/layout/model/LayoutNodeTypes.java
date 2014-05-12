@@ -83,6 +83,7 @@ public final class LayoutNodeTypes
   public static final int TYPE_BOX_INLINE_PROGRESS_MARKER = 0x1000042;
 
   public static final int TYPE_NODE_TEXT = 0x11;
+  public static final int TYPE_NODE_COMPLEX_TEXT = 0x111;
   public static final int TYPE_NODE_SPACER = 0x41;
   public static final int TYPE_NODE_FINISHEDNODE = 0x81;
 

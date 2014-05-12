@@ -535,6 +535,14 @@ public class BundleUtilities
                               final DocumentBundle sourceBundle,
                               final String[] files) throws IOException
   {
+    copyInto(targetBundle, sourceBundle, files, false);
+  }
+
+  public static void copyInto(final WriteableDocumentBundle targetBundle,
+                              final DocumentBundle sourceBundle,
+                              final String[] files,
+                              final boolean ignoreSticky) throws IOException
+  {
     if (targetBundle == null)
     {
       throw new NullPointerException();
@@ -592,6 +600,10 @@ public class BundleUtilities
       {
         continue;
       }
+      if (ignoreSticky && "true".equals(bundleMetaData.getEntryAttribute(entryName, STICKY_FLAG)))
+      {
+        continue;
+      }
 
       logger.debug("Processing " + entryName);
 
@@ -639,6 +651,19 @@ public class BundleUtilities
     }
   }
 
+  /**
+   * Returns an unique name for the given pattern, producing a file relative to the parent file name. The
+   * returned path will be an <b>absolute</b> path starting from the root of the bundle. When linking to this
+   * path via href-references that imply relative paths, use
+   * {@link org.pentaho.reporting.libraries.base.util.IOUtils#createRelativePath(java.lang.String, java.lang.String)}
+   * to transform the absolute path returned here into a path relative to your current context.
+   *
+   * @param bundle the document bundle for which we seek a new unique file name.
+   * @param parent the parent path to which the pattern is relative to.
+   * @param pattern the file name pattern. We expect one parameter only.
+   * @return the unique file name, never null.
+   * @throws IllegalStateException if the first 2 million entries we test do not yield a unique name we can use.
+   */
   public static String getUniqueName(final DocumentBundle bundle, final String parent, final String pattern)
   {
     final String fullPattern = IOUtils.getInstance().getAbsolutePath(pattern, parent);
@@ -684,7 +709,7 @@ public class BundleUtilities
     }
 
     // If you have more than 2 million entries, you would hate me to test for the two billion entries, wont you?
-    return null;
+    throw new IllegalStateException();
   }
 
 

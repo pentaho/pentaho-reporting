@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
@@ -48,10 +49,10 @@ public class ReportMigrationInspection extends AbstractStructureInspection
   }
 
   public void inspect(final ReportDesignerContext designerContext,
-                      final ReportRenderContext reportRenderContext,
+                      final ReportDocumentContext reportRenderContext,
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
-    final MasterReport masterReportElement = reportRenderContext.getMasterReportElement();
+    final MasterReport masterReportElement = reportRenderContext.getContextRoot();
     final Integer compatibilityLevel = masterReportElement.getCompatibilityLevel();
     if (compatibilityLevel == null ||
         compatibilityLevel == ClassicEngineBoot.VERSION_TRUNK)
@@ -102,7 +103,7 @@ public class ReportMigrationInspection extends AbstractStructureInspection
   }
 
   protected void inspectAttributeExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element,
@@ -141,7 +142,7 @@ public class ReportMigrationInspection extends AbstractStructureInspection
   }
 
   protected void inspectStyleExpression(final ReportDesignerContext designerContext,
-                                        final ReportRenderContext reportRenderContext,
+                                        final ReportDocumentContext reportRenderContext,
                                         final InspectionResultListener resultHandler,
                                         final String[] columnNames,
                                         final ReportElement element,
@@ -177,7 +178,7 @@ public class ReportMigrationInspection extends AbstractStructureInspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final Expression expression,

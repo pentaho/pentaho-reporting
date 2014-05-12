@@ -59,6 +59,7 @@ public class ZipHtmlServlet extends HttpServlet
       final ResourceManager resourceManager = new ResourceManager();
       final Resource resource = resourceManager.createDirectly(reportUrl, MasterReport.class);
       final MasterReport report = (MasterReport) resource.getResource();
+      report.setReportEnvironment(new SessionReportEnvironment(report.getReportEnvironment(), request.getSession()));
       response.setContentType("application/zip");
 
       final ServletOutputStream stream = response.getOutputStream();

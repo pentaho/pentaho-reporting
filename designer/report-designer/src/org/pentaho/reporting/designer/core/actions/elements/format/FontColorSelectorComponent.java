@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.actions.elements.format;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -51,8 +52,8 @@ public final class FontColorSelectorComponent extends ColorComboBox implements D
       else
       {
 
-        final Element[] visualElements = getSelectionModel().getSelectedVisualElements();
-        if (visualElements.length == 0)
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
+        if (visualElements.isEmpty())
         {
           setEnabled(false);
           setValueFromModel(null);
@@ -60,23 +61,21 @@ public final class FontColorSelectorComponent extends ColorComboBox implements D
         }
         else
         {
-          final Color color = (Color) visualElements[0].getStyle().getStyleProperty(ElementStyleKeys.PAINT);
-          for (int i = 1; i < visualElements.length; i++)
+          lastSelection = visualElements.get(0);
+          setEnabled(true);
+          final Color color = (Color) lastSelection.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
+          for (int i = 1; i < visualElements.size(); i++)
           {
-            final Element element = visualElements[i];
+            final Element element = visualElements.get(i);
             final Object otherColor = element.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
             if (ObjectUtilities.equal(color, otherColor) == false)
             {
-              setEnabled(true);
               setValueFromModel(null);
-              lastSelection = visualElements[0];
               return;
             }
           }
 
-          setEnabled(true);
           setValueFromModel(color);
-          lastSelection = visualElements[0];
         }
       }
     }

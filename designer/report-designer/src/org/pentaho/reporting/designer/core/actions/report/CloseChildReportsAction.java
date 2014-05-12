@@ -24,6 +24,7 @@ import javax.swing.Action;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -59,7 +60,7 @@ public class CloseChildReportsAction extends AbstractReportContextAction
     final ReportDesignerContext reportDesignerContext1 = getReportDesignerContext();
     if (tabIndex == -1)
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       if (activeContext == null)
       {
         return;
@@ -78,7 +79,7 @@ public class CloseChildReportsAction extends AbstractReportContextAction
   }
 
   private void performCloseReport(final ReportDesignerContext context, 
-                                  final ReportRenderContext activeContext)
+                                  final ReportDocumentContext activeContext)
   {
     final int contextCount = context.getReportRenderContextCount();
     final ArrayList<ReportRenderContext> contexts = new ArrayList<ReportRenderContext>(contextCount);

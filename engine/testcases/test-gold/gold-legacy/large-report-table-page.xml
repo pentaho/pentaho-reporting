@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="3" row-count="8">
+  <table col-count="3" row-count="7">
     <cols>
       <column width="100"/>
       <column width="355"/>
@@ -46,7 +46,7 @@
       <spanned-cell/>
       <empty-cell/>
     </row>
-    <row height="26">
+    <row height="622">
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Generated using JFreeReport."/>
@@ -59,13 +59,6 @@
         </line>
       </cell>
       <spanned-cell/>
-      <empty-cell/>
-    </row>
-    <row height="596">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
-      </empty-cell>
-      <empty-cell/>
       <empty-cell/>
     </row>
     <row height="4">
@@ -101,7 +94,7 @@
       <spanned-cell/>
     </row>
   </table>
-  <table col-count="4" row-count="18">
+  <table col-count="4" row-count="17">
     <cols>
       <column width="100"/>
       <column width="170"/>
@@ -261,7 +254,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="16">
+    <row height="588">
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total for letter:"/>
@@ -282,12 +275,6 @@
           <text x="358.495" y="90.0" width="17.505" height="9.0">0.00</text>
         </line>
       </cell>
-      <empty-cell/>
-    </row>
-    <row height="572">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
       <empty-cell/>
     </row>
     <row height="4">

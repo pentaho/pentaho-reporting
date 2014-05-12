@@ -136,7 +136,27 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
         writer = new XmlDocumentWriter(outputStream, metaData);
         writer.open();
       }
-      writer.processTableContent(logicalPage, metaData, contentProducer);
+      writer.processTableContent(logicalPage, metaData, contentProducer, false);
+    }
+    catch (Exception e)
+    {
+      throw new ContentProcessingException("Failed to generate PDF document", e);
+    }
+  }
+
+  protected void updateTableContent(final LogicalPageKey logicalPageKey,
+                                    final LogicalPageBox logicalPage,
+                                    final TableContentProducer contentProducer,
+                                    final boolean performOutput) throws ContentProcessingException
+  {
+    try
+    {
+      if (writer == null)
+      {
+        writer = new XmlDocumentWriter(outputStream, metaData);
+        writer.open();
+      }
+      writer.processTableContent(logicalPage, metaData, contentProducer, true);
     }
     catch (Exception e)
     {

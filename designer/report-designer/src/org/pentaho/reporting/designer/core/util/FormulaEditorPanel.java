@@ -40,7 +40,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
@@ -325,7 +325,7 @@ public class FormulaEditorPanel extends JPanel
       return EMPTY_FIELDS;
     }
 
-    final ReportRenderContext renderContext = reportDesignerContext.getActiveContext();
+    final ReportDocumentContext renderContext = reportDesignerContext.getActiveContext();
     if (renderContext == null)
     {
       return EMPTY_FIELDS;

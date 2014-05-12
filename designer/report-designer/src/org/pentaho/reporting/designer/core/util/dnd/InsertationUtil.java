@@ -24,13 +24,13 @@ import java.util.Map;
 import javax.swing.FocusManager;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.RootBandRenderComponent;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFunctionNode;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportParametersNode;
 import org.pentaho.reporting.designer.core.editor.structuretree.SubReportParametersNode;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.DataSourceEditUndoEntry;
@@ -173,7 +173,7 @@ public class InsertationUtil
         data instanceof DataFactory);
   }
 
-  public static Object getInsertationPoint(final ReportRenderContext renderContext)
+  public static Object getInsertationPoint(final ReportDocumentContext renderContext)
   {
     final Component owner = FocusManager.getCurrentManager().getPermanentFocusOwner();
     if (owner instanceof RootBandRenderComponent == false)
@@ -219,11 +219,9 @@ public class InsertationUtil
     final RootBandRenderComponent rootBandRenderComponent = (RootBandRenderComponent) owner;
     final Band rootBand = rootBandRenderComponent.getRootBand();
 
-    final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
-    final Element[] visualElements = selectionModel.getSelectedVisualElements();
-    for (int i = 0; i < visualElements.length; i++)
+    final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
+    for (final Element element : selectionModel.getSelectedElementsOfType(Element.class))
     {
-      final Element element = visualElements[i];
       if (element instanceof Band && ModelUtility.isDescendant(rootBand, element))
       {
         return element;
@@ -552,7 +550,7 @@ public class InsertationUtil
     return null;
   }
 
-  public static UndoEntry delete(final ReportRenderContext context, final Object data)
+  public static UndoEntry delete(final ReportDocumentContext context, final Object data)
   {
     if (data instanceof ParameterDefinitionEntry)
     {
@@ -795,7 +793,7 @@ public class InsertationUtil
     return null;
   }
 
-  public static Object prepareForCopy(final ReportRenderContext context, final Object data)
+  public static Object prepareForCopy(final ReportDocumentContext context, final Object data)
   {
     if (data instanceof ParameterDefinitionEntry)
     {

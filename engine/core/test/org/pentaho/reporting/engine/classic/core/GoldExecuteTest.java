@@ -19,6 +19,7 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 
 public class GoldExecuteTest extends GoldTestBase
@@ -30,8 +31,7 @@ public class GoldExecuteTest extends GoldTestBase
   @Test
   public void testExecuteReports() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-            ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }

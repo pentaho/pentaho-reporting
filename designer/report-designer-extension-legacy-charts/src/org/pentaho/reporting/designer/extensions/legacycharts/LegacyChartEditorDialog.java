@@ -46,7 +46,6 @@ import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionPropertiesTableModel;
 import org.pentaho.reporting.designer.core.util.ActionToggleButton;
 import org.pentaho.reporting.designer.core.util.ExpressionListCellRenderer;
@@ -444,8 +443,6 @@ public class LegacyChartEditorDialog extends CommonDialog
     }
     try
     {
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
-      editModel.setActiveContext(activeContext);
       chartTable.setReportDesignerContext(reportDesignerContext);
       primaryDataSourceTable.setReportDesignerContext(reportDesignerContext);
       secondaryDataSourceTable.setReportDesignerContext(reportDesignerContext);
@@ -531,7 +528,6 @@ public class LegacyChartEditorDialog extends CommonDialog
     }
     finally
     {
-      this.editModel.setActiveContext(null);
       chartTable.setReportDesignerContext(null);
       primaryDataSourceTable.setReportDesignerContext(null);
       secondaryDataSourceTable.setReportDesignerContext(null);

@@ -32,6 +32,8 @@
     <!-- slf4j impl -->
     <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.4" />
 
+    <!-- Testing Dependencies -->
+    <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
 	</dependencies>
 </ivy-module>
 

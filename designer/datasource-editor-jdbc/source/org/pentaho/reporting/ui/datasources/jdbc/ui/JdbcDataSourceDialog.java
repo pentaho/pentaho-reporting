@@ -1,19 +1,19 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
+ */
 
 package org.pentaho.reporting.ui.datasources.jdbc.ui;
 
@@ -707,7 +707,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
   private JTextField queryNameTextField;
   private RSyntaxTextArea queryTextArea;
-  private JList<DataSetQuery<String>> queryNameList;
+  private JList queryNameList;
   private NamedDataSourceDialogModel dialogModel;
   private JdbcConnectionPanel connectionComponent;
   private DesignTimeContext designTimeContext;
@@ -776,11 +776,21 @@ public class JdbcDataSourceDialog extends CommonDialog
       final JdbcConnectionDefinition definition = connectionComponent.createConnectionDefinition(currentConnectionProvider);
       dialogModel.addConnection(definition);
       dialogModel.getConnections().setSelectedItem(definition);
-      final String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
-      if(quernNameForSelection != null)
+
+      String selectedQuery = selectedQueryName;
+      if (StringUtils.isEmpty(selectedQuery))
       {
-        dialogModel.setSelectedQuery(quernNameForSelection);
-        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(quernNameForSelection));
+        DataSetQuery query = dialogModel.getFirstQueryName();
+        if (query != null)
+        {
+          selectedQuery = query.getQueryName();
+        }
+      }
+
+      if(StringUtils.isEmpty(selectedQuery) == false)
+      {
+        dialogModel.setSelectedQuery(selectedQuery);
+        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(selectedQuery));
       }
     }
 
@@ -912,7 +922,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     final QueryNameTextFieldDocumentListener updateHandler = new QueryNameTextFieldDocumentListener();
     dialogModel.getQueries().addListDataListener(updateHandler);
 
-    queryNameList = new JList<DataSetQuery<String>>(dialogModel.getQueries());
+    queryNameList = new JList(dialogModel.getQueries());
     queryNameList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(new QuerySelectedHandler());
@@ -930,7 +940,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -940,7 +950,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel<ScriptEngineFactory>(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 

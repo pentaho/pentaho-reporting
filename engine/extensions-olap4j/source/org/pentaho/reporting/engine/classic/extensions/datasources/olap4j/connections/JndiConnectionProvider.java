@@ -1,50 +1,40 @@
-/*!
-* This program is free software; you can redistribute it and/or modify it under the
-* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
-* Foundation.
-*
-* You should have received a copy of the GNU Lesser General Public License along with this
-* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
-* or from the Free Software Foundation, Inc.,
-* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* See the GNU Lesser General Public License for more details.
-*
-* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
-*/
+/*
+ * This program is free software; you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+ * Foundation.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+ * or from the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
+ */
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.connections;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.olap4j.OlapConnection;
 import org.olap4j.OlapWrapper;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DataSourceService;
+import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DatasourceServiceException;
 
 public class JndiConnectionProvider implements OlapConnectionProvider
 {
-  private static InitialContext initialContext;
-
-  protected static synchronized InitialContext getInitialContext() throws NamingException
-  {
-    if (initialContext == null)
-    {
-      initialContext = new InitialContext();
-    }
-    return initialContext;
-  }
+  private transient DataSourceService dataSourceService;
 
   private static final Log logger = LogFactory.getLog(JndiConnectionProvider.class);
   private String connectionPath;
@@ -53,6 +43,7 @@ public class JndiConnectionProvider implements OlapConnectionProvider
 
   public JndiConnectionProvider()
   {
+    this.dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
   }
 
   public String getConnectionPath()
@@ -89,8 +80,7 @@ public class JndiConnectionProvider implements OlapConnectionProvider
   {
     try
     {
-      final Context ctx = getInitialContext();
-      final DataSource ds = findDataSource(ctx, connectionPath);
+      final DataSource ds = dataSourceService.getDataSource(connectionPath);
 
       final String realUser;
       final String realPassword;
@@ -144,9 +134,10 @@ public class JndiConnectionProvider implements OlapConnectionProvider
         final OlapWrapper wrapper = (OlapWrapper) connection;
         return wrapper.unwrap(OlapConnection.class);
       }
-      throw new SQLException("Unable to unwrap the connection: " + connectionPath); //$NON-NLS-1$
+
+      return connection.unwrap(OlapConnection.class);
     }
-    catch (NamingException ne)
+    catch (DatasourceServiceException ne)
     {
       JndiConnectionProvider.logger.warn("Failed to access the JDNI-System", ne);
       throw new SQLException("Failed to access the JNDI system");
@@ -160,45 +151,6 @@ public class JndiConnectionProvider implements OlapConnectionProvider
     list.add(connectionPath);
     list.add(username);
     return list;
-  }
-
-  private DataSource findDataSource(final Context initialContext, final String connectionPath) throws SQLException
-  {
-    try
-    {
-      final Object o = initialContext.lookup(connectionPath);
-      if (o instanceof DataSource)
-      {
-        return (DataSource) o;
-      }
-    }
-    catch (NamingException e)
-    {
-      // ignored ..
-    }
-
-    final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator keys = config.findPropertyKeys
-        ("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.jndi-prefix.");
-    while (keys.hasNext())
-    {
-      final String key = (String) keys.next();
-      final String prefix = config.getConfigProperty(key);
-      try
-      {
-        final Object o = initialContext.lookup(prefix + connectionPath);
-        if (o instanceof DataSource)
-        {
-          return (DataSource) o;
-        }
-      }
-      catch (NamingException e)
-      {
-        // ignored ..
-      }
-    }
-
-    throw new SQLException("Failed to access the JNDI system");
   }
 
   public boolean equals(final Object o)
@@ -237,5 +189,12 @@ public class JndiConnectionProvider implements OlapConnectionProvider
     result = 31 * result + (username != null ? username.hashCode() : 0);
     result = 31 * result + (password != null ? password.hashCode() : 0);
     return result;
+  }
+
+  private void readObject(final ObjectInputStream stream)
+      throws IOException, ClassNotFoundException
+  {
+    stream.defaultReadObject();
+    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
   }
 }
