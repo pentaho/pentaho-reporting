@@ -19,6 +19,7 @@ package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
@@ -37,6 +38,7 @@ public class OverlappingElementOverlayRenderer implements OverlayRenderer
   private Element rootElement;
   private double zoomFactor;
   private Rectangle2D elementBounds;
+  private double offset;
 
   public OverlappingElementOverlayRenderer(final Element defaultElement)
   {
@@ -44,9 +46,10 @@ public class OverlappingElementOverlayRenderer implements OverlayRenderer
     this.rootElement = defaultElement;
   }
 
-  public void validate(final ReportDocumentContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
   {
     this.zoomFactor = zoomFactor;
+    this.offset = sectionOffset.getY();
   }
 
   public void draw(final Graphics2D graphics, final Rectangle2D bounds, final ImageObserver obs)
@@ -55,6 +58,8 @@ public class OverlappingElementOverlayRenderer implements OverlayRenderer
     {
       return;
     }
+
+    graphics.translate(0, -offset);
 
     draw(rootElement, graphics);
   }
