@@ -25,9 +25,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeRegistry;
@@ -38,6 +39,7 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class TestSetupModule extends AbstractModule
 {
@@ -63,8 +65,9 @@ public class TestSetupModule extends AbstractModule
 
     try
     {
-      Class.forName("org.hsqldb.jdbcDriver");
-      populateDatabase();
+      Driver driver = ObjectUtilities.loadAndInstantiate
+          ("org.hsqldb.jdbcDriver", TestSetupModule.class, Driver.class);
+      populateDatabase(driver);
     }
     catch (Exception e)
     {
@@ -72,10 +75,13 @@ public class TestSetupModule extends AbstractModule
     }
   }
 
-  private void populateDatabase()
+  private void populateDatabase(Driver driver)
       throws SQLException, IOException
   {
-    final Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:SampleData", "sa", "");
+    Properties p = new Properties();
+    p.setProperty("user", "sa");
+    p.setProperty("password", "");
+    final Connection connection = driver.connect("jdbc:hsqldb:mem:SampleData", p);
     connection.setAutoCommit(false);
     try
     {
