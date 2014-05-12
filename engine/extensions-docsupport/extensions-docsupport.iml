@@ -14,7 +14,6 @@
     <orderEntry type="module" module-name="extensions-mondrian" exported="" />
     <orderEntry type="module" module-name="extensions-olap4j" exported="" />
     <orderEntry type="module" module-name="extensions-pentaho-metadata" exported="" />
-    <orderEntry type="module" module-name="extensions-reportdesigner-parser" exported="" />
     <orderEntry type="module" module-name="extensions-sampledata" exported="" />
     <orderEntry type="module" module-name="extensions-scripting" exported="" />
     <orderEntry type="module" module-name="extensions-toc" exported="" />

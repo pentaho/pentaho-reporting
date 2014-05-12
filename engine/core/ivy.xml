@@ -45,7 +45,6 @@
         <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
         <exclude org="xml-apis" module="xml-apis"/>
       </dependency>
-      <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="default_external->default"/>
       <dependency org="pentaho" name="pentaho-database-model" rev="${dependency.pentaho-database-model.revision}" changing="true" conf="default_external->default"/>
 
       <!-- designtime support -->

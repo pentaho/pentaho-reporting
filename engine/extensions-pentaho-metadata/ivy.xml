@@ -28,6 +28,13 @@
       <exclude org="commons-logging"/>
       <exclude org="javax.activation" module="activation"/>
       <exclude org="xml-apis" module="xml-apis"/>
+      <exclude org="org.mortbay.jetty"/>
+      <exclude org="mysql"/>
+      <exclude org="hsqldb"/>
+      <exclude org="monetdb"/>
+      <exclude org="postgresql"/>
+      <exclude org="commons-logging"/>
+      <exclude org="pentaho" module="mondrian"/>
     </dependency>
 
     <dependency org="log4j" name="log4j" rev="1.2.14" transitive="false" conf="default_external->default"/>
