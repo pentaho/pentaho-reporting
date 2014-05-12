@@ -23,7 +23,10 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
+import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorRegistry;
 
 public class ReportPreProcessorListCellRenderer extends DefaultListCellRenderer
 {
@@ -45,9 +48,24 @@ public class ReportPreProcessorListCellRenderer extends DefaultListCellRenderer
       rendererComponent.setText(metaData.getDisplayName(Locale.getDefault()));
       rendererComponent.setToolTipText(metaData.getDeprecationMessage(Locale.getDefault()));
     }
-    else
+    else if (value instanceof ReportPreProcessor)
     {
-      rendererComponent.setText(" ");
+      String key = value.getClass().getName();
+      if (ReportPreProcessorRegistry.getInstance().isReportPreProcessorRegistered(key))
+      {
+        ReportPreProcessorMetaData metaData =
+            ReportPreProcessorRegistry.getInstance().getReportPreProcessorMetaData(key);
+        String displayName = metaData.getDisplayName(Locale.getDefault());
+        rendererComponent.setText(Messages.getString("ReportPreProcessorCellEditor.EditingInstanceMessage", displayName));
+        rendererComponent.setToolTipText(metaData.getDeprecationMessage(Locale.getDefault()));
+      }
+      else {
+        rendererComponent.setText(Messages.getString("ReportPreProcessorCellEditor.EditingInstanceMessage", key));
+        rendererComponent.setToolTipText(null);
+      }
+    }
+    else {
+      setText(" ");
     }
     return rendererComponent;
   }

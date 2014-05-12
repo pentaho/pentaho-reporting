@@ -25,6 +25,7 @@ import java.io.ObjectOutputStream;
 
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -56,18 +57,9 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
                                                    final int compatibilityLevel)
   {
     super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
-    if (propertyRole == null)
-    {
-      throw new NullPointerException();
-    }
-    if (beanInfo == null)
-    {
-      throw new NullPointerException();
-    }
-    if (reportPreProcessorCore == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("propertyRole", propertyRole);
+    ArgumentNullException.validate("beanInfo", beanInfo);
+    ArgumentNullException.validate("reportPreProcessorCore", reportPreProcessorCore);
 
     this.beanInfo = beanInfo;
     this.reportPreProcessorCore = reportPreProcessorCore;
@@ -84,6 +76,10 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
 
   public Class getPropertyType()
   {
+    if (propertyDescriptor == null)
+    {
+      propertyDescriptor = beanInfo.getPropertyDescriptor(getName());
+    }
     return propertyDescriptor.getPropertyType();
   }
 
