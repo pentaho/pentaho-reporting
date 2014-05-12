@@ -37,24 +37,34 @@ import org.pentaho.reporting.libraries.designtime.swing.background.GenericCancel
 
 public class LoginTask implements Runnable
 {
-  private ReportDesignerContext designerContext;
-  private Component uiContext;
+  private final ReportDesignerContext designerContext;
+  private final Component uiContext;
+  private final AuthenticatedServerTask followUpTask;
+  private final boolean loginForPublish;
+  private boolean skipFirstShowDialog;
   private RepositoryLoginDialog loginDialog;
   private AuthenticationData loginData;
-  private AuthenticatedServerTask followUpTask;
-  private boolean skipFirstShowDialog;
 
   public LoginTask(final ReportDesignerContext designerContext,
                    final Component uiContext,
                    final AuthenticatedServerTask followUpTask)
   {
-    this(designerContext, uiContext, followUpTask, null);
+    this(designerContext, uiContext, followUpTask, null, false);
   }
 
   public LoginTask(final ReportDesignerContext designerContext,
                    final Component uiContext,
                    final AuthenticatedServerTask followUpTask,
                    final AuthenticationData loginData)
+  {
+    this(designerContext, uiContext, followUpTask, loginData, false);
+  }
+
+  public LoginTask(final ReportDesignerContext designerContext,
+                   final Component uiContext,
+                   final AuthenticatedServerTask followUpTask,
+                   final AuthenticationData loginData,
+                   final boolean loginForPublish)
   {
     if (designerContext == null)
     {
@@ -64,6 +74,7 @@ public class LoginTask implements Runnable
     {
       throw new NullPointerException();
     }
+    this.loginForPublish = loginForPublish;
     this.designerContext = designerContext;
     this.uiContext = uiContext;
     this.followUpTask = followUpTask;
@@ -114,15 +125,15 @@ public class LoginTask implements Runnable
         final Window window = LibSwingUtil.getWindowAncestor(uiContext);
         if (window instanceof Frame)
         {
-          loginDialog = new RepositoryLoginDialog((Frame) window);
+          loginDialog = new RepositoryLoginDialog((Frame) window, loginForPublish);
         }
         else if (window instanceof Dialog)
         {
-          loginDialog = new RepositoryLoginDialog((Dialog) window);
+          loginDialog = new RepositoryLoginDialog((Dialog) window, loginForPublish);
         }
         else
         {
-          loginDialog = new RepositoryLoginDialog();
+          loginDialog = new RepositoryLoginDialog(loginForPublish);
         }
       }
 

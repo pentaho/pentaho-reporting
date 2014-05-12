@@ -85,7 +85,7 @@ public class PublishToServerAction extends AbstractReportContextAction
     final PublishToServerTask publishToServerTask =
         new PublishToServerTask(reportDesignerContext, reportDesignerContext.getView().getParent());
     final LoginTask loginTask = new LoginTask
-        (reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask);
+        (reportDesignerContext, reportDesignerContext.getView().getParent(), publishToServerTask, null, true);
 
     SwingUtilities.invokeLater(loginTask);
 
