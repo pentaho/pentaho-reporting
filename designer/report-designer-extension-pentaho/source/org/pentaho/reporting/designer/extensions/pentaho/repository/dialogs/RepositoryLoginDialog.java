@@ -81,22 +81,25 @@ public class RepositoryLoginDialog extends CommonDialog
   private DefaultComboBoxModel urlModel;
   private JComboBox versionCombo;
   private KeyedComboBoxModel<Integer, String> versionModel;
+  private boolean loginForPublish;
 
-  public RepositoryLoginDialog(final Dialog owner) throws HeadlessException
+  public RepositoryLoginDialog(final Dialog owner,
+                               final boolean loginForPublish) throws HeadlessException
   {
     super(owner);
-    init();
+    init(loginForPublish);
   }
 
-  public RepositoryLoginDialog(final Frame parent)
+  public RepositoryLoginDialog(final Frame parent,
+                                 final boolean loginForPublish)
   {
     super(parent);
-    init();
+    init(loginForPublish);
   }
 
-  public RepositoryLoginDialog()
+  public RepositoryLoginDialog(final boolean loginForPublish)
   {
-    init();
+    init(loginForPublish);
   }
 
   public static AuthenticationData getDefaultData(final ReportDesignerContext designerContext)
@@ -214,9 +217,11 @@ public class RepositoryLoginDialog extends CommonDialog
     return data;
   }
 
-  protected void init()
+  protected void init(final boolean loginForPublish)
   {
     setTitle(Messages.getInstance().getString("RepositoryLoginDialog.Title"));
+
+    this.loginForPublish = loginForPublish;
 
     urlModel = new DefaultComboBoxModel();
     urlCombo = new JComboBox(urlModel);
@@ -306,7 +311,7 @@ public class RepositoryLoginDialog extends CommonDialog
     c.weightx = 1.0;
     serverPanel.add(timeoutField, c);
 
-    if (WorkspaceSettings.getInstance().isShowExpertItems())
+    if (WorkspaceSettings.getInstance().isShowExpertItems() && loginForPublish == false)
     {
       c.insets = new Insets(0, 20, 5, 20);
       c.gridy = 4;
@@ -366,7 +371,7 @@ public class RepositoryLoginDialog extends CommonDialog
   public int getVersion ()
   {
     final Integer selectedKey = versionModel.getSelectedKey();
-    if (selectedKey == null)
+    if (selectedKey == null || loginForPublish)
     {
       return 5;
     }
