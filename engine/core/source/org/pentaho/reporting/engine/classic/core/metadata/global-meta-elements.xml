@@ -1227,14 +1227,18 @@
   <style-group name="bands" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
     <style name="computed-sheetname" expert="true" hidden="false" mandatory="false"/>
     <style name="bookmark" expert="true" hidden="false" mandatory="false"/>
-    <style name="pagebreak-before" expert="false" hidden="false" mandatory="false"/>
-    <style name="pagebreak-after" expert="false" hidden="false" mandatory="false"/>
     <style name="layout" expert="false" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LayoutPropertyEditor"/>
-    <style name="fixed-position" expert="true" hidden="false" mandatory="false"
-           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LengthPropertyEditor"/>
 
     <style name="anti-aliasing" expert="true" hidden="false" mandatory="false" deprecated="false"/>
+    <style name="keepAspectRatio" expert="false" hidden="false" mandatory="false"/>
+  </style-group>
+
+  <style-group name="pagination-control" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
+    <style name="pagebreak-before" expert="false" hidden="false" mandatory="false"/>
+    <style name="pagebreak-after" expert="false" hidden="false" mandatory="false"/>
+    <style name="fixed-position" expert="true" hidden="false" mandatory="false"
+           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LengthPropertyEditor"/>
   </style-group>
 
   <style-group name="page-bands" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
@@ -1278,7 +1282,7 @@
     <style name="font-strikethrough" expert="false" hidden="false" mandatory="false"/>
     <style name="font-smooth" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.FontSmoothPropertyEditor"/>
-    <style name="font-encoding" expert="true" hidden="false" mandatory="false"/>
+    <style name="font-encoding" expert="false" hidden="false" mandatory="false"/>
     <style name="font-size" expert="false" hidden="false" mandatory="false"/>
     <style name="font-italic" expert="false" hidden="false" mandatory="false"/>
     <style name="font-underline" expert="false" hidden="false" mandatory="false"/>
@@ -1289,7 +1293,7 @@
 
     <style name="text-wrap" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor"/>
-    <style name="direction" expert="true" hidden="false" mandatory="false"
+    <style name="direction" expert="false" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor"/>
     <style name="trim-text-content" expert="true" hidden="false" mandatory="false"/>
     <style name="vertical-text-alignment" expert="true" hidden="false" mandatory="false"
@@ -1310,6 +1314,7 @@
 
     <style name="text-indent" expert="true" hidden="true" mandatory="false"/>
     <style name="first-line-indent" expert="true" hidden="true" mandatory="false"/>
+    <style name="word-break" expert="true" hidden="true" mandatory="false" compatibility-level="5.1.0"/>
   </style-group>
 
   <style-group name="layout" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
