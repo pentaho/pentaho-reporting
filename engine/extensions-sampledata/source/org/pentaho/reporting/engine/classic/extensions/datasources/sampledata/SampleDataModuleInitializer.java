@@ -22,9 +22,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
@@ -34,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class SampleDataModuleInitializer implements ModuleInitializer
 {
@@ -53,8 +55,9 @@ public class SampleDataModuleInitializer implements ModuleInitializer
   {
     try
     {
-      Class.forName("org.hsqldb.jdbcDriver");
-      populateDatabase();
+      Driver driver = ObjectUtilities.loadAndInstantiate
+          ("org.hsqldb.jdbcDriver", SampleDataModuleInitializer.class, Driver.class);
+      populateDatabase(driver);
     }
     catch (Exception e)
     {
@@ -66,10 +69,14 @@ public class SampleDataModuleInitializer implements ModuleInitializer
 
   }
 
-  private void populateDatabase()
+  private void populateDatabase(Driver driver)
       throws SQLException, IOException
   {
-    final Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:SampleData", "sa", "");
+    Properties p = new Properties();
+    p.setProperty("user", "sa");
+    p.setProperty("password", "");
+    final Connection connection = driver.connect("jdbc:hsqldb:mem:SampleData", p);
+    connection.setAutoCommit(false);
     try
     {
       final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
@@ -91,24 +98,18 @@ public class SampleDataModuleInitializer implements ModuleInitializer
           String line;
           while ((line = bin.readLine()) != null)
           {
-            try
+            if (line.startsWith("CREATE SCHEMA ") ||
+                line.startsWith("CREATE USER SA ") ||
+                line.startsWith("GRANT DBA TO SA"))
             {
-              statement.execute(StringEscapeUtils.unescapeJava(line));
+              // ignore the error, HSQL sucks
             }
-            catch (SQLException e)
+            else
             {
-              if (line.startsWith("CREATE SCHEMA ") ||
-                  line.startsWith("CREATE USER SA ") ||
-                  line.startsWith("GRANT DBA TO SA"))
-              {
-                // ignore the error, HSQL sucks
-              }
-              else
-              {
-                throw e;
-              }
+              statement.addBatch(StringEscapeUtils.unescapeJava(line));
             }
           }
+          statement.executeBatch();
         }
         finally
         {
@@ -119,6 +120,8 @@ public class SampleDataModuleInitializer implements ModuleInitializer
       {
         bin.close();
       }
+
+      connection.commit();
     }
     finally
     {
