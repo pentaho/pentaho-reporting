@@ -55,14 +55,6 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.SmartComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.ValuePassThroughCellEditor;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 29.06.2009
- * Time: 15:46:15
- *
- * @author Thomas Morgner.
- */
 public class ReportPreProcessorCellEditor implements TableCellEditor
 {
   private static final String POPUP_EDITOR = "popupEditor";
