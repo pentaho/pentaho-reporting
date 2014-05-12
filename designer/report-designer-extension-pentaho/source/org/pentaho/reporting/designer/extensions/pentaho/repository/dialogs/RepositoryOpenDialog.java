@@ -35,10 +35,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -428,39 +424,6 @@ public class RepositoryOpenDialog extends CommonDialog
   private FileObject fileSystemRoot;
   private FileObject selectedView;
 
-  protected static final List<Character> reservedChars = Collections.unmodifiableList( Arrays.asList( new Character[] {
-    '/', '\\', '\t', '\r', '\n' } ) );
-
-  protected static final String reservedCharStr = "/, \\, TAB, CR, LF";
-  
-  private static final Pattern containsReservedCharsPattern = makePattern( reservedChars );
-  
-  private static Pattern makePattern( List<Character> list) {
-    // escape all reserved characters as they may have special meaning to regex engine
-    StringBuilder buf = new StringBuilder();
-    buf.append( ".*[" ); //$NON-NLS-1$
-    for ( Character ch : list ) {
-      buf.append( "\\" ); //$NON-NLS-1$
-      buf.append( ch );
-    }
-    buf.append( "]+.*" ); //$NON-NLS-1$
-    return Pattern.compile( buf.toString() );
-  }  
-  
-  /**
-   * Checks for presence of black listed chars as well as illegal permutations of legal chars.
-   */
-  public static boolean validateName(final String name) {
-    return !StringUtils.isEmpty(name, true) && 
-      name.trim().equals( name ) && // no leading or trailing whitespace
-      !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
-      !".".equals( name ) && // no . //$NON-NLS-1$
-      !"..".equals( name ) ;  // no .. //$NON-NLS-1$
-  }  
-  
-
-  
-  
   public RepositoryOpenDialog()
   {
     init();

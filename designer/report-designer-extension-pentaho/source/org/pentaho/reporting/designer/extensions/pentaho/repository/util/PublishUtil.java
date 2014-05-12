@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
@@ -66,6 +67,12 @@ public class PublishUtil
 
   private static final String TIMEOUT = "timeout";
 
+  protected static String reservedChars = "/\\\t\r\n";
+
+  protected static String reservedCharsDisplay = "/, \\, TAB, CR, LF";
+  
+  private static Pattern containsReservedCharsPattern = makePattern(reservedChars);  
+  
   private PublishUtil()
   {
   }
@@ -281,4 +288,52 @@ public class PublishUtil
     }
     return prefix.append(url2).toString();
   }
+  
+  private static Pattern makePattern(String reservedChars) 
+  {
+    // escape all reserved characters as they may have special meaning to regex engine
+    StringBuilder buf = new StringBuilder();
+    buf.append(".*["); //$NON-NLS-1$
+    for (int i=0;i<reservedChars.length();i++) 
+    {
+      buf.append( "\\" ); //$NON-NLS-1$
+      buf.append(reservedChars.substring(i, i + 1));
+    }
+    buf.append("]+.*"); //$NON-NLS-1$
+    return Pattern.compile(buf.toString());
+  }  
+  
+  /**
+   * Checks for presence of black listed chars as well as illegal permutations of legal chars.
+   */
+  public static boolean validateName(final String name) 
+  {
+    return !StringUtils.isEmpty(name, true) && 
+      name.trim().equals( name ) && // no leading or trailing whitespace
+      !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
+      !".".equals( name ) && // no . //$NON-NLS-1$
+      !"..".equals( name ) ;  // no .. //$NON-NLS-1$
+  }  
+  
+  public static void setReservedChars(String reservedChars) 
+  {
+    containsReservedCharsPattern = makePattern( reservedChars );
+  }
+  
+  public static Pattern getPattern() 
+  {
+    return containsReservedCharsPattern;
+  }
+  
+  public static String getReservedCharsDisplay()
+  {
+    return reservedCharsDisplay;
+  }
+  
+  public static void setReservedCharsDisplay(String reservedCharsDisplay) 
+  {
+    PublishUtil.reservedCharsDisplay = reservedCharsDisplay;
+  }  
+  
+  
 }
