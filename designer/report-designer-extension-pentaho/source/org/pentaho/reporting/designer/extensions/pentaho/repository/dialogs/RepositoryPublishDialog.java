@@ -48,6 +48,7 @@ import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileType;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfPageableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextPageableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTableModule;
@@ -103,9 +104,9 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         return;
       }
 
-      while (!validateName(newFolderDialog.getFolderName())) {
+      while (!PublishUtil.validateName(newFolderDialog.getFolderName())) {
         JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
-            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", newFolderDialog.getFolderName(), reservedCharStr),
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", newFolderDialog.getFolderName(), PublishUtil.getReservedCharsDisplay()),
             Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
         if (!newFolderDialog.performEdit())
       {
@@ -430,9 +431,9 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
       }
 
       String filename = getFileNameTextField().getText();
-      if (!validateName(filename)) {
+      if (!PublishUtil.validateName(filename)) {
         JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
-            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", filename, reservedCharStr),
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", filename, PublishUtil.getReservedCharsDisplay()),
             Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
         return false;
       }

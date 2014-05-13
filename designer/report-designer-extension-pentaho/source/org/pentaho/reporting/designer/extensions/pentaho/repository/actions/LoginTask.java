@@ -208,6 +208,9 @@ public class LoginTask implements Runnable
       followUpTask.setLoginData(loginData, storeUpdates);
       SwingUtilities.invokeLater(followUpTask);
     }
+    
+    UpdateReservedCharsTask updateReservedCharsTask = new UpdateReservedCharsTask(loginData);
+    SwingUtilities.invokeLater(updateReservedCharsTask);
   }
 
   public AuthenticationData getLoginData()
