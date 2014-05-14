@@ -17,14 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
-import org.xml.sax.SAXException;
-import org.xml.sax.Attributes;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransFromFileProducer;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 public class KettleTransFromFileReadHandler extends AbstractKettleTransformationProducerReadHandler
 {
+  private static final Log logger = LogFactory.getLog(KettleTransFromFileReadHandler.class);
   private String fileName;
 
   public KettleTransFromFileReadHandler()
@@ -43,7 +45,7 @@ public class KettleTransFromFileReadHandler extends AbstractKettleTransformation
     fileName = attrs.getValue(getUri(), "filename");
     if (fileName == null)
     {
-      throw new ParseException("Required attribute 'filename' is not defined");
+      logger.warn("Required attribute 'filename' is not defined. This report may not execute correctly.");
     }
   }
 

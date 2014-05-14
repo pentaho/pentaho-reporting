@@ -31,7 +31,6 @@ import org.xml.sax.SAXException;
 
 public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformationProducerReadHandler
 {
-
   private String pluginId;
   private StringReadHandler resourceReadHandler;
   private String name;
@@ -73,21 +72,20 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     }
 
     final String resourceName = resourceReadHandler.getResult();
-    
-    byte[] bytes = null;
 
-    try {
-      bytes = loadDataFromBundle(resourceName);
-    } catch (Exception e) {
-      
-      throw new ParseException("Could not load resource ".concat(resourceName), e, getLocator());
-      
+    try
+    {
+      byte[] bytes = loadDataFromBundle(resourceName);
+      return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(),
+          getDefinedVariableNames(),
+          pluginId,
+          bytes);
     }
-    
-    return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(), 
-                                                    getDefinedVariableNames(), 
-                                                    pluginId, 
-                                                    bytes);
+    catch (final Exception e)
+    {
+      throw new ParseException("Could not load resource " + resourceName, e, getLocator());
+    }
+
   }
 
   private byte[] loadDataFromBundle(final String href) throws ResourceKeyCreationException, ResourceLoadingException
@@ -98,11 +96,11 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     final ResourceData data = manager.load(derivedKey);
     return data.getResource(manager);
   }
-  
+
   public EmbeddedKettleTransformationProducer getTransformationProducer() throws SAXException
   {
     return getObject();
   }
-  
-  
+
+
 }

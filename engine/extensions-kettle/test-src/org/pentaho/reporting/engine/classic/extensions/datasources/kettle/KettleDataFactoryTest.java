@@ -72,8 +72,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
 
   protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
   {
-    final KettleTransFromFileProducer producer =
-        new KettleTransFromFileProducer(query, STEP, new String[0], new ParameterMapping[0]);
+    final KettleTransFromFileProducer producer = new KettleTransFromFileProducer(query, STEP);
 
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
@@ -85,8 +84,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
   {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
-    kettleDataFactory.setQuery("default",
-        new KettleTransFromFileProducer(QUERY, STEP, new String[0], new ParameterMapping[0]));
+    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(QUERY, STEP));
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
     final Object queryHash = metaData.getQueryHash(kettleDataFactory, "default", new StaticDataRow());
@@ -94,10 +92,8 @@ public class KettleDataFactoryTest extends DataSourceTestBase
 
     final KettleDataFactory kettleDataFactory2 = new KettleDataFactory();
     kettleDataFactory2.initialize(new DesignTimeDataFactoryContext());
-    kettleDataFactory2.setQuery("default",
-        new KettleTransFromFileProducer(QUERY + "2", STEP, new String[0], new ParameterMapping[0]));
-    kettleDataFactory2.setQuery("default2",
-        new KettleTransFromFileProducer(QUERY, STEP, new String[0], new ParameterMapping[0]));
+    kettleDataFactory2.setQuery("default", new KettleTransFromFileProducer(QUERY + "2", STEP));
+    kettleDataFactory2.setQuery("default2", new KettleTransFromFileProducer(QUERY, STEP));
 
     assertNotEquals("Physical Query is not the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default", new StaticDataRow()));
     assertEquals("Physical Query is the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default2", new StaticDataRow()));
@@ -113,8 +109,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
         new ParameterMapping("name", "k2")
     };
     final String[] argumentNames = {"arg0"};
-    kettleDataFactory.setQuery("default",
-        new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
+    kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
     final String[] fields = metaData.getReferencedFields(kettleDataFactory, "default", new StaticDataRow());
