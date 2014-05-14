@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parse
 
 import java.util.ArrayList;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
@@ -32,6 +34,8 @@ import org.xml.sax.SAXException;
 public abstract class AbstractKettleTransformationProducerReadHandler
     extends AbstractXmlReadHandler implements KettleTransformationProducerReadHandler
 {
+  private static final Log logger = LogFactory.getLog(AbstractKettleTransformationProducerReadHandler.class);
+
   private String name;
   private String stepName;
   private String username;
@@ -79,7 +83,7 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     stepName = attrs.getValue(getUri(), "step");
     if (stepName == null)
     {
-      throw new ParseException("Required attribute 'step' is not defined");
+      logger.warn("Required attribute 'step' is not defined. This query may not work correctly.");
     }
   }
 

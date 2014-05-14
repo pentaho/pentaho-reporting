@@ -92,6 +92,12 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     this("", transformationFile, stepName, null, null, definedArgumentNames, definedVariableNames);
   }
 
+  public KettleTransFromFileProducer(final String transformationFile,
+                                     final String stepName)
+  {
+    this("", transformationFile, stepName, null, null, new FormulaArgument[0], new FormulaParameter[0]);
+  }
+
   public String getTransformationFile()
   {
     return transformationFile;
