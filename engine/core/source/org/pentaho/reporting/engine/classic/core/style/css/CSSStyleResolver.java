@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.style.css;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.logging.Log;
@@ -65,10 +64,31 @@ public class CSSStyleResolver implements StyleResolver, Cloneable
     this.simpleStyleResolver = new SimpleStyleResolver(designTime);
   }
 
-  public static StyleResolver createDesignTimeResolver(final ReportDefinition reportDefinition,
+  public static StyleResolver createDesignTimeResolver(final ReportDefinition report,
                                                         final ResourceManager resourceManager,
                                                         final ResourceKey contentBase,
                                                         final boolean designTime)
+  {
+    final ElementStyleDefinition styleDefinition = createStyleDefinition(report, resourceManager, contentBase);
+
+    if (styleDefinition.getRuleCount() == 0 && styleDefinition.getStyleSheetCount() == 0)
+    {
+      return new SimpleStyleResolver(designTime);
+    }
+    else
+    {
+      final CSSStyleResolver resolver = new CSSStyleResolver(designTime);
+      final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
+      final DefaultDocumentContext documentContext =
+          new DefaultDocumentContext(namespaceCollection, resourceManager, contentBase, null, styleDefinition);
+      resolver.initialize(documentContext);
+      return resolver;
+    }
+  }
+
+  private static ElementStyleDefinition createStyleDefinition(final ReportDefinition reportDefinition,
+                                                              final ResourceManager resourceManager,
+                                                              final ResourceKey contentBase)
   {
     final ElementStyleDefinition styleDefinition;
     final Object maybeStyleSheet = reportDefinition.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET);
@@ -121,20 +141,7 @@ public class CSSStyleResolver implements StyleResolver, Cloneable
         logger.info("Failed to load referenced style-sheet: " + o, e);
       }
     }
-
-    if (styleDefinition.getRuleCount() == 0 && styleDefinition.getStyleSheetCount() == 0)
-    {
-      return new SimpleStyleResolver(designTime);
-    }
-    else
-    {
-      final CSSStyleResolver resolver = new CSSStyleResolver(designTime);
-      final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
-      final DefaultDocumentContext documentContext =
-          new DefaultDocumentContext(namespaceCollection, resourceManager, contentBase, null, styleDefinition);
-      resolver.initialize(documentContext);
-      return resolver;
-    }
+    return styleDefinition;
   }
 
   public void initialize(final DocumentContext layoutProcess)

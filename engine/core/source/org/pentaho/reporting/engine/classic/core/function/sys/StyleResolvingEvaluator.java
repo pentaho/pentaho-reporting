@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
 import org.pentaho.reporting.engine.classic.core.layout.style.DefaultStyleCache;
 import org.pentaho.reporting.engine.classic.core.layout.style.StyleCache;
+import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.css.CSSStyleResolver;
 import org.pentaho.reporting.engine.classic.core.style.resolver.StyleResolver;
@@ -162,10 +163,24 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
       return;
     }
 
-    final ReportDefinition reportDefinition = event.getReport();
+    ReportDefinition reportDefinition = locateMasterReport(event.getState());
     resolver = createStyleResolver(reportDefinition, getRuntime().getProcessingContext());
     styleSheet = new ResolverStyleSheet();
     super.reportInitialized(event);
+  }
+
+  private ReportDefinition locateMasterReport(final ReportState state)
+  {
+    if (state.isSubReportEvent())
+    {
+      ReportState parentState = state.getParentState();
+      if (parentState != null)
+      {
+        return locateMasterReport(parentState);
+      }
+    }
+
+    return state.getReport();
   }
 
   private static StyleResolver createStyleResolver(final ReportDefinition reportDefinition,
