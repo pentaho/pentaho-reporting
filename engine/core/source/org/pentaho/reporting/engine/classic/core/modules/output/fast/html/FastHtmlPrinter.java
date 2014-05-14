@@ -146,7 +146,7 @@ public class FastHtmlPrinter extends AbstractHtmlPrinter implements ContentUrlRe
         xmlWriter = writer.getXmlWriter();
 
         openSheet(reportAttributes, sheetName, metaData, sharedSheetLayout, xmlWriter);
-
+        setDataWriter(this.contentItems.getDataLocation(), this.contentItems.getDataNameGenerator());
         textExtractor = new FastHtmlTextExtractor(metaData, xmlWriter, getContentGenerator(), getTagHelper());
       }
       else

@@ -399,7 +399,7 @@ public class DefaultStyleBuilderFactory implements StyleBuilderFactory
                                       final StyleBuilder.CSSKeys[] extraStyleKeys,
                                       final String[] extraStyleValues)
   {
-    return createCellStyle(styleBuilder, background, extraStyleKeys, extraStyleValues);
+    return createCellStyle(styleBuilder, null, null, background, extraStyleKeys, extraStyleValues);
   }
 
   public StyleBuilder createCellStyle(StyleBuilder styleBuilder,
