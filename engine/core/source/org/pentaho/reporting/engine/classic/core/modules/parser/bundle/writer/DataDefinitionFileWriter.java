@@ -21,7 +21,6 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.HashSet;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -184,10 +183,9 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
     }
   }
 
-  private static HashSet writeMasterReportParameters(final XmlWriter writer, final ReportParameterDefinition definition)
+  private static void writeMasterReportParameters(final XmlWriter writer, final ReportParameterDefinition definition)
       throws BundleWriterException, IOException
   {
-    final HashSet parameters = new HashSet();
     final ParameterDefinitionEntry[] parameterDefinitions = definition.getParameterDefinitions();
     for (int i = 0; i < parameterDefinitions.length; i++)
     {
@@ -200,9 +198,7 @@ public class DataDefinitionFileWriter implements BundleWriterHandler
       {
         writeListSelectionParameter(writer, (ListParameter) entry);
       }
-      parameters.add(entry.getName());
     }
-    return parameters;
   }
 
   private static void writePlainParameter(final XmlWriter writer,

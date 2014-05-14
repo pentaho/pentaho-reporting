@@ -17,16 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.parameters.AbstractParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 public class ListParameterReadHandler extends AbstractParameterReadHandler
 {
+  private static final Log logger = LogFactory.getLog(ListParameterReadHandler.class);
+
   private String query;
   private String keyColumnName;
   private String valueColumnName;
@@ -47,7 +51,10 @@ public class ListParameterReadHandler extends AbstractParameterReadHandler
 
     if (query != null && keyColumnName == null)
     {
-      throw new ParseException("Required parameter 'key-column' is missing.", getLocator());
+      Locator locator = getLocator();
+      logger.warn(String.format("Required parameter 'key-column' is missing for parameter '%s'. [%d:%d]",
+          getName(), locator.getLineNumber(), locator.getColumnNumber()));
+      keyColumnName = "";
     }
 
     valueColumnName = attrs.getValue(getUri(), "value-column");

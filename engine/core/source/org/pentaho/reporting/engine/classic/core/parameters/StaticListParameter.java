@@ -22,6 +22,11 @@ import java.util.ArrayList;
 
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
+/**
+ * @deprecated This class is not used anywhere and you can get the same functionality via a default-list-parameter
+ * and a table-datasource.
+ */
+@Deprecated
 public class StaticListParameter extends AbstractParameter implements ListParameter
 {
   private static class StaticParameterValues implements ParameterValues
