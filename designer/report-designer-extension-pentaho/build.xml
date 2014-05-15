@@ -136,5 +136,8 @@
       </jmeter>
     	
     </target>	
-	
+
+    <target name="jmeter" depends="dist,jmeter.run-tests">
+
+    </target>
 </project>
