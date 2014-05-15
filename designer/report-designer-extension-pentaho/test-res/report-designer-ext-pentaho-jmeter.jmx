@@ -328,7 +328,7 @@
                   <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
                     <collectionProp name="HTTPFileArgs.files">
                       <elementProp name="${TestPath}/test1!@#$%^&amp;*()_+{}[]|;:&apos;&lt;&gt;,.?.prpt" elementType="HTTPFileArg">
-                        <stringProp name="File.path">${TestPath}/test1!@#$%^&amp;*()_+{}[]|;:&apos;&lt;&gt;,.?.prpt</stringProp>
+                        <stringProp name="File.path">${TestPath}/test1.prpt</stringProp>
                         <stringProp name="File.paramname">fileUpload</stringProp>
                         <stringProp name="File.mimetype">application/zip</stringProp>
                       </elementProp>
