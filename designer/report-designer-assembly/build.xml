@@ -47,6 +47,20 @@
   <import file="./build-res/subfloor-pkg.xml"/>
 
   <property name="pdi-plugins.stage.dir" value="${stage.dir}/plugins"/>
+	
+  <!-- - - - - - - - - - - - - - - - - - 
+    Macro for making resolving ivy a 1 liner.  Tasks using this must depend on install-ivy.                      
+  - - - - - - - - - - - - - - - - - -->
+  <macrodef name="ivy-resolve">
+    <attribute name="ivyfile" default="${ivyfile}" />
+    <attribute name="conf" default="default" />
+    <attribute name="directory"/>
+    <sequential>
+      <mkdir dir="@{directory}" />
+      <ivy:resolve file="@{ivyfile}" conf="@{conf}" />
+      <ivy:retrieve conf="@{conf}" pattern="@{directory}/[module]-[revision](-[classifier]).[ext]" />
+    </sequential>
+  </macrodef>
 
   <!--
     AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
@@ -201,7 +215,9 @@
                    match="&lt;/dict&gt;\s*&lt;/plist&gt;"
                    replace="${bundle.document.types}"
       />
-
+  	
+  	<ivy-resolve conf="pdf-docs" directory="${report-designer.dir.mac}/docs" />
+  	
     <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
     <copy file="${resource-mac.dir}/Contents/Resources/Java/launcher.properties"
           todir="${report-designer.dir.mac.java}"/>
@@ -278,8 +294,14 @@
     </zip>
   </target>
 
+	
+  <target name="resolve-pdf-docs" depends="install-ivy">
+    <ivy-resolve conf="pdf-docs" directory="${stage.dir.winlinux}/report-designer/docs" />
+  </target>
+	
+	
   <!-- The dist target is where everything is assembled -->
-  <target name="dist" depends="clean-all, init, resolve, dist-winlinux, dist-mac"
+  <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
           description="Creates the distributables for the Report Designer"/>
 
 
