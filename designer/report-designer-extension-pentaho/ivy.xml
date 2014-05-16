@@ -19,12 +19,7 @@
 		<!-- report designer dependencies -->
     <dependency org="${ivy.artifact.group}" name="report-designer" rev="${project.revision}" transitive="true"
                 changing="true"/>
-    <dependency org="pentaho-library" name="libpensol" rev="${dependency.reporting-library.revision}" transitive="true" changing="true">
-      <exclude org="pentaho" name="pentaho-platform-repository"/>
-      <exclude org="pentaho" name="pentaho-platform-extensions"/>
-      <exclude org="pentaho" name="pentaho-platform-core"/>
-      <exclude org="pentaho" name="pentaho-platform-api"/>
-    </dependency>
+    <dependency org="pentaho-library" name="libpensol" rev="${dependency.reporting-library.revision}" transitive="true" changing="true"/>
 
     <!-- Testing Dependencies -->
     <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
