@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -205,6 +206,7 @@ public class ConnectionEditorPanel extends JPanel
   protected void initPanel()
   {
     setLayout(new BorderLayout());
+    setBorder(BorderFactory.createEmptyBorder(2, 5, 5, 5));
 
     dataSourceModel = new EditorComboBoxModel();
     final List<IDatabaseConnection> datasources = dialogModel.getDatasources();

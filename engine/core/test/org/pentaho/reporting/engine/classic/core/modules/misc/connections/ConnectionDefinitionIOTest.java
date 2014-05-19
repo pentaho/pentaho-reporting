@@ -66,7 +66,7 @@ public class ConnectionDefinitionIOTest extends TestCase
     assertEquals(connection1.getPassword(), connection2.getPassword());
   }
 
-  private IDatabaseConnection generateDatabaseConnection()
+  public static IDatabaseConnection generateDatabaseConnection()
   {
     final IDatabaseConnection connection = new DatabaseConnection();
     connection.setName(UUID.randomUUID().toString());
