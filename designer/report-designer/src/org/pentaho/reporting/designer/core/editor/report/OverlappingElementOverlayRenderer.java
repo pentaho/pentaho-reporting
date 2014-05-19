@@ -59,7 +59,7 @@ public class OverlappingElementOverlayRenderer implements OverlayRenderer
       return;
     }
 
-    graphics.translate(0, -offset);
+    graphics.translate(0, -(offset * zoomFactor));
 
     draw(rootElement, graphics);
   }
