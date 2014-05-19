@@ -83,6 +83,11 @@ public class TestSetupModule extends AbstractModule
     p.setProperty("password", "");
     final Connection connection = driver.connect("jdbc:hsqldb:mem:SampleData", p);
     connection.setAutoCommit(false);
+    if (isValid(connection)) {
+      // both the test-module here and the sample-data module try to initialize the database.
+      // lets do it only once.
+      return;
+    }
     try
     {
       final InputStream in = new FileInputStream("sql/sampledata.script");
@@ -128,6 +133,28 @@ public class TestSetupModule extends AbstractModule
     finally
     {
       connection.close();
+    }
+  }
+
+  private boolean isValid(final Connection connection)
+  {
+    // cheap test:
+
+    try {
+      Statement statement = connection.createStatement();
+      boolean result = false;
+      try
+      {
+        result = statement.execute("SELECT Count(*) FROM CUSTOMERS");
+      }
+      finally {
+        statement.close();
+      }
+      return result;
+    }
+    catch (final SQLException e)
+    {
+      return false;
     }
   }
 }

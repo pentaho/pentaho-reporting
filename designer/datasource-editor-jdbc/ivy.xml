@@ -28,6 +28,7 @@
       <exclude org="org.eclipse.swt"/>
       <exclude org="pentaho" module="pentaho-xul-swt"/>
       <exclude org="pentaho-kettle" module="kettle-ui-swt"/>
+      <exclude org="org.apache.poi"/>
       <exclude org="org.eclipse.core"/>
       <exclude org="org.eclipse"/>
       <exclude org="org.eclipse.equinox"/>

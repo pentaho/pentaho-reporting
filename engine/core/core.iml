@@ -47,7 +47,10 @@
           <root url="file://$MODULE_DIR$/lib/external" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../../archive/sources/poi-3.10-FINAL-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../../archive/sources/poi-ooxml-3.10-FINAL-sources.jar!/" />
+        </SOURCES>
         <jarDirectory url="file://$MODULE_DIR$/lib/external" recursive="false" />
       </library>
     </orderEntry>
