@@ -59,10 +59,10 @@ public class TextFilePrinterDriver implements PrinterDriver
     this.linesPerInch = linesPerInch;
     if (unixEndOfLine == false)
     {
-      this.endOfLine = new char[]{PrinterDriverCommands.LINE_FEED,
-          PrinterDriverCommands.CARRIAGE_RETURN};
-      this.endOfPage = new char[]{PrinterDriverCommands.LINE_FEED,
-          PrinterDriverCommands.CARRIAGE_RETURN,
+      this.endOfLine = new char[]{PrinterDriverCommands.CARRIAGE_RETURN,
+          PrinterDriverCommands.LINE_FEED};
+      this.endOfPage = new char[]{PrinterDriverCommands.CARRIAGE_RETURN,
+          PrinterDriverCommands.LINE_FEED,
           PrinterDriverCommands.FORM_FEED};
     }
     else
