@@ -78,7 +78,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.StaticExcelColorSupport;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.XSSFExcelColorProducer;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
@@ -188,7 +187,7 @@ public class RichTextRenderingTest
     RichTextStyleResolver.resolveStyle(report);
 
     XSSFWorkbook hssfWorkbook = new XSSFWorkbook();
-    XSSFExcelColorProducer colorProducer = new XSSFExcelColorProducer();
+    ExcelColorProducer colorProducer = new StaticExcelColorSupport();
     ExcelFontFactory ff = new ExcelFontFactory(hssfWorkbook, colorProducer);
     CreationHelper ch = hssfWorkbook.getCreationHelper();
     FastExcelTextExtractor te = new FastExcelTextExtractor(colorProducer, ff, ch);
