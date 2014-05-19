@@ -6,6 +6,7 @@
     <conf name="default"/>
     <conf name="test" visibility="private"/>
     <conf name="source"/>
+    <conf name="pdf-docs" />
     <conf name="runtime"/>
     <conf name="drivers"/>
     <conf name="plugin"/>
@@ -133,6 +134,13 @@
                 transitive="false" conf="default->default" changing="false"/>
     <dependency org="jsonpath" name="jsonpath" rev="${dependency.jsonpath.revision}" transitive="false"
                 conf="default->default" changing="false"/>
+                
+                
+    <!-- PDF Documentation for bundling -->
+    <dependency org="pentaho-doc" name="report_designer_user_guide" rev="${dependency.documentation.revision}" conf="pdf-docs->default">
+		<artifact name="report_designer_user_guide" type="pdf" />
+	</dependency>
+	
 
     <!-- Prevent the inclusion of jars that should not make it into the final assembly -->
     <exclude org="javax.servlet" module="servlet-api"/>
