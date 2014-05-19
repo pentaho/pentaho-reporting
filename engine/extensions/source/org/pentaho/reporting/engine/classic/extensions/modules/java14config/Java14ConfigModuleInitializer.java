@@ -48,7 +48,7 @@ public class Java14ConfigModuleInitializer implements ModuleInitializer
     final ConfigFactory factory = ConfigFactory.getInstance();
     factory.defineUserStorage
         (new Java14ConfigStorage(Preferences.userNodeForPackage(MasterReport.class)));
-    factory.defineUserStorage
+    factory.defineSystemStorage
         (new Java14ConfigStorage(Preferences.systemNodeForPackage(MasterReport.class)));
   }
 }

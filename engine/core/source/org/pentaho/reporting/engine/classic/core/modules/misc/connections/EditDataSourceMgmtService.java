@@ -10,6 +10,8 @@ import java.util.UUID;
 
 import org.pentaho.database.model.IDatabaseConnection;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
@@ -20,15 +22,19 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
   private DataSourceMgmtService parent;
   private Set<String> deletedMembersById;
   private HashMap<String, SerializedConnection> editedMembers;
-  private HashMap<String, String> deletedMembersMap;
 
   public EditDataSourceMgmtService()
   {
-    parent = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceMgmtService.class);
+    this(ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceMgmtService.class));
+  }
 
+  public EditDataSourceMgmtService(final DataSourceMgmtService parent)
+  {
+    ArgumentNullException.validate("parent", parent);
+
+    this.parent = parent;
     deletedMembersById = new HashSet<String>();
     editedMembers = new HashMap<String, SerializedConnection>();
-    deletedMembersMap = new HashMap<String, String>();
   }
 
   public String createDatasource(final IDatabaseConnection databaseConnection)
@@ -54,7 +60,6 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
     final String id = UUID.randomUUID().toString();
     databaseConnection.setId(id);
     editedMembers.put(id, new SerializedConnection(databaseConnection));
-    deletedMembersMap.remove(databaseConnection.getName());
     return id;
   }
 
@@ -65,22 +70,20 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
     {
       throw new IllegalArgumentException();
     }
-    final IDatabaseConnection datasourceById = getDatasourceById(id);
-    if (datasourceById == null)
+
+    if (parent.getDatasourceIds().contains(id))
+    {
+      deletedMembersById.add(id);
+    }
+    else if (!editedMembers.containsKey(id))
     {
       throw new NonExistingDatasourceException();
     }
-    deletedMembersMap.put(datasourceById.getName(), datasourceById.getId());
-    deletedMembersById.add(id);
+    editedMembers.remove(id);
   }
 
   public IDatabaseConnection getDatasourceByName(final String name) throws DatasourceMgmtServiceException
   {
-    if (deletedMembersMap.containsKey(name))
-    {
-      throw new NonExistingDatasourceException();
-    }
-
     final IDatabaseConnection dataSource = parent.getDatasourceByName(name);
     if (deletedMembersById.contains(dataSource.getId()))
     {
@@ -96,12 +99,7 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
       throw new NonExistingDatasourceException();
     }
 
-    final IDatabaseConnection dataSource = parent.getDatasourceById(id);
-    if (deletedMembersMap.containsKey(dataSource.getName()))
-    {
-      throw new NonExistingDatasourceException();
-    }
-    return dataSource;
+    return parent.getDatasourceById(id);
   }
 
   public List<IDatabaseConnection> getDatasources() throws DatasourceMgmtServiceException
@@ -139,17 +137,26 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
     {
       throw new IllegalArgumentException();
     }
+    if (ObjectUtilities.equal(id, databaseConnection.getId()) == false)
+    {
+      // the Pentaho-datasources API is ill defined and allows bad behaviour.
+      throw new IllegalArgumentException();
+    }
     if (deletedMembersById.contains(id))
     {
       throw new NonExistingDatasourceException();
     }
-    deletedMembersMap.remove(databaseConnection.getName());
     editedMembers.put(id, new SerializedConnection(databaseConnection));
     return id;
   }
 
   public void commit()
   {
+    for (final String id : deletedMembersById)
+    {
+      parent.deleteDatasourceById(id);
+    }
+
     final Set<String> datasourceIds = new HashSet<String>(parent.getDatasourceIds());
     for (final SerializedConnection c : editedMembers.values())
     {
@@ -163,13 +170,8 @@ public class EditDataSourceMgmtService implements DataSourceMgmtService
         parent.createDatasource(connection);
       }
     }
-    for (final String id : deletedMembersById)
-    {
-      parent.deleteDatasourceById(id);
-    }
 
     deletedMembersById.clear();
     editedMembers.clear();
-    deletedMembersMap.clear();
   }
 }

@@ -28,7 +28,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 @SingletonHint
 public class FileDataSourceMgmtService implements DataSourceMgmtService
 {
-
   private static final Log logger = LogFactory.getLog(FileDataSourceMgmtService.class);
   private HashMap<String, SerializedConnection> connectionsByName;
   private HashMap<String, SerializedConnection> connectionsById;
@@ -176,10 +175,10 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService
 
     final String name = connection.getConnection().getName();
     databaseConnection.setId(id);
-    databaseConnection.setName(name);
     final SerializedConnection serializedConnection = new SerializedConnection(databaseConnection);
     connectionsById.put(id, serializedConnection);
-    connectionsByName.put(name, serializedConnection);
+    connectionsByName.remove(name);
+    connectionsByName.put(serializedConnection.getConnection().getName(), serializedConnection);
 
     writeChanges();
 
