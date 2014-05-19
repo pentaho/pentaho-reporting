@@ -58,7 +58,7 @@
     <sequential>
       <mkdir dir="@{directory}" />
       <ivy:resolve file="@{ivyfile}" conf="@{conf}" />
-      <ivy:retrieve conf="@{conf}" pattern="@{directory}/[module]-[revision](-[classifier]).[ext]" />
+      <ivy:retrieve conf="@{conf}" pattern="@{directory}/[module](-[classifier]).[ext]" />
     </sequential>
   </macrodef>
 
@@ -216,8 +216,6 @@
                    replace="${bundle.document.types}"
       />
   	
-  	<ivy-resolve conf="pdf-docs" directory="${report-designer.dir.mac}/docs" />
-  	
     <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
     <copy file="${resource-mac.dir}/Contents/Resources/Java/launcher.properties"
           todir="${report-designer.dir.mac.java}"/>
@@ -296,7 +294,8 @@
 
 	
   <target name="resolve-pdf-docs" depends="install-ivy">
-    <ivy-resolve conf="pdf-docs" directory="${stage.dir.winlinux}/report-designer/docs" />
+    <delete dir="resource/docs"/>
+    <ivy-resolve conf="pdf-docs" directory="resource/docs" />
   </target>
 	
 	
