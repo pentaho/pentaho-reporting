@@ -110,7 +110,7 @@ public class ExcelPrinter extends ExcelPrinterBase
       workbook = createWorkbook();
       initializeStyleProducers(workbook);
       this.textExtractor = new ExcelTextExtractor
-          (getMetaData(), getColorProducer(), workbook.getCreationHelper(), getCellStyleProducer().getFontFactory());
+          (getMetaData(), getFontColorProducer(), workbook.getCreationHelper(), getCellStyleProducer().getFontFactory());
     }
 
     final int startRow = contentProducer.getFinishedRows();

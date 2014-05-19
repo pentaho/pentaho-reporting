@@ -73,9 +73,11 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlTagHelper;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.InlineStyleManager;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilder;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelColorProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelFontFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.ExcelTextExtractor;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.StaticExcelColorSupport;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.XSSFExcelColorProducer;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextDirection;
@@ -157,7 +159,7 @@ public class RichTextRenderingTest
     metaData.initialize(report.getConfiguration());
 
     XSSFWorkbook hssfWorkbook = new XSSFWorkbook();
-    XSSFExcelColorProducer colorProducer = new XSSFExcelColorProducer();
+    ExcelColorProducer colorProducer = new StaticExcelColorSupport();
     ExcelFontFactory ff = new ExcelFontFactory(hssfWorkbook, colorProducer);
     CreationHelper ch = hssfWorkbook.getCreationHelper();
     ExcelTextExtractor te = new ExcelTextExtractor(metaData, colorProducer, ch, ff);

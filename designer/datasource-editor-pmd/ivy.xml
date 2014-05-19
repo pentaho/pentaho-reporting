@@ -34,6 +34,7 @@
       <exclude org="${ivy.artifact.group}"/>
       <exclude org="pentaho" module="pentaho-xul-gwt"/>
       <exclude org="com.google.gwt"/>
+      <exclude org="org.apache.poi" />
       <exclude org="org.eclipse" />
       <exclude org="org.eclipse.core" />
       <exclude org="org.eclipse.jdt" />
