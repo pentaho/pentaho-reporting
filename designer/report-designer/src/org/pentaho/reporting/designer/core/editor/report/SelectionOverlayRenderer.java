@@ -57,7 +57,7 @@ public class SelectionOverlayRenderer implements OverlayRenderer
       return;
     }
 
-    graphics.translate(bounds.getX(), bounds.getY() - offset);
+    graphics.translate(bounds.getX(), -(offset * zoomFactor));
     
     for (final Element visualElement : context.getSelectionModel().getSelectedElementsOfType(Element.class))
     {
