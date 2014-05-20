@@ -40,7 +40,7 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
 /**
  * The sheet layout is used to build the background map and to collect the x- and y-cell-borders.
  */
-public final class SheetLayout implements SlimSheetLayout, Cloneable
+public class SheetLayout implements SlimSheetLayout, Cloneable
 {
 
   private static final SheetLayoutTableCellDefinition MARKER_DEFINITION = new SheetLayoutTableCellDefinition();
@@ -330,18 +330,9 @@ public final class SheetLayout implements SlimSheetLayout, Cloneable
     if (elementBottomY >= headerSize && elementBottomY <= maxHeight)
     {
       ensureYMapping(elementBottomY, aux);
-      if (yMaxBounds < elementBottomY)
-      {
-        yMaxBounds = elementBottomY;
-      }
     }
 
     // update the collected maximums
-    if (xMaxBounds < elementRightX)
-    {
-      xMaxBounds = elementRightX;
-    }
-
     return unmodified;
   }
 
@@ -475,26 +466,26 @@ public final class SheetLayout implements SlimSheetLayout, Cloneable
     }
 
     // update the collected maximums
-    if (xMaxBounds < elementRightX)
-    {
-      xMaxBounds = elementRightX;
-    }
-    if (yMaxBounds < elementBottomY)
-    {
-      yMaxBounds = elementBottomY;
-    }
 
     return true;
   }
 
-  private void ensureXMapping(final long coordinate, final Boolean aux)
+  public void ensureXMapping(final long coordinate, final Boolean aux)
   {
     xBounds.put(coordinate, aux);
+    if (xMaxBounds < coordinate)
+    {
+      xMaxBounds = coordinate;
+    }
   }
 
   public void ensureYMapping(final long coordinate, final Boolean aux)
   {
     yBounds.put(coordinate, aux);
+    if (yMaxBounds < coordinate)
+    {
+      yMaxBounds = coordinate;
+    }
   }
 
   /**
