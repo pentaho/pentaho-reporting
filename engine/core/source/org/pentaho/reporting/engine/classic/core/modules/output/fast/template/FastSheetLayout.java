@@ -32,12 +32,14 @@ public class FastSheetLayout implements SlimSheetLayout
     this.sheetLayout.clearVerticalInfo();
   }
 
-  public void reinit(final long rowHeightOffset, long[] yBounds)
+  public void reinit(final long rowHeightOffset, final long[] cellHeights)
   {
     this.sheetLayout.ensureYMapping(0, false);
-    for (long yBound : yBounds)
+    long h = rowHeightOffset;
+    for (final long height : cellHeights)
     {
-      this.sheetLayout.ensureYMapping(rowHeightOffset + yBound, false);
+      h += height;
+      this.sheetLayout.ensureYMapping(h, false);
     }
   }
 

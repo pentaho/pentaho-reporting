@@ -65,8 +65,8 @@ public class ExcelImageHandler
 
   public ExcelImageHandler(final ResourceManager resourceManager, final ExcelPrinterBase printerBase)
   {
-    ArgumentNullException.validate("resourceManager", resourceManager);
-    ArgumentNullException.validate("printerBase", printerBase);
+    ArgumentNullException.validate("resourceManager", resourceManager);  // NON-NLS
+    ArgumentNullException.validate("printerBase", printerBase);  // NON-NLS
 
     this.resourceManager = resourceManager;
     this.printerBase = printerBase;
@@ -94,8 +94,7 @@ public class ExcelImageHandler
       {
         // there was an error while computing the grid-position for this
         // element. Evil me...
-        logger.debug("Invalid reference: I was not able to compute " +
-            "the rectangle for the content.");
+        logger.debug("Invalid reference: I was not able to compute the rectangle for the content."); // NON-NLS
         return;
       }
 
@@ -237,10 +236,10 @@ public class ExcelImageHandler
           }
         }
       }
-      catch (UnsupportedEncoderException uee)
+      catch (final UnsupportedEncoderException uee)
       {
         // should not happen, as PNG is always supported.
-        logger.warn("Assertation-Failure: PNG encoding failed.", uee);
+        logger.warn("Assertation-Failure: PNG encoding failed.", uee);  // NON-NLS
         return;
       }
 
@@ -249,11 +248,11 @@ public class ExcelImageHandler
       Drawing patriarch = printerBase.getDrawingPatriarch();
 
       final Picture picture = patriarch.createPicture(anchor, pictureId);
-      logger.info("Created image: " + pictureId + " => " + picture);
+      logger.info(String.format("Created image: %d => %s", pictureId, picture));  // NON-NLS
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
-      logger.warn("Failed to add image. Ignoring.", e);
+      logger.warn("Failed to add image. Ignoring.", e);  // NON-NLS
     }
   }
 
@@ -417,7 +416,7 @@ public class ExcelImageHandler
             final Resource resource = resourceManager.create(url, null, Image.class);
             image = (Image) resource.getResource();
           }
-          catch (ResourceException e)
+          catch (final ResourceException e)
           {
             // ignore.
           }
@@ -462,7 +461,7 @@ public class ExcelImageHandler
     {
       if (graphics.drawImage(image, null, null) == false)
       {
-        logger.debug("Failed to render the image. This should not happen for BufferedImages");
+        logger.debug("Failed to render the image. This should not happen for BufferedImages");  // NON-NLS
       }
     }
     else
@@ -475,7 +474,7 @@ public class ExcelImageHandler
         obs.waitImageLoaded();
         if (obs.isError())
         {
-          logger.warn("Error while loading the image during the rendering.");
+          logger.warn("Error while loading the image during the rendering.");  // NON-NLS
           break;
         }
       }
@@ -517,9 +516,9 @@ public class ExcelImageHandler
               final Resource resource = resourceManager.create(url, null, Image.class);
               image = (Image) resource.getResource();
             }
-            catch (ResourceException re)
+            catch (final ResourceException re)
             {
-              logger.info("Failed to load image from URL " + url, re);
+              logger.info("Failed to load image from URL " + url, re);  // NON-NLS
             }
           }
         }
@@ -531,9 +530,9 @@ public class ExcelImageHandler
             // create the image
             return workbook.addPicture(data.getResource(resourceManager), format);
           }
-          catch (ResourceException re)
+          catch (final ResourceException re)
           {
-            logger.info("Failed to load image from URL " + url, re);
+            logger.info("Failed to load image from URL " + url, re);  // NON-NLS
           }
 
         }

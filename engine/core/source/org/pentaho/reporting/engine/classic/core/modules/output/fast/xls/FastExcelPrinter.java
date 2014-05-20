@@ -56,6 +56,7 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
@@ -120,11 +121,16 @@ public class FastExcelPrinter extends ExcelPrinterBase
       configureSheetPaperSize(sheet, new PhysicalPageBox(pageDefinition.getPageFormat(0), 0, 0));
       configureSheetProperties(sheet, collector);
     }
+
+    for (int r = 0; r < cellHeights.length; r += 1)
+    {
+      getRowAt(r + rowOffset).setHeightInPoints((float) StrictGeomUtility.toExternalValue(cellHeights[r]));
+    }
   }
 
-  public void endSection(Band band, final ArrayList<CellLayoutInfo> backgroundCells)
+  public void endSection(final Band band, final ArrayList<CellLayoutInfo> backgroundCells)
   {
-    for (CellLayoutInfo layoutInfo : backgroundCells)
+    for (final CellLayoutInfo layoutInfo : backgroundCells)
     {
       int col = layoutInfo.getX1();
       int row = layoutInfo.getY1();
@@ -163,19 +169,20 @@ public class FastExcelPrinter extends ExcelPrinterBase
                     final ReportElement element,
                     final ExpressionRuntime runtime) throws ContentProcessingException
   {
-    int y = tableRectangle.getY1() + rowOffset;
-    int x = tableRectangle.getX1();
-    Cell cellAt = getCellAt(x, y);
+    TableRectangle rect = new TableRectangle();
+    rect.setRect(tableRectangle.getX1(), tableRectangle.getY1() + rowOffset,
+        tableRectangle.getX2(), tableRectangle.getY2() + rowOffset);
 
+    Cell cellAt = getCellAt(rect.getX1(), rect.getY1());
     CellBackground bg = tableRectangle.getBackground();
     CellStyle cellStyle = getCellStyleProducer().createCellStyle(element.getObjectID(), element.getComputedStyle(), bg);
     if (cellStyle != null)
     {
       cellAt.setCellStyle(cellStyle);
     }
-    if (applyCellValue(element, cellAt, tableRectangle, runtime))
+    if (applyCellValue(element, cellAt, rect, runtime))
     {
-      mergeCellRegion(tableRectangle, cellStyle);
+      mergeCellRegion(rect, cellStyle);
     }
   }
 
@@ -190,7 +197,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
       return;
     }
 
-    int row = rectangle.getY1() + rowOffset;
+    int row = rectangle.getY1();
     int col = rectangle.getX1();
 
     sheet.addMergedRegion(new CellRangeAddress(row, (row + rowSpan - 1), col, (col + columnSpan - 1)));
@@ -304,7 +311,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
         final ImageContainer imageContainer = new DefaultImageReference((Image) value);
         createImageCell(rawSource, imageContainer, sheetLayout, rectangle, contentBounds);
       }
-      catch (IOException ioe)
+      catch (final IOException ioe)
       {
         // Should not happen.
         logger.warn("Failed to process AWT-Image in Excel-Export", ioe);
