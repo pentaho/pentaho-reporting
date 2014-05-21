@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Drawing;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFShape;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.LocalImageContainer;
@@ -44,6 +45,7 @@ import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.encoder.UnsupportedEncoderException;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -63,6 +65,9 @@ public class ExcelImageHandler
 
   public ExcelImageHandler(final ResourceManager resourceManager, final ExcelPrinterBase printerBase)
   {
+    ArgumentNullException.validate("resourceManager", resourceManager);  // NON-NLS
+    ArgumentNullException.validate("printerBase", printerBase);  // NON-NLS
+
     this.resourceManager = resourceManager;
     this.printerBase = printerBase;
   }
@@ -89,8 +94,7 @@ public class ExcelImageHandler
       {
         // there was an error while computing the grid-position for this
         // element. Evil me...
-        logger.debug("Invalid reference: I was not able to compute " +
-            "the rectangle for the content.");
+        logger.debug("Invalid reference: I was not able to compute the rectangle for the content."); // NON-NLS
         return;
       }
 
@@ -232,10 +236,10 @@ public class ExcelImageHandler
           }
         }
       }
-      catch (UnsupportedEncoderException uee)
+      catch (final UnsupportedEncoderException uee)
       {
         // should not happen, as PNG is always supported.
-        logger.warn("Assertation-Failure: PNG encoding failed.", uee);
+        logger.warn("Assertation-Failure: PNG encoding failed.", uee);  // NON-NLS
         return;
       }
 
@@ -244,11 +248,11 @@ public class ExcelImageHandler
       Drawing patriarch = printerBase.getDrawingPatriarch();
 
       final Picture picture = patriarch.createPicture(anchor, pictureId);
-      logger.info("Created image: " + pictureId + " => " + picture);
+      logger.info(String.format("Created image: %d => %s", pictureId, picture));  // NON-NLS
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
-      logger.warn("Failed to add image. Ignoring.", e);
+      logger.warn("Failed to add image. Ignoring.", e);  // NON-NLS
     }
   }
 
@@ -277,14 +281,26 @@ public class ExcelImageHandler
     return scaleFactor;
   }
 
-  private ClientAnchor computeClientAnchor(final SlimSheetLayout currentLayout,
-                                           final TableRectangle rectangle,
-                                           final StrictBounds cb)
+  protected ClientAnchor computeClientAnchor(final SlimSheetLayout currentLayout,
+                                                    final TableRectangle rectangle,
+                                                    final StrictBounds cb)
+  {
+    if (printerBase.isUseXlsxFormat()) {
+      return computeExcel2003ClientAnchor(currentLayout, rectangle, cb);
+    }
+    else {
+      return computeExcel97ClientAnchor(currentLayout, rectangle, cb);
+    }
+  }
+
+  protected ClientAnchor computeExcel97ClientAnchor(final SlimSheetLayout currentLayout,
+                                                    final TableRectangle rectangle,
+                                                    final StrictBounds cb)
   {
     final int cell1x = rectangle.getX1();
     final int cell1y = rectangle.getY1();
-    final int cell2x = Math.max(cell1x, rectangle.getX2());
-    final int cell2y = Math.max(cell1y, rectangle.getY2());
+    final int cell2x = Math.max(cell1x, rectangle.getX2() - 1);
+    final int cell2y = Math.max(cell1y, rectangle.getY2() - 1);
 
     final long cell1width = currentLayout.getCellWidth(cell1x);
     final long cell1height = currentLayout.getRowHeight(cell1y);
@@ -310,7 +326,39 @@ public class ExcelImageHandler
     anchor.setRow1(cell1y);
     anchor.setCol2(cell2x);
     anchor.setRow2(cell2y);
-    anchor.setAnchorType(ClientAnchor.MOVE_DONT_RESIZE); // Move, but don't size
+    anchor.setAnchorType(ClientAnchor.MOVE_DONT_RESIZE);
+    return anchor;
+  }
+
+  protected ClientAnchor computeExcel2003ClientAnchor(final SlimSheetLayout currentLayout,
+                                                      final TableRectangle rectangle,
+                                                      final StrictBounds cb)
+  {
+    final int cell1x = rectangle.getX1();
+    final int cell1y = rectangle.getY1();
+    final int cell2x = Math.max(cell1x, rectangle.getX2() - 1);
+    final int cell2y = Math.max(cell1y, rectangle.getY2() - 1);
+
+    final long cell1xPos = currentLayout.getXPosition(cell1x);
+    final long cell1yPos = currentLayout.getYPosition(cell1y);
+    final long cell2xPos = currentLayout.getXPosition(cell2x);
+    final long cell2yPos = currentLayout.getYPosition(cell2y);
+
+    final int dx1 = (int) StrictGeomUtility.toExternalValue((cb.getX() - cell1xPos) * XSSFShape.EMU_PER_POINT);
+    final int dy1 = (int) StrictGeomUtility.toExternalValue((cb.getY() - cell1yPos) * XSSFShape.EMU_PER_POINT);
+    final int dx2 = (int) Math.max(0, StrictGeomUtility.toExternalValue((cb.getX() + cb.getWidth() - cell2xPos) * XSSFShape.EMU_PER_POINT));
+    final int dy2 = (int) Math.max(0, StrictGeomUtility.toExternalValue((cb.getY() + cb.getHeight() - cell2yPos)  * XSSFShape.EMU_PER_POINT));
+
+    final ClientAnchor anchor = printerBase.getWorkbook().getCreationHelper().createClientAnchor();
+    anchor.setDx1(dx1);
+    anchor.setDy1(dy1);
+    anchor.setDx2(dx2);
+    anchor.setDy2(dy2);
+    anchor.setCol1(cell1x);
+    anchor.setRow1(cell1y);
+    anchor.setCol2(cell2x);
+    anchor.setRow2(cell2y);
+    anchor.setAnchorType(ClientAnchor.MOVE_DONT_RESIZE);
     return anchor;
   }
 
@@ -368,7 +416,7 @@ public class ExcelImageHandler
             final Resource resource = resourceManager.create(url, null, Image.class);
             image = (Image) resource.getResource();
           }
-          catch (ResourceException e)
+          catch (final ResourceException e)
           {
             // ignore.
           }
@@ -413,7 +461,7 @@ public class ExcelImageHandler
     {
       if (graphics.drawImage(image, null, null) == false)
       {
-        logger.debug("Failed to render the image. This should not happen for BufferedImages");
+        logger.debug("Failed to render the image. This should not happen for BufferedImages");  // NON-NLS
       }
     }
     else
@@ -426,7 +474,7 @@ public class ExcelImageHandler
         obs.waitImageLoaded();
         if (obs.isError())
         {
-          logger.warn("Error while loading the image during the rendering.");
+          logger.warn("Error while loading the image during the rendering.");  // NON-NLS
           break;
         }
       }
@@ -468,9 +516,9 @@ public class ExcelImageHandler
               final Resource resource = resourceManager.create(url, null, Image.class);
               image = (Image) resource.getResource();
             }
-            catch (ResourceException re)
+            catch (final ResourceException re)
             {
-              logger.info("Failed to load image from URL " + url, re);
+              logger.info("Failed to load image from URL " + url, re);  // NON-NLS
             }
           }
         }
@@ -482,9 +530,9 @@ public class ExcelImageHandler
             // create the image
             return workbook.addPicture(data.getResource(resourceManager), format);
           }
-          catch (ResourceException re)
+          catch (final ResourceException re)
           {
-            logger.info("Failed to load image from URL " + url, re);
+            logger.info("Failed to load image from URL " + url, re);  // NON-NLS
           }
 
         }

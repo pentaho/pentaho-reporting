@@ -32,6 +32,7 @@ public class TableRectangle
   {
   }
 
+  @Deprecated
   public TableRectangle(final int x1, final int x2, final int y1, final int y2)
   {
     setRect(x1, y1, x2, y2);

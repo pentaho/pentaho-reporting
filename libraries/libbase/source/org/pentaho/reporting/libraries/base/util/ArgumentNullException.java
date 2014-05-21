@@ -23,7 +23,7 @@ public class ArgumentNullException extends IllegalArgumentException
 
   public ArgumentNullException(final String field)
   {
-    super(String.format("Argument '%s' is <null>", field));
+    super(String.format("Argument '%s' is <null>", field));  // NON-NLS
     this.field = field;
   }
 
@@ -32,7 +32,7 @@ public class ArgumentNullException extends IllegalArgumentException
     return field;
   }
 
-  public static void validate(String field, Object o)
+  public static void validate(final String field, final Object o)
   {
     if (o == null)
       throw new ArgumentNullException(field);
