@@ -293,10 +293,7 @@ public class PageBreakPositionList implements PageBreakPositions
       final long prevPos = backend.breakPositions[nextFoundIdx - 1];
       if (foundPos >= pos && prevPos < pos)
       {
-        if (prevPos < pos)
-        {
-          return nextFoundIdx;
-        }
+          return nextFoundIdx - 1;
       }
     }
 

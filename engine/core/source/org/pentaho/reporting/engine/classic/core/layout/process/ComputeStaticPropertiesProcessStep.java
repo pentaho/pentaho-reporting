@@ -282,11 +282,11 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_LINEBOX)
+    if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
     {
       sblp.setAvoidPagebreakInside(true);
     }
-    else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW || nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX)
     {
       sblp.setAvoidPagebreakInside(style.getBooleanStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true));
     }
