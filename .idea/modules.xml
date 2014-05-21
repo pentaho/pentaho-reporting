@@ -36,6 +36,7 @@
       <module fileurl="file://$PROJECT_DIR$/engine/legacy-charts/legacy-charts.iml" filepath="$PROJECT_DIR$/engine/legacy-charts/legacy-charts.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/engine/legacy-functions/legacy-functions.iml" filepath="$PROJECT_DIR$/engine/legacy-functions/legacy-functions.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libbase/libbase.iml" filepath="$PROJECT_DIR$/libraries/libbase/libbase.iml" group="libraries" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libcss/libcss.iml" filepath="$PROJECT_DIR$/libraries/libcss/libcss.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libdocbundle/libdocbundle.iml" filepath="$PROJECT_DIR$/libraries/libdocbundle/libdocbundle.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libfonts/libfonts.iml" filepath="$PROJECT_DIR$/libraries/libfonts/libfonts.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libformat/libformat.iml" filepath="$PROJECT_DIR$/libraries/libformat/libformat.iml" group="libraries" />
