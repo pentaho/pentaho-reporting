@@ -196,16 +196,6 @@ public final class PaginationStepLib
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if ((nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT && sblp.isAvoidPagebreakInside()) ||
-        (nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE ||
-        (nodeType & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW ||
-        nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-    {
-      // inline boxes are never broken down (at least we avoid it as if the breakinside is set.
-      // same for renderable replaced content
-      return Math.max(widowSize, box.getHeight());
-    }
-
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) != LayoutNodeTypes.MASK_BOX_BLOCK)
     {
       // Canvas boxes have no notion of lines, and therefore they cannot have orphans and widows.

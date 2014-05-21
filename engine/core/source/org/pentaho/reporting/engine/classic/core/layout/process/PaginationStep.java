@@ -665,12 +665,13 @@ public final class PaginationStep extends IterateVisualProcessStep
     final long shift = boxContext.getShiftForNextChild();
     final PageBreakPositions breakUtility = paginationTableState.getBreakPositions();
     final long boxHeightAndWidowArea = Math.max
-        (box.getHeight(), PaginationStepLib.getWidowConstraint(box, shiftState, paginationTableState));
+        (box.getHeight(), PaginationStepLib.getWidowConstraint(box, boxContext, paginationTableState));
     if (breakUtility.isCrossingPagebreak(box.getY(), boxHeightAndWidowArea, shift) == false)
     {
       // The whole box fits on the current page. No need to do anything fancy.
       final RenderBox.BreakIndicator breakIndicator = box.getManualBreakIndicator();
-      if (breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK)
+      if (breakIndicator == RenderBox.BreakIndicator.INDIRECT_MANUAL_BREAK ||
+          box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.RESTRICTED)
       {
         // One of the children of this box will cause a manual pagebreak. We have to dive deeper into this child.
         // for now, we will only apply the ordinary shift.

@@ -57,9 +57,9 @@ public class GoldenSampleGenerator extends GoldTestBase
   public static void main(final String[] args)
       throws Exception
   {
-    new GoldenSampleGenerator().runAllGoldReports();
+//    new GoldenSampleGenerator().runAllGoldReports();
 
-//    generateSingleSample("Prd-3857-002.prpt", false);
+    generateSingleSample("Prd-2087-Widow-2.prpt", false);
   }
 
   private static void generateSingleSample(final String name, final boolean legacy) throws Exception

@@ -104,4 +104,13 @@ public class PageBreakPositionListTest extends TestCase
     assertEquals(300000, list.findPageEndForPageStartPosition(300000));
   }
 
+  public void testWeirdCasePrd5034() {
+    PageBreakPositionList list = new PageBreakPositionList();
+    list.addMajorBreak(58446100, 14300000);
+    assertEquals(58446100, list.findNextBreakPosition(9271300));
+    assertFalse(list.isCrossingPagebreak(9271300, 1000600, 0));
+    assertFalse(list.isCrossingPagebreak(1009271300, 1000600, 0));
+    assertFalse(list.isCrossingPagebreak(9271300, 1000600, 0));
+  }
+
 }

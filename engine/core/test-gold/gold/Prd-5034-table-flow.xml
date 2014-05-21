@@ -1,0 +1,2711 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="24" row-count="40">
+    <cols>
+      <column width="40"/>
+      <column width="0.701"/>
+      <column width="1.299"/>
+      <column width="108.188"/>
+      <column width="49.812"/>
+      <column width="0.701"/>
+      <column width="111.649"/>
+      <column width="0.5"/>
+      <column width="8.5"/>
+      <column width="6.81"/>
+      <column width="36.7"/>
+      <column width="4.18"/>
+      <column width="15.96"/>
+      <column width="19.81"/>
+      <column width="56.21"/>
+      <column width="9.98"/>
+      <column width="1.785"/>
+      <column width="18.895"/>
+      <column width="8.56"/>
+      <column width="1.66"/>
+      <column width="3.885"/>
+      <column width="50"/>
+      <column width="2.325"/>
+      <column width="72.27"/>
+    </cols>
+    <row height="30">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="108">
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="en_tete"/>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Facture"/>
+      </empty-cell>
+      <cell row-span="2" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="AGENCE DE COMMUNICATION"/>
+        <line type="ParagraphPoolBox" x="81.432" y="0.0" width="118.568" height="8.0" color="#58585a" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="81.432" y="0.0" width="33.752" height="8.0">AGENCE</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="117.4" y="0.0" width="11.104" height="8.0">DE</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="130.72" y="0.0" width="69.28" height="8.0">COMMUNICATION</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Coordonnées Client"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="7">
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <cell row-span="2" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="customer_name"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="LP Paysagiste"/>
+        <line type="ParagraphPoolBox" x="321.35" y="1.0" width="76.656" height="12.0" color="black" font-face="DINOT-Bold" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="321.35" y="1.0" width="14.664" height="12.0">LP</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="339.338" y="1.0" width="58.668" height="12.0">Paysagiste</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="9">
+      <empty-cell/>
+      <cell row-span="2" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="40.784" y="10.0" width="159.216" height="10.012" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="40.784" y="10.0" width="47.072" height="8.0" color="#58585a" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PERPIGNAN"/>
+            <text x="40.784" y="10.0" width="47.072" height="8.0">PERPIGNAN</text>
+          </inline>
+          <inline type="InlineRenderBox" padding-left="1.5" padding-right="1.5" x="87.856" y="10.0" width="5.216" height="8.0" color="#f0414a" font-face="DINOT-Medium" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="/"/>
+            <text x="89.356" y="10.0" width="2.216" height="8.0">/</text>
+          </inline>
+          <inline type="InlineRenderBox" x="93.072" y="10.0" width="45.304" height="8.0" color="#58585a" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="NARBONNE"/>
+            <text x="93.072" y="10.0" width="45.304" height="8.0">NARBONNE</text>
+          </inline>
+          <inline type="InlineRenderBox" padding-left="1.5" padding-right="1.5" x="138.376" y="10.0" width="5.216" height="8.0" color="#6ec2c6" font-face="DINOT-Medium" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="/"/>
+            <text x="139.876" y="10.0" width="2.216" height="8.0">/</text>
+          </inline>
+          <inline type="InlineRenderBox" x="143.592" y="10.0" width="56.408" height="8.0" color="#58585a" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="MONTPELLIER"/>
+            <text x="143.592" y="10.0" width="56.408" height="8.0">MONTPELLIER</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <cell row-span="3" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="customer_street"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="3 lotissement des Olivettes"/>
+        <line type="ParagraphPoolBox" x="321.35" y="17.0" width="119.41" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="321.35" y="17.0" width="5.56" height="10.0">3</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="329.68" y="17.0" width="50.55" height="10.0">lotissement</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="383.0" y="17.0" width="16.12" height="10.0">des</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="401.89" y="17.0" width="38.87" height="10.0">Olivettes</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="2">
+      <empty-cell/>
+      <empty-cell background-color="#dbd6cf">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell background-color="#dbd6cf">
+      </empty-cell>
+      <empty-cell background-color="#dbd6cf">
+      </empty-cell>
+      <empty-cell background-color="#dbd6cf">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="7">
+      <empty-cell/>
+      <cell background-color="#dbd6cf" row-span="2" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="FACTURES"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="FACTURE BROUILLON"/>
+        <line type="ParagraphPoolBox" x="45.0" y="24.0" width="129.24" height="12.0" color="black" font-face="DINOT-Bold" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="45.0" y="24.0" width="56.616" height="12.0">FACTURE</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="104.94" y="24.0" width="69.3" height="12.0">BROUILLON</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="8">
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <cell row-span="2" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="customer_zip"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="11120"/>
+        <line type="ParagraphPoolBox" x="321.35" y="31.0" width="27.8" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="321.35" y="31.0" width="27.8" height="10.0">11120</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="2" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="customer_city"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="MIREPEISSET"/>
+        <line type="ParagraphPoolBox" x="364.86" y="31.0" width="67.15" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="364.86" y="31.0" width="67.15" height="10.0">MIREPEISSET</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="7">
+      <empty-cell/>
+      <cell row-span="2" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="40.0" y="42.994" width="57.572" height="12.012" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="40.0" y="42.994" width="6.432" height="12.0" color="#43b0b5" font-face="DINOT-Regular" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=" | "/>
+            <text x="40.0" y="42.994" width="3.108" height="12.0">|</text>
+            <spacer width="3.324" height="0.0" preserve="true"/>
+          </inline>
+          <inline type="InlineRenderBox" x="46.432" y="45.006" width="51.14" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="date_invoice"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="dd-MM-yyyy"/>
+            <text x="46.432" y="45.006" width="51.14" height="10.0">30-03-2014</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+    </row>
+    <row height="13">
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <empty-cell/>
+      <cell border-top-color="#8677c3" border-top-width="0.5" border-top-style="solid" row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="40.0" y="62.5" width="99.981" height="10.006" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="40.0" y="63.506" width="42.471" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Suivi par : "/>
+            <text x="40.0" y="63.506" width="19.494" height="9.0">Suivi</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="61.987" y="63.506" width="13.005" height="9.0">par</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="77.485" y="63.506" width="2.493" height="9.0">:</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+          </inline>
+          <inline type="InlineRenderBox" x="82.471" y="63.506" width="57.51" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="vendor"/>
+            <text x="82.471" y="63.506" width="25.506" height="9.0">Céline</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="110.47" y="63.506" width="29.511" height="9.0">Hoarau</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="16.713">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="13.775">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+      <cell row-span="2" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="321.35" y="92.713" width="119.178" height="10.006" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="321.35" y="93.719" width="61.686" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A l'attention de "/>
+            <text x="321.35" y="93.719" width="5.994" height="9.0">A</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="329.837" y="93.719" width="38.205" height="9.0">l'attention</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="370.535" y="93.719" width="10.008" height="9.0">de</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+          </inline>
+          <inline type="InlineRenderBox" x="383.036" y="93.719" width="57.492" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="destinataire"/>
+            <text x="383.036" y="93.719" width="10.998" height="9.0">LP</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="396.527" y="93.719" width="44.001" height="9.0">Paysagiste</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="30.225">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="16">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Désignation"/>
+        <line type="ParagraphPoolBox" x="42.0" y="136.713" width="52.79" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="136.713" width="52.79" height="10.0">Désignation</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Rem."/>
+        <line type="ParagraphPoolBox" x="336.66" y="136.713" width="23.88" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="336.66" y="136.713" width="23.88" height="10.0">Rem.</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Qtité"/>
+        <line type="ParagraphPoolBox" x="376.38" y="136.713" width="21.09" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="376.38" y="136.713" width="21.09" height="10.0">Qtité</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="PU HT"/>
+        <line type="ParagraphPoolBox" x="431.05" y="136.713" width="29.97" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="431.05" y="136.713" width="13.88" height="10.0">PU</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="447.7" y="136.713" width="13.32" height="10.0">HT</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="5">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA"/>
+        <line type="ParagraphPoolBox" x="470.75" y="136.713" width="19.42" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="470.75" y="136.713" width="19.42" height="10.0">TVA</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Euros HT"/>
+        <line type="ParagraphPoolBox" x="513.91" y="136.713" width="42.2" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="513.91" y="136.713" width="26.11" height="10.0">Euros</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="542.79" y="136.713" width="13.32" height="10.0">HT</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="0.6">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell background-color="#8677c3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell background-color="#8677c3">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="3">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="549">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="line_name"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:rich-text-type="text/plain"/>
+        <line type="ParagraphPoolBox" x="42.0" y="156.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="156.313" width="65.016" height="9.0">Renouvellement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="109.509" y="156.313" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="122.01" y="156.313" width="19.998" height="9.0">votre</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="144.501" y="156.313" width="17.505" height="9.0">nom</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="164.499" y="156.313" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="177.0" y="156.313" width="34.515" height="9.0">domaine</text>
+          <spacer width="4.986" height="0.0" preserve="true"/>
+          <text x="216.501" y="156.313" width="18.009" height="9.0">pour</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="237.003" y="156.313" width="15.012" height="9.0">une</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="254.508" y="156.313" width="23.013" height="9.0">durée</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="280.014" y="156.313" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="292.515" y="156.313" width="5.004" height="9.0">1</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="300.012" y="156.313" width="10.008" height="9.0">an</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="312.513" y="156.313" width="2.493" height="9.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="167.113" width="70.479" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="167.113" width="57.996" height="9.0">lppaysagiste.fr</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="102.489" y="167.113" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.479" y="167.113" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="177.913" width="75.492" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="177.913" width="53.019" height="9.0">hébergement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="97.512" y="177.913" width="12.501" height="9.0">sur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.506" y="177.913" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="117.492" y="177.913" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="188.713" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="188.713" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="199.513" width="257.931" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="199.513" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="199.513" width="31.5" height="9.0">Serveur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="81.483" y="199.513" width="22.014" height="9.0">dédié</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="105.99" y="199.513" width="54.504" height="9.0">Professionnel</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="162.987" y="199.513" width="15.984" height="9.0">IBM</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="181.464" y="199.513" width="12.501" height="9.0">sur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="196.458" y="199.513" width="30.006" height="9.0">mesure</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="228.957" y="199.513" width="18.999" height="9.0">Haut</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="250.449" y="199.513" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="262.95" y="199.513" width="31.995" height="9.0">Gamme</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="297.438" y="199.513" width="2.493" height="9.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="210.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="210.313" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="210.313" width="50.004" height="9.0">Processeurs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="99.987" y="210.313" width="18.99" height="9.0">Multi</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="121.47" y="210.313" width="22.509" height="9.0">coeur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="146.472" y="210.313" width="21.006" height="9.0">Xeon</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="169.971" y="210.313" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="174.957" y="210.313" width="15.984" height="9.0">IBM</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="193.434" y="210.313" width="29.988" height="9.0">System</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="225.915" y="210.313" width="24.516" height="9.0">x3250</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="252.924" y="210.313" width="12.501" height="9.0">M4</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="267.918" y="210.313" width="20.016" height="9.0">2583</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="290.427" y="210.313" width="21.006" height="9.0">Xeon</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="221.113" width="74.475" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="221.113" width="34.011" height="9.0">E3-1240</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="78.504" y="221.113" width="2.493" height="9.0">/</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="83.49" y="221.113" width="12.501" height="9.0">3.4</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="98.484" y="221.113" width="17.991" height="9.0">GHz</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="231.913" width="224.451" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="231.913" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="231.913" width="10.008" height="9.0">64</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="59.991" y="231.913" width="11.997" height="9.0">Go</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="74.481" y="231.913" width="47.511" height="9.0">DDR3-1600</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="124.485" y="231.913" width="106.506" height="9.0">MHz/PC3-12800-CL11-1.5</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="233.484" y="231.913" width="5.994" height="9.0">V</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="241.971" y="231.913" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="247.461" y="231.913" width="18.99" height="9.0">ECC</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="242.713" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="242.713" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="242.713" width="21.483" height="9.0">RAID</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="71.466" y="242.713" width="37.512" height="9.0">hardware</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="111.471" y="242.713" width="19.008" height="9.0">avec</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="132.972" y="242.713" width="5.004" height="9.0">2</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.469" y="242.713" width="31.014" height="9.0">disques</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="173.976" y="242.713" width="15.984" height="9.0">IBM</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="192.453" y="242.713" width="27.009" height="9.0">600Go</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="221.955" y="242.713" width="26.505" height="9.0">6Gbps</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="250.953" y="242.713" width="17.982" height="9.0">SAS</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="271.428" y="242.713" width="15.687" height="9.0">2,5&quot;</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="289.608" y="242.713" width="16.974" height="9.0">SFF</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="309.075" y="242.713" width="10.008" height="9.0">10</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="253.513" width="56.988" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="253.513" width="15.012" height="9.0">000</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="59.505" y="253.513" width="39.483" height="9.0">tours/min.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="264.313" width="186.939" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="264.313" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="264.313" width="28.008" height="9.0">Disque</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="77.991" y="264.313" width="13.005" height="9.0">dur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="93.489" y="264.313" width="44.019" height="9.0">secondaire</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.001" y="264.313" width="15.984" height="9.0">IBM</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="158.478" y="264.313" width="15.498" height="9.0">1To</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="176.469" y="264.313" width="26.505" height="9.0">6Gbps</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="205.467" y="264.313" width="23.472" height="9.0">SATA</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="275.113" width="73.728" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="275.113" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="275.113" width="28.512" height="9.0">Debian</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="78.495" y="275.113" width="5.004" height="9.0">7</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="85.992" y="275.113" width="5.247" height="9.0">+</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="93.732" y="275.113" width="21.996" height="9.0">Plesk</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="285.913" width="216.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="285.913" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.49" y="285.913" width="15.012" height="9.0">100</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.995" y="285.913" width="22.005" height="9.0">Mbps</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="89.493" y="285.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="101.994" y="285.913" width="25.02" height="9.0">bande</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="129.507" y="285.913" width="36.513" height="9.0">passante</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="168.513" y="285.913" width="32.508" height="9.0">garantie</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="203.514" y="285.913" width="17.001" height="9.0">1Go</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="223.008" y="285.913" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="235.509" y="285.913" width="22.491" height="9.0">burst.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="296.713" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="296.713" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="307.513" width="182.997" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="307.513" width="29.997" height="9.0">Service</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="74.49" y="307.513" width="47.016" height="9.0">infogérance</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="123.999" y="307.513" width="18.009" height="9.0">pour</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="144.501" y="307.513" width="30.006" height="9.0">serveur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="177.0" y="307.513" width="22.014" height="9.0">dédié</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="201.507" y="307.513" width="18.504" height="9.0">linux</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="222.504" y="307.513" width="2.493" height="9.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="318.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="318.313" width="20.493" height="9.0">Suite</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.986" y="318.313" width="5.004" height="9.0">à</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="72.483" y="318.313" width="7.002" height="9.0">la</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="81.978" y="318.313" width="59.022" height="9.0">recrudescence</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="143.493" y="318.313" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="160.494" y="318.313" width="34.506" height="9.0">attaques</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="197.493" y="318.313" width="33.498" height="9.0">système</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="233.484" y="318.313" width="19.512" height="9.0">nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.489" y="318.313" width="10.008" height="9.0">ne</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="267.99" y="318.313" width="42.021" height="9.0">proposons</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="329.113" width="148.518" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="329.113" width="16.506" height="9.0">plus</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="60.999" y="329.113" width="15.012" height="9.0">que</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="78.504" y="329.113" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="95.505" y="329.113" width="53.019" height="9.0">hébergement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="151.017" y="329.113" width="39.501" height="9.0">infogérés.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="339.913" width="204.633" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="339.913" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="339.913" width="53.505" height="9.0">Configuration</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.641" y="339.913" width="5.994" height="9.0">&amp;</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.128" y="339.913" width="47.997" height="9.0">optimisation</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="162.618" y="339.913" width="39.015" height="9.0">technique</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="204.126" y="339.913" width="10.008" height="9.0">du</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="216.627" y="339.913" width="30.006" height="9.0">serveur</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="350.713" width="87.624" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="350.713" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="350.713" width="32.994" height="9.0">Sécurité</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="83.13" y="350.713" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="93.12" y="350.713" width="36.504" height="9.0">contrôles</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="361.513" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="361.513" width="14.508" height="9.0">Les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="59.001" y="361.513" width="31.518" height="9.0">équipes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="93.012" y="361.513" width="48.996" height="9.0">administrent</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="144.501" y="361.513" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="154.491" y="361.513" width="40.995" height="9.0">optimisent</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="197.979" y="361.513" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="210.48" y="361.513" width="50.022" height="9.0">permanence</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="262.995" y="361.513" width="11.502" height="9.0">les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="276.99" y="361.513" width="34.506" height="9.0">serveurs</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="372.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="372.313" width="14.499" height="9.0">afin</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="58.992" y="372.313" width="24.696" height="9.0">d'offrir</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="86.181" y="372.313" width="15.012" height="9.0">une</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.686" y="372.313" width="27.99" height="9.0">fiabilité</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="134.169" y="372.313" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="144.159" y="372.313" width="15.012" height="9.0">une</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="161.664" y="372.313" width="31.5" height="9.0">sécurité</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="195.657" y="372.313" width="40.995" height="9.0">optimales.</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="239.145" y="372.313" width="8.991" height="9.0">Ils</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="250.629" y="372.313" width="34.002" height="9.0">réalisent</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="383.113" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="383.113" width="42.012" height="9.0">également</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="86.505" y="383.113" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.506" y="383.113" width="24.003" height="9.0">audits</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="130.002" y="383.113" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="142.503" y="383.113" width="89.487" height="9.0">sécurité récurrents car</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="234.483" y="383.113" width="11.502" height="9.0">les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="248.478" y="383.113" width="40.509" height="9.0">typologies</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="393.913" width="151.209" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="393.913" width="104.715" height="9.0">d'attaques évoluent toutes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="149.208" y="393.913" width="11.502" height="9.0">les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="163.203" y="393.913" width="30.006" height="9.0">heures.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="404.713" width="92.646" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="404.713" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="404.713" width="42.003" height="9.0">Monitoring</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="92.139" y="404.713" width="10.008" height="9.0">du</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="104.64" y="404.713" width="30.006" height="9.0">serveur</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="415.513" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="415.513" width="14.508" height="9.0">Les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="59.001" y="415.513" width="34.506" height="9.0">serveurs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="96.0" y="415.513" width="17.001" height="9.0">sont</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="115.494" y="415.513" width="39.501" height="9.0">monitorés</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="157.488" y="415.513" width="27.513" height="9.0">24h/24</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="187.494" y="415.513" width="14.499" height="9.0">7j/7</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="204.486" y="415.513" width="37.008" height="9.0">365j/365.</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="243.987" y="415.513" width="8.991" height="9.0">Ils</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.471" y="415.513" width="27.999" height="9.0">veillent</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="285.963" y="415.513" width="5.004" height="9.0">à</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="293.46" y="415.513" width="9.504" height="9.0">ce</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="305.457" y="415.513" width="15.012" height="9.0">que</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="426.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="426.313" width="14.004" height="9.0">ces</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="58.497" y="426.313" width="32.508" height="9.0">derniers</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="93.498" y="426.313" width="24.003" height="9.0">soient</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="119.994" y="426.313" width="32.004" height="9.0">toujours</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="154.491" y="426.313" width="44.01" height="9.0">pleinement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="200.994" y="426.313" width="56.511" height="9.0">opérationnels.</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="259.998" y="426.313" width="10.998" height="9.0">En</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="273.489" y="426.313" width="14.004" height="9.0">cas</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="289.986" y="426.313" width="10.008" height="9.0">de</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="437.113" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="437.113" width="37.008" height="9.0">plantage,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="81.501" y="437.113" width="8.496" height="9.0">ils</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="92.49" y="437.113" width="27.009" height="9.0">assure</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="121.992" y="437.113" width="10.008" height="9.0">un</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="134.493" y="437.113" width="51.516" height="9.0">rédémarrage</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="188.502" y="437.113" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="205.503" y="437.113" width="36.999" height="9.0">serveurs,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="244.995" y="437.113" width="18.009" height="9.0">pour</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="265.497" y="437.113" width="30.501" height="9.0">garantir</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="298.491" y="437.113" width="10.008" height="9.0">un</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="447.913" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="447.913" width="17.505" height="9.0">haut</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="61.998" y="447.913" width="26.514" height="9.0">niveau</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.005" y="447.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.506" y="447.913" width="47.007" height="9.0">disponibilité</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="153.006" y="447.913" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="170.007" y="447.913" width="18.495" height="9.0">sites</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="190.995" y="447.913" width="40.014" height="9.0">hébergés.</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="233.502" y="447.913" width="10.998" height="9.0">En</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="246.993" y="447.913" width="14.004" height="9.0">cas</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="263.49" y="447.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="275.991" y="447.913" width="40.5" height="9.0">nécessité,</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="458.713" width="274.968" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="458.713" width="46.503" height="9.0">intervention</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="90.996" y="458.713" width="12.501" height="9.0">sur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="105.99" y="458.713" width="11.502" height="9.0">les</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="119.985" y="458.713" width="29.52" height="9.0">pannes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="151.998" y="458.713" width="39.006" height="9.0">logicielles</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="193.497" y="458.713" width="33.498" height="9.0">système</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="229.488" y="458.713" width="20.502" height="9.0">(hors</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="252.483" y="458.713" width="39.996" height="9.0">applicatifs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="294.972" y="458.713" width="21.996" height="9.0">web).</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="469.513" width="58.662" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="469.513" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="469.513" width="53.019" height="9.0">Sauvegardes</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="480.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="480.313" width="19.998" height="9.0">Avec</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.491" y="480.313" width="24.498" height="9.0">toutes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.482" y="480.313" width="14.508" height="9.0">nos</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="108.483" y="480.313" width="44.001" height="9.0">prestations</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="154.977" y="480.313" width="62.514" height="9.0">d’hébergement,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="219.984" y="480.313" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="236.985" y="480.313" width="51.525" height="9.0">sauvegardes</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="491.113" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="491.113" width="51.021" height="9.0">quotidiennes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="95.514" y="491.113" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="108.015" y="491.113" width="42.723" height="9.0">l'ensemble</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="153.231" y="491.113" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="170.232" y="491.113" width="24.012" height="9.0">bases</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="196.737" y="491.113" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="209.238" y="491.113" width="34.524" height="9.0">données</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="246.255" y="491.113" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="256.245" y="491.113" width="30.987" height="9.0">fichiers,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="289.725" y="491.113" width="29.007" height="9.0">ensuite</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="501.913" width="203.499" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="501.913" width="14.004" height="9.0">ces</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="58.497" y="501.913" width="51.525" height="9.0">sauvegardes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.515" y="501.913" width="17.001" height="9.0">sont</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="132.009" y="501.913" width="35.505" height="9.0">stockées</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="170.007" y="501.913" width="12.501" height="9.0">sur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="185.001" y="501.913" width="36.009" height="9.0">plusieurs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="223.503" y="501.913" width="21.996" height="9.0">jours.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="512.713" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="512.713" width="16.002" height="9.0">Nos</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="60.495" y="512.713" width="19.485" height="9.0">tarifs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="82.473" y="512.713" width="52.515" height="9.0">comprennent</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="137.481" y="512.713" width="7.002" height="9.0">la</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="146.976" y="512.713" width="27.0" height="9.0">remise</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="176.469" y="512.713" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="188.97" y="512.713" width="42.012" height="9.0">production</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="233.475" y="512.713" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="245.976" y="512.713" width="7.002" height="9.0">la</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.471" y="512.713" width="33.012" height="9.0">dernière</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="523.513" width="209.979" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="523.513" width="47.025" height="9.0">sauvegarde</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.518" y="523.513" width="23.508" height="9.0">valide</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="117.519" y="523.513" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="130.02" y="523.513" width="19.998" height="9.0">votre</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="152.511" y="523.513" width="13.995" height="9.0">site</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="168.999" y="523.513" width="41.994" height="9.0">(maximum</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="213.486" y="523.513" width="5.004" height="9.0">2</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="220.983" y="523.513" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="236.481" y="523.513" width="15.498" height="9.0">an).</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="534.313" width="114.642" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="534.313" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="534.313" width="29.997" height="9.0">Service</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="80.133" y="534.313" width="22.995" height="9.0">Client</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="105.621" y="534.313" width="51.021" height="9.0">personnalisé</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="545.113" width="276.516" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="545.113" width="21.006" height="9.0">Nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="65.499" y="545.113" width="34.002" height="9.0">sommes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="101.994" y="545.113" width="36.018" height="9.0">joignable</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.505" y="545.113" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="156.003" y="545.113" width="39.519" height="9.0">téléphone</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="198.015" y="545.113" width="14.508" height="9.0">aux</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="215.016" y="545.113" width="27.513" height="9.0">heures</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="245.022" y="545.113" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.012" y="545.113" width="19.503" height="9.0">jours</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="277.008" y="545.113" width="41.508" height="9.0">ouvrables.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="555.913" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="555.913" width="18.999" height="9.0">Pour</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="63.492" y="555.913" width="31.5" height="9.0">certains</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="97.485" y="555.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="109.986" y="555.913" width="14.004" height="9.0">ses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="126.483" y="555.913" width="35.496" height="9.0">services,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="164.472" y="555.913" width="19.512" height="9.0">nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="186.477" y="555.913" width="40.5" height="9.0">travaillons</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="229.47" y="555.913" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="241.971" y="555.913" width="43.002" height="9.0">partenariat</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="287.466" y="555.913" width="29.997" height="9.0">exclusif</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="566.713" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="566.713" width="19.008" height="9.0">avec</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="63.501" y="566.713" width="15.012" height="9.0">une</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="81.006" y="566.713" width="28.503" height="9.0">société</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.002" y="566.713" width="12.006" height="9.0">qui</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="126.501" y="566.713" width="5.004" height="9.0">a</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="133.998" y="566.713" width="11.988" height="9.0">fait</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="148.479" y="566.713" width="14.004" height="9.0">ses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="164.976" y="566.713" width="32.013" height="9.0">preuves</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="199.482" y="566.713" width="26.514" height="9.0">depuis</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="228.489" y="566.713" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="240.99" y="566.713" width="49.518" height="9.0">nombreuses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="293.001" y="566.713" width="29.52" height="9.0">années</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="577.513" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="577.513" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="51.99" y="577.513" width="12.006" height="9.0">qui</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="66.489" y="577.513" width="19.512" height="9.0">nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="88.494" y="577.513" width="5.004" height="9.0">a</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="95.991" y="577.513" width="32.004" height="9.0">toujours</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="130.488" y="577.513" width="27.0" height="9.0">permis</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="159.981" y="577.513" width="22.212" height="9.0">d'être</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="184.686" y="577.513" width="28.989" height="9.0">réactifs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="216.168" y="577.513" width="17.001" height="9.0">face</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="235.662" y="577.513" width="14.508" height="9.0">aux</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="252.663" y="577.513" width="61.515" height="9.0">problématiques</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="588.313" width="93.213" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="588.313" width="41.22" height="9.0">d'attaques</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="85.713" y="588.313" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="98.214" y="588.313" width="36.999" height="9.0">serveurs.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="599.113" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="599.113" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="609.913" width="47.979" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="609.913" width="42.993" height="9.0">Volumétrie</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="87.486" y="609.913" width="2.493" height="9.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="620.713" width="81.99" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="620.713" width="11.502" height="9.0">Nb</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="55.995" y="620.713" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="68.496" y="620.713" width="19.512" height="9.0">base</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="90.501" y="620.713" width="23.499" height="9.0">Mysql</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="116.493" y="620.713" width="2.493" height="9.0">:</text>
+          <text x="118.986" y="620.713" width="5.004" height="9.0">2</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="631.513" width="110.484" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="631.513" width="30.006" height="9.0">Espace</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="74.499" y="631.513" width="26.514" height="9.0">disque</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.506" y="631.513" width="17.001" height="9.0">max</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="123.0" y="631.513" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="127.986" y="631.513" width="10.008" height="9.0">10</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.487" y="631.513" width="11.997" height="9.0">Go</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="642.313" width="100.431" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="642.313" width="22.482" height="9.0">Trafic</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="66.975" y="642.313" width="17.001" height="9.0">max</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="86.469" y="642.313" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.455" y="642.313" width="10.008" height="9.0">10</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.956" y="642.313" width="11.997" height="9.0">Go</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="118.446" y="642.313" width="2.493" height="9.0">/</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="123.432" y="642.313" width="18.999" height="9.0">mois</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="653.113" width="87.498" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="653.113" width="53.019" height="9.0">Sauvegardes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="97.512" y="653.113" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="102.498" y="653.113" width="5.004" height="9.0">2</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="109.995" y="653.113" width="19.503" height="9.0">jours</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="663.913" width="219.474" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="663.913" width="19.989" height="9.0">Sites</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.482" y="663.913" width="61.011" height="9.0">(pré-production</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="127.986" y="663.913" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="137.976" y="663.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="150.477" y="663.913" width="61.524" height="9.0">développement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="214.494" y="663.913" width="34.497" height="9.0">compris)</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="251.484" y="663.913" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="256.47" y="663.913" width="5.004" height="9.0">2</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="674.713" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="674.713" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="685.513" width="82.476" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="685.513" width="11.484" height="9.0">AT</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="55.977" y="685.513" width="38.007" height="9.0">Présence</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="96.477" y="685.513" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="111.975" y="685.513" width="10.008" height="9.0">an</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Remise"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="342.0975" y="684.313" width="13.005" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="342.0975" y="684.313" width="13.005" height="9.0">0%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="quantity"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="1.00"/>
+        <line type="ParagraphPoolBox" x="384.423" y="684.313" width="5.004" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="384.423" y="684.313" width="5.004" height="9.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="unit_price"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="340.00"/>
+        <line type="ParagraphPoolBox" x="433.507" y="684.313" width="27.513" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="433.507" y="684.313" width="27.513" height="9.0">340.00</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="taux_tva"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="475.672" y="685.313" width="16.008" height="8.0" color="#8a8888" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="475.672" y="685.313" width="16.008" height="8.0">20%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="5">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="price_subtotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="340.00"/>
+        <line type="ParagraphPoolBox" x="530.597" y="684.313" width="27.513" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="530.597" y="684.313" width="27.513" height="9.0">340.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="3">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="235.8">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="line_name"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:rich-text-type="text/plain"/>
+        <line type="ParagraphPoolBox" x="42.0" y="708.313" width="58.662" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="708.313" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="708.313" width="53.019" height="9.0">Sauvegardes</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="719.113" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="719.113" width="19.998" height="9.0">Avec</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.491" y="719.113" width="24.498" height="9.0">toutes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.482" y="719.113" width="14.508" height="9.0">nos</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="108.483" y="719.113" width="44.001" height="9.0">prestations</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="154.977" y="719.113" width="62.514" height="9.0">d’hébergement,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="219.984" y="719.113" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="236.985" y="719.113" width="51.525" height="9.0">sauvegardes</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="729.913" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="729.913" width="51.021" height="9.0">quotidiennes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="95.514" y="729.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="108.015" y="729.913" width="42.723" height="9.0">l'ensemble</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="153.231" y="729.913" width="14.508" height="9.0">des</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="170.232" y="729.913" width="24.012" height="9.0">bases</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="196.737" y="729.913" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="209.238" y="729.913" width="34.524" height="9.0">données</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="246.255" y="729.913" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="256.245" y="729.913" width="30.987" height="9.0">fichiers,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="289.725" y="729.913" width="29.007" height="9.0">ensuite</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="740.713" width="203.499" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="740.713" width="14.004" height="9.0">ces</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="58.497" y="740.713" width="51.525" height="9.0">sauvegardes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.515" y="740.713" width="17.001" height="9.0">sont</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="132.009" y="740.713" width="35.505" height="9.0">stockées</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="170.007" y="740.713" width="12.501" height="9.0">sur</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="185.001" y="740.713" width="36.009" height="9.0">plusieurs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="223.503" y="740.713" width="21.996" height="9.0">jours.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="751.513" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="751.513" width="16.002" height="9.0">Nos</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="60.495" y="751.513" width="19.485" height="9.0">tarifs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="82.473" y="751.513" width="52.515" height="9.0">comprennent</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="137.481" y="751.513" width="7.002" height="9.0">la</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="146.976" y="751.513" width="27.0" height="9.0">remise</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="176.469" y="751.513" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="188.97" y="751.513" width="42.012" height="9.0">production</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="233.475" y="751.513" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="245.976" y="751.513" width="7.002" height="9.0">la</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.471" y="751.513" width="33.012" height="9.0">dernière</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="762.313" width="209.979" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="762.313" width="47.025" height="9.0">sauvegarde</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.518" y="762.313" width="23.508" height="9.0">valide</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="117.519" y="762.313" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="130.02" y="762.313" width="19.998" height="9.0">votre</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="152.511" y="762.313" width="13.995" height="9.0">site</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="168.999" y="762.313" width="41.994" height="9.0">(maximum</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="213.486" y="762.313" width="5.004" height="9.0">2</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="220.983" y="762.313" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="236.481" y="762.313" width="15.498" height="9.0">an).</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="773.113" width="114.642" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="773.113" width="3.15" height="9.0">•</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="47.643" y="773.113" width="29.997" height="9.0">Service</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="80.133" y="773.113" width="22.995" height="9.0">Client</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="105.621" y="773.113" width="51.021" height="9.0">personnalisé</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="783.913" width="276.516" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="783.913" width="21.006" height="9.0">Nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="65.499" y="783.913" width="34.002" height="9.0">sommes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="101.994" y="783.913" width="36.018" height="9.0">joignable</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.505" y="783.913" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="156.003" y="783.913" width="39.519" height="9.0">téléphone</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="198.015" y="783.913" width="14.508" height="9.0">aux</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="215.016" y="783.913" width="27.513" height="9.0">heures</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="245.022" y="783.913" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="255.012" y="783.913" width="19.503" height="9.0">jours</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="277.008" y="783.913" width="41.508" height="9.0">ouvrables.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="794.713" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="794.713" width="18.999" height="9.0">Pour</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="63.492" y="794.713" width="31.5" height="9.0">certains</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="97.485" y="794.713" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="109.986" y="794.713" width="14.004" height="9.0">ses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="126.483" y="794.713" width="35.496" height="9.0">services,</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="164.472" y="794.713" width="19.512" height="9.0">nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="186.477" y="794.713" width="40.5" height="9.0">travaillons</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="229.47" y="794.713" width="10.008" height="9.0">en</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="241.971" y="794.713" width="43.002" height="9.0">partenariat</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="287.466" y="794.713" width="29.997" height="9.0">exclusif</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="805.513" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="805.513" width="19.008" height="9.0">avec</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="63.501" y="805.513" width="15.012" height="9.0">une</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="81.006" y="805.513" width="28.503" height="9.0">société</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="112.002" y="805.513" width="12.006" height="9.0">qui</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="126.501" y="805.513" width="5.004" height="9.0">a</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="133.998" y="805.513" width="11.988" height="9.0">fait</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="148.479" y="805.513" width="14.004" height="9.0">ses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="164.976" y="805.513" width="32.013" height="9.0">preuves</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="199.482" y="805.513" width="26.514" height="9.0">depuis</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="228.489" y="805.513" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="240.99" y="805.513" width="49.518" height="9.0">nombreuses</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="293.001" y="805.513" width="29.52" height="9.0">années</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="816.313" width="286.16" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="816.313" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="51.99" y="816.313" width="12.006" height="9.0">qui</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="66.489" y="816.313" width="19.512" height="9.0">nous</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="88.494" y="816.313" width="5.004" height="9.0">a</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="95.991" y="816.313" width="32.004" height="9.0">toujours</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="130.488" y="816.313" width="27.0" height="9.0">permis</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="159.981" y="816.313" width="22.212" height="9.0">d'être</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="184.686" y="816.313" width="28.989" height="9.0">réactifs</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="216.168" y="816.313" width="17.001" height="9.0">face</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="235.662" y="816.313" width="14.508" height="9.0">aux</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="252.663" y="816.313" width="61.515" height="9.0">problématiques</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="827.113" width="93.213" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="827.113" width="41.22" height="9.0">d'attaques</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="85.713" y="827.113" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="98.214" y="827.113" width="36.999" height="9.0">serveurs.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="837.913" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="837.913" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="848.713" width="47.979" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="848.713" width="42.993" height="9.0">Volumétrie</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="87.486" y="848.713" width="2.493" height="9.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="859.513" width="81.99" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="859.513" width="11.502" height="9.0">Nb</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="55.995" y="859.513" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="68.496" y="859.513" width="19.512" height="9.0">base</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="90.501" y="859.513" width="23.499" height="9.0">Mysql</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="116.493" y="859.513" width="2.493" height="9.0">:</text>
+          <text x="118.986" y="859.513" width="5.004" height="9.0">2</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="870.313" width="110.484" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="870.313" width="30.006" height="9.0">Espace</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="74.499" y="870.313" width="26.514" height="9.0">disque</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.506" y="870.313" width="17.001" height="9.0">max</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="123.0" y="870.313" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="127.986" y="870.313" width="10.008" height="9.0">10</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="140.487" y="870.313" width="11.997" height="9.0">Go</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="881.113" width="100.431" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="881.113" width="22.482" height="9.0">Trafic</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="66.975" y="881.113" width="17.001" height="9.0">max</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="86.469" y="881.113" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="91.455" y="881.113" width="10.008" height="9.0">10</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="103.956" y="881.113" width="11.997" height="9.0">Go</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="118.446" y="881.113" width="2.493" height="9.0">/</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="123.432" y="881.113" width="18.999" height="9.0">mois</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="891.913" width="87.498" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="891.913" width="53.019" height="9.0">Sauvegardes</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="97.512" y="891.913" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="102.498" y="891.913" width="5.004" height="9.0">2</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="109.995" y="891.913" width="19.503" height="9.0">jours</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="902.713" width="219.474" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="902.713" width="19.989" height="9.0">Sites</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="64.482" y="902.713" width="61.011" height="9.0">(pré-production</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="127.986" y="902.713" width="7.497" height="9.0">et</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="137.976" y="902.713" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="150.477" y="902.713" width="61.524" height="9.0">développement</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="214.494" y="902.713" width="34.497" height="9.0">compris)</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="251.484" y="902.713" width="2.493" height="9.0">:</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="256.47" y="902.713" width="5.004" height="9.0">2</text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="913.513" width="0.0" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="913.513" width="0.0" height="9.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="42.0" y="924.313" width="82.476" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="924.313" width="11.484" height="9.0">AT</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="55.977" y="924.313" width="38.007" height="9.0">Présence</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="96.477" y="924.313" width="13.005" height="9.0">par</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="111.975" y="924.313" width="10.008" height="9.0">an</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Remise"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="342.0975" y="923.113" width="13.005" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="342.0975" y="923.113" width="13.005" height="9.0">0%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="quantity"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="1.00"/>
+        <line type="ParagraphPoolBox" x="384.423" y="923.113" width="5.004" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="384.423" y="923.113" width="5.004" height="9.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="unit_price"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <line type="ParagraphPoolBox" x="443.515" y="923.113" width="17.505" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="443.515" y="923.113" width="17.505" height="9.0">0.00</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="taux_tva"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="475.672" y="924.113" width="16.008" height="8.0" color="#8a8888" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="475.672" y="924.113" width="16.008" height="8.0">20%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="5">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="price_subtotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <line type="ParagraphPoolBox" x="540.605" y="923.113" width="17.505" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="540.605" y="923.113" width="17.505" height="9.0">0.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="3">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="itemband"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="line_name"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:rich-text-type="text/plain"/>
+        <line type="ParagraphPoolBox" x="42.0" y="947.313" width="101.97" height="10.8" color="red" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="947.313" width="30.501" height="9.0">Remise</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="74.994" y="947.313" width="20.997" height="9.0">client</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="98.484" y="947.313" width="45.486" height="9.0">Virtualforce</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="Remise"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="342.0975" y="946.113" width="13.005" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="342.0975" y="946.113" width="13.005" height="9.0">0%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="quantity"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="1.00"/>
+        <line type="ParagraphPoolBox" x="384.423" y="946.113" width="5.004" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="384.423" y="946.113" width="5.004" height="9.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="unit_price"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <line type="ParagraphPoolBox" x="430.51" y="946.113" width="30.51" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="430.51" y="946.113" width="30.51" height="9.0">-130.00</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="taux_tva"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="0.#%;(0.#%)"/>
+        <line type="ParagraphPoolBox" x="475.672" y="947.113" width="16.008" height="8.0" color="#8a8888" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="475.672" y="947.113" width="16.008" height="8.0">20%</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="5">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="price_subtotal"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00;-#,##0.00"/>
+        <line type="ParagraphPoolBox" x="527.6" y="946.113" width="30.51" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="527.6" y="946.113" width="30.51" height="9.0">-130.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <cell row-span="1" col-span="23">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+        <line type="ParagraphPoolBox" x="0.0" y="964.113" width="24.46" height="10.0" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="964.113" width="24.46" height="10.0">Label</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TOTAL HT"/>
+        <line type="ParagraphPoolBox" x="385.0" y="989.613" width="43.452" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="385.0" y="989.613" width="28.971" height="9.0">TOTAL</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="416.464" y="989.613" width="11.988" height="9.0">HT</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="amount_untaxed"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00 €;-#,##0.00 €"/>
+        <line type="ParagraphPoolBox" x="521.99" y="989.613" width="35.01" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="521.99" y="989.613" width="27.513" height="9.0">210.00</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="551.996" y="989.613" width="5.004" height="9.0">€</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="5.5">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14.5">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TOTAL TTC - Net à payer"/>
+        <line type="ParagraphPoolBox" x="385.0" y="1009.613" width="103.419" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="385.0" y="1009.613" width="28.971" height="9.0">TOTAL</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="416.464" y="1009.613" width="17.478" height="9.0">TTC</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="436.435" y="1009.613" width="2.997" height="9.0">-</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="441.925" y="1009.613" width="13.995" height="9.0">Net</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="458.413" y="1009.613" width="5.004" height="9.0">à</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="465.91" y="1009.613" width="22.509" height="9.0">payer</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="inv_amount"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0.00€;(#,##0.00€)"/>
+        <line type="ParagraphPoolBox" x="524.483" y="1009.613" width="32.517" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="524.483" y="1009.613" width="32.517" height="9.0">252.00€</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="27">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="payment_terms"/>
+        <line type="ParagraphPoolBox" x="385.0" y="1039.113" width="87.984" height="12.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="385.0" y="1039.113" width="5.994" height="9.0">A</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="393.487" y="1039.113" width="37.008" height="9.0">réception</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="432.988" y="1039.113" width="10.008" height="9.0">de</text>
+          <spacer width="2.493" height="0.0" preserve="true"/>
+          <text x="445.489" y="1039.113" width="27.495" height="9.0">facture</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15.006">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="385.0" y="1051.113" width="92.493" height="10.006" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="385.0" y="1051.113" width="60.975" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Paiement par : "/>
+            <text x="385.0" y="1051.113" width="37.998" height="9.0">Paiement</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="425.491" y="1051.113" width="13.005" height="9.0">par</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="440.989" y="1051.113" width="2.493" height="9.0">:</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+          </inline>
+          <inline type="InlineRenderBox" x="445.975" y="1051.113" width="31.518" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="name_payment_mode"/>
+            <text x="445.975" y="1051.113" width="31.518" height="9.0">Chèque</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="385.0" y="1071.119" width="82.503" height="10.006" color="black" font-face="DINOT-Regular" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline type="InlineRenderBox" x="385.0" y="1071.119" width="47.493" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Echéance : "/>
+            <text x="385.0" y="1071.119" width="40.014" height="9.0">Echéance</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+            <text x="427.507" y="1071.119" width="2.493" height="9.0">:</text>
+            <spacer width="2.493" height="0.0" preserve="true"/>
+          </inline>
+          <inline type="InlineRenderBox" x="432.493" y="1071.119" width="35.01" height="9.0" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="echeance"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="dd/MM/yy"/>
+            <text x="432.493" y="1071.119" width="35.01" height="9.0">13/04/14</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="5">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="24.787">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="PageOfPagesFunction1"/>
+        <line type="ParagraphPoolBox" x="487.241" y="5.0" width="15.544" height="8.0" color="black" font-face="DINOT-Bold" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="487.241" y="5.0" width="4.448" height="8.0">1</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="493.905" y="5.0" width="2.216" height="8.0">/</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="498.337" y="5.0" width="4.448" height="8.0">1</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="7" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="signature_droite"/>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="content-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="signature_gauche"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:image-map=".png"/>
+      </cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="1.569">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="42.0" y="51.356" width="223.36" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline name="company_site" type="InlineRenderBox" x="42.0" y="51.356" width="89.76" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="company_street2"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="company_site"/>
+            <text x="42.0" y="51.356" width="11.112" height="8.0">70,</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="55.328" y="51.356" width="26.24" height="8.0">avenue</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="83.784" y="51.356" width="20.88" height="8.0">Alfred</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="106.88" y="51.356" width="24.88" height="8.0">Kastler</text>
+          </inline>
+          <inline type="InlineRenderBox" padding-left="2.0" padding-right="2.0" x="131.76" y="51.356" width="6.216" height="8.0" color="#f0414a" font-face="DINOT-Medium" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="/"/>
+            <text x="133.76" y="51.356" width="2.216" height="8.0">/</text>
+          </inline>
+          <inline name="company_site" type="InlineRenderBox" x="137.976" y="51.356" width="44.856" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="company_street"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="company_site"/>
+            <text x="137.976" y="51.356" width="44.856" height="8.0">TECNOSUD</text>
+          </inline>
+          <inline type="InlineRenderBox" padding-left="2.0" padding-right="2.0" x="182.832" y="51.356" width="6.216" height="8.0" color="#6ec2c6" font-face="DINOT-Medium" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="/"/>
+            <text x="184.832" y="51.356" width="2.216" height="8.0">/</text>
+          </inline>
+          <inline name="zip" type="InlineRenderBox" padding-right="2.0" x="189.048" y="51.356" width="24.24" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="zip"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="zip"/>
+            <text x="189.048" y="51.356" width="22.24" height="8.0">66100</text>
+          </inline>
+          <inline name="company_city" type="InlineRenderBox" padding-right="5.0" x="213.288" y="51.356" width="52.072" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="company_city"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="company_city"/>
+            <text x="213.288" y="51.356" width="47.072" height="8.0">PERPIGNAN</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="11">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="42.0" y="62.356" width="176.176" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline name="Company_Phone" type="InlineRenderBox" x="42.0" y="62.356" width="68.0" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Company_Phone"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TEL. : 0468551131"/>
+            <text x="42.0" y="62.356" width="16.872" height="8.0">TEL.</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="61.088" y="62.356" width="2.216" height="8.0">:</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="65.52" y="62.356" width="44.48" height="8.0">0468551131</text>
+          </inline>
+          <inline type="InlineRenderBox" padding-left="2.0" padding-right="2.0" x="110.0" y="62.356" width="6.216" height="8.0" color="#6ec2c6" font-face="DINOT-Medium" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="/"/>
+            <text x="112.0" y="62.356" width="2.216" height="8.0">/</text>
+          </inline>
+          <inline name="email" type="InlineRenderBox" padding-right="5.0" x="116.216" y="62.356" width="101.96" height="8.0" color="black" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="email"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Email : info@attraptemps.fr"/>
+            <text x="116.216" y="62.356" width="19.992" height="8.0">Email</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="138.424" y="62.356" width="2.216" height="8.0">:</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="142.856" y="62.356" width="70.32" height="8.0">info@attraptemps.fr</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="10">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="8">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="42.0" y="73.356" width="155.886" height="9.017" color="black" font-face="DINOT-Regular" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline name="Siret" type="InlineRenderBox" x="42.0" y="73.356" width="74.73" height="6.0" color="#58585a" font-face="DINOT-Regular" font-size="6" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Siret"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="n°Siret : 407 836 089 00042"/>
+            <text x="42.0" y="73.356" width="18.054" height="6.0">n°Siret</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="61.716" y="73.356" width="1.662" height="6.0">:</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="65.04" y="73.356" width="10.008" height="6.0">407</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="76.71" y="73.356" width="10.008" height="6.0">836</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="88.38" y="73.356" width="10.008" height="6.0">089</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="100.05" y="73.356" width="16.68" height="6.0">00042</text>
+          </inline>
+          <inline type="InlineRenderBox" x="116.73" y="73.356" width="6.504" height="8.0" color="#43b0b5" font-face="DINOT-Regular" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=" | "/>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+            <text x="118.946" y="73.356" width="2.072" height="8.0">|</text>
+            <spacer width="2.216" height="0.0" preserve="true"/>
+          </inline>
+          <inline name="TVA Intra" type="InlineRenderBox" x="123.234" y="73.356" width="74.652" height="6.0" color="#58585a" font-face="DINOT-Regular" font-size="6" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="TVA Intra"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA intra : FR40407836089"/>
+            <text x="123.234" y="73.356" width="11.652" height="6.0">TVA</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="136.548" y="73.356" width="11.664" height="6.0">intra</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="149.874" y="73.356" width="1.662" height="6.0">:</text>
+            <spacer width="1.662" height="0.0" preserve="true"/>
+            <text x="153.198" y="73.356" width="44.688" height="6.0">FR40407836089</text>
+          </inline>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="16.183">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="company_website"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="website"/>
+        <line type="ParagraphPoolBox" x="42.0" y="83.356" width="77.463" height="9.0" color="black" font-face="DINOT-Bold" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="42.0" y="83.356" width="77.463" height="9.0">www.attraptemps.fr</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>
