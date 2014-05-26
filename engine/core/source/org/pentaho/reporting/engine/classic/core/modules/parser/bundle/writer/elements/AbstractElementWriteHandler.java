@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -329,7 +330,7 @@ public abstract class AbstractElementWriteHandler implements BundleElementWriteH
   private void writeBulkAttributes(final WriteableDocumentBundle bundle,
                                    final BundleWriterState state,
                                    final Element element,
-                                   final XmlWriter writer) throws IOException,BundleWriterException
+                                   final XmlWriter writer) throws IOException, BundleWriterException
   {
     final ElementMetaData metaData = element.getElementType().getMetaData();
     final String[] attributeNamespaces = element.getAttributeNamespaces();
@@ -540,7 +541,7 @@ public abstract class AbstractElementWriteHandler implements BundleElementWriteH
     }
 
     // write style expressions.
-    final Map<StyleKey,Expression> styleExpressions = element.getStyleExpressions();
+    final Map<StyleKey, Expression> styleExpressions = element.getStyleExpressions();
     for (final Map.Entry<StyleKey, Expression> entry : styleExpressions.entrySet())
     {
       final StyleKey key = entry.getKey();
@@ -571,8 +572,29 @@ public abstract class AbstractElementWriteHandler implements BundleElementWriteH
     {
       throw new NullPointerException();
     }
+    if (section instanceof Band)
+    {
+      // A band can only contain other, non-root level bands and subreports. Any root-level band encountered
+      // should have been converted into a normal band by the author. Instead of silently failing or trying
+      // to fix the bad code, let's fail with a clean exception and let the developer fix their code.
+      for (final Element e : section)
+      {
+        if (e instanceof RootLevelBand)
+        {
+          throw new BundleWriterException("This report cannot be saved. A normal band cannot contain other " +
+              "root-level bands as children unless they are contained in a subreport.");
+        }
+        if (e instanceof Section && e instanceof Band == false && e instanceof SubReport == false)
+        {
+          // must be a group, or a group-body or a master-report. This is Invalid!
+          throw new BundleWriterException(String.format("This report cannot be saved. A normal band can only " +
+              "contain other data elements, bands or subreports as children. You cannot add " +
+              "structural elements such as '%s' here.", e.getElementTypeName()));
+        }
+      }
+    }
 
-    for (final Element e: section)
+    for (final Element e : section)
     {
       final BundleElementWriteHandler writeHandler = BundleElementRegistry.getInstance().getWriteHandler(e);
       writeHandler.writeElement(bundle, state, xmlWriter, e);
