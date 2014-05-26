@@ -20,8 +20,6 @@ package org.pentaho.reporting.designer.core.actions.global;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
@@ -60,12 +58,8 @@ import org.pentaho.reporting.engine.classic.core.Watermark;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.designtime.swing.FocusTracker;
 
 /**
@@ -94,7 +88,9 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
   private Object[] clipboardContents;
 
   private boolean selectionActive;
-  /** @noinspection FieldCanBeLocal, UnusedDeclaration */
+  /**
+   * @noinspection FieldCanBeLocal, UnusedDeclaration
+   */
   private FocusTracker focusTracker;
 
   public PasteAction()
@@ -171,10 +167,10 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
     }
     for (int i = 0; i < fromClipboardArray.length; i++)
     {
-      fromClipboardArray[i] = normalizeMasterReport(fromClipboardArray[i]);
+      fromClipboardArray[i] = normalizeElements(fromClipboardArray[i]);
     }
 
-    final Object[] selectedElements = new Object[fromClipboardArray.length];
+    final ArrayList<Object> selectedElements = new ArrayList<Object>();
     final AbstractReportDefinition report = activeContext.getReportDefinition();
     final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
     try
@@ -184,41 +180,13 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
         final Object o = fromClipboardArray[i];
         //
         final Object insertResult = InsertationUtil.insert(rawLeadSelection, report, o);
-        selectedElements[i] = insertResult;
+        if (insertResult != null)
+        {
+          selectedElements.add(insertResult);
+        }
         if (insertResult instanceof Element)
         {
-          final Element insertElement = (Element) insertResult;
-          final Section parent = insertElement.getParentSection();
-          if (parent == null)
-          {
-            throw new IllegalStateException("A newly inserted section must have a parent."); // NON-NLS
-          }
-          final int position = ModelUtility.findIndexOf(parent, insertElement);
-          if (position == -1)
-          {
-            if (insertElement instanceof SubReport && parent instanceof RootLevelBand)
-            {
-              final SubReport subReport = (SubReport) insertElement;
-              final RootLevelBand arb = (RootLevelBand) parent;
-              final int subreportPosition = ModelUtility.findSubreportIndexOf(arb, subReport);
-              if (subreportPosition == -1)
-              {
-                throw new IllegalStateException("A newly inserted section must have a position within its parent.");
-              }
-              else
-              {
-                undos.add(new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
-              }
-            }
-            else
-            {
-              throw new IllegalStateException("A newly inserted section must have a position within its parent.");
-            }
-          }
-          else
-          {
-            undos.add(new ElementEditUndoEntry(parent.getObjectID(), position, null, insertElement));
-          }
+          undos.add(handleInsertElement((Element) insertResult));
         }
         else if (insertResult instanceof Expression)
         {
@@ -242,7 +210,7 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
         }
 
       }
-      getSelectionModel().setSelectedElements(selectedElements);
+      getSelectionModel().setSelectedElements(selectedElements.toArray());
     }
     finally
     {
@@ -251,7 +219,43 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
     }
   }
 
-  public Object normalizeMasterReport(final Object element)
+  private UndoEntry handleInsertElement(final Element insertElement)
+  {
+    final Section parent = insertElement.getParentSection();
+    if (parent == null)
+    {
+      throw new IllegalStateException("Assert Failed: A newly inserted section must have a parent."); // NON-NLS
+    }
+    final int position = ModelUtility.findIndexOf(parent, insertElement);
+    if (position == -1)
+    {
+      if (insertElement instanceof SubReport && parent instanceof RootLevelBand)
+      {
+        final SubReport subReport = (SubReport) insertElement;
+        final RootLevelBand arb = (RootLevelBand) parent;
+        final int subreportPosition = ModelUtility.findSubreportIndexOf(arb, subReport);
+        if (subreportPosition == -1)
+        {
+          throw new IllegalStateException
+              ("Assert Failed: A newly inserted section must have a position within its parent.");
+        }
+        else
+        {
+          return new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport);
+        }
+      }
+      else
+      {
+        throw new IllegalStateException("A newly inserted section must have a position within its parent.");
+      }
+    }
+    else
+    {
+      return new ElementEditUndoEntry(parent.getObjectID(), position, null, insertElement);
+    }
+  }
+
+  public Object normalizeElements(final Object element)
   {
     if (element instanceof MasterReport)
     {
@@ -265,14 +269,14 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
           new String[]{Messages.getString("SubreportReportElementDragHandler.Inline"),
               Messages.getString("SubreportReportElementDragHandler.Banded"),
               Messages.getString("SubreportReportElementDragHandler.Cancel")},
-          Messages.getString("SubreportReportElementDragHandler.Inline"));
+          Messages.getString("SubreportReportElementDragHandler.Inline")
+      );
       if (result == JOptionPane.CLOSED_OPTION || result == 2)
       {
         return null;
       }
 
       final SubReport subReport = new SubReport();
-      final ElementMetaData metaData = subReport.getElementType().getMetaData();
       subReport.setRootGroup((Group) masterReport.getRootGroup().derive());
       subReport.setReportFooter((ReportFooter) masterReport.getReportFooter().derive());
       subReport.setReportHeader((ReportHeader) masterReport.getReportHeader().derive());
@@ -280,79 +284,16 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
       subReport.setPageHeader((PageHeader) masterReport.getPageHeader().derive());
       subReport.setWatermark((Watermark) masterReport.getWatermark().derive());
       subReport.setDataFactory(masterReport.getDataFactory().derive());
-
-
-      final String[] attributeNamespaces = masterReport.getAttributeNamespaces();
-      for (int i = 0; i < attributeNamespaces.length; i++)
-      {
-        final String namespace = attributeNamespaces[i];
-        final String[] attributeNames = masterReport.getAttributeNames(namespace);
-        for (int j = 0; j < attributeNames.length; j++)
-        {
-          final String name = attributeNames[j];
-          final AttributeMetaData attributeDescription = metaData.getAttributeDescription(namespace, name);
-          if (attributeDescription == null)
-          {
-            continue;
-          }
-          if (attributeDescription.isTransient())
-          {
-            continue;
-          }
-          if (attributeDescription.isComputed())
-          {
-            continue;
-          }
-          subReport.setAttribute(namespace, name, masterReport.getAttribute(namespace, name), false);
-        }
-      }
-
-      final String[] attrExprNamespaces = masterReport.getAttributeExpressionNamespaces();
-      for (int i = 0; i < attrExprNamespaces.length; i++)
-      {
-        final String namespace = attrExprNamespaces[i];
-        final String[] attributeNames = masterReport.getAttributeExpressionNames(namespace);
-        for (int j = 0; j < attributeNames.length; j++)
-        {
-          final String name = attributeNames[j];
-
-          final AttributeMetaData attributeDescription = metaData.getAttributeDescription(namespace, name);
-          if (attributeDescription == null)
-          {
-            continue;
-          }
-          if (attributeDescription.isTransient())
-          {
-            continue;
-          }
-          subReport.setAttributeExpression(namespace, name, masterReport.getAttributeExpression(namespace, name));
-        }
-      }
-
-      final ElementStyleSheet styleSheet = masterReport.getStyle();
-      final StyleKey[] styleKeys = styleSheet.getDefinedPropertyNamesArray();
-      for (int i = 0; i < styleKeys.length; i++)
-      {
-        final StyleKey styleKey = styleKeys[i];
-        if (styleKey != null)
-        {
-          subReport.getStyle().setStyleProperty(styleKey, styleSheet.getStyleProperty(styleKey));
-        }
-      }
-
-      final Set<Map.Entry<StyleKey,Expression>> styleExpressionEntries = masterReport.getStyleExpressions().entrySet();
-      for (final Map.Entry<StyleKey, Expression> entry: styleExpressionEntries)
-      {
-        subReport.setStyleExpression(entry.getKey(), entry.getValue());
-      }
+      masterReport.copyInto(subReport);
 
       final ReportParameterDefinition parameterDefinition = masterReport.getParameterDefinition();
-      for (final ParameterDefinitionEntry entry: parameterDefinition.getParameterDefinitions())
+      for (final ParameterDefinitionEntry entry : parameterDefinition.getParameterDefinitions())
       {
         subReport.addInputParameter(entry.getName(), entry.getName());
       }
+      subReport.addInputParameter("*", "*");
 
-      subReport.setElementType(new SubReportType());
+      subReport.setElementType(SubReportType.INSTANCE);
       if (result == 0)
       {
         // inline

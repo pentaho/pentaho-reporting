@@ -20,7 +20,6 @@ package org.pentaho.reporting.designer.core.util.dnd;
 import java.awt.Component;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-import java.util.Map;
 import javax.swing.FocusManager;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
@@ -69,13 +68,12 @@ import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.Watermark;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
 import org.pentaho.reporting.engine.classic.core.parameters.ModifiableReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
-import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 /**
  * Todo: Document Me
@@ -236,46 +234,17 @@ public class InsertationUtil
   {
     if (fromClipboard instanceof Expression)
     {
-      final Expression expression = (Expression) fromClipboard;
-      final Expression instance = expression.getInstance();
-      report.addExpression(instance);
-      report.notifyNodeChildAdded(instance);
-      return instance;
+      return insertExpression(report, (Expression) fromClipboard);
     }
 
     if (fromClipboard instanceof ParameterDefinitionEntry)
     {
-      if ((report instanceof MasterReport) == false)
-      {
-        return null;
-      }
-
-      final MasterReport masterReportElement = (MasterReport) report;
-      final ParameterDefinitionEntry pe = (ParameterDefinitionEntry) fromClipboard;
-      try
-      {
-        final ModifiableReportParameterDefinition definition = (ModifiableReportParameterDefinition) masterReportElement.getParameterDefinition();
-        final ParameterDefinitionEntry definitionEntry = (ParameterDefinitionEntry) pe.clone();
-        definition.addParameterDefinition(definitionEntry);
-        report.notifyNodeChildAdded(definitionEntry);
-        return definitionEntry;
-      }
-      catch (CloneNotSupportedException e1)
-      {
-        // ignore ..
-        UncaughtExceptionsModel.getInstance().addException(e1);
-        return null;
-      }
+      return insertParameter(report, (ParameterDefinitionEntry) fromClipboard);
     }
 
     if (fromClipboard instanceof DataFactory)
     {
-      final CompoundDataFactory element = (CompoundDataFactory) report.getDataFactory();
-      final DataFactory df = (DataFactory) fromClipboard;
-      final DataFactory dataFactory = df.derive();
-      element.add(dataFactory);
-      report.notifyNodeChildAdded(dataFactory);
-      return dataFactory;
+      return insertDataFactory(report, (DataFactory) fromClipboard);
     }
 
     if (fromClipboard instanceof Element == false)
@@ -479,6 +448,51 @@ public class InsertationUtil
     return null;
   }
 
+  private static Object insertDataFactory(final AbstractReportDefinition report, final DataFactory fromClipboard)
+  {
+    final CompoundDataFactory element = (CompoundDataFactory) report.getDataFactory();
+    final DataFactory df = (DataFactory) fromClipboard;
+    final DataFactory dataFactory = df.derive();
+    element.add(dataFactory);
+    report.notifyNodeChildAdded(dataFactory);
+    return dataFactory;
+  }
+
+  private static Object insertParameter(final AbstractReportDefinition report,
+                                        final ParameterDefinitionEntry fromClipboard)
+  {
+    if ((report instanceof MasterReport) == false)
+    {
+      return null;
+    }
+
+    final MasterReport masterReportElement = (MasterReport) report;
+    final ParameterDefinitionEntry pe = (ParameterDefinitionEntry) fromClipboard;
+    try
+    {
+      final ModifiableReportParameterDefinition definition = (ModifiableReportParameterDefinition) masterReportElement.getParameterDefinition();
+      final ParameterDefinitionEntry definitionEntry = (ParameterDefinitionEntry) pe.clone();
+      definition.addParameterDefinition(definitionEntry);
+      report.notifyNodeChildAdded(definitionEntry);
+      return definitionEntry;
+    }
+    catch (CloneNotSupportedException e1)
+    {
+      // ignore ..
+      UncaughtExceptionsModel.getInstance().addException(e1);
+      return null;
+    }
+  }
+
+  private static Object insertExpression(final AbstractReportDefinition report, final Expression fromClipboard)
+  {
+    final Expression expression = (Expression) fromClipboard;
+    final Expression instance = expression.getInstance();
+    report.addExpression(instance);
+    report.notifyNodeChildAdded(instance);
+    return instance;
+  }
+
   private static Element normalizeForInsert(final Element insert) throws CloneNotSupportedException
   {
     if (insert instanceof Section == false)
@@ -498,52 +512,8 @@ public class InsertationUtil
         return band.derive();
       }
       final Band newBand = new Band();
-
-      // copy styles
-      final ElementStyleSheet elementStyleSheet = band.getStyle();
-      final ElementStyleSheet targetStyleSheet = newBand.getStyle();
-      final StyleKey[] definedPropertyNamesArray = elementStyleSheet.getDefinedPropertyNamesArray();
-      for (int j = 0; j < definedPropertyNamesArray.length; j++)
-      {
-        final StyleKey styleKey = definedPropertyNamesArray[j];
-        if (styleKey == null)
-        {
-          continue;
-        }
-        targetStyleSheet.setStyleProperty(styleKey, elementStyleSheet.getStyleProperty(styleKey));
-      }
-
-      for (final Map.Entry<StyleKey, Expression> entry : band.getStyleExpressions().entrySet())
-      {
-        final StyleKey o = entry.getKey();
-        final Expression e = entry.getValue();
-        newBand.setStyleExpression(o, e);
-      }
-
-      // copy attributes ..
-      final String[] attributeNamespaces = band.getAttributeNamespaces();
-      for (int i = 0; i < attributeNamespaces.length; i++)
-      {
-        final String namespace = attributeNamespaces[i];
-        final String[] attributeNames = band.getAttributeNames(namespace);
-        for (int j = 0; j < attributeNames.length; j++)
-        {
-          final String name = attributeNames[j];
-          newBand.setAttribute(namespace, name, band.getAttribute(namespace, name));
-        }
-      }
-
-      final String[] attributeExNamespaces = band.getAttributeExpressionNamespaces();
-      for (int i = 0; i < attributeExNamespaces.length; i++)
-      {
-        final String namespace = attributeExNamespaces[i];
-        final String[] attributeNames = band.getAttributeNames(namespace);
-        for (int j = 0; j < attributeNames.length; j++)
-        {
-          final String name = attributeNames[j];
-          newBand.setAttribute(namespace, name, band.getAttribute(namespace, name));
-        }
-      }
+      band.copyInto(newBand);
+      band.setElementType(BandType.INSTANCE);
       return newBand;
     }
 
@@ -552,77 +522,25 @@ public class InsertationUtil
 
   public static UndoEntry delete(final ReportDocumentContext context, final Object data)
   {
+    if (data == context.getReportDefinition())
+    {
+      // we never delete the root element.
+      return null;
+    }
+
     if (data instanceof ParameterDefinitionEntry)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      if (report instanceof MasterReport == false)
-      {
-        return null;
-      }
-
-      final MasterReport mreport = (MasterReport) report;
-      final ReportParameterDefinition definition = mreport.getParameterDefinition();
-      if (definition instanceof ModifiableReportParameterDefinition == false)
-      {
-        return null;
-      }
-
-      final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
-      final int count = mdef.getParameterCount();
-      for (int i = 0; i < count; i++)
-      {
-        final ParameterDefinitionEntry definitionEntry = mdef.getParameterDefinition(i);
-        if (definitionEntry == data)
-        {
-          mdef.removeParameterDefinition(i);
-          report.notifyNodeChildRemoved(definitionEntry);
-          return new ParameterEditUndoEntry(i, definitionEntry, null);
-        }
-      }
-      return null;
+      return deleteParameter(context, data);
     }
 
     if (data instanceof Expression)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      final ExpressionCollection expressionCollection = report.getExpressions();
-      final int count = expressionCollection.size();
-      for (int i = 0; i < count; i++)
-      {
-        final Expression definitionEntry = expressionCollection.getExpression(i);
-        if (definitionEntry == data)
-        {
-          expressionCollection.removeExpression(i);
-          report.notifyNodeChildRemoved(definitionEntry);
-          return new ExpressionRemoveUndoEntry(i, definitionEntry);
-        }
-      }
-      return null;
+      return deleteExpression(context, data);
     }
-
 
     if (data instanceof DataFactory)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      // should be safe. If not, then the report-open functionality is wrong.
-      final CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-      final int count = dataFactory.size();
-      for (int i = 0; i < count; i++)
-      {
-        final DataFactory df = dataFactory.getReference(i);
-        if (df == data)
-        {
-          dataFactory.remove(i);
-          report.notifyNodeChildRemoved(df);
-          return new DataSourceEditUndoEntry(i, df, null);
-        }
-      }
-      return null;
-    }
-
-    if (data == context.getReportDefinition())
-    {
-      return null;
+      return deleteDataFactory(context, data);
     }
 
     if (data instanceof MasterReport)
@@ -633,22 +551,12 @@ public class InsertationUtil
 
     if (data instanceof GroupBody)
     {
-      final GroupBody subgroup = (GroupBody) data;
-      final RelationalGroup parent = (RelationalGroup) subgroup.getParentSection();
-      if (parent != null)
-      {
-        final GroupBody body = parent.getBody();
-        final GroupDataBody newBody = new GroupDataBody();
-        parent.setBody(newBody);
-        return new SectionEditUndoEntry
-            (parent.getObjectID(), ModelUtility.findIndexOf(parent, newBody), body, newBody);
-      }
-      return null;
+      return deleteGroupBody((GroupBody) data);
     }
 
     if (data instanceof Group)
     {
-      return performDeleteGroup((Group) data);
+      return deleteGroup((Group) data);
 
     }
 
@@ -691,6 +599,7 @@ public class InsertationUtil
       g.setHeader(newHeader);
       return new SectionEditUndoEntry(g.getObjectID(), ModelUtility.findIndexOf(g, newHeader), oldHeader, newHeader);
     }
+
     if (data instanceof GroupFooter)
     {
       final RelationalGroup g = (RelationalGroup) parent;
@@ -768,7 +677,89 @@ public class InsertationUtil
 
   }
 
-  private static UndoEntry performDeleteGroup(final Group groupElement)
+  private static UndoEntry deleteGroupBody(final GroupBody data)
+  {
+    final GroupBody subgroup = (GroupBody) data;
+    final RelationalGroup parent = (RelationalGroup) subgroup.getParentSection();
+    if (parent != null)
+    {
+      final GroupBody body = parent.getBody();
+      final GroupDataBody newBody = new GroupDataBody();
+      parent.setBody(newBody);
+      return new SectionEditUndoEntry
+          (parent.getObjectID(), ModelUtility.findIndexOf(parent, newBody), body, newBody);
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteDataFactory(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    // should be safe. If not, then the report-open functionality is wrong.
+    final CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
+    final int count = dataFactory.size();
+    for (int i = 0; i < count; i++)
+    {
+      final DataFactory df = dataFactory.getReference(i);
+      if (df == data)
+      {
+        dataFactory.remove(i);
+        report.notifyNodeChildRemoved(df);
+        return new DataSourceEditUndoEntry(i, df, null);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteExpression(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    final ExpressionCollection expressionCollection = report.getExpressions();
+    final int count = expressionCollection.size();
+    for (int i = 0; i < count; i++)
+    {
+      final Expression definitionEntry = expressionCollection.getExpression(i);
+      if (definitionEntry == data)
+      {
+        expressionCollection.removeExpression(i);
+        report.notifyNodeChildRemoved(definitionEntry);
+        return new ExpressionRemoveUndoEntry(i, definitionEntry);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteParameter(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    if (report instanceof MasterReport == false)
+    {
+      return null;
+    }
+
+    final MasterReport mreport = (MasterReport) report;
+    final ReportParameterDefinition definition = mreport.getParameterDefinition();
+    if (definition instanceof ModifiableReportParameterDefinition == false)
+    {
+      return null;
+    }
+
+    final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
+    final int count = mdef.getParameterCount();
+    for (int i = 0; i < count; i++)
+    {
+      final ParameterDefinitionEntry definitionEntry = mdef.getParameterDefinition(i);
+      if (definitionEntry == data)
+      {
+        mdef.removeParameterDefinition(i);
+        report.notifyNodeChildRemoved(definitionEntry);
+        return new ParameterEditUndoEntry(i, definitionEntry, null);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteGroup(final Group groupElement)
   {
     // deleting this group means, that the body moves down one level.
     final Section parent = groupElement.getParentSection();
