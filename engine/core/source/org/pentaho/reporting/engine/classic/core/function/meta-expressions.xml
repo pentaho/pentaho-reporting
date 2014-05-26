@@ -154,6 +154,7 @@
               hidden="false"/>
     <property name="visibleBackground" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
+    <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.ConvertToNumberExpression"
