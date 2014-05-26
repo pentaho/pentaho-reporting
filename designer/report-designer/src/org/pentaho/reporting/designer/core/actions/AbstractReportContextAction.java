@@ -82,6 +82,16 @@ public abstract class AbstractReportContextAction extends AbstractDesignerContex
                                      final ReportDocumentContext newContext)
   {
     setEnabled(newContext != null);
+
+    ReportRenderContext oldCtx = null;
+    ReportRenderContext newCtx = null;
+    if (oldContext instanceof ReportRenderContext) {
+      oldCtx = (ReportRenderContext) oldContext;
+    }
+    if (newContext instanceof ReportRenderContext) {
+      newCtx = (ReportRenderContext) newContext;
+    }
+    updateActiveContext(oldCtx, newCtx);
   }
 
   protected void updateActiveContext(final ReportRenderContext oldContext,

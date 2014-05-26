@@ -552,77 +552,25 @@ public class InsertationUtil
 
   public static UndoEntry delete(final ReportDocumentContext context, final Object data)
   {
+    if (data == context.getReportDefinition())
+    {
+      // we never delete the root element.
+      return null;
+    }
+
     if (data instanceof ParameterDefinitionEntry)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      if (report instanceof MasterReport == false)
-      {
-        return null;
-      }
-
-      final MasterReport mreport = (MasterReport) report;
-      final ReportParameterDefinition definition = mreport.getParameterDefinition();
-      if (definition instanceof ModifiableReportParameterDefinition == false)
-      {
-        return null;
-      }
-
-      final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
-      final int count = mdef.getParameterCount();
-      for (int i = 0; i < count; i++)
-      {
-        final ParameterDefinitionEntry definitionEntry = mdef.getParameterDefinition(i);
-        if (definitionEntry == data)
-        {
-          mdef.removeParameterDefinition(i);
-          report.notifyNodeChildRemoved(definitionEntry);
-          return new ParameterEditUndoEntry(i, definitionEntry, null);
-        }
-      }
-      return null;
+      return deleteParameter(context, data);
     }
 
     if (data instanceof Expression)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      final ExpressionCollection expressionCollection = report.getExpressions();
-      final int count = expressionCollection.size();
-      for (int i = 0; i < count; i++)
-      {
-        final Expression definitionEntry = expressionCollection.getExpression(i);
-        if (definitionEntry == data)
-        {
-          expressionCollection.removeExpression(i);
-          report.notifyNodeChildRemoved(definitionEntry);
-          return new ExpressionRemoveUndoEntry(i, definitionEntry);
-        }
-      }
-      return null;
+      return deleteExpression(context, data);
     }
-
 
     if (data instanceof DataFactory)
     {
-      final AbstractReportDefinition report = context.getReportDefinition();
-      // should be safe. If not, then the report-open functionality is wrong.
-      final CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-      final int count = dataFactory.size();
-      for (int i = 0; i < count; i++)
-      {
-        final DataFactory df = dataFactory.getReference(i);
-        if (df == data)
-        {
-          dataFactory.remove(i);
-          report.notifyNodeChildRemoved(df);
-          return new DataSourceEditUndoEntry(i, df, null);
-        }
-      }
-      return null;
-    }
-
-    if (data == context.getReportDefinition())
-    {
-      return null;
+      return deleteDataFactory(context, data);
     }
 
     if (data instanceof MasterReport)
@@ -633,22 +581,12 @@ public class InsertationUtil
 
     if (data instanceof GroupBody)
     {
-      final GroupBody subgroup = (GroupBody) data;
-      final RelationalGroup parent = (RelationalGroup) subgroup.getParentSection();
-      if (parent != null)
-      {
-        final GroupBody body = parent.getBody();
-        final GroupDataBody newBody = new GroupDataBody();
-        parent.setBody(newBody);
-        return new SectionEditUndoEntry
-            (parent.getObjectID(), ModelUtility.findIndexOf(parent, newBody), body, newBody);
-      }
-      return null;
+      return deleteGroupBody((GroupBody) data);
     }
 
     if (data instanceof Group)
     {
-      return performDeleteGroup((Group) data);
+      return deleteGroup((Group) data);
 
     }
 
@@ -691,6 +629,7 @@ public class InsertationUtil
       g.setHeader(newHeader);
       return new SectionEditUndoEntry(g.getObjectID(), ModelUtility.findIndexOf(g, newHeader), oldHeader, newHeader);
     }
+
     if (data instanceof GroupFooter)
     {
       final RelationalGroup g = (RelationalGroup) parent;
@@ -768,7 +707,89 @@ public class InsertationUtil
 
   }
 
-  private static UndoEntry performDeleteGroup(final Group groupElement)
+  private static UndoEntry deleteGroupBody(final GroupBody data)
+  {
+    final GroupBody subgroup = (GroupBody) data;
+    final RelationalGroup parent = (RelationalGroup) subgroup.getParentSection();
+    if (parent != null)
+    {
+      final GroupBody body = parent.getBody();
+      final GroupDataBody newBody = new GroupDataBody();
+      parent.setBody(newBody);
+      return new SectionEditUndoEntry
+          (parent.getObjectID(), ModelUtility.findIndexOf(parent, newBody), body, newBody);
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteDataFactory(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    // should be safe. If not, then the report-open functionality is wrong.
+    final CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
+    final int count = dataFactory.size();
+    for (int i = 0; i < count; i++)
+    {
+      final DataFactory df = dataFactory.getReference(i);
+      if (df == data)
+      {
+        dataFactory.remove(i);
+        report.notifyNodeChildRemoved(df);
+        return new DataSourceEditUndoEntry(i, df, null);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteExpression(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    final ExpressionCollection expressionCollection = report.getExpressions();
+    final int count = expressionCollection.size();
+    for (int i = 0; i < count; i++)
+    {
+      final Expression definitionEntry = expressionCollection.getExpression(i);
+      if (definitionEntry == data)
+      {
+        expressionCollection.removeExpression(i);
+        report.notifyNodeChildRemoved(definitionEntry);
+        return new ExpressionRemoveUndoEntry(i, definitionEntry);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteParameter(final ReportDocumentContext context, final Object data)
+  {
+    final AbstractReportDefinition report = context.getReportDefinition();
+    if (report instanceof MasterReport == false)
+    {
+      return null;
+    }
+
+    final MasterReport mreport = (MasterReport) report;
+    final ReportParameterDefinition definition = mreport.getParameterDefinition();
+    if (definition instanceof ModifiableReportParameterDefinition == false)
+    {
+      return null;
+    }
+
+    final ModifiableReportParameterDefinition mdef = (ModifiableReportParameterDefinition) definition;
+    final int count = mdef.getParameterCount();
+    for (int i = 0; i < count; i++)
+    {
+      final ParameterDefinitionEntry definitionEntry = mdef.getParameterDefinition(i);
+      if (definitionEntry == data)
+      {
+        mdef.removeParameterDefinition(i);
+        report.notifyNodeChildRemoved(definitionEntry);
+        return new ParameterEditUndoEntry(i, definitionEntry, null);
+      }
+    }
+    return null;
+  }
+
+  private static UndoEntry deleteGroup(final Group groupElement)
   {
     // deleting this group means, that the body moves down one level.
     final Section parent = groupElement.getParentSection();
