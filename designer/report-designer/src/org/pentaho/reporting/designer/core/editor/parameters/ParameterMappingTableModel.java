@@ -24,14 +24,6 @@ import javax.swing.table.AbstractTableModel;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 27.08.2009
- * Time: 18:21:14
- *
- * @author Thomas Morgner.
- */
 public class ParameterMappingTableModel extends AbstractTableModel
 {
   private ArrayList<ParameterMapping> backend;
@@ -63,6 +55,24 @@ public class ParameterMappingTableModel extends AbstractTableModel
     }
 
     return list.toArray(new ParameterMapping[list.size()]);
+  }
+
+  public void clear()
+  {
+    backend.clear();
+    fireTableDataChanged();
+  }
+
+  public void addMapping(final ParameterMapping mappings)
+  {
+    backend.add(mappings);
+    fireTableDataChanged();
+  }
+
+  public void addMappings(final ParameterMapping[] mappings)
+  {
+    backend.addAll(Arrays.asList(mappings));
+    fireTableDataChanged();
   }
 
   public void setMappings(final ParameterMapping[] mappings)
