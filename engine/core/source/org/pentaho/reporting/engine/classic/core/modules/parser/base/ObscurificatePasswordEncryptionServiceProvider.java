@@ -21,13 +21,15 @@ import org.pentaho.reporting.libraries.base.util.PasswordObscurification;
 
 public class ObscurificatePasswordEncryptionServiceProvider implements PasswordEncryptionServiceProvider
 {
+  public static final String SERVICE_TAG = "encrypted";
+
   public ObscurificatePasswordEncryptionServiceProvider()
   {
   }
 
   public String getPrefix()
   {
-    return "encrypted";
+    return SERVICE_TAG;
   }
 
   public String encrypt(final String rawPassword)

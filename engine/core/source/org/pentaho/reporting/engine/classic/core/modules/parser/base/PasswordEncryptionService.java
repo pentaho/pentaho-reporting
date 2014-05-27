@@ -22,6 +22,8 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.content.ContentRootElementHandler;
+import org.pentaho.reporting.libraries.base.util.PasswordObscurification48;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 
@@ -81,7 +83,8 @@ public class PasswordEncryptionService
       return encryptedPassword;
     }
 
-    final Object helperObject = root.getHelperObject("prpt-spec-version");
+    final Object helperObject = root.getHelperObject(ContentRootElementHandler.PRPT_SPEC_VERSION);
+    final boolean legacyFix;
     if (helperObject instanceof Integer)
     {
       final Integer version = (Integer) helperObject;
@@ -90,6 +93,11 @@ public class PasswordEncryptionService
         logger.warn("Decrypting password skipped, as we are dealing with an older version. ");
         return encryptedPassword;
       }
+
+      legacyFix = (version.intValue() < ClassicEngineBoot.computeVersionId(5, 0, 0));
+    }
+    else {
+      legacyFix = false;
     }
 
     final int separatorPos = encryptedPassword.indexOf(':');
@@ -103,6 +111,11 @@ public class PasswordEncryptionService
     final String serviceName = encryptedPassword.substring(0, separatorPos);
     final String payload = encryptedPassword.substring(separatorPos + 1);
     final PasswordEncryptionServiceProvider provider = services.get(serviceName);
+
+    if (legacyFix && ObscurificatePasswordEncryptionServiceProvider.SERVICE_TAG.equals(serviceName))
+    {
+      return PasswordObscurification48.decryptPassword(payload);
+    }
     if (provider != null)
     {
       return provider.decrypt(payload);

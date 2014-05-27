@@ -25,9 +25,10 @@ public class PasswordObscurificationTest extends TestCase
   {
   }
 
-  public PasswordObscurificationTest(final String name)
-  {
-    super(name);
+  public void testKnownPassword() {
+    assertEquals("520c4657510d0301045f41", PasswordObscurification.encryptPassword("abcdefghijk"));
+    assertEquals("520c4657510d0301045f41ae", PasswordObscurification.encryptPassword("abcdefghijkl"));
+    assertEquals("520c4657510d0301045f4183", PasswordObscurification48.encryptPassword("abcdefghijkl"));
   }
 
   public void testEncode() throws Exception
