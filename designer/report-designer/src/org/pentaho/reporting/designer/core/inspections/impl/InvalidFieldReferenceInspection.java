@@ -45,12 +45,8 @@ import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import static org.pentaho.reporting.designer.core.inspections.InspectionResult.Severity;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class InvalidFieldReferenceInspection extends AbstractStructureInspection
 {
   public InvalidFieldReferenceInspection()
@@ -83,7 +79,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
           resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
               Messages.getString("InvalidFieldReferenceInspection.AttributeInvalidField", element.getName(),
                   field, data.getDisplayName(Locale.getDefault())),
-              new AttributeLocationInfo(element, data.getNameSpace(), data.getName(), false)));
+              new AttributeLocationInfo(element, data.getNameSpace(), data.getName(), false)
+          ));
         }
       }
     }
@@ -98,13 +95,17 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
       for (int i = 0; i < parameterMappings.length; i++)
       {
         final ParameterMapping mapping = parameterMappings[i];
+        if ("*".equals(mapping.getName()))
+        {
+          continue;
+        }
+
         if (isValidField(mapping.getName(), columnNames) == false)
         {
-          resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-              Messages.getString("InvalidFieldReferenceInspection.SubReportInvalidField",
-                  report.getName(), mapping.getName()),
-              new LocationInfo(report)));
-
+          String message = Messages.getString("InvalidFieldReferenceInspection.SubReportInvalidField",
+                  report.getName(), mapping.getName());
+          InspectionResult ir = new InspectionResult(this, Severity.WARNING, message, new LocationInfo(report));
+          resultHandler.notifyInspectionResult(ir);
         }
       }
     }
@@ -139,17 +140,19 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
                 element.getMetaData().getAttributeDescription(attributeNamespace, attributeName);
             if (attrMetaData == null)
             {
-              resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
+              resultHandler.notifyInspectionResult(new InspectionResult(this, Severity.WARNING,
                   Messages.getString("InvalidFieldReferenceInspection.AttributeExpressionInvalidFieldNoMetaData",
                       element.getName(), attributeNamespace, attributeName, field, metaData.getDisplayName(Locale.getDefault())),
-                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())));
+                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())
+              ));
             }
             else
             {
-              resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
+              resultHandler.notifyInspectionResult(new InspectionResult(this, Severity.WARNING,
                   Messages.getString("InvalidFieldReferenceInspection.AttributeExpressionInvalidField",
                       element.getName(), attrMetaData.getDisplayName(Locale.getDefault()), field, metaData.getDisplayName(Locale.getDefault())),
-                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())));
+                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())
+              ));
             }
           }
         }
@@ -194,7 +197,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
                 Messages.getString("InvalidFieldReferenceInspection.StyleExpressionInvalidField",
                     element.getName(), styleDescription.getDisplayName(Locale.getDefault()),
                     field, metaData.getDisplayName(Locale.getDefault())),
-                new StyleExpressionPropertyLocationInfo(element, styleKey, metaData.getName())));
+                new StyleExpressionPropertyLocationInfo(element, styleKey, metaData.getName())
+            ));
           }
         }
       }
@@ -234,7 +238,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
             resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
                 Messages.getString("InvalidFieldReferenceInspection.ExpressionInvalidField", expression.getName(),
                     field, metaData.getDisplayName(Locale.getDefault())),
-                new PropertyLocationInfo(expression, metaData.getName())));
+                new PropertyLocationInfo(expression, metaData.getName())
+            ));
           }
         }
       }
@@ -290,12 +295,11 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
             resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
                 Messages.getString("InvalidFieldReferenceInspection.DataSourceInvalidField",
                     metaData.getDisplayName(Locale.getDefault()), field, query),
-                new PropertyLocationInfo(dataFactory, query)));
+                new PropertyLocationInfo(dataFactory, query)
+            ));
           }
         }
       }
-
-
     }
   }
 }

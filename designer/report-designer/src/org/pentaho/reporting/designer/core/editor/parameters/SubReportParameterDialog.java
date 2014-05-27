@@ -25,6 +25,7 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -253,6 +254,41 @@ public class SubReportParameterDialog extends CommonDialog
     return saveParameters();
   }
 
+  private String[] add(final String value, final String[] base)
+  {
+    ArrayList<String> tmp = new ArrayList<String>();
+    tmp.add(value);
+    tmp.addAll(Arrays.asList(base));
+    return tmp.toArray(new String[tmp.size()]);
+  }
+
+  private String[] collectParentContextFields(final ReportDesignerContext context)
+  {
+
+    final ReportDocumentContext activeContext = context.getActiveContext();
+    final Section parentSection = activeContext.getReportDefinition().getParentSection();
+    if (parentSection == null)
+    {
+      return new String[0];
+    }
+    final ReportDefinition parentReport = parentSection.getReportDefinition();
+    if (parentReport == null)
+    {
+      return new String[0];
+    }
+
+    final int contextCount = context.getReportRenderContextCount();
+    for (int i = 0; i < contextCount; i += 1)
+    {
+      final ReportRenderContext contextAt = context.getReportRenderContext(i);
+      if (parentReport == contextAt.getReportDefinition())
+      {
+        return contextAt.getReportDataSchemaModel().getColumnNames();
+      }
+    }
+    return new String[0];
+  }
+
   private void configureEditors(final ReportDesignerContext context)
   {
     if (context == null)
@@ -266,48 +302,21 @@ public class SubReportParameterDialog extends CommonDialog
       return;
     }
 
-    final Section parentSection = activeContext.getReportDefinition().getParentSection();
-    if (parentSection == null)
-    {
-      return;
-    }
-    final ReportDefinition parentReport = parentSection.getReportDefinition();
-    if (parentReport == null)
-    {
-      return;
-    }
-
-    String[] parentNames = null;
-    final int contextCount = context.getReportRenderContextCount();
-    for (int i = 0; i < contextCount; i += 1)
-    {
-      final ReportRenderContext contextAt = context.getReportRenderContext(i);
-      if (parentReport == contextAt.getReportDefinition())
-      {
-        parentNames = contextAt.getReportDataSchemaModel().getColumnNames();
-        importOuterTableCellEditor.setTags(parentNames);
-        exportOuterTableCellEditor.setTags(parentNames);
-
-        break;
-      }
-    }
+    String[] parentNames = collectParentContextFields(context);
+    importOuterTableCellEditor.setTags(add("*", parentNames));
+    exportOuterTableCellEditor.setTags(parentNames);
 
     // Add any unique columns from import/export outer to the inner parameter
     // list for both the import and export panels
-    List<String> columnNames = new LinkedList<String>(Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
-    if ((parentNames != null) && (columnNames.size() > 0))
-    {
-      for (String param : parentNames)
-      {
-        if (columnNames.contains(param) == false)
-        {
-          columnNames.add(param);
-        }
-      }
-    }
+    List<String> columnNames = new ArrayList<String>();
+    columnNames.add("*");
+    columnNames.addAll(Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
 
-    String [] paramList = new String[columnNames.size()];
-    columnNames.toArray(paramList);
+    List<String> l = new LinkedList<String>(Arrays.asList(parentNames));
+    l.removeAll(columnNames);
+    columnNames.addAll(l);
+
+    String[] paramList = columnNames.toArray(new String[columnNames.size()]);
     importInnerTableCellEditor.setTags(paramList);
     exportInnerTableCellEditor.setTags(paramList);
   }
