@@ -97,7 +97,8 @@ public class BundleMetaFileWriter implements BundleWriterHandler
     final int releaseMajor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMajor(), -1);
     final int releaseMinor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMinor(), -1);
     final int releasePatch = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMilestone(), -1);
-    if (ClassicEngineBoot.computeVersionId(releaseMajor, releaseMinor, releasePatch) > 0)
+    int versionId = ClassicEngineBoot.computeVersionId(releaseMajor, releaseMinor, releasePatch);
+    if (versionId > 0 && ClassicEngineBoot.VERSION_TRUNK != versionId)
     {
       writeableMetaData.setBundleAttribute(ClassicEngineBoot.METADATA_NAMESPACE, "prpt-spec.version.major", releaseMajor);
       writeableMetaData.setBundleAttribute(ClassicEngineBoot.METADATA_NAMESPACE, "prpt-spec.version.minor", releaseMinor);
