@@ -30,10 +30,13 @@ import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
+import org.pentaho.reporting.engine.classic.core.util.LibLoaderResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DataFactoryEditorSupport
 {
@@ -115,12 +118,17 @@ public class DataFactoryEditorSupport
     final ResourceKey contentBase;
     final ReportEnvironment reportEnvironment;
     final DataFactory reportDataFactory;
+    final ResourceManager resourceManager;
+    final ResourceBundleFactory resourceBundleFactory;
+
     if (masterReport == null)
     {
       contentBase = null;
       configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
       reportEnvironment = new DefaultReportEnvironment(configuration);
       reportDataFactory = null;
+      resourceManager = new ResourceManager();
+      resourceBundleFactory = new LibLoaderResourceBundleFactory();
     }
     else
     {
@@ -128,6 +136,8 @@ public class DataFactoryEditorSupport
       configuration = masterReport.getConfiguration();
       reportEnvironment = masterReport.getReportEnvironment();
       reportDataFactory = masterReport.getDataFactory();
+      resourceManager = masterReport.getResourceManager();
+      resourceBundleFactory = masterReport.getResourceBundleFactory();
     }
 
     final CompoundDataFactory compoundDataFactory = new CompoundDataFactory();
@@ -142,8 +152,8 @@ public class DataFactoryEditorSupport
     }
 
     final DesignTimeDataFactoryContext dataFactoryContext = new DesignTimeDataFactoryContext(configuration,
-        report.getResourceManager(), contentBase, MasterReport.computeAndInitResourceBundleFactory
-        (report.getResourceBundleFactory(), reportEnvironment), compoundDataFactory);
+        resourceManager, contentBase, MasterReport.computeAndInitResourceBundleFactory
+        (resourceBundleFactory, reportEnvironment), compoundDataFactory);
     dataFactory.initialize(dataFactoryContext);
     compoundDataFactory.initialize(dataFactoryContext);
   }

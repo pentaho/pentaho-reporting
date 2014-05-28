@@ -164,9 +164,6 @@ public class SubreportReportElementDragHandler extends AbstractSubReportElementD
         // Create the new subreport tab and update the active context to point to new subreport.
         subReport.setDataFactory(reportDefinition.getDataFactory());
 
-        final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
-        subReport.setResourceBundleFactory(rbf);
-
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
         designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
       }

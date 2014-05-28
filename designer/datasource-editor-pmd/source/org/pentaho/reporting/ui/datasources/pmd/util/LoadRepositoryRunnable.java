@@ -75,7 +75,7 @@ public class LoadRepositoryRunnable implements Runnable
         contentBase = masterReport.getContentBase();
       }
 
-      final ResourceManager resourceManager = context.getReport().getResourceManager();
+      final ResourceManager resourceManager = DesignTimeUtil.getResourceManager(report);
       return new PmdConnectionProvider().getMetadataDomainRepository(domainId, resourceManager, contentBase, fileName);
     }
     catch (Exception e)

@@ -503,16 +503,8 @@ public class ProcessState implements ReportState
     }
 
     final DefaultFlowController parentStateFlowController = parentState.getFlowController();
-    final ResourceBundleFactory resourceBundleFactory;
-    if (initialSubReport.getResourceBundleFactory() != null)
-    {
-      resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory
-          (initialSubReport.getResourceBundleFactory(), parentStateFlowController.getReportContext().getEnvironment());
-    }
-    else
-    {
-      resourceBundleFactory = parentState.getResourceBundleFactory();
-    }
+    final ResourceBundleFactory resourceBundleFactory = parentState.getResourceBundleFactory();
+
     if (isSubReportInvisible(initialSubReport, parentStateFlowController))
     {
       // make it a minimum effort report, but still enter the loop.

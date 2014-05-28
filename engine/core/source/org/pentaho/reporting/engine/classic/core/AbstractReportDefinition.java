@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.engine.classic.core.designtime.Change;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.StyleChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
@@ -54,41 +55,6 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 public abstract class AbstractReportDefinition extends Section
     implements ReportDefinition
 {
-
-  /**
-   * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
-   * DocumentBundle.
-   */
-  private static class ResourceBundleChangeHandler implements ReportModelListener
-  {
-    private ResourceBundleChangeHandler()
-    {
-    }
-
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      final Object element = event.getElement();
-      if (element instanceof AbstractReportDefinition == false)
-      {
-        return;
-      }
-      if (event.isNodeStructureChanged())
-      {
-        return;
-      }
-      if (event.getParameter() instanceof StyleChange)
-      {
-        return;
-      }
-      final AbstractReportDefinition report = (AbstractReportDefinition) element;
-      report.updateResourceBundleFactory();
-    }
-  }
-  
-  /**
-   * The resource bundle factory is used when generating localized reports.
-   */
-  private ResourceBundleFactory resourceBundleFactory;
   /**
    * Storage for the expressions in the report.
    */
@@ -156,8 +122,6 @@ public abstract class AbstractReportDefinition extends Section
     registerAsChild(pageHeader);
     registerAsChild(pageFooter);
     registerAsChild(watermark);
-
-    addReportModelListener(new ResourceBundleChangeHandler());
   }
 
 
@@ -167,9 +131,10 @@ public abstract class AbstractReportDefinition extends Section
    *
    * @return the assigned resource bundle factory.
    */
+  @Deprecated
   public ResourceBundleFactory getResourceBundleFactory()
   {
-    return resourceBundleFactory;
+    return DesignTimeUtil.getResourceBundleFactory(this);
   }
 
   /**
@@ -178,10 +143,9 @@ public abstract class AbstractReportDefinition extends Section
    * @param resourceBundleFactory the new resource bundle factory, never null.
    * @throws NullPointerException if the given ResourceBundleFactory is null.
    */
+  @Deprecated
   public void setResourceBundleFactory(final ResourceBundleFactory resourceBundleFactory)
   {
-    this.resourceBundleFactory = resourceBundleFactory;
-    this.notifyNodePropertiesChanged();
   }
 
   public int getPreProcessorCount()
@@ -948,13 +912,13 @@ public abstract class AbstractReportDefinition extends Section
     {
       final AbstractReportDefinition report = (AbstractReportDefinition) super.clone();
       report.eventListeners = null;
-      report.rootGroup = (Group) rootGroup.clone();
+      report.rootGroup = rootGroup.clone();
       report.watermark = (Watermark) watermark.clone();
       report.pageFooter = (PageFooter) pageFooter.clone();
       report.pageHeader = (PageHeader) pageHeader.clone();
       report.reportFooter = (ReportFooter) reportFooter.clone();
       report.reportHeader = (ReportHeader) reportHeader.clone();
-      report.expressions = (ExpressionCollection) expressions.clone();
+      report.expressions = expressions.clone();
       report.dataSchemaDefinition = (DataSchemaDefinition) dataSchemaDefinition.clone();
       report.rootGroup.setParent(report);
       report.reportHeader.setParent(report);
@@ -966,7 +930,7 @@ public abstract class AbstractReportDefinition extends Section
       final ReportPreProcessor[] reportPreProcessors = report.getPreProcessors();
       for (int i = 0; i < reportPreProcessors.length; i++)
       {
-        reportPreProcessors[i] = (ReportPreProcessor) reportPreProcessors[i].clone();
+        reportPreProcessors[i] = reportPreProcessors[i].clone();
       }
       report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, reportPreProcessors);
 
@@ -976,7 +940,6 @@ public abstract class AbstractReportDefinition extends Section
         structureFunctions[i] = (StructureFunction) structureFunctions[i].clone();
       }
       report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS, structureFunctions);
-      report.addReportModelListener(new ResourceBundleChangeHandler());
       return report;
     }
     catch (CloneNotSupportedException cne)
@@ -989,7 +952,7 @@ public abstract class AbstractReportDefinition extends Section
   {
     final AbstractReportDefinition report = (AbstractReportDefinition) super.derive(preserveElementInstanceIds);
     report.eventListeners = null;
-    report.rootGroup = (Group) rootGroup.derive(preserveElementInstanceIds);
+    report.rootGroup = rootGroup.derive(preserveElementInstanceIds);
     report.watermark = (Watermark) watermark.derive(preserveElementInstanceIds);
     report.pageFooter = (PageFooter) pageFooter.derive(preserveElementInstanceIds);
     report.pageHeader = (PageHeader) pageHeader.derive(preserveElementInstanceIds);
@@ -1007,7 +970,7 @@ public abstract class AbstractReportDefinition extends Section
     final ReportPreProcessor[] reportPreProcessors = report.getPreProcessors();
     for (int i = 0; i < reportPreProcessors.length; i++)
     {
-      reportPreProcessors[i] = (ReportPreProcessor) reportPreProcessors[i].clone();
+      reportPreProcessors[i] = reportPreProcessors[i].clone();
     }
     report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.PREPROCESSORS, reportPreProcessors);
 
@@ -1017,7 +980,6 @@ public abstract class AbstractReportDefinition extends Section
       structureFunctions[i] = (StructureFunction) structureFunctions[i].getInstance();
     }
     report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.STRUCTURE_FUNCTIONS, structureFunctions);
-    report.addReportModelListener(new ResourceBundleChangeHandler());
     return report;
   }
 
@@ -1281,6 +1243,11 @@ public abstract class AbstractReportDefinition extends Section
     notifyNodePropertiesChanged();
   }
 
+  /**
+   * This method has only meaning for master-reports. This handle will be removed in the next majore release.
+   * @return
+   */
+  @Deprecated
   public abstract ResourceManager getResourceManager();
 
 
@@ -1396,30 +1363,6 @@ public abstract class AbstractReportDefinition extends Section
       return structureFunctions.clone();
     }
     return new StructureFunction[0];
-  }
-
-  /**
-   * A helper method that deserializes a object from the given stream.
-   *
-   * @param stream the stream from which to read the object data.
-   * @throws IOException            if an IO error occured.
-   * @throws ClassNotFoundException if an referenced class cannot be found.
-   */
-  private void readObject(final ObjectInputStream stream)
-      throws IOException, ClassNotFoundException
-  {
-    stream.defaultReadObject();
-    updateResourceBundleFactory();
-  }
-
-  protected void updateResourceBundleFactory()
-  {
-    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory)
-    {
-      final ExtendedResourceBundleFactory erbf = (ExtendedResourceBundleFactory) resourceBundleFactory;
-      erbf.setResourceLoader(getResourceManager(), getContentBase());
-    }
-
   }
 
   public ElementStyleSheet getDefaultStyleSheet()
