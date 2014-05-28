@@ -114,7 +114,7 @@ public class PasswordEncryptionService
 
     if (legacyFix && ObscurificatePasswordEncryptionServiceProvider.SERVICE_TAG.equals(serviceName))
     {
-      return PasswordObscurification48.decryptPassword(payload);
+      return new Obscurificate48PasswordEncryptionServiceProvider().decrypt(payload);
     }
     if (provider != null)
     {
