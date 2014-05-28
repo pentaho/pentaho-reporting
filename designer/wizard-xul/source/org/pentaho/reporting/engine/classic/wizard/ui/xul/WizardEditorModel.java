@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModel;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
@@ -142,7 +143,9 @@ public class WizardEditorModel extends XulEventSourceAdapter
     {
       try
       {
-        specification = WizardProcessorUtil.loadWizardSpecification(reportDefinition, reportDefinition.getResourceManager());
+
+        specification = WizardProcessorUtil.loadWizardSpecification
+            (reportDefinition, DesignTimeUtil.getResourceManager(reportDefinition));
         if (specification != null)
         {
           return specification;

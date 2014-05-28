@@ -20,6 +20,8 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.com
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.compat.AbstractCompatibilityConverter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.AbstractMDXDataFactory;
 import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.CubeFileProvider;
@@ -54,9 +56,10 @@ public class MondrianDataSource_50_CompatibilityConverter extends AbstractCompat
       return;
     }
 
-    final ResourceManager mgr = report.getResourceManager();
+
+    final ResourceManager mgr = DesignTimeUtil.getResourceManager(report);
     final ResourceKey reportContentBase = report.getContentBase();
-    final String cubeName = calculateCubeNameFromProvider (mgr, reportContentBase, cubeFileProvider);
+    final String cubeName = calculateCubeNameFromProvider(mgr, reportContentBase, cubeFileProvider);
 
     cubeFileProvider.setCubeConnectionName(cubeName);
   }

@@ -175,9 +175,6 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
         subReport.setDataFactory(reportDefinition.getDataFactory());
         subReport.getReportDefinition().setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f);
 
-        final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
-        subReport.setResourceBundleFactory(rbf);
-
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
         designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
       }

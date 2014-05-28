@@ -1172,14 +1172,13 @@ public class Element implements DataTarget, ReportElement
 
   private ResourceManager locateResourceManager()
   {
-    final ReportDefinition reportDefinition = getReportDefinition();
-    if (reportDefinition instanceof AbstractReportDefinition == false)
+    final ReportDefinition report = getMasterReport();
+    if (report instanceof MasterReport)
     {
-      return new ResourceManager();
+      MasterReport mr = (MasterReport) report;
+      return mr.getResourceManager();
     }
-
-    final AbstractReportDefinition abstractReportDefinition = (AbstractReportDefinition) reportDefinition;
-    return abstractReportDefinition.getResourceManager();
+    return new ResourceManager();
   }
 
   /**

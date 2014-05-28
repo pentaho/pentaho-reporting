@@ -20,11 +20,11 @@ package org.pentaho.reporting.engine.classic.core;
 import java.awt.print.PageFormat;
 import java.util.LinkedHashMap;
 
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.engine.classic.core.util.LibLoaderResourceBundleFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
@@ -381,55 +381,17 @@ public class SubReport extends AbstractReportDefinition
     // also notify all local listeners on all changes.
     super.fireModelLayoutChanged(element, type, parameter);
     super.updateChangedFlagInternal(element, type, parameter);
-    
-/*
-    if ((type == ReportModelEvent.NODE_PROPERTIES_CHANGED && element == this &&
-        parameter instanceof Change))
-    {
-      // propagate the change to the parent report. This change may have come from editing the subreport
-      // in the parent or from editing the subreport properties itself
-
-      // Datasource or parameter changes (or any other non-visual change) will not be propagated.
-      super.updateChangedFlagInternal(element, type, parameter);
-    }
-    */
   }
 
+  @Deprecated
   public ResourceManager getResourceManager()
   {
-    Section parent = getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        final MasterReport masterReport = (MasterReport) parent;
-        return masterReport.getResourceManager();
-      }
-      parent = parent.getParentSection();
-    }
-
-    return new ResourceManager();
+    return DesignTimeUtil.getResourceManager(this);
   }
 
+  @Deprecated
   public ResourceBundleFactory getResourceBundleFactory()
   {
-    Section parent = getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        final MasterReport masterReport = (MasterReport)parent;
-        return masterReport.getResourceBundleFactory();
-      }
-      else if (parent instanceof SubReport)
-      {
-        final SubReport subReport = (SubReport)parent;
-        return subReport.getResourceBundleFactory();
-      }
-
-      parent = parent.getParentSection();
-    }
-
-    return new LibLoaderResourceBundleFactory();
+    return super.getResourceBundleFactory();
   }
 }

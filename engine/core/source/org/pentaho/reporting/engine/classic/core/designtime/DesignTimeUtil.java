@@ -30,6 +30,7 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DesignTimeUtil
 {
@@ -92,66 +93,36 @@ public class DesignTimeUtil
 
   public static ResourceBundleFactory getResourceBundleFactory(final AbstractReportDefinition reportDefinition)
   {
-    AbstractReportDefinition e = reportDefinition;
-    while (e != null)
+    ReportDefinition e = reportDefinition.getMasterReport();
+    if (e instanceof MasterReport)
     {
-      final ResourceBundleFactory base = e.getResourceBundleFactory();
+      final MasterReport report = (MasterReport) e;
+      final ResourceBundleFactory base = report.getResourceBundleFactory();
       if (base != null)
       {
         return base;
-      }
-      final Section parentSection = e.getParentSection();
-      if (parentSection != null)
-      {
-        final ReportDefinition reportDefinition1 = parentSection.getReportDefinition();
-        if (reportDefinition1 instanceof AbstractReportDefinition)
-        {
-          e = (AbstractReportDefinition) reportDefinition1;
-        }
-        else
-        {
-          e = null;
-        }
-      }
-      else
-      {
-        e = null;
       }
     }
     return null;
   }
 
+  public static ResourceManager getResourceManager(final AbstractReportDefinition reportDefinition)
+  {
+    ReportDefinition e = reportDefinition.getMasterReport();
+    if (e instanceof MasterReport)
+    {
+      final MasterReport report = (MasterReport) e;
+      return report.getResourceManager();
+    }
+    return new ResourceManager();
+  }
+
   public static MasterReport getMasterReport(final Element element)
   {
-    AbstractReportDefinition e = (AbstractReportDefinition) element.getReportDefinition();
+    ReportDefinition e = element.getMasterReport();
     if (e instanceof MasterReport)
     {
       return (MasterReport) e;
-    }
-
-    while (e != null)
-    {
-      final Section parentSection = e.getParentSection();
-      if (parentSection != null)
-      {
-        final ReportDefinition reportDefinition1 = parentSection.getReportDefinition();
-        if (reportDefinition1 instanceof MasterReport)
-        {
-          return (MasterReport) reportDefinition1;
-        }
-        else if (reportDefinition1 instanceof AbstractReportDefinition)
-        {
-          e = (AbstractReportDefinition) reportDefinition1;
-        }
-        else
-        {
-          e = null;
-        }
-      }
-      else
-      {
-        e = null;
-      }
     }
     return null;
   }

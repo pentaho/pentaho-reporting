@@ -30,6 +30,7 @@ import javax.swing.table.TableModel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.AttributeChange;
+import org.pentaho.reporting.engine.classic.core.designtime.StyleChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.MasterReportType;
@@ -45,6 +46,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfiguration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.MemoryDocumentBundle;
@@ -100,6 +102,38 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  */
 public class MasterReport extends AbstractReportDefinition
 {
+
+  /**
+   * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
+   * DocumentBundle.
+   */
+  private static class ResourceBundleChangeHandler implements ReportModelListener
+  {
+    private ResourceBundleChangeHandler()
+    {
+    }
+
+    public void nodeChanged(final ReportModelEvent event)
+    {
+      if (event.isNodeStructureChanged())
+      {
+        return;
+      }
+      if (event.getParameter() instanceof StyleChange)
+      {
+        return;
+      }
+
+      final Object element = event.getElement();
+      if (element instanceof MasterReport == false)
+      {
+        return;
+      }
+      final MasterReport report = (MasterReport) element;
+      report.updateResourceBundleFactoryInternal();
+    }
+  }
+
   /**
    * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
    * DocumentBundle.
@@ -174,6 +208,10 @@ public class MasterReport extends AbstractReportDefinition
   private ReportParameterDefinition parameterDefinition;
   private ReportEnvironment reportEnvironment;
   private ReportParameterValues parameterValues;
+  /**
+   * The resource bundle factory is used when generating localized reports.
+   */
+  private ResourceBundleFactory resourceBundleFactory;
 
   /**
    * The default constructor. Creates an empty but fully initialized report.
@@ -206,6 +244,9 @@ public class MasterReport extends AbstractReportDefinition
     setBundle(documentBundle);
 
     setContentBase(documentBundle.getBundleMainKey());
+
+    addReportModelListener(new ResourceBundleChangeHandler());
+    updateResourceBundleFactoryInternal();
   }
 
   public static ResourceBundleFactory computeAndInitResourceBundleFactory
@@ -238,6 +279,18 @@ public class MasterReport extends AbstractReportDefinition
     }
   }
 
+
+  /**
+   * Returns the resource bundle factory for this report definition. The {@link ResourceBundleFactory} is used in
+   * internationalized reports to create the resourcebundles holding the localized resources.
+   *
+   * @return the assigned resource bundle factory.
+   */
+  public ResourceBundleFactory getResourceBundleFactory()
+  {
+    return resourceBundleFactory;
+  }
+
   /**
    * Redefines the resource bundle factory for the report.
    *
@@ -246,11 +299,10 @@ public class MasterReport extends AbstractReportDefinition
    */
   public void setResourceBundleFactory(final ResourceBundleFactory resourceBundleFactory)
   {
-    if (resourceBundleFactory == null)
-    {
-      throw new NullPointerException("ResourceBundleFactory must not be null");
-    }
-    super.setResourceBundleFactory(resourceBundleFactory);
+    ArgumentNullException.validate("resourceBundleFactory", resourceBundleFactory);
+
+    this.resourceBundleFactory = resourceBundleFactory;
+    this.notifyNodePropertiesChanged();
   }
 
   public DocumentBundle getBundle()
@@ -423,6 +475,7 @@ public class MasterReport extends AbstractReportDefinition
 
     // Add a listener that will handle keeping the ResourceManager in sync with changes to the Document Bundle
     report.addReportModelListener(new DocumentBundleChangeHandler());
+    report.addReportModelListener(new ResourceBundleChangeHandler());
 
     return report;
   }
@@ -444,6 +497,7 @@ public class MasterReport extends AbstractReportDefinition
 
     // Add a listener that will handle keeping the ResourceManager in sync with changes to the Document Bundle
     report.addReportModelListener(new DocumentBundleChangeHandler());
+    report.addReportModelListener(new ResourceBundleChangeHandler());
 
     return report;
   }
@@ -485,7 +539,7 @@ public class MasterReport extends AbstractReportDefinition
     if (resourceManager == null)
     {
       resourceManager = new ResourceManager();
-      updateResourceBundleFactory();
+      updateResourceBundleFactoryInternal();
     }
     return resourceManager;
   }
@@ -554,6 +608,8 @@ public class MasterReport extends AbstractReportDefinition
   {
     stream.defaultReadObject();
 
+    updateResourceBundleFactoryInternal();
+
     reportConfiguration.reconnectConfiguration(ClassicEngineBoot.getInstance().getGlobalConfig());
     addReportModelListener(new DocumentBundleChangeHandler());
 
@@ -576,6 +632,15 @@ public class MasterReport extends AbstractReportDefinition
     catch (ResourceException e)
     {
       throw new IOException(e);
+    }
+  }
+
+  private void updateResourceBundleFactoryInternal()
+  {
+    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory)
+    {
+      final ExtendedResourceBundleFactory erbf = (ExtendedResourceBundleFactory) resourceBundleFactory;
+      erbf.setResourceLoader(getResourceManager(), getContentBase());
     }
   }
 
