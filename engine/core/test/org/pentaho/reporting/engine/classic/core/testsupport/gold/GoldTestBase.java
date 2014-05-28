@@ -141,9 +141,14 @@ public class GoldTestBase
         GoldTestBase.this.run(reportFile, goldTemplate, processingMode);
         System.out.printf("Finished   %s in mode=%s%n", reportFile, processingMode);
       }
+      catch (AssertionError e)
+      {
+        errors.add(e);
+      }
       catch (Throwable t)
       {
-        errors.add(t);
+        String message = String.format("Failed to process %s in mode %s", reportFile, processingMode); // NON-NLS
+        errors.add(new AssertionError(message, t));
       }
     }
   }
