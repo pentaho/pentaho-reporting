@@ -20,6 +20,7 @@ package org.pentaho.reporting.libraries.pensol;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.logging.Log;
@@ -117,7 +118,7 @@ public class PublishRestUtil {
 			part.field("fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("overwriteFile", String.valueOf(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
 
-			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName(fileName).build());
+			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName(URLEncoder.encode( fileName, "utf-8") ).build());
 
       WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA);
 			ClientResponse response =  builder.post(ClientResponse.class, part);

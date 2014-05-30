@@ -119,7 +119,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         {
           glassPane.setVisible(true);
           glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        final FileObject child = treeNode.resolveFile(URLEncoder.encodeUTF8(newFolderDialog.getFolderName()).replaceAll("\\!", "%21"));
+          final FileObject child = treeNode.resolveFile(newFolderDialog.getFolderName().replaceAll("\\%", "%25").replaceAll("\\!", "%21"));
           child.createFolder();
           if (child instanceof WebSolutionFileObject)
           {

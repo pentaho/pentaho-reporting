@@ -455,7 +455,7 @@ public class JCRSolutionFileModel implements SolutionFileModel
       {
         throw new FileSystemException(BI_SERVER_NULL_OBJECT);
       }
-      childrenArray[i] = URLEncoder.encodeUTF8(file.getName()).replaceAll("\\!", "%21").replaceAll("\\+", "%2B");
+      childrenArray[i] = file.getName().replaceAll("\\%", "%25").replaceAll("\\!", "%21").replaceAll("\\+", "%2B");
     }
     return childrenArray;
   }
