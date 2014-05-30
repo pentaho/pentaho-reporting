@@ -15,19 +15,12 @@
 	  <vbox background="images/rdw_bg.png" width="200" height="400" padding="0" spacing="0">
 	  	<hbox flex="1" padding="0">
   		  <spacer width="2"/>
-  		  <vbox flex="1" padding="0">
-		  	<spacer height="10"/>
-		    <grid id="step_grid" flex="1" >
-		      <columns>
-		        <column flex="0" />
-		        <column flex="1" />
-		      </columns>
-		      <rows id="step_rows" />
-		    </grid>
-		  </vbox>
-		</hbox>
+  		  <vbox id="step_container" flex="1" padding="0">
+		  	  <spacer height="10"/>
+		    </vbox>
+	  	</hbox>
 	  </vbox>
-   	<deck id="content_deck" flex="1" />
+   	<deck id="content_deck" flex="1" height="400"/>
   </hbox>
   <spacer flex="1"/>
   <hbox id="controller_panel" bgcolor="#ffffff" padding="4"/>
