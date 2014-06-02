@@ -41,10 +41,5 @@ public class DateChooserPopupMenu extends JPopupMenu
     {
       super.setVisible(false);
     }
-    else
-    {
-      DebugLog.log("Ignoring close request: isDateSelected=" +
-          dateChooserPanel.isDateSelected() + "; isCanceled=" + isCanceled);
-    }
   }
 }

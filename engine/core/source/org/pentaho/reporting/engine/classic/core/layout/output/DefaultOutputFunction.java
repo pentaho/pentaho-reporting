@@ -183,6 +183,9 @@ public class DefaultOutputFunction extends AbstractFunction
 
       renderer.startSection(Renderer.SectionType.NORMALFLOW);
       final ReportDefinition report = event.getReport();
+      if (designTime && event.getState().isSubReportEvent()) {
+        print(getRuntime(), report.getPageHeader());
+      }
       print(getRuntime(), report.getReportHeader());
       addSubReportMarkers(renderer.endSection());
     }
@@ -448,9 +451,11 @@ public class DefaultOutputFunction extends AbstractFunction
       // force that this last pagebreak ... (This is an indicator for the
       // pagefooter's print-on-last-page) This is highly unclean and may or
       // may not work ..
-      final Band b = event.getReport().getReportFooter();
       renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), b);
+      print(getRuntime(), event.getReport().getReportFooter());
+      if (designTime && event.getState().isSubReportEvent()) {
+        print(getRuntime(), event.getReport().getPageFooter());
+      }
       addSubReportMarkers(renderer.endSection());
 
       if (event.isDeepTraversing() == false)
