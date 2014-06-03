@@ -1097,33 +1097,25 @@ public class DefaultOutputFunction extends AbstractFunction
   protected boolean isNeedPrintRepeatingFooter(final ReportEvent event,
                                                final LayouterLevel[] levels)
   {
-    if (isDesignTime())
-    {
-      return false;
-    }
-
-    if (clearedFooter) {
-      return true;
-    }
-
-    if (repeatingFooterValidator.isRepeatFooterValid(event, levels) == false)
-    {
-      return true;
-    }
-
     final ReportDefinition report = event.getReport();
     final ReportState state = event.getState();
     final int groupsPrinted = state.getPresentationGroupIndex();
     final int levelCount = levels.length;
     final DataRow dataRow = event.getDataRow();
 
-    if (state.isInItemGroup())
+    if (repeatingFooterValidator.isRepeatFooterValid(event, levels) == false)
+    {
+      return true;
+    }
+
+    boolean needPrinting = clearedFooter;
+    if (needPrinting == false && state.isInItemGroup())
     {
       final DetailsFooter footer = report.getDetailsFooter();
       if (isGroupSectionPrintableInternal(footer, false, true) &&
           elementChangeChecker.isBandChanged(footer, dataRow))
       {
-        return true;
+        needPrinting = true;
       }
     }
 
@@ -1131,55 +1123,64 @@ public class DefaultOutputFunction extends AbstractFunction
      * Repeating group header are only printed while ItemElements are
      * processed.
      */
-    for (int gidx = groupsPrinted; gidx >= 0; gidx -= 1)
+    if (needPrinting == false)
     {
-      final Group g = report.getGroup(gidx);
-      if (g instanceof RelationalGroup)
+      for (int gidx = groupsPrinted; gidx >= 0; gidx -= 1)
       {
-        final RelationalGroup rg = (RelationalGroup) g;
-        final GroupFooter footer = rg.getFooter();
-        if (isGroupSectionPrintableInternal(footer, false, true) &&
-            elementChangeChecker.isBandChanged(footer, dataRow))
-        {
-          return true;
-        }
-      }
-    }
-
-    for (int i = 0; i < levelCount; i++)
-    {
-      final LayouterLevel level = levels[i];
-      final ReportDefinition def = level.getReportDefinition();
-
-      if (level.isInItemGroup())
-      {
-        final DetailsFooter detailsFooter = def.getDetailsFooter();
-        if (detailsFooter != null)
-        {
-          if (isGroupSectionPrintableInternal(detailsFooter, true, true) &&
-              elementChangeChecker.isBandChanged(detailsFooter, dataRow))
-          {
-            return true;
-          }
-        }
-      }
-
-      for (int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1)
-      {
-        final Group g = def.getGroup(gidx);
+        final Group g = report.getGroup(gidx);
         if (g instanceof RelationalGroup)
         {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupFooter footer = rg.getFooter();
-          if (isGroupSectionPrintableInternal(footer, true, true) &&
+          if (isGroupSectionPrintableInternal(footer, false, true) &&
               elementChangeChecker.isBandChanged(footer, dataRow))
           {
-            return true;
+            needPrinting = true;
           }
         }
       }
     }
-    return false;
+
+    if (needPrinting == false)
+    {
+      for (int i = 0; i < levelCount; i++)
+      {
+        final LayouterLevel level = levels[i];
+        final ReportDefinition def = level.getReportDefinition();
+
+        if (level.isInItemGroup())
+        {
+          final DetailsFooter detailsFooter = def.getDetailsFooter();
+          if (detailsFooter != null)
+          {
+            if (isGroupSectionPrintableInternal(detailsFooter, true, true) &&
+                elementChangeChecker.isBandChanged(detailsFooter, dataRow))
+            {
+              needPrinting = true;
+            }
+          }
+        }
+
+        if (needPrinting == false)
+        {
+          for (int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1)
+          {
+            final Group g = def.getGroup(gidx);
+            if (g instanceof RelationalGroup)
+            {
+              final RelationalGroup rg = (RelationalGroup) g;
+              final GroupFooter footer = rg.getFooter();
+              if (isGroupSectionPrintableInternal(footer, true, true) &&
+                  elementChangeChecker.isBandChanged(footer, dataRow))
+              {
+                needPrinting = true;
+              }
+            }
+          }
+        }
+      }
+    }
+    return needPrinting;
   }
 
   protected boolean isGroupSectionPrintableInternal(final Band b,
