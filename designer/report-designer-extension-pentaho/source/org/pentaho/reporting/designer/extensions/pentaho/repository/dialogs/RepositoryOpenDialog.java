@@ -612,7 +612,7 @@ public class RepositoryOpenDialog extends CommonDialog
     	selectedView = selectedView.getParent();
     }
        
-    final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(fileNameTextField.getText()).replaceAll("\\!", "%21"));
+    final FileObject targetFile = selectedView.resolveFile(fileNameTextField.getText().replaceAll("\\%", "%25").replaceAll("\\!", "%21"));
     return targetFile.getName().getPathDecoded();
   }
 
