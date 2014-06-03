@@ -38,7 +38,6 @@ public class RenderableComplexText extends RenderNode
                                final RichTextSpec text)
   {
     super(new NodeLayoutProperties(styleSheet, attributes, instanceID, elementType));
-    DebugLog.log("Created " + text.getText());
     this.text = text.getText();
     this.richText = text;
     this.forceLinebreak = false;

@@ -54,6 +54,7 @@ public class ValidateTextGraphics extends TestGraphics2D
       expect(strtok.nextToken());
     }
   }
+
   public void drawString(final String str, final float x, final float y)
   {
     Assert.assertTrue("Text " + str + " outside of clipping area", hitClip((int) x, (int) y, 1, 1));
@@ -63,5 +64,10 @@ public class ValidateTextGraphics extends TestGraphics2D
       expectedWords.remove(0);
     }
     super.drawString(str, x, y);
+  }
+
+  public boolean isValid()
+  {
+    return expectedWords.isEmpty();
   }
 }

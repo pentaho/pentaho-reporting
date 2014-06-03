@@ -168,7 +168,7 @@ public class ProcessState implements ReportState
     public void close()
     {
       ChangeEvent event = new ChangeEvent(this);
-      for (ChangeListener changeListener : listeners.getListeners(ChangeListener.class))
+      for (final ChangeListener changeListener : listeners.getListeners(ChangeListener.class))
       {
         changeListener.stateChanged(event);
       }
@@ -388,7 +388,7 @@ public class ProcessState implements ReportState
     return hc;
   }
 
-  private void setConfigurationIfDefined(ModifiableConfiguration config, String configKey, Object value)
+  private void setConfigurationIfDefined(final ModifiableConfiguration config, final String configKey, final Object value)
   {
     if (value == null)
     {
@@ -399,7 +399,7 @@ public class ProcessState implements ReportState
       String valueText = ConverterRegistry.toAttributeValue(value);
       config.setConfigProperty(configKey, valueText);
     }
-    catch (BeanException e)
+    catch (final BeanException e)
     {
       logger.info(String.format("Ignoring invalid attribute-value override for configuration '%s' with value '%s'", configKey, value));
     }
@@ -748,7 +748,7 @@ public class ProcessState implements ReportState
       evalExpression.setRuntime(runtime);
       return evalExpression.getValue();
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       logger.debug("Failed to evaluate expression " + expression, e);
       return defaultValue;
@@ -949,7 +949,7 @@ public class ProcessState implements ReportState
       processState.layoutProcess = layoutProcess.deriveForPagebreak();
       return processState;
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException("Clone failed but I dont know why ..");
     }
@@ -964,7 +964,7 @@ public class ProcessState implements ReportState
       processState.processKey = processState.createKey();
       return processState;
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException("Clone failed but I dont know why ..");
     }
@@ -980,7 +980,7 @@ public class ProcessState implements ReportState
       result.layoutProcess = layoutProcess.deriveForStorage();
       return result;
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException("Clone failed but I dont know why ..");
     }

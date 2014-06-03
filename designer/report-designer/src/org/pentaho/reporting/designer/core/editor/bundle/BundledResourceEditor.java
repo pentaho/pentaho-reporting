@@ -545,7 +545,6 @@ public class BundledResourceEditor extends JDialog
 
     Collections.sort(entries);
     fileModel.clear();
-    DebugLog.log(entries);
     final int length = entries.size();
     for (int i = 0; i < length; i++)
     {

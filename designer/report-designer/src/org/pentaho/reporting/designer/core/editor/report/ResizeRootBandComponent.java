@@ -63,14 +63,13 @@ public class ResizeRootBandComponent extends JPanel
     this.linealComponent = linealComponent;
     this.renderContext = renderContext;
     this.rootBandRenderer = renderer;
-    normalColor = new Color(212, 212, 212);
 
     if (linealComponent)
     {
+      normalColor = new Color(212, 212, 212);
       normalBorder = BorderFactory.createLineBorder(new Color(188, 188, 188), 1);
       hoverColor = new Color(212, 212, 212);
       hoverBorder = BorderFactory.createLineBorder(new Color(128, 128, 128), 1);
-      setOpaque(true);
     }
     else
     {
@@ -78,9 +77,9 @@ public class ResizeRootBandComponent extends JPanel
       hoverColor = new Color(255, 255, 255, 0);
       hoverBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
       normalBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
-      setOpaque(true);
     }
 
+    setOpaque(false);
     setBorder(normalBorder);
     setMinimumSize(new Dimension(6, 4));
     setPreferredSize(new Dimension(6, 4));

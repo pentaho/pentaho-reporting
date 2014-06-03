@@ -634,11 +634,10 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       ct.setText(p);
       if (ct.go(false) == ColumnText.NO_MORE_COLUMN)
       {
-        DebugLog.log("!Width:" + ct.getFilledWidth());
         throw new InvalidReportStateException
-            ("iText signaled an error when printing text. Failing to prevent silent data-loss");
+            ("iText signaled an error when printing text. Failing to prevent silent data-loss: Width=" +
+            ct.getFilledWidth());
       }
-      DebugLog.log(" Width:" + ct.getFilledWidth());
     }
     catch (DocumentException e)
     {
@@ -676,7 +675,6 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     public ColumnText reconfigure(PdfContentByte cb, Phrase p)
     {
       float filledWidth = ColumnText.getWidth(p, runDirection, 0) + 0.5f;
-      DebugLog.log("Width:" + filledWidth);
       ColumnText ct = new ColumnText(cb);
       ct.setRunDirection(runDirection);
       if (alignment == Element.ALIGN_LEFT)
@@ -695,7 +693,6 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       else {
         ct.setSimpleColumn(llx, lly, urx, ury, leading, alignment);
       }
-      DebugLog.log(String.format("Conf: %s, %s, %s, %s, %s, %s", llx, lly, urx, ury, leading, alignment));
       return ct;
     }
   }

@@ -35,6 +35,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import javax.swing.Action;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -43,14 +45,6 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.PngEncoder;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 01.12.2010
- * Time: 14:26:05
- *
- * @author Thomas Morgner.
- */
 public class ScreenCaptureAction extends AbstractDesignerContextAction
 {
   private static class ScreenShotFilenameFilter implements FilenameFilter
@@ -88,6 +82,7 @@ public class ScreenCaptureAction extends AbstractDesignerContextAction
     }
   }
 
+  private static final Log logger = LogFactory.getLog(ScreenCaptureAction.class);
   private static final String PNG_SUFFIX = ".png";
   private static final String PREFIX = "prd-screen-capture-";
   private static boolean installed;
@@ -199,7 +194,7 @@ public class ScreenCaptureAction extends AbstractDesignerContextAction
       catch (Exception e)
       {
         // non-fatal, complete ignore
-        DebugLog.log(e);
+        logger.debug(e);
       }
     }
 

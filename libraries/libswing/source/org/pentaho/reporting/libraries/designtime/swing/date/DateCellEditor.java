@@ -106,7 +106,6 @@ public class DateCellEditor extends JPanel implements TableCellEditor
       dateField.setValue(date);
       if (dateChooserPanel.isDateSelected())
       {
-        DebugLog.log("PropertyChange on DATE - about to close");
         stopCellEditing();
       }
     }
