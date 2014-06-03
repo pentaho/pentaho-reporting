@@ -80,7 +80,6 @@ public class DefaultOutputFunction extends AbstractFunction
   private RepeatingFooterValidator repeatingFooterValidator;
   private boolean clearedFooter;
   private ArrayList<InstanceID> subReportFooterTracker;
-  private boolean designTime;
 
   /**
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
@@ -181,13 +180,14 @@ public class DefaultOutputFunction extends AbstractFunction
       // activating this state after the page has ended is invalid.
       updateFooterArea(event);
 
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
       final ReportDefinition report = event.getReport();
-      if (designTime && event.getState().isSubReportEvent()) {
-        print(getRuntime(), report.getPageHeader());
-      }
+
+      renderer.startSection(Renderer.SectionType.NORMALFLOW);
       print(getRuntime(), report.getReportHeader());
       addSubReportMarkers(renderer.endSection());
+
+      printDesigntimeHeader(event);
+
     }
     catch (final InvalidReportStateException fe)
     {
@@ -201,6 +201,10 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       clearCurrentEvent();
     }
+  }
+
+  protected void printDesigntimeHeader(final ReportEvent event) throws ReportProcessingException
+  {
   }
 
   public void addSubReportMarkers(final InlineSubreportMarker[] markers)
@@ -453,9 +457,6 @@ public class DefaultOutputFunction extends AbstractFunction
       // may not work ..
       renderer.startSection(Renderer.SectionType.NORMALFLOW);
       print(getRuntime(), event.getReport().getReportFooter());
-      if (designTime && event.getState().isSubReportEvent()) {
-        print(getRuntime(), event.getReport().getPageFooter());
-      }
       addSubReportMarkers(renderer.endSection());
 
       if (event.isDeepTraversing() == false)
@@ -463,6 +464,8 @@ public class DefaultOutputFunction extends AbstractFunction
         lastPagebreak = true;
       }
       updateFooterArea(event);
+
+      printDesigntimeFooter(event);
     }
     catch (final InvalidReportStateException fe)
     {
@@ -476,6 +479,10 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       clearCurrentEvent();
     }
+  }
+
+  protected void printDesigntimeFooter(final ReportEvent event) throws ReportProcessingException
+  {
   }
 
   /**
@@ -495,13 +502,15 @@ public class DefaultOutputFunction extends AbstractFunction
       renderer.endSubReport();
     }
 
-    if (!designTime)
-    {
-      elementChangeChecker.reportCachePerformance();
-      logger.info(String.format
-          ("Performance: footer-printed=%d footer-avoided=%d repeating-footer-printed=%d repeating-footer-avoided=%d",
-              printedFooter, avoidedFooter, printedRepeatingFooter, avoidedRepeatingFooter));
-    }
+    printPerformanceStats();
+  }
+
+  protected void printPerformanceStats()
+  {
+    elementChangeChecker.reportCachePerformance();
+    logger.info(String.format
+        ("Performance: footer-printed=%d footer-avoided=%d repeating-footer-printed=%d repeating-footer-avoided=%d",
+            printedFooter, avoidedFooter, printedRepeatingFooter, avoidedRepeatingFooter));
   }
 
   private static LayoutExpressionRuntime createRuntime(final MasterDataRow masterRow,
@@ -564,7 +573,7 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       throw new InvalidReportStateException("Inv");
     }
-    if (designTime) {
+    if (isDesignTime()) {
       return true;
     }
 
@@ -758,7 +767,7 @@ public class DefaultOutputFunction extends AbstractFunction
                                                          final LayouterLevel[] levels,
                                                          ExpressionRuntime runtime) throws ReportProcessingException
   {
-    if (designTime)
+    if (isDesignTime())
     {
       return runtime;
     }
@@ -821,7 +830,7 @@ public class DefaultOutputFunction extends AbstractFunction
                                                   final ReportDefinition report,
                                                   ExpressionRuntime runtime) throws ReportProcessingException
   {
-    if (designTime) {
+    if (isDesignTime()) {
       return runtime;
     }
 
@@ -973,7 +982,7 @@ public class DefaultOutputFunction extends AbstractFunction
                                        final DataRow dataRow,
                                        final PageFooter pageFooter)
   {
-    if (designTime)
+    if (isDesignTime())
     {
       return true;
     }
@@ -1088,7 +1097,7 @@ public class DefaultOutputFunction extends AbstractFunction
   protected boolean isNeedPrintRepeatingFooter(final ReportEvent event,
                                                final LayouterLevel[] levels)
   {
-    if (designTime)
+    if (isDesignTime())
     {
       return false;
     }
@@ -1380,7 +1389,11 @@ public class DefaultOutputFunction extends AbstractFunction
   public void setRenderer(final Renderer renderer)
   {
     this.renderer = renderer;
-    this.designTime = renderer.getOutputProcessor().getMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+  }
+
+  protected boolean isDesignTime()
+  {
+    return false;
   }
 
   public Renderer getRenderer()

@@ -108,6 +108,10 @@ public class DesignerPageDrawable extends LogicalPageDrawable
 
   private SectionSubType determineSubType(final Section s)
   {
+    if (s.getReportDefinition() != s.getMasterReport())
+    {
+      return SectionSubType.NORMALFLOW;
+    }
     if (s instanceof Watermark)
     {
       return SectionSubType.WATERMARK;
