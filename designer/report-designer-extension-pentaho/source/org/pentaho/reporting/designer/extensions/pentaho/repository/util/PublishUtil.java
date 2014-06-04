@@ -87,7 +87,7 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
-    final String urlPath =  URLEncoder.encodeUTF8(path.replaceAll("%2B", "+")).replaceAll("\\!", "%21");
+    final String urlPath =  URLEncoder.encodeUTF8(path.replaceAll("%2B", "+")).replaceAll("\\!", "%21").replaceAll(":", "%3A");
     final FileObject connection = createVFSConnection(loginData);
     final FileObject object = connection.resolveFile(urlPath);
     if (object.exists() == false)

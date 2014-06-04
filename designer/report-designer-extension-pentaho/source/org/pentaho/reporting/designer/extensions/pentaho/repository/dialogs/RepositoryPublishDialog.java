@@ -439,7 +439,7 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
       }
       
       
-      final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(getFileNameTextField().getText()).replaceAll("\\+", "%2B").replaceAll("\\!", "%21"));
+      final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(getFileNameTextField().getText()).replaceAll(":", "%3A").replaceAll("\\+", "%2B").replaceAll("\\!", "%21"));
       final FileObject fileObject = selectedView.getFileSystem().resolveFile(targetFile.getName());
       if (fileObject.getType() == FileType.IMAGINARY)
       {
