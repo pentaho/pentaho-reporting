@@ -1293,7 +1293,7 @@
 
     <style name="text-wrap" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor"/>
-    <style name="direction" expert="false" hidden="false" mandatory="false"
+    <style name="direction" expert="false" hidden="false" mandatory="false" compatibility-level="5.1.0"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor"/>
     <style name="trim-text-content" expert="true" hidden="false" mandatory="false"/>
     <style name="vertical-text-alignment" expert="true" hidden="false" mandatory="false"
@@ -1314,7 +1314,7 @@
 
     <style name="text-indent" expert="true" hidden="true" mandatory="false"/>
     <style name="first-line-indent" expert="true" hidden="true" mandatory="false"/>
-    <style name="word-break" expert="true" hidden="true" mandatory="false" compatibility-level="5.1.0"/>
+    <style name="word-break" expert="true" hidden="false" mandatory="false" compatibility-level="5.1.0"/>
   </style-group>
 
   <style-group name="layout" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
