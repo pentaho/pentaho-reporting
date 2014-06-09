@@ -197,12 +197,12 @@ public class CreateCrosstabDialog extends CommonDialog
     }
   }
 
-  private JList otherFields;
-  private JTable rowFields;
-  private JTable columnFields;
+  private DraggableJList otherFields;
+  private DraggableCrosstabDimensionTable rowFields;
+  private DraggableCrosstabDimensionTable columnFields;
   private JTable detailFields;
 
-  private JList availableFields;
+  private DraggableJList availableFields;
   private DefaultBulkListModel availableFieldsModel;
   private DefaultBulkListModel otherFieldsModel;
   private CrosstabDimensionTableModel rowsFieldsModel;
@@ -236,34 +236,24 @@ public class CreateCrosstabDialog extends CommonDialog
 
     availableFieldsModel = new DefaultBulkListModel();
 
-    availableFields = new JList(availableFieldsModel);
-    availableFields.setDragEnabled(true);
-    availableFields.setTransferHandler(new ListTransferHandler(availableFields, availableFieldsModel));
-    availableFields.setDropMode(DropMode.ON);
+    availableFields = new DraggableJList(availableFieldsModel);
+    availableFields.setTransferHandler(new ListTransferHandler(availableFields, true));
 
     otherFieldsModel = new DefaultBulkListModel();
-    otherFields = new JList(otherFieldsModel);
+    otherFields = new DraggableJList(otherFieldsModel);
     otherFields.setVisibleRowCount(3);
-    otherFields.setTransferHandler(new ListTransferHandler(otherFields, otherFieldsModel));
-    otherFields.setDragEnabled(true);
-    otherFields.setDropMode(DropMode.ON);
 
     rowsFieldsModel = new CrosstabDimensionTableModel();
-    rowFields = new PropertyTable(rowsFieldsModel);
-    rowFields.setTransferHandler(new CrosstabDimensionTableTransferHandler(rowFields, rowsFieldsModel));
-    rowFields.setDragEnabled(true);
-    rowFields.setDropMode(DropMode.ON);
+    rowFields = new DraggableCrosstabDimensionTable(rowsFieldsModel);
 
     columnsFieldsModel = new CrosstabDimensionTableModel();
-    columnFields = new PropertyTable(columnsFieldsModel);
-    columnFields.setTransferHandler(new CrosstabDimensionTableTransferHandler(columnFields, columnsFieldsModel));
-    columnFields.setDragEnabled(true);
-    columnFields.setDropMode(DropMode.ON);
+    columnFields = new DraggableCrosstabDimensionTable(columnsFieldsModel);
 
     detailFieldsModel = new CrosstabDetailTableModel();
     detailFields = new PropertyTable(detailFieldsModel);
     detailFields.setTransferHandler(new CrosstabDetailTableTransferHandler(detailFields, detailFieldsModel));
     detailFields.setDragEnabled(true);
+    detailFields.setFillsViewportHeight(true);
     detailFields.setDropMode(DropMode.ON);
 
     super.init();
@@ -458,12 +448,8 @@ public class CreateCrosstabDialog extends CommonDialog
     try
     {
       final String[] columnNames = reportRenderContext.getReportDataSchemaModel().getColumnNames();
-      final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
-      availableFieldsModel.clear();
-      for (int i = 0; i < columnNames.length; i++)
-      {
-        availableFieldsModel.addElement(columnNames[i]);
-      }
+      final DefaultBulkListModel availableFieldsModel = getAvailableFieldsModel();
+      availableFieldsModel.setBulkData(columnNames);
 
       if (performEdit() == false)
       {
@@ -528,6 +514,10 @@ public class CreateCrosstabDialog extends CommonDialog
     ClassicEngineBoot.getInstance().start();
     final CreateCrosstabDialog d = new CreateCrosstabDialog();
     d.getAvailableFieldsModel().addElement("Test"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test2"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test3"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test4"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test5"); // NON-NLS
     d.setModal(true);
     d.setVisible(true);
 

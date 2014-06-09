@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.core.elementfactory;
 
 import java.io.Serializable;
 
-public class CrosstabDimension implements Serializable
+public class CrosstabDimension implements Serializable, Cloneable
 {
   private String field;
   private String title;
@@ -88,5 +88,17 @@ public class CrosstabDimension implements Serializable
   public void setSummaryTitle(final String summaryTitle)
   {
     this.summaryTitle = summaryTitle;
+  }
+
+  public CrosstabDimension clone()
+  {
+    try
+    {
+      return (CrosstabDimension) super.clone();
+    }
+    catch (final CloneNotSupportedException e)
+    {
+      throw new IllegalStateException();
+    }
   }
 }
