@@ -13,6 +13,14 @@
     <attribute-group-ref ref="rich-text-attributes"/>
     <attribute-group-ref ref="label"/>
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+              name="rotation"
+              mandatory="false"
+              expert="true"
+              hidden="false"
+              value-type="java.lang.String"
+              value-role="Value"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>

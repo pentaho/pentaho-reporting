@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedText;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 
@@ -60,7 +61,42 @@ public class LabelType extends AbstractElementType
     {
       return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
     }
-    return String.valueOf(retval);
+    // Check if rotation is needed
+    final String rotation = String.valueOf(element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
+    if (rotation.equals("null") || rotation.equalsIgnoreCase("none"))
+    {
+      return String.valueOf(retval);
+    }
+    else if (rotation.equalsIgnoreCase("left"))
+    {
+      return new ReportDrawableRotatedText(String.valueOf(retval), Float.valueOf(-90), element);
+    }
+    else if (rotation.equalsIgnoreCase("right"))
+    {
+      return new ReportDrawableRotatedText(String.valueOf(retval), Float.valueOf(90), element);
+    }
+    else
+    {
+      try
+      {
+    	// Check if rotation is needed by validating the rotation angle value
+    	Float rotationValue = Float.valueOf(rotation);
+    	if ((rotationValue % 360) == 0)
+    	{
+    	  return String.valueOf(retval);
+    	}
+    	else
+    	{
+    	  return new ReportDrawableRotatedText(String.valueOf(retval), rotationValue, element);
+    	}
+      }
+      catch(NumberFormatException nfe)
+      {
+        return String.valueOf(retval);
+      }
+    	
+    }
+    
   }
 
   public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)

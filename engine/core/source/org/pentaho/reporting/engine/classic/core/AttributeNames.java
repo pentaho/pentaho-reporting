@@ -193,6 +193,8 @@ public class AttributeNames
     public static final String MESSAGE_NULL_VALUE = "message-null-value";
     public static final String VALUE = "value";
     public static final String FIELD = "field";
+    
+    public static final String ROTATION = "rotation";
 
     public static final String FORMAT_STRING = "format-string";
     public static final String NAME = "name";
