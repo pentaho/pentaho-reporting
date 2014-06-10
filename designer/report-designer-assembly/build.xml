@@ -114,6 +114,11 @@
     <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="codegen"/>
     <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
   </target>
+	
+  <target name="resolve-oss-licenses" depends="install-ivy">
+    <ivy:resolve file="${ivyfile}" conf="oss-licenses" />
+    <ivy:retrieve conf="oss-licenses" pattern="${bin.dir}/[module].[ext]" />
+  </target>
 
   <!-- - - - - - - - - - - - - - - - - -
       target: resolve-plugins
@@ -219,6 +224,12 @@
     <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
     <copy file="${resource-mac.dir}/Contents/Resources/Java/launcher.properties"
           todir="${report-designer.dir.mac.java}"/>
+  	
+  	<unzip src="${bin.dir}/oss-licenses.zip" dest="${stage.dir.mac}/Pentaho Report Designer.app">
+  	  	<patternset>
+  	  	   <include name="PentahoReporting_OSS_Licenses.html"/>
+  	  	</patternset>
+  	</unzip>
 
     <!-- put the other resources into the root of the .app -->
     <copy todir="${report-designer.dir.mac}" overwrite="true">
@@ -266,6 +277,12 @@
         <include name="**/*"/>
       </fileset>
     </copy>
+  	
+  	<unzip src="${bin.dir}/oss-licenses.zip" dest="${report-designer.dir.winlinux}">
+  	   <patternset>
+  	      <include name="PentahoReporting_OSS_Licenses.html"/>
+  	   </patternset>
+  	</unzip>
 
     <move file="${report-designer.dir.winlinux}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
           tofile="${report-designer.dir.winlinux}/launcher.jar"/>
@@ -300,7 +317,7 @@
 	
 	
   <!-- The dist target is where everything is assembled -->
-  <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
+  <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, resolve-oss-licenses, dist-winlinux, dist-mac"
           description="Creates the distributables for the Report Designer"/>
 
 
