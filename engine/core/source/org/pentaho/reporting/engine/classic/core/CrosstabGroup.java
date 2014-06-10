@@ -218,9 +218,11 @@ public class CrosstabGroup extends Group
     final CrosstabGroup g = (CrosstabGroup) super.clone();
     g.footer = (GroupFooter) footer.clone();
     g.header = (GroupHeader) header.clone();
+    g.noDataBand = (NoDataBand) noDataBand.clone();
 
     g.registerAsChild(g.footer);
     g.registerAsChild(g.header);
+    g.registerAsChild(g.noDataBand);
     return g;
   }
 
@@ -229,9 +231,11 @@ public class CrosstabGroup extends Group
     final CrosstabGroup g = (CrosstabGroup) super.derive(preserveElementInstanceIds);
     g.footer = (GroupFooter) footer.derive(preserveElementInstanceIds);
     g.header = (GroupHeader) header.derive(preserveElementInstanceIds);
+    g.noDataBand = (NoDataBand) noDataBand.derive(preserveElementInstanceIds);
 
     g.registerAsChild(g.footer);
     g.registerAsChild(g.header);
+    g.registerAsChild(g.noDataBand);
     return g;
   }
 

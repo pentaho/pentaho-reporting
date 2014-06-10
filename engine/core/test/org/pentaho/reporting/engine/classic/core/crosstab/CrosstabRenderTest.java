@@ -22,13 +22,18 @@ import java.awt.print.PageFormat;
 import java.net.URL;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
+import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.NoDataBand;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class CrosstabRenderTest extends TestCase
@@ -74,4 +79,16 @@ public class CrosstabRenderTest extends TestCase
     //ModelPrinter.print(box);
   }
 
+  public void testClone() throws ResourceException
+  {
+    final MasterReport report = new MasterReport();
+    report.getReportHeader().addElement(new CrosstabElement());
+
+    CrosstabElement ct0 = (CrosstabElement) report.getReportHeader().getElement(0);
+    NoDataBand noDataBand0 = ct0.getNoDataBand();
+    MasterReport derive = (MasterReport) report.derive();
+    CrosstabElement ct1 = (CrosstabElement) derive.getReportHeader().getElement(0);
+    NoDataBand noDataBand1 = ct1.getNoDataBand();
+    Assert.assertNotSame(noDataBand0, noDataBand1);
+  }
 }
