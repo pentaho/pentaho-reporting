@@ -602,7 +602,6 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     {
       alignment = paragraphContext.getTextAlignment();
     }
-    DebugLog.log(alignment);
     if (ElementAlignment.LEFT.equals(alignment))
     {
       return Element.ALIGN_LEFT;

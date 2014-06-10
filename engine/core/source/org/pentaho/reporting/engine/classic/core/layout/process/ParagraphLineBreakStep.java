@@ -76,10 +76,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     paragraphNesting = new FastStack<ParagraphLinebreaker>(50);
   }
 
-  public void initialize(final OutputProcessorMetaData metaData)
-  {
-  }
-
   public void compute(final LogicalPageBox root)
   {
     paragraphNesting.clear();
@@ -377,10 +373,6 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
 
   private boolean startBox(final RenderBox box)
   {
-    if (box instanceof RenderableReplacedContentBox)
-    {
-      DebugLog.logHere();
-    }
     if (breakState == null)
     {
       if (box.isLinebreakCacheValid())
