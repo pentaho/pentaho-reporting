@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
-  <attribute-group name="rich-text-attributes">
+  <attribute-group name="rich-text-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="rich-text-type"
                mandatory="false"
@@ -12,7 +13,8 @@
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.RichTextTypePropertyEditor"/>
   </attribute-group>
 
-  <attribute-group name="excel-footer-attributes">
+  <attribute-group name="excel-footer-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/excel"
                name="page-footer-left"
@@ -40,7 +42,8 @@
 
   </attribute-group>
 
-  <attribute-group name="excel-header-attributes">
+  <attribute-group name="excel-header-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/excel"
                name="page-header-left"
@@ -68,7 +71,8 @@
 
   </attribute-group>
 
-  <attribute-group name="band-attributes">
+  <attribute-group name="band-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
                name="generated-content-marker"
                mandatory="false"
@@ -169,7 +173,8 @@
 
   </attribute-group>
 
-  <attribute-group name="root-level-band-attributes">
+  <attribute-group name="root-level-band-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/report-designer/2.0"
                name="VerticalGuideLines"
                mandatory="false"
@@ -1188,7 +1193,8 @@
                value-role="Bundle-Key"/>
   </attribute-group>
 
-  <attribute-group name="resource-message">
+  <attribute-group name="resource-message"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="value"
                mandatory="false"
@@ -1214,7 +1220,8 @@
                value-role="Content"/>
   </attribute-group>
 
-  <attribute-group name="translated-content">
+  <attribute-group name="translated-content"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="resource-identifier"
                mandatory="false"
@@ -1388,6 +1395,5 @@
 
     <style name="invisible-consumes-space" expert="true" hidden="false" mandatory="false" deprecated="false"/>
   </style-group>
-
 
 </meta-data>
