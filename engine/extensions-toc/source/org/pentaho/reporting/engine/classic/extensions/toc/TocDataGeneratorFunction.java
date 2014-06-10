@@ -229,6 +229,8 @@ public class TocDataGeneratorFunction extends AbstractFunction implements PageEv
           model.addColumn("group-value-" + i, Object.class);
         }
       }
+      groupCount = new ArrayList<Integer>(groups.size());
+      groupValues = new ArrayList<Object>(groups.size());
     }
 
     if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
