@@ -30,7 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public abstract class AbstractDataFactory implements DataFactoryDesignTimeSupport, Cloneable
+public abstract class AbstractDataFactory implements DataFactoryDesignTimeSupport, Cloneable, DataFactoryMetaProvider
 {
   private transient Configuration configuration;
   private transient ResourceManager resourceManager;
@@ -135,7 +135,7 @@ public abstract class AbstractDataFactory implements DataFactoryDesignTimeSuppor
     {
       return (DataFactory) super.clone();
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException(e);
     }
@@ -149,6 +149,21 @@ public abstract class AbstractDataFactory implements DataFactoryDesignTimeSuppor
   public DataFactoryMetaData getMetaData()
   {
     return DataFactoryRegistry.getInstance().getMetaData(getClass().getName());
+  }
+
+  public String getDisplayConnectionName()
+  {
+    return null;
+  }
+
+  public Object getQueryHash(final String query, final DataRow dataRow) throws ReportDataFactoryException
+  {
+    return null;
+  }
+
+  public String[] getReferencedFields(final String query, final DataRow dataRow) throws ReportDataFactoryException
+  {
+    return null;
   }
 
   protected static class DataRowWrapper implements DataRow
