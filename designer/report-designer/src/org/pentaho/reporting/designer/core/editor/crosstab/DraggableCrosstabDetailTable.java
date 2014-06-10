@@ -24,18 +24,18 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 import javax.swing.DropMode;
-import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
-import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDimension;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDetail;
+import org.pentaho.reporting.engine.classic.core.function.ItemCountFunction;
 import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTable;
 
-public class DraggableCrosstabDimensionTable extends PropertyTable implements FieldDragSupport
+public class DraggableCrosstabDetailTable extends PropertyTable implements FieldDragSupport
 {
   private UUID dragId;
-  private CrosstabDimensionTableModel dataModel;
+  private CrosstabDetailTableModel dataModel;
 
-  public DraggableCrosstabDimensionTable(final CrosstabDimensionTableModel dm)
+  public DraggableCrosstabDetailTable(final CrosstabDetailTableModel dm)
   {
     super(dm);
     dataModel = dm;
@@ -73,13 +73,13 @@ public class DraggableCrosstabDimensionTable extends PropertyTable implements Fi
     ArrayList<IndexedTransferable.FieldTuple> retval = new ArrayList<IndexedTransferable.FieldTuple>();
     for (final int idx : selectedValues)
     {
-      CrosstabDimension dimension = dataModel.get(idx);
+      CrosstabDetail dimension = dataModel.get(idx);
       retval.add(new IndexedTransferable.FieldTuple(idx, dimension.getField(), dimension.getTitle(), dimension));
     }
     return retval;
   }
 
-  private boolean containsField(String field)
+  private boolean containsField(final String field)
   {
     for (int i = 0; i < getRowCount(); i += 1)
     {
@@ -91,17 +91,17 @@ public class DraggableCrosstabDimensionTable extends PropertyTable implements Fi
     return false;
   }
 
-  private CrosstabDimension toDimension(final IndexedTransferable.FieldTuple tuple)
+  private CrosstabDetail toDimension(final IndexedTransferable.FieldTuple tuple)
   {
     final Object raw = tuple.getRaw();
-    if (raw instanceof CrosstabDimension)
+    if (raw instanceof CrosstabDetail)
     {
-      CrosstabDimension rawDimension = (CrosstabDimension) raw;
+      CrosstabDetail rawDimension = (CrosstabDetail) raw;
       return rawDimension.clone();
     }
     else
     {
-      return new CrosstabDimension(tuple.getValue(), tuple.getTitle());
+      return new CrosstabDetail(tuple.getValue(), tuple.getTitle(), ItemCountFunction.class);
     }
 
   }
@@ -147,9 +147,9 @@ public class DraggableCrosstabDimensionTable extends PropertyTable implements Fi
 
   private int findInsertIndex(final TransferHandler.DropLocation dropLocation)
   {
-    if (dropLocation instanceof JTable.DropLocation)
+    if (dropLocation instanceof DropLocation)
     {
-      JTable.DropLocation dl = (JTable.DropLocation) dropLocation;
+      DropLocation dl = (DropLocation) dropLocation;
       return dl.getRow();
     }
     return rowAtPoint(dropLocation.getDropPoint());

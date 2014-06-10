@@ -40,7 +40,7 @@ public class DraggableJList extends JList implements FieldDragSupport
     bulkModel = dataModel;
     dragId = UUID.randomUUID();
 
-    setTransferHandler(new ListTransferHandler(this));
+    setTransferHandler(new CrosstabDialogTransferHandler(this));
     setDragEnabled(true);
     setDropMode(DropMode.ON);
   }

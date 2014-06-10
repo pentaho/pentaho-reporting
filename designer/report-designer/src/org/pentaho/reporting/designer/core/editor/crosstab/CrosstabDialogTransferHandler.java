@@ -29,18 +29,18 @@ import javax.swing.TransferHandler;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
-public class ListTransferHandler extends TransferHandler
+public class CrosstabDialogTransferHandler extends TransferHandler
 {
   private FieldDragSupport targetList;
   private boolean fieldPool;
 
-  public ListTransferHandler(final FieldDragSupport targetList)
+  public CrosstabDialogTransferHandler(final FieldDragSupport targetList)
   {
     this(targetList, false);
   }
 
-  public ListTransferHandler(final FieldDragSupport targetList,
-                             final boolean fieldPool)
+  public CrosstabDialogTransferHandler(final FieldDragSupport targetList,
+                                       final boolean fieldPool)
   {
     this.targetList = targetList;
     this.fieldPool = fieldPool;
@@ -94,10 +94,6 @@ public class ListTransferHandler extends TransferHandler
 
   public boolean canImport(final TransferSupport support)
   {
-    if (targetList instanceof JTable)
-    {
-      DebugLog.logHere();
-    }
     if (support.isDrop() == false)
     {
       return false;

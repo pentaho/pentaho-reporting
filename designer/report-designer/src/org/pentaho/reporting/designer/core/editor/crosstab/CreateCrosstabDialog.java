@@ -31,7 +31,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -63,7 +62,6 @@ import org.pentaho.reporting.libraries.designtime.swing.bulk.DefaultBulkListMode
 import org.pentaho.reporting.libraries.designtime.swing.bulk.RemoveBulkAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
-import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTable;
 
 public class CreateCrosstabDialog extends CommonDialog
 {
@@ -237,7 +235,7 @@ public class CreateCrosstabDialog extends CommonDialog
     availableFieldsModel = new DefaultBulkListModel();
 
     availableFields = new DraggableJList(availableFieldsModel);
-    availableFields.setTransferHandler(new ListTransferHandler(availableFields, true));
+    availableFields.setTransferHandler(new CrosstabDialogTransferHandler(availableFields, true));
 
     otherFieldsModel = new DefaultBulkListModel();
     otherFields = new DraggableJList(otherFieldsModel);
@@ -250,11 +248,7 @@ public class CreateCrosstabDialog extends CommonDialog
     columnFields = new DraggableCrosstabDimensionTable(columnsFieldsModel);
 
     detailFieldsModel = new CrosstabDetailTableModel();
-    detailFields = new PropertyTable(detailFieldsModel);
-    detailFields.setTransferHandler(new CrosstabDetailTableTransferHandler(detailFields, detailFieldsModel));
-    detailFields.setDragEnabled(true);
-    detailFields.setFillsViewportHeight(true);
-    detailFields.setDropMode(DropMode.ON);
+    detailFields = new DraggableCrosstabDetailTable(detailFieldsModel);
 
     super.init();
   }
