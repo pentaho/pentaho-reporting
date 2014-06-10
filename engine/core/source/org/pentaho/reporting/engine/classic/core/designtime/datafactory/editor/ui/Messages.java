@@ -31,7 +31,7 @@ public class Messages
 {
   private static final Log logger = LogFactory.getLog(Messages.class);
   private static ResourceBundleSupport bundle =
-      new ResourceBundleSupport(Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui",
+      new ResourceBundleSupport(Locale.getDefault(), "org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui.messages",
           ObjectUtilities.getClassLoader(Messages.class));
 
   private Messages()
