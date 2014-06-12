@@ -34,8 +34,8 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 
 public class ReportDrawableRotatedText implements ReportDrawable
 {
-  private final double rotationDegree;
-  private final double rotationRadian;
+  private final Float rotationDegree;
+  private final Double rotationRadian;
   private final String text;
   private final ReportElement element;
 
@@ -43,7 +43,7 @@ public class ReportDrawableRotatedText implements ReportDrawable
   {
     this.text = someText;
     this.rotationDegree = someRotation;
-    this.rotationRadian = Math.toRadians(someRotation);
+    this.rotationRadian = Math.toRadians(someRotation.doubleValue());
     this.element = someElement;
   }
 
@@ -153,7 +153,7 @@ public class ReportDrawableRotatedText implements ReportDrawable
     return this.rotationRadian;
   }
   
-  public Double getRotationDegree(){
+  public Float getRotationDegree(){
     return this.rotationDegree;
   }
   

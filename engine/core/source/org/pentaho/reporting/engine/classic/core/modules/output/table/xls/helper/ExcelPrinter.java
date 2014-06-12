@@ -31,7 +31,6 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -451,7 +450,9 @@ public class ExcelPrinter
 
         if (applyCellValue(metaData, content, cell, sheetLayout, rectangle, contentOffset))
         {
-          mergeCellRegion(rectangle, row, col, sheetLayout, logicalPage, content, contentProducer);
+          // TODO: better rotation integration with code
+          mergeCellRegion(rectangle, row, col, sheetLayout, logicalPage, content, contentProducer,
+              cell.getCellStyle().getRotation());
         }
 
         content.setFinishedTable(true);
@@ -473,7 +474,7 @@ public class ExcelPrinter
                                final SheetLayout sheetLayout,
                                final LogicalPageBox logicalPage,
                                final RenderBox content,
-                               final TableContentProducer contentProducer)
+                               final TableContentProducer contentProducer, final short rotation)
   {
     if (content == null)
     {
@@ -502,6 +503,8 @@ public class ExcelPrinter
         final CellStyle spannedStyle = cellStyleProducer.createCellStyle(content, bg);
         if (spannedStyle != null)
         {
+          //TODO: integrate rotation better with stylesheet keys and HSSFCellStyleProducer
+          spannedStyle.setRotation( rotation );
           regionCell.setCellStyle(spannedStyle);
         }
       }
@@ -576,11 +579,9 @@ public class ExcelPrinter
           // XLS
           if (rotate >= -90 && rotate <= 90)
           {
-            HSSFCellStyle style = ((HSSFCell)cell).getCellStyle();
-            style.setRotation((short) (rotate));
-            cell.setCellStyle(style);
+            cell.getCellStyle().setRotation((short)rotate);
             cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
-            return false;
+            return true;
           }
         }
         else if (cell instanceof XSSFCell)
@@ -592,7 +593,7 @@ public class ExcelPrinter
             style.setRotation((short) (rotate));
             cell.setCellStyle(style);
             cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
-            return false;
+            return true;
           }
           else if (rotate >= -90 && rotate < 0)
           {
@@ -601,7 +602,7 @@ public class ExcelPrinter
             style.setRotation((short) (90 + -1*rotate));
             cell.setCellStyle(style);
             cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
-            return false;
+            return true;
           }
         }
       }

@@ -17,16 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GraphicsEnvironment;
-import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -53,14 +46,12 @@ import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.GlobalStyleManager;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlTextExtractorState;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleManager;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedText;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
@@ -947,25 +938,15 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       if (drawable.getBackend() instanceof ReportDrawableRotatedText)
       {
         final ReportDrawableRotatedText reportDrawable = (ReportDrawableRotatedText) drawable.getBackend();
-        //Set Style for rotation
-        styleBuilder.clear();
-        // Streching text
-        //styleBuilder.append( DefaultStyleBuilder.CSSKeys.CLEAR, "both" );
-        //styleBuilder.append( DefaultStyleBuilder.CSSKeys.DISPLAY, "inline-block" );
-        // Text one-liner
-        //styleBuilder.append( DefaultStyleBuilder.CSSKeys.OVERFLOW, "hidden" );
-        //styleBuilder.append( DefaultStyleBuilder.CSSKeys.WHITE_SPACE, "nowrap" );
         DecimalFormat dc = new DecimalFormat("#.000000");
         final String cos = dc.format(Math.cos(reportDrawable.getRotationDegree().doubleValue()*Math.PI/180d)),
             M12 = dc.format(-1d*Math.sin(reportDrawable.getRotationDegree().doubleValue()*Math.PI/180d)),
             sin = dc.format(Math.sin(reportDrawable.getRotationDegree().doubleValue()*Math.PI/180d));
         
-        final AttributeList attrList = new AttributeList();
-        styleManager.updateStyle(styleBuilder, attrList);
         // force style class name to update
-        final String rotationClassName = "r"+(System.currentTimeMillis()+Math.abs(reportDrawable.getRotationDegree())+reportDrawable.getText()).hashCode();
-        //attrList.setAttribute( HtmlPrinter.XHTML_NAMESPACE, "class", "rotate-"+(hashCode>0?hashCode:(-hashCode)) ); //attrList.getAttribute(HtmlPrinter.XHTML_NAMESPACE, "class")
-        // we have to avoid IE8 CSS rotation code in IE9+ browsers
+        final String rotationClassName = "r"+(reportDrawable.getText()+reportDrawable.getPreferredSize().getHeight()+reportDrawable.getPreferredSize().getWidth()+sin+System.currentTimeMillis()).hashCode();
+        
+        // avoid IE8 CSS rotation code in IE9+ browsers
         xmlWriter.writeText("<style> "+
             "\n@media all\\0 { "+
               "."+rotationClassName+" { "+
@@ -980,9 +961,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         String hAlign = String.valueOf(reportDrawable.getElement().getStyle().getStyleProperty(ElementStyleKeys.ALIGNMENT));
         xmlWriter.writeText("<div style='text-align: inherit; vertical-align: inherit; display: inline-block;'>\n");
         xmlWriter.writeText("<div class='"+rotationClassName+"' style='clear: both; display: inline-block; overflow: hidden; white-space: nowrap;'>\n");
-        //xmlWriter.writeTag(HtmlPrinter.XHTML_NAMESPACE, DIV_TAG, attrList, XmlWriterSupport.OPEN);
         xmlWriter.writeText( reportDrawable.getText() );
-        //xmlWriter.writeCloseTag();
         xmlWriter.writeText("\n </div>\n"
     	+ "<script>\n"
         + "var elems = document.getElementsByTagName('div');\n"
@@ -1004,9 +983,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         else if (hAlign.equals(String.valueOf(ElementAlignment.RIGHT)))
         {
         	xmlWriter.writeText("  if (currEl.parentNode.parentNode.offsetWidth >= currEl.offsetWidth){\n"
-        	     + "     mStr += ( (currEl.offsetWidth/2)-currEl.offsetHeight -((currEl.offsetWidth/2)*Math.abs("+cos+")) +(currEl.offsetHeight/2)*Math.abs("+sin+") )+',';\n"
+        	     + "     mStr += ( currEl.offsetWidth/2 -((currEl.offsetWidth/2)*Math.abs("+cos+")) -((currEl.offsetHeight/2)*Math.abs("+sin+")) )+',';\n"
         	     + "  }else{\n"
-        	     + "     mStr += ( currEl.parentNode.parentNode.offsetWidth-(currEl.offsetWidth/2) -(currEl.offsetWidth/2)*Math.abs("+cos+") -(currEl.offsetHeight/2)*Math.abs("+sin+") )+',';\n"
+        	     + "     mStr += ( currEl.parentNode.parentNode.offsetWidth-(currEl.offsetWidth/2+currEl.offsetHeight/8) -(currEl.offsetWidth/2)*Math.abs("+cos+") -(currEl.offsetHeight/2)*Math.abs("+sin+") )+',';\n"
         	     + "  }\n");
         }
         else if (hAlign.equals(String.valueOf(ElementAlignment.CENTER)))
@@ -1014,7 +993,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         	xmlWriter.writeText("  if (currEl.parentNode.parentNode.offsetWidth >= currEl.offsetWidth){\n"
                  + "     mStr += '0,';\n"
            	     + "  }else{\n"
-           	     + "     mStr += ( (currEl.parentNode.parentNode.offsetWidth/2+currEl.offsetHeight/2-currEl.offsetWidth/2) -(currEl.offsetWidth/2)*Math.abs("+cos+") -(currEl.offsetHeight/2)*Math.abs("+sin+") )+',';\n"
+           	     + "     mStr += ( currEl.parentNode.parentNode.offsetWidth/2+currEl.offsetHeight/2-currEl.offsetWidth/2 -(currEl.offsetWidth/2)*Math.abs("+cos+") -(currEl.offsetHeight/2)*Math.abs("+sin+") )+',';\n"
            	     + "  }\n");
         }
         /* vertical translation */
@@ -1033,17 +1012,15 @@ public class HtmlTextExtractor extends DefaultTextExtractor
 		xmlWriter.writeText(" var sheet = document.createElement('style');\n"
         + " sheet.innerHTML = '."+rotationClassName+"{ ';\n"
         /* CSS3 IE 10.0, Firefox 16, Opera 12.1 */
-        + " sheet.innerHTML += 'transform:'+mStr;\n"
+        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.TRANSFORM.getCssName()+":'+mStr;\n"
         /* IE 9.0 */
-        + " sheet.innerHTML += '-ms-transform:'+mStr;\n"
+        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.MS_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Chrome 12.0, Opera 15.0, Safari 3.1 */
-        + " sheet.innerHTML += '-webkit-transform:'+mStr;\n"
+        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.WEBKIT_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Firefox 3.5 */
-        + " sheet.innerHTML += '-moz-transform:'+mStr;\n"
+        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.MOZ_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Opera 10.5 */
-        + " sheet.innerHTML += '-o-transform:'+mStr+' }';\n"
-		//+ " sheet.innerHTML += 'display: inline-block }';\n"
-		//+ " sheet.innerHTML += 'clear: both; display: inline-block; overflow: hidden; white-space: nowrap; }';\n"
+        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.O_TRANSFORM.getCssName()+":'+mStr+' }';\n"
         + " document.body.appendChild(sheet);\n"
         + "</script>");
         
