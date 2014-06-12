@@ -80,7 +80,7 @@ public class LabelType extends AbstractElementType
       try
       {
     	// Check if rotation is needed by validating the rotation angle value
-    	final Float rotationValue = Float.valueOf( Float.valueOf(rotation).floatValue() % 360);
+    	final Float rotationValue = Float.valueOf(rotation).floatValue() % 360f;
     	if (rotationValue.floatValue() == 0)
     	{
     	  return String.valueOf(retval);

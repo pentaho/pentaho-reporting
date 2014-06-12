@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core.util;
 
 import java.awt.Graphics2D;
 import java.awt.Dimension;
-import java.awt.font.FontRenderContext;
-import java.awt.font.GlyphVector;
+import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
 
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -49,11 +48,12 @@ public class ReportDrawableRotatedText implements ReportDrawable
 
   public void draw(final Graphics2D graphics2D, final Rectangle2D bounds)
   {
-    final int textWidth = graphics2D.getFontMetrics().stringWidth(this.text),
-        textHeight = graphics2D.getFontMetrics().getHeight();// + graphics2D.getFontMetrics().getHeight()/2; // textHeight value is underlining text, small case chars go 'lower'
-    // textHeightgraphics2D.getFontMetrics().getAscent()+graphics2D.getFontMetrics().getDescent()+graphics2D.getFontMetrics().getLeading();
+    final int textWidth = graphics2D.getFontMetrics().stringWidth(this.text);
+    final LineMetrics lm = graphics2D.getFontMetrics().getLineMetrics(this.text,graphics2D);
+    final float textHeight = lm.getHeight();
+    
     String vAlign = String.valueOf(element.getStyle().getStyleProperty(ElementStyleKeys.VALIGNMENT));
-    String hAlign = String.valueOf(element.getStyle().getStyleProperty(ElementStyleKeys.ALIGNMENT));
+    String hAlign = String.valueOf(element.getStyle().getStyleProperty(ElementStyleKeys.ALIGNMENT));    
     
     // half dimension
     final float centerX = (float)bounds.getMaxX()/2f,
@@ -61,53 +61,39 @@ public class ReportDrawableRotatedText implements ReportDrawable
     
     // coordinates to draw text centered
     final float drawX = ((float)bounds.getMaxX() - textWidth) / 2,
-        drawY = ((float)bounds.getMaxY() + textHeight) / 2;
+        drawY = (((float)bounds.getMaxY() + lm.getAscent()) / 2);
     
     // translate coordinates
     float translateX = 0f, translateY = 0f;
     if ( hAlign.equals("null") || hAlign.equals(String.valueOf(ElementAlignment.LEFT)) || hAlign.equals(String.valueOf(ElementAlignment.JUSTIFY)) )
     {
-      //translateX = -centerX + (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) + (textHeight/2f)*(float)Math.abs(Math.sin(this.rotationRadian));
       if( (this.rotationDegree > 0 && this.rotationDegree <= 180) || (this.rotationDegree > -360 && this.rotationDegree <= -180) ){
-        translateX = -centerX + (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) + (textHeight/4f)*(float)Math.abs(Math.sin(this.rotationRadian));
+        translateX = -centerX + (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) + (lm.getAscent()/2+lm.getDescent())*(float)Math.abs(Math.sin(this.rotationRadian));
       }else{
-        translateX = -centerX + (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) + (3f*textHeight/4f)*(float)Math.abs(Math.sin(this.rotationRadian));
+        translateX = -centerX + (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) + (textHeight/2f)*(float)Math.abs(Math.sin(this.rotationRadian));
       }
     }
     else if (hAlign.equals(String.valueOf(ElementAlignment.RIGHT)))
     {
-      //translateX = centerX - (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) - (textHeight/2f)*(float)Math.abs(Math.sin(this.rotationRadian));
       if( (this.rotationDegree > 0 && this.rotationDegree <= 180) || (this.rotationDegree > -360 && this.rotationDegree <= -180) ){
-      translateX = centerX - (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) - (3f*textHeight/4f)*(float)Math.abs(Math.sin(this.rotationRadian));
-      }
-      else{
-      translateX = centerX - (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) - (textHeight/4f)*(float)Math.abs(Math.sin(this.rotationRadian));
+        translateX = centerX - (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) - (textHeight/2f)*(float)Math.abs(Math.sin(this.rotationRadian));
+      }else{
+        translateX = centerX - (textWidth/2f)*(float)Math.abs(Math.cos(this.rotationRadian)) - (lm.getAscent()/2+lm.getDescent())*(float)Math.abs(Math.sin(this.rotationRadian));
       }
     }
     
     if (vAlign.equals("null") || vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.TOP)))
     {
-      //translateY = -centerY + (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) + (textHeight/2f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      if( (this.rotationDegree > -90 && this.rotationDegree < 90) || (this.rotationDegree > 270 || (this.rotationDegree > -270 && this.rotationDegree <= -180)) ) {
-        translateY = -centerY + (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) + (textHeight/4f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      }
-      else{
-      translateY = -centerY + (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) + (3f*textHeight/4f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      }
+      translateY = -centerY + (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) + (lm.getAscent()/2+lm.getDescent())*(float)Math.abs(Math.cos(this.rotationRadian));
     }
     else if (vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.BOTTOM)))
     {
-      //translateY = centerY - (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) - (textHeight/2f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      if( (this.rotationDegree > -90 && this.rotationDegree < 90) || (this.rotationDegree > 270 || this.rotationDegree < -270) ) {
-      translateY = centerY - (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) - (3f*textHeight/4f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      }else{
-      translateY = centerY - (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) - (textHeight/4f)*(float)Math.abs(Math.cos(this.rotationRadian));
-      }
+      translateY = centerY - (textWidth/2f)*(float)Math.abs(Math.sin(this.rotationRadian)) - (textHeight/2f)*(float)Math.abs(Math.cos(this.rotationRadian));
     }
 
     graphics2D.translate(translateX,translateY);
     graphics2D.rotate(-this.rotationRadian, centerX, centerY);
-    graphics2D.drawString(this.text, drawX, drawY);
+    graphics2D.drawString(this.text, drawX, drawY-(lm.getDescent()/2));
   }
 
   public boolean isKeepAspectRatio()
