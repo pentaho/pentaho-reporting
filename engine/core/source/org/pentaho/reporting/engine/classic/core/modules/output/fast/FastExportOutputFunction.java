@@ -160,7 +160,6 @@ public class FastExportOutputFunction extends AbstractFunction implements Output
 
   public void clearInlineSubreports(final SubReportProcessType processType)
   {
-    throw new UnsupportedOperationException("Inline-SubReports are not supported by this export type.");
   }
 
   public void restart(final ReportState state) throws ReportProcessingException
