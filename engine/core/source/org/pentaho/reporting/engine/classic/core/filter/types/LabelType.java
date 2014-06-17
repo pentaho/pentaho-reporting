@@ -24,7 +24,7 @@ import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedText;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 
@@ -69,11 +69,11 @@ public class LabelType extends AbstractElementType
     }
     else if (rotation.equalsIgnoreCase("left"))
     {
-      return new ReportDrawableRotatedText(String.valueOf(retval), Float.valueOf(-90), element);
+      return new ReportDrawableRotatedComponent(String.valueOf(retval), Float.valueOf(-90), element);
     }
     else if (rotation.equalsIgnoreCase("right"))
     {
-      return new ReportDrawableRotatedText(String.valueOf(retval), Float.valueOf(90), element);
+      return new ReportDrawableRotatedComponent(String.valueOf(retval), Float.valueOf(90), element);
     }
     else
     {
@@ -87,7 +87,7 @@ public class LabelType extends AbstractElementType
     	}
     	else
     	{
-    	  return new ReportDrawableRotatedText(String.valueOf(retval), rotationValue, element);
+    	  return new ReportDrawableRotatedComponent(String.valueOf(retval), rotationValue, element);
     	}
       }
       catch(NumberFormatException nfe)

@@ -76,6 +76,14 @@
     <attribute-group-ref ref="wizard-aggregation"/>
     <attribute-group-ref ref="date-field"/>
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="rotation"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               value-type="java.lang.String"
+               value-role="Value"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>

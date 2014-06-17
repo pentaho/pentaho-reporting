@@ -53,7 +53,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
-import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedText;
+import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -935,9 +935,9 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       // render it into an Buffered image and make it a PNG file.
       final DrawableWrapper drawable = (DrawableWrapper) rawObject;
       
-      if (drawable.getBackend() instanceof ReportDrawableRotatedText)
+      if (drawable.getBackend() instanceof IReportDrawableRotated)
       {
-        final ReportDrawableRotatedText reportDrawable = (ReportDrawableRotatedText) drawable.getBackend();
+        final IReportDrawableRotated reportDrawable = (IReportDrawableRotated) drawable.getBackend();
         DecimalFormat dc = new DecimalFormat("#.000000");
         final String cos = dc.format(Math.cos(reportDrawable.getRotationDegree().doubleValue()*Math.PI/180d)),
             M12 = dc.format(-1d*Math.sin(reportDrawable.getRotationDegree().doubleValue()*Math.PI/180d)),

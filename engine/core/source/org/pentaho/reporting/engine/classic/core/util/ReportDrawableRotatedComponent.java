@@ -31,14 +31,16 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public class ReportDrawableRotatedText implements ReportDrawable
+public class ReportDrawableRotatedComponent implements IReportDrawableRotated
 {
   private final Float rotationDegree;
   private final Double rotationRadian;
   private final String text;
   private final ReportElement element;
 
-  public ReportDrawableRotatedText(final String someText, final Float someRotation, final ReportElement someElement)
+  public ReportDrawableRotatedComponent(final String someText,
+                                        final Float someRotation,
+                                        final ReportElement someElement)
   {
     this.text = someText;
     this.rotationDegree = someRotation;

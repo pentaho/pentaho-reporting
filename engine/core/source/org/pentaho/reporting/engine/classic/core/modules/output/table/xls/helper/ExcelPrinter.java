@@ -72,9 +72,9 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
 import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
-import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedText;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -561,9 +561,9 @@ public class ExcelPrinter
     else if (value instanceof DrawableWrapper)
     {
       final DrawableWrapper drawable = (DrawableWrapper) value;
-      if (drawable.getBackend() instanceof ReportDrawableRotatedText)
+      if (drawable.getBackend() instanceof IReportDrawableRotated)
       {
-        int rotate = ((ReportDrawableRotatedText) drawable.getBackend()).getRotationDegree().intValue();
+        int rotate = ((IReportDrawableRotated) drawable.getBackend()).getRotationDegree().intValue();
         // transform angle values [270,360] => [-90,0] , [-360,-270] => [0,90]
         if (rotate >= 270 && rotate <= 360)
         {
@@ -580,7 +580,7 @@ public class ExcelPrinter
           if (rotate >= -90 && rotate <= 90)
           {
             cell.getCellStyle().setRotation((short)rotate);
-            cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
+            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
             return true;
           }
         }
@@ -592,7 +592,7 @@ public class ExcelPrinter
             XSSFCellStyle style = ((XSSFCell)cell).getCellStyle();
             style.setRotation((short) (rotate));
             cell.setCellStyle(style);
-            cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
+            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
             return true;
           }
           else if (rotate >= -90 && rotate < 0)
@@ -601,7 +601,7 @@ public class ExcelPrinter
             XSSFCellStyle style = ((XSSFCell)cell).getCellStyle();
             style.setRotation((short) (90 + -1*rotate));
             cell.setCellStyle(style);
-            cell.setCellValue(((ReportDrawableRotatedText) drawable.getBackend()).getText());
+            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
             return true;
           }
         }
