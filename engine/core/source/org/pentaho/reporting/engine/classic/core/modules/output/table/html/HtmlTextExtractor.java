@@ -962,19 +962,23 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         xmlWriter.writeText("<div style='text-align: inherit; vertical-align: inherit; display: inline-block;'>\n");
         xmlWriter.writeText("<div class='"+rotationClassName+"' style='clear: both; display: inline-block; overflow: hidden; white-space: nowrap;'>\n");
         xmlWriter.writeText( reportDrawable.getText() );
-        xmlWriter.writeText("\n </div>\n"
-    	+ "<script>\n"
+        xmlWriter.writeText("\n </div></div>\n"
+    	  + "<script>\n"
         + "var elems = document.getElementsByTagName('div');\n"
-    	+ "var currEl = undefined;"
+    	  + "var currEl = undefined;\n"
         + "for (i in elems) {\n"
         + "  if(typeof currEl != 'undefined'){ break; }\n"
         + "  if( (''+elems[i].className).indexOf('"+rotationClassName+"') > -1) {\n"
         + "    currEl = elems[i];\n"
-        + "  } }"
-        // SEVERE: no matching DIV
+        + "  } }\n"
+        // DEBUG: SEVERE: no matching DIV
         + "if(typeof currEl == 'undefined'){ throw 'error: calculating text width'; }\n"
         /* transformation matrix */
         + "var mStr= 'matrix("+cos+","+M12+","+sin+","+cos+",';\n");
+        xmlWriter.writeText("var h=0, v=0;\n"
+        + "var elem = document.createElement('style');\n"
+        + "elem.setAttribute('type','text/css');\n"
+      + "if(elem.innerHTML == '' && !elem.styleSheet){\n");
         /* horizontal translation */
         if ( hAlign.equals("null") || hAlign.equals(String.valueOf(ElementAlignment.LEFT)) || hAlign.equals(String.valueOf(ElementAlignment.JUSTIFY)) )
         {
@@ -1007,21 +1011,56 @@ public class HtmlTextExtractor extends DefaultTextExtractor
         }
         else if (vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.MIDDLE)))
         {
-        	xmlWriter.writeText("   mStr += ( (currEl.parentNode.parentNode.offsetHeight/2+currEl.offsetParent.offsetParent.offsetTop)-(currEl.offsetHeight+currEl.offsetTop) )+');';");
+        	xmlWriter.writeText("   mStr += ( (currEl.parentNode.parentNode.offsetHeight/2+currEl.offsetParent.offsetParent.offsetTop)-(currEl.offsetHeight+currEl.offsetTop) )+');';\n");
         }
-		xmlWriter.writeText(" var sheet = document.createElement('style');\n"
-        + " sheet.innerHTML = '."+rotationClassName+"{ ';\n"
+		    xmlWriter.writeText(" elem.innerHTML = '."+rotationClassName+"{ ';\n"
         /* CSS3 IE 10.0, Firefox 16, Opera 12.1 */
-        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.TRANSFORM.getCssName()+":'+mStr;\n"
+        + " elem.innerHTML += '"+StyleBuilder.CSSKeys.TRANSFORM.getCssName()+":'+mStr;\n"
         /* IE 9.0 */
-        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.MS_TRANSFORM.getCssName()+":'+mStr;\n"
+        + " elem.innerHTML += '"+StyleBuilder.CSSKeys.MS_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Chrome 12.0, Opera 15.0, Safari 3.1 */
-        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.WEBKIT_TRANSFORM.getCssName()+":'+mStr;\n"
+        + " elem.innerHTML += '"+StyleBuilder.CSSKeys.WEBKIT_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Firefox 3.5 */
-        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.MOZ_TRANSFORM.getCssName()+":'+mStr;\n"
+        + " elem.innerHTML += '"+StyleBuilder.CSSKeys.MOZ_TRANSFORM.getCssName()+":'+mStr;\n"
         /* Opera 10.5 */
-        + " sheet.innerHTML += '"+StyleBuilder.CSSKeys.O_TRANSFORM.getCssName()+":'+mStr+' }';\n"
-        + " document.body.appendChild(sheet);\n"
+        + " elem.innerHTML += '"+StyleBuilder.CSSKeys.O_TRANSFORM.getCssName()+":'+mStr+' }';\n"
+        + " document.body.appendChild(elem);\n"
+      + "}else{\n"
+        + " var pCurr = currEl.parentElement;\n"
+        + " var ppCurr = currEl.parentElement.parentElement;\n"
+        + " ppCurr.removeChild(pCurr);\n"
+        + " ppCurr.appendChild(currEl);\n"
+        + " currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal;');\n");
+        /* horizontal translation IE8 */
+        if ( hAlign.equals("null") || hAlign.equals(String.valueOf(ElementAlignment.LEFT)) || hAlign.equals(String.valueOf(ElementAlignment.JUSTIFY)) )
+        {
+          xmlWriter.writeText("  h = 0;\n");
+        }
+        else if (hAlign.equals(String.valueOf(ElementAlignment.RIGHT)))
+        {
+          xmlWriter.writeText("  h = currEl.parentNode.offsetWidth - currEl.offsetWidth;\n");
+        }
+        else if (hAlign.equals(String.valueOf(ElementAlignment.CENTER)))
+        {
+          xmlWriter.writeText("  h = (currEl.parentNode.offsetWidth - currEl.offsetWidth)/2;\n");
+        }
+        //+ " v = ( -(currEl.offsetTop+currEl.parentNode.offsetTop) +(currEl.offsetHeight/2)*Math.abs("+cos+") +(currEl.offsetWidth/2)*Math.abs("+sin+") );\n"
+		    /* vertical translation IE8 */
+		    if (vAlign.equals("null") || vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.TOP)))
+        {
+          xmlWriter.writeText(" v = 0;\n"); // already forced to top
+        }
+        else if (vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.BOTTOM)))
+        {
+          xmlWriter.writeText(" v = ( currEl.parentElement.offsetHeight-currEl.offsetHeight );\n");
+        }
+        else if (vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.MIDDLE)))
+        {
+          xmlWriter.writeText(" v = ( currEl.parentElement.offsetHeight-currEl.offsetHeight )/2;\n");
+        }
+        
+        xmlWriter.writeText(" elem.styleSheet.cssText = '.'+currEl.className+'{ margin-left:'+h+'px; margin-top:'+v+'px;}';\n"
+        + " document.getElementsByTagName('head')[0].appendChild(elem);\n}\n"
         + "</script>");
         
         result = true;
