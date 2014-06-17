@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 /**
@@ -221,18 +222,39 @@ public class HSSFCellStyleProducer
         }
         this.wrapText = isWrapText(styleSheet);
         // read and parse, throws exception if angle out of range [-90,90]
-        final String rotationStr = String.valueOf(content.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
+        String rotationStr = String.valueOf(content.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
         if (!rotationStr.isEmpty() && !rotationStr.equals("null") && !rotationStr.equalsIgnoreCase("none"))
         {
-          final short rotation = (short)(Short.parseShort(rotationStr) % 360);
-          if (rotation >= -90 && rotation <= 90){
-            this.rotation = rotation;
-          }else if (rotation >= 270 && rotation < 360){
-            this.rotation = (short)(rotation - 360);
-          }else if (rotation > -360 && rotation <= -270){
-            this.rotation = (short)(rotation + 360);
-          }else{
-            this.rotation = 0;
+
+          final short rotation;
+
+          if ( RotationUtils.ROTATE_LEFT.equalsIgnoreCase( rotationStr) )
+          {
+            rotation = 90;
+          }
+          else if ( RotationUtils.ROTATE_RIGHT.equalsIgnoreCase( rotationStr) )
+          {
+            rotation = -90;
+          }
+          else if( RotationUtils.isValidNumber( rotationStr ) )
+          {
+            rotation = (short) ( Short.parseShort( rotationStr ) % 360 );
+            if ( rotation >= -90 && rotation <= 90 )
+            {
+              this.rotation = rotation;
+            }
+            else if ( rotation >= 270 && rotation < 360 )
+            {
+              this.rotation = (short) (rotation - 360);
+            }
+            else if ( rotation > -360 && rotation <= -270 )
+            {
+              this.rotation = (short) (rotation + 360);
+            }
+            else
+            {
+              this.rotation = 0;
+            }
           }
         }
       }

@@ -16,13 +16,15 @@
  */
 package org.pentaho.reporting.engine.classic.core.util;
 
-
 import java.awt.Dimension;
+import java.io.IOException;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
 public interface IReportDrawableRotated extends ReportDrawable
 {
+
+  public static enum Type { HTML , PDF , XLS_XLSX };
 
   public boolean isKeepAspectRatio();
 
@@ -35,5 +37,7 @@ public interface IReportDrawableRotated extends ReportDrawable
   public Float getRotationDegree();
 
   public ReportElement getElement();
+
+  public boolean drawRotatedComponent( Object componentWriter , Type componentType ) throws IOException;
 
 }

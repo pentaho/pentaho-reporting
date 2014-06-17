@@ -24,6 +24,8 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class MessageType extends AbstractElementType
@@ -102,7 +104,11 @@ public class MessageType extends AbstractElementType
     {
       return nullValue;
     }
-    return String.valueOf(value);
+    final String valueAsString =  String.valueOf( value );
+
+    final float rotation = RotationUtils.getRotation(element);
+
+    return rotation == RotationUtils.NO_ROTATION ? valueAsString : new ReportDrawableRotatedComponent( valueAsString, rotation, element );
   }
 
   public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)

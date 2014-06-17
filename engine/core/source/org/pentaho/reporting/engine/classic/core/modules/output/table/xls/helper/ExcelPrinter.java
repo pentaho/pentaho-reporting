@@ -561,49 +561,18 @@ public class ExcelPrinter
     else if (value instanceof DrawableWrapper)
     {
       final DrawableWrapper drawable = (DrawableWrapper) value;
-      if (drawable.getBackend() instanceof IReportDrawableRotated)
+      if ( drawable.getBackend() instanceof IReportDrawableRotated )
       {
-        int rotate = ((IReportDrawableRotated) drawable.getBackend()).getRotationDegree().intValue();
-        // transform angle values [270,360] => [-90,0] , [-360,-270] => [0,90]
-        if (rotate >= 270 && rotate <= 360)
+        try
         {
-          rotate = rotate - 360;
-        }
-        else if (rotate >= -360 && rotate <= -270)
-        {
-          rotate = rotate + 360;
-        }
-        // if in range [-90,90] export as cell with rotated text, else export as image
-        if (cell instanceof HSSFCell)
-        {
-          // XLS
-          if (rotate >= -90 && rotate <= 90)
+          if (((IReportDrawableRotated) drawable.getBackend()).drawRotatedComponent(cell, IReportDrawableRotated.Type.XLS_XLSX))
           {
-            cell.getCellStyle().setRotation((short)rotate);
-            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
             return true;
+            // if incompatible angle value then proceed onto exporting as image
           }
-        }
-        else if (cell instanceof XSSFCell)
-        {
-          //XLSX
-          if (rotate >= 0 && rotate <= 90)
-          {
-            XSSFCellStyle style = ((XSSFCell)cell).getCellStyle();
-            style.setRotation((short) (rotate));
-            cell.setCellStyle(style);
-            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
-            return true;
-          }
-          else if (rotate >= -90 && rotate < 0)
-          {
-            // XLSX works funny [-90,0[  => ]90,180]
-            XSSFCellStyle style = ((XSSFCell)cell).getCellStyle();
-            style.setRotation((short) (90 + -1*rotate));
-            cell.setCellStyle(style);
-            cell.setCellValue(((IReportDrawableRotated) drawable.getBackend()).getText());
-            return true;
-          }
+        } catch( IOException e ){
+          ExcelPrinter.logger.error( e );
+          return false;
         }
       }
       final RenderNode rawSource = textExtractor.getRawSource();

@@ -23,6 +23,8 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 
 public class TextFieldType extends AbstractElementType
 {
@@ -73,6 +75,9 @@ public class TextFieldType extends AbstractElementType
     {
       return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
     }
-    return retval;
+
+    final float rotation = RotationUtils.getRotation(element);
+
+    return rotation == RotationUtils.NO_ROTATION ? retval : new ReportDrawableRotatedComponent( retval, rotation, element );
   }
 }
