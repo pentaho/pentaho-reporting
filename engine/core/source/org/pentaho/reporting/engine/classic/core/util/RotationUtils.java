@@ -59,21 +59,19 @@ public class RotationUtils
    */
   public static float getRotationDegreesInXlsAcceptedRange( final String r ) {
 
-    float rotation;
+    final float rotation = getRotation( r );
 
-    // validate & parse string value
-    if ( ( rotation = getRotation( r ) ) == NO_ROTATION ) {
+    // Accepted range is [-90,90] degrees
+    if ( rotation >= -90 && rotation <= 90 ) {
+      return rotation;
+    } else if ( rotation >= 270 && rotation < 360 ) {
+      return rotation - 360;
+    } else if ( rotation > -360 && rotation <= -270 ) {
+      return rotation + 360;
+    } else {
+      // if unsupported degree value, cell content will not be rotated and will be exported as an image
       return NO_ROTATION;
     }
-
-    if ( rotation >= 270 && rotation < 360 ) {
-      rotation = rotation - 360;
-
-    } else if ( rotation > -360 && rotation <= -270 ) {
-      rotation = rotation + 360;
-    }
-
-    return rotation;
   }
 
   public static boolean isValidNumber( String value ) {

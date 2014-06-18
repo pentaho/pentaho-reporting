@@ -47,6 +47,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFPicture;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -1063,6 +1064,10 @@ public class ExcelPrinter
       }
 
       final Picture picture = patriarch.createPicture(anchor, pictureId);
+      if(picture instanceof XSSFPicture)
+      {
+    	picture.resize();
+      }
       ExcelPrinter.logger.info("Created image: " + pictureId + " => " + picture);
     }
     catch (IOException e)
