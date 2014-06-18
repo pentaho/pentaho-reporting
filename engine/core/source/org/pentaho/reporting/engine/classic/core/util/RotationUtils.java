@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 public class RotationUtils
 {
   public static final float NO_ROTATION = 0; // degrees
+  public static final float FULL_ROTATION = 360; // degrees
 
   public static final String ROTATE_LEFT = "left"; //$NON-NLS-1$
   public static final String ROTATE_RIGHT = "right"; //$NON-NLS-1$
@@ -29,31 +30,53 @@ public class RotationUtils
   public static final String ROTATE_NONE = "none"; //$NON-NLS-1$
   public static final String ROTATE_NULL = "null"; //$NON-NLS-1$
 
-  public static float getRotation( final ReportElement element )
-  {
+  public static float getRotation(final ReportElement e) {
 
-    String r = String.valueOf(element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
+    return ( e == null ) ? NO_ROTATION :
+        getRotation( String.valueOf( e.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION ) ) );
+  }
 
-    if ( r != null && !ROTATE_NONE.equalsIgnoreCase( r ) && !ROTATE_NULL.equalsIgnoreCase( r ))
-    {
-      if (ROTATE_LEFT.equalsIgnoreCase( r ))
-      {
-        return Float.valueOf(-90);
-      }
-      else if (ROTATE_RIGHT.equalsIgnoreCase( r ))
-      {
-        return Float.valueOf(90);
-      }
-      else if (isValidNumber( r ))
-      {
+  public static float getRotation( final String r ) {
+
+    if ( r != null && !ROTATE_NONE.equalsIgnoreCase( r ) && !ROTATE_NULL.equalsIgnoreCase( r ) ) {
+
+      if ( ROTATE_LEFT.equalsIgnoreCase( r ) ) {
+        return Float.valueOf( -90 );
+
+      } else if ( ROTATE_RIGHT.equalsIgnoreCase (r ) ) {
+        return Float.valueOf( 90 );
+
+      } else if ( isValidNumber( r ) ) {
         // Check if rotation is needed by validating the rotation angle value
-        return Float.valueOf( r ).floatValue() % 360f;
+        return Float.valueOf( r ).floatValue() % FULL_ROTATION; // remainder
       }
     }
     return NO_ROTATION;
   }
 
-  public static boolean isValidNumber( String value ){
-    return value != null && value.matches("[-+]?[0-9]*\\.?[0-9]+"); // Is a number - int, float, double
+  /*
+   * xls throws exception if angle out of range [-90,90]
+   */
+  public static float getRotationDegreesInXlsAcceptedRange( final String r ) {
+
+    float rotation;
+
+    // validate & parse string value
+    if ( ( rotation = getRotation( r ) ) == NO_ROTATION ) {
+      return NO_ROTATION;
+    }
+
+    if ( rotation >= 270 && rotation < 360 ) {
+      rotation = rotation - 360;
+
+    } else if ( rotation > -360 && rotation <= -270 ) {
+      rotation = rotation + 360;
+    }
+
+    return rotation;
+  }
+
+  public static boolean isValidNumber( String value ) {
+    return value != null && value.matches( "[-+]?[0-9]*\\.?[0-9]+" ); // Is a number - int, float, double
   }
 }

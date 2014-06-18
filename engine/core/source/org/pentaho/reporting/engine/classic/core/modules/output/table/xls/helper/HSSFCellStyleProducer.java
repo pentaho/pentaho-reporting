@@ -222,41 +222,12 @@ public class HSSFCellStyleProducer
         }
         this.wrapText = isWrapText(styleSheet);
         // read and parse, throws exception if angle out of range [-90,90]
-        String rotationStr = String.valueOf(content.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
-        if (!rotationStr.isEmpty() && !rotationStr.equals("null") && !rotationStr.equalsIgnoreCase("none"))
-        {
+        String rotationString = String.valueOf(
+            content.getAttributes().getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION ) );
 
-          final short rotation;
+        float rotationFloat = RotationUtils.getRotationDegreesInXlsAcceptedRange( rotationString );
 
-          if ( RotationUtils.ROTATE_LEFT.equalsIgnoreCase( rotationStr) )
-          {
-            rotation = 90;
-          }
-          else if ( RotationUtils.ROTATE_RIGHT.equalsIgnoreCase( rotationStr) )
-          {
-            rotation = -90;
-          }
-          else if( RotationUtils.isValidNumber( rotationStr ) )
-          {
-            rotation = (short) ( Short.parseShort( rotationStr ) % 360 );
-            if ( rotation >= -90 && rotation <= 90 )
-            {
-              this.rotation = rotation;
-            }
-            else if ( rotation >= 270 && rotation < 360 )
-            {
-              this.rotation = (short) (rotation - 360);
-            }
-            else if ( rotation > -360 && rotation <= -270 )
-            {
-              this.rotation = (short) (rotation + 360);
-            }
-            else
-            {
-              this.rotation = 0;
-            }
-          }
-        }
+        this.rotation = new Integer( Math.round( rotationFloat ) ).shortValue();
       }
     }
 
