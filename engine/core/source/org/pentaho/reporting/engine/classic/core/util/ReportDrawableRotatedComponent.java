@@ -348,23 +348,29 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
         + " var pCurr = currEl.parentElement;\n"
         + " var ppCurr = currEl.parentElement.parentElement;\n"
         + " ppCurr.removeChild(pCurr);\n"
-        + " ppCurr.appendChild(currEl);\n"
-        + " currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal;');\n");
-        /* horizontal translation IE8 */
+        + " ppCurr.appendChild(currEl);\n");
+    /* horizontal translation IE8 */
     if (hAlign.equals("null") || hAlign.equals(String.valueOf(ElementAlignment.LEFT)) || hAlign.equals(String.valueOf(ElementAlignment.JUSTIFY)))
     {
-      ((XmlWriter) writer).writeText("  h = 0;\n");
+      ((XmlWriter) writer).writeText(" currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal;');\n"
+          + "   h = 0;\n");
     }
     else if (hAlign.equals(String.valueOf(ElementAlignment.RIGHT)))
     {
-      ((XmlWriter) writer).writeText("  h = currEl.parentNode.offsetWidth - currEl.offsetWidth;\n");
+      ((XmlWriter) writer).writeText(" currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal;');\n"
+          + "  h = currEl.parentNode.offsetWidth - currEl.offsetWidth;\n");
     }
     else if (hAlign.equals(String.valueOf(ElementAlignment.CENTER)))
     {
-      ((XmlWriter) writer).writeText("  h = (currEl.parentNode.offsetWidth - currEl.offsetWidth)/2;\n");
+      if( getRotationDegree().floatValue() != RotationUtils.NO_ROTATION){
+        ((XmlWriter) writer).writeText(" currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal; text-align: left;');\n"
+            + "  h = (currEl.parentNode.offsetWidth - currEl.offsetWidth)/2;\n");
+      }else{
+        ((XmlWriter) writer).writeText(" currEl.parentNode.setAttribute('style','vertical-align: top; white-space: normal;');\n"
+            + "  h = (currEl.parentNode.offsetWidth - currEl.offsetWidth)/2;\n");
+      }
     }
-    //+ " v = ( -(currEl.offsetTop+currEl.parentNode.offsetTop) +(currEl.offsetHeight/2)*Math.abs("+cos+") +(currEl.offsetWidth/2)*Math.abs("+sin+") );\n"
-        /* vertical translation IE8 */
+    /* vertical translation IE8 */
     if (vAlign.equals("null") || vAlign.equalsIgnoreCase(String.valueOf(VerticalTextAlign.TOP)))
     {
       ((XmlWriter) writer).writeText(" v = 0;\n"); // already forced to top
