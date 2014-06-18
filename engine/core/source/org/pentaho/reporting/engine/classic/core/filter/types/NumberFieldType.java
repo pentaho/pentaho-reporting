@@ -210,7 +210,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
       final float rotation = RotationUtils.getRotation(element);
 
-      return rotation == RotationUtils.NO_ROTATION ? retval : new ReportDrawableRotatedComponent( value, rotation, element );
+      return rotation == RotationUtils.NO_ROTATION ? value : new ReportDrawableRotatedComponent( value, rotation, element );
     }
     catch (Exception e)
     {
