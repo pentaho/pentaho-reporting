@@ -21,7 +21,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.apache.poi.xslf.model.geom.AbsExpression;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
@@ -36,12 +35,13 @@ import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
-import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class RelationalReportBuilder
 {
@@ -140,6 +140,7 @@ public class RelationalReportBuilder
 
   public RelationalReportBuilder(final DesignTimeDataSchemaModel dataSchemaModel)
   {
+    ArgumentNullException.validate("dataSchemaModel", dataSchemaModel);
     groups = new ArrayList<GroupDefinition>();
     details = new ArrayList<RelationalDetail>();
     this.dataSchemaModel = dataSchemaModel;
@@ -153,11 +154,13 @@ public class RelationalReportBuilder
 
   public void setGroupNamePrefix(final String groupNamePrefix)
   {
+    ArgumentNullException.validate("groupNamePrefix", groupNamePrefix);
     this.groupNamePrefix = groupNamePrefix;
   }
 
   public void addGroup(final GroupDefinition g)
   {
+    ArgumentNullException.validate("g", g);
     groups.add(g);
   }
 
@@ -196,7 +199,7 @@ public class RelationalReportBuilder
     RelationalGroup rootGroup = null;
     RelationalGroup innerGroup = null;
 
-    boolean headerPrinted = false ;
+    boolean headerPrinted = false;
 
     if (groups.size() <= 0)
     {
@@ -216,6 +219,7 @@ public class RelationalReportBuilder
         final GroupDefinition groupDefinition = groups.get(i);
         final RelationalGroup g = new RelationalGroup();
         g.addField(groupDefinition.getGroupField());
+        g.setName(computeGroupName(groupDefinition));
         configureGroupHeader(groupDefinition, g, headerPrinted);
         configureGroupFooter(groupDefinition, g, headerPrinted);
         if (rootGroup == null)
@@ -246,6 +250,15 @@ public class RelationalReportBuilder
       band.addElement(createFieldItem(relationalDetail.getField(), null, relationalDetail.getBackground()));
     }
     return rootGroup;
+  }
+
+  protected String computeGroupName(final GroupDefinition g)
+  {
+    if (StringUtils.isEmpty(getGroupNamePrefix()))
+    {
+      return g.getGroupField();
+    }
+    return getGroupNamePrefix() + g.getGroupField();
   }
 
   private void configureGroupFooter(final GroupDefinition groupDefinition,
@@ -363,6 +376,7 @@ public class RelationalReportBuilder
   {
     return createLabel(text, 80);
   }
+
   private Element createLabel(final String text, float width)
   {
     final Element element = new Element();
