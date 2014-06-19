@@ -31,7 +31,7 @@ public class FastExcelReportUtil
   {
   }
 
-  public static void processXls(MasterReport report, OutputStream out) throws ReportProcessingException, IOException
+  public static void processXls(final MasterReport report, final OutputStream out) throws ReportProcessingException, IOException
   {
     ReportStructureValidator validator = new ReportStructureValidator();
     if (validator.isValidForFastProcessing(report) == false)
@@ -46,12 +46,12 @@ public class FastExcelReportUtil
     out.flush();
   }
 
-  public static void processXlsx(MasterReport report, OutputStream out) throws ReportProcessingException, IOException
+  public static void processXlsx(final MasterReport report, final OutputStream out) throws ReportProcessingException, IOException
   {
     ReportStructureValidator validator = new ReportStructureValidator();
     if (validator.isValidForFastProcessing(report) == false)
     {
-      ExcelReportUtil.createXLS(report, out);
+      ExcelReportUtil.createXLSX(report, out);
       return;
     }
 
