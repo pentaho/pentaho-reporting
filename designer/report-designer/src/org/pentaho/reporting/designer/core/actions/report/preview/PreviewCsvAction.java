@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.report.preview;
 
@@ -33,9 +33,12 @@ import org.pentaho.reporting.designer.core.util.ExternalToolLauncher;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewParametersDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.csv.FastCsvExportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StreamCSVOutputProcessor;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -66,8 +69,8 @@ public final class PreviewCsvAction extends AbstractReportContextAction
       return;
     }
 
-    final MasterReport reportElement = getActiveContext().getMasterReportElement();
-    final Component parent = getReportDesignerContext().getParent();
+    final MasterReport reportElement = getActiveContext().getContextRoot();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     if (PreviewParametersDialog.process(window, reportElement))
     {
@@ -112,10 +115,21 @@ public final class PreviewCsvAction extends AbstractReportContextAction
         final FileOutputStream fout = new FileOutputStream(tempFile);
         try
         {
-          final BufferedOutputStream bout = new BufferedOutputStream(fout);
-          final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(bout);
 
-          final StreamReportProcessor reportProcessor = new StreamReportProcessor(report, target);
+          final BufferedOutputStream bout = new BufferedOutputStream(fout);
+
+          ReportProcessor reportProcessor;
+          ReportStructureValidator validator = new ReportStructureValidator();
+          if (validator.isValidForFastProcessing(report) == false)
+          {
+            final StreamCSVOutputProcessor target = new StreamCSVOutputProcessor(bout);
+            reportProcessor = new StreamReportProcessor(report, target);
+          }
+          else
+          {
+            reportProcessor = new FastCsvExportProcessor(report, bout);
+          }
+
           reportProcessor.addReportProgressListener(progressDialog);
           progressDialog.setVisibleInEDT(true);
 

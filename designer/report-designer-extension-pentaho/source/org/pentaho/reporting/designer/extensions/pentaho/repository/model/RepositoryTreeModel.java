@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.model;
 
 import java.util.LinkedList;
@@ -39,6 +56,7 @@ public class RepositoryTreeModel implements TreeModel
   private String[] filters;
   private EventListenerList listenerList;
   private boolean showFoldersOnly;
+  private boolean showHiddenFiles;
   private RepositoryTreeRoot root;
   private static final String[] EMPTY_FILTER = new String[0];
 
@@ -69,6 +87,17 @@ public class RepositoryTreeModel implements TreeModel
   public boolean isShowFoldersOnly()
   {
     return showFoldersOnly;
+  }
+
+  public boolean isShowHiddenFiles()
+  {
+    return showHiddenFiles;
+  }
+
+  public void setShowHiddenFiles(final boolean showHiddenFiles)
+  {
+    this.showHiddenFiles = showHiddenFiles;
+    fireTreeDataChanged();
   }
 
   public String[] getFilters()
@@ -140,6 +169,10 @@ public class RepositoryTreeModel implements TreeModel
         {
           continue;
         }
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER &&
             PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
         {
@@ -196,6 +229,10 @@ public class RepositoryTreeModel implements TreeModel
       {
         final FileObject child = children[i];
         if (isShowFoldersOnly() && child.getType() != FileType.FOLDER)
+        {
+          continue;
+        }
+        if (isShowHiddenFiles() == false && child.isHidden())
         {
           continue;
         }
@@ -294,6 +331,10 @@ public class RepositoryTreeModel implements TreeModel
       {
         final FileObject child = childs[i];
         if (isShowFoldersOnly() && child.getType() != FileType.FOLDER)
+        {
+          continue;
+        }
+        if (isShowHiddenFiles() == false && child.isHidden())
         {
           continue;
         }

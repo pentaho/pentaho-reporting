@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.wizard;
 
@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.wizard.model.DefaultDetailFieldDefinition;
@@ -74,7 +75,8 @@ public class GeneratorTest extends TestCase
 
     final ProcessingContext processingContext = new DefaultProcessingContext();
     final DefaultFlowController flowController = new DefaultFlowController
-        (processingContext, report.getDataSchemaDefinition(), new ReportParameterValues());
+        (processingContext, report.getDataSchemaDefinition(), new ReportParameterValues(),
+            new NoOpPerformanceMonitorContext());
 
     final WizardProcessor processor = new WizardProcessor();
     final MasterReport masterReport = processor.performPreProcessing(report, flowController);

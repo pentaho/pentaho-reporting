@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.sampledata;
 
@@ -22,10 +22,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Driver;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -33,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class SampleDataModuleInitializer implements ModuleInitializer
 {
@@ -52,8 +55,9 @@ public class SampleDataModuleInitializer implements ModuleInitializer
   {
     try
     {
-      Class.forName("org.hsqldb.jdbcDriver");
-      populateDatabase();
+      Driver driver = ObjectUtilities.loadAndInstantiate
+          ("org.hsqldb.jdbcDriver", SampleDataModuleInitializer.class, Driver.class);
+      populateDatabase(driver);
     }
     catch (Exception e)
     {
@@ -65,10 +69,14 @@ public class SampleDataModuleInitializer implements ModuleInitializer
 
   }
 
-  private void populateDatabase()
+  private void populateDatabase(Driver driver)
       throws SQLException, IOException
   {
-    final Connection connection = DriverManager.getConnection("jdbc:hsqldb:mem:SampleData", "sa", "");
+    Properties p = new Properties();
+    p.setProperty("user", "sa");
+    p.setProperty("password", "");
+    final Connection connection = driver.connect("jdbc:hsqldb:mem:SampleData", p);
+    connection.setAutoCommit(false);
     try
     {
       final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
@@ -90,24 +98,18 @@ public class SampleDataModuleInitializer implements ModuleInitializer
           String line;
           while ((line = bin.readLine()) != null)
           {
-            try
+            if (line.startsWith("CREATE SCHEMA ") ||
+                line.startsWith("CREATE USER SA ") ||
+                line.startsWith("GRANT DBA TO SA"))
             {
-              statement.execute(line);
+              // ignore the error, HSQL sucks
             }
-            catch (SQLException e)
+            else
             {
-              if (line.startsWith("CREATE SCHEMA ") ||
-                  line.startsWith("CREATE USER SA ") ||
-                  line.startsWith("GRANT DBA TO SA"))
-              {
-                // ignore the error, HSQL sucks
-              }
-              else
-              {
-                throw e;
-              }
+              statement.addBatch(StringEscapeUtils.unescapeJava(line));
             }
           }
+          statement.executeBatch();
         }
         finally
         {
@@ -118,6 +120,8 @@ public class SampleDataModuleInitializer implements ModuleInitializer
       {
         bin.close();
       }
+
+      connection.commit();
     }
     finally
     {

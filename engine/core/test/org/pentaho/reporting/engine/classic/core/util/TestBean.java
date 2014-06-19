@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2009 Pentaho Corporation, Object Refinery Limited and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.util;
 
@@ -24,6 +24,7 @@ import java.util.Arrays;
 /**
  * Needed for the BeanUtilityTest class.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class TestBean
 {
   private String simpleString;
@@ -31,14 +32,14 @@ public class TestBean
   private boolean simpleBool;
   private double simpleDouble;
   private Color simpleColor;
-  private ArrayList fullyIndexed;
+  private ArrayList<String> fullyIndexed;
   private String[] arrayOnly;
-  private ArrayList indexOnly;
+  private ArrayList<String> indexOnly;
 
   public TestBean ()
   {
-    indexOnly = new ArrayList();
-    fullyIndexed = new ArrayList();
+    indexOnly = new ArrayList<String>();
+    fullyIndexed = new ArrayList<String>();
   }
 
   public String[] getArrayOnly ()
@@ -53,7 +54,7 @@ public class TestBean
 
   public String[] getFullyIndexed ()
   {
-    return (String[]) fullyIndexed.toArray(new String [fullyIndexed.size()]);
+    return fullyIndexed.toArray(new String [fullyIndexed.size()]);
   }
 
   public void setFullyIndexed (final String[] fullyIndexed)
@@ -67,7 +68,7 @@ public class TestBean
 
   public String getFullyIndexed (final int idx)
   {
-    return (String) fullyIndexed.get(idx);
+    return fullyIndexed.get(idx);
   }
 
   public void setFullyIndexed (final int idx, final String indexOnly)
@@ -84,7 +85,7 @@ public class TestBean
 
   public String getIndexOnly (final int idx)
   {
-    return (String) indexOnly.get(idx);
+    return indexOnly.get(idx);
   }
 
   public void setIndexOnly (final int idx, final String indexOnly)

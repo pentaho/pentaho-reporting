@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.openformula.ui;
 
@@ -90,16 +90,19 @@ public class FormulaEditorDialog extends CommonDialog
     return panel.getEditor(function);
   }
 
+  @Deprecated
   public String getFormulaText()
   {
     return panel.getFormulaText();
   }
 
+  @Deprecated
   public void setFormulaText(final String formulaText)
   {
     panel.setFormulaText(formulaText);
   }
 
+  @Deprecated
   public void setFields(final FieldDefinition[] fields)
   {
     panel.setFields(fields);
@@ -118,6 +121,7 @@ public class FormulaEditorDialog extends CommonDialog
     }
 
     panel.setFields(fields);
+
     if (StringUtils.isEmpty(formula, true))
     {
       panel.setFormulaText("=");
@@ -127,9 +131,9 @@ public class FormulaEditorDialog extends CommonDialog
       panel.setFormulaText(formula);
     }
     if (!super.performEdit())
-    {
-      return null;
-    }
+  {
+    return null;
+  }
 
     final String formulaText = panel.getFormulaText();
     if (StringUtils.isEmpty(formulaText, true) || formulaText.trim().equals("="))
@@ -139,6 +143,7 @@ public class FormulaEditorDialog extends CommonDialog
     return formulaText;
   }
 
+  @Deprecated
   public String editFormulaFragment(final String formula, final FieldDefinition[] fields)
   {
     if (fields == null)

@@ -1,24 +1,24 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.fonts.registry;
 
 import org.pentaho.reporting.libraries.fonts.LibFontsDefaults;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * An placeholder metrics for buggy fonts.
@@ -34,8 +34,8 @@ public class EmptyFontMetrics implements FontMetrics
   public EmptyFontMetrics(final FontNativeContext record, final double baseWidth, final double baseHeight)
   {
     this.record = record;
-    this.baseSize = StrictGeomUtility.toInternalValue(baseHeight);
-    this.baseWidth = StrictGeomUtility.toInternalValue(baseWidth);
+    this.baseSize = FontStrictGeomUtility.toInternalValue(baseHeight);
+    this.baseWidth = FontStrictGeomUtility.toInternalValue(baseWidth);
   }
 
   public EmptyFontMetrics(final FontNativeContext record, final long baseWidth, final long baseHeight)
@@ -62,12 +62,12 @@ public class EmptyFontMetrics implements FontMetrics
    */
   public long getAscent()
   {
-    return StrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_ASCENT_SIZE);
+    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_ASCENT_SIZE);
   }
 
   public long getDescent()
   {
-    return StrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_DESCENT_SIZE);
+    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_DESCENT_SIZE);
   }
 
   public long getLeading()
@@ -83,7 +83,7 @@ public class EmptyFontMetrics implements FontMetrics
    */
   public long getXHeight()
   {
-    return StrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE);
+    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE);
   }
 
   public long getOverlinePosition()
@@ -98,7 +98,7 @@ public class EmptyFontMetrics implements FontMetrics
 
   public long getStrikeThroughPosition()
   {
-    return StrictGeomUtility.toInternalValue(getXHeight() * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
+    return FontStrictGeomUtility.toInternalValue(getXHeight() * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
   }
 
   public long getMaxAscent()

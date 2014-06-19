@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.editor.drilldown;
 
 import java.awt.BorderLayout;
@@ -5,7 +22,6 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -52,11 +68,13 @@ public class DrillDownEditor extends JPanel
   private ReportDesignerContext designerContext;
   private DrillDownUiProfile selectedProfile;
   private boolean editFormulaFragment;
+  private String[] fields;
 
   public DrillDownEditor()
   {
     // this.drillDownSelector = drillDownSelector;
     editorContainer = new JPanel();
+    fields = new String[0];
     editorContainer.setLayout(new BorderLayout());
 
     final JPanel cardHolder = new JPanel();
@@ -125,7 +143,7 @@ public class DrillDownEditor extends JPanel
     try
     {
       drillDownEditor = uiProfile.createUI();
-      drillDownEditor.init(DrillDownEditor.this, designerContext, model);
+      drillDownEditor.init(DrillDownEditor.this, designerContext, model, fields);
       editorContainer.add(drillDownEditor.getEditorPanel());
       editorContainer.revalidate();
     }
@@ -180,8 +198,15 @@ public class DrillDownEditor extends JPanel
   public boolean initialize(final ReportDesignerContext designerContext,
                             final String linkFormula,
                             final String tooltipFormula,
-                            final String targetFormula)
+                            final String targetFormula,
+                            final String[] fields)
   {
+    if (fields == null)
+    {
+      throw new NullPointerException();
+    }
+    this.fields = fields.clone();
+
     this.model.setTargetFormula(targetFormula);
     this.model.setTooltipFormula(tooltipFormula);
     if (designerContext != null)

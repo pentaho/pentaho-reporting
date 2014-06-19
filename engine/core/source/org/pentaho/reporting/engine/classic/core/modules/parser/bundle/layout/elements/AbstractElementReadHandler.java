@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ClassicEngineFactoryParameters;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.StyleExpressionHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
@@ -42,6 +43,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 import org.pentaho.reporting.engine.classic.core.util.beans.ValueConverter;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -73,6 +75,19 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
   protected AbstractElementReadHandler(final ElementType elementType) throws ParseException {
     this();
     initialize(elementType);
+  }
+
+  protected void autoInit() throws ParseException
+  {
+    String tagName = getTagName();
+    String uri = getUri();
+    ElementMetaData elementType = ElementTypeRegistry.getInstance().getElementType(tagName);
+    if (ObjectUtilities.equal(uri, elementType.getNamespace()) == false)
+    {
+      throw new ParseException("Metadata not registered, and auto-registration does not match namespace");
+    }
+    this.metaData = elementType;
+    this.element = createElement();
   }
 
   protected void initialize(final ElementType elementType)
@@ -143,7 +158,7 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
       return;
     }
 
-    if ("Resource".equals(attributeMetaData.getValueRole())) {
+    if (ElementMetaData.VALUEROLE_RESOURCE.equals(attributeMetaData.getValueRole())) {
       try {
         final Object type = attributes.getAttribute(AttributeNames.Core.NAMESPACE, "resource-type");
         if ("url".equals(type)) {
@@ -266,6 +281,14 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
         bulkexpressions.add(readHandler);
         return readHandler;
       }
+      else if ("attribute".equals(tagName)) {
+        String namespace = atts.getValue(getUri(), "namespace");
+        String attrName = atts.getValue(getUri(), "name");
+
+        final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(namespace, attrName);
+        bulkattributes.add(readHandler);
+        return readHandler;
+      }
     }
     if (BundleNamespaces.STYLE.equals(uri)) {
       if ("element-style".equals(tagName)) {
@@ -273,9 +296,14 @@ public abstract class AbstractElementReadHandler extends AbstractXmlReadHandler 
       }
     }
 
-    final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(uri, tagName);
-    bulkattributes.add(readHandler);
-    return readHandler;
+    if (metaData.getAttributeDescription(uri, tagName) != null )
+    {
+      final BulkAttributeReadHandler readHandler = new BulkAttributeReadHandler(uri, tagName);
+      bulkattributes.add(readHandler);
+      return readHandler;
+    }
+
+    return null;
   }
 
   /**

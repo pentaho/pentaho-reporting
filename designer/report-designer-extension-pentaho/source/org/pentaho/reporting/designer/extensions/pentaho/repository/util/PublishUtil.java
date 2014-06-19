@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.util;
 
 import java.io.ByteArrayOutputStream;
@@ -5,8 +22,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Locale;
 import java.text.MessageFormat;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
@@ -27,13 +46,13 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.Bu
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.pensol.PentahoSolutionsFileSystemConfigBuilder;
 import org.pentaho.reporting.libraries.pensol.PublishRestUtil;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
-import  org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 public class PublishUtil
 {
@@ -43,19 +62,19 @@ public class PublishUtil
   public static final String SERVER_VERSION = "server-version";
   public static final int SERVER_VERSION_SUGAR = 5;
   public static final int SERVER_VERSION_LEGACY = 4;
-  private static final String SLASH = "/";
-  private static final String COLON_SEP = ":";
   private static final int HTTP_RESPONSE_FAIL = 504; //RepresentS an unknown rest failure as this code
   private static final int HTTP_RESPONSE_OK = 200;
 
-
-
-
   private static final String TIMEOUT = "timeout";
 
+  protected static String reservedChars = "/\\\t\r\n";
+
+  protected static String reservedCharsDisplay = "/, \\, TAB, CR, LF";
+  
+  private static Pattern containsReservedCharsPattern = makePattern(reservedChars);  
+  
   private PublishUtil()
   {
-
   }
 
   public static ReportRenderContext openReport(final ReportDesignerContext context,
@@ -68,7 +87,7 @@ public class PublishUtil
       throw new IOException("Path is empty.");
     }
 
-    final String urlPath =  URLEncoder.encode(path,"UTF-8");
+    final String urlPath =  path.replaceAll("%", "%25").replaceAll("%2B", "+").replaceAll("\\!", "%21").replaceAll(":", "%3A");
     final FileObject connection = createVFSConnection(loginData);
     final FileObject object = connection.resolveFile(urlPath);
     if (object.exists() == false)
@@ -116,9 +135,7 @@ public class PublishUtil
     final String urlMessage = config.getConfigProperty
         ("org.pentaho.reporting.designer.extensions.pentaho.repository.LaunchReport");
 
-    final MessageFormat fmt = new MessageFormat(urlMessage);
-    final String urlPath = path.replace(SLASH,COLON_SEP);
-    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(urlPath, "UTF-8"));
+    final String fullRepoViewerPath = MessageFormat.format(urlMessage,URLEncoder.encode(RepositoryPathEncoder.encodeRepositoryPath(path), "UTF-8"));
     final String url = baseUrl + fullRepoViewerPath;
 
     ExternalToolLauncher.openURL(url);
@@ -271,4 +288,52 @@ public class PublishUtil
     }
     return prefix.append(url2).toString();
   }
+  
+  private static Pattern makePattern(String reservedChars) 
+  {
+    // escape all reserved characters as they may have special meaning to regex engine
+    StringBuilder buf = new StringBuilder();
+    buf.append(".*["); //$NON-NLS-1$
+    for (int i=0;i<reservedChars.length();i++) 
+    {
+      buf.append( "\\" ); //$NON-NLS-1$
+      buf.append(reservedChars.substring(i, i + 1));
+    }
+    buf.append("]+.*"); //$NON-NLS-1$
+    return Pattern.compile(buf.toString());
+  }  
+  
+  /**
+   * Checks for presence of black listed chars as well as illegal permutations of legal chars.
+   */
+  public static boolean validateName(final String name) 
+  {
+    return !StringUtils.isEmpty(name, true) && 
+      name.trim().equals( name ) && // no leading or trailing whitespace
+      !containsReservedCharsPattern.matcher( name ).matches() && // no reserved characters
+      !".".equals( name ) && // no . //$NON-NLS-1$
+      !"..".equals( name ) ;  // no .. //$NON-NLS-1$
+  }  
+  
+  public static void setReservedChars(String reservedChars) 
+  {
+    containsReservedCharsPattern = makePattern( reservedChars );
+  }
+  
+  public static Pattern getPattern() 
+  {
+    return containsReservedCharsPattern;
+  }
+  
+  public static String getReservedCharsDisplay()
+  {
+    return reservedCharsDisplay;
+  }
+  
+  public static void setReservedCharsDisplay(String reservedCharsDisplay) 
+  {
+    PublishUtil.reservedCharsDisplay = reservedCharsDisplay;
+  }  
+  
+  
 }

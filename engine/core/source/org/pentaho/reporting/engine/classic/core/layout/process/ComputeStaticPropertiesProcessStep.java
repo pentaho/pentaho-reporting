@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -26,7 +26,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
+import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
@@ -40,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
  * Computes the width for all elements. This uses the CSS algorithm, percentages are resolved against the parent's
@@ -56,12 +59,14 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private static final StaticRootChunkWidthUpdate ROOT = new StaticRootChunkWidthUpdate();
 
   private OutputProcessorMetaData metaData;
+  private ResourceManager resourceManager;
   private boolean overflowXSupported;
   private boolean overflowYSupported;
   private boolean widowsEnabled;
   private StaticChunkWidthUpdate chunkWidthUpdate;
   private StaticChunkWidthUpdatePool chunkWidthUpdatePool;
   private boolean widowOrphanDefinitionsEncountered;
+  private boolean designTime;
 
   public ComputeStaticPropertiesProcessStep()
   {
@@ -76,6 +81,8 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     this.overflowYSupported = metaData.isFeatureSupported(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     this.widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
     this.widowOrphanDefinitionsEncountered = false;
+    this.designTime = metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    this.resourceManager = processingContext.getResourceManager();
   }
 
   public boolean isWidowOrphanDefinitionsEncountered()
@@ -127,6 +134,12 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
 
   protected void processOtherNode(final RenderNode node)
   {
+    if (node instanceof RenderableComplexText)
+    {
+      RenderableComplexText t = (RenderableComplexText) node;
+      t.computeMinimumChunkWidth(metaData, resourceManager);
+    }
+
     chunkWidthUpdate.update(node.getMinimumChunkWidth());
   }
 
@@ -251,12 +264,29 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
   private void computeResolvedStyleProperties(final RenderBox box, final StaticBoxLayoutProperties sblp)
   {
     final StyleSheet style = box.getStyleSheet();
+
+    NodeLayoutProperties nlp = box.getNodeLayoutProperties();
+    if (designTime)
+    {
+      // at design-time elements can be generated that are not visible in the final output
+      // the report designer needs them to create a smooth design experience.
+      RenderBox parent = box.getParent();
+      if (parent == null)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+      else if (parent.isEmptyNodesHaveSignificance() == false)
+      {
+        nlp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
+      }
+    }
+
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_LINEBOX)
+    if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
     {
       sblp.setAvoidPagebreakInside(true);
     }
-    else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
+    else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW || nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX)
     {
       sblp.setAvoidPagebreakInside(style.getBooleanStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true));
     }
@@ -291,16 +321,29 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
         (ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, nodeType == LayoutNodeTypes.TYPE_BOX_ROWBOX));
     sblp.setVisible(style.getBooleanStyleProperty(ElementStyleKeys.VISIBLE));
 
-    if (box.getParent() != null &&
+    final RenderBox parent = box.getParent();
+    if (parent != null &&
         style.getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0) == 0 &&
         style.getDoubleStyleProperty(ElementStyleKeys.WIDTH, 0) == 0)
     {
+      // todo: Should that flag also take paddings and borders of the parent into account?
+      // They alter the available space for the childs, and thus it would make sense to establish a new
+      // context for resolving percentage-widths
+
       // only a box with a parent can try to inherit a context ..
-      sblp.setUndefinedWidth(true);
+      if ((parent.getLayoutNodeType() & LayoutNodeTypes.TYPE_BOX_BLOCK) == LayoutNodeTypes.TYPE_BOX_BLOCK)
+      {
+        // a block level box always creates a block-context.
+        sblp.setDefinedWidth(true);
+      }
+      else
+      {
+        sblp.setDefinedWidth(false);
+      }
     }
     else
     {
-      sblp.setUndefinedWidth(false);
+      sblp.setDefinedWidth(true);
     }
   }
 
@@ -353,7 +396,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     if (changeTracker == age)
     {
       // update the parent
-      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      if (box.isVisible())
+      {
+        chunkWidthUpdate.update(box.getMinimumChunkWidth());
+      }
       return;
     }
 
@@ -363,7 +409,10 @@ public final class ComputeStaticPropertiesProcessStep extends IterateSimpleStruc
     boxUpdate.finish();
 
     chunkWidthUpdate = chunkWidthUpdate.pop();
-    chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    if (box.isVisible())
+    {
+      chunkWidthUpdate.update(box.getMinimumChunkWidth());
+    }
   }
 
 

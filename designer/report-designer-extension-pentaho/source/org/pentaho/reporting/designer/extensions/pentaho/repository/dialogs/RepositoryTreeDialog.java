@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -33,6 +33,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,6 +56,33 @@ import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
 
 public class RepositoryTreeDialog extends CommonDialog
 {
+  private class ShowHiddenFilesAction extends AbstractAction
+  {
+    private ShowHiddenFilesAction()
+    {
+      putValue(Action.NAME, Messages.getInstance().getString("ShowHiddenFilesAction.Name"));
+      setSelected(Boolean.FALSE);
+    }
+
+    private Boolean getSelected()
+    {
+      return (Boolean) this.getValue(Action.SELECTED_KEY);
+    }
+
+    private void setSelected(final Boolean selected)
+    {
+      this.putValue (Action.SELECTED_KEY, selected);
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      repositoryTreeModel.setShowHiddenFiles(Boolean.TRUE.equals(getSelected()));
+    }
+  }
+
   private class DoubleClickHandler extends MouseAdapter
   {
     private DoubleClickHandler()
@@ -307,13 +335,12 @@ public class RepositoryTreeDialog extends CommonDialog
 
 
     c = new GridBagConstraints();
+    c.anchor = GridBagConstraints.WEST;
     c.insets = new Insets(0, 10, 5, 10);
     c.gridx = 0;
     c.gridy = 2;
-    c.fill = GridBagConstraints.BOTH;
-    c.weightx = 1.0;
-    c.weighty = 1.0;
-
+    c.fill = GridBagConstraints.HORIZONTAL;
+    panel.add(new JCheckBox(new ShowHiddenFilesAction()));
     return panel;
   }
 

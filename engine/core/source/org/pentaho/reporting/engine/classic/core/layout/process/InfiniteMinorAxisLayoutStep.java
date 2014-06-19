@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -63,7 +63,7 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    nodeContext.updateX2(box.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth());
+    nodeContext.updateX2(nodeContext.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth());
   }
 
   protected MinorAxisNodeContext getNodeContext()
@@ -108,7 +108,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -119,7 +122,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -173,7 +179,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
 
     node.setCachedX(computeCanvasPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishCanvasLevelBox(final RenderBox box)
@@ -182,7 +191,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -194,7 +206,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -218,8 +233,16 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     final RenderNode prev = node.getPrev();
     if (prev != null)
     {
-      // we have a sibling. Position yourself directly to the right of your sibling ..
-      return prev.getCachedX() + prev.getCachedWidth();
+      if (prev.isVisible())
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX() + prev.getCachedWidth();
+      }
+      else
+      {
+        // we have a sibling. Position yourself directly to the right of your sibling ..
+        return prev.getCachedX();
+      }
     }
     else
     {
@@ -255,7 +278,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
 
     node.setCachedX(computeRowPosition(node));
     node.setCachedWidth(node.getMaximumBoxWidth());
-    nodeContext.updateParentX2(node.getCachedX2());
+    if (node.isVisible())
+    {
+      nodeContext.updateParentX2(node.getCachedX2());
+    }
   }
 
   protected void finishRowLevelBox(final RenderBox box)
@@ -264,7 +290,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -275,7 +304,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       {
         box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
       }
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -344,7 +376,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     {
       if (checkCacheValid(box))
       {
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
         return;
       }
 
@@ -362,7 +397,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
         box.setContentAreaX1(nodeContext.getX1());
         box.setContentAreaX2(nodeContext.getX2());
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally
@@ -396,7 +434,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       box.setContentAreaX2(nodeContext.getX2());
       box.setCachedWidth(resolveTableWidthOnFinish(box));
 
-      nodeContext.updateParentX2(box.getCachedX2());
+      if (box.isVisible())
+      {
+        nodeContext.updateParentX2(box.getCachedX2());
+      }
     }
     finally
     {
@@ -465,7 +506,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
       {
         // break-marker boxes etc.
         box.setCachedWidth(resolveTableWidthOnFinish(box));
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
       else
       {
@@ -478,7 +522,10 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
         {
           table.getColumnModel().updateCellSize(cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets());
         }
-        nodeContext.updateParentX2(box.getCachedX2());
+        if (box.isVisible())
+        {
+          nodeContext.updateParentX2(box.getCachedX2());
+        }
       }
     }
     finally

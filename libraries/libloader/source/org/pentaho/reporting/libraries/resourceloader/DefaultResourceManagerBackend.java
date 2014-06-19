@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.resourceloader;
 
@@ -34,6 +34,8 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
   private ArrayList<ResourceLoader> resourceLoaders;
   private ArrayList<ResourceBundleLoader> resourceBundleLoaders;
   private ArrayList<ResourceFactory> resourceFactories;
+  private boolean registeredFactories;
+  private boolean registeredLoaders;
 
   public DefaultResourceManagerBackend()
   {
@@ -42,7 +44,8 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
     resourceFactories = new ArrayList<ResourceFactory>();
   }
 
-  public synchronized ResourceKey createKey(final Object data, final Map<? extends ParameterKey, ? extends Object> parameters)
+  public synchronized ResourceKey createKey(final Object data,
+                                            final Map<? extends ParameterKey, ?> parameters)
       throws ResourceKeyCreationException
   {
     if (data == null)
@@ -90,7 +93,7 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
    */
   public synchronized ResourceKey deriveKey(final ResourceKey parent,
                                             final String path,
-                                            final Map<? extends ParameterKey, ? extends Object> parameters)
+                                            final Map<? extends ParameterKey, ?> parameters)
       throws ResourceKeyCreationException
   {
     if (parent == null)
@@ -295,8 +298,9 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
 
   private boolean isSupportedTarget(final Class target, final ResourceFactory fact)
   {
-    final Class factoryType = fact.getFactoryType();
-    if (target != null && target.isAssignableFrom(factoryType))
+    final Class<?> factoryType = fact.getFactoryType();
+    // strict tests. We do no longer allow sub-class matching, as this yields
+    if (target != null && factoryType != null && factoryType.equals(target))
     {
       return true;
     }
@@ -418,6 +422,12 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
 
   public void registerDefaultFactories()
   {
+    if (registeredFactories == true)
+    {
+      return;
+    }
+
+    registeredFactories = true;
     final Configuration config = LibLoaderBoot.getInstance().getGlobalConfig();
     final Iterator itType = config.findPropertyKeys(ResourceManager.FACTORY_TYPE_PREFIX);
     while (itType.hasNext())
@@ -425,14 +435,13 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
       final String key = (String) itType.next();
       final String factoryClass = config.getConfigProperty(key);
 
-      final Object maybeFactory = ObjectUtilities.loadAndInstantiate(factoryClass, ResourceManager.class,
-          ResourceFactory.class);
-      if (maybeFactory instanceof ResourceFactory == false)
+      final ResourceFactory factory =
+          ObjectUtilities.loadAndInstantiate(factoryClass, ResourceManager.class, ResourceFactory.class);
+      if (factory == null)
       {
         continue;
       }
 
-      final ResourceFactory factory = (ResourceFactory) maybeFactory;
       factory.initializeDefaults();
       registerFactory(factory);
     }
@@ -440,6 +449,13 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
 
   public void registerDefaultLoaders()
   {
+    if (registeredLoaders == true)
+    {
+      return;
+    }
+
+    registeredLoaders = true;
+
     final Configuration config = LibLoaderBoot.getInstance().getGlobalConfig();
     final Iterator<String> it = config.findPropertyKeys(ResourceManager.LOADER_PREFIX);
     while (it.hasNext())
@@ -504,9 +520,10 @@ public class DefaultResourceManagerBackend implements ResourceManagerBackend
    * @param bundleKey
    * @param serializedKey the String serialized key to be deserialized  @returns the <code>ResourceKey</code> that has been deserialized
    * @throws ResourceKeyCreationException indicates an error trying to create the <code>ResourceKey</code>
-   * from the deserialized version
+   *                                      from the deserialized version
    */
-  public ResourceKey deserialize(final ResourceKey bundleKey, final String serializedKey) throws ResourceKeyCreationException
+  public ResourceKey deserialize(final ResourceKey bundleKey,
+                                 final String serializedKey) throws ResourceKeyCreationException
   {
     if (serializedKey == null)
     {

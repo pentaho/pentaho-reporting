@@ -1,0 +1,2798 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="47" row-count="36">
+    <cols>
+      <column width="3.333"/>
+      <column width="0.001"/>
+      <column width="1.333"/>
+      <column width="1.333"/>
+      <column width="9.334"/>
+      <column width="1.333"/>
+      <column width="4.666"/>
+      <column width="5.333"/>
+      <column width="3.334"/>
+      <column width="13.333"/>
+      <column width="3.333"/>
+      <column width="128.667"/>
+      <column width="8"/>
+      <column width="4"/>
+      <column width="37.667"/>
+      <column width="0.333"/>
+      <column width="28"/>
+      <column width="3"/>
+      <column width="18.334"/>
+      <column width="8.666"/>
+      <column width="1.334"/>
+      <column width="2.333"/>
+      <column width="12.333"/>
+      <column width="1.334"/>
+      <column width="9.332"/>
+      <column width="1.334"/>
+      <column width="10.667"/>
+      <column width="13.333"/>
+      <column width="33.667"/>
+      <column width="1"/>
+      <column width="1.333"/>
+      <column width="24.667"/>
+      <column width="7"/>
+      <column width="8.333"/>
+      <column width="8"/>
+      <column width="5.334"/>
+      <column width="5.333"/>
+      <column width="28.667"/>
+      <column width="2"/>
+      <column width="20.666"/>
+      <column width="12.668"/>
+      <column width="1.333"/>
+      <column width="3.332"/>
+      <column width="4.334"/>
+      <column width="3.667"/>
+      <column width="2.666"/>
+      <column width="2"/>
+    </cols>
+    <row height="3.333">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="3" col-span="16">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="INVOICE / FACTURE"/>
+        <line type="ParagraphPoolBox" x="183.4075" y="0.0" width="135.184" height="14.0" color="black" font-face="Serif" font-size="14" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="183.4075" y="0.0" width="57.498" height="14.0">INVOICE</text>
+          <spacer width="3.878" height="0.0" preserve="true"/>
+          <text x="244.7835" y="0.0" width="3.878" height="14.0">/</text>
+          <spacer width="3.878" height="0.0" preserve="true"/>
+          <text x="252.5395" y="0.0" width="66.052" height="14.0">FACTURE</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14.001">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Facture n*: "/>
+        <line type="ParagraphPoolBox" x="370.0" y="3.333" width="51.64" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="370.0" y="3.333" width="33.88" height="10.0">Facture</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="406.65" y="3.333" width="12.22" height="10.0">n*:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="60.666">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="8">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Facture Date: "/>
+        <line type="ParagraphPoolBox" x="370.0" y="17.334" width="63.3" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="370.0" y="17.334" width="33.88" height="10.0">Facture</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="406.65" y="17.334" width="23.88" height="10.0">Date:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="15.333">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Client :"/>
+        <line type="ParagraphPoolBox" x="274.667" y="78.0" width="24.872" height="8.0" color="black" font-face="Serif" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="274.667" y="78.0" width="20.44" height="8.0">Client</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="297.323" y="78.0" width="2.216" height="8.0">:</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="2.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="2" col-span="13">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Langley Travel AB&#x000a;Box 53004 &#x000a;400 14  Göteborg&#x000a;Suède"/>
+        <line type="ParagraphPoolBox" x="284.667" y="93.333" width="81.65" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="284.667" y="93.333" width="35.02" height="10.0">Langley</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="322.457" y="93.333" width="27.77" height="10.0">Travel</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="352.997" y="93.333" width="13.32" height="10.0">AB</text>
+        </line>
+        <line type="ParagraphPoolBox" x="284.667" y="103.333" width="50.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="284.667" y="103.333" width="17.22" height="10.0">Box</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="304.657" y="103.333" width="27.8" height="10.0">53004</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="335.227" y="103.333" width="0.0" height="10.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="284.667" y="113.333" width="77.78" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="284.667" y="113.333" width="16.68" height="10.0">400</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="304.117" y="113.333" width="11.12" height="10.0">14</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="320.777" y="113.333" width="41.67" height="10.0">Göteborg</text>
+        </line>
+        <line type="ParagraphPoolBox" x="284.667" y="123.333" width="28.9" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="284.667" y="123.333" width="28.9" height="10.0">Suède</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="62.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="SARL Fort Royal Resort&#x000a;Lieu dit « Petit Bas Vent »&#x000a;97126 Deshaies, Guadeloupe&#x000a;&#x000a;"/>
+        <line type="ParagraphPoolBox" x="43.333" y="96.0" width="107.17" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="43.333" y="96.0" width="26.1" height="10.0">SARL</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="72.203" y="96.0" width="17.76" height="10.0">Fort</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="92.733" y="96.0" width="25.56" height="10.0">Royal</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="121.063" y="96.0" width="29.44" height="10.0">Resort</text>
+        </line>
+        <line type="ParagraphPoolBox" x="43.333" y="106.0" width="114.94" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="43.333" y="106.0" width="18.9" height="10.0">Lieu</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="65.003" y="106.0" width="10.55" height="10.0">dit</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="78.323" y="106.0" width="5.56" height="10.0">«</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="86.653" y="106.0" width="19.98" height="10.0">Petit</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="109.403" y="106.0" width="17.22" height="10.0">Bas</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="129.393" y="106.0" width="20.55" height="10.0">Vent</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="152.713" y="106.0" width="5.56" height="10.0">»</text>
+        </line>
+        <line type="ParagraphPoolBox" x="43.333" y="116.0" width="118.667" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="43.333" y="116.0" width="27.8" height="10.0">97126</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="73.903" y="116.0" width="44.45" height="10.0">Deshaies,</text>
+        </line>
+        <line type="ParagraphPoolBox" x="43.333" y="126.0" width="54.47" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="43.333" y="126.0" width="54.47" height="10.0">Guadeloupe</text>
+        </line>
+        <line type="ParagraphPoolBox" x="43.333" y="136.0" width="0.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="43.333" y="136.0" width="0.0" height="10.0"></text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="8.667">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="6">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="6" col-span="8">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant TTC &#x000a;Taxe de séjour incluse&#x000a;"/>
+        <line type="ParagraphPoolBox" x="459.811" y="28.0" width="48.856" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="459.811" y="28.0" width="28.888" height="8.0">Montant</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="490.915" y="28.0" width="15.536" height="8.0">TTC</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="508.667" y="28.0" width="0.0" height="8.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="479.779" y="36.0" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="479.779" y="36.0" width="17.776" height="8.0">Taxe</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="499.771" y="36.0" width="8.896" height="8.0">de</text>
+        </line>
+        <line type="ParagraphPoolBox" x="459.771" y="44.0" width="48.896" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="459.771" y="44.0" width="21.784" height="8.0">séjour</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="483.771" y="44.0" width="24.896" height="8.0">incluse</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="5" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant&#x000a;Taxe de Séjour&#x000a;"/>
+        <line type="ParagraphPoolBox" x="428.446" y="28.0" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="428.446" y="28.0" width="28.888" height="8.0">Montant</text>
+        </line>
+        <line type="ParagraphPoolBox" x="428.446" y="36.0" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="428.446" y="36.0" width="17.776" height="8.0">Taxe</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="448.438" y="36.0" width="8.896" height="8.0">de</text>
+        </line>
+        <line type="ParagraphPoolBox" x="434.222" y="44.0" width="23.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="434.222" y="44.0" width="23.112" height="8.0">Séjour</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="7.333">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="4" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant Hors Taxes"/>
+        <line type="ParagraphPoolBox" x="331.112" y="28.0" width="28.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="331.112" y="28.0" width="28.888" height="8.0">Montant</text>
+        </line>
+        <line type="ParagraphPoolBox" x="343.112" y="36.0" width="16.888" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="343.112" y="36.0" width="16.888" height="8.0">Hors</text>
+        </line>
+        <line type="ParagraphPoolBox" x="338.224" y="44.0" width="21.776" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="338.224" y="44.0" width="21.776" height="8.0">Taxes</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="4">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="3" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Nbre Clients"/>
+        <line type="ParagraphPoolBox" x="228.6655" y="36.0" width="21.0015" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="228.6655" y="36.0" width="17.336" height="8.0">Nbre</text>
+        </line>
+        <line type="ParagraphPoolBox" x="225.1135" y="44.0" width="24.44" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="225.1135" y="44.0" width="24.44" height="8.0">Clients</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="3" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Adultes"/>
+        <line type="ParagraphPoolBox" x="254.3345" y="44.0" width="26.664" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="254.3345" y="44.0" width="26.664" height="8.0">Adultes</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="3" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Enfants"/>
+        <line type="ParagraphPoolBox" x="285.1145" y="44.0" width="27.104" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="285.1145" y="44.0" width="27.104" height="8.0">Enfants</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="2">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="2" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA"/>
+        <line type="ParagraphPoolBox" x="399.131" y="44.0" width="15.536" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="399.131" y="44.0" width="15.536" height="8.0">TVA</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <empty-cell/>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hôtel ID"/>
+        <line type="ParagraphPoolBox" x="3.333" y="44.0" width="28.872" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="3.333" y="44.0" width="18.664" height="8.0">Hôtel</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="24.213" y="44.0" width="7.992" height="8.0">ID</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hôtels"/>
+        <line type="ParagraphPoolBox" x="46.666" y="44.0" width="22.664" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="46.666" y="44.0" width="22.664" height="8.0">Hôtels</text>
+        </line>
+      </cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Semaine"/>
+        <line type="ParagraphPoolBox" x="187.333" y="44.0" width="31.56" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="187.333" y="44.0" width="31.56" height="8.0">Semaine</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="2.666">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="0.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumClients"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+        <line type="ParagraphPoolBox" x="236.109" y="57.333" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="236.109" y="57.333" width="4.448" height="8.0">0</text>
+        </line>
+      </cell>
+      <empty-cell/>
+      <cell row-span="1" col-span="2">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumAdultes"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+        <line type="ParagraphPoolBox" x="264.4425" y="57.333" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="264.4425" y="57.333" width="4.448" height="8.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="0"/>
+        <line type="ParagraphPoolBox" x="294.4425" y="57.333" width="4.448" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="294.4425" y="57.333" width="4.448" height="8.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumMontHorsTax"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+        <line type="ParagraphPoolBox" x="348.888" y="57.333" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="348.888" y="57.333" width="11.112" height="8.0">.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="4">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumTVA"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+        <line type="ParagraphPoolBox" x="403.554" y="57.333" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="403.554" y="57.333" width="11.112" height="8.0">.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_SumTDS"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+        <line type="ParagraphPoolBox" x="446.221" y="57.333" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="446.221" y="57.333" width="11.112" height="8.0">.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="7">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;(#,###.00)"/>
+        <line type="ParagraphPoolBox" x="497.555" y="57.333" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="497.555" y="57.333" width="11.112" height="8.0">.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="11.667">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="details-header"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12.333">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="1" col-span="15">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="TVA spécifications"/>
+        <line type="ParagraphPoolBox" x="369.0" y="89.0" width="65.752" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="369.0" y="89.0" width="15.536" height="8.0">TVA</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="386.752" y="89.0" width="48.0" height="8.0">spécifications</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="1">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="3">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="11">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="VATsum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,###.00;-#,###.00"/>
+        <line type="ParagraphPoolBox" x="491.888" y="105.333" width="11.112" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="491.888" y="105.333" width="11.112" height="8.0">.00</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="12">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="50">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="12">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant total TTC"/>
+        <line type="ParagraphPoolBox" x="349.382" y="137.333" width="79.95" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="349.382" y="137.333" width="36.11" height="10.0">Montant</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="388.262" y="137.333" width="18.88" height="10.0">total</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="409.912" y="137.333" width="19.42" height="10.0">TTC</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0;-#,##0"/>
+        <line type="ParagraphPoolBox" x="492.44" y="137.333" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="492.44" y="137.333" width="5.56" height="10.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="€"/>
+        <line type="ParagraphPoolBox" x="501.219" y="137.333" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="501.219" y="137.333" width="5.56" height="10.0">€</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+    </row>
+    <row height="55.334">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="31">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Cette facture est établie selon les accords contractuels entre &#x000a;FORT ROYAL RESORT &amp; LANGLEY TRAVEL.&#x000a;Conditions de paiement :  virement bancaire à 30 jours fin de mois"/>
+        <line type="ParagraphPoolBox" x="117.4165" y="187.333" width="270.5" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="117.4165" y="187.333" width="23.88" height="10.0">Cette</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="144.0665" y="187.333" width="30.55" height="10.0">facture</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="177.3865" y="187.333" width="13.33" height="10.0">est</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="193.4865" y="187.333" width="29.45" height="10.0">établie</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="225.7065" y="187.333" width="23.9" height="10.0">selon</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="252.3765" y="187.333" width="12.78" height="10.0">les</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="267.9265" y="187.333" width="35.01" height="10.0">accords</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="305.7065" y="187.333" width="53.89" height="10.0">contractuels</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="362.3665" y="187.333" width="22.78" height="10.0">entre</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="387.9165" y="187.333" width="0.0" height="10.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="147.2065" y="197.333" width="210.92" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="147.2065" y="197.333" width="27.19" height="10.0">FORT</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="177.1665" y="197.333" width="33.87" height="10.0">ROYAL</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="213.8065" y="197.333" width="41.63" height="10.0">RESORT</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="258.2065" y="197.333" width="6.66" height="10.0">&amp;</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="267.6365" y="197.333" width="46.09" height="10.0">LANGLEY</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="316.4965" y="197.333" width="41.63" height="10.0">TRAVEL.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="106.0215" y="207.333" width="293.29" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="106.0215" y="207.333" width="47.23" height="10.0">Conditions</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="156.0215" y="207.333" width="11.12" height="10.0">de</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="169.9115" y="207.333" width="41.12" height="10.0">paiement</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="213.8015" y="207.333" width="2.77" height="10.0">:</text>
+          <spacer width="5.54" height="0.0" preserve="true"/>
+          <text x="222.1115" y="207.333" width="38.33" height="10.0">virement</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="263.2115" y="207.333" width="38.35" height="10.0">bancaire</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="304.3315" y="207.333" width="5.56" height="10.0">à</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="312.6615" y="207.333" width="11.12" height="10.0">30</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="326.5515" y="207.333" width="21.67" height="10.0">jours</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="350.9915" y="207.333" width="10.55" height="10.0">fin</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="364.3115" y="207.333" width="11.12" height="10.0">de</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="378.2015" y="207.333" width="21.11" height="10.0">mois</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="4.666">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="3.333">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-left-color="black" border-left-width="0.5" border-left-style="solid">
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <cell row-span="2" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Montant à payer:"/>
+        <line type="ParagraphPoolBox" x="300.667" y="247.333" width="74.99" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.667" y="247.333" width="36.11" height="10.0">Montant</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="339.547" y="247.333" width="5.56" height="10.0">à</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="347.877" y="247.333" width="27.78" height="10.0">payer:</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="2" col-span="6">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="f_TotalSum"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="#,##0;-#,##0"/>
+        <line type="ParagraphPoolBox" x="473.773" y="247.333" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="473.773" y="247.333" width="5.56" height="10.0">0</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="2" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="€"/>
+        <line type="ParagraphPoolBox" x="484.2195" y="247.333" width="5.56" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="484.2195" y="247.333" width="5.56" height="10.0">€</text>
+        </line>
+      </cell>
+      <empty-cell border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-left-color="black" border-left-width="0.5" border-left-style="solid">
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="3" col-span="9">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Coordonnées Bancaires .&#x000a;BANQUE POPULAIRE&#x000a;Client SARL FORT ROYAL RESORT&#x000a;IBAN : FR76 1680 7001 6531 5062 7121 442&#x000a;BIC/SWIFT : CCBPFRPPGRE&#x000a;&#x000a;"/>
+        <line type="ParagraphPoolBox" x="26.666" y="250.666" width="112.79" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="250.666" width="60.03" height="10.0">Coordonnées</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="89.466" y="250.666" width="44.45" height="10.0">Bancaires</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="136.686" y="250.666" width="2.77" height="10.0">.</text>
+        </line>
+        <line type="ParagraphPoolBox" x="26.666" y="260.666" width="102.14" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="260.666" width="42.19" height="10.0">BANQUE</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="71.626" y="260.666" width="57.18" height="10.0">POPULAIRE</text>
+        </line>
+        <line type="ParagraphPoolBox" x="26.666" y="270.666" width="165.42" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="270.666" width="25.55" height="10.0">Client</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="54.986" y="270.666" width="26.1" height="10.0">SARL</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="83.856" y="270.666" width="27.19" height="10.0">FORT</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="113.816" y="270.666" width="33.87" height="10.0">ROYAL</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="150.456" y="270.666" width="41.63" height="10.0">RESORT</text>
+        </line>
+        <line type="ParagraphPoolBox" x="26.666" y="280.666" width="200.56" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="280.666" width="23.31" height="10.0">IBAN</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="52.746" y="280.666" width="2.77" height="10.0">:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="58.286" y="280.666" width="24.44" height="10.0">FR76</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="85.496" y="280.666" width="22.24" height="10.0">1680</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="110.506" y="280.666" width="22.24" height="10.0">7001</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="135.516" y="280.666" width="22.24" height="10.0">6531</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="160.526" y="280.666" width="22.24" height="10.0">5062</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="185.536" y="280.666" width="22.24" height="10.0">7121</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="210.546" y="280.666" width="16.68" height="10.0">442</text>
+        </line>
+        <line type="ParagraphPoolBox" x="26.666" y="290.666" width="134.84" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="290.666" width="50.48" height="10.0">BIC/SWIFT</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="79.916" y="290.666" width="2.77" height="10.0">:</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="85.456" y="290.666" width="76.05" height="10.0">CCBPFRPPGRE</text>
+        </line>
+        <line type="ParagraphPoolBox" x="26.666" y="300.666" width="0.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="26.666" y="300.666" width="0.0" height="10.0"></text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="18.001">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-left-color="black" border-left-width="0.5" border-left-style="solid">
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Date d'échéance:"/>
+        <line type="ParagraphPoolBox" x="300.667" y="264.666" width="77.47" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="300.667" y="264.666" width="21.11" height="10.0">Date</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="324.547" y="264.666" width="53.59" height="10.0">d'échéance:</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell>
+      </empty-cell>
+      <empty-cell border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="28.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" row-span="1" col-span="11">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Référence de paiement:"/>
+        <line type="ParagraphPoolBox" x="299.333" y="282.667" width="106.67" height="10.0" color="black" font-face="Calibri Light" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="299.333" y="282.667" width="46.12" height="10.0">Référence</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="348.223" y="282.667" width="11.12" height="10.0">de</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="362.113" y="282.667" width="43.89" height="10.0">paiement:</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="9.333">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="6.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-left-color="black" border-left-width="0.5" border-left-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="rectangle"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid">
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="61.333">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-left-color="black" border-left-width="0.5" border-left-style="solid" border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <empty-cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid">
+      </empty-cell>
+      <cell border-bottom-color="black" border-bottom-width="0.5" border-bottom-style="solid" border-right-color="black" border-right-width="0.5" border-right-style="solid" row-span="1" col-span="34">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="*  Pénalités de retard :&#x000a;   - Taux de pénalités exigibles le jour suivant la date d'échéance de règlement inscrite sur la facture. ( art L 441-6 du code de commerce) &#x000a;      Pénalités de retard ne pouvant être inférieures à 3 fois le taux d'intérêt légal (taux annuel) &#x000a;   - Une indemnité forfaitaire de 40 euros (décret 2012-1115 du 2 octobre 2012)&#x000a;*  Escompte pour paiement anticipé (taux mensuel applicable en cas de paiement anticipé)&#x000a;"/>
+        <line type="ParagraphPoolBox" x="21.333" y="16.0" width="79.08" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="16.0" width="3.112" height="8.0">*</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="28.877" y="16.0" width="32.888" height="8.0">Pénalités</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="63.981" y="16.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="75.093" y="16.0" width="20.888" height="8.0">retard</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="98.197" y="16.0" width="2.216" height="8.0">:</text>
+        </line>
+        <line type="ParagraphPoolBox" x="21.333" y="24.0" width="470.0" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="24.0" width="2.664" height="8.0">-</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="26.213" y="24.0" width="17.776" height="8.0">Taux</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="46.205" y="24.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="57.317" y="24.0" width="32.008" height="8.0">pénalités</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="91.541" y="24.0" width="31.12" height="8.0">exigibles</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="124.877" y="24.0" width="6.224" height="8.0">le</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="133.317" y="24.0" width="13.336" height="8.0">jour</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="148.869" y="24.0" width="25.336" height="8.0">suivant</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="176.421" y="24.0" width="6.224" height="8.0">la</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="184.861" y="24.0" width="15.56" height="8.0">date</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="202.637" y="24.0" width="40.656" height="8.0">d'échéance</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="245.509" y="24.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="256.621" y="24.0" width="35.56" height="8.0">règlement</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="294.397" y="24.0" width="25.328" height="8.0">inscrite</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="321.941" y="24.0" width="11.112" height="8.0">sur</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="335.269" y="24.0" width="6.224" height="8.0">la</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="343.709" y="24.0" width="26.656" height="8.0">facture.</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="372.581" y="24.0" width="2.664" height="8.0">(</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="377.461" y="24.0" width="9.328" height="8.0">art</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="389.005" y="24.0" width="4.448" height="8.0">L</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="395.669" y="24.0" width="20.456" height="8.0">441-6</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="418.341" y="24.0" width="8.896" height="8.0">du</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="429.453" y="24.0" width="17.344" height="8.0">code</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="449.013" y="24.0" width="8.896" height="8.0">de</text>
+        </line>
+        <line type="ParagraphPoolBox" x="21.333" y="32.0" width="42.216" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="32.0" width="40.0" height="8.0">commerce)</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="63.549" y="32.0" width="0.0" height="8.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="21.333" y="40.0" width="318.8" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="40.0" width="32.888" height="8.0">Pénalités</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="56.437" y="40.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="67.549" y="40.0" width="20.888" height="8.0">retard</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="90.653" y="40.0" width="8.896" height="8.0">ne</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="101.765" y="40.0" width="28.456" height="8.0">pouvant</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="132.437" y="40.0" width="13.776" height="8.0">être</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="148.429" y="40.0" width="37.336" height="8.0">inférieures</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="187.981" y="40.0" width="4.448" height="8.0">à</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="194.645" y="40.0" width="4.448" height="8.0">3</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="201.309" y="40.0" width="12.44" height="8.0">fois</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="215.965" y="40.0" width="6.224" height="8.0">le</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="224.405" y="40.0" width="15.112" height="8.0">taux</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="241.733" y="40.0" width="28.184" height="8.0">d'intérêt</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="272.133" y="40.0" width="16.896" height="8.0">légal</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="291.245" y="40.0" width="17.776" height="8.0">(taux</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="311.237" y="40.0" width="26.68" height="8.0">annuel)</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="340.133" y="40.0" width="0.0" height="8.0"></text>
+        </line>
+        <line type="ParagraphPoolBox" x="21.333" y="48.0" width="273.328" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="48.0" width="2.664" height="8.0">-</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="26.213" y="48.0" width="14.672" height="8.0">Une</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="43.101" y="48.0" width="34.672" height="8.0">indemnité</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="79.989" y="48.0" width="33.32" height="8.0">forfaitaire</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="115.525" y="48.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="126.637" y="48.0" width="8.896" height="8.0">40</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="137.749" y="48.0" width="20.008" height="8.0">euros</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="159.973" y="48.0" width="24.888" height="8.0">(décret</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="187.077" y="48.0" width="38.248" height="8.0">2012-1115</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="227.541" y="48.0" width="8.896" height="8.0">du</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="238.653" y="48.0" width="4.448" height="8.0">2</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="245.317" y="48.0" width="26.672" height="8.0">octobre</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="274.205" y="48.0" width="20.456" height="8.0">2012)</text>
+        </line>
+        <line type="ParagraphPoolBox" x="21.333" y="56.0" width="321.32" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="21.333" y="56.0" width="3.112" height="8.0">*</text>
+          <spacer width="4.432" height="0.0" preserve="true"/>
+          <text x="28.877" y="56.0" width="35.552" height="8.0">Escompte</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="66.645" y="56.0" width="16.008" height="8.0">pour</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="84.869" y="56.0" width="32.896" height="8.0">paiement</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="119.981" y="56.0" width="27.56" height="8.0">anticipé</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="149.757" y="56.0" width="17.776" height="8.0">(taux</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="169.749" y="56.0" width="30.232" height="8.0">mensuel</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="202.197" y="56.0" width="36.016" height="8.0">applicable</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="240.429" y="56.0" width="8.896" height="8.0">en</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="251.541" y="56.0" width="12.448" height="8.0">cas</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="266.205" y="56.0" width="8.896" height="8.0">de</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="277.317" y="56.0" width="32.896" height="8.0">paiement</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="312.429" y="56.0" width="30.224" height="8.0">anticipé)</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="14.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="0.667">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="horizontal-line"/>
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+      <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid">
+      </empty-cell>
+    </row>
+    <row height="2.666">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+    <row height="32">
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="10">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="SARL Fort Royal Resort&#x000a;Lieu dit « Petit Bas Vent »&#x000a;97126 Deshaies, Guadeloupe&#x000a;"/>
+        <line type="ParagraphPoolBox" x="4.667" y="95.333" width="85.736" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="4.667" y="95.333" width="20.88" height="8.0">SARL</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="27.763" y="95.333" width="14.208" height="8.0">Fort</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="44.187" y="95.333" width="20.448" height="8.0">Royal</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="66.851" y="95.333" width="23.552" height="8.0">Resort</text>
+        </line>
+        <line type="ParagraphPoolBox" x="4.667" y="103.333" width="91.952" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="4.667" y="103.333" width="15.12" height="8.0">Lieu</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="22.003" y="103.333" width="8.44" height="8.0">dit</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="32.659" y="103.333" width="4.448" height="8.0">«</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="39.323" y="103.333" width="15.984" height="8.0">Petit</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="57.523" y="103.333" width="13.776" height="8.0">Bas</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="73.515" y="103.333" width="16.44" height="8.0">Vent</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="92.171" y="103.333" width="4.448" height="8.0">»</text>
+        </line>
+        <line type="ParagraphPoolBox" x="4.667" y="111.333" width="105.808" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="4.667" y="111.333" width="22.24" height="8.0">97126</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="29.123" y="111.333" width="35.56" height="8.0">Deshaies,</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="66.899" y="111.333" width="43.576" height="8.0">Guadeloupe</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="14">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Téléphone: +590 (0)590 68 76 70&#x000a;Fax: +590 (0)590 68 79 50&#x000a;"/>
+        <line type="ParagraphPoolBox" x="188.2145" y="95.333" width="118.904" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="188.2145" y="95.333" width="40.008" height="8.0">Téléphone:</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="230.4385" y="95.333" width="18.008" height="8.0">+590</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="250.6625" y="95.333" width="23.12" height="8.0">(0)590</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="275.9985" y="95.333" width="8.896" height="8.0">68</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="287.1105" y="95.333" width="8.896" height="8.0">76</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="298.2225" y="95.333" width="8.896" height="8.0">70</text>
+        </line>
+        <line type="ParagraphPoolBox" x="200.4465" y="103.333" width="94.44" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="200.4465" y="103.333" width="15.544" height="8.0">Fax:</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="218.2065" y="103.333" width="18.008" height="8.0">+590</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="238.4305" y="103.333" width="23.12" height="8.0">(0)590</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="263.7665" y="103.333" width="8.896" height="8.0">68</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="274.8785" y="103.333" width="8.896" height="8.0">79</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="285.9905" y="103.333" width="8.896" height="8.0">50</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <cell row-span="1" col-span="17">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Société à responsabilité limitée – Capital 7 500 EUR&#x000a;Code APE 5510Z RCS Basse Terre – 501 094 999&#x000a;"/>
+        <line type="ParagraphPoolBox" x="337.133" y="95.333" width="166.2" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="337.133" y="95.333" width="26.664" height="8.0">Société</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="366.013" y="95.333" width="4.448" height="8.0">à</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="372.677" y="95.333" width="49.344" height="8.0">responsabilité</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="424.237" y="95.333" width="23.104" height="8.0">limitée</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="449.557" y="95.333" width="4.448" height="8.0">–</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="456.221" y="95.333" width="24.888" height="8.0">Capital</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="483.325" y="95.333" width="4.448" height="8.0">7</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="489.989" y="95.333" width="13.344" height="8.0">500</text>
+        </line>
+        <line type="ParagraphPoolBox" x="486.453" y="103.333" width="16.88" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="486.453" y="103.333" width="16.88" height="8.0">EUR</text>
+        </line>
+        <line type="ParagraphPoolBox" x="338.485" y="111.333" width="164.848" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="338.485" y="111.333" width="19.12" height="8.0">Code</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="359.821" y="111.333" width="15.984" height="8.0">APE</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="378.021" y="111.333" width="22.672" height="8.0">5510Z</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="402.909" y="111.333" width="16.88" height="8.0">RCS</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="422.005" y="111.333" width="22.224" height="8.0">Basse</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="446.445" y="111.333" width="19.104" height="8.0">Terre</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="467.765" y="111.333" width="4.448" height="8.0">–</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="474.429" y="111.333" width="13.344" height="8.0">501</text>
+          <spacer width="2.216" height="0.0" preserve="true"/>
+          <text x="489.989" y="111.333" width="13.344" height="8.0">094</text>
+        </line>
+        <line type="ParagraphPoolBox" x="489.989" y="119.333" width="13.344" height="8.0" color="black" font-face="Calibri Light" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="489.989" y="119.333" width="13.344" height="8.0">999</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>

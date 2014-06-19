@@ -1,30 +1,30 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core;
 
 import java.awt.print.PageFormat;
 import java.util.LinkedHashMap;
 
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.engine.classic.core.util.LibLoaderResourceBundleFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
@@ -381,55 +381,17 @@ public class SubReport extends AbstractReportDefinition
     // also notify all local listeners on all changes.
     super.fireModelLayoutChanged(element, type, parameter);
     super.updateChangedFlagInternal(element, type, parameter);
-    
-/*
-    if ((type == ReportModelEvent.NODE_PROPERTIES_CHANGED && element == this &&
-        parameter instanceof Change))
-    {
-      // propagate the change to the parent report. This change may have come from editing the subreport
-      // in the parent or from editing the subreport properties itself
-
-      // Datasource or parameter changes (or any other non-visual change) will not be propagated.
-      super.updateChangedFlagInternal(element, type, parameter);
-    }
-    */
   }
 
+  @Deprecated
   public ResourceManager getResourceManager()
   {
-    Section parent = getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        final MasterReport masterReport = (MasterReport) parent;
-        return masterReport.getResourceManager();
-      }
-      parent = parent.getParentSection();
-    }
-
-    return new ResourceManager();
+    return DesignTimeUtil.getResourceManager(this);
   }
 
+  @Deprecated
   public ResourceBundleFactory getResourceBundleFactory()
   {
-    Section parent = getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        final MasterReport masterReport = (MasterReport)parent;
-        return masterReport.getResourceBundleFactory();
-      }
-      else if (parent instanceof SubReport)
-      {
-        final SubReport subReport = (SubReport)parent;
-        return subReport.getResourceBundleFactory();
-      }
-
-      parent = parent.getParentSection();
-    }
-
-    return new LibLoaderResourceBundleFactory();
+    return super.getResourceBundleFactory();
   }
 }

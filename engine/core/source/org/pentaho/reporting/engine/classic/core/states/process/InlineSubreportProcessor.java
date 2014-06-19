@@ -1,21 +1,24 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.states.process;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -25,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.LinkedMap;
 
 public class InlineSubreportProcessor
 {
@@ -40,14 +42,13 @@ public class InlineSubreportProcessor
                                                         final RootLevelBand rootLevelBand)
       throws ReportProcessingException
   {
-    final LinkedMap markers = collectSubReportMarkers(state, rootLevelBand);
+    final Map<InstanceID, InlineSubreportMarker> markers = collectSubReportMarkers(state, rootLevelBand);
     if (markers == null || markers.size() == 0)
     {
       return EMPTY_MARKERS;
     }
 
-    return (InlineSubreportMarker[])
-        markers.values(new InlineSubreportMarker[markers.size()]);
+    return markers.values().toArray(new InlineSubreportMarker[markers.size()]);
   }
 
   public static ProcessState processInline(ProcessState state,
@@ -70,7 +71,7 @@ public class InlineSubreportProcessor
     try
     {
       // this recreates the process key.
-      state = (ProcessState) state.clone();
+      state = state.clone();
     }
     catch (CloneNotSupportedException e)
     {
@@ -96,7 +97,7 @@ public class InlineSubreportProcessor
   public static boolean hasSubReports(final ProcessState state,
                                       final RootLevelBand rootLevelBand) throws ReportProcessingException
   {
-    final LinkedMap markers = collectSubReportMarkers(state, rootLevelBand);
+    final Map<InstanceID, InlineSubreportMarker> markers = collectSubReportMarkers(state, rootLevelBand);
     if (markers == null || markers.size() == 0)
     {
       return false;
@@ -104,8 +105,8 @@ public class InlineSubreportProcessor
     return true;
   }
 
-  public static ProcessState process(final ProcessState state,
-                                     final RootLevelBand rootLevelBand)
+  public static ProcessState processBandedSubReports(final ProcessState state,
+                                                     final RootLevelBand rootLevelBand)
       throws ReportProcessingException
   {
     final InlineSubreportMarker[] markers = collectMarkers(state, rootLevelBand);
@@ -126,11 +127,11 @@ public class InlineSubreportProcessor
     return pstate;
   }
 
-  private static LinkedMap collectSubReportMarkers(final ProcessState state,
+  private static Map<InstanceID, InlineSubreportMarker> collectSubReportMarkers(final ProcessState state,
                                                    final RootLevelBand rootLevelBand)
       throws ReportProcessingException
   {
-    final LinkedMap list = collectSubReportMarkers((Section) rootLevelBand, null);
+    final Map<InstanceID, InlineSubreportMarker> list = collectSubReportMarkers((Section) rootLevelBand, null);
     if (list == null)
     {
 
@@ -139,7 +140,7 @@ public class InlineSubreportProcessor
       {
         return null;
       }
-      final LinkedMap map = new LinkedMap();
+      final Map<InstanceID, InlineSubreportMarker> map = new LinkedHashMap<InstanceID, InlineSubreportMarker>();
       for (int i = 0; i < subreports.length; i++)
       {
         final InlineSubreportMarker subreport = subreports[i];
@@ -157,7 +158,7 @@ public class InlineSubreportProcessor
     return list;
   }
 
-  private static LinkedMap collectBandedSubReportMarkers(final RootLevelBand rootLevelBand, LinkedMap list)
+  private static Map collectBandedSubReportMarkers(final RootLevelBand rootLevelBand, Map<InstanceID, InlineSubreportMarker> list)
       throws ReportProcessingException
   {
     final int count = rootLevelBand.getSubReportCount();
@@ -166,7 +167,7 @@ public class InlineSubreportProcessor
       final SubReport element = rootLevelBand.getSubReport(i);
       if (list == null)
       {
-        list = new LinkedMap();
+        list = new LinkedHashMap<InstanceID, InlineSubreportMarker>();
       }
       list.put(element.getObjectID(),
           new InlineSubreportMarker(element, null, SubReportProcessType.BANDED));
@@ -174,7 +175,7 @@ public class InlineSubreportProcessor
     return list;
   }
 
-  private static LinkedMap collectSubReportMarkers(final Section rootLevelBand, LinkedMap list)
+  private static Map<InstanceID, InlineSubreportMarker> collectSubReportMarkers(final Section rootLevelBand, Map<InstanceID, InlineSubreportMarker> list)
       throws ReportProcessingException
   {
     if (rootLevelBand instanceof RootLevelBand)
@@ -190,7 +191,7 @@ public class InlineSubreportProcessor
       {
         if (list == null)
         {
-          list = new LinkedMap();
+          list = new LinkedHashMap<InstanceID, InlineSubreportMarker>();
         }
         list.put(element.getObjectID(),
             new InlineSubreportMarker((SubReport) element, DUMMY_SUBREPORT_MARKER, SubReportProcessType.INLINE));

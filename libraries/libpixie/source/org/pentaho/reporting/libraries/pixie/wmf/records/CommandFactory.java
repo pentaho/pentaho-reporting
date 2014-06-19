@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2009 Pentaho Corporation, Object Refinery Limited and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
@@ -42,19 +42,19 @@ public class CommandFactory
   /**
    * A global collection of all known record types.
    */
-  private HashMap recordTypes;
+  private HashMap<Integer,MfCmd> recordTypes;
 
   /**
    * Registers all known command types to the standard factory.
    */
-  public void registerAllKnownTypes()
+  public synchronized void registerAllKnownTypes()
   {
     if (recordTypes != null)
     {
       return;
     }
 
-    recordTypes = new HashMap();
+    recordTypes = new HashMap<Integer, MfCmd>();
 
     registerCommand(new MfCmdAnimatePalette());
     registerCommand(new MfCmdArc());
@@ -127,12 +127,13 @@ public class CommandFactory
 
   private void registerCommand(final MfCmd command)
   {
-    if (recordTypes.get(new Integer(command.getFunction())) != null)
+    MfCmd cmd = recordTypes.get(new Integer(command.getFunction()));
+    if (cmd != null)
     {
-      throw new IllegalArgumentException("Already registered");
+      throw new IllegalArgumentException("Already registered command " + command + " -> was: " + cmd);
     }
 
-    recordTypes.put(new Integer(command.getFunction()), command);
+    recordTypes.put(command.getFunction(), command);
   }
 
   public MfCmd getCommand(final int function)
@@ -142,7 +143,7 @@ public class CommandFactory
       registerAllKnownTypes();
     }
 
-    final MfCmd cmd = (MfCmd) recordTypes.get(new Integer(function));
+    final MfCmd cmd = recordTypes.get(new Integer(function));
     if (cmd == null)
     {
       final MfCmdUnknownCommand ucmd = new MfCmdUnknownCommand();

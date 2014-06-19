@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.Container;
@@ -10,7 +27,7 @@ import java.awt.geom.Point2D;
 import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -47,7 +64,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
                          final String fieldName)
   {
     final Container representationContainer = dragContext.getRepresentationContainer();
-    final ReportRenderContext renderContext = dragContext.getRenderContext();
+    final ReportDocumentContext renderContext = dragContext.getRenderContext();
     final Point pos = event.getLocation();
     final Point2D point = dragContext.normalize(pos);
     if (point.getX() < 0 || point.getY() < 0)
@@ -116,7 +133,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
         return;
       }
 
-      final ReportRenderContext context = dragContext.getRenderContext();
+      final ReportDocumentContext context = dragContext.getRenderContext();
       final Element visualElement = createElement(elementMetaData, fieldName, context);
       final ElementStyleSheet styleSheet = visualElement.getStyle();
 
@@ -148,7 +165,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
                                  final ReportElementEditorContext dragContext,
                                  final Point2D point)
   {
-    final ReportRenderContext context = dragContext.getRenderContext();
+    final ReportDocumentContext context = dragContext.getRenderContext();
     final UndoManager undo = context.getUndo();
     undo.addChange(Messages.getString("DefaultReportElementDragHandler.AddElementUndoEntry"),
         new ElementEditUndoEntry(target.getObjectID(), target.getElementCount(), null, visualElement));
@@ -157,7 +174,7 @@ public abstract class AbstractReportElementDragHandler implements ReportElementD
 
   protected abstract Element createElement(final ElementMetaData elementMetaData,
                                            final String fieldName,
-                                           final ReportRenderContext context) throws InstantiationException;
+                                           final ReportDocumentContext context) throws InstantiationException;
 
 
   protected Band getInsertionBand(final DropTargetDropEvent event,

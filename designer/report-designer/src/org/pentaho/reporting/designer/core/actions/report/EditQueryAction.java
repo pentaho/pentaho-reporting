@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.report;
 
@@ -24,9 +24,9 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.DataSourceEditUndoEntry;
@@ -62,7 +62,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       setEnabled(false);
@@ -98,7 +98,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -150,7 +150,7 @@ public class EditQueryAction extends AbstractElementSelectionAction
     final DataFactory storedFactory = dataFactory.derive();
     if (dataSourcePlugin.canHandle(dataFactory))
     {
-      final ReportRenderContext activeContext = getActiveContext();
+      final ReportDocumentContext activeContext = getActiveContext();
       final AbstractReportDefinition report = activeContext.getReportDefinition();
       final boolean editingActiveQuery = contains(report.getQuery(), dataFactory.getQueryNames());
 

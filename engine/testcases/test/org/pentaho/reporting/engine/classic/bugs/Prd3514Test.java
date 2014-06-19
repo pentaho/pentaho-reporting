@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.bugs;
 
@@ -25,11 +25,21 @@ import net.sourceforge.barbecue.Barcode;
 import net.sourceforge.barbecue.env.EnvironmentFactory;
 import net.sourceforge.barbecue.env.HeadlessEnvironment;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.BarcodeWrapper;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesAttributeNames;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.SimpleBarcodesType;
@@ -73,5 +83,36 @@ public class Prd3514Test extends TestCase
     assertEquals(1, barWidth.get(barcode));
     assertEquals(18, barHeight.get(barcode));
     assertEquals(new Dimension(132, 18), w.getPreferredSize());
+  }
+
+  public void testWeirdTocLayout() throws Exception
+  {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3514.prpt");
+    SubReport toc = (SubReport) report.getReportHeader().getElement(0);
+    Band paragraph = (Band) toc.getItemBand().getElement(1);
+    paragraph.setName("outer-box");
+    paragraph.getElement(1).setName("dotField");
+    paragraph.getElement(0).setName("textField");
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    ModelPrinter.INSTANCE.print(logicalPageBox);
+
+    RenderBox outerBox = (RenderBox) MatchFactory.findElementByName(logicalPageBox, "outer-box");
+    RenderNode dotFieldBox = MatchFactory.findElementByName(logicalPageBox, "dotField");
+    RenderNode textFieldBox = MatchFactory.findElementByName(logicalPageBox, "textField");
+    assertNotNull(outerBox);
+    assertNotNull(dotFieldBox);
+    assertNotNull(textFieldBox);
+
+    assertEquals(StrictGeomUtility.toInternalValue(92), outerBox.getY());
+    // report-header of master-report defines that the v-align for all its childs should be 'middle'
+    assertEquals(StrictGeomUtility.toInternalValue(94.988), dotFieldBox.getY());
+    assertEquals(StrictGeomUtility.toInternalValue(94.988), textFieldBox.getY());
+
+    // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
+    assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(14.024), outerBox.getFirstChild().getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(14), dotFieldBox.getHeight());
+    assertEquals(StrictGeomUtility.toInternalValue(14), textFieldBox.getHeight());
   }
 }

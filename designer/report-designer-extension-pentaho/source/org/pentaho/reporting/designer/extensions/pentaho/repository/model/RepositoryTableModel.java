@@ -1,6 +1,26 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.model;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Date;
+
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.vfs.FileObject;
@@ -14,10 +34,22 @@ public class RepositoryTableModel extends AbstractTableModel
 {
   private FileObject selectedPath;
   private String[] filters;
+  private boolean showHiddenFiles;
 
   public RepositoryTableModel()
   {
     this.filters = new String[0];
+  }
+
+  public boolean isShowHiddenFiles()
+  {
+    return showHiddenFiles;
+  }
+
+  public void setShowHiddenFiles(final boolean showHiddenFiles)
+  {
+    this.showHiddenFiles = showHiddenFiles;
+    fireTableDataChanged();
   }
 
   public String[] getFilters()
@@ -66,6 +98,10 @@ public class RepositoryTableModel extends AbstractTableModel
       for (int i = 0; i < children.length; i++)
       {
         final FileObject child = children[i];
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER)
         {
           if (PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
@@ -120,6 +156,10 @@ public class RepositoryTableModel extends AbstractTableModel
       for (int i = 0; i < children.length; i++)
       {
         final FileObject child = children[i];
+        if (isShowHiddenFiles() == false && child.isHidden())
+        {
+          continue;
+        }
         if (child.getType() != FileType.FOLDER)
         {
           if (PublishUtil.acceptFilter(filters, child.getName().getBaseName()) == false)
@@ -154,7 +194,7 @@ public class RepositoryTableModel extends AbstractTableModel
         case 0:
           return node1.getContent().getAttribute("localized-name");
         case 1:
-          return node1.getName().getBaseName();
+          return URLDecoder.decode(node1.getName().getBaseName().replaceAll("\\+", "%2B"), "UTF-8");
         case 2:
           final long lastModifiedTime = node1.getContent().getLastModifiedTime();
           if (lastModifiedTime == -1)
@@ -172,6 +212,9 @@ public class RepositoryTableModel extends AbstractTableModel
     {
       // ignre the exception, assume the file is not valid
       UncaughtExceptionsModel.getInstance().addException(fse);
+      return null;
+    } catch (UnsupportedEncodingException e) {
+      UncaughtExceptionsModel.getInstance().addException(e);
       return null;
     }
   }

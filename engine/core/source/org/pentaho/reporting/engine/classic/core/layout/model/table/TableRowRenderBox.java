@@ -1,23 +1,27 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
+import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -40,15 +44,14 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  */
 public class TableRowRenderBox extends RenderBox
 {
+  private static final Log logger = LogFactory.getLog(TableRowRenderBox.class);
   private int rowIndex;
   private boolean bodySection;
 
   public TableRowRenderBox()
   {
-    super(RenderNode.HORIZONTAL_AXIS, RenderNode.VERTICAL_AXIS,
-        SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+    this(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
         AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
-    this.rowIndex = -1;
   }
 
   public TableRowRenderBox(final StyleSheet styleSheet,
@@ -134,8 +137,65 @@ public class TableRowRenderBox extends RenderBox
     super.shiftCached(amount);
   }
 
-  public void extendHeight(final RenderNode child, final long heightOffset)
+  public long extendHeight(final RenderNode child, final long heightOffset)
   {
-    extendHeightInRowMode(child, heightOffset);
+    return extendHeightInRowMode(child, heightOffset);
+  }
+
+  public void addChild(final RenderNode child)
+  {
+    if (isValid(child) == false)
+    {
+      TableCellRenderBox tsrb = new TableCellRenderBox();
+      tsrb.addChild(child);
+      addChild(tsrb);
+      tsrb.close();
+      return;
+    }
+
+    super.addChild(child);
+  }
+
+  private boolean isValid(final RenderNode child)
+  {
+    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
+    {
+      return true;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
+    {
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("WARN: BREAK MARKER INSIDE TABLE ROW");
+      }
+      return false;
+    }
+
+    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
+    {
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("WARN: PROGRESS MARKER INSIDE TABLE ROW");
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  public RenderBox create(final StyleSheet styleSheet)
+  {
+    return new AutoRenderBox(styleSheet);
   }
 }

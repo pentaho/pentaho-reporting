@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.openformula.ui.util;
 
@@ -25,6 +25,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -57,6 +58,7 @@ public class FieldSelectorDialog extends CommonDialog
   public static final String SELECTED_DEFINITION_PROPERTY = "selectedDefinition";
   private JList fieldList;
   private FieldDefinition selectedDefinition;
+  private Component focusReturn;
 
   /**
    * Creates a non-modal dialog without a title with the specified <code>Dialog</code> as its owner.
@@ -91,6 +93,7 @@ public class FieldSelectorDialog extends CommonDialog
 
   protected void init()
   {
+    // focus logic currently depends on this
     setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
     fieldList = new JList(new FieldListModel());
@@ -105,7 +108,7 @@ public class FieldSelectorDialog extends CommonDialog
 
   protected String getDialogId()
   {
-    return "LibFormula.FieldSelector";
+    return "LibFormula.FieldSelector"; // NON-NLS
   }
 
   protected Component createContentPane()
@@ -143,6 +146,7 @@ public class FieldSelectorDialog extends CommonDialog
     return null;
   }
 
+
   protected boolean validateInputs(final boolean onConfirm)
   {
     if (onConfirm)
@@ -151,4 +155,21 @@ public class FieldSelectorDialog extends CommonDialog
     }
     return selectedDefinition != null;
   }
+
+  public void setFocusReturn(Component component) {
+    focusReturn = component;
+  }
+
+  private void close() {
+    if (focusReturn != null) {
+      focusReturn.requestFocusInWindow();
+    }
+  }
+
+  @Override
+  public void dispose() {
+    close();
+    super.dispose();
+  }
+
 }

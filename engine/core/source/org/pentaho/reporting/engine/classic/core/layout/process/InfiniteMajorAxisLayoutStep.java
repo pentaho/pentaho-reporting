@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -34,6 +34,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.CacheBoxShifter;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MajorAxisParagraphBreakState;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.ProcessUtility;
@@ -57,12 +59,18 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 {
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
+  private boolean complexText;
 
   public InfiniteMajorAxisLayoutStep()
   {
     super(false);
     this.breakState = new MajorAxisParagraphBreakState();
     this.processor = new VerticalAlignmentProcessor();
+  }
+
+  public void initialize(OutputProcessorMetaData metaData)
+  {
+    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
   }
 
   public void compute(final LogicalPageBox pageBox)
@@ -111,12 +119,16 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
 
     performStartTable(box);
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalBlockPosition(box));
 
     if (breakState.isActive())
     {
+      if (complexText) {
+        return true;
+      }
+
       // No breakstate and not being suspended? Why this?
       if (breakState.isSuspended() == false)
       {
@@ -265,8 +277,15 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final RenderNode prev = node.getPrev();
       if (prev != null)
       {
-        // we have a silbling. Position yourself directly below your silbling ..
-        return (marginTop + prev.getCachedY() + prev.getCachedHeight());
+        if (prev.isVisible())
+        {
+          // we have a silbling. Position yourself directly below your silbling ..
+          return (marginTop + prev.getCachedY() + prev.getCachedHeight());
+        }
+        else
+        {
+          return (marginTop + prev.getCachedY());
+        }
       }
       else
       {
@@ -316,7 +335,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     if (lastChildNode != null)
     {
       childY1 = box.getFirstChild().getCachedY();
-      childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+      if (lastChildNode.isVisible())
+      {
+        childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+      }
+      else
+      {
+        childY2 = lastChildNode.getCachedY();
+      }
       usedHeight = (childY2 - childY1);
     }
     else
@@ -421,9 +447,11 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       long maxChildY2 = 0;
       while (child != null)
       {
-        final long childY2 = child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom();
-        maxChildY2 = Math.max(childY2, maxChildY2);
-
+        if (child.isVisible())
+        {
+          final long childY2 = child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom();
+          maxChildY2 = Math.max(childY2, maxChildY2);
+        }
         child = child.getNext();
       }
       usedHeight = (maxChildY2 - box.getCachedY());
@@ -453,23 +481,29 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    // Process the direct childs of the paragraph
-    // Each direct child represents a line ..
+    // todo Arabic text
+    if(complexText) {
+      processBoxChilds(box);
+    }
+    else {
+      // Process the direct childs of the paragraph
+      // Each direct child represents a line ..
 
-    RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      // all childs of the linebox container must be inline boxes. They
-      // represent the lines in the paragraph. Any other element here is
-      // a error that must be reported
-      final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-      if (startLine(inlineRenderBox))
+      RenderNode node = box.getFirstChild();
+      while (node != null)
       {
-        processBoxChilds(inlineRenderBox);
-        finishLine(inlineRenderBox);
-      }
+        // all childs of the linebox container must be inline boxes. They
+        // represent the lines in the paragraph. Any other element here is
+        // a error that must be reported
+        final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
+        if (startLine(inlineRenderBox))
+        {
+          processBoxChilds(inlineRenderBox);
+          finishLine(inlineRenderBox);
+        }
 
-      node = node.getNext();
+        node = node.getNext();
+      }
     }
   }
 
@@ -487,7 +521,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return false;
     }
 
-    breakState.openContext(new BoxAlignContext(box));
+    breakState.openContext(box);
     return true;
   }
 
@@ -538,7 +572,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     final int nodeType = box.getLayoutNodeType();
     if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
     {
-      breakState.openContext(new BoxAlignContext(box));
+      breakState.openContext(box);
       return true;
     }
     else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
@@ -592,6 +626,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       return;
     }
 
+    if(complexText) {
+      return;
+    }
+
     if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
     {
       breakState.getCurrentLine().addChild(new TextElementAlignContext((RenderableText) node));
@@ -605,6 +643,8 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishInlineLevelBox(final RenderBox box)
   {
+    // todo Arabic text
+
     if (checkCacheValid(box))
     {
       return;
@@ -922,7 +962,7 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     performStartTable(box);
 
-    // Compute the block-position of the box. The box is positioned relative to the previous silbling or
+    // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
     box.setCachedY(computeVerticalRowPosition(box));
 
@@ -1074,11 +1114,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       final long blockHeight = computeTableHeightAndAlign(box);
       box.setCachedHeight(blockHeight);
     }
+
+    markAllChildsDirty(box);
     return true;
   }
 
   protected void finishTableRowLevelBox(final RenderBox box)
   {
+    clearAllChildsDirtyMarker(box);
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
     {
       final long blockHeight = computeTableHeightAndAlign(box);
@@ -1135,19 +1178,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void finishTableSectionLevelBox(final RenderBox box)
   {
-    if (box instanceof TableRowRenderBox)
-    {
-      // rows get their height from the current table-row-model. This model cannot be computed until
-      // the full section is known.
-      // rows will be shifted into place by the finishTableLevelBox function.
-      box.setCachedHeight(0);
-    }
-    else
-    {
-      // auto-boxes behave like normal block elements.
-      // This produces invalid output, as the rows are not shifted yet.
-      final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeight(blockHeight);
-    }
+    box.setCachedHeight(0);
   }
 }

@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.extensions.modules.sparklines;
 
@@ -23,11 +23,8 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleEle
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleStyleRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterHandlerRegistry;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.BarSparklineElementReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.BarSparklineWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.LineSparklineElementReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.LineSparklineWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.PieSparklineElementReadHandler;
-import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.PieSparklineWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.SparklineStyleSetWriteHandler;
 import org.pentaho.reporting.engine.classic.extensions.modules.sparklines.xml.SparklineStylesReadHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
@@ -76,24 +73,25 @@ public class SparklineModule extends AbstractModule
       throw new ModuleInitializeException("Unable to load the Sparkline library class.");
     }
 
-    BundleElementRegistry.getInstance().register("line-sparkline", LineSparklineWriteHandler.class);
-    BundleElementRegistry.getInstance().register("pie-sparkline", PieSparklineWriteHandler.class);
-    BundleElementRegistry.getInstance().register("bar-sparkline", BarSparklineWriteHandler.class);
-    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
-
-    BundleElementRegistry.getInstance().register(NAMESPACE, "line-spark", LineSparklineElementReadHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "pie-spark", PieSparklineElementReadHandler.class);
-    BundleElementRegistry.getInstance().register(NAMESPACE, "bar-spark", BarSparklineElementReadHandler.class);
-
-    BundleStyleRegistry.getInstance().register(SparklineStyleSetWriteHandler.class);
-    BundleStyleRegistry.getInstance().register(NAMESPACE, "spark-styles", SparklineStylesReadHandler.class);
-
     ElementTypeRegistry.getInstance().registerNamespacePrefix(NAMESPACE, "sparkline");
-    
     ElementMetaDataParser.initializeOptionalElementMetaData
         ("org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-elements.xml");
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
         ("org/pentaho/reporting/engine/classic/extensions/modules/sparklines/meta-expressions.xml");
+
+    BundleElementRegistry.getInstance().registerGenericElement(LineSparklineType.INSTANCE);
+    BundleElementRegistry.getInstance().registerGenericElement(BarSparklineType.INSTANCE);
+    BundleElementRegistry.getInstance().registerGenericElement(PieSparklineType.INSTANCE);
+    // legacy element handling
+    BundleElementRegistry.getInstance().register(NAMESPACE, "line-spark", LineSparklineElementReadHandler.class);
+    BundleElementRegistry.getInstance().register(NAMESPACE, "pie-spark", PieSparklineElementReadHandler.class);
+    BundleElementRegistry.getInstance().register(NAMESPACE, "bar-spark", BarSparklineElementReadHandler.class);
+    BundleWriterHandlerRegistry.getInstance().setNamespaceHasCData(NAMESPACE, false);
+
+    BundleStyleRegistry.getInstance().register(SparklineStyleSetWriteHandler.class);
+    BundleStyleRegistry.getInstance().register(NAMESPACE, "spark-styles", SparklineStylesReadHandler.class);
+
+
 
   }
 }

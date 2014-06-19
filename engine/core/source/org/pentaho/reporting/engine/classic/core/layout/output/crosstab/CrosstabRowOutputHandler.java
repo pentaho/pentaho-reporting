@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -31,13 +31,13 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableCellRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.output.GroupOutputHandler;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
-import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class CrosstabRowOutputHandler implements GroupOutputHandler
@@ -98,6 +98,14 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
     }
 
+    final int firstRowGroupIndex = crosstabLayout.getFirstRowGroupIndex();
+    if (gidx == firstRowGroupIndex)
+    {
+      RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
+      RenderBox parentNode = (RenderBox) CrosstabOutputHelper.findParentNode(renderNode, crosstabLayout.getCrosstabId());
+      parentNode.setPreventPagination(true);
+    }
+
     CrosstabOutputHelper.createAutomaticCell(layoutModelBuilder, 1, 1, group.getHeader());
     crosstabLayout.setRowHeader(gidx - crosstabLayout.getFirstRowGroupIndex(), layoutModelBuilder.dangerousRawAccess().getInstanceId());
     outputFunction.getRenderer().add(group.getHeader(), outputFunction.getRuntime());
@@ -131,6 +139,15 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
       }
       crosstabLayout.setCrosstabHeaderOpen(false);
     }
+
+    final int gidx = event.getState().getCurrentGroupIndex();
+    final int firstRowGroupIndex = crosstabLayout.getFirstRowGroupIndex();
+    if (gidx == firstRowGroupIndex)
+    {
+      RenderNode renderNode = layoutModelBuilder.dangerousRawAccess();
+      RenderBox parentNode = (RenderBox) CrosstabOutputHelper.findParentNode(renderNode, crosstabLayout.getCrosstabId());
+      parentNode.setPreventPagination(false);
+    }
   }
 
   public void groupBodyFinished(final DefaultOutputFunction outputFunction,
@@ -142,7 +159,9 @@ public class CrosstabRowOutputHandler implements GroupOutputHandler
   private void buildHeaderPlaceholder(final RenderedCrosstabLayout crosstabLayout,
                                       final LayoutModelBuilder layoutModelBuilder)
   {
-    layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(TableLayout.auto));
+    crosstabLayout.setCrosstabId
+        (layoutModelBuilder.startBox(CrosstabOutputHelper.createTable(crosstabLayout.getTableLayout())));
+
     layoutModelBuilder.startBox(CrosstabOutputHelper.createTableBand(BandStyleKeys.LAYOUT_TABLE_HEADER));
 
     // create column group placeholder rows. We subsequently add content as sub-flows into these groups.

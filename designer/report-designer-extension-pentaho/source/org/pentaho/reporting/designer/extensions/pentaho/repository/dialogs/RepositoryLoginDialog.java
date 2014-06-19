@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
@@ -42,7 +42,7 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishSettings;
@@ -81,22 +81,25 @@ public class RepositoryLoginDialog extends CommonDialog
   private DefaultComboBoxModel urlModel;
   private JComboBox versionCombo;
   private KeyedComboBoxModel<Integer, String> versionModel;
+  private boolean loginForPublish;
 
-  public RepositoryLoginDialog(final Dialog owner) throws HeadlessException
+  public RepositoryLoginDialog(final Dialog owner,
+                               final boolean loginForPublish) throws HeadlessException
   {
     super(owner);
-    init();
+    init(loginForPublish);
   }
 
-  public RepositoryLoginDialog(final Frame parent)
+  public RepositoryLoginDialog(final Frame parent,
+                                 final boolean loginForPublish)
   {
     super(parent);
-    init();
+    init(loginForPublish);
   }
 
-  public RepositoryLoginDialog()
+  public RepositoryLoginDialog(final boolean loginForPublish)
   {
-    init();
+    init(loginForPublish);
   }
 
   public static AuthenticationData getDefaultData(final ReportDesignerContext designerContext)
@@ -129,7 +132,7 @@ public class RepositoryLoginDialog extends CommonDialog
   public static AuthenticationData getStoredLoginData(final String baseUrl,
                                                       final ReportDesignerContext context)
   {
-    final ReportRenderContext reportRenderContext = context.getActiveContext();
+    final ReportDocumentContext reportRenderContext = context.getActiveContext();
     final AuthenticationStore authStore;
     if (reportRenderContext == null)
     {
@@ -164,7 +167,7 @@ public class RepositoryLoginDialog extends CommonDialog
 
     urlModel.removeAllElements();
     final String[] urls;
-    final ReportRenderContext reportRenderContext = context.getActiveContext();
+    final ReportDocumentContext reportRenderContext = context.getActiveContext();
     if (reportRenderContext == null)
     {
       urls = context.getGlobalAuthenticationStore().getKnownURLs();
@@ -214,9 +217,11 @@ public class RepositoryLoginDialog extends CommonDialog
     return data;
   }
 
-  protected void init()
+  protected void init(final boolean loginForPublish)
   {
     setTitle(Messages.getInstance().getString("RepositoryLoginDialog.Title"));
+
+    this.loginForPublish = loginForPublish;
 
     urlModel = new DefaultComboBoxModel();
     urlCombo = new JComboBox(urlModel);
@@ -306,7 +311,7 @@ public class RepositoryLoginDialog extends CommonDialog
     c.weightx = 1.0;
     serverPanel.add(timeoutField, c);
 
-    if (WorkspaceSettings.getInstance().isShowExpertItems())
+    if (WorkspaceSettings.getInstance().isShowExpertItems() && loginForPublish == false)
     {
       c.insets = new Insets(0, 20, 5, 20);
       c.gridy = 4;
@@ -366,7 +371,7 @@ public class RepositoryLoginDialog extends CommonDialog
   public int getVersion ()
   {
     final Integer selectedKey = versionModel.getSelectedKey();
-    if (selectedKey == null)
+    if (selectedKey == null || loginForPublish)
     {
       return 5;
     }

@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
@@ -31,6 +31,8 @@ import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
+import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class RenderedCrosstabLayout implements Cloneable
@@ -56,10 +58,12 @@ public class RenderedCrosstabLayout implements Cloneable
   private InstanceID[] rowHeaders;
   private InstanceID[] columnHeaders;
   private InstanceID[] columnTitleHeaders;
+  private InstanceID crosstabId;
 
   private int firstRowGroupIndex;
   private int firstColGroupIndex;
   private CrosstabDetailMode detailMode;
+  private TableLayout tableLayout;
 
   public RenderedCrosstabLayout()
   {
@@ -219,6 +223,7 @@ public class RenderedCrosstabLayout implements Cloneable
         (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER)));
     this.generateColumnTitleHeaders = !(Boolean.FALSE.equals
         (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER)));
+    this.tableLayout = (TableLayout) group.getStyle().getStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
   }
 
   private void computeGroupCounts(final CrosstabGroup crosstabGroup)
@@ -399,5 +404,20 @@ public class RenderedCrosstabLayout implements Cloneable
   public boolean isSummaryRowPrintable()
   {
     return summaryRowPrintable;
+  }
+
+  public TableLayout getTableLayout()
+  {
+    return tableLayout;
+  }
+
+  public InstanceID getCrosstabId()
+  {
+    return crosstabId;
+  }
+
+  public void setCrosstabId(final InstanceID crosstabId)
+  {
+    this.crosstabId = crosstabId;
   }
 }

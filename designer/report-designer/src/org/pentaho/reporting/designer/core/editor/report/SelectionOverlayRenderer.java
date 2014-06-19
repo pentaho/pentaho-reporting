@@ -1,45 +1,39 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 26.04.2009
- * Time: 20:51:09
- *
- * @author Thomas Morgner.
- */
 public class SelectionOverlayRenderer implements OverlayRenderer
 {
   private Section rootElement;
-  private ReportRenderContext context;
+  private ReportDocumentContext context;
   private double zoomFactor;
+  private double offset;
 
   public SelectionOverlayRenderer(final Element defaultElement)
   {
@@ -49,8 +43,9 @@ public class SelectionOverlayRenderer implements OverlayRenderer
     }
   }
 
-  public void validate(final ReportRenderContext context, final double zoomFactor)
+  public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
   {
+    this.offset = sectionOffset.getY();
     this.context = context;
     this.zoomFactor = zoomFactor;
   }
@@ -62,12 +57,10 @@ public class SelectionOverlayRenderer implements OverlayRenderer
       return;
     }
 
-    graphics.translate(bounds.getX(), bounds.getY());
+    graphics.translate(bounds.getX(), -(offset * zoomFactor));
     
-    final Element[] visualElements = context.getSelectionModel().getSelectedVisualElements();
-    for (int i = 0; i < visualElements.length; i++)
+    for (final Element visualElement : context.getSelectionModel().getSelectedElementsOfType(Element.class))
     {
-      final Element visualElement = visualElements[i];
       if (ModelUtility.isDescendant(rootElement, visualElement) == false)
       {
         continue;

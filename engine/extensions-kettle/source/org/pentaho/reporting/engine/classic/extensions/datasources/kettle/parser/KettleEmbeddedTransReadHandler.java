@@ -1,6 +1,22 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
-import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleDataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.EmbeddedKettleTransformationProducer;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -15,7 +31,6 @@ import org.xml.sax.SAXException;
 
 public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformationProducerReadHandler
 {
-
   private String pluginId;
   private StringReadHandler resourceReadHandler;
   private String name;
@@ -57,22 +72,20 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     }
 
     final String resourceName = resourceReadHandler.getResult();
-    
-    byte[] bytes = null;
 
-    try {
-      bytes = loadDataFromBundle(resourceName);
-    } catch (Exception e) {
-      
-      throw new ParseException("Could not load resource ".concat(resourceName), e, getLocator());
-      
+    try
+    {
+      byte[] bytes = loadDataFromBundle(resourceName);
+      return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(),
+          getDefinedVariableNames(),
+          pluginId,
+          bytes);
     }
-    
-    return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(), 
-                                                    getDefinedVariableNames(), 
-                                                    pluginId, 
-                                                    EmbeddedKettleDataFactoryMetaData.DATA_RETRIEVAL_STEP, 
-                                                    bytes);
+    catch (final Exception e)
+    {
+      throw new ParseException("Could not load resource " + resourceName, e, getLocator());
+    }
+
   }
 
   private byte[] loadDataFromBundle(final String href) throws ResourceKeyCreationException, ResourceLoadingException
@@ -83,11 +96,11 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     final ResourceData data = manager.load(derivedKey);
     return data.getResource(manager);
   }
-  
+
   public EmbeddedKettleTransformationProducer getTransformationProducer() throws SAXException
   {
     return getObject();
   }
-  
-  
+
+
 }

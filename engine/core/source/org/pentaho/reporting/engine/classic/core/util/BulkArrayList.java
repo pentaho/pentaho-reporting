@@ -1,29 +1,26 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.util;
 
 import java.util.Arrays;
 
 /**
- * A Array-List for integer objects. Ints can be added to the list and will be stored in an int-array.
- * <p/>
- * Using this list for storing ints is much faster than creating java.lang.Long objects and storing them in an
- * ArrayList.
+ * An Array-List with a linear instead of exponential growth.
  * <p/>
  * This list is not synchronized and does not implement the full List interface. In fact, this list can only be used to
  * add new values or to clear the complete list.
@@ -33,6 +30,11 @@ import java.util.Arrays;
  */
 public class BulkArrayList<T> implements Cloneable
 {
+  public static interface Func<T>
+  {
+    void process (T value, int index);
+  }
+
   /**
    * An empty array used to avoid object creation.
    */
@@ -64,7 +66,7 @@ public class BulkArrayList<T> implements Cloneable
 
   public BulkArrayList(final T[] data, final int increment)
   {
-    this (Math.max (increment, data.length));
+    this (Math.max (increment, data.length + increment));
     this.increment = increment;
 
     System.arraycopy(data, 0, this.data, 0, data.length);
@@ -214,5 +216,18 @@ public class BulkArrayList<T> implements Cloneable
     final BulkArrayList<T> intList = (BulkArrayList<T>) super.clone();
     intList.data = data.clone();
     return intList;
+  }
+
+  public void foreach (Func<T> func)
+  {
+    foreach(func, 0, size);
+  }
+
+  public void foreach (Func<T> func, int start, int end)
+  {
+    for (int i = start; i < end; i+= 1)
+    {
+      func.process((T) data[i], i);
+    }
   }
 }

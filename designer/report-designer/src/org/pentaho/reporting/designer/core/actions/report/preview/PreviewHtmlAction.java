@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.report.preview;
 
@@ -34,12 +34,17 @@ import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewParametersDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.html.FastHtmlContentItems;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.html.FastHtmlExportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FileSystemURLRewriter;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.StreamHtmlOutputProcessor;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -48,11 +53,6 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.file.FileRepository;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public final class PreviewHtmlAction extends AbstractReportContextAction
 {
   public PreviewHtmlAction()
@@ -74,8 +74,8 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
       return;
     }
 
-    final MasterReport reportElement = getActiveContext().getMasterReportElement();
-    final Component parent = getReportDesignerContext().getParent();
+    final MasterReport reportElement = getActiveContext().getContextRoot();
+    final Component parent = getReportDesignerContext().getView().getParent();
     final Window window = LibSwingUtil.getWindowAncestor(parent);
     if(PreviewParametersDialog.process(window, reportElement))
     {
@@ -123,14 +123,27 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
           final ContentLocation targetRoot = targetRepository.getRoot();
 
 
-          final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-          printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));//$NON-NLS-1$
-          printer.setDataWriter(targetRoot, new DefaultNameGenerator(targetRoot, "content"));//$NON-NLS-1$
-          printer.setUrlRewriter(new FileSystemURLRewriter());
+          ReportProcessor reportProcessor;
+          ReportStructureValidator validator = new ReportStructureValidator();
+          if (validator.isValidForFastProcessing(report) == false)
+          {
+            final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
+            final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
+            printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
+            printer.setDataWriter(null, null); //$NON-NLS-1$
+            printer.setUrlRewriter(new FileSystemURLRewriter());
+            outputProcessor.setPrinter(printer);
+            reportProcessor = new StreamReportProcessor(report, outputProcessor);
+          }
+          else
+          {
+            FastHtmlContentItems printer = new FastHtmlContentItems();
+            printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
+            printer.setDataWriter(null, null); //$NON-NLS-1$
+            printer.setUrlRewriter(new FileSystemURLRewriter());
+            reportProcessor = new FastHtmlExportProcessor(report, printer);
+          }
 
-          final StreamHtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
-          outputProcessor.setPrinter(printer);
-          final StreamReportProcessor reportProcessor = new StreamReportProcessor(report, outputProcessor);
           reportProcessor.addReportProgressListener(progressDialog);
           progressDialog.setVisibleInEDT(true);
 

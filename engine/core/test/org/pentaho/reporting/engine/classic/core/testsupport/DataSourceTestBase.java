@@ -1,20 +1,20 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2011 Pentaho Corporation and Contributors...  
- * All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+* All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
@@ -41,10 +41,12 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -81,6 +83,9 @@ public abstract class DataSourceTestBase extends TestCase
     {
       final String query = queriesAndResults[i][0];
       final String resultFile = queriesAndResults[i][1];
+
+      DebugLog.log("Executing query " + query);
+
       final DataFactory dataFactory = createDataFactory(query);
 
       final ByteArrayOutputStream bo = new ByteArrayOutputStream();
@@ -117,6 +122,40 @@ public abstract class DataSourceTestBase extends TestCase
     }
   }
 
+  protected void runSaveAndLoadForSubReports(final String[][] queriesAndResults) throws Exception
+  {
+    if (queriesAndResults.length == 0)
+    {
+      return;
+    }
+
+    for (int i = 0; i < queriesAndResults.length; i++)
+    {
+      final String query = queriesAndResults[i][0];
+      final String resultFile = queriesAndResults[i][1];
+      final DataFactory dataFactory = createDataFactory(query);
+
+      SubReport subReport = new SubReport();
+      subReport.setDataFactory(dataFactory);
+
+      final MasterReport report = new MasterReport();
+      report.getReportHeader().addSubReport(subReport);
+
+      final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
+      BundleWriter.writeReportToZipStream(report, bout);
+      final ResourceManager mgr = new ResourceManager();
+      mgr.registerDefaults();
+
+      final Resource resource = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+      final MasterReport r2 = (MasterReport) resource.getResource();
+      final SubReport sr2 = r2.getReportHeader().getSubReport(0);
+      final DataFactory e2 = sr2.getDataFactory();
+      assertNotNull(e2); // cannot assert equals, as this is not implemented ...
+      initializeDataFactory(e2);
+      final String queryResult = performQueryTest(e2);
+      compareLineByLine(resultFile, queryResult);
+    }
+  }
 
   protected void runSaveAndLoad(final String[][] queriesAndResults) throws Exception
   {

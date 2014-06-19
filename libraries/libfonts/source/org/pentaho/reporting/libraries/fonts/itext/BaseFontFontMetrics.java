@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.fonts.itext;
 
@@ -25,7 +25,7 @@ import org.pentaho.reporting.libraries.fonts.encoding.CodePointUtilities;
 import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 22.07.2007, 19:04:00
@@ -65,12 +65,12 @@ public class BaseFontFontMetrics implements FontMetrics
     this.cachedWidths = new long[256 - 32];
     Arrays.fill(cachedWidths, -1);
 
-    sizeScaled = StrictGeomUtility.toInternalValue(size);
+    sizeScaled = FontStrictGeomUtility.toInternalValue(size);
 
     this.ascent = (long) baseFont.getFontDescriptor(BaseFont.AWT_ASCENT, sizeScaled);
     this.descent = (long) -baseFont.getFontDescriptor(BaseFont.AWT_DESCENT, sizeScaled);
     this.leading = (long) baseFont.getFontDescriptor(BaseFont.AWT_LEADING, sizeScaled);
-    italicsAngle = StrictGeomUtility.toInternalValue(baseFont.getFontDescriptor(BaseFont.ITALICANGLE, size));
+    italicsAngle = FontStrictGeomUtility.toInternalValue(baseFont.getFontDescriptor(BaseFont.ITALICANGLE, size));
     maxAscent = (long) baseFont.getFontDescriptor(BaseFont.BBOXURY, sizeScaled);
     maxDescent = (long) -baseFont.getFontDescriptor(BaseFont.BBOXLLY, sizeScaled);
     maxCharAdvance = (long) baseFont.getFontDescriptor(BaseFont.AWT_MAXADVANCE, sizeScaled);

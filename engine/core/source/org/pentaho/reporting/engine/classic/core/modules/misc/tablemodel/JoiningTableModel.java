@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
@@ -85,7 +85,8 @@ public class JoiningTableModel extends AbstractTableModel
      */
     public void tableChanged(final TableModelEvent e)
     {
-      if (e.getType() == TableModelEvent.HEADER_ROW)
+      if (e.getType() == TableModelEvent.UPDATE &&
+          e.getFirstRow() == TableModelEvent.HEADER_ROW)
       {
         updateStructure();
       }
@@ -106,14 +107,14 @@ public class JoiningTableModel extends AbstractTableModel
   // all column types of all tables ..
   private Class[] columnTypes;
 
-  private ArrayList models;
+  private ArrayList<TablePosition> models;
   private TableChangeHandler changeHandler;
   private int rowCount;
   public static final String TABLE_PREFIX_COLUMN = "TablePrefix"; //$NON-NLS-1$
 
   public JoiningTableModel()
   {
-    models = new ArrayList();
+    models = new ArrayList<TablePosition>();
     changeHandler = new TableChangeHandler();
   }
 
@@ -128,10 +129,10 @@ public class JoiningTableModel extends AbstractTableModel
   {
     for (int i = 0; i < models.size(); i++)
     {
-      final TablePosition position = (TablePosition) models.get(i);
+      final TablePosition position = models.get(i);
       if (position.getTableModel() == model)
       {
-        models.remove(model);
+        models.remove(position);
         model.removeTableModelListener(changeHandler);
         updateStructure();
         return;
@@ -146,14 +147,14 @@ public class JoiningTableModel extends AbstractTableModel
 
   public synchronized TableModel getTableModel(final int pos)
   {
-    final TablePosition position = (TablePosition) models.get(pos);
+    final TablePosition position = models.get(pos);
     return position.getTableModel();
   }
 
   protected synchronized void updateStructure()
   {
-    final ArrayList columnNames = new ArrayList();
-    final ArrayList columnTypes = new ArrayList();
+    final ArrayList<String> columnNames = new ArrayList<String>();
+    final ArrayList<Class<?>> columnTypes = new ArrayList<Class<?>>();
 
     columnNames.add(JoiningTableModel.TABLE_PREFIX_COLUMN);
     columnTypes.add(String.class);
@@ -162,7 +163,7 @@ public class JoiningTableModel extends AbstractTableModel
     int rowOffset = 0;
     for (int i = 0; i < models.size(); i++)
     {
-      final TablePosition pos = (TablePosition) models.get(i);
+      final TablePosition pos = models.get(i);
       pos.updateOffsets(rowOffset, columnOffset);
       final TableModel tableModel = pos.getTableModel();
       rowOffset += tableModel.getRowCount();
@@ -173,8 +174,8 @@ public class JoiningTableModel extends AbstractTableModel
         columnTypes.add(tableModel.getColumnClass(c));
       }
     }
-    this.columnNames = (String[]) columnNames.toArray(new String[columnNames.size()]);
-    this.columnTypes = (Class[]) columnTypes.toArray(new Class[columnTypes.size()]);
+    this.columnNames = columnNames.toArray(new String[columnNames.size()]);
+    this.columnTypes = columnTypes.toArray(new Class[columnTypes.size()]);
     this.rowCount = rowOffset;
     fireTableStructureChanged();
   }
@@ -185,7 +186,7 @@ public class JoiningTableModel extends AbstractTableModel
     int columnOffset = 1;
     for (int i = 0; i < models.size(); i++)
     {
-      final TablePosition model = (TablePosition) models.get(i);
+      final TablePosition model = models.get(i);
       model.updateOffsets(rowOffset, columnOffset);
       rowOffset += model.getTableModel().getRowCount();
       columnOffset += model.getTableModel().getColumnCount();
@@ -300,7 +301,7 @@ public class JoiningTableModel extends AbstractTableModel
     // assume, that the models are in ascending order ..
     for (int i = 0; i < models.size(); i++)
     {
-      final TablePosition pos = (TablePosition) models.get(i);
+      final TablePosition pos = models.get(i);
       final int maxRow = pos.getTableOffset() + pos.getTableModel().getRowCount();
       if (row < maxRow)
       {

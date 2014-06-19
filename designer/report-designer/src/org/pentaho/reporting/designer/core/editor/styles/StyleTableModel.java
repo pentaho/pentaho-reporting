@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.styles;
 
@@ -29,7 +29,7 @@ import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
@@ -188,7 +188,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
   private Executor pool;
   private DefaultStyleDataBackend oldDataBackend;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
 
   public StyleTableModel()
   {
@@ -578,7 +578,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
     if (changed)
     {
-      final ReportRenderContext reportRenderContext = getReportRenderContext();
+      final ReportDocumentContext reportRenderContext = getReportRenderContext();
       if (reportRenderContext == null)
       {
         throw new IllegalStateException("No report render context? Thats bad.");
@@ -671,7 +671,7 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
 
     if (changed)
     {
-      final ReportRenderContext reportRenderContext = getReportRenderContext();
+      final ReportDocumentContext reportRenderContext = getReportRenderContext();
       if (reportRenderContext == null)
       {
         throw new IllegalStateException("No report render context? Thats bad.");
@@ -785,12 +785,12 @@ public class StyleTableModel extends AbstractStyleTableModel<StyleTableModel.Def
     }
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  public void setReportRenderContext(final ReportRenderContext reportRenderContext)
+  public void setReportRenderContext(final ReportDocumentContext reportRenderContext)
   {
     this.reportRenderContext = reportRenderContext;
   }

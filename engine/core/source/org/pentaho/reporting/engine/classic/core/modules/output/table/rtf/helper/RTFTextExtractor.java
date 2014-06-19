@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
@@ -30,17 +30,17 @@ import com.lowagie.text.TextElementArray;
 import com.lowagie.text.pdf.BaseFont;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
-import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.output.RenderUtility;
+import org.pentaho.reporting.engine.classic.core.layout.process.text.RichTextSpec;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.DefaultTextExtractor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
@@ -267,7 +267,7 @@ public class RTFTextExtractor extends DefaultTextExtractor
     {
       return false;
     }
-    
+
     // Compare the text style ..
     final StyleContext currentContext = getCurrentContext();
     final StyleContext boxContext = new StyleContext(currentContext.getTarget(), box.getStyleSheet(), metaData);
@@ -318,6 +318,36 @@ public class RTFTextExtractor extends DefaultTextExtractor
         return;
       }
       final RenderableText text = (RenderableText) node;
+      if (text.isForceLinebreak())
+      {
+        final StyleContext currentContext = getCurrentContext();
+        if (getTextLength() > 0)
+        {
+          currentContext.add(getText());
+          clearText();
+        }
+        context.pop();
+        final StyleContext cellContext = getCurrentContext();
+        cellContext.add(currentContext.getTarget());
+
+        context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
+      }
+    }
+    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+    {
+      // todo: check if special text processing is required for RenderableComplexText nodes
+//      return;
+      if (node.isVirtualNode())
+      {
+        return;
+      }
+
+      if ((node.getX() + node.getWidth()) > (paragraphBounds.getX() + paragraphBounds.getWidth()))
+      {
+        // This node will only be partially visible. The end-of-line marker will not apply.
+        return;
+      }
+      final RenderableComplexText text = (RenderableComplexText) node;
       if (text.isForceLinebreak())
       {
         final StyleContext currentContext = getCurrentContext();
@@ -408,6 +438,42 @@ public class RTFTextExtractor extends DefaultTextExtractor
     }
     context.pop();
     getCurrentContext().add(currentContext.getTarget());
+  }
+
+  protected void drawComplexText(final RenderableComplexText renderableComplexText)
+  {
+    if (renderableComplexText.getRawText().length() == 0)
+    {
+      // This text is empty.
+      return;
+    }
+    if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
+    {
+      return;
+    }
+
+    // check if we have to process inline text elements
+    if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
+    {
+      // iterate through all inline elements
+      for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
+      {
+        // Add style for current styled chunk
+        final StyleContext boxContext = new StyleContext(getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData);
+        if (styledChunk.getText().length() > 0)
+        {
+          final String text = styledChunk.getText();
+          boxContext.add(text);
+          clearText();
+        }
+        context.pop();
+        context.push(boxContext);
+      }
+    }
+    else
+    {
+      super.drawComplexText(renderableComplexText);
+    }
   }
 
 }

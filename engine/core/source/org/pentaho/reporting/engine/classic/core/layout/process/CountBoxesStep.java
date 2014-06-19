@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -34,9 +34,11 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
   private static final Log logger = LogFactory.getLog(CountBoxesStep.class);
   private int totalCount;
   private int finishedBoxes;
+  private int deepDirtyBoxes;
   private int autoBoxes;
   private boolean enabled;
   private int maxBoxSize;
+  private boolean validating;
 
   public CountBoxesStep()
   {
@@ -46,9 +48,11 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
 
   public int countChildren(final RenderBox box)
   {
+    validating = true;
     totalCount = 0;
     finishedBoxes = 0;
     autoBoxes = 0;
+    deepDirtyBoxes = 0;
     if (box instanceof LogicalPageBox)
     {
       totalCount = 1;
@@ -61,6 +65,11 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
     return totalCount;
   }
 
+  public int getTotalCount()
+  {
+    return totalCount;
+  }
+
   public void process(final LogicalPageBox box)
   {
     if (!enabled)
@@ -68,14 +77,16 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
       return;
     }
 
+    validating = false;
     totalCount = 0;
     finishedBoxes = 0;
     autoBoxes = 0;
+    deepDirtyBoxes = 0;
     startProcessing(box);
     logger.debug(MessageFormat.format
-        ("CountBoxes: Total={0}; finished={1}; auto={2} - maxWeight={5} - Finished-Ratio: {3} AutoRatio: {4}",
+        ("CountBoxes: Total={0}; finished={1}; auto={2}; deepDirty={6} - maxWeight={5} - Finished-Ratio: {3} AutoRatio: {4}",
             totalCount, finishedBoxes, autoBoxes, finishedBoxes / (double) totalCount * 100f,
-            autoBoxes / (double) totalCount * 100f, maxBoxSize));
+            autoBoxes / (double) totalCount * 100f, maxBoxSize, deepDirtyBoxes));
   }
 
   protected void count(final RenderNode node)
@@ -88,6 +99,10 @@ public class CountBoxesStep extends IterateSimpleStructureProcessStep
     if (node.getElementType() instanceof AutoLayoutBoxType)
     {
       autoBoxes += 1;
+    }
+    if (node.getCacheState() == RenderNode.CacheState.DEEP_DIRTY)
+    {
+      deepDirtyBoxes += 1;
     }
     maxBoxSize = Math.max(maxBoxSize, node.getChildCount());
   }

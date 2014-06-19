@@ -1,25 +1,27 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.fonts.itext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.fonts.cache.FirstLevelFontCache;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.FontContext;
 import org.pentaho.reporting.libraries.fonts.registry.FontIdentifier;
 import org.pentaho.reporting.libraries.fonts.registry.FontKey;
@@ -144,17 +146,32 @@ public class ITextFontStorage implements FontStorage
 
   public ITextFontStorage(final ITextFontRegistry registry)
   {
-    this(registry, null);
+    this(registry, EncodingRegistry.getPlatformDefaultEncoding());
   }
 
   public ITextFontStorage(final ITextFontRegistry registry,
                           final String encoding)
   {
+    ArgumentNullException.validate("registry", registry);
+    ArgumentNullException.validate("encoding", encoding);
+
     this.lookupKey = new EncodingFontKey();
     this.knownMetrics = new FirstLevelFontCache(registry.getSecondLevelCache());
     this.registry = registry;
     this.defaultEncoding = encoding;
     this.metricsFactory = (ITextFontMetricsFactory) registry.createMetricsFactory();
+  }
+
+  public String getDefaultEncoding()
+  {
+    return defaultEncoding;
+  }
+
+  public void setDefaultEncoding(final String defaultEncoding)
+  {
+    ArgumentNullException.validate("defaultEncoding", defaultEncoding);
+
+    this.defaultEncoding = defaultEncoding;
   }
 
   public FontRegistry getFontRegistry()

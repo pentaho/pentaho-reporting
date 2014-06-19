@@ -1,13 +1,28 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.actions.report;
 
 import java.awt.event.ActionEvent;
-import java.util.HashMap;
-import java.util.Random;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.Anonymizer;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -22,7 +37,6 @@ import org.pentaho.reporting.libraries.designtime.swing.background.BackgroundCan
 import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
-import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 
 public class AnonymizeReportAction extends AbstractReportContextAction
@@ -96,17 +110,17 @@ public class AnonymizeReportAction extends AbstractReportContextAction
 
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getMasterReportElement()));
+    final Thread thread = new Thread(new ConvertReportTask(getActiveContext().getContextRoot()));
     thread.setName("AnonymizeReport-Worker");// NON-NLS
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("AnonymizeReportAction.TaskTitle"));
 
   }
 }

@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
@@ -53,6 +53,7 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 public class DefaultOutputFunction extends AbstractFunction
@@ -60,6 +61,7 @@ public class DefaultOutputFunction extends AbstractFunction
 {
   private static final Log logger = LogFactory.getLog(DefaultOutputFunction.class);
   private static final LayouterLevel[] EMPTY_LAYOUTER_LEVEL = new LayouterLevel[0];
+  public static final InlineSubreportMarker[] EMPTY_INLINE_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
 
   private ReportEvent currentEvent;
   private Renderer renderer;
@@ -77,6 +79,7 @@ public class DefaultOutputFunction extends AbstractFunction
   private int avoidedRepeatingFooter;
   private RepeatingFooterValidator repeatingFooterValidator;
   private boolean clearedFooter;
+  private ArrayList<InstanceID> subReportFooterTracker;
 
   /**
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
@@ -84,6 +87,7 @@ public class DefaultOutputFunction extends AbstractFunction
    */
   public DefaultOutputFunction()
   {
+    this.subReportFooterTracker = new ArrayList<InstanceID>();
     this.repeatingFooterValidator = new RepeatingFooterValidator();
     this.pagebreakHandler = new DefaultLayoutPagebreakHandler();
     this.inlineSubreports = new ArrayList<InlineSubreportMarker>();
@@ -125,7 +129,7 @@ public class DefaultOutputFunction extends AbstractFunction
       final ReportDefinition report = event.getReport();
       if (event.getState().isSubReportEvent() == false)
       {
-        renderer.startReport(report, getRuntime().getProcessingContext());
+        renderer.startReport(report, getRuntime().getProcessingContext(), event.getState().getPerformanceMonitorContext());
 
         final ReportState reportState = event.getState();
         final ExpressionRuntime runtime = getRuntime();
@@ -145,11 +149,11 @@ public class DefaultOutputFunction extends AbstractFunction
         renderer.startSubReport(report, event.getState().getCurrentSubReportMarker().getInsertationPointId());
       }
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ReportInitialized failed", e);
     }
@@ -176,16 +180,20 @@ public class DefaultOutputFunction extends AbstractFunction
       // activating this state after the page has ended is invalid.
       updateFooterArea(event);
 
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
       final ReportDefinition report = event.getReport();
+
+      renderer.startSection(Renderer.SectionType.NORMALFLOW);
       print(getRuntime(), report.getReportHeader());
       addSubReportMarkers(renderer.endSection());
+
+      printDesigntimeHeader(event);
+
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ReportStarted failed", e);
     }
@@ -193,6 +201,10 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       clearCurrentEvent();
     }
+  }
+
+  protected void printDesigntimeHeader(final ReportEvent event) throws ReportProcessingException
+  {
   }
 
   public void addSubReportMarkers(final InlineSubreportMarker[] markers)
@@ -229,11 +241,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.peek();
       handler.groupStarted(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("GroupStarted failed", e);
     }
@@ -260,11 +272,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.peek();
       handler.itemsStarted(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ItemsStarted failed", e);
     }
@@ -289,11 +301,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.peek();
       handler.itemsAdvanced(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ItemsAdvanced failed", e);
     }
@@ -320,11 +332,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.peek();
       handler.itemsFinished(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ItemsFinished failed", e);
     }
@@ -344,11 +356,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.peek();
       handler.groupBodyFinished(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("GroupBody failed", e);
     }
@@ -373,11 +385,11 @@ public class DefaultOutputFunction extends AbstractFunction
       final GroupOutputHandler handler = outputHandlers.pop();
       handler.groupFinished(this, event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("GroupFinished failed", e);
     }
@@ -412,11 +424,11 @@ public class DefaultOutputFunction extends AbstractFunction
         handler.summaryRow(this, event);
       }
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("Summary Row Selection event failed", e);
     }
@@ -443,9 +455,8 @@ public class DefaultOutputFunction extends AbstractFunction
       // force that this last pagebreak ... (This is an indicator for the
       // pagefooter's print-on-last-page) This is highly unclean and may or
       // may not work ..
-      final Band b = event.getReport().getReportFooter();
       renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), b);
+      print(getRuntime(), event.getReport().getReportFooter());
       addSubReportMarkers(renderer.endSection());
 
       if (event.isDeepTraversing() == false)
@@ -453,12 +464,14 @@ public class DefaultOutputFunction extends AbstractFunction
         lastPagebreak = true;
       }
       updateFooterArea(event);
+
+      printDesigntimeFooter(event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("ReportFinished failed", e);
     }
@@ -466,6 +479,10 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       clearCurrentEvent();
     }
+  }
+
+  protected void printDesigntimeFooter(final ReportEvent event) throws ReportProcessingException
+  {
   }
 
   /**
@@ -485,13 +502,15 @@ public class DefaultOutputFunction extends AbstractFunction
       renderer.endSubReport();
     }
 
-    OutputProcessorMetaData metaData = getRuntime().getProcessingContext().getOutputProcessorMetaData();
-    if (metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false)
-    {
-      elementChangeChecker.reportCachePerformance();
-      logger.info("Performance: footer-printed=" + printedFooter + " footer-avoided=" + avoidedFooter +
-          "repeating-footer-printed=" + printedRepeatingFooter + " repeating-footer-avoided=" + avoidedRepeatingFooter);
-    }
+    printPerformanceStats();
+  }
+
+  protected void printPerformanceStats()
+  {
+    elementChangeChecker.reportCachePerformance();
+    logger.info(String.format
+        ("Performance: footer-printed=%d footer-avoided=%d repeating-footer-printed=%d repeating-footer-avoided=%d",
+            printedFooter, avoidedFooter, printedRepeatingFooter, avoidedRepeatingFooter));
   }
 
   private static LayoutExpressionRuntime createRuntime(final MasterDataRow masterRow,
@@ -553,6 +572,9 @@ public class DefaultOutputFunction extends AbstractFunction
     if (resolverStyleSheet == null)
     {
       throw new InvalidReportStateException("Inv");
+    }
+    if (isDesignTime()) {
+      return true;
     }
 
     if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
@@ -617,11 +639,11 @@ public class DefaultOutputFunction extends AbstractFunction
       clearedFooter = true;
       updateHeaderArea(event.getState());
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("PageStarted failed", e);
     }
@@ -680,10 +702,10 @@ public class DefaultOutputFunction extends AbstractFunction
   }
 
   protected ExpressionRuntime updateWatermark(final ReportState state,
-                                            final ProcessingContext processingContext,
-                                            final ReportDefinition report,
-                                            final LayouterLevel[] levels,
-                                            ExpressionRuntime runtime) throws ReportProcessingException
+                                              final ProcessingContext processingContext,
+                                              final ReportDefinition report,
+                                              final LayouterLevel[] levels,
+                                              ExpressionRuntime runtime) throws ReportProcessingException
   {
     for (int i = levels.length - 1; i >= 0; i -= 1)
     {
@@ -707,10 +729,10 @@ public class DefaultOutputFunction extends AbstractFunction
   }
 
   protected ExpressionRuntime updatePageHeader(final ReportState state,
-                                             final ProcessingContext processingContext,
-                                             final ReportDefinition report,
-                                             final LayouterLevel[] levels,
-                                             ExpressionRuntime runtime) throws ReportProcessingException
+                                               final ProcessingContext processingContext,
+                                               final ReportDefinition report,
+                                               final LayouterLevel[] levels,
+                                               ExpressionRuntime runtime) throws ReportProcessingException
   {
     for (int i = levels.length - 1; i >= 0; i -= 1)
     {
@@ -739,13 +761,16 @@ public class DefaultOutputFunction extends AbstractFunction
     return runtime;
   }
 
-  // todo: return immediately in designmode
   protected ExpressionRuntime updateRepeatingGroupHeader(final ReportState state,
-                                                       final ProcessingContext processingContext,
-                                                       final ReportDefinition report,
-                                                       final LayouterLevel[] levels,
-                                                       ExpressionRuntime runtime) throws ReportProcessingException
+                                                         final ProcessingContext processingContext,
+                                                         final ReportDefinition report,
+                                                         final LayouterLevel[] levels,
+                                                         ExpressionRuntime runtime) throws ReportProcessingException
   {
+    if (isDesignTime())
+    {
+      return runtime;
+    }
     /**
      * Dive into the pending group to print the group header ...
      */
@@ -800,12 +825,15 @@ public class DefaultOutputFunction extends AbstractFunction
     return runtime;
   }
 
-  // todo: Return immediately in designmode
   protected ExpressionRuntime updateDetailsHeader(final ReportState state,
-                                   final ProcessingContext processingContext,
-                                   final ReportDefinition report,
-                                   ExpressionRuntime runtime) throws ReportProcessingException
+                                                  final ProcessingContext processingContext,
+                                                  final ReportDefinition report,
+                                                  ExpressionRuntime runtime) throws ReportProcessingException
   {
+    if (isDesignTime()) {
+      return runtime;
+    }
+
     if (state.isInItemGroup())
     {
       final DetailsHeader detailsHeader = report.getDetailsHeader();
@@ -838,11 +866,11 @@ public class DefaultOutputFunction extends AbstractFunction
     {
       updateFooterArea(event);
     }
-    catch (InvalidReportStateException fe)
+    catch (final InvalidReportStateException fe)
     {
       throw fe;
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new InvalidReportStateException("PageFinished failed", e);
     }
@@ -866,44 +894,52 @@ public class DefaultOutputFunction extends AbstractFunction
     }
 
     final LayouterLevel[] levels = DefaultOutputFunction.collectSubReportStates(event.getState(), getRuntime().getProcessingContext());
+    if (isSubReportConfigurationChanged(levels))
+    {
+      clearedFooter = true;
+      refreshSubReportFooterConfiguration(levels);
+    }
     updateRepeatingFooters(event, levels);
     updatePageFooter(event, levels);
     clearedFooter = false;
   }
 
+  private void refreshSubReportFooterConfiguration(final LayouterLevel[] levels)
+  {
+    subReportFooterTracker.clear();
+    for (final LayouterLevel level : levels)
+    {
+      subReportFooterTracker.add(level.getReportDefinition().getObjectID());
+    }
+  }
+
+  private boolean isSubReportConfigurationChanged(final LayouterLevel[] levels)
+  {
+    if (levels.length != subReportFooterTracker.size())
+    {
+      return true;
+    }
+
+    for (int i = 0; i < subReportFooterTracker.size(); i++)
+    {
+      InstanceID instanceID = subReportFooterTracker.get(i);
+      if (levels[i].getReportDefinition().getObjectID() != instanceID)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   protected boolean updatePageFooter(final ReportEvent event,
-                                   final LayouterLevel[] levels) throws ReportProcessingException
+                                     final LayouterLevel[] levels) throws ReportProcessingException
   {
     final ReportDefinition report = event.getReport();
     final int levelCount = levels.length;
     final DataRow dataRow = event.getDataRow();
 
-    boolean needPrinting = false;
     final PageFooter pageFooter = report.getPageFooter();
-    if (clearedFooter)
-    {
-      needPrinting = true;
-    }
-    else if (isPageFooterPrintable(pageFooter, false) &&
-        elementChangeChecker.isBandChanged(pageFooter, dataRow))
-    {
-      needPrinting = true;
-    }
-    else
-    {
-      for (int i = 0; i < levelCount; i++)
-      {
-        final LayouterLevel level = levels[i];
-        final ReportDefinition def = level.getReportDefinition();
-        final PageFooter b = def.getPageFooter();
-        if (isPageFooterPrintable(b, true) &&
-            elementChangeChecker.isBandChanged(b, dataRow))
-        {
-          needPrinting = true;
-          break;
-        }
-      }
-    }
+    boolean needPrinting = isPageFooterPrinting(levels, levelCount, dataRow, pageFooter);
 
     if (needPrinting == false)
     {
@@ -941,8 +977,43 @@ public class DefaultOutputFunction extends AbstractFunction
     return true;
   }
 
+  private boolean isPageFooterPrinting(final LayouterLevel[] levels,
+                                       final int levelCount,
+                                       final DataRow dataRow,
+                                       final PageFooter pageFooter)
+  {
+    if (isDesignTime())
+    {
+      return true;
+    }
+
+    if (clearedFooter)
+    {
+      return true;
+    }
+
+    if (isPageFooterPrintable(pageFooter, false) &&
+        elementChangeChecker.isBandChanged(pageFooter, dataRow))
+    {
+      return true;
+    }
+
+    for (int i = 0; i < levelCount; i++)
+    {
+      final LayouterLevel level = levels[i];
+      final ReportDefinition def = level.getReportDefinition();
+      final PageFooter b = def.getPageFooter();
+      if (isPageFooterPrintable(b, true) &&
+          elementChangeChecker.isBandChanged(b, dataRow))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   protected boolean updateRepeatingFooters(final ReportEvent event,
-                                         final LayouterLevel[] levels) throws ReportProcessingException
+                                           final LayouterLevel[] levels) throws ReportProcessingException
   {
     final ReportDefinition report = event.getReport();
     final ReportState state = event.getState();
@@ -1024,7 +1095,7 @@ public class DefaultOutputFunction extends AbstractFunction
   }
 
   protected boolean isNeedPrintRepeatingFooter(final ReportEvent event,
-                                             final LayouterLevel[] levels)
+                                               final LayouterLevel[] levels)
   {
     final ReportDefinition report = event.getReport();
     final ReportState state = event.getState();
@@ -1112,9 +1183,9 @@ public class DefaultOutputFunction extends AbstractFunction
     return needPrinting;
   }
 
-  protected boolean isGroupSectionPrintableInternal (final Band b,
-                                                  final boolean testSticky,
-                                                  final boolean testRepeat)
+  protected boolean isGroupSectionPrintableInternal(final Band b,
+                                                    final boolean testSticky,
+                                                    final boolean testRepeat)
   {
     return isGroupSectionPrintable(b, testSticky, testRepeat);
   }
@@ -1137,7 +1208,7 @@ public class DefaultOutputFunction extends AbstractFunction
   }
 
   protected boolean isPageFooterPrintable(final Band b,
-                                        final boolean testSticky)
+                                          final boolean testSticky)
   {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
     if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
@@ -1310,7 +1381,7 @@ public class DefaultOutputFunction extends AbstractFunction
       }
       return sl;
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException();
     }
@@ -1319,6 +1390,11 @@ public class DefaultOutputFunction extends AbstractFunction
   public void setRenderer(final Renderer renderer)
   {
     this.renderer = renderer;
+  }
+
+  protected boolean isDesignTime()
+  {
+    return false;
   }
 
   public Renderer getRenderer()
@@ -1386,11 +1462,11 @@ public class DefaultOutputFunction extends AbstractFunction
         clearCurrentEvent();
       }
     }
-    catch (ReportProcessingException e)
+    catch (final ReportProcessingException e)
     {
       throw new InvalidReportStateException("Failed to update the page-header", e);
     }
-    catch (ContentProcessingException e)
+    catch (final ContentProcessingException e)
     {
       throw new InvalidReportStateException("Failed to update the page-header", e);
     }
@@ -1402,6 +1478,10 @@ public class DefaultOutputFunction extends AbstractFunction
 
   public InlineSubreportMarker[] getInlineSubreports()
   {
+    if (inlineSubreports.isEmpty())
+    {
+      return EMPTY_INLINE_SUBREPORT_MARKERS;
+    }
     return inlineSubreports.toArray(new InlineSubreportMarker[inlineSubreports.size()]);
   }
 

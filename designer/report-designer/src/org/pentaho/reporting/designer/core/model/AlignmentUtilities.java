@@ -1,32 +1,34 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.drag.MoveDragOperation;
 import org.pentaho.reporting.designer.core.editor.report.snapping.EmptySnapModel;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.MassElementStyleUndoEntryBuilder;
+import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -41,23 +43,23 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public class AlignmentUtilities
 {
-  private ReportRenderContext context;
+  private final UndoManager undo;
   private PageDefinition originalPageDefinition;
   private PageDefinition currentPageDefinition;
-  private Element[] visualElements;
+  private List<Element> visualElements;
   private MassElementStyleUndoEntryBuilder builder;
 
-  public AlignmentUtilities(final ReportRenderContext reportRenderContext, final PageDefinition pageDefinition)
+  public AlignmentUtilities(final ReportDocumentContext reportRenderContext, final PageDefinition pageDefinition)
   {
-    context = reportRenderContext;
+    undo = reportRenderContext.getUndo();
 
-    final MasterReport masterReport = reportRenderContext.getMasterReportElement();
+    final MasterReport masterReport = reportRenderContext.getContextRoot();
     currentPageDefinition = masterReport.getPageDefinition();
     originalPageDefinition = pageDefinition;
 
     final ArrayList<Element> elementArrayList = new ArrayList<Element>();
     collectAlignableElements(masterReport, elementArrayList);
-    visualElements = elementArrayList.toArray(new Element[elementArrayList.size()]);
+    visualElements = Collections.unmodifiableList(elementArrayList);
 
     builder = new MassElementStyleUndoEntryBuilder(visualElements);
   }
@@ -83,15 +85,13 @@ public class AlignmentUtilities
     final float currentPageWidth = currentPageDefinition.getWidth();
     final float scaleFactor = currentPageWidth / originalPageWidth;
 
-    for (int i = 0; i < visualElements.length; i++)
+    for (Element element : visualElements)
     {
-
       // Resize the element.
-      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData(visualElements[i]);
+      final CachedLayoutData cachedLayoutData = ModelUtility.getCachedLayoutData(element);
 
       final double elementWidth = StrictGeomUtility.toExternalValue(cachedLayoutData.getWidth());
-      final Element theElement = visualElements[i];
-      final ElementStyleSheet styleSheet = theElement.getStyle();
+      final ElementStyleSheet styleSheet = element.getStyle();
       styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(elementWidth * scaleFactor));
 
       // Reposition the element.
@@ -99,9 +99,9 @@ public class AlignmentUtilities
       final double destination = scaleFactor * origin;
       final int theShift = (int) (destination - origin);
 
-      final Element[] theElements = new Element[1];
-      theElements[0] = theElement;
-      align(theShift, theElements);
+      final List<Element> elementsCarrier = new ArrayList<Element>(1);
+      elementsCarrier.add(element);
+      align(theShift, elementsCarrier);
     }
     registerChanges();
   }
@@ -132,7 +132,7 @@ public class AlignmentUtilities
     registerChanges();
   }
 
-  private void align(final int theShiftValue, final Element[] elements)
+  private void align(final int theShiftValue, final List<Element> elements)
   {
     final MoveDragOperation mop =
         new MoveDragOperation(elements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
@@ -143,17 +143,18 @@ public class AlignmentUtilities
   private void registerChanges()
   {
     final MassElementStyleUndoEntry massElementStyleUndoEntry = builder.finish();
-    context.getUndo().addChange(Messages.getString("AlignmentUtilities.Undo"), massElementStyleUndoEntry);
+    undo.addChange(Messages.getString("AlignmentUtilities.Undo"), massElementStyleUndoEntry);
   }
 
   private long computeFarRightPostion()
   {
+    boolean first = true;
     long theFarRightPostion = 0;
-    for (int i = 0; i < visualElements.length; i++)
+    for (Element visualElement : visualElements)
     {
-      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElements[i]);
+      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElement);
       final long theCurrentPosition = theElementData.getX() + theElementData.getWidth();
-      if (i == 0)
+      if (first)
       {
         theFarRightPostion = theCurrentPosition;
       }
@@ -161,19 +162,20 @@ public class AlignmentUtilities
       {
         theFarRightPostion = theCurrentPosition;
       }
+      first = false;
     }
     return theFarRightPostion;
   }
 
   private long computeFarLeftPosition()
   {
-
+    boolean first = true;
     long theFarLeftPostion = 0;
-    for (int i = 0; i < visualElements.length; i++)
+    for (Element visualElement : visualElements)
     {
-      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElements[i]);
+      final CachedLayoutData theElementData = ModelUtility.getCachedLayoutData(visualElement);
       final long theCurrentPosition = theElementData.getX();
-      if (i == 0)
+      if (first)
       {
         theFarLeftPostion = theCurrentPosition;
       }
@@ -181,6 +183,7 @@ public class AlignmentUtilities
       {
         theFarLeftPostion = theCurrentPosition < theFarLeftPostion ? theCurrentPosition : theFarLeftPostion;
       }
+      first = false;
     }
     return theFarLeftPostion;
   }

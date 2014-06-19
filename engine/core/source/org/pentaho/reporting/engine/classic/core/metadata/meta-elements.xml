@@ -4,7 +4,8 @@
   <element name="band" expert="false" hidden="false" preferred="true" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -16,12 +17,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="group-data-body" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupDataBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -32,13 +35,15 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
   
 
   <element name="group-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupFooterType"
-           type-classification="group-footer">
+           type-classification="group-footer"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -53,12 +58,14 @@
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
     <style-group-ref ref="group-bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="group-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupHeaderType"
-           type-classification="group-header">
+           type-classification="group-header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -73,13 +80,15 @@
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
     <style-group-ref ref="group-bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
 
   <element name="details-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsHeaderType"
-           type-classification="header">
+           type-classification="header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -94,12 +103,14 @@
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
     <style-group-ref ref="group-bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="details-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsFooterType"
-           type-classification="footer">
+           type-classification="footer"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -114,12 +125,14 @@
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
     <style-group-ref ref="group-bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="itemband" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -132,12 +145,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="master-report" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.MasterReportType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -336,6 +351,16 @@
                value-type="org.pentaho.reporting.engine.classic.core.style.css.ElementStyleDefinition"
                value-role="Value"/>
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="complex-text"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
@@ -345,7 +370,8 @@
   <element name="relational-group" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -366,13 +392,15 @@
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
     <style-group-ref ref="layout"/>
   </element>
 
   <element name="no-data-band" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.NoDataBandType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -385,12 +413,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="page-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.PageFooterType"
-           type-classification="footer">
+           type-classification="footer"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -410,7 +440,8 @@
   <element name="page-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.PageHeaderType"
-           type-classification="header">
+           type-classification="header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -430,7 +461,8 @@
   <element name="report-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportFooterType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -443,12 +475,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="report-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportHeaderType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -461,12 +495,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="sub-group-body" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.SubGroupBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -477,12 +513,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="sub-report" expert="false" hidden="false" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType"
-           type-classification="subreport">
+           type-classification="subreport"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -495,12 +533,14 @@
     <style-group-ref ref="text"/>
     <style-group-ref ref="layout"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
   </element>
 
   <element name="watermark" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.WatermarkType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -519,7 +559,8 @@
   <element name="auto-layout-box" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="auto-layout-box"/>
 

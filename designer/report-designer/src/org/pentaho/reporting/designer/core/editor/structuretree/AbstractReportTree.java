@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
 import java.util.TreeSet;
@@ -12,10 +29,10 @@ import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 
 public abstract class AbstractReportTree extends JTree
 {
@@ -89,7 +106,7 @@ public abstract class AbstractReportTree extends JTree
       updateFromInternalSource = true;
       try
       {
-        final ReportRenderContext renderContext = getRenderContext();
+        final ReportDocumentContext renderContext = getRenderContext();
         if (renderContext == null)
         {
           return;
@@ -103,7 +120,7 @@ public abstract class AbstractReportTree extends JTree
           return;
         }
 
-        final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+        final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
         final Object[] data = new Object[treePaths.length];
         for (int i = 0; i < treePaths.length; i++)
         {
@@ -192,9 +209,9 @@ public abstract class AbstractReportTree extends JTree
 
   protected abstract TreePath getPathForNode (Object node);
 
-  public abstract void setRenderContext(final ReportRenderContext renderContext);
+  public abstract void setRenderContext(final ReportDocumentContext renderContext);
 
-  protected abstract ReportRenderContext getRenderContext();
+  protected abstract ReportDocumentContext getRenderContext();
 
   public ReportDesignerContext getReportDesignerContext()
   {
@@ -208,21 +225,21 @@ public abstract class AbstractReportTree extends JTree
 
   protected TreeSet<Integer> getExpandedNodes()
   {
-    final ReportRenderContext renderContext = getRenderContext();
+    final ReportDocumentContext renderContext = getRenderContext();
     if (renderContext == null)
     {
       // dummy operation..
       return new TreeSet<Integer>();
     }
 
-    final Object property = renderContext.getProperty("::layout-report-tree:expanded-nodes");
+    final Object property = renderContext.getProperties().get("::layout-report-tree:expanded-nodes");
     if (property instanceof TreeSet)
     {
       return (TreeSet<Integer>) property;
     }
 
     final TreeSet<Integer> retval = new TreeSet<Integer>();
-    renderContext.setProperty("::layout-report-tree:expanded-nodes", retval);
+    renderContext.getProperties().put("::layout-report-tree:expanded-nodes", retval);
     return retval;
   }
 

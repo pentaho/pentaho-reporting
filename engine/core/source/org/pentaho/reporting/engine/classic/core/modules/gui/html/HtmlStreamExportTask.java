@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.html;
 
@@ -26,10 +26,14 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportInterruptedException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.layout.output.ReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGuiContext;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.html.FastHtmlContentItems;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.html.FastHtmlExportProcessor;
+import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllItemsHtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.FileSystemURLRewriter;
@@ -154,26 +158,39 @@ public class HtmlStreamExportTask implements Runnable
 
 //      final DummyRepository dataRepository = new DummyRepository();
 //      final ContentLocation dataRoot = dataRepository.getRoot();
+      ReportProcessor reportProcessor;
+      ReportStructureValidator validator = new ReportStructureValidator();
+      if (validator.isValidForFastProcessing(report) == false)
+      {
+        final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
+        final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
+        printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, filename, suffix));
+        printer.setDataWriter(null, null); //$NON-NLS-1$
+        printer.setUrlRewriter(new FileSystemURLRewriter());
+        outputProcessor.setPrinter(printer);
+        reportProcessor = new StreamReportProcessor(report, outputProcessor);
+      }
+      else
+      {
+        FastHtmlContentItems printer = new FastHtmlContentItems();
+        printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, filename, suffix));
+        printer.setDataWriter(null, null); //$NON-NLS-1$
+        printer.setUrlRewriter(new FileSystemURLRewriter());
+        reportProcessor = new FastHtmlExportProcessor(report, printer);
+      }
 
-      final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
-      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-      printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, filename, suffix));
-      printer.setDataWriter(null, null); //$NON-NLS-1$
-      printer.setUrlRewriter(new FileSystemURLRewriter());
-      outputProcessor.setPrinter(printer);
 
-      final StreamReportProcessor sp = new StreamReportProcessor(report, outputProcessor);
       if (progressDialog != null)
       {
         progressDialog.setModal(false);
         progressDialog.setVisible(true);
-        sp.addReportProgressListener(progressDialog);
+        reportProcessor.addReportProgressListener(progressDialog);
       }
-      sp.processReport();
+      reportProcessor.processReport();
 
       if (progressDialog != null)
       {
-        sp.removeReportProgressListener(progressDialog);
+        reportProcessor.removeReportProgressListener(progressDialog);
       }
 
       if (statusListener != null)

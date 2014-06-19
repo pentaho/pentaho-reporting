@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.inspections.impl;
 
@@ -21,7 +21,7 @@ import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeExpressionPropertyLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
@@ -39,19 +39,14 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import static org.pentaho.reporting.designer.core.inspections.InspectionResult.Severity;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class InvalidFieldReferenceInspection extends AbstractStructureInspection
 {
   public InvalidFieldReferenceInspection()
@@ -64,7 +59,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                final ReportRenderContext reportRenderContext,
+                                final ReportDocumentContext reportRenderContext,
                                 final InspectionResultListener resultHandler,
                                 final String[] columnNames,
                                 final ReportElement element)
@@ -84,7 +79,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
           resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
               Messages.getString("InvalidFieldReferenceInspection.AttributeInvalidField", element.getName(),
                   field, data.getDisplayName(Locale.getDefault())),
-              new AttributeLocationInfo(element, data.getNameSpace(), data.getName(), false)));
+              new AttributeLocationInfo(element, data.getNameSpace(), data.getName(), false)
+          ));
         }
       }
     }
@@ -99,20 +95,24 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
       for (int i = 0; i < parameterMappings.length; i++)
       {
         final ParameterMapping mapping = parameterMappings[i];
+        if ("*".equals(mapping.getName()))
+        {
+          continue;
+        }
+
         if (isValidField(mapping.getName(), columnNames) == false)
         {
-          resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
-              Messages.getString("InvalidFieldReferenceInspection.SubReportInvalidField",
-                  report.getName(), mapping.getName()),
-              new LocationInfo(report)));
-
+          String message = Messages.getString("InvalidFieldReferenceInspection.SubReportInvalidField",
+                  report.getName(), mapping.getName());
+          InspectionResult ir = new InspectionResult(this, Severity.WARNING, message, new LocationInfo(report));
+          resultHandler.notifyInspectionResult(ir);
         }
       }
     }
   }
 
   protected void inspectAttributeExpression(final ReportDesignerContext designerContext,
-                                            final ReportRenderContext reportRenderContext,
+                                            final ReportDocumentContext reportRenderContext,
                                             final InspectionResultListener resultHandler,
                                             final String[] columnNames,
                                             final ReportElement element,
@@ -140,17 +140,19 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
                 element.getMetaData().getAttributeDescription(attributeNamespace, attributeName);
             if (attrMetaData == null)
             {
-              resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
+              resultHandler.notifyInspectionResult(new InspectionResult(this, Severity.WARNING,
                   Messages.getString("InvalidFieldReferenceInspection.AttributeExpressionInvalidFieldNoMetaData",
                       element.getName(), attributeNamespace, attributeName, field, metaData.getDisplayName(Locale.getDefault())),
-                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())));
+                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())
+              ));
             }
             else
             {
-              resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
+              resultHandler.notifyInspectionResult(new InspectionResult(this, Severity.WARNING,
                   Messages.getString("InvalidFieldReferenceInspection.AttributeExpressionInvalidField",
                       element.getName(), attrMetaData.getDisplayName(Locale.getDefault()), field, metaData.getDisplayName(Locale.getDefault())),
-                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())));
+                  new AttributeExpressionPropertyLocationInfo(element, attributeNamespace, attributeName, metaData.getName())
+              ));
             }
           }
         }
@@ -163,7 +165,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectStyleExpression(final ReportDesignerContext designerContext,
-                                        final ReportRenderContext reportRenderContext,
+                                        final ReportDocumentContext reportRenderContext,
                                         final InspectionResultListener resultHandler,
                                         final String[] columnNames,
                                         final ReportElement element,
@@ -195,7 +197,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
                 Messages.getString("InvalidFieldReferenceInspection.StyleExpressionInvalidField",
                     element.getName(), styleDescription.getDisplayName(Locale.getDefault()),
                     field, metaData.getDisplayName(Locale.getDefault())),
-                new StyleExpressionPropertyLocationInfo(element, styleKey, metaData.getName())));
+                new StyleExpressionPropertyLocationInfo(element, styleKey, metaData.getName())
+            ));
           }
         }
       }
@@ -207,7 +210,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final Expression expression,
@@ -235,7 +238,8 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
             resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
                 Messages.getString("InvalidFieldReferenceInspection.ExpressionInvalidField", expression.getName(),
                     field, metaData.getDisplayName(Locale.getDefault())),
-                new PropertyLocationInfo(expression, metaData.getName())));
+                new PropertyLocationInfo(expression, metaData.getName())
+            ));
           }
         }
       }
@@ -263,7 +267,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
   }
 
   protected void inspectDataSource(final ReportDesignerContext designerContext,
-                                   final ReportRenderContext reportRenderContext,
+                                   final ReportDocumentContext reportRenderContext,
                                    final InspectionResultListener resultHandler,
                                    final String[] columnNames,
                                    final DataFactory dataFactory)
@@ -291,12 +295,11 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
             resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
                 Messages.getString("InvalidFieldReferenceInspection.DataSourceInvalidField",
                     metaData.getDisplayName(Locale.getDefault()), field, query),
-                new PropertyLocationInfo(dataFactory, query)));
+                new PropertyLocationInfo(dataFactory, query)
+            ));
           }
         }
       }
-
-
     }
   }
 }

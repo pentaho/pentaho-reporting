@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
@@ -25,8 +25,8 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.AbstractDesignerContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.actions.ToggleStateAction;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -57,7 +57,7 @@ import org.pentaho.reporting.engine.classic.core.GroupHeader;
  */
 public class SelectCrosstabBandAction extends AbstractDesignerContextAction implements ToggleStateAction
 {
-  private ReportSelectionModel selectionModel;
+  private DocumentContextSelectionModel selectionModel;
 
   private ArrayList<Element> otherGroupBodyList;
   private ArrayList<Element> rowGroupBodyList;
@@ -151,12 +151,12 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     cellBodyList.clear();
   }
 
-  private ReportSelectionModel getSelectionModel()
+  private DocumentContextSelectionModel getSelectionModel()
   {
     if (selectionModel == null)
     {
       final ReportDesignerContext reportDesignerContext = getReportDesignerContext();
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       selectionModel = activeContext.getSelectionModel();
     }
 
@@ -179,7 +179,7 @@ public class SelectCrosstabBandAction extends AbstractDesignerContextAction impl
     // Clear lists just in case something changed.
     initialize();
 
-    final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+    final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
     selectionModel = getSelectionModel();
 
     final AbstractReportDefinition reportDefinition = activeContext.getReportDefinition();

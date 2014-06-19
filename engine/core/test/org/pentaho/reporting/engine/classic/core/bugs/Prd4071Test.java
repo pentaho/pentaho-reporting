@@ -1,10 +1,27 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -26,9 +43,10 @@ public class Prd4071Test extends TestCase
   {
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4071-Standalone.prpt");
     report.getItemBand().getElement(0).getStyle().setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, true);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+
     assertEquals(64800000, logicalPageBox.getPageEnd());
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);
     assertEquals(6, elementsByElementType.length);
@@ -38,13 +56,13 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReportEmptyPage2() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
     report.getItemBand().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.setQueryLimit(100);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
@@ -59,12 +77,12 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReport() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     report.setQueryLimit(100);
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
@@ -80,12 +98,12 @@ public class Prd4071Test extends TestCase
 
   public void testRealWorldReport3() throws Exception
   {
-    if ("false".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest")))
+    if (DebugReportRunner.isSkipLongRunTest())
     {
       return;
     }
     final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2087-small.prpt");
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 46);
 //    ModelPrinter.INSTANCE.print(logicalPageBox);

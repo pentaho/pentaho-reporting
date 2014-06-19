@@ -1,26 +1,26 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.fonts.truetype;
 
 import java.io.IOException;
 
 import org.pentaho.reporting.libraries.fonts.LibFontsDefaults;
-import org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -59,7 +59,7 @@ public class ScalableTrueTypeFontMetrics
       throw new IllegalStateException("Font has no HEAD table and is not a usable font.");
     }
     final int unitsPerEm = head.getUnitsPerEm();
-    final long strictScaleFactor = StrictGeomUtility.toInternalValue(1); 
+    final long strictScaleFactor = FontStrictGeomUtility.toInternalValue(1);
     maxAscent = (strictScaleFactor * head.getyMax()) / unitsPerEm;
     maxDescent = (strictScaleFactor * -head.getyMin()) / unitsPerEm;
     // prefer the mac table, as at least for the old version of Arial
@@ -82,7 +82,7 @@ public class ScalableTrueTypeFontMetrics
         (PostscriptInformationTable) font.getTable(PostscriptInformationTable.TABLE_ID);
     if (postTable != null)
     {
-      this.italicAngle = StrictGeomUtility.toInternalValue(postTable.getItalicAngle());
+      this.italicAngle = FontStrictGeomUtility.toInternalValue(postTable.getItalicAngle());
       this.underlinePosition = getAscent() +
          (strictScaleFactor * (-postTable.getUnderlinePosition() + (postTable.getUnderlineThickness() / 2))) / unitsPerEm;
     }
@@ -101,7 +101,7 @@ public class ScalableTrueTypeFontMetrics
     this.leading = (scaleFactor * hhea.getLineGap()) / unitsPerEm;
     this.xHeight = (long) (ascent * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE / LibFontsDefaults.DEFAULT_ASCENT_SIZE);
     this.strikethroughPosition = getMaxAscent() - (long) (this.xHeight * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
-    this.italicAngle = StrictGeomUtility.toInternalValue
+    this.italicAngle = FontStrictGeomUtility.toInternalValue
         (-StrictMath.atan2(hhea.getCaretSlopeRun(), hhea.getCaretSlopeRise()) * 180 / Math.PI);
   }
 

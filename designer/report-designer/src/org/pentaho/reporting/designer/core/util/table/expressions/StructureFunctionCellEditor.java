@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.util.table.expressions;
 
@@ -38,7 +38,7 @@ import javax.swing.table.TableCellEditor;
 
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
@@ -143,7 +143,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
   private JComboBox expressionEditor;
   private EventListenerList eventListenerList;
   private ReportDesignerContext designerContext;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
   private DefaultDataAttributeContext dataAttributeContext;
   private boolean initialized;
@@ -156,7 +156,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
     final EllipsisButton ellipsisButton = new EllipsisButton("...");
     ellipsisButton.addActionListener(new ExtendedEditorAction());
 
-    expressionEditor = new SmartComboBox();
+    expressionEditor = new SmartComboBox<ExpressionMetaData>();
     expressionEditor.setEditable(false);
     expressionEditor.setEditor(new ValuePassThroughCellEditor(expressionEditor, new ExpressionListCellRenderer()));
     expressionEditor.setRenderer(new ExpressionListCellRenderer());
@@ -206,12 +206,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
     expressionEditor.setModel(model);
   }
 
-  public ReportRenderContext getRenderContext()
-  {
-    return renderContext;
-  }
-
-  public void setRenderContext(final ReportRenderContext renderContext)
+  public void setRenderContext(final ReportDocumentContext renderContext)
   {
     this.renderContext = renderContext;
   }

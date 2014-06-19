@@ -1,29 +1,29 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.ss.usermodel.Font;
+import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 
 /**
- * The HSSFFontWrapper is used to store excel style font informations.
+ * The HSSFFontWrapper is used to store excel style font information.
  *
  * @author Heiko Evermann
  */
@@ -31,6 +31,7 @@ public final class HSSFFontWrapper
 {
   /**
    * scale between Excel and awt. With this value it looks fine.
+   * @deprecated No longer used, will be removed in 6.0
    */
   public static final int FONT_FACTOR = 20;
 
@@ -74,6 +75,23 @@ public final class HSSFFontWrapper
    */
   private int hashCode;
 
+  public HSSFFontWrapper(final StyleSheet contentStyle,
+                         final short colorIndex)
+  {
+    if (colorIndex < 0)
+    {
+      throw new IllegalArgumentException("Negative color index is not allowed");
+    }
+
+    this.fontName = normalizeFontName((String) contentStyle.getStyleProperty(TextStyleKeys.FONT));
+    this.fontHeight = contentStyle.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
+    this.bold = contentStyle.getBooleanStyleProperty(TextStyleKeys.BOLD);
+    this.italic = contentStyle.getBooleanStyleProperty(TextStyleKeys.ITALIC);
+    this.underline = contentStyle.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
+    this.strikethrough = contentStyle.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+    this.colorIndex = colorIndex;
+  }
+
   /**
    * Creates a new HSSFFontWrapper for the given font and color.
    *
@@ -97,30 +115,39 @@ public final class HSSFFontWrapper
     {
       throw new NullPointerException("FontDefinition is null");
     }
-
-    if ("SansSerif".equalsIgnoreCase(fontName))
+    if (colorIndex < 0)
     {
-      this.fontName = "Arial";
-    }
-    else if ("Monosspace".equalsIgnoreCase(fontName))
-    {
-      this.fontName = "Courier New";
-    }
-    else if ("Serif".equalsIgnoreCase(fontName))
-    {
-      this.fontName = "Times New Roman";
-    }
-    else
-    {
-      this.fontName = fontName;
+      throw new IllegalArgumentException("Negative color index is not allowed");
     }
 
-    this.colorIndex = colorIndex;
+    this.fontName = normalizeFontName(fontName);
     this.fontHeight = fontSize;
     this.bold = bold;
     this.italic = italic;
     this.underline = underline;
     this.strikethrough = strikethrough;
+    this.colorIndex = colorIndex;
+  }
+
+  private String normalizeFontName(final String fontName)
+  {
+    if ("SansSerif".equalsIgnoreCase(fontName) ||
+        "Dialog".equalsIgnoreCase(fontName))
+    {
+      return "Arial";
+    }
+    else if ("Monospace".equalsIgnoreCase(fontName))
+    {
+      return "Courier New";
+    }
+    else if ("Serif".equalsIgnoreCase(fontName))
+    {
+      return "Times New Roman";
+    }
+    else
+    {
+      return fontName;
+    }
   }
 
   /**
@@ -134,13 +161,18 @@ public final class HSSFFontWrapper
     {
       throw new NullPointerException("Font is null");
     }
-    fontName = font.getFontName();
-    colorIndex = font.getColor();
+    if (font.getColor() < 0)
+    {
+      throw new IllegalArgumentException("Negative color index is not allowed");
+    }
+
+    fontName = normalizeFontName(font.getFontName());
     fontHeight = font.getFontHeightInPoints();
-    italic = font.getItalic();
     bold = (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD);
+    italic = font.getItalic();
     underline = (font.getUnderline() != HSSFFont.U_NONE);
     strikethrough = font.getStrikeout();
+    colorIndex = font.getColor();
   }
 
   /**
@@ -166,7 +198,7 @@ public final class HSSFFontWrapper
     {
       return false;
     }
-    if (underline != wrapper.strikethrough)
+    if (underline != wrapper.underline)
     {
       return false;
     }
@@ -209,9 +241,26 @@ public final class HSSFFontWrapper
       result = 29 * result + fontHeight;
       result = 29 * result + (bold ? 1 : 0);
       result = 29 * result + (italic ? 1 : 0);
+      result = 29 * result + (underline ? 1 : 0);
+      result = 29 * result + (strikethrough ? 1 : 0);
       hashCode = result;
     }
     return hashCode;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "HSSFFontWrapper{" +
+        "fontName='" + fontName + '\'' +
+        ", colorIndex=" + colorIndex +
+        ", fontHeight=" + fontHeight +
+        ", bold=" + bold +
+        ", italic=" + italic +
+        ", underline=" + underline +
+        ", strikethrough=" + strikethrough +
+        ", hashCode=" + hashCode +
+        '}';
   }
 
   public boolean isBold()

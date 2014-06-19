@@ -16,6 +16,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="report-designer" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-wizard" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-toc" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-legacy-charts" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-pentaho" exported="" />
+    <orderEntry type="module" module-name="report-designer-extension-connectioneditor" exported="" />
     <orderEntry type="module" module-name="datasource-editor-external" exported="" />
     <orderEntry type="module" module-name="datasource-editor-jdbc" exported="" />
     <orderEntry type="module" module-name="datasource-editor-mondrian" exported="" />
@@ -26,13 +31,9 @@
     <orderEntry type="module" module-name="datasource-editor-xpath" exported="" />
     <orderEntry type="module" module-name="datasource-editor-table" exported="" />
     <orderEntry type="module" module-name="datasource-editor-kettle" exported="" />
-    <orderEntry type="module" module-name="report-designer-extension-wizard" exported="" />
-    <orderEntry type="module" module-name="report-designer-extension-toc" exported="" />
     <orderEntry type="module" module-name="datasource-editor-cda" exported="" />
-    <orderEntry type="module" module-name="extensions-sampledata" exported="" />
     <orderEntry type="module" module-name="datasource-editor-openerp" exported="" />
-    <orderEntry type="module" module-name="report-designer-extension-legacy-charts" exported="" />
-    <orderEntry type="module" module-name="report-designer-extension-pentaho" exported="" />
+    <orderEntry type="module" module-name="extensions-sampledata" exported="" />
     <orderEntry type="library" exported="" name="jdbc" level="application" />
     <orderEntry type="module-library" exported="">
       <library>
@@ -42,6 +43,15 @@
         <JAVADOC />
         <SOURCES />
         <jarDirectory url="file://$MODULE_DIR$/lib/jdbc" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/bin/stage/plugins" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
   </component>

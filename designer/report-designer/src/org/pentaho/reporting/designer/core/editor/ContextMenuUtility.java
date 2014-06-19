@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor;
 
@@ -27,6 +27,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
+import org.pentaho.reporting.designer.core.ReportDesignerView;
 import org.pentaho.reporting.designer.core.actions.global.PasteAction;
 import org.pentaho.reporting.designer.core.actions.report.AddDataFactoryAction;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFunctionNode;
@@ -67,110 +69,112 @@ public class ContextMenuUtility
   {
   }
 
-  public static JPopupMenu getMenu(final ReportDesignerContext designerContext, final Object context)
+  public static JPopupMenu getMenu(final ReportDesignerContext context, final Object selectedElement)
   {
-    if (context == null || context instanceof MasterReport)  // This check assumes that we've click on a report band see JIRA PRD-1076
+    ReportDesignerView view = context.getView();
+    if (selectedElement == null || selectedElement instanceof MasterReport)  // This check assumes that we've click on a report band see JIRA PRD-1076
     {
-      return designerContext.getPopupMenu("popup-ReportDefinition"); // NON-NLS
+      return view.getPopupMenu("popup-ReportDefinition"); // NON-NLS
     }
-    final ReportRenderContext activeContext = designerContext.getActiveContext();
-    if (activeContext != null)
+    final ReportDesignerDocumentContext activeContext = context.getActiveContext();
+    if (activeContext instanceof ReportRenderContext)
     {
-      if (context == activeContext.getReportDefinition())
+      ReportRenderContext doc = (ReportRenderContext) activeContext;
+      if (selectedElement == doc.getReportDefinition())
       {
-        return designerContext.getPopupMenu("popup-ReportDefinition");// NON-NLS
+        return view.getPopupMenu("popup-ReportDefinition");// NON-NLS
       }
     }
-    if (context instanceof SubReport)
+    if (selectedElement instanceof SubReport)
     {
-      return designerContext.getPopupMenu("popup-SubReport");// NON-NLS
+      return view.getPopupMenu("popup-SubReport");// NON-NLS
     }
-    if (context instanceof CompoundDataFactory)
+    if (selectedElement instanceof CompoundDataFactory)
     {
-      return createDataSourcePopup(designerContext);
+      return createDataSourcePopup(context);
     }
-    if (context instanceof DataFactory)
+    if (selectedElement instanceof DataFactory)
     {
-      return designerContext.getPopupMenu("popup-DataSource");// NON-NLS
+      return view.getPopupMenu("popup-DataSource");// NON-NLS
     }
-    if (context instanceof ReportFunctionNode)
+    if (selectedElement instanceof ReportFunctionNode)
     {
-      return designerContext.getPopupMenu("popup-Expressions");// NON-NLS
+      return view.getPopupMenu("popup-Expressions");// NON-NLS
     }
-    if (context instanceof ReportQueryNode)
+    if (selectedElement instanceof ReportQueryNode)
     {
-      final ReportQueryNode rqn = (ReportQueryNode) context;
+      final ReportQueryNode rqn = (ReportQueryNode) selectedElement;
       if (rqn.isAllowEdit())
       {
-        return designerContext.getPopupMenu("popup-Query");// NON-NLS
+        return view.getPopupMenu("popup-Query");// NON-NLS
       }
-      return designerContext.getPopupMenu("popup-Inherited-Query");// NON-NLS
+      return view.getPopupMenu("popup-Inherited-Query");// NON-NLS
     }
-    if (context instanceof Expression)
+    if (selectedElement instanceof Expression)
     {
-      return designerContext.getPopupMenu("popup-Expression");// NON-NLS
+      return view.getPopupMenu("popup-Expression");// NON-NLS
     }
-    if (context instanceof RootLevelBand)
+    if (selectedElement instanceof RootLevelBand)
     {
-      return designerContext.getPopupMenu("popup-RootLevelBand");// NON-NLS
+      return view.getPopupMenu("popup-RootLevelBand");// NON-NLS
     }
-    if (context instanceof RelationalGroup)
+    if (selectedElement instanceof RelationalGroup)
     {
-      return designerContext.getPopupMenu("popup-RelationalGroup");// NON-NLS
+      return view.getPopupMenu("popup-RelationalGroup");// NON-NLS
     }
-    if (context instanceof CrosstabGroup)
+    if (selectedElement instanceof CrosstabGroup)
     {
-      return designerContext.getPopupMenu("popup-CrosstabGroup");// NON-NLS
+      return view.getPopupMenu("popup-CrosstabGroup");// NON-NLS
     }
-    if (context instanceof CrosstabOtherGroup)
+    if (selectedElement instanceof CrosstabOtherGroup)
     {
-      return designerContext.getPopupMenu("popup-CrosstabOtherGroup");// NON-NLS
+      return view.getPopupMenu("popup-CrosstabOtherGroup");// NON-NLS
     }
-    if (context instanceof CrosstabRowGroup)
+    if (selectedElement instanceof CrosstabRowGroup)
     {
-      return designerContext.getPopupMenu("popup-CrosstabRowGroup");// NON-NLS
+      return view.getPopupMenu("popup-CrosstabRowGroup");// NON-NLS
     }
-    if (context instanceof CrosstabColumnGroup)
+    if (selectedElement instanceof CrosstabColumnGroup)
     {
-      return designerContext.getPopupMenu("popup-CrosstabColumnGroup");// NON-NLS
+      return view.getPopupMenu("popup-CrosstabColumnGroup");// NON-NLS
     }
-    if (context instanceof CrosstabCellBody)
+    if (selectedElement instanceof CrosstabCellBody)
     {
-      return designerContext.getPopupMenu("popup-CrosstabCellBody");// NON-NLS
+      return view.getPopupMenu("popup-CrosstabCellBody");// NON-NLS
     }
-    if (context instanceof Group)
+    if (selectedElement instanceof Group)
     {
-      return designerContext.getPopupMenu("popup-Group");// NON-NLS
+      return view.getPopupMenu("popup-Group");// NON-NLS
     }
-    if (context instanceof Band)
+    if (selectedElement instanceof Band)
     {
-      return designerContext.getPopupMenu("popup-Band");// NON-NLS
+      return view.getPopupMenu("popup-Band");// NON-NLS
     }
-    if (context instanceof Element)
+    if (selectedElement instanceof Element)
     {
-      final Element element = (Element) context;
-      final JPopupMenu popup = designerContext.getPopupMenu("popup-" + element.getElementTypeName());// NON-NLS
+      final Element element = (Element) selectedElement;
+      final JPopupMenu popup = view.getPopupMenu("popup-" + element.getElementTypeName());// NON-NLS
       if (popup != null)
       {
         return popup;
       }
-      return designerContext.getPopupMenu("popup-Element");// NON-NLS
+      return view.getPopupMenu("popup-Element");// NON-NLS
     }
-    if (context instanceof ReportParameterDefinition)
+    if (selectedElement instanceof ReportParameterDefinition)
     {
-      return designerContext.getPopupMenu("popup-Parameters");// NON-NLS
+      return view.getPopupMenu("popup-Parameters");// NON-NLS
     }
-    if (context instanceof ParameterDefinitionEntry)
+    if (selectedElement instanceof ParameterDefinitionEntry)
     {
-      return designerContext.getPopupMenu("popup-Parameter");// NON-NLS
+      return view.getPopupMenu("popup-Parameter");// NON-NLS
     }
-    if (context instanceof ReportParametersNode)
+    if (selectedElement instanceof ReportParametersNode)
     {
-      return designerContext.getPopupMenu("popup-Parameters");// NON-NLS
+      return view.getPopupMenu("popup-Parameters");// NON-NLS
     }
-    if (context instanceof SubReportParametersNode)
+    if (selectedElement instanceof SubReportParametersNode)
     {
-      return designerContext.getPopupMenu("popup-SubReportParameters");// NON-NLS
+      return view.getPopupMenu("popup-SubReportParameters");// NON-NLS
     }
     return null;
   }

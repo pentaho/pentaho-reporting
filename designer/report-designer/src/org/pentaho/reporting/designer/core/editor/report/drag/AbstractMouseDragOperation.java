@@ -1,25 +1,26 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report.drag;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.editor.report.snapping.SnapPositionsModel;
 import org.pentaho.reporting.designer.core.model.CachedLayoutData;
@@ -44,15 +45,15 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
   private long originPointX;
   private long originPointY;
 
-  protected AbstractMouseDragOperation(final Element[] selectedVisualElements,
+  protected AbstractMouseDragOperation(final List<Element> selectedVisualElements,
                                        final Point2D originPoint,
                                        final SnapPositionsModel horizontalSnapModel,
                                        final SnapPositionsModel verticalSnapModel)
   {
-    final ArrayList<Element> nonDescendants = new ArrayList<Element>(selectedVisualElements.length);
-    for (int i = 0; i < selectedVisualElements.length; i++)
+    final ArrayList<Element> nonDescendants = new ArrayList<Element>(selectedVisualElements.size());
+    for (int i = 0; i < selectedVisualElements.size(); i++)
     {
-      final Element element = selectedVisualElements[i];
+      final Element element = selectedVisualElements.get(i);
       if (isDescendant(element, selectedVisualElements) == false)
       {
         nonDescendants.add(element);
@@ -89,7 +90,7 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
    * @param elements
    * @return
    */
-  protected boolean isDescendant(final Element element, final Element[] elements)
+  protected boolean isDescendant(final Element element, final List<Element> elements)
   {
     final HashSet<Element> parents = new HashSet<Element>();
     Element parent = element.getParentSection();
@@ -99,9 +100,8 @@ public abstract class AbstractMouseDragOperation implements MouseDragOperation
       parent = parent.getParent();
     }
 
-    for (int i = 0; i < elements.length; i++)
+    for (Element visualReportElement : elements)
     {
-      final Element visualReportElement = elements[i];
       if (element == visualReportElement)
       {
         continue;

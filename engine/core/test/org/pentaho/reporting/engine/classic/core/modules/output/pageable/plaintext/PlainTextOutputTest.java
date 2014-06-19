@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext;
 
 import java.awt.Insets;
@@ -8,12 +25,12 @@ import java.io.ByteArrayOutputStream;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.elementfactory.LabelElementFactory;
-import org.pentaho.reporting.engine.classic.core.layout.ModelPrinter;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
@@ -68,7 +85,7 @@ public class PlainTextOutputTest extends TestCase
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(10, 6)), false);
-    ModelPrinter.INSTANCE.print(pageBox);
+
     final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName(pageBox, "LabelElement");
     assertEquals(StrictGeomUtility.toInternalValue(26), labelElement.getHeight());
     assertEquals(StrictGeomUtility.toInternalValue(4), labelElement.getY());
@@ -93,6 +110,7 @@ public class PlainTextOutputTest extends TestCase
     final int cpi = 6;
 
     final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
         new DefaultFontStorage(new MonospaceFontRegistry(lpi, cpi)), false);
 
@@ -131,6 +149,8 @@ public class PlainTextOutputTest extends TestCase
   {
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(PageSize.A4,  PageFormat.LANDSCAPE, new Insets(72, 72, 72, 72)));
+    report.setCompatibilityLevel(null);
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final Band pageHeader = report.getPageHeader();
     final LabelElementFactory labelFactory = new LabelElementFactory();

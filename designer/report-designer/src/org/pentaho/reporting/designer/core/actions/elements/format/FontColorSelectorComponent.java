@@ -1,24 +1,25 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.elements.format;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -51,8 +52,8 @@ public final class FontColorSelectorComponent extends ColorComboBox implements D
       else
       {
 
-        final Element[] visualElements = getSelectionModel().getSelectedVisualElements();
-        if (visualElements.length == 0)
+        final List<Element> visualElements = getSelectionModel().getSelectedElementsOfType(Element.class);
+        if (visualElements.isEmpty())
         {
           setEnabled(false);
           setValueFromModel(null);
@@ -60,23 +61,21 @@ public final class FontColorSelectorComponent extends ColorComboBox implements D
         }
         else
         {
-          final Color color = (Color) visualElements[0].getStyle().getStyleProperty(ElementStyleKeys.PAINT);
-          for (int i = 1; i < visualElements.length; i++)
+          lastSelection = visualElements.get(0);
+          setEnabled(true);
+          final Color color = (Color) lastSelection.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
+          for (int i = 1; i < visualElements.size(); i++)
           {
-            final Element element = visualElements[i];
+            final Element element = visualElements.get(i);
             final Object otherColor = element.getStyle().getStyleProperty(ElementStyleKeys.PAINT);
             if (ObjectUtilities.equal(color, otherColor) == false)
             {
-              setEnabled(true);
               setValueFromModel(null);
-              lastSelection = visualElements[0];
               return;
             }
           }
 
-          setEnabled(true);
           setValueFromModel(color);
-          lastSelection = visualElements[0];
         }
       }
     }

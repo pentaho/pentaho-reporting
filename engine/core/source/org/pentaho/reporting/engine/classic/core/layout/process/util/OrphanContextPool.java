@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
@@ -49,12 +66,6 @@ public class OrphanContextPool
       final OrphanBlockContext retval = blockContextPool.get();
       retval.init(blockContextPool, context, box, orphans);
       return retval;
-    }
-
-    if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-    {
-      // todo: Make this a row-context later .. (Not needed for 3.9)
-      // return new WidowCanvasContext(context);
     }
 
     final OrphanCanvasContext retval = canvasContextPool.get();

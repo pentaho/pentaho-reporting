@@ -1,26 +1,29 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle.parser;
 
 import java.util.ArrayList;
 
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaArgument;
+import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.FormulaParameter;
 import org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleTransformationProducer;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -31,13 +34,15 @@ import org.xml.sax.SAXException;
 public abstract class AbstractKettleTransformationProducerReadHandler
     extends AbstractXmlReadHandler implements KettleTransformationProducerReadHandler
 {
+  private static final Log logger = LogFactory.getLog(AbstractKettleTransformationProducerReadHandler.class);
+
   private String name;
   private String stepName;
   private String username;
   private String password;
   private String repositoryName;
-  private String[] definedArgumentNames;
-  private ParameterMapping[] definedVariableNames;
+  private FormulaArgument[] definedArgumentNames;
+  private FormulaParameter[] definedVariableNames;
   private ArrayList<ArgumentReadHandler> argumentHandlers;
   private ArrayList<VariableReadHandler> variablesHandlers;
 
@@ -78,7 +83,7 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     stepName = attrs.getValue(getUri(), "step");
     if (stepName == null)
     {
-      throw new ParseException("Required attribute 'step' is not defined");
+      logger.warn("Required attribute 'step' is not defined. This query may not work correctly.");
     }
   }
 
@@ -121,18 +126,18 @@ public abstract class AbstractKettleTransformationProducerReadHandler
    */
   protected void doneParsing() throws SAXException
   {
-    definedArgumentNames = new String[argumentHandlers.size()];
+    definedArgumentNames = new FormulaArgument[argumentHandlers.size()];
     for (int i = 0; i < definedArgumentNames.length; i++)
     {
-      final ArgumentReadHandler o = (ArgumentReadHandler) argumentHandlers.get(i);
-      definedArgumentNames[i] = o.getDataRowName();
+      final ArgumentReadHandler o = argumentHandlers.get(i);
+      definedArgumentNames[i] = o.getFormula();
     }
 
-    definedVariableNames = new ParameterMapping[variablesHandlers.size()];
+    definedVariableNames = new FormulaParameter[variablesHandlers.size()];
     for (int i = 0; i < definedVariableNames.length; i++)
     {
-      final VariableReadHandler readHandler = (VariableReadHandler) variablesHandlers.get(i);
-      definedVariableNames[i] = (ParameterMapping) readHandler.getObject();
+      final VariableReadHandler readHandler = variablesHandlers.get(i);
+      definedVariableNames[i] = readHandler.getObject();
     }
   }
 
@@ -156,12 +161,12 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     return repositoryName;
   }
 
-  public String[] getDefinedArgumentNames()
+  public FormulaArgument[] getDefinedArgumentNames()
   {
     return definedArgumentNames;
   }
 
-  public ParameterMapping[] getDefinedVariableNames()
+  public FormulaParameter[] getDefinedVariableNames()
   {
     return definedVariableNames;
   }

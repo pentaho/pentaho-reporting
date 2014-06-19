@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.editor.drilldown.basic;
 
 import java.awt.Component;
@@ -52,13 +69,18 @@ public class XulDrillDownUi implements DrillDownUi
 
   public void init(final Component parent,
                    final ReportDesignerContext reportDesignerContext,
-                   final DrillDownModel model) throws DrillDownUiException
+                   final DrillDownModel model,
+                   final String[] extraFields) throws DrillDownUiException
   {
     if (model == null)
     {
       throw new NullPointerException();
     }
     if (reportDesignerContext == null)
+    {
+      throw new NullPointerException();
+    }
+    if (extraFields == null)
     {
       throw new NullPointerException();
     }
@@ -79,8 +101,6 @@ public class XulDrillDownUi implements DrillDownUi
           ("org.pentaho.reporting.designer.core.editor.drilldown.xul-document." + configurationTag, // NON-NLS
               "res://org/pentaho/reporting/designer/core/editor/drilldown/basic/basic-drilldown.xul"); // NON-NLS
 
-      // System.out.println("Loading " + xulDocument);
-
       final ResourceManager resourceManager = new ResourceManager();
       final Resource resource = resourceManager.createDirectly(xulDocument, Document.class);
       final Document document = (Document) resource.getResource();
@@ -98,7 +118,7 @@ public class XulDrillDownUi implements DrillDownUi
       {
         controller.setName("controller"); // NON-NLS
         controller.setXulDomContainer(container);
-        controller.init(reportDesignerContext, model);
+        controller.init(reportDesignerContext, model, extraFields);
         container.addEventHandler(controller);
       }
 

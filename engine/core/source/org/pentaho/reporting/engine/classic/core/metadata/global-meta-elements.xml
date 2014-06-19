@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
-  <attribute-group name="rich-text-attributes">
+  <attribute-group name="rich-text-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="rich-text-type"
                mandatory="false"
@@ -12,7 +13,8 @@
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.RichTextTypePropertyEditor"/>
   </attribute-group>
 
-  <attribute-group name="excel-footer-attributes">
+  <attribute-group name="excel-footer-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/excel"
                name="page-footer-left"
@@ -40,7 +42,8 @@
 
   </attribute-group>
 
-  <attribute-group name="excel-header-attributes">
+  <attribute-group name="excel-header-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/excel"
                name="page-header-left"
@@ -68,7 +71,8 @@
 
   </attribute-group>
 
-  <attribute-group name="band-attributes">
+  <attribute-group name="band-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/wizard"
                name="generated-content-marker"
                mandatory="false"
@@ -169,7 +173,8 @@
 
   </attribute-group>
 
-  <attribute-group name="root-level-band-attributes">
+  <attribute-group name="root-level-band-attributes"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/report-designer/2.0"
                name="VerticalGuideLines"
                mandatory="false"
@@ -186,6 +191,16 @@
                hidden="true"
                computed="false"
                value-type="java.lang.Double"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="fast-export-dynamic-style-stash"
+               mandatory="false"
+               expert="true"
+               hidden="true"
+               computed="true"
+               transient="false"
+               value-type="java.lang.Object"
                value-role="Value"/>
   </attribute-group>
 
@@ -616,6 +631,17 @@
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
                name="need-eval-result:org.pentaho.reporting.engine.classic.core.function.sys.WizardItemHideFunction"
+               mandatory="false"
+               expert="false"
+               hidden="true"
+               value-type="java.lang.Object"
+               value-role="Value"
+               computed="true"
+               transient="false"
+               design-time-value="false"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"
+               name="fast-export-element-style-stash"
                mandatory="false"
                expert="false"
                hidden="true"
@@ -1167,7 +1193,8 @@
                value-role="Bundle-Key"/>
   </attribute-group>
 
-  <attribute-group name="resource-message">
+  <attribute-group name="resource-message"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="value"
                mandatory="false"
@@ -1193,7 +1220,8 @@
                value-role="Content"/>
   </attribute-group>
 
-  <attribute-group name="translated-content">
+  <attribute-group name="translated-content"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="resource-identifier"
                mandatory="false"
@@ -1206,14 +1234,18 @@
   <style-group name="bands" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
     <style name="computed-sheetname" expert="true" hidden="false" mandatory="false"/>
     <style name="bookmark" expert="true" hidden="false" mandatory="false"/>
-    <style name="pagebreak-before" expert="false" hidden="false" mandatory="false"/>
-    <style name="pagebreak-after" expert="false" hidden="false" mandatory="false"/>
     <style name="layout" expert="false" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LayoutPropertyEditor"/>
-    <style name="fixed-position" expert="true" hidden="false" mandatory="false"
-           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LengthPropertyEditor"/>
 
     <style name="anti-aliasing" expert="true" hidden="false" mandatory="false" deprecated="false"/>
+    <style name="keepAspectRatio" expert="false" hidden="false" mandatory="false"/>
+  </style-group>
+
+  <style-group name="pagination-control" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
+    <style name="pagebreak-before" expert="false" hidden="false" mandatory="false"/>
+    <style name="pagebreak-after" expert="false" hidden="false" mandatory="false"/>
+    <style name="fixed-position" expert="true" hidden="false" mandatory="false"
+           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.LengthPropertyEditor"/>
   </style-group>
 
   <style-group name="page-bands" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
@@ -1257,7 +1289,7 @@
     <style name="font-strikethrough" expert="false" hidden="false" mandatory="false"/>
     <style name="font-smooth" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.FontSmoothPropertyEditor"/>
-    <style name="font-encoding" expert="true" hidden="false" mandatory="false"/>
+    <style name="font-encoding" expert="false" hidden="false" mandatory="false"/>
     <style name="font-size" expert="false" hidden="false" mandatory="false"/>
     <style name="font-italic" expert="false" hidden="false" mandatory="false"/>
     <style name="font-underline" expert="false" hidden="false" mandatory="false"/>
@@ -1268,6 +1300,8 @@
 
     <style name="text-wrap" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor"/>
+    <style name="direction" expert="false" hidden="false" mandatory="false" compatibility-level="5.1.0"
+           propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor"/>
     <style name="trim-text-content" expert="true" hidden="false" mandatory="false"/>
     <style name="vertical-text-alignment" expert="true" hidden="false" mandatory="false"
            propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.VerticalTextAlignmentPropertyEditor"/>
@@ -1287,6 +1321,7 @@
 
     <style name="text-indent" expert="true" hidden="true" mandatory="false"/>
     <style name="first-line-indent" expert="true" hidden="true" mandatory="false"/>
+    <style name="word-break" expert="true" hidden="false" mandatory="false" compatibility-level="5.1.0"/>
   </style-group>
 
   <style-group name="layout" bundle-name="org.pentaho.reporting.engine.classic.core.metadata.styles">
@@ -1360,6 +1395,5 @@
 
     <style name="invisible-consumes-space" expert="true" hidden="false" mandatory="false" deprecated="false"/>
   </style-group>
-
 
 </meta-data>

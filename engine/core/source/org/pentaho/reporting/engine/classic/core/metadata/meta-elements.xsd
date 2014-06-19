@@ -17,6 +17,7 @@
     <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
     <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
     <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
+    <xs:attribute type="xs:integer" name="priority" use="optional"/>
     <xs:attribute type="xs:boolean" name="execute-in-design-mode" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
   </xs:complexType>
@@ -81,6 +82,7 @@
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:string" name="type-classification" use="optional"/>
     <xs:attribute type="xs:string" name="content-type" use="optional"/>
+    <xs:attribute type="xs:string" name="namespace" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="dataFactoryType">
@@ -100,6 +102,9 @@
   </xs:complexType>
 
   <xs:complexType name="reportPreProcessorType">
+    <xs:sequence>
+      <xs:element type="propertyType" name="property" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
     <xs:attribute type="xs:string" name="class" use="required"/>
     <xs:attribute type="xs:string" name="bundle-name" use="required"/>
     <xs:attribute type="xs:string" name="key-prefix" use="optional"/>
@@ -111,6 +116,7 @@
     <xs:attribute type="xs:boolean" name="metadata-source" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
+    <xs:attribute type="xs:boolean" name="execute-in-design-mode" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="style-group-refType">

@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
@@ -22,9 +22,12 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.libraries.base.util.FormattedMessage;
+import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class DefaultListParameter extends AbstractParameter implements ListParameter
@@ -99,23 +102,33 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
     final DataRow parameterData = context.getParameterData();
     final ReportEnvironmentDataRow envDataRow = new ReportEnvironmentDataRow(context.getReportEnvironment());
     final DataFactory dataFactory = context.getDataFactory();
-    final TableModel tableModel = dataFactory.queryData(getQueryName(),
-        new CompoundDataRow(envDataRow, parameterData));
-
-    final String formula = getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context);
-    if (StringUtils.isEmpty(formula, true))
-    {
-      return new DefaultParameterValues(tableModel, getKeyColumn(), getTextColumn());
-    }
-
+    PerformanceLoggingStopWatch sw = context.getPerformanceMonitorContext().createStopWatch
+            (PerformanceTags.REPORT_PARAMETER_QUERY, new FormattedMessage("query={%s}", getQueryName()));
     try
     {
-      return new ComputedParameterValues(tableModel, getKeyColumn(), getTextColumn(), formula, context);
+      sw.start();
+      final TableModel tableModel = dataFactory.queryData(getQueryName(),
+          new CompoundDataRow(envDataRow, parameterData));
+
+      final String formula = getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
+          ParameterAttributeNames.Core.DISPLAY_VALUE_FORMULA, context);
+      if (StringUtils.isEmpty(formula, true))
+      {
+        return new DefaultParameterValues(tableModel, getKeyColumn(), getTextColumn());
+      }
+
+      try
+      {
+        return new ComputedParameterValues(tableModel, getKeyColumn(), getTextColumn(), formula, context);
+      }
+      catch (ReportProcessingException e)
+      {
+        throw new ReportDataFactoryException("Failed to initialize parameter-value-collection", e);
+      }
     }
-    catch (ReportProcessingException e)
+    finally
     {
-      throw new ReportDataFactoryException("Failed to initialize parameter-value-collection", e);
+      sw.close();
     }
   }
 
@@ -176,7 +189,7 @@ public class DefaultListParameter extends AbstractParameter implements ListParam
         }
       }
     }
-    
+
     if (allowMultiSelection)
     {
       final Class valueType1 = getValueType();

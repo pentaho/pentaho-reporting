@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2007 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.base.boot;
 
@@ -144,7 +144,7 @@ public abstract class AbstractBoot implements SubSystem
   {
     return getProjectInfo().getProductId();
   }
-  
+
   /**
    * Loads the configuration. This will be called exactly once.
    *
@@ -200,13 +200,16 @@ public abstract class AbstractBoot implements SubSystem
       }
 
       performBoot();
-      if (info != null)
+      if (LOGGER.isInfoEnabled())
       {
-        LOGGER.info(info.getName() + ' ' + info.getVersion() + " started.");
-      }
-      else
-      {
-        LOGGER.info(getClass() + " started.");
+        if (info != null)
+        {
+          LOGGER.info(info.getName() + ' ' + info.getVersion() + " started.");
+        }
+        else
+        {
+          LOGGER.info(getClass() + " started.");
+        }
       }
     }
     catch (Exception e)
@@ -255,7 +258,7 @@ public abstract class AbstractBoot implements SubSystem
         {
           boot.start();
           while (boot.isBootDone() == false &&
-                 boot.isBootFailed() == false)
+              boot.isBootFailed() == false)
           {
             try
             {
@@ -327,7 +330,7 @@ public abstract class AbstractBoot implements SubSystem
    * Loads the specified booter-class.
    *
    * @param classname the classname of the booter class.
-   * @param source the source-class from where to get the classloader.
+   * @param source    the source-class from where to get the classloader.
    * @return the instantiated booter or null, if no booter could be loaded.
    */
   public static AbstractBoot loadBooter(final String classname, final Class source)
@@ -369,10 +372,10 @@ public abstract class AbstractBoot implements SubSystem
    * @return the configured Configuration instance.
    */
   protected HierarchicalConfiguration createDefaultHierarchicalConfiguration
-      (final String staticConfig,
-       final String userConfig,
-       final boolean addSysProps,
-       final Class source)
+  (final String staticConfig,
+   final String userConfig,
+   final boolean addSysProps,
+   final Class source)
   {
     if (source == null)
     {

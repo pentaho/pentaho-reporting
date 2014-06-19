@@ -1,20 +1,20 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2011 Pentaho Corporation and Contributors...  
- * All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+* All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.report;
 
@@ -24,9 +24,9 @@ import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportQueryNode;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -45,9 +45,9 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
   public static class ConvertDataSourceTask implements Runnable
   {
     private Object[] selectedElements;
-    private ReportRenderContext activeContext;
+    private ReportDocumentContext activeContext;
 
-    public ConvertDataSourceTask(final ReportRenderContext activeContext)
+    public ConvertDataSourceTask(final ReportDocumentContext activeContext)
     {
       this.activeContext = activeContext;
       this.selectedElements = activeContext.getSelectionModel().getSelectedElements();
@@ -64,7 +64,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
           {
             final ReportQueryNode queryNode = (ReportQueryNode) element;
             final DataFactory dataFactory = queryNode.getDataFactory().derive();
-            final MasterReport report = activeContext.getMasterReportElement();
+            final MasterReport report = activeContext.getContextRoot();
             dataFactory.initialize(new DesignTimeDataFactoryContext(report));
             if (dataFactory.isQueryExecutable(queryNode.getQueryName(), new StaticDataRow()) == false)
             {
@@ -128,7 +128,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel model = getSelectionModel();
+    final DocumentContextSelectionModel model = getSelectionModel();
     if (model == null)
     {
       setEnabled(false);
@@ -162,7 +162,7 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
@@ -172,6 +172,6 @@ public class ConvertDataSourceAction extends AbstractElementSelectionAction
     thread.setName("ConvertDataSource-Worker");
     thread.setDaemon(true);
     BackgroundCancellableProcessHelper.executeProcessWithCancelDialog(thread, null,
-        getReportDesignerContext().getParent(), ActionMessages.getString("ConvertDataSourceAction.TaskTitle"));
+        getReportDesignerContext().getView().getParent(), ActionMessages.getString("ConvertDataSourceAction.TaskTitle"));
   }
 }

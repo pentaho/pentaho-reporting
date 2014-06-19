@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
@@ -30,6 +30,7 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DesignTimeUtil
 {
@@ -92,66 +93,36 @@ public class DesignTimeUtil
 
   public static ResourceBundleFactory getResourceBundleFactory(final AbstractReportDefinition reportDefinition)
   {
-    AbstractReportDefinition e = reportDefinition;
-    while (e != null)
+    ReportDefinition e = reportDefinition.getMasterReport();
+    if (e instanceof MasterReport)
     {
-      final ResourceBundleFactory base = e.getResourceBundleFactory();
+      final MasterReport report = (MasterReport) e;
+      final ResourceBundleFactory base = report.getResourceBundleFactory();
       if (base != null)
       {
         return base;
-      }
-      final Section parentSection = e.getParentSection();
-      if (parentSection != null)
-      {
-        final ReportDefinition reportDefinition1 = parentSection.getReportDefinition();
-        if (reportDefinition1 instanceof AbstractReportDefinition)
-        {
-          e = (AbstractReportDefinition) reportDefinition1;
-        }
-        else
-        {
-          e = null;
-        }
-      }
-      else
-      {
-        e = null;
       }
     }
     return null;
   }
 
+  public static ResourceManager getResourceManager(final AbstractReportDefinition reportDefinition)
+  {
+    ReportDefinition e = reportDefinition.getMasterReport();
+    if (e instanceof MasterReport)
+    {
+      final MasterReport report = (MasterReport) e;
+      return report.getResourceManager();
+    }
+    return new ResourceManager();
+  }
+
   public static MasterReport getMasterReport(final Element element)
   {
-    AbstractReportDefinition e = (AbstractReportDefinition) element.getReportDefinition();
+    ReportDefinition e = element.getMasterReport();
     if (e instanceof MasterReport)
     {
       return (MasterReport) e;
-    }
-
-    while (e != null)
-    {
-      final Section parentSection = e.getParentSection();
-      if (parentSection != null)
-      {
-        final ReportDefinition reportDefinition1 = parentSection.getReportDefinition();
-        if (reportDefinition1 instanceof MasterReport)
-        {
-          return (MasterReport) reportDefinition1;
-        }
-        else if (reportDefinition1 instanceof AbstractReportDefinition)
-        {
-          e = (AbstractReportDefinition) reportDefinition1;
-        }
-        else
-        {
-          e = null;
-        }
-      }
-      else
-      {
-        e = null;
-      }
     }
     return null;
   }

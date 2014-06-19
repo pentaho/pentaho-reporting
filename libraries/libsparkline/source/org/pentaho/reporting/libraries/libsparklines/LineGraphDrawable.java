@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Larry Ogrodnek, Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2008 - 2009 Larry Ogrodnek, Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.libsparklines;
 
@@ -35,6 +35,8 @@ public class LineGraphDrawable
 {
   private static final int DEFAULT_SPACING = 2;
   private static final Number[] EMPTY = new Number[0];
+  private static final float LAST_POINT_RADIUS = 2.5f;
+  private static final float LAST_POINT_DIAMETER = LAST_POINT_RADIUS * 2;
 
   private int spacing;
   private Color color;
@@ -59,7 +61,7 @@ public class LineGraphDrawable
    */
   public Number[] getData()
   {
-    return (Number[]) data.clone();
+    return data.clone();
   }
 
   /**
@@ -69,7 +71,7 @@ public class LineGraphDrawable
    */
   public void setData(final Number[] data)
   {
-    this.data = (Number[]) data.clone();
+    this.data = data.clone();
   }
 
   /**
@@ -167,7 +169,20 @@ public class LineGraphDrawable
       throw new NullPointerException();
     }
 
-    final int height = (int) drawArea.getHeight();
+    final float lastPointDiameter;
+    final float lastPointRadius;
+    if (lastColor == null)
+    {
+      lastPointDiameter = 0;
+      lastPointRadius = 0;
+    }
+    else
+    {
+      lastPointDiameter = LAST_POINT_DIAMETER;
+      lastPointRadius = LAST_POINT_RADIUS;
+    }
+
+    final int height = (int) (drawArea.getHeight() - lastPointDiameter);
     if (height <= 0)
     {
       return;
@@ -186,26 +201,14 @@ public class LineGraphDrawable
       return;
     }
 
-    g2.translate(drawArea.getX(), drawArea.getY());
+    g2.translate(drawArea.getX(), drawArea.getY() + lastPointRadius);
 
     float scale = GraphUtils.getDivisor(data, height);
     final int spacing = getSpacing();
-    final float width = (float) ((drawArea.getWidth() - (spacing * (data.length - 1))) / (data.length - 1));
+    final float usableWidth = (float) (drawArea.getWidth() - lastPointRadius);
+    final float width = (usableWidth - spacing * (data.length - 1)) / (data.length - 1);
 
-    float min = Float.MAX_VALUE;
-    for (int index = 0; index < data.length; index++)
-    {
-      final Number i = data[index];
-      if (i == null)
-      {
-        continue;
-      }
-      final float value = i.floatValue();
-      if (value < min)
-      {
-        min = value;
-      }
-    }
+    float min = computeMin();
 
     int x = 0;
     int y = -1;
@@ -258,9 +261,29 @@ public class LineGraphDrawable
     if (lastColor != null)
     {
       g2.setColor(lastColor);
-      g2.fill(new Ellipse2D.Double(lastX - 2, lastY - 2, 5, 5));
+      g2.fill(new Ellipse2D.Double
+          (lastX - LAST_POINT_RADIUS, lastY - LAST_POINT_RADIUS, LAST_POINT_DIAMETER, LAST_POINT_DIAMETER));
     }
     g2.dispose();
 
+  }
+
+  private float computeMin()
+  {
+    float min = Float.MAX_VALUE;
+    for (int index = 0; index < data.length; index++)
+    {
+      final Number i = data[index];
+      if (i == null)
+      {
+        continue;
+      }
+      final float value = i.floatValue();
+      if (value < min)
+      {
+        min = value;
+      }
+    }
+    return min;
   }
 }

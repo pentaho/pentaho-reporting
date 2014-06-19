@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
@@ -25,6 +25,7 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +42,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
@@ -252,6 +254,41 @@ public class SubReportParameterDialog extends CommonDialog
     return saveParameters();
   }
 
+  private String[] add(final String value, final String[] base)
+  {
+    ArrayList<String> tmp = new ArrayList<String>();
+    tmp.add(value);
+    tmp.addAll(Arrays.asList(base));
+    return tmp.toArray(new String[tmp.size()]);
+  }
+
+  private String[] collectParentContextFields(final ReportDesignerContext context)
+  {
+
+    final ReportDocumentContext activeContext = context.getActiveContext();
+    final Section parentSection = activeContext.getReportDefinition().getParentSection();
+    if (parentSection == null)
+    {
+      return new String[0];
+    }
+    final ReportDefinition parentReport = parentSection.getReportDefinition();
+    if (parentReport == null)
+    {
+      return new String[0];
+    }
+
+    final int contextCount = context.getReportRenderContextCount();
+    for (int i = 0; i < contextCount; i += 1)
+    {
+      final ReportRenderContext contextAt = context.getReportRenderContext(i);
+      if (parentReport == contextAt.getReportDefinition())
+      {
+        return contextAt.getReportDataSchemaModel().getColumnNames();
+      }
+    }
+    return new String[0];
+  }
+
   private void configureEditors(final ReportDesignerContext context)
   {
     if (context == null)
@@ -259,54 +296,27 @@ public class SubReportParameterDialog extends CommonDialog
       return;
     }
 
-    final ReportRenderContext activeContext = context.getActiveContext();
+    final ReportDocumentContext activeContext = context.getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Section parentSection = activeContext.getReportDefinition().getParentSection();
-    if (parentSection == null)
-    {
-      return;
-    }
-    final ReportDefinition parentReport = parentSection.getReportDefinition();
-    if (parentReport == null)
-    {
-      return;
-    }
-
-    String[] parentNames = null;
-    final int contextCount = context.getReportRenderContextCount();
-    for (int i = 0; i < contextCount; i += 1)
-    {
-      final ReportRenderContext contextAt = context.getReportRenderContext(i);
-      if (parentReport == contextAt.getReportDefinition())
-      {
-        parentNames = contextAt.getReportDataSchemaModel().getColumnNames();
-        importOuterTableCellEditor.setTags(parentNames);
-        exportOuterTableCellEditor.setTags(parentNames);
-
-        break;
-      }
-    }
+    String[] parentNames = collectParentContextFields(context);
+    importOuterTableCellEditor.setTags(add("*", parentNames));
+    exportOuterTableCellEditor.setTags(parentNames);
 
     // Add any unique columns from import/export outer to the inner parameter
     // list for both the import and export panels
-    List<String> columnNames = new LinkedList<String>(Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
-    if ((parentNames != null) && (columnNames.size() > 0))
-    {
-      for (String param : parentNames)
-      {
-        if (columnNames.contains(param) == false)
-        {
-          columnNames.add(param);
-        }
-      }
-    }
+    List<String> columnNames = new ArrayList<String>();
+    columnNames.add("*");
+    columnNames.addAll(Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
 
-    String [] paramList = new String[columnNames.size()];
-    columnNames.toArray(paramList);
+    List<String> l = new LinkedList<String>(Arrays.asList(parentNames));
+    l.removeAll(columnNames);
+    columnNames.addAll(l);
+
+    String[] paramList = columnNames.toArray(new String[columnNames.size()]);
     importInnerTableCellEditor.setTags(paramList);
     exportInnerTableCellEditor.setTags(paramList);
   }

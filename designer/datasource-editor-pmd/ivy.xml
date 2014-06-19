@@ -22,6 +22,10 @@
                 rev="${project.revision}" transitive="true" changing="true"/>
     <dependency org="org.fife.ui" name="rsyntaxtextarea" rev="1.3.2"
                 transitive="false" conf="default_external->default"/>
+    
+    <!-- release check resolve keeps failing on a conflictt with commons-lang 2.4 coming in 
+          transitively. If commons-lang is not required. Add it to the excludes -->
+    <dependency org="commons-lang" name="commons-lang" rev="2.6" transitive="false"/>                
 
     <dependency org="pentaho" name="pentaho-mql-editor" rev="${dependency.pentaho-mql-editor.revision}" changing="true" conf="default_external->default">
       <!-- These dependencies are dangerous and/or not needed in a Swing application. -->
@@ -30,6 +34,7 @@
       <exclude org="${ivy.artifact.group}"/>
       <exclude org="pentaho" module="pentaho-xul-gwt"/>
       <exclude org="com.google.gwt"/>
+      <exclude org="org.apache.poi" />
       <exclude org="org.eclipse" />
       <exclude org="org.eclipse.core" />
       <exclude org="org.eclipse.jdt" />
@@ -58,8 +63,41 @@
       <exclude org="commons-vfs"/>
       <exclude org="log4j"/>
       <exclude org="org.safehaus.jug"/>
+      <exclude org="org.eclipse.swt"/>
+      <exclude org="pentaho" module="pentaho-xul-swt"/>
+      <exclude org="pentaho-kettle" module="kettle-ui-swt"/>
+      <exclude org="org.mortbay.jetty"/>
+      <exclude org="commons-logging"/>
+      <exclude org="xml-apis"/>
+      <exclude org="pentaho" module="mondrian"/>
+      <exclude org="${library.group}"/>
+      <exclude org="${ivy.artifact.group}"/>
+
+      <!-- Exclude Kettle's JDBC drivers from the dependency list. They should be only in the assembly -->
+      <exclude org="org.apache.derby" name="derby"/>
+      <exclude org="org.apache.derby" name="derbyclient"/>
+      <exclude org="com.h2database" name="h2"/>
+      <exclude org="hsqldb" name="hsqldb"/>
+      <exclude org="infobright" name="infobright-core"/>
+      <exclude org="org.firebirdsql.jdbc" name="jaybird"/>
+      <exclude org="net.sf.jt400" name="jt400"/>
+      <exclude org="jtds" name="jtds"/>
+      <exclude org="luciddb" name="LucidDbClient-minimal"/>
+      <exclude org="monetdb" name="monetdb-jdbc"/>
+      <exclude org="postgresql" name="postgresql"/>
+      <exclude org="com.sap" name="sapdbc"/>
+      <exclude org="org.xerial" name="sqlite-jdbc"/>
+
     </dependency>
 
+    <!-- Testing Dependencies -->
+    <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default"/>
+    <dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="test->default"/>
+    <dependency org="org.slf4j" name="slf4j-api" rev="1.7.3" transitive="false" conf="test->default"/>
+    <dependency org="simple-jndi" name="simple-jndi" rev="0.11.3" transitive="false" conf="test->default"/>
+    <dependency org="xmlunit" name="xmlunit" rev="1.3" conf="test->default"/>
+    <dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core-test" rev="${project.revision}"
+                transitive="false" conf="test->default"/>
 
 	</dependencies>
 </ivy-module>

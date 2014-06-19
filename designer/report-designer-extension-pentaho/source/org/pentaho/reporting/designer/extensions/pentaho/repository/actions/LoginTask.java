@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import java.awt.Component;
@@ -9,7 +26,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs.RepositoryLoginDialog;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishSettings;
@@ -20,24 +37,34 @@ import org.pentaho.reporting.libraries.designtime.swing.background.GenericCancel
 
 public class LoginTask implements Runnable
 {
-  private ReportDesignerContext designerContext;
-  private Component uiContext;
+  private final ReportDesignerContext designerContext;
+  private final Component uiContext;
+  private final AuthenticatedServerTask followUpTask;
+  private final boolean loginForPublish;
+  private boolean skipFirstShowDialog;
   private RepositoryLoginDialog loginDialog;
   private AuthenticationData loginData;
-  private AuthenticatedServerTask followUpTask;
-  private boolean skipFirstShowDialog;
 
   public LoginTask(final ReportDesignerContext designerContext,
                    final Component uiContext,
                    final AuthenticatedServerTask followUpTask)
   {
-    this(designerContext, uiContext, followUpTask, null);
+    this(designerContext, uiContext, followUpTask, null, false);
   }
 
   public LoginTask(final ReportDesignerContext designerContext,
                    final Component uiContext,
                    final AuthenticatedServerTask followUpTask,
                    final AuthenticationData loginData)
+  {
+    this(designerContext, uiContext, followUpTask, loginData, false);
+  }
+
+  public LoginTask(final ReportDesignerContext designerContext,
+                   final Component uiContext,
+                   final AuthenticatedServerTask followUpTask,
+                   final AuthenticationData loginData,
+                   final boolean loginForPublish)
   {
     if (designerContext == null)
     {
@@ -47,6 +74,7 @@ public class LoginTask implements Runnable
     {
       throw new NullPointerException();
     }
+    this.loginForPublish = loginForPublish;
     this.designerContext = designerContext;
     this.uiContext = uiContext;
     this.followUpTask = followUpTask;
@@ -57,10 +85,10 @@ public class LoginTask implements Runnable
     }
     else
     {
-      final ReportRenderContext reportRenderContext = designerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = designerContext.getActiveContext();
       if (reportRenderContext != null)
       {
-        final Object o = reportRenderContext.getProperty("pentaho-login-url");
+        final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
         if (o != null)
         {
           // prepopulate the dialog with the correct login data, but do not skip login completely.
@@ -97,15 +125,15 @@ public class LoginTask implements Runnable
         final Window window = LibSwingUtil.getWindowAncestor(uiContext);
         if (window instanceof Frame)
         {
-          loginDialog = new RepositoryLoginDialog((Frame) window);
+          loginDialog = new RepositoryLoginDialog((Frame) window, loginForPublish);
         }
         else if (window instanceof Dialog)
         {
-          loginDialog = new RepositoryLoginDialog((Dialog) window);
+          loginDialog = new RepositoryLoginDialog((Dialog) window, loginForPublish);
         }
         else
         {
-          loginDialog = new RepositoryLoginDialog();
+          loginDialog = new RepositoryLoginDialog(loginForPublish);
         }
       }
 
@@ -153,7 +181,7 @@ public class LoginTask implements Runnable
 
     if (loginDialog != null && loginDialog.isRememberSettings())
     {
-      final ReportRenderContext reportRenderContext = designerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = designerContext.getActiveContext();
       if (reportRenderContext != null)
       {
         final AuthenticationStore store = reportRenderContext.getAuthenticationStore();
@@ -180,6 +208,9 @@ public class LoginTask implements Runnable
       followUpTask.setLoginData(loginData, storeUpdates);
       SwingUtilities.invokeLater(followUpTask);
     }
+    
+    UpdateReservedCharsTask updateReservedCharsTask = new UpdateReservedCharsTask(loginData);
+    SwingUtilities.invokeLater(updateReservedCharsTask);
   }
 
   public AuthenticationData getLoginData()

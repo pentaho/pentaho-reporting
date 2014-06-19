@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.model;
 
@@ -29,14 +29,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
 public class AlignmentOptionsDialog extends CommonDialog
 {
   private PageDefinition pageDefinition;
-  private ReportRenderContext context;
+  private ReportDocumentContext context;
 
   private JRadioButton leftButton;
   private JRadioButton centerButton;
@@ -44,14 +44,14 @@ public class AlignmentOptionsDialog extends CommonDialog
   private JRadioButton proportionalButton;
   private JRadioButton noneButton;
 
-  public AlignmentOptionsDialog(final ReportRenderContext context,
+  public AlignmentOptionsDialog(final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     init(context, pageDefinition);
   }
 
   public AlignmentOptionsDialog(final Dialog parent,
-                                final ReportRenderContext context,
+                                final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     super(parent);
@@ -59,14 +59,14 @@ public class AlignmentOptionsDialog extends CommonDialog
   }
 
   public AlignmentOptionsDialog(final Frame parent,
-                                final ReportRenderContext context,
+                                final ReportDocumentContext context,
                                 final PageDefinition pageDefinition)
   {
     super(parent);
     init(context, pageDefinition);
   }
 
-  private void init(final ReportRenderContext reportRenderContext,
+  private void init(final ReportDocumentContext reportRenderContext,
                     final PageDefinition pageDefinition)
   {
     if (reportRenderContext == null)

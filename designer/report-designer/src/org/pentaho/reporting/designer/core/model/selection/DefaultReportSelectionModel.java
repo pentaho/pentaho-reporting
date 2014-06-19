@@ -1,35 +1,36 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.model.selection;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.libraries.designtime.swing.WeakEventListenerList;
 
-public class DefaultReportSelectionModel implements ReportSelectionModel
+public class DefaultReportSelectionModel implements DocumentContextSelectionModel
 {
   private WeakEventListenerList listenerList;
   private LinkedHashMap<Object, Object> backend;
   private Object[] valuesCached;
-  private Element[] visualElementsCached;
 
   public DefaultReportSelectionModel()
   {
@@ -101,7 +102,6 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
       {
         iterator.remove();
         valuesCached = null;
-        visualElementsCached = null;
         fireSelectionRemoved(elementFromOldSelection);
       }
     }
@@ -114,7 +114,6 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
       if (backend.containsKey(key) == false)
       {
         backend.put(key, element);
-        visualElementsCached = null;
         valuesCached = null;
         fireSelectionAdded(element);
       }
@@ -177,7 +176,6 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
     if (backend.containsKey(key) == false)
     {
       backend.put(key, element);
-      visualElementsCached = null;
       valuesCached = null;
       fireSelectionAdded(element);
       return true;
@@ -191,7 +189,6 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
     if (backend.containsKey(key))
     {
       backend.remove(key);
-      visualElementsCached = null;
       valuesCached = null;
       fireSelectionRemoved(element);
     }
@@ -200,24 +197,6 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
   public boolean isSelected(final Object o)
   {
     return backend.containsKey(computeKey(o));
-  }
-
-  public Element[] getSelectedVisualElements()
-  {
-    if (visualElementsCached == null)
-    {
-      final ArrayList<Element> selection = new ArrayList<Element>();
-      for (Iterator iterator = backend.values().iterator(); iterator.hasNext(); )
-      {
-        final Object o = iterator.next();
-        if (o instanceof Element)
-        {
-          selection.add((Element) o);
-        }
-      }
-      visualElementsCached = selection.toArray(new Element[selection.size()]);
-    }
-    return visualElementsCached;
   }
 
   public Object[] getSelectedElements()
@@ -245,4 +224,17 @@ public class DefaultReportSelectionModel implements ReportSelectionModel
     }
   }
 
+  public <T> List<T> getSelectedElementsOfType(final Class<T> t)
+  {
+    ArrayList<T> list = new ArrayList<T>();
+    for (Object o : backend.values())
+    {
+      if (t.isInstance(o))
+      {
+        //noinspection unchecked
+        list.add((T) o);
+      }
+    }
+    return Collections.unmodifiableList(list);
+  }
 }

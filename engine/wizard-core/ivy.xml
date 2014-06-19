@@ -19,9 +19,6 @@
 		<!--  reporting engine dependencies -->
 		<dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}" transitive="true" changing="true" />
 
-		<!--  external dependencies -->
-	    <dependency org="commons-logging" name="commons-logging" rev="1.1.1" transitive="false" conf="default_external->default"/>
-	 	
 	 	<!-- Test Dependencies -->
 		<dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default" />
 	</dependencies>

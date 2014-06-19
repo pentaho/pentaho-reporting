@@ -7,7 +7,7 @@
 
   See common_build.xml for more details
 ============================================================================-->
-<project name="sdk" basedir="." default="dist">
+<project name="sdk" basedir="." default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
 
 	<description>
 	  This build file is used to create the Pentaho Reporting Classic SDK
@@ -65,6 +65,27 @@
         and coverage artifacts
         ====================================================================-->
     <target name="continuous-local-testless" depends="dist"/>
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts
+      ====================================================================-->
+  <target name="continuous-junit" depends="build,publish" />
+
+  <!-- Until CM-466 is fixed, hot-patch it -->
+  <target name="install-ivy" depends="subfloor.install-ivy">
+    <ivy:settings url="${ivy.settingsurl}" />
+  </target>
 
     <!--
       AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
@@ -191,14 +212,12 @@
                 <exclude name="**/*.sh"/>
             </zipfileset>
         </zip>
-        
-        <tar tarfile="${dist.dir}/${ivy.artifact.id}-${project.revision}.tar.gz" compression="gzip">
-            <tarfileset dir="${stage.dir}" mode="755">
-                <include name="**/*.sh"/>
-            </tarfileset>
-            <tarfileset dir="${stage.dir}">
-                <exclude name="**/*.sh"/>
-            </tarfileset>
-        </tar>
     </target>
+	
+	
+	<!--========================================================================
+		override subfloor and do nothing since we have no source dir
+		=======================================================================-->
+	<target name="dist-javadoc" />
+	
 </project>

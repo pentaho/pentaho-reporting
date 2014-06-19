@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.model.context;
 
@@ -50,7 +50,7 @@ public final class StaticBoxLayoutProperties implements Serializable
   private static final int FLAG_BREAK_AFTER = 0x40;
   private static final int FLAG_SECTION_CONTEXT = 0x80;
   private static final int FLAG_WIDOW_ORPHAN_OPT_OUT = 0x100;
-  private static final int FLAG_UNDEFINED_WIDTH = 0x200;
+  private static final int FLAG_DEFINED_WIDTH = 0x200;
 
   private static final Log logger = LogFactory.getLog(StaticBoxLayoutProperties.class);
 
@@ -101,14 +101,19 @@ public final class StaticBoxLayoutProperties implements Serializable
     setFlag(FLAG_WIDOW_ORPHAN_OPT_OUT, widowOrphanOptOut);
   }
 
-  public boolean isUndefinedWidth()
+  public boolean isDefinedWidth()
   {
-    return isFlag(FLAG_UNDEFINED_WIDTH);
+    return isFlag(FLAG_DEFINED_WIDTH);
   }
 
-  public void setUndefinedWidth(final boolean undefinedWidth)
+  /**
+   * Indicates whether the box explicitly defines a width.
+   *
+   * @param definedWidth
+   */
+  public void setDefinedWidth(final boolean definedWidth)
   {
-    setFlag(FLAG_UNDEFINED_WIDTH, undefinedWidth);
+    setFlag(FLAG_DEFINED_WIDTH, definedWidth);
   }
 
   public boolean isSectionContext()

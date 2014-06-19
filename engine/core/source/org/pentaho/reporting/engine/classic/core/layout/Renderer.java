@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.LayoutPagebreakHandler;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
@@ -43,17 +44,13 @@ public interface Renderer extends Cloneable
     NORMALFLOW, HEADER, FOOTER, REPEAT_FOOTER, WATERMARK
   }
   
-  public static final int TYPE_NORMALFLOW = 0;
-  public static final int TYPE_HEADER = 1;
-  public static final int TYPE_FOOTER = 2;
-  public static final int TYPE_REPEATED_FOOTER = 3;
-  public static final int TYPE_WATERMARK = 4;
-
   public OutputProcessor getOutputProcessor();
 
   public LayoutModelBuilder getNormalFlowLayoutModelBuilder();
 
-  public void startReport(final ReportDefinition pageDefinition, final ProcessingContext processingContext);
+  public void startReport(final ReportDefinition pageDefinition,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext);
 
   public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint);
 
@@ -73,9 +70,6 @@ public interface Renderer extends Cloneable
 
   public void add(Band band, ExpressionRuntime runtime)
       throws ReportProcessingException;
-
-  public void addToNormalFlow(final Band band,
-                              final ExpressionRuntime runtime) throws ReportProcessingException;
 
   public void endGroupBody();
 

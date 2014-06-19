@@ -1,21 +1,23 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout;
+
+import java.util.List;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -29,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
+import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
@@ -53,7 +56,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.addElement(createBand("ib1"));
     detailBody.addElement(createBand("ib2"));
@@ -62,20 +65,20 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -106,7 +109,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.addElement(createBand("ib1"));
     detailBody.addElement(createBand("ib2"));
@@ -115,20 +118,20 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final Band band = new Band();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -139,11 +142,12 @@ public class WidowOrphanTest extends TestCase
     final ReportHeader header = report.getReportHeader();
     header.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
     header.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    header.setLayout("block");
+    header.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     header.addElement(createBand("placeholder", 60));
     header.addElement(band);
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox = pages.get(0);
     // if keep-together works, then we avoid the pagebreak between the inner-group-header and the first itemband.
     // therefore the first page only contains the placeholder element.
     final RenderNode grHOut = MatchFactory.findElementByName(logicalPageBox, "group-header-outside");
@@ -151,7 +155,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode grOut = MatchFactory.findElementByName(logicalPageBox, "group-outside");
     assertNull(grOut);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-header-outside");
     assertNotNull(grHOut2);
     final RenderNode grOut2 = MatchFactory.findElementByName(logicalPageBox2, "group-outside");
@@ -159,7 +163,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3_miss = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3_miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox3, "ib3");
     assertNotNull(ib3);
 //    ModelPrinter.INSTANCE.print(logicalPageBox3);
@@ -179,7 +183,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
     detailBody.addElement(createBand("ib1"));
@@ -190,20 +194,20 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -244,7 +248,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
     detailBody.addElement(createBand("ib1"));
@@ -254,21 +258,21 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -276,7 +280,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -289,7 +294,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNotNull(ib3);
@@ -307,7 +312,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
     detailBody.addElement(createRootBand("ib1"));
@@ -317,21 +322,21 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createRootBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createRootBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final Band band = new Band();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -341,11 +346,12 @@ public class WidowOrphanTest extends TestCase
 
     report.getReportHeader().getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     report.getReportHeader().getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
-    report.getReportHeader().setLayout("block");
+    report.getReportHeader().setLayout(BandStyleKeys.LAYOUT_BLOCK);
     report.getReportHeader().addElement(createBand("Dummy", 15));
     report.getReportHeader().addElement(band);
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -358,7 +364,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNotNull(ib3);
@@ -381,7 +387,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
     detailBody.addElement(createBand("ib1"));
@@ -395,21 +401,21 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -417,7 +423,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -430,7 +437,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNotNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3);
@@ -439,10 +446,10 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib7miss = MatchFactory.findElementByName(logicalPageBox1, "ib7");
     assertNull(ib7miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     ModelPrinter.INSTANCE.print(logicalPageBox3);
     final RenderNode ib7 = MatchFactory.findElementByName(logicalPageBox3, "ib7");
-    assertNull(ib7);
+    assertNotNull(ib7);
   }
 
   public void testKeepTogetherEffectPagebreakLarger() throws Exception
@@ -451,7 +458,7 @@ public class WidowOrphanTest extends TestCase
     report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
 
     final Band detailBody = new Band();
-    detailBody.setLayout("block");
+    detailBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     detailBody.setName("detail-body");
     detailBody.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, true);
     detailBody.addElement(createBand("ib1"));
@@ -465,21 +472,21 @@ public class WidowOrphanTest extends TestCase
     final Band insideGroup = new Band();
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     insideGroup.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
-    insideGroup.setLayout("block");
+    insideGroup.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     insideGroup.setName("group-inside");
     insideGroup.addElement(createBand("group-header-inside"));
     insideGroup.addElement(detailBody);
     insideGroup.addElement(createBand("group-footer-inside"));
 
     final Band outsideBody = new Band();
-    outsideBody.setLayout("block");
+    outsideBody.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     outsideBody.setName("group-body-outside");
     outsideBody.addElement(insideGroup);
 
     final ReportHeader band = report.getReportHeader();
     band.getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, false);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
-    band.setLayout("block");
+    band.setLayout(BandStyleKeys.LAYOUT_BLOCK);
     band.setName("group-outside");
     band.getStyle().setStyleProperty(ElementStyleKeys.ORPHANS, 2);
     band.getStyle().setStyleProperty(ElementStyleKeys.WIDOWS, 2);
@@ -487,7 +494,8 @@ public class WidowOrphanTest extends TestCase
     band.addElement(outsideBody);
     band.addElement(createBand("group-footer-outside"));
 
-    final LogicalPageBox logicalPageBox1 = DebugReportRunner.layoutPage(report, 0);
+    List<LogicalPageBox> pages = DebugReportRunner.layoutPages(report, 0, 1, 2);
+    final LogicalPageBox logicalPageBox1 = pages.get(0);
     ModelPrinter.INSTANCE.print(logicalPageBox1);
     final RenderNode grHOut2 = MatchFactory.findElementByName(logicalPageBox1, "group-header-outside");
     assertNotNull(grHOut2);
@@ -500,7 +508,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib3miss = MatchFactory.findElementByName(logicalPageBox1, "ib3");
     assertNotNull(ib3miss);
 
-    final LogicalPageBox logicalPageBox2 = DebugReportRunner.layoutPage(report, 1);
+    final LogicalPageBox logicalPageBox2 = pages.get(1);
     ModelPrinter.INSTANCE.print(logicalPageBox2);
     final RenderNode ib3 = MatchFactory.findElementByName(logicalPageBox2, "ib3");
     assertNull(ib3);
@@ -509,7 +517,7 @@ public class WidowOrphanTest extends TestCase
     final RenderNode ib7miss = MatchFactory.findElementByName(logicalPageBox2, "ib7");
     assertNull(ib7miss);
 
-    final LogicalPageBox logicalPageBox3 = DebugReportRunner.layoutPage(report, 2);
+    final LogicalPageBox logicalPageBox3 = pages.get(2);
     final RenderNode ib7 = MatchFactory.findElementByName(logicalPageBox3, "ib7");
     assertNotNull(ib7);
   }

@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report;
 
@@ -44,6 +44,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
@@ -57,7 +58,7 @@ import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ContextMenuUtility;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ZoomModel;
 import org.pentaho.reporting.designer.core.editor.ZoomModelListener;
 import org.pentaho.reporting.designer.core.editor.report.drag.CompoundDragOperation;
@@ -79,9 +80,9 @@ import org.pentaho.reporting.designer.core.model.lineal.GuideLine;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModelEvent;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModelListener;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.BreakPositionsList;
@@ -259,11 +260,11 @@ public abstract class AbstractRenderComponent extends JComponent
       normalizedSelectionRectangleTarget.setLocation(Math.max(0, normalizedSelectionRectangleTarget.getX()), Math.max(0, normalizedSelectionRectangleTarget
           .getY()));
       final ElementRenderer rendererRoot = getElementRenderer();
-      final ReportRenderContext renderContext = getRenderContext();
+      final ReportDocumentContext renderContext = getRenderContext();
 
       if (clearSelectionOnDrag)
       {
-        final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+        final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
         selectionModel.clearSelection();
         clearSelectionOnDrag = false;
       }
@@ -277,7 +278,7 @@ public abstract class AbstractRenderComponent extends JComponent
       final double x2 = Math.max(normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleTarget.getX());
 
       final Element[] allNodes = rendererRoot.getElementsAt(x1, y1, x2 - x1, y2 - y1);
-      final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+      final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
 
       // Convert between points to micro-points (1 point X 100K is a micro-point)
       final StrictBounds rect1 = StrictGeomUtility.createBounds(x1, y1, x2 - x1, y2 - y1);
@@ -366,10 +367,10 @@ public abstract class AbstractRenderComponent extends JComponent
         clearSelectionOnDrag = true;
       }
 
-      final ReportRenderContext renderContext = getRenderContext();
+      final ReportDocumentContext renderContext = getRenderContext();
       final ElementRenderer rendererRoot = getElementRenderer();
 
-      final ReportSelectionModel selectionModel = renderContext.getSelectionModel();
+      final DocumentContextSelectionModel selectionModel = renderContext.getSelectionModel();
       final Element[] allNodes = rendererRoot.getElementsAt
           (normalizedSelectionRectangleOrigin.getX(), normalizedSelectionRectangleOrigin.getY());
       for (int i = allNodes.length - 1; i >= 0; i -= 1)
@@ -403,7 +404,7 @@ public abstract class AbstractRenderComponent extends JComponent
         return; // we do not handle that one ..
       }
 
-      final ReportSelectionModel selectionModel = getRenderContext().getSelectionModel();
+      final DocumentContextSelectionModel selectionModel = getRenderContext().getSelectionModel();
       final ElementRenderer rendererRoot = getElementRenderer();
 
       // Sorted list of all elements that intersect the point we are seeking
@@ -458,7 +459,7 @@ public abstract class AbstractRenderComponent extends JComponent
       }
     }
 
-    private void toggleSelection(final ReportSelectionModel selectionModel, final Element element)
+    private void toggleSelection(final DocumentContextSelectionModel selectionModel, final Element element)
     {
       // toggle selection ..
       if (selectionModel.isSelected(element))
@@ -620,8 +621,8 @@ public abstract class AbstractRenderComponent extends JComponent
     public void keyPressed(final KeyEvent keyEvent)
     {
       // move all selected components 1px
-      final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
-      if (visualElements.length == 0)
+      List<Element> selectedElements = getRenderContext().getSelectionModel().getSelectedElementsOfType(Element.class);
+      if (selectedElements.isEmpty())
       {
         return;
       }
@@ -642,9 +643,8 @@ public abstract class AbstractRenderComponent extends JComponent
 
       keyEvent.consume();
 
-      for (int i = 0; i < visualElements.length; i++)
+      for (final Element element: selectedElements)
       {
-        final Element element = visualElements[i];
         if (element instanceof RootLevelBand)
         {
           continue;
@@ -662,8 +662,8 @@ public abstract class AbstractRenderComponent extends JComponent
         }
       }
 
-      final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder(visualElements);
-      final MoveDragOperation mop = new MoveDragOperation(visualElements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
+      final MassElementStyleUndoEntryBuilder builder = new MassElementStyleUndoEntryBuilder(selectedElements);
+      final MoveDragOperation mop = new MoveDragOperation(selectedElements, new Point(), EmptySnapModel.INSTANCE, EmptySnapModel.INSTANCE);
 
       if (keyCode == KeyEvent.VK_UP)
       {
@@ -882,10 +882,8 @@ public abstract class AbstractRenderComponent extends JComponent
         }
       }
 
-      final Element[] renderers = getRenderContext().getSelectionModel().getSelectedVisualElements();
-      for (int i = 0; i < renderers.length; i++)
+      for (final Element e : getRenderContext().getSelectionModel().getSelectedElementsOfType(Element.class))
       {
-        final Element e = renderers[i];
         final Object o = e.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "selection-overlay-information"); // NON-NLS
         if (o instanceof SelectionOverlayInformation == false)
         {
@@ -1046,7 +1044,7 @@ public abstract class AbstractRenderComponent extends JComponent
     {
     }
 
-    public void validate(final ReportRenderContext context, final double zoomFactor)
+    public void validate(final ReportDocumentContext context, final double zoomFactor, final Point2D sectionOffset)
     {
     }
 
@@ -1065,7 +1063,7 @@ public abstract class AbstractRenderComponent extends JComponent
   private RepaintHandler repaintHandler;
   private SettingsUpdateHandler settingsUpdateHandler;
   private ReportDesignerContext designerContext;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private boolean showLeftBorder;
   private boolean showTopBorder;
   private double gridSize;
@@ -1091,10 +1089,11 @@ public abstract class AbstractRenderComponent extends JComponent
   private SimpleStyleResolver styleResolver;
   private ResolverStyleSheet resolvedStyle;
   private FpsCalculator fpsCalculator;
+  private boolean paintingImmediately = false;
 
 
   protected AbstractRenderComponent(final ReportDesignerContext designerContext,
-                                    final ReportRenderContext renderContext)
+                                    final ReportDocumentContext renderContext)
   {
     if (renderContext == null)
     {
@@ -1241,7 +1240,7 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       return 0;
     }
-    final PageDefinition pageDefinition = renderContext.getPageDefinition();
+    final PageDefinition pageDefinition = renderContext.getContextRoot().getPageDefinition();
     final PageFormat pageFormat = pageDefinition.getPageFormat(0);
     final PageFormatFactory pageFormatFactory = PageFormatFactory.getInstance();
     return pageFormatFactory.getLeftBorder(pageFormat.getPaper());
@@ -1257,7 +1256,7 @@ public abstract class AbstractRenderComponent extends JComponent
     {
       return 0;
     }
-    final PageDefinition pageDefinition = renderContext.getPageDefinition();
+    final PageDefinition pageDefinition = renderContext.getContextRoot().getPageDefinition();
     final PageFormat pageFormat = pageDefinition.getPageFormat(0);
     final PageFormatFactory pageFormatFactory = PageFormatFactory.getInstance();
     return pageFormatFactory.getTopBorder(pageFormat.getPaper());
@@ -1284,7 +1283,7 @@ public abstract class AbstractRenderComponent extends JComponent
         StrictGeomUtility.toExternalValue(bounds.getY()));
   }
 
-  public ReportRenderContext getRenderContext()
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
@@ -1312,7 +1311,7 @@ public abstract class AbstractRenderComponent extends JComponent
     final float scaleFactor = getRenderContext().getZoomModel().getZoomAsPercentage();
 
     // draw the page area ..
-    final PageDefinition pageDefinition = getRenderContext().getPageDefinition();
+    final PageDefinition pageDefinition = getRenderContext().getContextRoot().getPageDefinition();
     final Rectangle2D.Double area = new Rectangle2D.Double(0, 0, pageDefinition.getWidth() * scaleFactor, getHeight());
     g2.translate(leftBorder * scaleFactor, topBorder * scaleFactor);
     g2.clip(area);
@@ -1373,10 +1372,7 @@ public abstract class AbstractRenderComponent extends JComponent
       final OverlayRenderer renderer = renderers[i];
       final Graphics2D selectionG2 = (Graphics2D) g.create();
 
-      // TODO: Check if this is a no-op due to negative offset
-      selectionG2.translate(0, -offset.getY() * scaleFactor);
-
-      renderer.validate(getRenderContext(), scaleFactor);
+      renderer.validate(getRenderContext(), scaleFactor, offset);
       renderer.draw(selectionG2, new Rectangle2D.Double(getLeftBorder(), getTopBorder(), getWidth(), getHeight()), this);
       selectionG2.dispose();
     }
@@ -1590,7 +1586,7 @@ public abstract class AbstractRenderComponent extends JComponent
 
     KeyboardFocusManager.getCurrentKeyboardFocusManager().removePropertyChangeListener("permanentFocusOwner", focusHandler); // NON-NLS
 
-    final ReportRenderContext renderContext = getRenderContext();
+    final ReportDocumentContext renderContext = getRenderContext();
     renderContext.getReportDefinition().removeReportModelListener(changeHandler);
     renderContext.getSelectionModel().removeReportSelectionListener(selectionModelListener);
 
@@ -1666,7 +1662,8 @@ public abstract class AbstractRenderComponent extends JComponent
     editorComponent.validate();
     inlineEditor.addCellEditorListener(this);
 
-    final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
+    List<Element> selectedElements = getRenderContext().getSelectionModel().getSelectedElementsOfType(Element.class);
+    final Element[] visualElements = selectedElements.toArray(new Element[selectedElements.size()]);
     if (visualElements.length > 0)
     {
       oldValues = new ArrayList<Object>();
@@ -1687,7 +1684,8 @@ public abstract class AbstractRenderComponent extends JComponent
 
   public void editingStopped(final ChangeEvent e)
   {
-    final Element[] visualElements = getRenderContext().getSelectionModel().getSelectedVisualElements();
+    List<Element> selectedElements = getRenderContext().getSelectionModel().getSelectedElementsOfType(Element.class);
+    final Element[] visualElements = selectedElements.toArray(new Element[selectedElements.size()]);
     if (visualElements.length > 0)
     {
       final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
@@ -1786,9 +1784,8 @@ public abstract class AbstractRenderComponent extends JComponent
     fpsCalculator.reset();
     fpsCalculator.setActive(true);
 
-    final Element[] visualElements =
-        filterLocalElements(getRenderContext().getSelectionModel().getSelectedVisualElements());
-    if (visualElements.length == 0)
+    List<Element> visualElements = getRenderContext().getSelectionModel().getSelectedElementsOfType(Element.class);
+    if (visualElements.isEmpty())
     {
       return;
     }
@@ -1929,9 +1926,13 @@ public abstract class AbstractRenderComponent extends JComponent
 
   public void repaintConditionally()
   {
-    if (operation != null)
+    if (!paintingImmediately && operation != null)
     {
+      // guard against paintImmediately being called again if we're
+      // already in the middle of repainting.
+      paintingImmediately = true;
       paintImmediately(0, 0, getWidth(), getHeight());
+      paintingImmediately = false;
     }
     else
     {

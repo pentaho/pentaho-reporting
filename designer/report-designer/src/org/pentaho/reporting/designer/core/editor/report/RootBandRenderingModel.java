@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report;
 
@@ -22,6 +22,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
 
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.CrosstabRenderer;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
@@ -34,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
+import org.pentaho.reporting.engine.classic.core.PageDefinition;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -97,7 +99,7 @@ public class RootBandRenderingModel
   }
 
   private ArrayList<ElementRenderer> rootBandComponents;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private AbstractReportDefinition report;
   private EventListenerList eventListenerList;
   private RendererChangeHandler rendererChangeHandler;
@@ -180,7 +182,8 @@ public class RootBandRenderingModel
     }
   }
 
-  public ReportRenderContext getRenderContext()
+  // todo Codesmell
+  public ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
@@ -363,5 +366,10 @@ public class RootBandRenderingModel
     }
 
     this.rootBandComponents.clear();
+  }
+
+  public PageDefinition getPageDefinition()
+  {
+    return renderContext.getContextRoot().getPageDefinition();
   }
 }

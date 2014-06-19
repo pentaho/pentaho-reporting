@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.util;
 
@@ -23,10 +23,10 @@ import javax.swing.JPanel;
 
 import org.pentaho.reporting.designer.core.DesignerContextComponent;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionEvent;
 import org.pentaho.reporting.designer.core.model.selection.ReportSelectionListener;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
 
 /**
  * Although in the report designer the designer-context never changes, for better testability of the side-panels we
@@ -50,7 +50,7 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
 
     public void propertyChange(final PropertyChangeEvent evt)
     {
-      updateActiveContext((ReportRenderContext) evt.getOldValue(), (ReportRenderContext) evt.getNewValue());
+      updateActiveContext((ReportDocumentContext) evt.getOldValue(), (ReportDocumentContext) evt.getNewValue());
     }
   }
 
@@ -100,7 +100,7 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
 
   protected void updateDesignerContext(final ReportDesignerContext oldContext, final ReportDesignerContext newContext)
   {
-    final ReportRenderContext oldRenderContext;
+    final ReportDocumentContext oldRenderContext;
     if (oldContext != null)
     {
       oldContext.removePropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler);
@@ -111,7 +111,7 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
       oldRenderContext = null;
     }
 
-    final ReportRenderContext newRenderContext;
+    final ReportDocumentContext newRenderContext;
     if (newContext != null)
     {
       newContext.addPropertyChangeListener(ReportDesignerContext.ACTIVE_CONTEXT_PROPERTY, contextChangeHandler);
@@ -125,7 +125,7 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
     updateActiveContext(oldRenderContext, newRenderContext);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     if (oldContext != null)
     {
@@ -140,7 +140,7 @@ public abstract class SidePanel extends JPanel implements DesignerContextCompone
   }
 
   @SuppressWarnings({"NoopMethodInAbstractClass"})
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
   }
 }

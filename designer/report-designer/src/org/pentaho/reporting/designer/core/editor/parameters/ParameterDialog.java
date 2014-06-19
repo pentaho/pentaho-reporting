@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.parameters;
 
@@ -59,7 +59,7 @@ import javax.swing.table.TableModel;
 import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.FormulaEditorDataModel;
 import org.pentaho.reporting.designer.core.util.FormulaEditorPanel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -87,6 +87,8 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
+import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -315,6 +317,11 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       dataRow = new CompoundDataRow(envDataRow, new StaticDataRow());
     }
 
+    public PerformanceMonitorContext getPerformanceMonitorContext()
+    {
+      return new NoOpPerformanceMonitorContext();
+    }
+
     public DataRow getParameterData()
     {
       return dataRow;
@@ -331,12 +338,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return resourceManager;
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return resourceManager;
       }
-      return activeContext.getMasterReportElement().getResourceManager();
+      return activeContext.getContextRoot().getResourceManager();
     }
 
     public ResourceBundleFactory getResourceBundleFactory()
@@ -345,21 +352,14 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return resourceBundleFactory;
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return resourceBundleFactory;
       }
-      final MasterReport report = activeContext.getMasterReportElement();
-      try
-      {
-        return MasterReport.computeAndInitResourceBundleFactory
-            (report.getResourceBundleFactory(), report.getReportEnvironment());
-      }
-      catch (ReportProcessingException e)
-      {
-        return resourceBundleFactory;
-      }
+      final MasterReport report = activeContext.getContextRoot();
+      return MasterReport.computeAndInitResourceBundleFactory
+          (report.getResourceBundleFactory(), report.getReportEnvironment());
     }
 
     public Configuration getConfiguration()
@@ -368,12 +368,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return ClassicEngineBoot.getInstance().getGlobalConfig();
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return ClassicEngineBoot.getInstance().getGlobalConfig();
       }
-      return activeContext.getMasterReportElement().getConfiguration();
+      return activeContext.getContextRoot().getConfiguration();
     }
 
     public ResourceKey getContentBase()
@@ -382,12 +382,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return null;
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return null;
       }
-      return activeContext.getMasterReportElement().getContentBase();
+      return activeContext.getContextRoot().getContentBase();
     }
 
     /**
@@ -402,12 +402,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return defaultDocumentMetaData;
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return defaultDocumentMetaData;
       }
-      return activeContext.getMasterReportElement().getBundle().getMetaData();
+      return activeContext.getContextRoot().getBundle().getMetaData();
     }
 
     public ReportEnvironment getReportEnvironment()
@@ -416,12 +416,12 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
       {
         return defaultEnvironment;
       }
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext == null)
       {
         return defaultEnvironment;
       }
-      return activeContext.getMasterReportElement().getReportEnvironment();
+      return activeContext.getContextRoot().getReportEnvironment();
     }
 
     public void close() throws ReportDataFactoryException
@@ -1390,10 +1390,10 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
 
     try
     {
-      final ReportRenderContext activeContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext activeContext = reportDesignerContext.getActiveContext();
       if (activeContext != null)
       {
-        final MasterReport reportDefinition = activeContext.getMasterReportElement();
+        final MasterReport reportDefinition = activeContext.getContextRoot();
         dataFactory.initialize(new DesignTimeDataFactoryContext(reportDefinition));
       }
 

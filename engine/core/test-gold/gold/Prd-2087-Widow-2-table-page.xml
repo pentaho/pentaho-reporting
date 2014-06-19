@@ -328,7 +328,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="2" row-count="5">
+  <table col-count="2" row-count="4">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -363,28 +363,14 @@
         </line>
       </cell>
     </row>
-    <row height="20">
+    <row height="40">
       <empty-cell/>
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="detail-field"/>
-        <line type="ParagraphPoolBox" x="100.0" y="60.0" width="45.55" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="100.0" y="60.0" width="45.55" height="10.0">detail-field</text>
-        </line>
-      </cell>
-    </row>
-    <row height="20">
-      <empty-cell/>
-      <cell row-span="1" col-span="1">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="inner-footer-field"/>
-        <line type="ParagraphPoolBox" x="100.0" y="80.0" width="72.77" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="100.0" y="80.0" width="72.77" height="10.0">inner-footer-field</text>
-        </line>
-      </cell>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+      </empty-cell>
     </row>
   </table>
-  <table col-count="2" row-count="2">
+  <table col-count="2" row-count="4">
     <cols>
       <column width="100"/>
       <column width="400"/>
@@ -393,13 +379,33 @@
       <empty-cell/>
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="outer-footer-field"/>
-        <line type="ParagraphPoolBox" x="100.0" y="0.0" width="73.32" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="100.0" y="0.0" width="73.32" height="10.0">outer-footer-field</text>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="detail-field"/>
+        <line type="ParagraphPoolBox" x="100.0" y="0.0" width="45.55" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="0.0" width="45.55" height="10.0">detail-field</text>
         </line>
       </cell>
     </row>
-    <row height="80">
+    <row height="20">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="inner-footer-field"/>
+        <line type="ParagraphPoolBox" x="100.0" y="20.0" width="72.77" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="20.0" width="72.77" height="10.0">inner-footer-field</text>
+        </line>
+      </cell>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="outer-footer-field"/>
+        <line type="ParagraphPoolBox" x="100.0" y="40.0" width="73.32" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="40.0" width="73.32" height="10.0">outer-footer-field</text>
+        </line>
+      </cell>
+    </row>
+    <row height="40">
       <empty-cell/>
       <empty-cell/>
     </row>

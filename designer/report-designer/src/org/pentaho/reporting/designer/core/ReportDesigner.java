@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core;
 
@@ -33,7 +33,6 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.text.StyleContext;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionUtil;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionsTreeModel;
 import org.pentaho.reporting.designer.core.settings.SettingsUtil;
@@ -59,10 +58,44 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor;
 import org.pentaho.reporting.libraries.fonts.LibFontBoot;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderBoot;
-import org.pentaho.ui.xul.XulException;
 
 public class ReportDesigner
 {
+  private static class SetLookAndFeelTask implements Runnable
+  {
+    public void run()
+    {
+      int indent = 0;
+      try
+      {
+        final String lnfName = WorkspaceSettings.getInstance().getLNF();
+        if (!StringUtils.isEmpty(lnfName))
+        {
+          final LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
+          for (final LookAndFeelInfo lnf : lnfs)
+          {
+            if (lnf.getName().equals(lnfName))
+            {
+              UIManager.setLookAndFeel(lnf.getClassName());
+              return;
+            }
+          }
+        }
+
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        indent = 5; //PRD-4583
+      }
+      catch (Throwable t)
+      {
+        UncaughtExceptionsModel.getInstance().addException(t);
+      }
+
+      final UIDefaults uiDefaults = UIManager.getDefaults();
+      uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
+      uiDefaults.put("Tree.leftChildIndent", indent);//PRD-4419
+    }
+  }
+
   private static SplashScreen splashScreen;
   private static ReportDesignerFrame reportDesignerFrame;
 
@@ -244,7 +277,7 @@ public class ReportDesigner
 
     try
     {
-      setLookAndFeel();
+      SwingUtilities.invokeAndWait(new SetLookAndFeelTask());
       SwingUtilities.invokeAndWait(new InstallAWTHandlerRunnable());
 
       SwingUtilities.invokeAndWait(new InitializeSplashScreenTask());
@@ -311,38 +344,6 @@ public class ReportDesigner
     }
   }
 
-  private static void setLookAndFeel()
-  {
-    int indent = 0;
-    try
-    {
-      final String lnfName = WorkspaceSettings.getInstance().getLNF();
-      if (!StringUtils.isEmpty(lnfName))
-      {
-        final LookAndFeelInfo[] lnfs = UIManager.getInstalledLookAndFeels();
-        for (final LookAndFeelInfo lnf : lnfs)
-        {
-          if (lnf.getName().equals(lnfName))
-          {
-            UIManager.setLookAndFeel(lnf.getClassName());
-            return;
-          }
-        }
-      }
-
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      indent = 5; //PRD-4583
-    }
-    catch (Throwable t)
-    {
-      UncaughtExceptionsModel.getInstance().addException(t);
-    }
-
-    final UIDefaults uiDefaults = UIManager.getDefaults();
-    uiDefaults.put("Table.gridColor", uiDefaults.get("Panel.background"));// NON-NLS
-    uiDefaults.put("Tree.leftChildIndent" , indent );//PRD-4419
-  }
-
   public static void preloadFonts()
   {
     final BufferedImage image = ImageUtils.createTransparentImage(10, 10);
@@ -358,21 +359,4 @@ public class ReportDesigner
     d.dispose();
   }
 
-  public static class DataTabSetVisible implements Runnable
-  {
-    ReportRenderContext activeContext;
-    private DataTabSetVisible()
-    {
-    }
-    public DataTabSetVisible(final ReportRenderContext activeContext){
-        this.activeContext = activeContext;
-    }
-    public void run()
-    {
-      if(this.activeContext == null){
-        return;
-      }
-     reportDesignerFrame.displayAndExpandDataSource(activeContext);
-    }
-  }
 }

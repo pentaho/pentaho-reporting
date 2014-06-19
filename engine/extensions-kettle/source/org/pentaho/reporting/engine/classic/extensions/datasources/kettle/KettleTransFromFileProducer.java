@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
@@ -50,6 +50,7 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
 
   private String transformationFile;
 
+  @Deprecated
   public KettleTransFromFileProducer(final String repositoryName,
                                      final String transformationFile,
                                      final String stepName,
@@ -62,13 +63,39 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     this.transformationFile = transformationFile;
   }
 
+  public KettleTransFromFileProducer(final String repositoryName,
+                                     final String transformationFile,
+                                     final String stepName,
+                                     final String username,
+                                     final String password,
+                                     final FormulaArgument[] definedArgumentNames,
+                                     final FormulaParameter[] definedVariableNames)
+  {
+    super(repositoryName, stepName, username, password, definedArgumentNames, definedVariableNames);
+    this.transformationFile = transformationFile;
+  }
 
+  @Deprecated
   public KettleTransFromFileProducer(final String transformationFile,
                                      final String stepName,
                                      final String[] definedArgumentNames,
                                      final ParameterMapping[] definedVariableNames)
   {
     this("", transformationFile, stepName, null, null, definedArgumentNames, definedVariableNames);
+  }
+
+  public KettleTransFromFileProducer(final String transformationFile,
+                                     final String stepName,
+                                     final FormulaArgument[] definedArgumentNames,
+                                     final FormulaParameter[] definedVariableNames)
+  {
+    this("", transformationFile, stepName, null, null, definedArgumentNames, definedVariableNames);
+  }
+
+  public KettleTransFromFileProducer(final String transformationFile,
+                                     final String stepName)
+  {
+    this("", transformationFile, stepName, null, null, new FormulaArgument[0], new FormulaParameter[0]);
   }
 
   public String getTransformationFile()
@@ -89,21 +116,6 @@ public class KettleTransFromFileProducer extends AbstractKettleTransformationPro
     }
 
     return resourceManager.createKey(new File(transformationFile));
-  }
-
-  protected String computeFullFilename(ResourceKey key)
-  {
-    while (key != null)
-    {
-      final Object identifier = key.getIdentifier();
-      if (identifier instanceof File)
-      {
-        final File file = (File) identifier;
-        return file.getAbsolutePath();
-      }
-      key = key.getParent();
-    }
-    return null;
   }
 
   protected TransMeta loadTransformation(final Repository repository,

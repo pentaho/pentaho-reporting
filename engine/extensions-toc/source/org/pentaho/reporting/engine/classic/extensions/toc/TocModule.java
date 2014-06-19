@@ -1,8 +1,24 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.extensions.toc;
 
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.LayoutDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.extensions.toc.parser.BundleIndexXmlFactoryModule;
@@ -48,10 +64,10 @@ public class TocModule extends AbstractModule
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData
         ("org/pentaho/reporting/engine/classic/extensions/toc/meta-datafactory.xml");
 
-    BundleElementRegistry.getInstance().register("toc", TocElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register("index", IndexElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "toc", TocReadHandler.class);
-    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "index", IndexReadHandler.class);
+    BundleElementRegistry.getInstance().register(TocElementType.INSTANCE, TocElementWriteHandler.class);
+    BundleElementRegistry.getInstance().register(IndexElementType.INSTANCE, IndexElementWriteHandler.class);
+    BundleElementRegistry.getInstance().registerReader(TocElementType.INSTANCE, TocReadHandler.class);
+    BundleElementRegistry.getInstance().registerReader(IndexElementType.INSTANCE, IndexReadHandler.class);
 
     TocXmlResourceFactory.register(BundleTocXmlFactoryModule.class);
     TocXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);

@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
@@ -57,6 +57,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   private String prefix;
   private Class elementType;
   private Class contentType;
+  private String namespace;
 
   private ArrayList<StyleReadHandler> styleHandlers;
   private ArrayList<AttributeReadHandler> attributeHandlers;
@@ -88,6 +89,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
       throw new ParseException("Attribute 'name' is undefined", getLocator());
     }
 
+    namespace = attrs.getValue(getUri(), "namespace"); // NON-NLS
     experimental = "true".equals(attrs.getValue(getUri(), "experimental")); // NON-NLS
     compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
     expert = "true".equals(attrs.getValue(getUri(), "expert"));
@@ -287,7 +289,7 @@ public class ElementReadHandler extends AbstractXmlReadHandler
   public Object getObject() throws SAXException
   {
     return new DefaultElementMetaData
-        (name, bundleName, "element.", expert, preferred, hidden, deprecated, reportElementType,
+        (name, bundleName, "element.", namespace, expert, preferred, hidden, deprecated, reportElementType,
             attributes, styles, elementType, contentType, experimental, compatibilityLevel);
   }
 }

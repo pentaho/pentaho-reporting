@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.core.editor.drilldown;
 
 import java.beans.PropertyEditor;
@@ -10,7 +27,6 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.plugin.jfreereport.reportcharts.metadata.CategoryChartFormulaExpressionPropertyCore;
 import org.pentaho.reporting.designer.core.editor.drilldown.model.DrillDownParameter;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTableModel;
 import org.pentaho.reporting.designer.core.util.table.GroupedName;
@@ -20,12 +36,6 @@ import org.pentaho.reporting.designer.core.util.table.TableStyle;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-/**
- * Todo: Document me!
- * <p/>
- *
- * @author Thomas Morgner.
- */
 public class DrillDownParameterTableModel extends AbstractTableModel
     implements ElementMetaDataTableModel, GroupingModel
 {
@@ -110,6 +120,7 @@ public class DrillDownParameterTableModel extends AbstractTableModel
   private TableStyle tableStyle;
   private DrillDownParameter[] elements;
   private DrillDownParameter[] groupedElements;
+  private String[] extraFields;
 
   /**
    * Constructs a default <code>DefaultTableModel</code>
@@ -123,6 +134,17 @@ public class DrillDownParameterTableModel extends AbstractTableModel
     this.elements = EMPTY_ELEMENTS;
     this.groupings = EMPTY_GROUPINGS;
     this.groupedElements = EMPTY_ELEMENTS;
+    this.extraFields = new String[0];
+  }
+
+  public String[] getExtraFields()
+  {
+    return extraFields.clone();
+  }
+
+  public void setExtraFields(final String[] extraFields)
+  {
+    this.extraFields = extraFields.clone();
   }
 
   /**
@@ -403,7 +425,7 @@ public class DrillDownParameterTableModel extends AbstractTableModel
 
   public String[] getExtraFields(final int row, final int column)
   {
-    return CategoryChartFormulaExpressionPropertyCore.ADDITIONAL_COLUMN_KEYS;
+    return extraFields;
   }
 
   public GroupingHeader getGroupHeader(final int index)

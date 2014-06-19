@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="5" row-count="39">
+  <table col-count="5" row-count="38">
     <cols>
       <column width="72.16"/>
       <column width="72.16"/>
@@ -1806,7 +1806,7 @@
         </line>
       </cell>
     </row>
-    <row height="20">
+    <row height="27">
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="DEPARTMENT"/>
@@ -1855,13 +1855,6 @@
           <text x="301.89" y="670.0" width="58.91" height="10.0">-12,403.0000</text>
         </line>
       </cell>
-    </row>
-    <row height="7">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
   </table>
   <table col-count="5" row-count="38">

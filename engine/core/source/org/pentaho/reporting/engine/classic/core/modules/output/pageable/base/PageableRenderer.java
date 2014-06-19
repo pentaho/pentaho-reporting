@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.base;
 
@@ -36,7 +36,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.OrphanStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.PaginationStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 
 @SuppressWarnings("HardCodedStringLiteral")
 public class PageableRenderer extends AbstractRenderer
@@ -64,21 +64,38 @@ public class PageableRenderer extends AbstractRenderer
     initialize();
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
+  public void startReport(final ReportDefinition report,
+                          final ProcessingContext processingContext,
+                          final PerformanceMonitorContext performanceMonitorContext)
   {
-    super.startReport(report, processingContext);
+    super.startReport(report, processingContext, performanceMonitorContext);
     pageCount = 0;
     widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
   }
 
   protected void debugPrint(final LogicalPageBox pageBox)
   {
-    if (pageCount == 2)
+//    printConditional(5, pageBox);
+//    printConditional(18, pageBox);
+  }
+
+  protected void printConditional(final int page, final LogicalPageBox pageBox)
+  {
+    if (logger.isDebugEnabled() == false)
     {
-//      DebugLog.logEnter();
-//      ModelPrinter.INSTANCE.print(pageBox);
-//      DebugLog.logExit();
+      return;
     }
+
+    logger.debug("Printing a page: " + pageCount);
+    if (pageCount == page)
+    {
+      // leave the debug-code in until all of these cases are solved.
+      logger.debug("1: **** Start Printing Page: " + pageCount);
+      //  ModelPrinter.INSTANCE.print(clone);
+      ModelPrinter.INSTANCE.print(pageBox);
+      logger.debug("1: **** Stop  Printing Page: " + pageCount);
+    }
+
   }
 
   protected boolean preparePagination(final LogicalPageBox pageBox)
@@ -143,18 +160,6 @@ public class PageableRenderer extends AbstractRenderer
     pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
 
     pageCount += 1;
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Printing a page: " + pageCount);
-      if (pageCount == -1)
-      {
-        // leave the debug-code in until all of these cases are solved.
-        logger.debug("1: **** Start Printing Page: " + pageCount);
-      //  ModelPrinter.INSTANCE.print(clone);
-        logger.debug("1: **** Start Printing Page: " + pageCount);
-        ModelPrinter.INSTANCE.print(pageBox);
-      }
-    }
 
 //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
     debugPrint(pageBox);
@@ -205,6 +210,7 @@ public class PageableRenderer extends AbstractRenderer
       pageBox.setPageOffset(nextOffset);
       countBoxesStep.process(pageBox);
       cleanPaginatedBoxesStep.compute(pageBox);
+      // todo PRD-4606
       pageBox.resetCacheState(true);
 
       if (pageBreak.isNextPageContainsContent())
@@ -272,4 +278,19 @@ public class PageableRenderer extends AbstractRenderer
   {
     return true;
   }
+
+  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
+  {
+    super.initializeRendererOnStartReport(processingContext);
+    paginationStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
+    fillPhysicalPagesStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
+  }
+
+  protected void close()
+  {
+    super.close();
+    paginationStep.close();
+    fillPhysicalPagesStep.close();
+  }
+
 }

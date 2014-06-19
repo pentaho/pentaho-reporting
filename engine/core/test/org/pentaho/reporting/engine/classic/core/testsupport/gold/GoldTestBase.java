@@ -1,20 +1,20 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2011 Pentaho Corporation and Contributors...  
- * All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2000 - 2013 Pentaho Corporation and Contributors...
+* All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.testsupport.gold;
 
@@ -46,12 +46,14 @@ import javax.naming.spi.NamingManager;
 
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLAssert;
 import org.junit.Before;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -65,6 +67,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Strea
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.XmlTableOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal.XmlTableOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.font.LocalFontRegistry;
 import org.pentaho.reporting.libraries.base.config.ModifiableConfiguration;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -114,15 +117,18 @@ public class GoldTestBase
 
   private class ExecuteReportRunner implements Runnable
   {
-    private String directory;
+    private File reportFile;
+    private File goldTemplate;
     private ReportProcessingMode processingMode;
     private List<Throwable> errors;
 
-    private ExecuteReportRunner(final String directory,
-                                final ReportProcessingMode processingMode,
-                                final List<Throwable> errors)
+    private ExecuteReportRunner(final File reportFile,
+                                final File goldTemplate,
+                                final List<Throwable> errors,
+                                final ReportProcessingMode processingMode)
     {
-      this.directory = directory;
+      this.reportFile = reportFile;
+      this.goldTemplate = goldTemplate;
       this.processingMode = processingMode;
       this.errors = errors;
     }
@@ -131,11 +137,18 @@ public class GoldTestBase
     {
       try
       {
-        processReports(directory, processingMode);
+        System.out.printf("Processing %s in mode=%s%n", reportFile, processingMode);
+        GoldTestBase.this.run(reportFile, goldTemplate, processingMode);
+        System.out.printf("Finished   %s in mode=%s%n", reportFile, processingMode);
+      }
+      catch (AssertionError e)
+      {
+        errors.add(e);
       }
       catch (Throwable t)
       {
-        errors.add(t);
+        String message = String.format("Failed to process %s in mode %s", reportFile, processingMode); // NON-NLS
+        errors.add(new AssertionError(message, t));
       }
     }
   }
@@ -347,8 +360,8 @@ public class GoldTestBase
   {
     try
     {
-      new File("test-output").mkdir();
-      final FileOutputStream w = new FileOutputStream("test-output/gold-failure-" + goldSample.getName());
+      File testOutputFile = DebugReportRunner.createTestOutputFile();
+      final FileOutputStream w = new FileOutputStream(new File(testOutputFile, "gold-failure-" + goldSample.getName()));
       try
       {
         w.write(reportOutput);
@@ -476,8 +489,15 @@ public class GoldTestBase
 
   protected void runAllGoldReports() throws Exception
   {
+    if ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        (ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY)))
+    {
+      Assert.fail("Dont run GoldenSample tests with the new layout system. These tests are not platform independent.");
+    }
+
     final int numThreads = Math.max(1, ClassicEngineBoot.getInstance().getExtendedConfig().getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads", 3));
+        ("org.pentaho.reporting.engine.classic.core.testsupport.gold.MaxWorkerThreads",
+            Math.max (1, Runtime.getRuntime().availableProcessors() - 1)));
 
     StopWatch w = new StopWatch();
     w.start();
@@ -502,11 +522,27 @@ public class GoldTestBase
   {
     initializeTestEnvironment();
 
-    processReports("reports", ReportProcessingMode.legacy);
-    processReports("reports", ReportProcessingMode.migration);
-    processReports("reports", ReportProcessingMode.current);
-    processReports("reports-4.0", ReportProcessingMode.migration);
-    processReports("reports-4.0", ReportProcessingMode.current);
+    List<Throwable> errors = Collections.synchronizedList(new ArrayList<Throwable>());
+    List<ExecuteReportRunner> reports = new ArrayList<ExecuteReportRunner>();
+    reports.addAll(collectReports("reports", ReportProcessingMode.legacy, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.current, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.current, errors));
+
+    for (ExecuteReportRunner report : reports)
+    {
+      report.run();
+    }
+    if (errors.isEmpty() == false)
+    {
+      Log log = LogFactory.getLog(GoldTestBase.class);
+      for (Throwable throwable : errors)
+      {
+        log.error("Failed", throwable);
+      }
+      Assert.fail();
+    }
 
     System.out.println(findMarker());
   }
@@ -522,11 +558,17 @@ public class GoldTestBase
         new LinkedBlockingQueue<Runnable>(),
         new TestThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
 
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.legacy, errors));
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.current, errors));
-    threadPool.submit(new ExecuteReportRunner("reports", ReportProcessingMode.migration, errors));
-    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.current, errors));
-    threadPool.submit(new ExecuteReportRunner("reports-4.0", ReportProcessingMode.migration, errors));
+    List<ExecuteReportRunner> reports = new ArrayList<ExecuteReportRunner>();
+    reports.addAll(collectReports("reports", ReportProcessingMode.legacy, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports", ReportProcessingMode.current, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.migration, errors));
+    reports.addAll(collectReports("reports-4.0", ReportProcessingMode.current, errors));
+
+    for (ExecuteReportRunner report : reports)
+    {
+      threadPool.submit(report);
+    }
 
     threadPool.shutdown();
     while (threadPool.isTerminated() == false)
@@ -535,17 +577,18 @@ public class GoldTestBase
     }
     if (errors.isEmpty() == false)
     {
-      for (int i = 0; i < errors.size(); i++)
+      Log log = LogFactory.getLog(GoldTestBase.class);
+      for (Throwable throwable : errors)
       {
-        final Throwable throwable = errors.get(i);
-        throwable.printStackTrace();
-        LogFactory.getLog(GoldTestBase.class).error("Failed", throwable);
+        log.error("Failed", throwable);
       }
       Assert.fail();
     }
   }
 
-  private void processReports(final String sourceDirectoryName, final ReportProcessingMode mode) throws Exception
+  private List<ExecuteReportRunner> collectReports(final String sourceDirectoryName,
+                                                   final ReportProcessingMode mode,
+                                                   final List<Throwable> errors) throws Exception
   {
     final File marker = findMarker();
     final File reports = new File(marker, sourceDirectoryName);
@@ -571,6 +614,7 @@ public class GoldTestBase
       }
     }
 
+    List<ExecuteReportRunner> retval = new ArrayList<ExecuteReportRunner>();
     for (final File file : files)
     {
       if (file.isDirectory())
@@ -580,16 +624,14 @@ public class GoldTestBase
 
       try
       {
-        System.out.printf("Processing %s in mode=%s%n", file, mode);
-        run(file, gold, mode);
-        System.out.printf("Finished   %s in mode=%s%n", file, mode);
+        retval.add(new ExecuteReportRunner(file, gold, errors, mode));
       }
       catch (Throwable re)
       {
         throw new Exception("Failed at " + file, re);
       }
     }
-
+    return retval;
   }
 
   protected void runSingleGoldReport(final String file, final ReportProcessingMode mode) throws Exception

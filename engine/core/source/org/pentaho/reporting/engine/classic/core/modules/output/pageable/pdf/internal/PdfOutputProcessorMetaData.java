@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.internal;
 
@@ -36,7 +36,7 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 
 public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
 {
-  private LFUMap normalizedFontNameCache;
+  private LFUMap<String, String> normalizedFontNameCache;
 
   public PdfOutputProcessorMetaData(final ITextFontStorage fontStorage)
   {
@@ -82,7 +82,18 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
       addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
     }
 
-    normalizedFontNameCache = new LFUMap(500);
+    if (isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
+    {
+      addFeature(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
+    }
+
+    String defaultEncoding = configuration.getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding");
+    if (!StringUtils.isEmpty(defaultEncoding))
+    {
+      getITextFontStorage().setDefaultEncoding(defaultEncoding);
+    }
+    normalizedFontNameCache = new LFUMap<String, String>(500);
   }
 
   public String getNormalizedFontFamilyName(final String name)
@@ -170,7 +181,7 @@ public class PdfOutputProcessorMetaData extends AbstractOutputProcessorMetaData
     {
       return false;
     }
-    
+
     final Object o = attributes.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
     if (o instanceof MasterReportType)
     {

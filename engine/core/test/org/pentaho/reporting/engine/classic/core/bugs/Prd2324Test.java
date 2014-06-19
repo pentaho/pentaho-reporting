@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.bugs;
 
 import java.io.ByteArrayOutputStream;
@@ -7,6 +24,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -18,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllIt
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlPrinter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.PageableHtmlOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
@@ -61,6 +80,7 @@ public class Prd2324Test extends TestCase
   public void testPageFooterMissing() throws IOException, ReportProcessingException
   {
     final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
     addLabel("PageFooter", report.getPageFooter());
     addLabel("PageHeader", report.getPageHeader());
     addLabel("ReportHeader", report.getReportHeader());
@@ -69,7 +89,28 @@ public class Prd2324Test extends TestCase
     final byte[] bytes = generate(report);
     final String data = new String(bytes, "ISO-8859-1");
 
-    System.out.println(data);
+    DebugLog.log(data);
+
+    assertTrue("Found PageFooter", data.contains("PageFooter"));
+    assertTrue("Found PageHeader", data.contains("PageHeader"));
+    assertTrue("Found ReportFooter", data.contains("ReportFooter"));
+    assertTrue("Found ReportHeader", data.contains("ReportHeader"));
+
+  }
+
+  public void testPageFooterMissingComplex() throws IOException, ReportProcessingException
+  {
+    final MasterReport report = new MasterReport();
+    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    addLabel("PageFooter", report.getPageFooter());
+    addLabel("PageHeader", report.getPageHeader());
+    addLabel("ReportHeader", report.getReportHeader());
+    addLabel("ReportFooter", report.getReportFooter());
+
+    final byte[] bytes = generate(report);
+    final String data = new String(bytes, "ISO-8859-1");
+
+    DebugLog.log(data);
 
     assertTrue("Found PageFooter", data.contains("PageFooter"));
     assertTrue("Found PageHeader", data.contains("PageHeader"));

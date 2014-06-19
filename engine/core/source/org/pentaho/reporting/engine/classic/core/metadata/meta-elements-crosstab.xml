@@ -4,7 +4,8 @@
   <element name="crosstab-title-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabTitleHeaderType"
-           type-classification="header">
+           type-classification="header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -22,7 +23,8 @@
   <element name="crosstab-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabHeaderType"
-           type-classification="header">
+           type-classification="header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -41,7 +43,8 @@
   <element name="crosstab-summary-header" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabSummaryHeaderType"
-           type-classification="header">
+           type-classification="header"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -59,7 +62,8 @@
   <element name="crosstab" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="common-attributes"/>
@@ -127,13 +131,15 @@
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
     <style-group-ref ref="layout"/>
   </element>
 
   <element name="crosstab-other-group" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -153,13 +159,15 @@
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
     <style-group-ref ref="layout"/>
   </element>
 
   <element name="crosstab-other-group-body" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -173,7 +181,8 @@
   <element name="crosstab-row-group" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabRowGroupType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -239,13 +248,15 @@
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>
     <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
     <style-group-ref ref="layout"/>
   </element>
 
   <element name="crosstab-row-group-body" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabRowGroupBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -261,7 +272,8 @@
   <element name="crosstab-column-group" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabColumnGroupType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -322,7 +334,8 @@
   <element name="crosstab-column-group-body" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabColumnGroupBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -338,7 +351,8 @@
   <element name="crosstab-cell-body" expert="true" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellBodyType"
-           type-classification="control">
+           type-classification="control"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
@@ -352,7 +366,8 @@
   <element name="crosstab-cell" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType"
-           type-classification="section">
+           type-classification="section"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="root-level-band-attributes"/>
     <attribute-group-ref ref="band-attributes"/>
@@ -392,7 +407,8 @@
   <element name="crosstab-report" experimental="true" hidden="false" preferred="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType"
-           type-classification="subreport">
+           type-classification="subreport"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
 
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>

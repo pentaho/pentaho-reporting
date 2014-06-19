@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
@@ -22,6 +22,8 @@ import java.util.HashMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.content.ContentRootElementHandler;
+import org.pentaho.reporting.libraries.base.util.PasswordObscurification48;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 
@@ -36,10 +38,6 @@ public class PasswordEncryptionService
   {
     services = new HashMap<String, PasswordEncryptionServiceProvider>();
     provider = ClassicEngineBoot.getInstance().getObjectFactory().get(PasswordEncryptionServiceProvider.class);
-    if (provider == null)
-    {
-      provider = new ObscurificatePasswordEncryptionServiceProvider();
-    }
     registerService(provider);
     logger.debug("Selected " + provider.getClass() + " as default provider.");
   }
@@ -85,7 +83,8 @@ public class PasswordEncryptionService
       return encryptedPassword;
     }
 
-    final Object helperObject = root.getHelperObject("prpt-spec-version");
+    final Object helperObject = root.getHelperObject(ContentRootElementHandler.PRPT_SPEC_VERSION);
+    final boolean legacyFix;
     if (helperObject instanceof Integer)
     {
       final Integer version = (Integer) helperObject;
@@ -94,6 +93,11 @@ public class PasswordEncryptionService
         logger.warn("Decrypting password skipped, as we are dealing with an older version. ");
         return encryptedPassword;
       }
+
+      legacyFix = (version.intValue() < ClassicEngineBoot.computeVersionId(5, 0, 0));
+    }
+    else {
+      legacyFix = false;
     }
 
     final int separatorPos = encryptedPassword.indexOf(':');
@@ -107,6 +111,11 @@ public class PasswordEncryptionService
     final String serviceName = encryptedPassword.substring(0, separatorPos);
     final String payload = encryptedPassword.substring(separatorPos + 1);
     final PasswordEncryptionServiceProvider provider = services.get(serviceName);
+
+    if (legacyFix && ObscurificatePasswordEncryptionServiceProvider.SERVICE_TAG.equals(serviceName))
+    {
+      return new Obscurificate48PasswordEncryptionServiceProvider().decrypt(payload);
+    }
     if (provider != null)
     {
       return provider.decrypt(payload);

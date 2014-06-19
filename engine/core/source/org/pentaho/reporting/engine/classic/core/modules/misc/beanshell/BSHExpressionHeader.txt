@@ -14,6 +14,6 @@ ExpressionRuntime runtime;
 
 Object getValue ()
 {
-  DebugLog.log ("Warning: No user defined function!");
+  DebugLog.log ("BSH-Expression: Warning: No user defined function defined! Scripts must declare a getValue() function.");
   return null;
 }

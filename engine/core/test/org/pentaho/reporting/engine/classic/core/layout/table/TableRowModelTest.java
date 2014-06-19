@@ -1,26 +1,24 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.SeparateRowModel;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.rows.TableRowModel;
 
@@ -28,11 +26,6 @@ public class TableRowModelTest extends TestCase
 {
   public TableRowModelTest()
   {
-  }
-
-  public TableRowModelTest(final String name)
-  {
-    super(name);
   }
 
   public void setUp() throws Exception
@@ -62,14 +55,6 @@ public class TableRowModelTest extends TestCase
     assertEquals(1, rowModel.getRow(0).getMaximumRowSpan());
     assertEquals(5000, rowModel.getRow(0).getPreferredSize(1));
     assertEquals(5000, rowModel.getRow(0).getValidatedTrailingSize(1));
-  }
-
-  private TableSectionRenderBox createSection()
-  {
-    final TableRenderBox table = new TableRenderBox();
-    final TableSectionRenderBox child = new TableSectionRenderBox();
-    table.addChild(child);
-    return child;
   }
 
   public void testPruneMiddle()

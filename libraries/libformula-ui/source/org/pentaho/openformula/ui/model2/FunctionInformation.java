@@ -1,21 +1,23 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.openformula.ui.model2;
+
+import java.util.Arrays;
 
 public class FunctionInformation
 {
@@ -95,7 +97,12 @@ public class FunctionInformation
 
   public int getParamStart(final int i)
   {
-    return paramStart[i];
+    if (i < paramStart.length)
+    {
+      return paramStart[i];
+    }
+
+    return functionParameterStart;
   }
 
   public int getParamEnd(final int i)
@@ -110,5 +117,23 @@ public class FunctionInformation
   public int getParameterCount()
   {
     return parameterText.length;
+  }
+
+  public String[] getParameters(){
+    return parameterText.clone();
+  }
+
+  public String toString()
+  {
+    return "FunctionInformation{" +
+        "canonicalName='" + canonicalName + '\'' +
+        ", functionParameterStart=" + functionParameterStart +
+        ", functionParameterEnd=" + functionParameterEnd +
+        ", parameterText=" + Arrays.toString(parameterText) +
+        ", paramStart=" + Arrays.toString(paramStart) +
+        ", paramEnd=" + Arrays.toString(paramEnd) +
+        ", functionOffset=" + functionOffset +
+        ", functionText='" + functionText + '\'' +
+        '}';
   }
 }

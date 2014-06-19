@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory;
 
@@ -30,10 +30,13 @@ import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
+import org.pentaho.reporting.engine.classic.core.util.LibLoaderResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DataFactoryEditorSupport
 {
@@ -115,12 +118,17 @@ public class DataFactoryEditorSupport
     final ResourceKey contentBase;
     final ReportEnvironment reportEnvironment;
     final DataFactory reportDataFactory;
+    final ResourceManager resourceManager;
+    final ResourceBundleFactory resourceBundleFactory;
+
     if (masterReport == null)
     {
       contentBase = null;
       configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
       reportEnvironment = new DefaultReportEnvironment(configuration);
       reportDataFactory = null;
+      resourceManager = new ResourceManager();
+      resourceBundleFactory = new LibLoaderResourceBundleFactory();
     }
     else
     {
@@ -128,6 +136,8 @@ public class DataFactoryEditorSupport
       configuration = masterReport.getConfiguration();
       reportEnvironment = masterReport.getReportEnvironment();
       reportDataFactory = masterReport.getDataFactory();
+      resourceManager = masterReport.getResourceManager();
+      resourceBundleFactory = masterReport.getResourceBundleFactory();
     }
 
     final CompoundDataFactory compoundDataFactory = new CompoundDataFactory();
@@ -142,8 +152,8 @@ public class DataFactoryEditorSupport
     }
 
     final DesignTimeDataFactoryContext dataFactoryContext = new DesignTimeDataFactoryContext(configuration,
-        report.getResourceManager(), contentBase, MasterReport.computeAndInitResourceBundleFactory
-        (report.getResourceBundleFactory(), reportEnvironment), compoundDataFactory);
+        resourceManager, contentBase, MasterReport.computeAndInitResourceBundleFactory
+        (resourceBundleFactory, reportEnvironment), compoundDataFactory);
     dataFactory.initialize(dataFactoryContext);
     compoundDataFactory.initialize(dataFactoryContext);
   }

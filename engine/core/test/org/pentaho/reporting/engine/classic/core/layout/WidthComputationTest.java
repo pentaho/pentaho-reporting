@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
@@ -22,6 +22,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
@@ -56,6 +57,29 @@ public class WidthComputationTest extends TestCase
   {
     final MasterReport basereport = new MasterReport();
     basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setCompatibilityLevel(null);
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+
+    final URL target = LayoutTest.class.getResource("layout-matrix.xml");
+    final ResourceManager rm = new ResourceManager();
+    rm.registerDefaults();
+    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final MasterReport report = (MasterReport) directly.getResource();
+
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
+        (basereport, report.getReportHeader(), true, false);
+    // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
+    // and that only two lines exist for each
+    // ModelPrinter.INSTANCE.print(logicalPageBox);
+    new ValidateRunner().startValidation(logicalPageBox);
+  }
+
+  public void testLayoutMatrixLegacy() throws Exception
+  {
+    final MasterReport basereport = new MasterReport();
+    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
 
     final URL target = LayoutTest.class.getResource("layout-matrix.xml");
     final ResourceManager rm = new ResourceManager();
@@ -83,7 +107,6 @@ public class WidthComputationTest extends TestCase
 
       if (name.startsWith("test-") && (box instanceof InlineRenderBox == false))
       {
-//        assertEquals("Computed-Width is same as page-width [BLOCK->*]", StrictGeomUtility.toInternalValue(468), box.getComputedWidth());
         assertEquals("Cached-Width is same as page-width [BLOCK->*]", StrictGeomUtility.toInternalValue(468), box.getCachedWidth());
       }
 

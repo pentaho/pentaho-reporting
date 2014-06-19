@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.ui.datasources.mondrian;
 
@@ -451,7 +451,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     protected void handleChange(final DocumentEvent e)
     {
       final NamedDataSourceDialogModel dialogModel = getDialogModel();
-      final DataSetQuery item = (DataSetQuery) dialogModel.getQueries().getSelectedItem();
+      final DataSetQuery<String> item = dialogModel.getQueries().getSelectedQuery();
       if (item == null)
       {
         return;
@@ -652,7 +652,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
     public void actionPerformed(final ActionEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery<String> query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
         final ScriptEngineFactory selectedItem = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
@@ -687,7 +687,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
     protected void handleChange(final DocumentEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery<String> query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
         query.setScript(queryScriptTextArea.getText());
@@ -734,9 +734,9 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
   private Properties mondrianProperties;
 
   private RSyntaxTextArea globalScriptTextArea;
-  private SmartComboBox globalLanguageField;
+  private SmartComboBox<ScriptEngineFactory> globalLanguageField;
   private RSyntaxTextArea queryScriptTextArea;
-  private SmartComboBox queryLanguageField;
+  private SmartComboBox<ScriptEngineFactory> queryLanguageField;
   private QueryLanguageListCellRenderer queryLanguageListCellRenderer;
   private GlobalTemplateAction globalTemplateAction;
   private QueryTemplateAction queryTemplateAction;
@@ -811,7 +811,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -821,7 +821,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -1306,7 +1306,7 @@ public abstract class MondrianDataSourceEditor extends CommonDialog
       dataFactory.setGlobalScript(globalScriptTextArea.getText());
     }
 
-    final DataSetComboBoxModel queries = dialogModel.getQueries();
+    final DataSetComboBoxModel<String> queries = dialogModel.getQueries();
     for (int i = 0; i < queries.getSize(); i++)
     {
       final DataSetQuery<String> query = queries.getQuery(i);

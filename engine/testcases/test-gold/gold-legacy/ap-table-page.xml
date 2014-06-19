@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="1" row-count="2">
+  <table col-count="1" row-count="1">
     <cols>
       <column width="540"/>
     </cols>
-    <row height="18">
+    <row height="720">
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="AP Letter"/>
-      </empty-cell>
-    </row>
-    <row height="702">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
       </empty-cell>
     </row>
   </table>

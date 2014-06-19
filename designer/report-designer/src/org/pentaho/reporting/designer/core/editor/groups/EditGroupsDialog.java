@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.groups;
 
@@ -37,7 +37,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.undo.EditGroupUndoEntry;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -172,7 +172,7 @@ public class EditGroupsDialog extends CommonDialog
 
   private JTable table;
   private GroupDataTableModel tableModel;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private GroupDataEntryCellEditor groupDataEntryCellEditor;
 
   public EditGroupsDialog()
@@ -242,12 +242,12 @@ public class EditGroupsDialog extends CommonDialog
     return panel;
   }
 
-  protected ReportRenderContext getReportRenderContext()
+  protected ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
 
-  protected GroupDataEntry[] editGroups(final ReportRenderContext reportRenderContext,
+  protected GroupDataEntry[] editGroups(final ReportDocumentContext reportRenderContext,
                                         final GroupDataEntry[] groupData)
   {
     if (reportRenderContext == null)
@@ -293,7 +293,7 @@ public class EditGroupsDialog extends CommonDialog
     }
   }
 
-  public boolean editGroups(final ReportRenderContext context)
+  public boolean editGroups(final ReportDocumentContext context)
   {
     if (context == null)
     {

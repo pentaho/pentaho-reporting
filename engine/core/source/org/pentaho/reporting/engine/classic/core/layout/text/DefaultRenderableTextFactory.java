@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.text;
 
@@ -56,6 +56,7 @@ import org.pentaho.reporting.libraries.fonts.text.whitespace.DiscardWhiteSpaceFi
 import org.pentaho.reporting.libraries.fonts.text.whitespace.PreserveBreaksWhiteSpaceFilter;
 import org.pentaho.reporting.libraries.fonts.text.whitespace.PreserveWhiteSpaceFilter;
 import org.pentaho.reporting.libraries.fonts.text.whitespace.WhiteSpaceFilter;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 /**
  * Creation-Date: 03.04.2007, 16:43:48
@@ -101,7 +102,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
   private WhitespaceCollapse whitespaceCollapseValue;
   private TextWrap breakOpportunityValue;
   private long wordSpacing;
-  private ReportAttributeMap attributeMap;
+  private ReportAttributeMap<Object> attributeMap;
   private ElementType elementType;
   private ExtendedBaselineInfo uniformBaselineInfo;
   private InstanceID instanceId;
@@ -132,7 +133,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
                                  final StyleSheet layoutContext,
                                  final ElementType elementType,
                                  final InstanceID instanceId,
-                                 final ReportAttributeMap attributeMap)
+                                 final ReportAttributeMap<Object> attributeMap)
   {
     this.instanceId = instanceId;
     if (layoutContext == null)
@@ -167,7 +168,7 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
 
     if (metaData.isFeatureSupported(OutputProcessorFeature.SPACING_SUPPORTED))
     {
-      this.wordSpacing = org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility.toInternalValue
+      this.wordSpacing = FontStrictGeomUtility.toInternalValue
           (layoutContext.getDoubleStyleProperty(TextStyleKeys.WORD_SPACING, 0));
     }
     else

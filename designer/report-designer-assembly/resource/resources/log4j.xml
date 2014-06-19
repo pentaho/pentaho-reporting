@@ -16,107 +16,128 @@
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
 
-    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
-        <param name="Target" value="System.err"/>
-        <!--    <param name="Threshold" value="INFO"/> -->
+  <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <param name="Target" value="System.err"/>
+    <!--    <param name="Threshold" value="INFO"/> -->
 
-        <layout class="org.apache.log4j.PatternLayout">
-            <!-- The default pattern: Date Priority [Category] Messagen -->
-            <!--
-            <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
-            -->
-            <!--
-            NOTE: %F:%M:%L (File:Method:Line) is useless because of the way Kettle logs messages.
-            They always show up as coming from the LogWriter class.  Also, it is expensive to
-            generate the location information (although since there is only ever one location
-            I imagine it gets cached and reused throughout the life of the application).
-            <param name="ConversionPattern" value="%-5p %d{dd-MM HH:mm:ss,SSS} (%F:%M:%L)  -%m%n"/>
-            -->
-            <param name="ConversionPattern" value="%d [%7r] %6p - %-50c - %m%n"/>
-        </layout>
-    </appender>
+    <layout class="org.apache.log4j.PatternLayout">
+      <!-- The default pattern: Date Priority [Category] Messagen -->
+      <!--
+      <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}] %m%n"/>
+      -->
+      <!--
+      NOTE: %F:%M:%L (File:Method:Line) is useless because of the way Kettle logs messages.
+      They always show up as coming from the LogWriter class.  Also, it is expensive to
+      generate the location information (although since there is only ever one location
+      I imagine it gets cached and reused throughout the life of the application).
+      <param name="ConversionPattern" value="%-5p %d{dd-MM HH:mm:ss,SSS} (%F:%M:%L)  -%m%n"/>
+      -->
+      <param name="ConversionPattern" value="%d [%7r] %6p - %-50c - %m%n"/>
+    </layout>
+  </appender>
 
-    <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-        <param name="MaxFileSize" value="10Mb"/>
-        <param name="MaxBackupIndex" value="5"/>
-        <param name="file" value="${user.home}/.pentaho/logs/prd.log"/>
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d [%7r] %6p - %-50c - %m%n"/>
-        </layout>
-    </appender>
+  <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
+    <param name="MaxFileSize" value="10Mb"/>
+    <param name="MaxBackupIndex" value="5"/>
+    <param name="file" value="${user.home}/.pentaho/logs/prd.log"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%d [%7r] %6p - %-50c - %m%n"/>
+    </layout>
+  </appender>
 
-    <category name="org.pentaho">
-        <priority value="DEBUG"/>
-    </category>
+  <!-- This file appender is used to output aggregated performance statistics -->
+  <appender name="PerformanceFileAppender" class="org.apache.log4j.FileAppender">
+    <param name="File" value="${user.home}/.pentaho/logs/prd-perfStats.log"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender>
 
-    <category name="com.healthmarketscience.jackcess">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.pentaho">
+    <priority value="DEBUG"/>
+  </category>
 
-    <category name="org.apache.commons.httpclient">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.pentaho.ui.xul">
+    <priority value="ERROR"/>
+  </category>
 
-    <category name="org.mortbay">
-        <priority value="ERR"/>
-    </category>
+  <category name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch" additivity="false">
+    <priority value="DEBUG"/>
+    <appender-ref ref="PerformanceFileAppender"/>
+  </category>
 
-    <category name="java.net">
-        <priority value="NONE"/>
-    </category>
+  <category name="org.pentaho.reporting.libraries.base.util.LoggingStopWatch.Detail">
+    <priority value="ERROR"/>
+  </category>
 
-    <category name="org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache.EHCacheModule#CacheLog">
-        <priority value="WARN"/>
-    </category>
+  <category name="com.healthmarketscience.jackcess">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.apache.commons.httpclient">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.mortbay">
+    <priority value="ERR"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout.SlottedLayoutBuilder">
-        <priority value="WARN"/>
-    </category>
+  <category name="java.net">
+    <priority value="NONE"/>
+  </category>
 
-    <category name="org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.pentaho.reporting.libraries.resourceloader.modules.cache.ehcache.EHCacheModule#CacheLog">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient.auth">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.pentaho.reporting.engine.classic.core.layout.process.ValidateModelStep">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.libraries.base.util.ResourceBundleSupport">
-        <priority value="WARN"/>
-    </category>
+  <category name="org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout">
-        <priority value="INFO"/>
-    </category>
+  <category name="org.pentaho.reporting.engine.classic.core.layout.SlottedLayoutBuilder">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableRenderer">
-        <priority value="INFO"/>
-    </category>
+  <category name="org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter">
-        <priority value="DEBUG"/>
-    </category>
+  <category name="org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient.auth">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor">
-        <priority value="INFO"/>
-    </category>
+  <category name="org.pentaho.reporting.libraries.base.util.ResourceBundleSupport">
+    <priority value="WARN"/>
+  </category>
 
-    <category name="org.pentaho.reporting.engine.classic.core.states.datarow">
-        <priority value="INFO"/>
-    </category>
+  <category name="org.pentaho.reporting.engine.classic.core.layout">
+    <priority value="INFO"/>
+  </category>
 
-    <root>
-        <priority value="INFO"/>
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
-    </root>
+  <category name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableRenderer">
+    <priority value="INFO"/>
+  </category>
+
+  <category name="org.pentaho.reporting.engine.classic.core.layout.ModelPrinter">
+    <priority value="DEBUG"/>
+  </category>
+
+  <category name="org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor">
+    <priority value="INFO"/>
+  </category>
+
+  <category name="org.pentaho.reporting.engine.classic.core.states.datarow">
+    <priority value="INFO"/>
+  </category>
+
+  <root>
+    <priority value="INFO"/>
+    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="FILE"/>
+  </root>
 
 </log4j:configuration>

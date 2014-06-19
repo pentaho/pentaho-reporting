@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
@@ -28,8 +28,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.FastPropertyEditorManager;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -69,7 +68,7 @@ public class ExpressionPropertiesTableModel
   private TableStyle tableStyle;
   private Expression[] elements;
   private BeanUtility[] editors;
-  private ReportRenderContext activeContext;
+  private ReportDocumentContext activeContext;
   private boolean filterInlineExpressionProperty;
 
   public ExpressionPropertiesTableModel()
@@ -91,12 +90,12 @@ public class ExpressionPropertiesTableModel
     this.filterInlineExpressionProperty = filterInlineExpressionProperty;
   }
 
-  public ReportRenderContext getActiveContext()
+  public ReportDocumentContext getActiveContext()
   {
     return activeContext;
   }
 
-  public void setActiveContext(final ReportRenderContext activeContext)
+  public void setActiveContext(final ReportDocumentContext activeContext)
   {
     this.activeContext = activeContext;
   }
@@ -453,7 +452,7 @@ public class ExpressionPropertiesTableModel
 
       if (changed)
       {
-        final ReportRenderContext activeContext1 = getActiveContext();
+        final ReportDocumentContext activeContext1 = getActiveContext();
         final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
 
         for (int i = 0; i < elements.length; i++)

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="2" row-count="7" sheet-name="Report-Header">
+  <table col-count="2" row-count="6" sheet-name="Report-Header">
     <cols>
       <column width="341.25"/>
       <column width="113.75"/>
@@ -37,7 +37,7 @@
       </cell>
       <spanned-cell/>
     </row>
-    <row height="26">
+    <row height="622">
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Generated using JFreeReport."/>
@@ -50,12 +50,6 @@
         </line>
       </cell>
       <spanned-cell/>
-    </row>
-    <row height="596">
-      <empty-cell>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
-      </empty-cell>
-      <empty-cell/>
     </row>
     <row height="4">
       <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="yellow">
@@ -88,7 +82,7 @@
       </cell>
     </row>
   </table>
-  <table col-count="3" row-count="17">
+  <table col-count="3" row-count="16">
     <cols>
       <column width="276"/>
       <column width="65.25"/>
@@ -231,7 +225,7 @@
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="16">
+    <row height="588">
       <cell row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Total for letter:"/>
@@ -252,11 +246,6 @@
         </line>
       </cell>
       <spanned-cell/>
-    </row>
-    <row height="572">
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
     </row>
     <row height="4">
       <empty-cell border-top-color="black" border-top-width="0.5" border-top-style="solid" background-color="yellow">

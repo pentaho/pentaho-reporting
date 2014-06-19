@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
 import java.awt.BorderLayout;
@@ -10,7 +27,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -29,6 +48,7 @@ import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileType;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
+import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfPageableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.PlainTextPageableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVTableModule;
@@ -36,6 +56,7 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.HtmlT
 import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.RTFTableModule;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelTableModule;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 import org.pentaho.reporting.libraries.pensol.WebSolutionFileObject;
@@ -83,14 +104,22 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         return;
       }
 
-      if (!StringUtils.isEmpty(newFolderDialog.getName()))
+      while (!PublishUtil.validateName(newFolderDialog.getFolderName())) {
+        JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", newFolderDialog.getFolderName(), PublishUtil.getReservedCharsDisplay()),
+            Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
+        if (!newFolderDialog.performEdit())
       {
+          return;
+        }
+      }
+      
         final Component glassPane = SwingUtilities.getRootPane(RepositoryPublishDialog.this).getGlassPane();
         try
         {
           glassPane.setVisible(true);
           glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-          final FileObject child = treeNode.resolveFile(newFolderDialog.getFolderName());
+          final FileObject child = treeNode.resolveFile(newFolderDialog.getFolderName().replaceAll("\\%", "%25").replaceAll("\\!", "%21"));
           child.createFolder();
           if (child instanceof WebSolutionFileObject)
           {
@@ -110,7 +139,6 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         }
       }
     }
-  }
 
   private class FileSelectionHandler implements ListSelectionListener
   {
@@ -402,7 +430,16 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
         return false;
       }
 
-      final FileObject targetFile = selectedView.resolveFile(getFileNameTextField().getText());
+      String filename = getFileNameTextField().getText();
+      if (!PublishUtil.validateName(filename)) {
+        JOptionPane.showMessageDialog(RepositoryPublishDialog.this,
+            Messages.getInstance().formatMessage("PublishToServerAction.IllegalName", filename, PublishUtil.getReservedCharsDisplay()),
+            Messages.getInstance().getString("PublishToServerAction.Error.Title"), JOptionPane.ERROR_MESSAGE);
+        return false;
+      }
+      
+      
+      final FileObject targetFile = selectedView.resolveFile(URLEncoder.encodeUTF8(getFileNameTextField().getText()).replaceAll(":", "%3A").replaceAll("\\+", "%2B").replaceAll("\\!", "%21"));
       final FileObject fileObject = selectedView.getFileSystem().resolveFile(targetFile.getName());
       if (fileObject.getType() == FileType.IMAGINARY)
       {
@@ -417,6 +454,9 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
     catch (FileSystemException fse)
     {
       UncaughtExceptionsModel.getInstance().addException(fse);
+      return false;
+    } catch ( UnsupportedEncodingException uee ) {
+      UncaughtExceptionsModel.getInstance().addException(uee);
       return false;
     }
   }

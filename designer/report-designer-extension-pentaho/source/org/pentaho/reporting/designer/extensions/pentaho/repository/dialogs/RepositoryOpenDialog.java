@@ -1,3 +1,20 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.extensions.pentaho.repository.dialogs;
 
 import java.awt.BorderLayout;
@@ -14,14 +31,18 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -47,6 +68,7 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.util.Publish
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.event.DocumentChangeHandler;
@@ -149,10 +171,6 @@ public class RepositoryOpenDialog extends CommonDialog
         }
       }
       catch (FileSystemException e1)
-      {
-        UncaughtExceptionsModel.getInstance().addException(e1);
-      }
-      catch (IOException e1)
       {
         UncaughtExceptionsModel.getInstance().addException(e1);
       }
@@ -293,10 +311,13 @@ public class RepositoryOpenDialog extends CommonDialog
       {
         if (selectedFileObject.getType() == FileType.FILE)
         {
-          fileNameTextField.setText(selectedFileObject.getName().getBaseName());
+          fileNameTextField.setText(URLDecoder.decode(selectedFileObject.getName().getBaseName().replaceAll("\\+", "%2B"), "UTF-8"));
         }
       }
       catch (FileSystemException e1)
+      {
+        // ignore ..
+      } catch ( UnsupportedEncodingException e1 ) 
       {
         // ignore ..
       }
@@ -364,6 +385,33 @@ public class RepositoryOpenDialog extends CommonDialog
           setSelectedView(selectedItem);
         }
       }
+    }
+  }
+
+  private class ShowHiddenFilesAction extends AbstractAction
+  {
+    private ShowHiddenFilesAction()
+    {
+      putValue(Action.NAME, Messages.getInstance().getString("ShowHiddenFilesAction.Name"));
+      setSelected(Boolean.FALSE);
+    }
+
+    private Boolean getSelected()
+    {
+      return (Boolean) this.getValue(Action.SELECTED_KEY);
+    }
+
+    private void setSelected(final Boolean selected)
+    {
+      this.putValue (Action.SELECTED_KEY, selected);
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      table.setShowHiddenFiles(Boolean.TRUE.equals(getSelected()));
     }
   }
 
@@ -442,7 +490,7 @@ public class RepositoryOpenDialog extends CommonDialog
         if (selectedView.getType() == FileType.FILE)
         {
           logger.debug("Setting filename in selected view to " + selectedView.getName().getBaseName());
-          this.fileNameTextField.setText(selectedView.getName().getBaseName());
+          this.fileNameTextField.setText(URLDecoder.decode(selectedView.getName().getBaseName(), "UTF-8"));
         }
       }
       catch (Exception e)
@@ -505,7 +553,7 @@ public class RepositoryOpenDialog extends CommonDialog
   }
 
   public String performOpen(final AuthenticationData loginData,
-                            final String previousSelection) throws FileSystemException
+                            final String previousSelection) throws FileSystemException, UnsupportedEncodingException
   {
     fileSystemRoot = PublishUtil.createVFSConnection(VFS.getManager(), loginData);
     if (previousSelection == null)
@@ -553,7 +601,7 @@ public class RepositoryOpenDialog extends CommonDialog
   }
 
   protected String getSelectedFile()
-      throws FileSystemException
+      throws FileSystemException, UnsupportedEncodingException
   {
     if (StringUtils.isEmpty(fileNameTextField.getText()))
     {
@@ -564,7 +612,7 @@ public class RepositoryOpenDialog extends CommonDialog
     	selectedView = selectedView.getParent();
     }
        
-    final FileObject targetFile = selectedView.resolveFile(fileNameTextField.getText());
+    final FileObject targetFile = selectedView.resolveFile(fileNameTextField.getText().replaceAll("\\%", "%25").replaceAll("\\!", "%21").replaceAll(":", "%3A"));
     return targetFile.getName().getPathDecoded();
   }
 
@@ -589,6 +637,7 @@ public class RepositoryOpenDialog extends CommonDialog
     centerCarrier.setLayout(new BorderLayout());
     centerCarrier.setBorder(new EmptyBorder(5, 5, 5, 5));
     centerCarrier.add(new JScrollPane(table), BorderLayout.CENTER);
+    centerCarrier.add(new JCheckBox(new ShowHiddenFilesAction()), BorderLayout.SOUTH);
 
     final JPanel contentPanel = new JPanel();
     contentPanel.setLayout(new BorderLayout());

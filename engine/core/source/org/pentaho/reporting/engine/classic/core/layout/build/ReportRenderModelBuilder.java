@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
 {
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
   private LayoutModelBuilder normalFlow;
   private LayoutModelBuilder header;
   private LayoutModelBuilder footer;
@@ -71,25 +72,67 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     final StyleSheet resolverStyle = report.getComputedStyle();
     this.pageBox = renderNodeFactory.createPage(report, resolverStyle);
 
-    normalFlow = componentFactory.createLayoutModelBuilder("Section-0");
+    normalFlow = createNormalBuilder(processingContext);
+
+    header = createHeaderBuilder(processingContext);
+    footer = createFooterBuilder(processingContext);
+    repeatedFooter = createRepeatedFooterBuilder(processingContext);
+    watermark = createWatermarkBuilder(processingContext);
+  }
+
+  protected LayoutModelBuilder createNormalBuilder(final ProcessingContext processingContext)
+  {
+    LayoutModelBuilder normalFlow = componentFactory.createLayoutModelBuilder("Section-0");
     normalFlow.initialize(processingContext, this.pageBox.getContentArea(), renderNodeFactory);
     normalFlow.updateState(stateKey);
+    return normalFlow;
+  }
 
-    header = new HeaderLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Header-1"));
+  protected LayoutModelBuilder createHeaderBuilder(final ProcessingContext processingContext)
+  {
+    HeaderLayoutModelBuilder header = new HeaderLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Header-1"));
     header.initialize(processingContext, this.pageBox.getHeaderArea(), renderNodeFactory);
     header.updateState(stateKey);
+    return header;
+  }
 
-    footer = new FooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Footer-2"));
+  protected LayoutModelBuilder createFooterBuilder(final ProcessingContext processingContext)
+  {
+    FooterLayoutModelBuilder footer = new FooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Footer-2"));
     footer.initialize(processingContext, this.pageBox.getFooterArea(), renderNodeFactory);
     footer.updateState(stateKey);
+    return footer;
+  }
 
-    repeatedFooter = new RepeatedFooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Repeat-Footer-3"));
+  protected LayoutModelBuilder createRepeatedFooterBuilder(final ProcessingContext processingContext)
+  {
+    RepeatedFooterLayoutModelBuilder repeatedFooter = new RepeatedFooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Repeat-Footer-3"));
     repeatedFooter.initialize(processingContext, this.pageBox.getRepeatFooterArea(), renderNodeFactory);
     repeatedFooter.updateState(stateKey);
+    return repeatedFooter;
+  }
 
-    watermark = new WatermarkLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Watermark-Section"));
+  protected LayoutModelBuilder createWatermarkBuilder(final ProcessingContext processingContext)
+  {
+    WatermarkLayoutModelBuilder watermark = new WatermarkLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Watermark-Section"));
     watermark.initialize(processingContext, this.pageBox.getWatermarkArea(), renderNodeFactory);
     watermark.updateState(stateKey);
+    return watermark;
+  }
+
+  protected RenderNodeFactory getRenderNodeFactory()
+  {
+    return renderNodeFactory;
+  }
+
+  public ReportStateKey getStateKey()
+  {
+    return stateKey;
+  }
+
+  protected RenderComponentFactory getComponentFactory()
+  {
+    return componentFactory;
   }
 
   public void updateStateKey(final ReportStateKey stateKey)
@@ -188,7 +231,8 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
                   final Band band) throws ReportProcessingException
   {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
-    builderStrategy.add(runtime, getLayoutModelBuilder(), band, collectedSubReportMarker);
+    LayoutModelBuilder layoutModelBuilder = getLayoutModelBuilder();
+    builderStrategy.add(runtime, layoutModelBuilder, band, collectedSubReportMarker);
   }
 
   public void addToNormalFlow(final ExpressionRuntime runtime,
@@ -207,7 +251,11 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
   {
     final boolean empty = getLayoutModelBuilder().isEmpty();
     getLayoutModelBuilder().endSection();
-    final InlineSubreportMarker[] markers = collectedSubReportMarker.toArray
+    final InlineSubreportMarker[] markers;
+    if (collectedSubReportMarker.isEmpty())
+    markers = EMPTY_SUBREPORT_MARKERS;
+      else
+    markers = collectedSubReportMarker.toArray
         (new InlineSubreportMarker[collectedSubReportMarker.size()]);
 
     activeSection = Renderer.SectionType.NORMALFLOW;

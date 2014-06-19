@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report.layouting;
 
@@ -30,7 +30,7 @@ import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.DesignerPageDrawable;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.lineal.LinealModel;
@@ -97,7 +97,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
 
   private SharedElementRenderer sharedRenderer;
   private Section element;
-  private ReportRenderContext reportRenderContext;
+  private ReportDocumentContext reportRenderContext;
   private EventListenerList listenerList;
   private Rectangle2D computedBounds;
   private BreakPositionsList verticalEdgePositions;
@@ -106,7 +106,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
   private Map<InstanceID, Element> elementsById;
 
   protected AbstractElementRenderer(final Section element,
-                                    final ReportRenderContext reportRenderContext)
+                                    final ReportDocumentContext reportRenderContext)
   {
     if (element == null)
     {
@@ -158,7 +158,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     sharedRenderer.removeChangeListener(sharedLayoutUpdateHandler);
   }
 
-  public ReportRenderContext getReportRenderContext()
+  public ReportDocumentContext getReportRenderContext()
   {
     return reportRenderContext;
   }
@@ -328,7 +328,7 @@ public abstract class AbstractElementRenderer implements ElementRenderer
     return true;
   }
 
-  public void handleError(final ReportDesignerContext designerContext, final ReportRenderContext reportContext)
+  public void handleError(final ReportDesignerContext designerContext, final ReportDocumentContext reportContext)
   {
     if (sharedRenderer.isMigrationError())
     {

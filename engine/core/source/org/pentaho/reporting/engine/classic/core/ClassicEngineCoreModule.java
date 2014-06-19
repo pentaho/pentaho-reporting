@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core;
 
@@ -42,23 +42,17 @@ import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.Border
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.BoxSizingPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.ElementTypePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.StagingModePropertyEditor;
+import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextDirectionPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TextWrapPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.TimeZonePropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.VerticalTextAlignmentPropertyEditor;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.WhitespaceCollapsePropertyEditor;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.CrosstabXmlResourceFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleElementRegistry;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.LayoutDefinitionXmlFactoryModule;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements.CrosstabElementReadHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.BundleCrosstabXmlFactoryModule;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements.CrosstabElementWriteHandler;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
@@ -106,6 +100,9 @@ public class ClassicEngineCoreModule extends AbstractModule
    */
   public static final String STRICT_ERROR_HANDLING_KEY
       = "org.pentaho.reporting.engine.classic.core.StrictErrorHandling";
+
+  public static final String COMPLEX_TEXT_CONFIG_OVERRIDE_KEY =
+      "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
 
   /**
    * Creates a new module definition based on the 'coremodule.properties' file of this package.
@@ -168,6 +165,7 @@ public class ClassicEngineCoreModule extends AbstractModule
     PropertyEditorManager.registerEditor(ElementType.class, ElementTypePropertyEditor.class);
     PropertyEditorManager.registerEditor(StagingMode.class, StagingModePropertyEditor.class);
     PropertyEditorManager.registerEditor(TextWrap.class, TextWrapPropertyEditor.class);
+    PropertyEditorManager.registerEditor(TextDirection.class, TextDirectionPropertyEditor.class);
     PropertyEditorManager.registerEditor(TimeZone.class, TimeZonePropertyEditor.class);
     PropertyEditorManager.registerEditor(VerticalTextAlign.class, VerticalTextAlignmentPropertyEditor.class);
     PropertyEditorManager.registerEditor(WhitespaceCollapse.class, WhitespaceCollapsePropertyEditor.class);
@@ -186,13 +184,5 @@ public class ClassicEngineCoreModule extends AbstractModule
     ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/sys/meta-expressions.xml");
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-datafactory.xml");
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-report-preprocessors.xml");
-
-    // Crosstab
-    BundleElementRegistry.getInstance().register("crosstab-report", CrosstabElementWriteHandler.class);
-    BundleElementRegistry.getInstance().register(BundleNamespaces.LAYOUT, "crosstab-report", CrosstabElementReadHandler.class);
-
-    CrosstabXmlResourceFactory.register(BundleCrosstabXmlFactoryModule.class);
-    CrosstabXmlResourceFactory.register(LayoutDefinitionXmlFactoryModule.class);
-    CrosstabXmlResourceFactory.register(StyleDefinitionXmlFactoryModule.class);
   }
 }

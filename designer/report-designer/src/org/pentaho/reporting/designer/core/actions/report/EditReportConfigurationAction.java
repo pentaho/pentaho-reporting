@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.report;
 
@@ -28,7 +28,7 @@ import javax.swing.JFrame;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ConfigurationEditorDialog;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.undo.EditReportConfigUndoEntry;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -53,7 +53,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
     if (activeContext == null)
     {
       // has no effect
@@ -62,7 +62,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
 
     final ConfigurationEditorDialog dialog;
 
-    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getParent());
+    final Window window = LibSwingUtil.getWindowAncestor(getReportDesignerContext().getView().getParent());
     if (window instanceof JDialog)
     {
       dialog = new ConfigurationEditorDialog((JDialog) window);
@@ -77,7 +77,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
     }
 
     final HierarchicalConfiguration config =
-        (HierarchicalConfiguration) activeContext.getMasterReportElement().getReportConfiguration();
+        (HierarchicalConfiguration) activeContext.getContextRoot().getReportConfiguration();
     final HashMap oldConfig = copyConfig(config);
 
     if (dialog.performEdit(config))
@@ -85,7 +85,7 @@ public final class EditReportConfigurationAction extends AbstractReportContextAc
       final HashMap newConfig = copyConfig(config);
       activeContext.getUndo().addChange(ActionMessages.getString("EditReportConfigurationAction.Text"),
           new EditReportConfigUndoEntry(oldConfig, newConfig));
-      activeContext.getMasterReportElement().notifyNodeStructureChanged();
+      activeContext.getContextRoot().notifyNodeStructureChanged();
     }
 
 

@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
@@ -40,7 +40,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
 public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessStep
 {
-  protected static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
+  public static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
 
   private OutputProcessorMetaData metaData;
   private boolean strictLegacyMode;
@@ -51,7 +51,6 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   private TextAlignmentProcessor leftProcessor;
   private TextAlignmentProcessor justifyProcessor;
   private MinorAxisTableContext tableContext;
-  private boolean cacheDeepDirty;
 
   protected AbstractMinorAxisLayoutStep()
   {
@@ -80,33 +79,28 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
 
   protected boolean checkCacheValid(final RenderNode node)
   {
-    if (cacheDeepDirty)
-    {
-      return false;
-    }
     final RenderNode.CacheState cacheState = node.getCacheState();
     if (cacheState == RenderNode.CacheState.CLEAN)
     {
       return true;
-    }
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
-      cacheDeepDirty = true;
     }
     return false;
   }
 
   public void compute(final LogicalPageBox root)
   {
+    getEventWatch().start();
+    getSummaryWatch().start();
     try
     {
-      cacheDeepDirty = false;
       pageGrid = root.getPageGrid();
       startProcessing(root);
     }
     finally
     {
       pageGrid = null;
+      getEventWatch().stop();
+      getSummaryWatch().stop(true);
     }
   }
 

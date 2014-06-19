@@ -1,29 +1,30 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.DataSourceEditUndoEntry;
@@ -52,29 +53,22 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       setEnabled(false);
       return;
     }
 
-    final Object[] selectedObjects = selectionModel1.getSelectedElements();
-    for (int i = 0; i < selectedObjects.length; i++)
+    final List<DataFactory> selectedObjects = selectionModel1.getSelectedElementsOfType(DataFactory.class);
+    for (DataFactory dataFactory : selectedObjects)
     {
-      final Object selectedObject = selectedObjects[i];
-      if (selectedObject instanceof DataFactory == false)
-      {
-        continue;
-      }
-      final DataFactory dataFactory = (DataFactory) selectedObject;
       final DataFactoryMetaData metadata = dataFactory.getMetaData();
       if (metadata.isEditable())
       {
         setEnabled(true);
         return;
       }
-
     }
 
     setEnabled(false);
@@ -85,28 +79,24 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final Object[] selectedElements = getSelectionModel().getSelectedElements();
-    for (int i = 0; i < selectedElements.length; i++)
+    final List<DataFactory> selectedElements = getSelectionModel().getSelectedElementsOfType(DataFactory.class);
+    for (DataFactory dataFactory : selectedElements)
     {
-      final Object element = selectedElements[i];
-      if (element instanceof DataFactory)
+      try
       {
-        try
-        {
-          performEdit((DataFactory) element);
-        }
-        catch (ReportDataFactoryException e1)
-        {
-          UncaughtExceptionsModel.getInstance().addException(e1);
-        }
-        break;
+        performEdit(dataFactory);
       }
+      catch (ReportDataFactoryException e1)
+      {
+        UncaughtExceptionsModel.getInstance().addException(e1);
+      }
+      return;
     }
   }
 
@@ -133,7 +123,7 @@ public class EditDataSourceAction extends AbstractElementSelectionAction
       return;
     }
 
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     final AbstractReportDefinition report = activeContext.getReportDefinition();
     final CompoundDataFactory collection = (CompoundDataFactory) report.getDataFactory();
     final int j = collection.indexOfByReference(dataFactory);

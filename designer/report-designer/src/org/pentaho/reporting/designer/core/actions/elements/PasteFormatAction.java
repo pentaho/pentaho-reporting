@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
@@ -21,15 +21,16 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.Action;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.dnd.ClipboardManager;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -72,7 +73,7 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
       this.newStyleData = newStyleData.clone();
     }
 
-    public void undo(final ReportRenderContext renderContext)
+    public void undo(final ReportDocumentContext renderContext)
     {
       final Element target = (Element) ModelUtility.findElementById(renderContext.getReportDefinition(), element);
 
@@ -102,7 +103,7 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
       target.notifyNodePropertiesChanged();
     }
 
-    public void redo(final ReportRenderContext renderContext)
+    public void redo(final ReportDocumentContext renderContext)
     {
       final Element target = (Element) ModelUtility.findElementById(renderContext.getReportDefinition(), element);
 
@@ -171,7 +172,7 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
 
   protected void updateSelection()
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       setSelectionActive(false);
@@ -237,19 +238,19 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null)
     {
       return;
     }
-    final Element[] visualElements = selectionModel1.getSelectedVisualElements();
-    if (visualElements.length == 0)
+    final List<Element> visualElements = selectionModel1.getSelectedElementsOfType(Element.class);
+    if (visualElements.isEmpty())
     {
       return;
     }
@@ -277,9 +278,8 @@ public final class PasteFormatAction extends AbstractElementSelectionAction impl
       final Object formatString = data.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING);
 
       final ArrayList<UndoEntry> undos = new ArrayList<UndoEntry>();
-      for (int i = 0; i < visualElements.length; i++)
+      for (Element element : visualElements)
       {
-        final Element element = visualElements[i];
         final ElementMetaData metaData = element.getMetaData();
         final ElementStyleSheet elementStyleSheet = element.getStyle();
 

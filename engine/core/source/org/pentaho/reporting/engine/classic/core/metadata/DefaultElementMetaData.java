@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
@@ -37,17 +37,19 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   private TypeClassification reportElementType;
   private Class<?> contentType;
   private transient StyleMetaData[] stylesArray;
+  private String namespace;
 
   public DefaultElementMetaData(final String name,
                                 final String bundleLocation,
                                 final String keyPrefix,
+                                final String namespace,
                                 final boolean expert,
                                 final boolean preferred,
                                 final boolean hidden,
                                 final boolean deprecated,
                                 final TypeClassification reportElementType,
                                 final AttributeMap<AttributeMetaData> attributes,
-                                final HashMap<StyleKey, StyleMetaData> styles,
+                                final Map<StyleKey, StyleMetaData> styles,
                                 final Class<? extends ElementType> elementType,
                                 final Class<?> contentType,
                                 final boolean experimental,
@@ -70,12 +72,17 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     {
       throw new NullPointerException();
     }
+    if (namespace == null)
+    {
+      throw new NullPointerException();
+    }
 
     this.contentType = contentType;
     this.reportElementType = reportElementType;
     this.attributes = attributes.clone();
-    this.styles = (HashMap<StyleKey, StyleMetaData>) styles.clone();
+    this.styles = new HashMap<StyleKey, StyleMetaData>(styles);
     this.elementType = elementType;
+    this.namespace = namespace;
   }
 
   public DefaultElementMetaData(final ElementMetaData metaData)
@@ -84,6 +91,11 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     this.contentType = metaData.getContentType();
     this.reportElementType = metaData.getReportElementType();
     this.elementType = metaData.getElementType();
+    this.namespace = metaData.getNamespace();
+    if (this.namespace == null)
+    {
+      throw new IllegalArgumentException();
+    }
 
     this.styles = new HashMap<StyleKey, StyleMetaData>();
     final StyleMetaData[] styleDescriptions = metaData.getStyleDescriptions();
@@ -216,5 +228,10 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
   public Class<? extends ElementType> getElementType()
   {
     return elementType;
+  }
+
+  public String getNamespace()
+  {
+    return namespace;
   }
 }

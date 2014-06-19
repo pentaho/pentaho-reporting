@@ -96,6 +96,7 @@ import org.pentaho.reporting.ui.datasources.jdbc.connection.JndiConnectionDefini
 /**
  * @author David Kincade
  */
+@SuppressWarnings("HardCodedStringLiteral")
 public class JdbcDataSourceDialog extends CommonDialog
 {
 
@@ -518,7 +519,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     protected void handleChange(final DocumentEvent e)
     {
       final NamedDataSourceDialogModel dialogModel = getDialogModel();
-      final DataSetQuery item = (DataSetQuery) dialogModel.getQueries().getSelectedItem();
+      final DataSetQuery<String> item = dialogModel.getQueries().getSelectedQuery();
       if (item == null)
       {
         return;
@@ -658,7 +659,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
     public void actionPerformed(final ActionEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
         final ScriptEngineFactory selectedItem = (ScriptEngineFactory) queryLanguageField.getSelectedItem();
@@ -693,10 +694,11 @@ public class JdbcDataSourceDialog extends CommonDialog
 
     protected void handleChange(final DocumentEvent e)
     {
-      final DataSetQuery query = (DataSetQuery) queryNameList.getSelectedValue();
+      final DataSetQuery query = dialogModel.getQueries().getSelectedQuery();
       if (query != null)
       {
-        query.setScript(queryScriptTextArea.getText());
+        String text = queryScriptTextArea.getText();
+        query.setScript(text);
       }
     }
   }
@@ -712,9 +714,9 @@ public class JdbcDataSourceDialog extends CommonDialog
   private JSpinner maxPreviewRowsSpinner;
 
   private RSyntaxTextArea globalScriptTextArea;
-  private SmartComboBox globalLanguageField;
+  private SmartComboBox<ScriptEngineFactory> globalLanguageField;
   private RSyntaxTextArea queryScriptTextArea;
-  private SmartComboBox queryLanguageField;
+  private SmartComboBox<ScriptEngineFactory> queryLanguageField;
   private QueryLanguageListCellRenderer queryLanguageListCellRenderer;
   private GlobalTemplateAction globalTemplateAction;
   private QueryTemplateAction queryTemplateAction;
@@ -774,11 +776,21 @@ public class JdbcDataSourceDialog extends CommonDialog
       final JdbcConnectionDefinition definition = connectionComponent.createConnectionDefinition(currentConnectionProvider);
       dialogModel.addConnection(definition);
       dialogModel.getConnections().setSelectedItem(definition);
-      final String quernNameForSelection = (StringUtils.isEmpty(selectedQueryName))?dialogModel.getFirstQueryName().getQueryName():selectedQueryName;
-      if(quernNameForSelection != null)
+
+      String selectedQuery = selectedQueryName;
+      if (StringUtils.isEmpty(selectedQuery))
       {
-        dialogModel.setSelectedQuery(quernNameForSelection);
-        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(quernNameForSelection));
+        DataSetQuery query = dialogModel.getFirstQueryName();
+        if (query != null)
+        {
+          selectedQuery = query.getQueryName();
+        }
+      }
+
+      if(StringUtils.isEmpty(selectedQuery) == false)
+      {
+        dialogModel.setSelectedQuery(selectedQuery);
+        queryNameList.setSelectedIndex(dialogModel.getQueries().getIndexForQuery(selectedQuery));
       }
     }
 
@@ -878,7 +890,7 @@ public class JdbcDataSourceDialog extends CommonDialog
       newDataFactory.setGlobalScript(globalScriptTextArea.getText());
     }
 
-    final DataSetComboBoxModel queries = dialogModel.getQueries();
+    final DataSetComboBoxModel<String> queries = dialogModel.getQueries();
     for (int i = 0; i < queries.getSize(); i++)
     {
       final DataSetQuery<String> query = queries.getQuery(i);
@@ -928,7 +940,7 @@ public class JdbcDataSourceDialog extends CommonDialog
     globalScriptTextArea = new RSyntaxTextArea();
     globalScriptTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_NONE);
 
-    globalLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    globalLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     globalLanguageField.setRenderer(new QueryLanguageListCellRenderer());
     globalLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 
@@ -938,7 +950,7 @@ public class JdbcDataSourceDialog extends CommonDialog
 
     queryLanguageListCellRenderer = new QueryLanguageListCellRenderer();
 
-    queryLanguageField = new SmartComboBox(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
+    queryLanguageField = new SmartComboBox<ScriptEngineFactory>(new DefaultComboBoxModel(DataFactoryEditorSupport.getScriptEngineLanguages()));
     queryLanguageField.setRenderer(queryLanguageListCellRenderer);
     queryLanguageField.addActionListener(new UpdateScriptLanguageHandler());
 

@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul.components;
 
@@ -29,8 +29,10 @@ import org.pentaho.ui.xul.binding.BindingFactory;
 import org.pentaho.ui.xul.components.XulImage;
 import org.pentaho.ui.xul.components.XulLabel;
 import org.pentaho.ui.xul.containers.XulGrid;
+import org.pentaho.ui.xul.containers.XulHbox;
 import org.pentaho.ui.xul.containers.XulRow;
 import org.pentaho.ui.xul.containers.XulRows;
+import org.pentaho.ui.xul.containers.XulVbox;
 import org.pentaho.ui.xul.dom.Document;
 
 public abstract class AbstractWizardStep extends XulEventSourceAdapter implements WizardStep
@@ -41,10 +43,9 @@ public abstract class AbstractWizardStep extends XulEventSourceAdapter implement
   public static final String PREVIEWABLE_PROPERTY_NAME = "previewable"; //$NON-NLS-1$
   public static final String FINISHABLE_PROPERTY_NAME = "finishable"; //$NON-NLS-1$
 
-  public static final String STEP_GRID_ID = "step_grid"; //$NON-NLS-1$
-  public static final String STEP_ROWS_ID = "step_rows"; //$NON-NLS-1$
+  public static final String STEP_CONTAINER ="step_container";
 
-  public static final String XUL_ROW_TYPE = "row"; //$NON-NLS-1$
+  public static final String XUL_HBOX_TYPE = "hbox"; //$NON-NLS-1$
   public static final String XUL_IMAGE_TYPE = "image";  //$NON-NLS-1$
   public static final String XUL_LABEL_TYPE = "label"; //$NON-NLS-1$
 
@@ -163,31 +164,25 @@ public abstract class AbstractWizardStep extends XulEventSourceAdapter implement
    */
   public void createPresentationComponent(final XulDomContainer mainWizardContainer) throws XulException
   {
+    final XulVbox stepContainer = (XulVbox) mainWizardContainer.getDocumentRoot().getElementById(STEP_CONTAINER);
 
-    // get the grid itself so we can update it later
-    final XulGrid stepGrid = (XulGrid) mainWizardContainer.getDocumentRoot().getElementById(STEP_GRID_ID);
-
-    // grab the rows and add a new row to it
-    final XulRows stepRows = (XulRows) mainWizardContainer.getDocumentRoot().getElementById(STEP_ROWS_ID);
-    final XulRow stepRow = (XulRow) mainWizardContainer.getDocumentRoot().createElement(XUL_ROW_TYPE);
-    stepRows.addChild(stepRow);
+    XulHbox row = (XulHbox) mainWizardContainer.getDocumentRoot().createElement(XUL_HBOX_TYPE);
 
     // Create and add the activeImage to the row (goes in the first column)
     stepImage = (XulImage) mainWizardContainer.getDocumentRoot().createElement(XUL_IMAGE_TYPE);
     stepImage.setSrc(STEP_IMAGE_SRC);
     stepImage.setId(this.getStepName());
     stepImage.setVisible(false);
-    stepRow.addChild(stepImage);
+    row.addChild(stepImage);
 
     // Create and add the text label to the row (goes in the second column)
     stepLabel = (XulLabel) mainWizardContainer.getDocumentRoot().createElement(XUL_LABEL_TYPE);
     stepLabel.setValue(this.getStepName());
     stepLabel.setFlex(1);
     stepLabel.setDisabled(true);
-    stepRow.addChild(stepLabel);
+    row.addChild(stepLabel);
 
-
-    stepGrid.update();
+    stepContainer.addChild(row);
   }
 
   /* (non-Javadoc)

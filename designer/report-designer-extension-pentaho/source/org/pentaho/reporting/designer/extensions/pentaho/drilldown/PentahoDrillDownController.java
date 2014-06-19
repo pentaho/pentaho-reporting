@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2005-2011 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.extensions.pentaho.drilldown;
 
@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
 import org.pentaho.reporting.designer.core.auth.AuthenticationStore;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.drilldown.DrillDownParameterTable;
 import org.pentaho.reporting.designer.core.editor.drilldown.basic.DefaultXulDrillDownController;
@@ -76,11 +77,11 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     {
       pentahoPathWrapper.setLoginData(loginData);
 
-      final ReportRenderContext reportRenderContext = reportDesignerContext.getActiveContext();
-      final Object o = reportRenderContext.getProperty("pentaho-login-url");
+      final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
+      final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
       if (o == null)
       {
-        reportRenderContext.setProperty("pentaho-login-url", loginData.getUrl());
+        reportRenderContext.getProperties().put("pentaho-login-url", loginData.getUrl());
       }
 
       if (nextTask != null)
@@ -185,10 +186,12 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
 
   protected abstract String getProfileName();
 
-  public void init(final ReportDesignerContext reportDesignerContext, final DrillDownModel model)
+  public void init(final ReportDesignerContext reportDesignerContext,
+                   final DrillDownModel model,
+                   final String[] fields)
   {
     this.reportDesignerContext = reportDesignerContext;
-    super.init(reportDesignerContext, model);
+    super.init(reportDesignerContext, model, fields);
 
     final DrillDownParameter[] drillDownParameter = model.getDrillDownParameter();
 
@@ -222,7 +225,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     parameterRefreshHandler = new PentahoParameterRefreshHandler(pentahoPathWrapper, reportDesignerContext, c);
 
@@ -269,10 +272,10 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     if (StringUtils.isEmpty(model.getDrillDownPath()))
     {
       pentahoPathWrapper.setUseRemoteServer(false);
-      final ReportRenderContext reportRenderContext = reportDesignerContext.getActiveContext();
+      final ReportDocumentContext reportRenderContext = reportDesignerContext.getActiveContext();
       if (reportRenderContext != null)
       {
-        final Object o = reportRenderContext.getProperty("pentaho-login-url");
+        final Object o = reportRenderContext.getProperties().get("pentaho-login-url");
         if (o != null)
         {
           pentahoPathWrapper.setServerPath(String.valueOf(o));
@@ -324,7 +327,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask(null));
     SwingUtilities.invokeLater(loginTask);
@@ -335,14 +338,13 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
    */
   public void browse()
   {
-    final ReportRenderContext activeContext = getReportDesignerContext().getActiveContext();
+    final ReportDocumentContext activeContext = getReportDesignerContext().getActiveContext();
     if (pentahoPathWrapper.getLoginData() == null)
     {
-      final ReportRenderContext reportRenderContext = activeContext;
       final String path = getModel().getDrillDownPath();
       if (path != null)
       {
-        final AuthenticationStore authStore = reportRenderContext.getAuthenticationStore();
+        final AuthenticationStore authStore = activeContext.getAuthenticationStore();
         final String username = authStore.getUsername(path);
         final String password = authStore.getPassword(path);
         final int timeout = authStore.getIntOption(path, "timeout", 0);
@@ -358,7 +360,7 @@ public abstract class PentahoDrillDownController extends DefaultXulDrillDownCont
     }
     else
     {
-      c = getReportDesignerContext().getParent();
+      c = getReportDesignerContext().getView().getParent();
     }
     final LoginTask loginTask = new LoginTask(getReportDesignerContext(), c, new LoginCompleteTask
         (new SelectDrillTargetTask(pentahoPathWrapper, c, new RefreshParameterTask(), activeContext)),

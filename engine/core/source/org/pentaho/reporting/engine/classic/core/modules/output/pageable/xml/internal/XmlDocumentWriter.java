@@ -1,23 +1,24 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.internal;
 
 import java.awt.Color;
+import java.awt.font.TextLayout;
 import java.beans.PropertyEditor;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -46,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -652,6 +654,25 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         xmlWriter.writeCloseTag();
 
       }
+      else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        final RenderableComplexText renderableComplexText = (RenderableComplexText) node;
+        final AttributeList attributeList = new AttributeList();
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
+
+        final String text = renderableComplexText.getRawText();
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
+        xmlWriter.writeTextNormalized(text, true);
+        xmlWriter.writeCloseTag();
+
+      }
       else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
       {
         final SpacerRenderNode spacer = (SpacerRenderNode) node;
@@ -762,7 +783,20 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   protected boolean startTableCellBox(final TableCellRenderBox box)
   {
-    return startBox(box, "table-cell");
+    try
+    {
+      AttributeList attrs = createBoxAttributeList(box);
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-span", String.valueOf(box.getColSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-span", String.valueOf(box.getRowSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-index", String.valueOf(box.getColumnIndex()));
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table-cell", attrs, XmlWriter.OPEN);
+      writeElementAttributes(box);
+      return true;
+    }
+    catch (IOException e)
+    {
+      throw new InvalidReportStateException(e.getMessage(), e);
+    }
   }
 
   protected void finishTableCellBox(final TableCellRenderBox box)

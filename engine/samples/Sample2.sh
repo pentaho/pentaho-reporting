@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cp=./
+cp=./dist/pentaho-reporting-engine-classic-samples-TRUNK-SNAPSHOT.jar
 for jar in `ls -1 lib/*.jar`
 do
     cp=${cp}:${jar}

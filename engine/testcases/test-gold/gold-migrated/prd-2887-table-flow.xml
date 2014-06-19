@@ -1777,7 +1777,9 @@
       <empty-cell/>
     </row>
     <row height="20">
-      <empty-cell/>
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="page-footer"/>
+      </empty-cell>
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
@@ -1787,7 +1789,7 @@
       <empty-cell/>
     </row>
     <row height="10">
-      <cell row-span="1" col-span="1">
+      <cell border-top-color="#003b79" border-top-width="2.0" border-top-style="solid" background-color="#d9e2eb" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Chicago Metallic Confidential"/>
         <line type="ParagraphPoolBox" x="0.0" y="22.0" width="103.104" height="8.0" color="#003b79" font-face="Liberation Sans" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1798,7 +1800,7 @@
           <text x="60.88" y="22.0" width="42.224" height="8.0">Confidential</text>
         </line>
       </cell>
-      <cell row-span="1" col-span="2">
+      <cell border-top-color="#003b79" border-top-width="2.0" border-top-style="solid" background-color="#d9e2eb" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Built by Unknown user, prpt version : Wed Apr 04 00:12:42 UTC 2012"/>
         <line type="ParagraphPoolBox" x="171.54" y="22.0" width="246.6" height="8.0" color="#003b79" font-face="Liberation Sans" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1830,7 +1832,7 @@
         </line>
       </cell>
       <spanned-cell/>
-      <cell row-span="1" col-span="3">
+      <cell border-top-color="#003b79" border-top-width="2.0" border-top-style="solid" background-color="#d9e2eb" row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Page $(PageofPages)"/>
         <line type="ParagraphPoolBox" x="509.11" y="22.0" width="40.88" height="8.0" color="#003b79" font-face="Liberation Sans" font-size="8" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1849,7 +1851,7 @@
       <empty-cell/>
     </row>
   </table>
-  <table col-count="6" row-count="8">
+  <table col-count="6" row-count="7">
     <cols>
       <column width="56.7"/>
       <column width="85.05"/>
@@ -1894,23 +1896,6 @@
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
-    </row>
-    <row height="12">
-      <cell background-color="#003b79" row-span="1" col-span="6">
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="string"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-attributes="true"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:allow-metadata-styling="true"/>
-        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/wizard" autoGenNs:label-for="String"/>
-        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="29.328" height="12.0" color="#d9e2eb" font-face="Liberation Sans" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="0.0" y="20.0" width="29.328" height="12.0">string</text>
-        </line>
-      </cell>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
-      <spanned-cell/>
     </row>
     <row height="12">
       <cell row-span="1" col-span="1">

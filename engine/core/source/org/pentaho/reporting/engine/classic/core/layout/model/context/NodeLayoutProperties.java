@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.model.context;
 
@@ -62,8 +62,9 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   private InstanceID instanceId;
   private Float posY;
   private Float posX;
-  private ReportAttributeMap attributes;
+  private ReportAttributeMap<Object> attributes;
   private ElementType elementType;
+  private boolean visible;
 
   private NodeLayoutProperties()
   {
@@ -72,7 +73,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   }
 
   public NodeLayoutProperties(final StyleSheet styleSheet,
-                              final ReportAttributeMap attributes,
+                              final ReportAttributeMap<Object> attributes,
                               final InstanceID instanceID,
                               final ElementType elementType)
   {
@@ -82,7 +83,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   public NodeLayoutProperties(final int majorAxis,
                               final int minorAxis,
                               final StyleSheet styleSheet,
-                              final ReportAttributeMap attributes,
+                              final ReportAttributeMap<Object> attributes,
                               final InstanceID instanceID,
                               final ElementType elementType)
   {
@@ -133,6 +134,17 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     {
       verticalTextAlign = VerticalTextAlign.BASELINE;
     }
+    this.visible = true;
+  }
+
+  public void setVisible(final boolean visible)
+  {
+    this.visible = visible;
+  }
+
+  public boolean isVisible()
+  {
+    return visible;
   }
 
   public VerticalTextAlign getVerticalTextAlign()
@@ -208,7 +220,7 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     return posX.doubleValue();
   }
 
-  public ReportAttributeMap getAttributes()
+  public ReportAttributeMap<Object> getAttributes()
   {
     return attributes;
   }

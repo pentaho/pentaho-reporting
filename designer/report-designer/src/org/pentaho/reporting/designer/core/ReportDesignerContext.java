@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2008 - 2009 Pentaho Corporation, .  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core;
 
@@ -23,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 
 import org.pentaho.reporting.designer.core.auth.GlobalAuthenticationStore;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.settings.RecentFilesModel;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -46,28 +47,37 @@ public interface ReportDesignerContext
 
   public RecentFilesModel getRecentFilesModel();
 
-  public ReportRenderContext getActiveContext();
+  public ReportDocumentContext getActiveContext();
 
-  public void setActiveContext(ReportRenderContext context);
+  public ReportDesignerDocumentContext<?> getActiveDocument();
+  public void setActiveDocument(ReportDesignerDocumentContext<?> context);
 
   public void setStatusText(String text);
 
+  @Deprecated
   public void setPageNumbers(int page, int pageTotal);
 
+  @Deprecated
   public int getPage();
+
+  @Deprecated
   public int getPageTotal();
 
+  @Deprecated
   public Component getParent();
 
+  @Deprecated
   public JPopupMenu getPopupMenu(final String id);
 
+  @Deprecated
   public JComponent getToolBar(final String id);
 
   public int addMasterReport(final MasterReport masterReportElement) throws ReportDataFactoryException;
 
-  public int addSubReport(final ReportRenderContext parentReportContext,
+  public int addSubReport(final ReportDocumentContext parentReportContext,
                           final SubReport subReportElement) throws ReportDataFactoryException;
 
+  public ReportDesignerDocumentContext getDocumentContext(int index);
   public ReportRenderContext getReportRenderContext(int index);
 
   public int getReportRenderContextCount();

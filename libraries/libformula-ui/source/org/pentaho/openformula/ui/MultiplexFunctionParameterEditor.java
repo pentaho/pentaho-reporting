@@ -114,15 +114,11 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
     }
   }
 
+  @Override
   public void setSelectedFunction(final FunctionParameterContext context)
   {
-    final FunctionDescription selectedFunction = context.getFunction();
+    final FunctionDescription fnDesc = context.getFunction();
     final int functionStart = context.getFunctionInformation().getFunctionOffset();
-
-    if (activeEditor != null)
-    {
-      activeEditor.setSelectedFunction(context);
-    }
 
     // Ensure that the parameter field editor has been initialized. This can
     // happen if user manually types in the whole formula in text-area.
@@ -137,10 +133,10 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       switchParameterEditor = context.isSwitchParameterEditor();
     }
 
-    this.selectedFunction = selectedFunction;
+    this.selectedFunction = fnDesc;
     this.functionStartIndex = functionStart;
 
-    final String name = selectedFunction.getCanonicalName();
+    final String name = fnDesc.getCanonicalName();
     if ((activeEditor != null) && (switchParameterEditor == true))
     {
       activeEditor.removeParameterUpdateListener(parameterUpdateHandler);
@@ -164,6 +160,8 @@ public class MultiplexFunctionParameterEditor implements FunctionParameterEditor
       rootPanel.invalidate();
       rootPanel.revalidate();
       rootPanel.repaint();
+    } else {
+      activeEditor.setSelectedFunction(context);
     }
   }
 

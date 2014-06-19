@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2000 - 2009 Pentaho Corporation, Object Refinery Limited and Contributors...  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.designtime.swing.date;
 
@@ -315,7 +315,7 @@ public class DateChooserPanel extends JPanel
    *
    * @param theDate the new date.
    */
-  public void setDate(final Date theDate)
+  public void setDate(final Date theDate, boolean firePC)
   {
     final Date oldDate = this.selectedDate;
     this.selectedDate = theDate;
@@ -328,14 +328,21 @@ public class DateChooserPanel extends JPanel
       refreshYearSelector();
       refreshButtons();
     }
-    if (ObjectUtilities.equal(oldDate, theDate))
+    if (firePC)
     {
-      firePropertyChange(PROPERTY_DATE, null, theDate);
+      if (ObjectUtilities.equal(oldDate, theDate))
+      {
+        firePropertyChange(PROPERTY_DATE, null, theDate);
+      }
+      else
+      {
+        firePropertyChange(PROPERTY_DATE, oldDate, theDate);
+      }
     }
-    else
-    {
-      firePropertyChange(PROPERTY_DATE, oldDate, theDate);
-    }
+  }
+
+  public void setDate(final Date theDate) {
+    setDate(theDate, true);
   }
 
   /**

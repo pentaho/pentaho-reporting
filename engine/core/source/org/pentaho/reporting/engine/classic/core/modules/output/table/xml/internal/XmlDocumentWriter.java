@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal;
 
@@ -45,6 +45,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableComplexText;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContent;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
@@ -98,9 +99,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
   private FastDecimalFormat pointIntConverter;
   private FastDecimalFormat pointConverter;
   private FastDecimalFormat pointShortConverter;
-  private boolean ignoreEmptyBorders = true;
+  private boolean ignoreEmptyBorders;
   private CellBackgroundProducer cellBackgroundProducer;
   private OutputProcessorMetaData metaData;
+  private boolean tableOpen;
 
   public XmlDocumentWriter(final OutputStream outputStream,
                            final OutputProcessorMetaData metaData)
@@ -115,6 +117,7 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     this.pointConverter = new FastDecimalFormat("0.0####", Locale.US);
     this.pointShortConverter = new FastDecimalFormat("0.#####", Locale.US);
     this.pointIntConverter = new FastDecimalFormat("0", Locale.US);
+    this.ignoreEmptyBorders = true;
   }
 
   public void open() throws IOException
@@ -145,7 +148,8 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   public void processTableContent(final LogicalPageBox logicalPageBox,
                                   final OutputProcessorMetaData metaData,
-                                  final TableContentProducer contentProducer) throws IOException
+                                  final TableContentProducer contentProducer,
+                                  final boolean incremental) throws IOException
   {
 
     // Start a new page.
@@ -154,6 +158,10 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
     final int rowCount = contentProducer.getRowCount();
     final int startRow = contentProducer.getFinishedRows();
     final int finishRow = contentProducer.getFilledRows();
+    if (incremental && startRow == finishRow)
+    {
+      return;
+    }
 
     if (cellBackgroundProducer == null)
     {
@@ -162,22 +170,26 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
               metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));
     }
 
-    final AttributeList pageAttributes = new AttributeList();
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-count", pointIntConverter.format(columnCount));
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-count", pointIntConverter.format(rowCount));
-    pageAttributes.setAttribute
-        (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "sheet-name", contentProducer.getSheetName());
-    xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table", pageAttributes, XmlWriter.OPEN);
-    xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "cols", XmlWriter.OPEN);
-    for (int i = 0; i < columnCount; i++)
+    if (tableOpen == false)
     {
-      final double cellWidth = StrictGeomUtility.toExternalValue(sheetLayout.getCellWidth(i, i + 1));
-      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "column", "width", pointShortConverter.format(cellWidth),
-          XmlWriter.CLOSE);
+      tableOpen = true;
+      final AttributeList pageAttributes = new AttributeList();
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-count", pointIntConverter.format(columnCount));
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-count", pointIntConverter.format(rowCount));
+      pageAttributes.setAttribute
+          (XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "sheet-name", contentProducer.getSheetName());
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table", pageAttributes, XmlWriter.OPEN);
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "cols", XmlWriter.OPEN);
+      for (int i = 0; i < columnCount; i++)
+      {
+        final double cellWidth = StrictGeomUtility.toExternalValue(sheetLayout.getCellWidth(i, i + 1));
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "column", "width", pointShortConverter.format(cellWidth),
+            XmlWriter.CLOSE);
+      }
+      xmlWriter.writeCloseTag();
     }
-    xmlWriter.writeCloseTag();
 
     for (int row = startRow; row < finishRow; row++)
     {
@@ -270,96 +282,12 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
       }
       xmlWriter.writeCloseTag();
     }
-    xmlWriter.writeCloseTag();
-  }
 
-  protected void processPage(final LogicalPageBox rootBox)
-  {
-    final StrictBounds pageBounds = drawArea;
-    startProcessing(rootBox.getWatermarkArea());
-
-    final BlockRenderBox headerArea = rootBox.getHeaderArea();
-    final BlockRenderBox footerArea = rootBox.getFooterArea();
-    final BlockRenderBox repeatFooterArea = rootBox.getRepeatFooterArea();
-    final StrictBounds headerBounds =
-        new StrictBounds(headerArea.getX(), headerArea.getY(), headerArea.getWidth(), headerArea.getHeight());
-    final StrictBounds footerBounds =
-        new StrictBounds(footerArea.getX(), footerArea.getY(), footerArea.getWidth(), footerArea.getHeight());
-    final StrictBounds repeatFooterBounds = new StrictBounds
-        (repeatFooterArea.getX(), repeatFooterArea.getY(), repeatFooterArea.getWidth(), repeatFooterArea.getHeight());
-    final StrictBounds contentBounds = new StrictBounds
-        (rootBox.getX(), headerArea.getY() + headerArea.getHeight(),
-            rootBox.getWidth(), footerArea.getY() - headerArea.getHeight());
-    this.drawArea = headerBounds;
-    startProcessing(headerArea);
-    this.drawArea = contentBounds;
-    processBoxChilds(rootBox);
-    this.drawArea = repeatFooterBounds;
-    startProcessing(repeatFooterArea);
-    this.drawArea = footerBounds;
-    startProcessing(footerArea);
-    this.drawArea = pageBounds;
-  }
-
-  protected final boolean isNodeVisible(final RenderNode rect2)
-  {
-    final long drawAreaX0 = drawArea.getX();
-    final long drawAreaY0 = drawArea.getY();
-    final long drawAreaX1 = drawAreaX0 + drawArea.getWidth();
-    final long drawAreaY1 = drawAreaY0 + drawArea.getHeight();
-
-    final long x = rect2.getX();
-    final long y = rect2.getY();
-    final long width = rect2.getWidth();
-    final long height = rect2.getHeight();
-    final long x2 = x + width;
-    final long y2 = y + height;
-
-    if (width == 0)
+    if (incremental == false)
     {
-      if (x2 < drawAreaX0)
-      {
-        return false;
-      }
-      if (x > drawAreaX1)
-      {
-        return false;
-      }
+      xmlWriter.writeCloseTag(); // table
+      tableOpen = false;
     }
-    else
-    {
-      if (x2 <= drawAreaX0)
-      {
-        return false;
-      }
-      if (x >= drawAreaX1)
-      {
-        return false;
-      }
-    }
-    if (height == 0)
-    {
-      if (y2 < drawAreaY0)
-      {
-        return false;
-      }
-      if (y > drawAreaY1)
-      {
-        return false;
-      }
-    }
-    else
-    {
-      if (y2 <= drawAreaY0)
-      {
-        return false;
-      }
-      if (y >= drawAreaY1)
-      {
-        return false;
-      }
-    }
-    return true;
   }
 
   private AttributeList createBoxAttributeList(final RenderBox box)
@@ -943,6 +871,25 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
         xmlWriter.writeCloseTag();
 
       }
+      else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
+      {
+        final RenderableComplexText renderableComplexText = (RenderableComplexText) node;
+        final AttributeList attributeList = new AttributeList();
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "x",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getX())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "y",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getY())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "width",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getWidth())));
+        attributeList.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "height",
+            pointConverter.format(StrictGeomUtility.toExternalValue(node.getHeight())));
+
+        final String text = renderableComplexText.getRawText();
+        xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "text", attributeList, XmlWriter.OPEN);
+        xmlWriter.writeTextNormalized(text, true);
+        xmlWriter.writeCloseTag();
+
+      }
       else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
       {
         final SpacerRenderNode spacer = (SpacerRenderNode) node;
@@ -1031,7 +978,20 @@ public class XmlDocumentWriter extends IterateStructuralProcessStep
 
   protected boolean startTableCellBox(final TableCellRenderBox box)
   {
-    return startBox(box, "table-cell");
+    try
+    {
+      AttributeList attrs = createBoxAttributeList(box);
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-span", String.valueOf(box.getColSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "row-span", String.valueOf(box.getRowSpan()));
+      attrs.setAttribute(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "col-index", String.valueOf(box.getColumnIndex()));
+      xmlWriter.writeTag(XmlDocumentWriter.LAYOUT_OUTPUT_NAMESPACE, "table-cell", attrs, XmlWriter.OPEN);
+      writeElementAttributes(box);
+      return true;
+    }
+    catch (IOException e)
+    {
+      throw new InvalidReportStateException(e.getMessage(), e);
+    }
   }
 
   protected void finishTableCellBox(final TableCellRenderBox box)

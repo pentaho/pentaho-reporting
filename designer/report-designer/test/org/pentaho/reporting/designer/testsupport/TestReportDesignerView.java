@@ -1,8 +1,34 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.designer.testsupport;
 
+import java.awt.Component;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JPopupMenu;
+
 import org.pentaho.reporting.designer.core.ReportDesignerView;
+import org.pentaho.reporting.designer.core.xul.ActionSwingMenuitem;
+import org.pentaho.ui.xul.XulComponent;
+import org.pentaho.ui.xul.XulException;
+import org.pentaho.ui.xul.containers.XulMenupopup;
 
 public class TestReportDesignerView implements ReportDesignerView
 {
@@ -93,5 +119,45 @@ public class TestReportDesignerView implements ReportDesignerView
   public void redrawAll()
   {
 
+  }
+
+  public void showDataTree()
+  {
+
+  }
+
+  public Component getParent()
+  {
+    return null;
+  }
+
+  public JPopupMenu getPopupMenu(final String id)
+  {
+    return null;
+  }
+
+  public JComponent getToolBar(final String id)
+  {
+    return null;
+  }
+
+  public <T extends JComponent> T getComponent(final String id, final Class<T> type)
+  {
+    return null;
+  }
+
+  public <T extends XulComponent> T getXulComponent(final String id, final Class<T> type)
+  {
+    return null;
+  }
+
+  public ActionSwingMenuitem createMenuItem(final Action action)
+  {
+    return null;
+  }
+
+  public XulMenupopup createPopupMenu(final String label, final XulComponent parent) throws XulException
+  {
+    return null;
   }
 }

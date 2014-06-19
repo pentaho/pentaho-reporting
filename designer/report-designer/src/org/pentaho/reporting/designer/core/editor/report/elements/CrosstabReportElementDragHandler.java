@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
@@ -30,6 +30,7 @@ import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
@@ -78,7 +79,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
 
   protected Element createElement(final ElementMetaData elementMetaData,
                                   final String fieldName,
-                                  final ReportRenderContext context) throws InstantiationException
+                                  final ReportDocumentContext context) throws InstantiationException
   {
     // Create a crosstab element
     final ElementType type = elementMetaData.create();
@@ -123,7 +124,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
 
     public void run()
     {
-      final ReportRenderContext context = dragContext.getRenderContext();
+      final ReportDocumentContext context = dragContext.getRenderContext();
       if (rootband)
       {
         final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),
@@ -164,7 +165,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
       }
 
       final ReportDesignerContext designerContext = dragContext.getDesignerContext();
-      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getParent());
+      final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
       final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
 
       try
@@ -174,11 +175,8 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
         subReport.setDataFactory(reportDefinition.getDataFactory());
         subReport.getReportDefinition().setAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM, 1.5f);
 
-        final ResourceBundleFactory rbf = subReport.getResourceBundleFactory();
-        subReport.setResourceBundleFactory(rbf);
-
         final int idx = designerContext.addSubReport(designerContext.getActiveContext(), subReport);
-        designerContext.setActiveContext(designerContext.getReportRenderContext(idx));
+        designerContext.setActiveDocument(designerContext.getReportRenderContext(idx));
       }
       catch (ReportDataFactoryException e)
       {

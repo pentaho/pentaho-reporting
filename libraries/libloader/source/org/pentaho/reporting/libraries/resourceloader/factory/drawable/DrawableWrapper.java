@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation and Contributors.  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2006 - 2013 Pentaho Corporation and Contributors.  All rights reserved.
+*/
 
 package org.pentaho.reporting.libraries.resourceloader.factory.drawable;
 
@@ -29,15 +29,10 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * Creation-Date: 05.12.2007, 19:15:56
- *
- * @author Thomas Morgner
- */
 public class DrawableWrapper
 {
   private static final Log logger = LogFactory.getLog(DrawableWrapper.class);
-  private static final Map drawables = Collections.synchronizedMap(new HashMap());
+  private static final Map<String,Boolean> drawables = Collections.synchronizedMap(new HashMap<String,Boolean>());
 
   private Object backend;
   private Method drawMethod;
@@ -57,7 +52,7 @@ public class DrawableWrapper
     {
       throw new IllegalArgumentException("Cannot wrap around a drawable-wrapper");
     }
-    final Class aClass = maybeDrawable.getClass();
+    final Class<?> aClass = maybeDrawable.getClass();
     try
     {
       drawMethod = aClass.getMethod("draw", PARAMETER_TYPES);
@@ -68,7 +63,7 @@ public class DrawableWrapper
       {
         if (logger.isWarnEnabled())
         {
-          logger.warn("DrawMethod is not valid: " + aClass + '#' + drawMethod);
+          logger.warn(String.format("DrawMethod is not valid: %s#%s", aClass, drawMethod)); // NON-NLS
         }
         drawMethod = null;
       }
@@ -78,7 +73,7 @@ public class DrawableWrapper
       // ignore exception
       if (logger.isWarnEnabled())
       {
-        logger.warn("The object is not a drawable: " + aClass);
+        logger.warn(String.format("The object is not a drawable: %s", aClass)); // NON-NLS
       }
       drawMethod = null;
     }
@@ -136,13 +131,13 @@ public class DrawableWrapper
 
     try
     {
-      drawMethod.invoke(backend, new Object[]{g2, bounds});
+      drawMethod.invoke(backend, g2, bounds);
     }
     catch (Throwable e)
     {
       if (logger.isDebugEnabled())
       {
-        logger.warn("Invoking draw failed:", e);
+        logger.warn("Invoking draw failed:", e); // NON-NLS
       }
     }
   }
@@ -168,7 +163,7 @@ public class DrawableWrapper
     {
       if (logger.isWarnEnabled())
       {
-        logger.warn("Invoking getPreferredSize failed:", e);
+        logger.warn("Invoking getPreferredSize failed:", e); // NON-NLS
       }
       return null;
     }
@@ -194,7 +189,7 @@ public class DrawableWrapper
     {
       if (logger.isWarnEnabled())
       {
-        logger.warn("Invoking isKeepAspectRatio failed:", e);
+        logger.warn("Invoking isKeepAspectRatio failed:", e); // NON-NLS
       }
       return false;
     }
@@ -207,7 +202,7 @@ public class DrawableWrapper
       throw new NullPointerException("A <null> value can never be a drawable.");
     }
     final String key = maybeDrawable.getClass().getName();
-    final Boolean result = (Boolean) drawables.get(key);
+    final Boolean result = drawables.get(key);
     if (result != null)
     {
       return result.booleanValue();
@@ -226,7 +221,7 @@ public class DrawableWrapper
 
   private static boolean computeIsDrawable(final Object maybeDrawable)
   {
-    final Class aClass = maybeDrawable.getClass();
+    final Class<?> aClass = maybeDrawable.getClass();
     try
     {
       final Method drawMethod = aClass.getMethod("draw", PARAMETER_TYPES);

@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParse
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
+import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
@@ -162,6 +163,12 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
       styleSheet.setStyleProperty(TextStyleKeys.TEXT_WRAP, parseTextWrap(textWrap));
     }
 
+    final String textDirection = attrs.getValue(getUri(), "direction");
+    if (textDirection != null)
+    {
+      styleSheet.setStyleProperty(TextStyleKeys.DIRECTION, parseTextDirection(textDirection));
+    }
+
     final String fontSmooth = attrs.getValue(getUri(), "font-smooth");
     if (fontSmooth != null)
     {
@@ -278,6 +285,19 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
       return TextWrap.NONE;
     }
     return TextWrap.WRAP;
+  }
+
+  private TextDirection parseTextDirection(final String o)
+  {
+    if (TextDirection.LTR.toString().equalsIgnoreCase(o))
+    {
+      return TextDirection.LTR;
+    }
+    if (TextDirection.RTL.toString().equalsIgnoreCase(o))
+    {
+      return TextDirection.RTL;
+    }
+    return TextDirection.LTR;
   }
 
   /**

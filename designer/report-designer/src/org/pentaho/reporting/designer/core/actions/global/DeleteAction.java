@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.actions.global;
 
@@ -25,8 +25,8 @@ import javax.swing.JOptionPane;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.dnd.InsertationUtil;
 import org.pentaho.reporting.designer.core.util.undo.CompoundUndoEntry;
@@ -56,19 +56,19 @@ public final class DeleteAction extends AbstractElementSelectionAction
    */
   public void actionPerformed(final ActionEvent e)
   {
-    final ReportRenderContext activeContext = getActiveContext();
+    final ReportDocumentContext activeContext = getActiveContext();
     if (activeContext == null)
     {
       return;
     }
 
-    final ReportSelectionModel selectionModel = activeContext.getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = activeContext.getSelectionModel();
     final Object[] selectedElements = selectionModel.getSelectedElements();
     if (isParameter())
     {
       final String theTitle = ActionMessages.getString("DeleteAction.Warning");
       final String theDeleteMessage = ActionMessages.getString("DeleteAction.Confirmation");
-      final Component theParent = getReportDesignerContext().getParent();
+      final Component theParent = getReportDesignerContext().getView().getParent();
       final int result = JOptionPane.showConfirmDialog(theParent, theDeleteMessage, theTitle, JOptionPane.YES_NO_OPTION);
       if (result != JOptionPane.YES_OPTION)
       {
@@ -95,7 +95,7 @@ public final class DeleteAction extends AbstractElementSelectionAction
 
   private boolean isParameter()
   {
-    final ReportSelectionModel selectionModel = getActiveContext().getSelectionModel();
+    final DocumentContextSelectionModel selectionModel = getActiveContext().getSelectionModel();
     final Object[] selectedElements = selectionModel.getSelectedElements();
     for (int i = 0; i < selectedElements.length; i++)
     {
@@ -113,7 +113,7 @@ public final class DeleteAction extends AbstractElementSelectionAction
 
   protected void updateSelection()
   {
-    final ReportSelectionModel selectionModel1 = getSelectionModel();
+    final DocumentContextSelectionModel selectionModel1 = getSelectionModel();
     if (selectionModel1 == null || selectionModel1.getSelectionCount() == 0)
     {
       setEnabled(false);

@@ -1,30 +1,31 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2009 Pentaho Corporation.  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.attributes;
 
 import java.awt.BorderLayout;
+import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
-import org.pentaho.reporting.designer.core.model.selection.ReportSelectionModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.SidePanel;
 import org.pentaho.reporting.designer.core.util.table.ElementMetaDataTable;
 import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
@@ -36,11 +37,6 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.libraries.designtime.swing.DefaultTableHeaderRenderer;
 
-/**
- * Todo: Document me!
- *
- * @author Thomas Morgner
- */
 public class VisualAttributeEditorPanel extends SidePanel
 {
   protected static final Element[] EMPTY_DATA = new Element[0];
@@ -129,13 +125,14 @@ public class VisualAttributeEditorPanel extends SidePanel
     headerPanel.setEnabled(enabled);
   }
 
-  protected void updateSelection(final ReportSelectionModel model)
+  protected void updateSelection(final DocumentContextSelectionModel model)
   {
-    final Element[] selectedElements = model.getSelectedVisualElements();
-    setData(selectedElements);
+    List<Element> selectedElementsOfType = model.getSelectedElementsOfType(Element.class);
+    final Element[] visualElements = selectedElementsOfType.toArray(new Element[selectedElementsOfType.size()]);
+    setData(visualElements);
   }
 
-  protected void updateActiveContext(final ReportRenderContext oldContext, final ReportRenderContext newContext)
+  protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
     table.stopEditing();
     

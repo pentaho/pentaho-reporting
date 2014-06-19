@@ -374,10 +374,6 @@
                   </p>
                 </row>
               </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="118.257" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="118.257" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="118.257" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="118.257" width="806.0" height="0.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -721,10 +717,6 @@
                     </line>
                   </p>
                 </row>
-              </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="197.975" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="197.975" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
               </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="197.975" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1070,10 +1062,6 @@
                   </p>
                 </row>
               </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="277.693" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="277.693" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="277.693" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="277.693" width="806.0" height="0.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1417,10 +1405,6 @@
                     </line>
                   </p>
                 </row>
-              </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="357.411" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="357.411" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
               </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="357.411" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -1766,10 +1750,6 @@
                   </p>
                 </row>
               </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="437.129" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="437.129" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="437.129" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="437.129" width="806.0" height="0.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2113,10 +2093,6 @@
                     </line>
                   </p>
                 </row>
-              </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="516.847" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="516.847" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
               </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="516.847" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2513,10 +2489,6 @@
                   </p>
                 </row>
               </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="91.718" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="91.718" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
-              </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="91.718" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <canvas type="CanvasRenderBox" x="0.0" y="91.718" width="806.0" height="0.0" color="black" font-face="Arial" font-size="12" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
@@ -2860,10 +2832,6 @@
                     </line>
                   </p>
                 </row>
-              </block>
-              <block name="Section-0" type="SectionRenderBox" x="0.0" y="171.436" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                <block type="ProgressMarkerRenderBox" x="0.0" y="171.436" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                </block>
               </block>
             </block>
             <block name="Section-0" type="SectionRenderBox" x="0.0" y="171.436" width="806.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">

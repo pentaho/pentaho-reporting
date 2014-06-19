@@ -1,19 +1,19 @@
 /*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2001 - 2009 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
- */
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
+*/
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
@@ -29,6 +29,7 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 import org.pentaho.reporting.libraries.fonts.text.breaks.BreakOpportunityProducer;
+import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
 
 /**
@@ -58,13 +59,12 @@ public final class RenderableText extends RenderNode
   static
   {
     final long value = StrictGeomUtility.toInternalValue(1);
-    conversionFactor = value / org.pentaho.reporting.libraries.fonts.tools.StrictGeomUtility.toInternalValue(1);
+    conversionFactor = value / FontStrictGeomUtility.toInternalValue(1);
   }
   
   private GlyphList glyphs;
   private int offset;
   private int length;
-  private boolean ltr;
   private int script;
 
   private long minimumWidth;
@@ -76,7 +76,7 @@ public final class RenderableText extends RenderNode
   public RenderableText(final StyleSheet layoutContext,
                         final ElementType elementType,
                         final InstanceID instanceID,
-                        final ReportAttributeMap attributes,
+                        final ReportAttributeMap<Object> attributes,
                         final ExtendedBaselineInfo baselineInfo,
                         final GlyphList glyphs,
                         final int offset,
@@ -108,7 +108,6 @@ public final class RenderableText extends RenderNode
     }
 
     this.baselineInfo = baselineInfo;
-    this.ltr = true; // this depends on the script value
     this.script = script;
 
     this.glyphs = glyphs;
@@ -194,11 +193,6 @@ public final class RenderableText extends RenderNode
   public boolean isForceLinebreak()
   {
     return forceLinebreak;
-  }
-
-  public boolean isLtr()
-  {
-    return ltr;
   }
 
   public GlyphList getGlyphs()

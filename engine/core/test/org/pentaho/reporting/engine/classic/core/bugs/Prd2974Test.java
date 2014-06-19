@@ -1,6 +1,22 @@
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
+
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
 import junit.framework.TestCase;
@@ -9,13 +25,56 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.XmlPageReportUtil;
+import org.pentaho.reporting.engine.classic.core.layout.model.CanvasRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.SectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
+import org.pentaho.reporting.engine.classic.core.testsupport.selector.NodeMatcher;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class Prd2974Test extends TestCase
 {
+  private static class FooterTextMatcher implements NodeMatcher
+  {
+    private String text;
+
+    private FooterTextMatcher(final String text)
+    {
+      this.text = text;
+    }
+
+    public boolean matches(final RenderNode node)
+    {
+      if (!(node instanceof ParagraphRenderBox))
+      {
+        return false;
+      }
+      if (!(node.getParent() instanceof CanvasRenderBox))
+      {
+        return false;
+      }
+      RenderBox parent = node.getParent().getParent();
+      if (parent instanceof SectionRenderBox == false)
+      {
+        return false;
+      }
+      ParagraphRenderBox para = (ParagraphRenderBox) node;
+      Object attribute = para.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
+      if (ObjectUtilities.equal(text, attribute))
+      {
+        return true;
+      }
+      return false;
+    }
+  }
+
   public Prd2974Test()
   {
   }
@@ -47,13 +106,10 @@ public class Prd2974Test extends TestCase
 
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    XmlPageReportUtil.createXml(report, out);
-    final String outText = out.toString("UTF-8");
 
-    System.out.println(outText);
-    assertTrue(outText.indexOf(">Label</text>") > 0);
-    assertTrue(outText.indexOf("value=\"XASDAS\"") > 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
   }
 
 
@@ -74,13 +130,10 @@ public class Prd2974Test extends TestCase
 
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    XmlPageReportUtil.createXml(report, out);
-    final String outText = out.toString("UTF-8");
 
-    System.out.println(outText);
-    assertTrue(outText.indexOf(">Label</text>") > 0);
-    assertTrue(outText.indexOf("value=\"XASDAS\"") > 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
   }
 
 
@@ -101,13 +154,10 @@ public class Prd2974Test extends TestCase
 
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    XmlPageReportUtil.createXml(report, out);
-    final String outText = out.toString("UTF-8");
 
-    System.out.println(outText);
-    assertFalse(outText.indexOf(">Label</text>") > 0);
-    assertTrue(outText.indexOf("value=\"XASDAS\"") > 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
   }
 
   public void testRunStickyMasterFooter() throws Exception
@@ -126,17 +176,11 @@ public class Prd2974Test extends TestCase
     report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    XmlPageReportUtil.createXml(report, out);
-    final String outText = out.toString("UTF-8");
-/**
- * TESTBUG: PRD-4344 - Fix this regression
- */
- /*
-    System.out.println(outText);
-    assertFalse(outText.indexOf(">Label</text>") > 0);
-    assertTrue(outText.indexOf("value=\"XASDAS\"") > 0);
- */
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+
+    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
   }
 
   private Element createLabel()
@@ -174,19 +218,11 @@ public class Prd2974Test extends TestCase
 
     report.getReportConfiguration().setConfigProperty
         ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
-/*
-    final PreviewDialog previewDialog = new PreviewDialog(report);
-    previewDialog.pack();
-    previewDialog.setModal(true);
-    previewDialog.setVisible(true);
-*/
-    final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    XmlPageReportUtil.createXml(report, out);
-    final String outText = out.toString("UTF-8");
 
-    System.out.println(outText);
-    assertTrue(outText.indexOf(">Label</text>") > 0);
-    assertTrue(outText.indexOf(">PageFooter-Label<") > 0);
+
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
+    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("PageFooter-Label")));
     // TESTBUG: this is not a true structural test at all.
   }
 

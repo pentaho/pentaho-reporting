@@ -1,19 +1,19 @@
-/*
- * This program is free software; you can redistribute it and/or modify it under the
- * terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
- * Foundation.
- *
- * You should have received a copy of the GNU Lesser General Public License along with this
- * program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
- * or from the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Lesser General Public License for more details.
- *
- * Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
- */
+/*!
+* This program is free software; you can redistribute it and/or modify it under the
+* terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software
+* Foundation.
+*
+* You should have received a copy of the GNU Lesser General Public License along with this
+* program; if not, you can obtain a copy at http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+* or from the Free Software Foundation, Inc.,
+* 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+*
+* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+* without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
+*/
 
 package org.pentaho.reporting.designer.core.editor.report;
 
@@ -29,7 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.ElementRenderer;
 import org.pentaho.reporting.designer.core.util.CanvasImageLoader;
 
@@ -45,12 +45,12 @@ public class ResizeRootBandComponent extends JPanel
   private Border hoverBorder;
   private Border normalBorder;
   private ElementRenderer rootBandRenderer;
-  private ReportRenderContext renderContext;
+  private ReportDocumentContext renderContext;
   private boolean linealComponent;
 
   public ResizeRootBandComponent(final boolean linealComponent,
                                  final ElementRenderer renderer,
-                                 final ReportRenderContext renderContext)
+                                 final ReportDocumentContext renderContext)
   {
     if (renderer == null)
     {
@@ -63,14 +63,13 @@ public class ResizeRootBandComponent extends JPanel
     this.linealComponent = linealComponent;
     this.renderContext = renderContext;
     this.rootBandRenderer = renderer;
-    normalColor = new Color(212, 212, 212);
 
     if (linealComponent)
     {
+      normalColor = new Color(212, 212, 212);
       normalBorder = BorderFactory.createLineBorder(new Color(188, 188, 188), 1);
       hoverColor = new Color(212, 212, 212);
       hoverBorder = BorderFactory.createLineBorder(new Color(128, 128, 128), 1);
-      setOpaque(true);
     }
     else
     {
@@ -78,9 +77,9 @@ public class ResizeRootBandComponent extends JPanel
       hoverColor = new Color(255, 255, 255, 0);
       hoverBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
       normalBorder = BorderFactory.createEmptyBorder(1, 1, 1, 1);
-      setOpaque(true);
     }
 
+    setOpaque(false);
     setBorder(normalBorder);
     setMinimumSize(new Dimension(6, 4));
     setPreferredSize(new Dimension(6, 4));
@@ -142,7 +141,7 @@ public class ResizeRootBandComponent extends JPanel
     return rootBandRenderer;
   }
 
-  public ReportRenderContext getRenderContext()
+  protected ReportDocumentContext getRenderContext()
   {
     return renderContext;
   }
