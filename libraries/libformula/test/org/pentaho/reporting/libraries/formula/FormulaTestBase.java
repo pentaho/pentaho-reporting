@@ -20,7 +20,7 @@ package org.pentaho.reporting.libraries.formula;
 import java.util.Locale;
 
 import junit.framework.TestCase;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.junit.Assert;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.formula.common.TestFormulaContext;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
@@ -66,65 +66,44 @@ public abstract class FormulaTestBase extends TestCase
     }
   }
 
-  protected void performTest(final String formul, final Object result) throws Exception
+  protected void performTest(final String formula, final Object result) throws Exception
   {
-    performTest(formul, result, this.context);
+    performTest(formula, result, getContext());
   }
 
-  protected void performTest(final String formul, final Object result, final FormulaContext context) throws Exception
+  @SuppressWarnings("unchecked")
+  protected void performTest(final String formulaText,
+                             final Object expected,
+                             final FormulaContext context) throws Exception
   {
-    final Formula formula = new Formula(formul);
+    final Formula formula = new Formula(formulaText);
     formula.initialize(context);
-    final Object eval = formula.evaluateTyped().getValue();
-    if (result instanceof Comparable && eval instanceof Comparable)
+    final Object formulaResult = formula.evaluateTyped().getValue();
+    if (expected instanceof Comparable && formulaResult instanceof Comparable)
     {
-      final Comparable n = (Comparable) result;
+      final Comparable<Object> resultComparable = (Comparable<Object>) formulaResult;
+      final Comparable<Object> expectedComparable = (Comparable<Object>) expected;
       try
       {
-        assertTrue("Failure numeric comparison on " + formul + ": " + result + " vs. " + eval, n.compareTo(eval) == 0);
+        assertTrue(String.format
+                ("For formula [%s]\n - Expected \"%s\"\n but found \"%s\"", formulaText, expected, formulaResult),
+            resultComparable.compareTo(formulaResult) == 0);
       }
       catch (final ClassCastException cce)
       {
-        cce.printStackTrace();
-        fail("Failure numeric comparison on " + formul + ": " + result + " vs. " + eval);
+        Assert.assertEquals(expectedComparable, resultComparable);
       }
     }
-    else if (result instanceof Object[] && eval instanceof Object[])
+    else if (expected instanceof Object[] && formulaResult instanceof Object[])
     {
-      final boolean b = ObjectUtilities.equalArray((Object[]) result, (Object[]) eval);
-      if (b == false)
-      {
-        System.out.println(printArray(result));
-        System.out.println(printArray(eval));
-        fail("Failure on array comparison: " + formul);
-      }
+      Object[] expectedArray = (Object[]) expected;
+      Object[] resultArray = (Object[]) formulaResult;
+      Assert.assertArrayEquals(expectedArray, resultArray);
     }
     else
     {
-      assertEquals("Failure on " + formul, result, eval);
+      assertEquals("Failure on " + formula, expected, formulaResult);
     }
-  }
-
-  private String printArray(final Object o)
-  {
-    if (o instanceof Object[] == false)
-    {
-      return String.valueOf(o);
-    }
-
-    final StringBuffer b = new StringBuffer();
-    b.append("Object[]{");
-    final Object[] array = (Object[]) o;
-    for (int i = 0; i < array.length; i++)
-    {
-      if (i > 0)
-      {
-        b.append(", ");
-      }
-      b.append(array[i]);
-    }
-    b.append("}");
-    return b.toString();
   }
 
   protected void performTranslationTest(String function)
