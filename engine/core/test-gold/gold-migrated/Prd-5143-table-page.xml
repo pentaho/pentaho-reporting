@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="3">
+    <cols>
+      <column width="98"/>
+      <column width="370"/>
+    </cols>
+    <row height="32">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="20">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+        <line type="ParagraphPoolBox" x="98.0" y="32.0" width="27.336" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <inline name="content" type="InlineRenderBox" x="98.0" y="32.0" width="27.336" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="content"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Hello"/>
+            <text x="98.0" y="32.0" width="27.336" height="12.0">Hello</text>
+          </inline>
+        </line>
+      </cell>
+    </row>
+    <row height="596">
+      <empty-cell/>
+      <empty-cell/>
+    </row>
+  </table>
+</layout-output>
