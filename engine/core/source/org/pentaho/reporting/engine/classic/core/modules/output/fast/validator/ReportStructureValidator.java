@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 import java.util.HashSet;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -86,6 +87,18 @@ public class ReportStructureValidator extends AbstractStructureVisitor
   protected void inspectElement(final ReportElement element)
   {
     traverseStyleExpressions(element);
+
+    if (element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
+    {
+      valid = false;
+      return;
+    }
+
+    if (element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
+    {
+      valid = false;
+      return;
+    }
 
     if (element instanceof AbstractReportDefinition)
     {
