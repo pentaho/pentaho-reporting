@@ -302,6 +302,7 @@ public class Prd3514Test extends TestCase
 
     // box only contains one line, and min-size is set to 8, max size = 20, so the line-height of 14.024 is used.
     assertTrue(outerBox.getHeight() >= StrictGeomUtility.toInternalValue(16));
+    assertSame(outerBox.getFirstChild(), outerBox.getLastChild());
     // no valid test.
  //   assertEquals(outerBox.getHeight(), outerBox.getFirstChild().getHeight());
   }
