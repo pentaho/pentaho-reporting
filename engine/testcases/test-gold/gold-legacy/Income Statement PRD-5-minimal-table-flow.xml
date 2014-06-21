@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="4">
+    <cols>
+      <column width="270"/>
+      <column width="270"/>
+    </cols>
+    <row height="9">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Income Statement"/>
+      </empty-cell>
+      <empty-cell/>
+    </row>
+    <row height="14">
+      <empty-cell>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="band"/>
+      </empty-cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Steel Wheels, Inc."/>
+        <line type="ParagraphPoolBox" x="443.388" y="10.0" width="96.612" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="443.388" y="10.0" width="27.324" height="12.0">Steel</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="474.036" y="10.0" width="43.32" height="12.0">Wheels,</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="520.68" y="10.0" width="19.32" height="12.0">Inc.</text>
+        </line>
+      </cell>
+    </row>
+    <row height="14">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Income Statement"/>
+        <line type="ParagraphPoolBox" x="442.692" y="24.0" width="97.308" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="442.692" y="24.0" width="39.336" height="12.0">Income</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="485.352" y="24.0" width="54.648" height="12.0">Statement</text>
+        </line>
+      </cell>
+    </row>
+    <row height="14">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="From June 1 through June 30, 2005"/>
+        <line type="ParagraphPoolBox" x="270.0" y="37.0" width="190.668" height="12.0" color="black" font-face="SansSerif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="270.0" y="37.0" width="27.984" height="12.0">From</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="301.308" y="37.0" width="26.016" height="12.0">June</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="330.648" y="37.0" width="6.672" height="12.0">1</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="340.644" y="37.0" width="40.68" height="12.0">through</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="384.648" y="37.0" width="26.016" height="12.0">June</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="413.988" y="37.0" width="16.668" height="12.0">30,</text>
+          <spacer width="3.324" height="0.0" preserve="true"/>
+          <text x="433.98" y="37.0" width="26.688" height="12.0">2005</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>
