@@ -239,13 +239,16 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       {
         rebuildLastLineComplex(prev, (ParagraphPoolBox) node);
       }
+
       // now remove all pending lineboxes (they should be empty anyway).
+      node = node.getNext();
       while (node != null)
       {
         final RenderNode oldNode = node;
         node = node.getNext();
         paragraph.remove(oldNode);
       }
+      return;
     }
   }
 
