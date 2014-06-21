@@ -234,6 +234,7 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       {
         // none of the lines fits fully, so get the first one at least
         rebuildLastLineComplex((ParagraphPoolBox) node, (RenderBox) node.getNext());
+        node = node.getNext();
       }
       else
       {
@@ -241,7 +242,6 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       }
 
       // now remove all pending lineboxes (they should be empty anyway).
-      node = node.getNext();
       while (node != null)
       {
         final RenderNode oldNode = node;
