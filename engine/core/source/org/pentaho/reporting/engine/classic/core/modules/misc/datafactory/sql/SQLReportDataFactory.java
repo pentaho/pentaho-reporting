@@ -159,7 +159,9 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory
     {
       throw new ReportDataFactoryException("Query '" + query + "' is not recognized."); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    return super.queryData(realQuery, parameters);
+    TableModel queryResult = super.queryData( realQuery, parameters );
+    TableModel postProcessResult = scriptingSupport.postProcessResult( query, parameters, queryResult );
+    return postProcessResult;
   }
 
   public String[] getReferencedFields(final String query, final DataRow parameter) throws ReportDataFactoryException
