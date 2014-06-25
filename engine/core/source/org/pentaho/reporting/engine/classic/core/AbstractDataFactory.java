@@ -17,7 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+
+import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
@@ -25,7 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public abstract class AbstractDataFactory implements DataFactory, Cloneable
+public abstract class AbstractDataFactory implements DataFactoryDesignTimeSupport, Cloneable
 {
   private transient Configuration configuration;
   private transient ResourceManager resourceManager;
@@ -84,6 +89,12 @@ public abstract class AbstractDataFactory implements DataFactory, Cloneable
     }
   }
 
+  public TableModel queryDesignTimeStructure(final String query,
+                                             final DataRow parameter) throws ReportDataFactoryException
+  {
+    return queryData(query, new DataRowWrapper(parameter));
+  }
+
   public Locale getLocale()
   {
     return locale;
@@ -138,5 +149,55 @@ public abstract class AbstractDataFactory implements DataFactory, Cloneable
   public DataFactoryMetaData getMetaData()
   {
     return DataFactoryRegistry.getInstance().getMetaData(getClass().getName());
+  }
+
+  protected static class DataRowWrapper implements DataRow
+  {
+    private DataRow parent;
+    private String[] columnNames;
+
+    public DataRowWrapper(final DataRow parent)
+    {
+      this.parent = parent;
+      this.columnNames = computeEffectiveColumnNameSet();
+    }
+
+    private String[] computeEffectiveColumnNameSet()
+    {
+      List<String> c = Arrays.asList(parent.getColumnNames());
+      ArrayList<String> retval = new ArrayList<String>(c);
+      if (!retval.contains(DataFactory.QUERY_LIMIT)) {
+        retval.add(DataFactory.QUERY_LIMIT);
+      }
+      retval.add(DataFactoryDesignTimeSupport.DESIGN_TIME);
+      return retval.toArray(new String[retval.size()]);
+    }
+
+    public Object get(final String name)
+    {
+      if (DESIGN_TIME.equals(name)) {
+        return true;
+      }
+      if (QUERY_LIMIT.equals(name)) {
+        return 1;
+      }
+      return parent.get(name);
+    }
+
+    public String[] getColumnNames()
+    {
+      return columnNames.clone();
+    }
+
+    public boolean isChanged(final String name)
+    {
+      if (DESIGN_TIME.equals(name)) {
+        return false;
+      }
+      if (QUERY_LIMIT.equals(name)) {
+        return false;
+      }
+      return parent.isChanged(name);
+    }
   }
 }

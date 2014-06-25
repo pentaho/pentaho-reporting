@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
 
 /**
@@ -63,14 +63,8 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
    */
   public final TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
-    if (parameters == null)
-    {
-      throw new NullPointerException();
-    }
-    if (query == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("query", query);
+    ArgumentNullException.validate("parameters", parameters);
 
     final TableModel staticResult = queryStatic(query, parameters);
     if (staticResult != null)
@@ -83,6 +77,36 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
       return freeFormResult;
     }
     return handleFallThrough(query);
+  }
+
+
+  public TableModel queryDesignTimeStructureFreeForm(final String query,
+                                                     final DataRow parameters) throws ReportDataFactoryException
+  {
+    for (int i = 0; i < dataFactories.size(); i++)
+    {
+      final DataFactory dataFactory = dataFactories.get(i);
+
+      if (dataFactory instanceof CompoundDataFactorySupport)
+      {
+        final CompoundDataFactorySupport support = (CompoundDataFactorySupport) dataFactory;
+        if (support.isFreeFormQueryExecutable(query, parameters))
+        {
+          return support.queryDesignTimeStructureFreeForm(query, parameters);
+        }
+      }
+      else if (isFreeFormQueryDataFactory(dataFactory) && dataFactory.isQueryExecutable(query, parameters))
+      {
+        if (dataFactory instanceof DataFactoryDesignTimeSupport) {
+          DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
+          return dts.queryDesignTimeStructure(query, parameters);
+        }
+        else {
+          return dataFactory.queryData(query, new DataRowWrapper(parameters));
+        }
+      }
+    }
+    return null;
   }
 
   public TableModel queryFreeForm(final String query, final DataRow parameters) throws ReportDataFactoryException
@@ -102,6 +126,34 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
       else if (isFreeFormQueryDataFactory(dataFactory) && dataFactory.isQueryExecutable(query, parameters))
       {
         return dataFactory.queryData(query, parameters);
+      }
+    }
+    return null;
+  }
+
+  public TableModel queryDesignTimeStructureStatic(final String query,
+                                                   final DataRow parameters) throws ReportDataFactoryException
+  {
+    for (int i = 0; i < dataFactories.size(); i++)
+    {
+      final DataFactory dataFactory = dataFactories.get(i);
+      if (dataFactory instanceof CompoundDataFactorySupport)
+      {
+        final CompoundDataFactorySupport support = (CompoundDataFactorySupport) dataFactory;
+        if (support.isStaticQueryExecutable(query, parameters))
+        {
+          return support.queryDesignTimeStructureStatic(query, parameters);
+        }
+      }
+      else if ((isFreeFormQueryDataFactory(dataFactory) == false) && dataFactory.isQueryExecutable(query, parameters))
+      {
+        if (dataFactory instanceof DataFactoryDesignTimeSupport) {
+          DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
+          return dts.queryDesignTimeStructure(query, parameters);
+        }
+        else {
+          return dataFactory.queryData(query, new DataRowWrapper(parameters));
+        }
       }
     }
     return null;
@@ -127,6 +179,26 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     }
     return null;
   }
+
+  public TableModel queryDesignTimeStructure(final String query,
+                                             final DataRow parameters) throws ReportDataFactoryException
+  {
+    ArgumentNullException.validate("query", query);
+    ArgumentNullException.validate("parameters", parameters);
+
+    final TableModel staticResult = queryStatic(query, parameters);
+    if (staticResult != null)
+    {
+      return staticResult;
+    }
+    final TableModel freeFormResult = queryFreeForm(query, parameters);
+    if (freeFormResult != null)
+    {
+      return freeFormResult;
+    }
+    return handleFallThrough(query);
+  }
+
 
   protected TableModel handleFallThrough(final String query)
       throws ReportDataFactoryException

@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactorySupport;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
@@ -36,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class CachingDataFactory extends AbstractDataFactory implements CompoundDataFactorySupport
 {
@@ -60,7 +62,27 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     this(backend, false, dataCacheEnabled);
   }
 
-  public CachingDataFactory(final DataFactory backend, final boolean noClose, final boolean dataCacheEnabled)
+  public CachingDataFactory(final DataFactory backend, final boolean noClose,
+                            final boolean dataCacheEnabled)
+  {
+    this(backend, noClose, produceDefault(dataCacheEnabled));
+  }
+
+  private static DataCache produceDefault(final boolean dataCacheEnabled)
+  {
+    if (dataCacheEnabled)
+    {
+      return DataCacheFactory.getCache();
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  public CachingDataFactory(final DataFactory backend,
+                            final boolean noClose,
+                            final DataCache dataCache)
   {
     if (backend == null)
     {
@@ -77,15 +99,8 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     }
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    sessionCache = new HashMap<DataCacheKey, TableModel>();
-    if (dataCacheEnabled)
-    {
-      this.dataCache = DataCacheFactory.getCache();
-    }
-    else
-    {
-      this.dataCache = null;
-    }
+    this.sessionCache = new HashMap<DataCacheKey, TableModel>();
+    this.dataCache = dataCache;
 
     this.debugDataSources = "true".equals(configuration.getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.DebugDataSources"));
@@ -143,7 +158,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       throw new NullPointerException();
     }
 
-    final DataCacheKey key = createCacheKey(query, parameters);
+    final DataCacheKey key = createCacheKey(query, parameters, false);
     if (key != null)
     {
       TableModel model = sessionCache.get(key);
@@ -153,14 +168,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
-        if (model instanceof MetaTableModel)
-        {
-          return new IndexedMetaTableModel((MetaTableModel) model);
-        }
-        else
-        {
-          return new IndexedTableModel(model);
-        }
+        return wrapAsIndexed(model);
       }
     }
 
@@ -175,26 +183,49 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       return null;
     }
 
-    if (key != null)
+    data = putInCache(key, data);
+    return wrapAsIndexed(data);
+  }
+
+  public TableModel queryDesignTimeStructureStatic(final String query,
+                                                   final DataRow parameters) throws ReportDataFactoryException
+  {
+    if (query == null)
     {
-      final TableModel newData = dataCache.put(key, data);
-      if (newData != data && data instanceof CloseableTableModel)
-      {
-        final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
-        closeableTableModel.close();
-      }
-      sessionCache.put(key, newData);
-      data = newData;
+      throw new NullPointerException();
+    }
+    if (parameters == null)
+    {
+      throw new NullPointerException();
     }
 
-    if (data instanceof MetaTableModel)
+    final DataCacheKey key = createCacheKey(query, parameters, false);
+    if (key != null)
     {
-      return new IndexedMetaTableModel((MetaTableModel) data);
+      TableModel model = sessionCache.get(key);
+      if (model == null)
+      {
+        model = dataCache.get(key);
+      }
+      if (model != null)
+      {
+        return wrapAsIndexed(model);
+      }
     }
-    else
+
+    if (!backend.isStaticQueryExecutable(query, parameters))
     {
-      return new IndexedTableModel(data);
+      throw new ReportDataFactoryException("The specified query '" + query + "' is not executable here.");
     }
+
+    TableModel data = backend.queryDesignTimeStructureStatic(query, parameters);
+    if (data == null)
+    {
+      return null;
+    }
+
+    data = putInCache(key, data);
+    return wrapAsIndexed(data);
   }
 
   public TableModel queryFreeForm(final String query, final DataRow parameters) throws ReportDataFactoryException
@@ -208,7 +239,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       throw new NullPointerException();
     }
 
-    final DataCacheKey key = createCacheKey(query, parameters);
+    final DataCacheKey key = createCacheKey(query, parameters, false);
     if (key != null)
     {
       TableModel model = sessionCache.get(key);
@@ -218,14 +249,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
-        if (model instanceof MetaTableModel)
-        {
-          return new IndexedMetaTableModel((MetaTableModel) model);
-        }
-        else
-        {
-          return new IndexedTableModel(model);
-        }
+        return wrapAsIndexed(model);
       }
     }
 
@@ -240,26 +264,48 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       return null;
     }
 
-    if (key != null)
+    data = putInCache(key, data);
+    return wrapAsIndexed(data);
+  }
+
+  public TableModel queryDesignTimeStructureFreeForm(final String query, final DataRow parameters) throws ReportDataFactoryException
+  {
+    if (query == null)
     {
-      final TableModel newData = dataCache.put(key, data);
-      if (newData != data && data instanceof CloseableTableModel)
-      {
-        final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
-        closeableTableModel.close();
-      }
-      sessionCache.put(key, newData);
-      data = newData;
+      throw new NullPointerException();
+    }
+    if (parameters == null)
+    {
+      throw new NullPointerException();
     }
 
-    if (data instanceof MetaTableModel)
+    final DataCacheKey key = createCacheKey(query, parameters, false);
+    if (key != null)
     {
-      return new IndexedMetaTableModel((MetaTableModel) data);
+      TableModel model = sessionCache.get(key);
+      if (model == null)
+      {
+        model = dataCache.get(key);
+      }
+      if (model != null)
+      {
+        return wrapAsIndexed(model);
+      }
     }
-    else
+
+    if (!backend.isFreeFormQueryExecutable(query, parameters))
     {
-      return new IndexedTableModel(data);
+      throw new ReportDataFactoryException("The specified query '" + query + "' is not executable here.");
     }
+
+    TableModel data = backend.queryDesignTimeStructureFreeForm(query, parameters);
+    if (data == null)
+    {
+      return null;
+    }
+
+    data = putInCache(key, data);
+    return wrapAsIndexed(data);
   }
 
   public boolean isStaticQueryExecutable(final String query, final DataRow parameters)
@@ -289,29 +335,20 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   public TableModel queryData(final String query, final DataRow parameters)
       throws ReportDataFactoryException
   {
-    if (query == null)
-    {
-      throw new NullPointerException();
-    }
-    if (parameters == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("query", query);
+    ArgumentNullException.validate("parameters", parameters);
 
-    final DataCacheKey key = createCacheKey(query, parameters);
+    final DataCacheKey key = createCacheKey(query, parameters, false);
     if (key != null)
     {
-      final TableModel model = dataCache.get(key);
+      TableModel model = sessionCache.get(key);
       if (model != null)
       {
-        if (model instanceof MetaTableModel)
-        {
-          return new IndexedMetaTableModel((MetaTableModel) model);
-        }
-        else
-        {
-          return new IndexedTableModel(model);
-        }
+        model = dataCache.get(key);
+      }
+      if (model != null)
+      {
+        return wrapAsIndexed(model);
       }
     }
 
@@ -320,32 +357,73 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       TableModel data = queryInternal(query, parameters, QueryStyle.General);
       if (data != null)
       {
-        if (key != null)
-        {
-          final TableModel newData = dataCache.put(key, data);
-          if (newData != data && data instanceof CloseableTableModel)
-          {
-            final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
-            closeableTableModel.close();
-          }
-          data = newData;
-        }
-
-        if (data instanceof MetaTableModel)
-        {
-          return new IndexedMetaTableModel((MetaTableModel) data);
-        }
-        else
-        {
-          return new IndexedTableModel(data);
-        }
+        data = putInCache(key, data);
+        return wrapAsIndexed(data);
       }
     }
     throw new ReportDataFactoryException("The specified query '" + query + "' is not executable here.");
   }
 
+  public TableModel queryDesignTimeStructure(final String query,
+                                             final DataRow parameters) throws ReportDataFactoryException
+  {
+    ArgumentNullException.validate("query", query);
+    ArgumentNullException.validate("parameters", parameters);
+
+    final DataCacheKey key = createCacheKey(query, parameters, true);
+    if (key != null)
+    {
+      final TableModel model = dataCache.get(key);
+      if (model != null)
+      {
+        return wrapAsIndexed(model);
+      }
+    }
+
+    if (backend.isQueryExecutable(query, parameters))
+    {
+      TableModel data = queryDesignTimeStructureInternal(query, parameters);
+      if (data != null)
+      {
+        data = putInCache(key, data);
+        return wrapAsIndexed(data);
+      }
+    }
+    throw new ReportDataFactoryException("The specified query '" + query + "' is not executable here.");
+  }
+
+  private TableModel putInCache(final DataCacheKey key, TableModel data)
+  {
+    if (key != null)
+    {
+      final TableModel newData = dataCache.put(key, data);
+      if (newData != data && data instanceof CloseableTableModel)
+      {
+        final CloseableTableModel closeableTableModel = (CloseableTableModel) data;
+        closeableTableModel.close();
+      }
+      sessionCache.put(key, newData);
+      data = newData;
+    }
+    return data;
+  }
+
+
+  private TableModel wrapAsIndexed(final TableModel data)
+  {
+    if (data instanceof MetaTableModel)
+    {
+      return new IndexedMetaTableModel((MetaTableModel) data);
+    }
+    else
+    {
+      return new IndexedTableModel(data);
+    }
+  }
+
   private DataCacheKey createCacheKey(final String query,
-                                      final DataRow parameters)
+                                      final DataRow parameters,
+                                      final boolean designTime)
   {
     try
     {
@@ -375,6 +453,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
             }
 
             key.addAttribute(DataCacheKey.QUERY_CACHE, queryHash);
+            key.addAttribute(DataFactoryDesignTimeSupport.DESIGN_TIME, designTime);
 
             // The data cache maps are immutable - make sure of it.
             key.makeReadOnly();
@@ -446,6 +525,30 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
         // totally new query here.
         return dataFromQuery;
       }
+    }
+    finally
+    {
+      final long queryTime = System.currentTimeMillis();
+      if (profileDataSources && CachingDataFactory.logger.isDebugEnabled())
+      {
+        CachingDataFactory.logger.debug(System.identityHashCode(
+            Thread.currentThread()) + ": Query processing time: " + ((queryTime - startTime) / 1000.0));
+      }
+    }
+  }
+
+  private TableModel queryDesignTimeStructureInternal(final String query,
+                                                      final DataRow parameters) throws ReportDataFactoryException
+  {
+    if (profileDataSources && CachingDataFactory.logger.isDebugEnabled())
+    {
+      CachingDataFactory.logger.debug(System.identityHashCode(
+          Thread.currentThread()) + ": Query processing time: Starting");
+    }
+    final long startTime = System.currentTimeMillis();
+    try
+    {
+      return backend.queryDesignTimeStructure(query, parameters);
     }
     finally
     {
