@@ -28,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironmentMapping;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -379,6 +380,11 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
         if (query == null)
         {
           reportData = new EmptyTableModel();
+        }
+        else if (dataFactory instanceof DataFactoryDesignTimeSupport)
+        {
+          final DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
+          reportData = dts.queryDesignTimeStructure(query, new QueryDataRowWrapper(new StaticDataRow(), 1, queryTimeout));
         }
         else
         {
