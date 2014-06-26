@@ -80,11 +80,13 @@
 
 
   <!-- Fixes antcall not passing down the ivy-refs and thus making ivy resolve again for no reason at all -->
-  <target name="publish-nojar" depends="install-antcontrib,create-pom,ivy.deliver,publish-nojar.internal">
+  <target name="publish-nojar" depends="install-antcontrib,create-pom">
+    <antcall target="publish-nojar.internal" inheritRefs="false" inheritAll="false"/>
+
     <if>
-      <equals arg1="${tests.publish}" arg2="true" />
+      <equals arg1="${tests.publish}" arg2="true"/>
       <then>
-        <antcall target="publish-nojar.internal" inheritrefs="true">
+        <antcall target="publish-nojar.test" inheritRefs="false" inheritAll="false">
           <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
         </antcall>
       </then>
