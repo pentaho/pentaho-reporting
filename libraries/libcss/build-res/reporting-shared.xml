@@ -86,7 +86,7 @@
     <if>
       <equals arg1="${tests.publish}" arg2="true"/>
       <then>
-        <antcall target="publish-nojar.test" inheritRefs="false" inheritAll="false">
+        <antcall target="publish-nojar.internal">
           <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
         </antcall>
       </then>
