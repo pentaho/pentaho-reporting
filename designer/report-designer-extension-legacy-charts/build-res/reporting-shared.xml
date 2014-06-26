@@ -80,33 +80,20 @@
 
 
   <!-- Fixes antcall not passing down the ivy-refs and thus making ivy resolve again for no reason at all -->
-  <target name="publish-nojar" depends="install-antcontrib,create-pom,ivy.deliver,publish-nojar.internal">
+  <target name="publish-nojar" depends="install-antcontrib,create-pom">
+    <antcall target="publish-nojar.internal" inheritRefs="false" inheritAll="false"/>
+
     <if>
-      <equals arg1="${tests.publish}" arg2="true" />
+      <equals arg1="${tests.publish}" arg2="true"/>
       <then>
-        <antcall target="publish-nojar.internal" inheritrefs="true">
+        <antcall target="publish-nojar.test" inheritRefs="false" inheritAll="false">
           <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
         </antcall>
       </then>
     </if>
   </target>
 
-  <!-- Sample fix for publishing ivy and pom artifacts in one transaction. -->
-  <target name="[REMOVE-ME]publish-nojar.internal" depends="install-antcontrib,resolve,create-pom">
-    <sequential>
-      <copy file="${dist.dir}/pom.xml" tofile="${dist.dir}/${ivy.artifact.id}-${project.revision}.pom"/>
-      <ivy:deliver conf="*(public)" deliverpattern="${dist.dir}/ivy.xml"/>
-      <ivy:publish resolver="${ivy.repository.id}"
-                   srcivypattern="${dist.dir}/${ivy.artifact.id}-[revision](-[classifier]).ivy.xml"
-                   pubrevision="${project.revision}" overwrite="true" forcedeliver="false" warnonmissing="yes"
-                   haltonmissing="no">
-        <artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
-        <artifact name="${ivy.artifact.id}" type="ivy" ext="ivy.xml"/>
-        <artifact name="${ivy.artifact.id}" type="pom" ext="pom"/>
-      </ivy:publish>
-    </sequential>
-
-    <antcall target="maven-publish.post"/>
-  </target>
+  <!-- Don't produce source.zip or source.tar.gz files - no one is consuming them anyway -->
+  <target name="dist-source" depends="source.jar"/>
 
 </project>
