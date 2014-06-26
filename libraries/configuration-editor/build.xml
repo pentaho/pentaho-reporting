@@ -14,8 +14,15 @@
 		and works with the build-res/subfloor.xml file.
 	</description>
 
-    <property file="${user.home}/.pentaho-reporting-build-settings.properties"
+  <property file="${user.home}/.pentaho-reporting-build-settings.properties"
                 description="Per user override settings-file for all pentaho-reporting projects." />
+
+  <!-- Define the default location of the common build file -->
+  <property name="reporting.build.file" value="./build-res/reporting-shared.xml"
+            description="This is the location of the standardized build-res/reporting-shared.xml file"/>
+
+  <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
+  <import file="${reporting.build.file}"/>
 
   <!-- Define the default location of the common build file -->
   <property name="common.build.file" value="./build-res/subfloor.xml"
@@ -24,51 +31,10 @@
   <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
   <import file="${common.build.file}"/>
 
-    <!--=======================================================================
-        continuous
-
-        Runs a typical continuous integration build including project dist,
-        test, and coverage artifacts
-        ====================================================================-->
-    <target name="continuous-local" depends="build,publish-local" />
-
-
-    <!--=======================================================================
-        continuous-testless
-
-        Runs a typical continuous integration build including project dist,
-        and coverage artifacts
-        ====================================================================-->
-    <target name="continuous-local-testless" depends="build-testless,publish-local" />
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-junit" depends="build,publish" />
-
-  <!-- Until CM-466 is fixed, hot-patch it -->
-  <target name="install-ivy" depends="subfloor.install-ivy">
-    <ivy:settings url="${ivy.settingsurl}" />
-  </target>
-
   <!--
     AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
     THE TASKS THAT NEED TO DIFFER FROM THE DEFAULT IMPLEMENTATION OF THE TASKS
     FOUND IN build-res/subfloor.xml.
   -->
-
-	<!-- Override default dist target to do a dist-full instead -->
-	<target name="dist" depends="dist-full"/>
 
 </project>

@@ -2,7 +2,7 @@
 This is the build file for the collection of Shims modules to provide support
 ============================================================================-->
   
-<project name="multimodule-build">
+<project name="multimodule-build-shared">
 
   <description>
     This builds all modules within this directory (specifically as declared by ${modules}).
@@ -178,6 +178,14 @@ This is the build file for the collection of Shims modules to provide support
     </for>
   </target>
 
+  <target name="continuous-junit" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-junit" />
+      </sequential>
+    </for>
+  </target>
+
   <target name="continuous-testless" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
@@ -185,7 +193,7 @@ This is the build file for the collection of Shims modules to provide support
       </sequential>
     </for>
   </target>
-  
+
   <target name="continuous-local" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
@@ -202,11 +210,19 @@ This is the build file for the collection of Shims modules to provide support
     </for>
   </target>
 
+  <target name="continuous-local-junit" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="continuous-local-junit" />
+      </sequential>
+    </for>
+  </target>
+
   <target name="longrun-cobertura" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
         <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="longrun-cobertura">
-          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExeuteLongRunningTest" value="true"/>
+          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
           <property name="basedir" value="${basedir}/@{module}"/>
         </ant>
       </sequential>
@@ -217,10 +233,37 @@ This is the build file for the collection of Shims modules to provide support
     <for list="${modules}" param="module" trim="true">
       <sequential>
         <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="longrun-test">
-          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExeuteLongRunningTest" value="true"/>
+          <property name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
         </ant>
       </sequential>
     </for>
+  </target>
+
+  <target name="copy-reporting-shared">
+    <antcall target="copy-shared">
+      <param name="file.to.copy" value="build-res/reporting-shared.xml"/>
+    </antcall>
+  </target>
+
+  <target name="copy-shared" depends="init">
+    <echo>Copy ${file.to.copy}</echo>
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="copy-shared-local">
+          <property name="local.file.to.copy" value="../${file.to.copy}"/>
+        </ant>
+      </sequential>
+    </for>
+  </target>
+
+  <target name="copy-shared-local" depends="init">
+    <echo>Copy local ${basedir}/${local.file.to.copy}</echo>
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <copy file="${local.file.to.copy}" todir="@{module}/build-res"/>
+      </sequential>
+    </for>
+
   </target>
 
 </project> 

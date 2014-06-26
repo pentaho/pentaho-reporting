@@ -18,5 +18,7 @@
 	<dependencies defaultconf="default_internal->default">
 		<!--  internal dependencies -->
 		<dependency org="${ivy.artifact.group}" name="libbase" rev="${project.revision}" transitive="true" changing="true" />
+    <!--  test dependencies -->
+    <dependency org="junit" name="junit" rev="4.10" transitive="false" conf="test->default" />
 	</dependencies>
 </ivy-module>
