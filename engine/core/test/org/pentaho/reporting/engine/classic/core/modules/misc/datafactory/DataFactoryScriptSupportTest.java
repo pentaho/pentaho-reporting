@@ -19,14 +19,19 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import javax.swing.table.TableModel;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DefaultResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
+import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -220,6 +225,33 @@ public class DataFactoryScriptSupportTest extends TestCase
     assertEquals("result", support.computeQuery("test-script", new ParameterDataRow()));
     assertEqualsArray(null, support.computeAdditionalQueryFields("test-script", new ParameterDataRow()));
     support.shutdown();
+  }
+  
+  public void testPostProcessResult() throws ReportDataFactoryException {
+    final DriverConnectionProvider driverConnectionProvider = new DriverConnectionProvider();
+
+    driverConnectionProvider.setDriver( "org.hsqldb.jdbcDriver" );
+    driverConnectionProvider.setUrl( "jdbc:hsqldb:mem:SampleData" );
+    driverConnectionProvider.setProperty( "user", "sa" );
+    driverConnectionProvider.setProperty( "password", "" );
+
+    final SQLReportDataFactory sqlReportDataFactory = new SQLReportDataFactory( driverConnectionProvider );
+
+    sqlReportDataFactory.setQuery( "default", "SELECT Count(*) FROM CUSTOMERS", "Groovy",
+        "import org.pentaho.reporting.engine.classic.core.util.TypedTableModel\n"
+            + "def postProcessResult(query, queryName, dataRow, tableModel){\n"
+            + "TypedTableModel model = new TypedTableModel([\"column1\"] as String[], [String.class] as Class[]);"
+            + "model.addRow(\"row1\");" + "return model;" + "}" );
+
+    try {
+      sqlReportDataFactory.initialize( new DesignTimeDataFactoryContext() );
+      TableModel data = sqlReportDataFactory.queryData( "default", new StaticDataRow() );
+      Assert.assertEquals( 1, data.getColumnCount() );
+      Assert.assertEquals( 1, data.getRowCount() );
+      Assert.assertEquals( "row1", data.getValueAt( 0, 0 ) );
+    } finally {
+      sqlReportDataFactory.close();
+    }
   }
 
   private void assertEqualsArray(final String[] o, final String[] strings)
