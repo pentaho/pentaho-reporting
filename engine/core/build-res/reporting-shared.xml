@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!--
+  Contains shared definitions for all reporting projects.
+
+  This adds extra operations to the subfloor file.
+
+  It is easier to validate the correctness of a shared file than patching
+  separate projects.
+  -->
+<project name="reporting-shared"  xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <!--=======================================================================
+      continuous
+
+      Runs a typical continuous integration build including project dist,
+      test, and coverage artifacts
+      ====================================================================-->
+  <target name="continuous-local" depends="build,publish-local"/>
+
+  <!--=======================================================================
+      continuous-testless
+
+      Runs a typical continuous integration build including project dist,
+      and coverage artifacts
+      ====================================================================-->
+  <target name="continuous-local-testless" depends="build-testless,publish-local"/>
+
+  <!--=======================================================================
+      continuous-local-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts using JUnit, not cobertura, for maximum speed.
+      ====================================================================-->
+  <target name="continuous-local-junit" depends="clean-all,resolve,test,dist-source,dist,publish-local"/>
+
+  <!--=======================================================================
+      continuous-junit
+
+      Runs a typical continuous integration build including project dist,
+      and test artifacts using JUnit, not cobertura, for maximum speed.
+      ====================================================================-->
+  <target name="continuous-junit" depends="clean-all,resolve,test,dist-source,dist,publish"/>
+
+
+  <target name="longrun-test" depends="clean-all,resolve">
+      <antcall target="test">
+          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
+      </antcall>
+  </target>
+
+  <target name="longrun-cobertura" depends="clean-all,resolve">
+      <antcall target="cobertura">
+          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
+      </antcall>
+  </target>
+
+
+  <!--=======================================================================
+      create-pom
+
+      Creates the POM file for publishing the jar file to a Maven2 repository.
+      (Patched for CM-519)
+      ====================================================================-->
+  <target name="create-pom" depends="install-ivy">
+    <ivy:makepom ivyfile="${ivyfile}" pomfile="${dist.dir}/pom.xml">
+      <mapping conf="default_internal" scope="compile" />
+      <mapping conf="default_external" scope="compile" />
+      <mapping conf="default" scope="compile" />
+      <mapping conf="runtime" scope="runtime" />
+      <mapping conf="test" scope="test" />
+    </ivy:makepom>
+  </target>
+
+  <!-- Until CM-466 is fixed, hot-patch it -->
+  <target name="install-ivy" depends="subfloor.install-ivy">
+    <ivy:settings url="${ivy.settingsurl}" />
+  </target>
+
+
+  <!-- Fixes antcall not passing down the ivy-refs and thus making ivy resolve again for no reason at all -->
+  <target name="publish-nojar" depends="install-antcontrib,create-pom,ivy.deliver,publish-nojar.internal">
+    <if>
+      <equals arg1="${tests.publish}" arg2="true" />
+      <then>
+        <antcall target="publish-nojar.internal" inheritrefs="true">
+          <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
+        </antcall>
+      </then>
+    </if>
+  </target>
+
+  <!-- Sample fix for publishing ivy and pom artifacts in one transaction. -->
+  <target name="[REMOVE-ME]publish-nojar.internal" depends="install-antcontrib,resolve,create-pom">
+    <sequential>
+      <copy file="${dist.dir}/pom.xml" tofile="${dist.dir}/${ivy.artifact.id}-${project.revision}.pom"/>
+      <ivy:deliver conf="*(public)" deliverpattern="${dist.dir}/ivy.xml"/>
+      <ivy:publish resolver="${ivy.repository.id}"
+                   srcivypattern="${dist.dir}/${ivy.artifact.id}-[revision](-[classifier]).ivy.xml"
+                   pubrevision="${project.revision}" overwrite="true" forcedeliver="false" warnonmissing="yes"
+                   haltonmissing="no">
+        <artifacts pattern="${dist.dir}/[artifact]-[revision](-[classifier]).[ext]"/>
+        <artifact name="${ivy.artifact.id}" type="ivy" ext="ivy.xml"/>
+        <artifact name="${ivy.artifact.id}" type="pom" ext="pom"/>
+      </ivy:publish>
+    </sequential>
+
+    <antcall target="maven-publish.post"/>
+  </target>
+
+</project>
