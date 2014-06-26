@@ -16,7 +16,7 @@
       <data:config label-mapping="true"/>
       <data:connection>
         <data:driver>org.hsqldb.jdbcDriver</data:driver>
-        <data:url>jdbc:hsqldb:./sql/sampledata</data:url>
+        <data:url>jdbc:hsqldb:mem:SampleData</data:url>
         <data:properties>
           <data:property name="user">sa</data:property>
           <data:property name="pass"></data:property>
