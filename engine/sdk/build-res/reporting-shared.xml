@@ -41,8 +41,20 @@
       ====================================================================-->
   <target name="continuous-junit" depends="clean-all,resolve,test,dist-source,dist,publish"/>
 
-  <!-- Override default dist target to do a dist-full instead -->
-  <target name="dist" depends="dist-full"/>
+
+  <target name="longrun-test" depends="clean-all,resolve">
+      <antcall target="test">
+          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
+      </antcall>
+  </target>
+
+  <target name="longrun-cobertura" depends="clean-all,resolve">
+      <antcall target="cobertura">
+          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
+      </antcall>
+  </target>
 
 
   <!--=======================================================================
@@ -66,18 +78,22 @@
     <ivy:settings url="${ivy.settingsurl}" />
   </target>
 
-  <target name="longrun-test" depends="clean-all,resolve">
-      <antcall target="test">
-          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
-          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
-      </antcall>
+
+  <!-- Fixes antcall not passing down the ivy-refs and thus making ivy resolve again for no reason at all -->
+  <target name="publish-nojar" depends="install-antcontrib,create-pom">
+    <antcall target="publish-nojar.internal" inheritRefs="false" inheritAll="false"/>
+
+    <if>
+      <equals arg1="${tests.publish}" arg2="true"/>
+      <then>
+        <antcall target="publish-nojar.test" inheritRefs="false" inheritAll="false">
+          <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
+        </antcall>
+      </then>
+    </if>
   </target>
 
-  <target name="longrun-cobertura" depends="clean-all,resolve">
-      <antcall target="cobertura">
-          <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
-          <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
-      </antcall>
-  </target>
+  <!-- Don't produce source.zip or source.tar.gz files - no one is consuming them anyway -->
+  <target name="dist-source" depends="source.jar"/>
 
 </project>
