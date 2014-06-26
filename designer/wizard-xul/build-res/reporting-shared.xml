@@ -56,44 +56,9 @@
       </antcall>
   </target>
 
-
-  <!--=======================================================================
-      create-pom
-
-      Creates the POM file for publishing the jar file to a Maven2 repository.
-      (Patched for CM-519)
-      ====================================================================-->
-  <target name="create-pom" depends="install-ivy">
-    <ivy:makepom ivyfile="${ivyfile}" pomfile="${dist.dir}/pom.xml">
-      <mapping conf="default_internal" scope="compile" />
-      <mapping conf="default_external" scope="compile" />
-      <mapping conf="default" scope="compile" />
-      <mapping conf="runtime" scope="runtime" />
-      <mapping conf="test" scope="test" />
-    </ivy:makepom>
-  </target>
-
   <!-- Until CM-466 is fixed, hot-patch it -->
   <target name="install-ivy" depends="subfloor.install-ivy">
     <ivy:settings url="${ivy.settingsurl}" />
   </target>
-
-
-  <!-- Fixes antcall not passing down the ivy-refs and thus making ivy resolve again for no reason at all -->
-  <target name="publish-nojar" depends="install-antcontrib,create-pom">
-    <antcall target="publish-nojar.internal" inheritRefs="false" inheritAll="false"/>
-
-    <if>
-      <equals arg1="${tests.publish}" arg2="true"/>
-      <then>
-        <antcall target="publish-nojar.internal">
-          <param name="ivy.artifact.id" value="${ivy.artifact.id}-test"/>
-        </antcall>
-      </then>
-    </if>
-  </target>
-
-  <!-- Don't produce source.zip or source.tar.gz files - no one is consuming them anyway -->
-  <target name="dist-source" depends="source.jar"/>
 
 </project>
