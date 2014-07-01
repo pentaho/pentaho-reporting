@@ -30,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import javax.naming.spi.NamingManager;
 import javax.swing.table.TableModel;
@@ -334,9 +335,9 @@ public abstract class DataSourceTestBase extends TestCase
   protected String performQueryTest(final DataFactory dataFactory) throws SQLException, ReportDataFactoryException
   {
     final ByteArrayOutputStream sw = new ByteArrayOutputStream();
-    final PrintStream ps = new PrintStream(sw);
     try
     {
+      final PrintStream ps = new PrintStream(sw, true, "UTF-8");
       final TableModel tableModel = dataFactory.queryData(getLogicalQueryForNextTest(), getParameterForNextTest());
       generateCompareText(ps, tableModel);
       if (tableModel instanceof CloseableTableModel)
@@ -344,6 +345,10 @@ public abstract class DataSourceTestBase extends TestCase
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
         ctm.close();
       }
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new ReportDataFactoryException("If UTF-8 is not supported, we are in trouble.");
     }
     finally
     {
@@ -355,9 +360,9 @@ public abstract class DataSourceTestBase extends TestCase
   protected String performDesignTimeTest(final DataFactoryDesignTimeSupport dataFactory) throws SQLException, ReportDataFactoryException
   {
     final ByteArrayOutputStream sw = new ByteArrayOutputStream();
-    final PrintStream ps = new PrintStream(sw);
     try
     {
+      final PrintStream ps = new PrintStream(sw, true, "UTF-8");
       final TableModel tableModel = dataFactory.queryDesignTimeStructure(getLogicalQueryForNextTest(), getParameterForNextTest());
       generateCompareText(ps, tableModel);
       if (tableModel instanceof CloseableTableModel)
@@ -365,6 +370,10 @@ public abstract class DataSourceTestBase extends TestCase
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
         ctm.close();
       }
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new ReportDataFactoryException("If UTF-8 is not supported, we are in trouble.");
     }
     finally
     {
