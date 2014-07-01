@@ -97,18 +97,7 @@ public class KettleDataFactory extends AbstractDataFactory
    */
   public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
-    final Object queryLimitRaw = parameters.get(DataFactory.QUERY_LIMIT);
-    final int queryLimit;
-    if (queryLimitRaw instanceof Number)
-    {
-      final Number queryLimitNum = (Number) queryLimitRaw;
-      queryLimit = queryLimitNum.intValue();
-    }
-    else
-    {
-      queryLimit = 0;
-    }
-
+    int queryLimit = calculateQueryLimit(parameters);
     final KettleTransformationProducer producer = queries.get(query);
     if (producer == null)
     {
@@ -120,11 +109,11 @@ public class KettleDataFactory extends AbstractDataFactory
       currentlyRunningQuery = producer;
       return producer.performQuery(parameters, queryLimit, getDataFactoryContext());
     }
-    catch (ReportDataFactoryException rdfe)
+    catch (final ReportDataFactoryException rdfe)
     {
       throw rdfe;
     }
-    catch (Throwable e)
+    catch (final Throwable e)
     {
       throw new ReportDataFactoryException("Caught Kettle Exception: Check your configuration", e);
     }
@@ -146,6 +135,34 @@ public class KettleDataFactory extends AbstractDataFactory
       entry.setValue((KettleTransformationProducer) value.clone());
     }
     return df;
+  }
+
+  public TableModel queryDesignTimeStructure(final String query,
+                                             final DataRow parameter) throws ReportDataFactoryException
+  {
+    final KettleTransformationProducer producer = queries.get(query);
+    if (producer == null)
+    {
+      throw new ReportDataFactoryException("There is no such query defined: " + query);
+    }
+
+    try
+    {
+      currentlyRunningQuery = producer;
+      return producer.queryDesignTimeStructure(parameter, getDataFactoryContext());
+    }
+    catch (final ReportDataFactoryException rdfe)
+    {
+      throw rdfe;
+    }
+    catch (final Throwable e)
+    {
+      throw new ReportDataFactoryException("Caught Kettle Exception: Check your configuration", e);
+    }
+    finally
+    {
+      currentlyRunningQuery = null;
+    }
   }
 
   /**

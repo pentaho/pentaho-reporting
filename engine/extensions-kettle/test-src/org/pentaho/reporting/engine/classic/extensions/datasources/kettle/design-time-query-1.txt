@@ -1,0 +1,14 @@
+Tablemodel contains 0 rows.
+Column: 0 Name=Row1; DataType=class java.lang.Double
+Column: 1 Name=Row2; DataType=class java.lang.String
+Column: 2 Name=Form; DataType=class java.lang.Double
+Column: 3 Name=Form2; DataType=class java.lang.String
+Checking the data inside
+TableModel has no meta-data.
+TableModel has no meta-data.
+Tablemodel contains 0 rows.
+Column: 0 Name=Row1; DataType=class java.lang.Double
+Column: 1 Name=Row2; DataType=class java.lang.String
+Column: 2 Name=Form; DataType=class java.lang.Double
+Column: 3 Name=Form2; DataType=class java.lang.String
+Checking the data inside

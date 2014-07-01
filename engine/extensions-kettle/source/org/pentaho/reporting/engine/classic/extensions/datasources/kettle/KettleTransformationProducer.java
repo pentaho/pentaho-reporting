@@ -47,4 +47,8 @@ public interface KettleTransformationProducer extends Cloneable, Serializable
   public String getTransformationFile();
 
   public String getStepName();
+
+  public TableModel queryDesignTimeStructure(DataRow parameter,
+                                             DataFactoryContext dataFactoryContext)
+      throws ReportDataFactoryException, KettleException;
 }
