@@ -106,7 +106,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       collectedLists.add(parameterName);
 
       String subType = null;
-      final StringBuffer b = new StringBuffer(name.length() + 4);
+      final StringBuilder b = new StringBuilder(name.length() + 4);
       b.append('{');
       b.append("0");
       while (tokenizer.hasMoreTokens())
@@ -135,9 +135,10 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       return messageFormat.format(new Object[]{o});
     }
 
-    public Set getParameter()
+    public Set<String> getParameter()
     {
-      return Collections.unmodifiableSet((Set) collectedLists.clone());
+      //noinspection unchecked
+      return Collections.unmodifiableSet((Set<String>) collectedLists.clone());
     }
 
   }
@@ -243,7 +244,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
           connection.setRoleName(role);
         }
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         throw new ReportDataFactoryException("Failed to obtain a connection", e);
       }
@@ -293,7 +294,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
         if (field instanceof Object[])
         {
           final Object[] roleArray = (Object[]) field;
-          final StringBuffer buffer = new StringBuffer();
+          final StringBuilder buffer = new StringBuilder();
           final int length = roleArray.length;
           for (int i = 0; i < length; i++)
           {
@@ -314,7 +315,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
         }
         else if (field.getClass().isArray())
         {
-          final StringBuffer buffer = new StringBuffer();
+          final StringBuilder buffer = new StringBuilder();
           final int length = Array.getLength(field);
           for (int i = 0; i < length; i++)
           {
@@ -350,7 +351,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
     {
       return role;
     }
-    final StringBuffer b = new StringBuffer(role.length() + 5);
+    final StringBuilder b = new StringBuilder(role.length() + 5);
     final char[] chars = role.toCharArray();
     for (int i = 0; i < chars.length; i++)
     {
@@ -368,103 +369,96 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       throws ReportDataFactoryException, SQLException
   {
     final PreparedOlapStatement statement = getStatement(rawMdxQuery, parameters);
-    final OlapParameterMetaData data = statement.getParameterMetaData();
-    final int count = data.getParameterCount();
-    for (int i = 0; i < count; i++)
-    {
-      final String parameterName = data.getParameterName(i + 1);
-      statement.setObject(i + 1, parameters.get(parameterName));
-    }
-
-    final Object queryTimeout = parameters.get(DataFactory.QUERY_TIMEOUT);
-    final int queryTimeoutValue;
-    if (queryTimeout instanceof Number)
-    {
-      final Number i = (Number) queryTimeout;
-      queryTimeoutValue = i.intValue();
-    }
-    else
-    {
-      // means unlimited ...
-      queryTimeoutValue = 0;
-    }
-
+    final int queryTimeoutValue = calculateQueryTimeOut(parameters);
     if (queryTimeoutValue > 0)
     {
       statement.setQueryTimeout(queryTimeoutValue);
     }
 
+    parametrizeQuery(parameters, statement);
+    return new QueryResultWrapper(statement, statement.executeQuery());
+  }
 
+  private void parametrizeQuery(final DataRow parameters,
+                                final PreparedOlapStatement statement) throws SQLException, ReportDataFactoryException
+  {
     final OlapParameterMetaData olapParameterMetaData = statement.getParameterMetaData();
     final int paramCount = olapParameterMetaData.getParameterCount();
     for (int i = 1; i <= paramCount; i++)
     {
       final String paramName = olapParameterMetaData.getParameterName(i);
       Object parameterValue = parameters.get(paramName);
-      if (parameterValue != null)
-      {
-        final Type parameterType = olapParameterMetaData.getParameterOlapType(i);
-        if (parameterType instanceof StringType)
-        {
-          if (!(parameterValue instanceof String))
-          {
-            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-          }
-        }
-        if (parameterType instanceof NumericType)
-        {
-          if (!(parameterValue instanceof Number))
-          {
-            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-          }
-        }
-
-        if (parameterType instanceof MemberType)
-        {
-          if (parameterValue instanceof String)
-          {
-            final MemberType type = (MemberType) parameterType;
-            final Hierarchy hierarchy = type.getHierarchy();
-            final Cube cube = statement.getCube();
-            parameterValue = findMember(hierarchy, cube, String.valueOf(parameterValue));
-          }
-          else if (!(parameterValue instanceof Member))
-          {
-            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-          }
-        }
-        if (parameterType instanceof SetType)
-        {
-          if (parameterValue instanceof String)
-          {
-            final SetType type = (SetType) parameterType;
-            final Hierarchy hierarchy = type.getHierarchy();
-            final Cube cube = statement.getCube();
-
-            final String rawString = (String) parameterValue;
-            final String[] memberStr = rawString.replaceFirst("^ *\\{", "").replaceFirst("} *$", "").split(",");
-            final List<Member> list = new ArrayList<Member>(memberStr.length);
-
-            for (int j = 0; j < memberStr.length; j++)
-            {
-              final String str = memberStr[j];
-              final Member member = findMember(hierarchy, cube, String.valueOf(str));
-              list.add(member);
-            }
-
-            parameterValue = list;
-          }
-          else if (!(parameterValue instanceof Member))
-          {
-            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-          }
-        }
-
-      }
+      final Type parameterType = olapParameterMetaData.getParameterOlapType(i);
+      parameterValue = computeParameterValue(statement, parameterType, parameterValue);
       statement.setObject(i, parameterValue);
     }
+  }
 
-    return new QueryResultWrapper(statement, statement.executeQuery());
+  private Object computeParameterValue(final PreparedOlapStatement statement,
+                                       final Type parameterType,
+                                       Object parameterValue) throws ReportDataFactoryException, SQLException
+  {
+    if (parameterValue == null) {
+      return null;
+    }
+
+    if (parameterType instanceof StringType)
+    {
+      if (!(parameterValue instanceof String))
+      {
+        throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+      }
+    }
+    if (parameterType instanceof NumericType)
+    {
+      if (!(parameterValue instanceof Number))
+      {
+        throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+      }
+    }
+
+    if (parameterType instanceof MemberType)
+    {
+      if (parameterValue instanceof String)
+      {
+        final MemberType type = (MemberType) parameterType;
+        final Hierarchy hierarchy = type.getHierarchy();
+        final Cube cube = statement.getCube();
+        parameterValue = findMember(hierarchy, cube, String.valueOf(parameterValue));
+      }
+      else if (!(parameterValue instanceof Member))
+      {
+        throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+      }
+    }
+    if (parameterType instanceof SetType)
+    {
+      if (parameterValue instanceof String)
+      {
+        final SetType type = (SetType) parameterType;
+        final Hierarchy hierarchy = type.getHierarchy();
+        final Cube cube = statement.getCube();
+
+        final String rawString = (String) parameterValue;
+        final String[] memberStr = rawString.replaceFirst("^ *\\{", "").replaceFirst("} *$", "").split(",");
+        final List<Member> list = new ArrayList<Member>(memberStr.length);
+
+        for (int j = 0; j < memberStr.length; j++)
+        {
+          final String str = memberStr[j];
+          final Member member = findMember(hierarchy, cube, String.valueOf(str));
+          list.add(member);
+        }
+
+        parameterValue = list;
+      }
+      else if (!(parameterValue instanceof Member))
+      {
+        throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+      }
+    }
+
+    return parameterValue;
   }
 
   public String[] getReferencedFields(final String queryName,
@@ -513,7 +507,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       params.add(DataFactory.QUERY_LIMIT);
       return params.toArray(new String[params.size()]);
     }
-    catch (Throwable e)
+    catch (final Throwable e)
     {
       throw new ReportDataFactoryException("Failed to obtain a connection", e);
     }
@@ -540,7 +534,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
         return directValue;
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       // It is non fatal if that fails. Invalid input has this effect.
     }
@@ -601,7 +595,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       {
         statement.close();
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         // ignore 
       }
@@ -690,7 +684,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       {
         statement.close();
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         // ignore
       }
@@ -754,7 +748,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
       {
         connection.close();
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         // ignore ..
       }
@@ -829,7 +823,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
           return null;
         }
       }
-      catch (PatternSyntaxException pe)
+      catch (final PatternSyntaxException pe)
       {
         throw new ReportDataFactoryException("Unable to match reg-exp role filter:", pe);
       }
@@ -863,7 +857,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
           return role;
         }
       }
-      catch (PatternSyntaxException pe)
+      catch (final PatternSyntaxException pe)
       {
         throw new ReportDataFactoryException("Unable to match reg-exp role filter:", pe);
       }
