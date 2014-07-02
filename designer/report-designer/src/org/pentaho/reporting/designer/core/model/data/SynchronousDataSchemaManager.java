@@ -12,38 +12,40 @@
  *  without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *  See the GNU Lesser General Public License for more details.
  *
- *  Copyright (c) 2006 - 2013 Pentaho Corporation..  All rights reserved.
+ *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.editor;
+package org.pentaho.reporting.designer.core.model.data;
 
-import java.util.HashMap;
-
-import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
-import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
+import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface ReportDocumentContext extends ReportDesignerDocumentContext<MasterReport>
+public class SynchronousDataSchemaManager implements DataSchemaManager
 {
-  AbstractReportDefinition getReportDefinition();
+  private final MasterReport masterReport;
+  private final AbstractReportDefinition report;
+  private ContextAwareDataSchemaModel model;
 
-  ZoomModel getZoomModel();
+  public SynchronousDataSchemaManager(final MasterReport masterReport,
+                                      final AbstractReportDefinition report)
+  {
+    this.masterReport = masterReport;
+    this.report = report;
+  }
 
-  ContextAwareDataSchemaModel getReportDataSchemaModel();
+  public void nodeChanged(final ReportModelEvent event)
+  {
+    model = null;
+  }
 
-  SharedElementRenderer getSharedRenderer();
-
-  // todo might be able to remove that one
-  ResourceManager getResourceManager();
-
-  HashMap<String, Object> getProperties();
-
-  // todo codesmell
-  boolean isBandedContext();
-
-  // todo CodeSmell
-  void resetChangeTracker();
+  public ContextAwareDataSchemaModel getModel()
+  {
+    if (model == null) {
+      model = new ReportDataSchemaModel(masterReport, report);
+    }
+    return model;
+  }
 }

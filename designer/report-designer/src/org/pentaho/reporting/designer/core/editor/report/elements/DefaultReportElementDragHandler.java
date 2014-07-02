@@ -20,10 +20,8 @@ package org.pentaho.reporting.designer.core.editor.report.elements;
 import java.util.Locale;
 
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.AbstractReportElementDragHandler;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -34,6 +32,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
 public class DefaultReportElementDragHandler extends AbstractReportElementDragHandler
@@ -68,7 +67,7 @@ public class DefaultReportElementDragHandler extends AbstractReportElementDragHa
                                          final ReportDocumentContext context,
                                          final Element visualElement)
   {
-    final ReportDataSchemaModel model = context.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
     if (fieldName == null)
     {
       return;

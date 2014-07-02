@@ -23,7 +23,6 @@ import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -34,17 +33,14 @@ import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.expressions.ExpressionUtil;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.designer.core.util.table.CellEditorUtility;
 import org.pentaho.reporting.designer.core.util.table.expressions.ExpressionPropertiesDialog;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class ExpressionEditorPane extends JPanel
@@ -158,12 +154,9 @@ public class ExpressionEditorPane extends JPanel
   private JComboBox expressionEditor;
   private ReportDesignerContext reportDesignerContext;
   private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
-  private DefaultDataAttributeContext dataAttributeContext;
 
   public ExpressionEditorPane()
   {
-    this.dataAttributeContext = new DefaultDataAttributeContext();
-
     final JButton ellipsisButton = new JButton("...");
     ellipsisButton.setDefaultCapable(false);
     ellipsisButton.setMargin(new Insets(0, 0, 0, 0));
@@ -191,16 +184,16 @@ public class ExpressionEditorPane extends JPanel
     return expressionEditor;
   }
 
-  public ReportRenderContext getRenderContext()
+  public ReportDocumentContext getRenderContext()
   {
     if (reportDesignerContext == null)
     {
       return null;
     }
     ReportDesignerDocumentContext activeContext = reportDesignerContext.getActiveContext();
-    if (activeContext instanceof ReportRenderContext)
+    if (activeContext instanceof ReportDocumentContext)
     {
-      return (ReportRenderContext) activeContext;
+      return (ReportDocumentContext) activeContext;
     }
     return null;
   }
@@ -217,32 +210,7 @@ public class ExpressionEditorPane extends JPanel
 
   public FieldDefinition[] getFields()
   {
-    final ReportRenderContext renderContext = getRenderContext();
-    if (renderContext == null)
-    {
-      return EMPTY_FIELDS;
-    }
-
-    final ReportDataSchemaModel model = renderContext.getReportDataSchemaModel();
-    final String[] columnNames = model.getColumnNames();
-    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length);
-    final DataSchema dataSchema = model.getDataSchema();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for expression with name '" + columnName + '\'');
-      }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
-      {
-        continue;
-      }
-
-      fields.add(new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext));
-    }
-    return fields.toArray(new FieldDefinition[fields.size()]);
+    return CellEditorUtility.getFields(getRenderContext(), new String[0]);
   }
 
   public void setValue(final Expression expression)

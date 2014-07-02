@@ -23,13 +23,13 @@ import java.awt.dnd.DropTargetDragEvent;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.dnd.ElementMetaDataTransferable;
 import org.pentaho.reporting.designer.core.util.dnd.FieldDescriptionTransferable;
 import org.pentaho.reporting.designer.core.util.dnd.GenericDNDHandler;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
@@ -37,9 +37,9 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeCont
 
 /**
  * Todo: Document Me
-*
-* @author Thomas Morgner
-*/
+ *
+ * @author Thomas Morgner
+ */
 public class BandDndHandler extends GenericDNDHandler
 {
   private ReportElementDragHandler dragHandler;
@@ -190,7 +190,7 @@ public class BandDndHandler extends GenericDNDHandler
   private ElementMetaData createMetaData(final String fieldName)
   {
 
-    final ReportDataSchemaModel model = editorContext.getRenderContext().getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = editorContext.getRenderContext().getReportDataSchemaModel();
     final DataSchema dataSchema = model.getDataSchema();
     final DataAttributes attributes = dataSchema.getAttributes(fieldName);
     final DataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();

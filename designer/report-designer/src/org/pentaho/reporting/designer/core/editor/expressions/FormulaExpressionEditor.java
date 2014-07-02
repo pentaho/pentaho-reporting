@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.expressions;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JComponent;
 
@@ -27,16 +26,12 @@ import org.pentaho.openformula.ui.FunctionParameterEditor;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
-import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
 import org.pentaho.reporting.designer.core.util.GUIUtils;
 import org.pentaho.reporting.designer.core.util.ReportDesignerFunctionParameterEditor;
+import org.pentaho.reporting.designer.core.util.table.CellEditorUtility;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.function.FormulaFunction;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -47,13 +42,11 @@ public class FormulaExpressionEditor implements ExpressionEditor
 
   private FormulaEditorPanel editorPanel;
   private ReportDocumentContext renderContext;
-  private DefaultDataAttributeContext dataAttributeContext;
   private FormulaExpression formulaExpression;
   private FormulaFunction formulaFunction;
 
   public FormulaExpressionEditor()
   {
-    this.dataAttributeContext = new DefaultDataAttributeContext();
     this.editorPanel = new FormulaEditorPanel();
   }
 
@@ -105,32 +98,7 @@ public class FormulaExpressionEditor implements ExpressionEditor
 
   private FieldDefinition[] getFields()
   {
-    final ReportDocumentContext renderContext = getRenderContext();
-    if (renderContext == null)
-    {
-      return EMPTY_FIELDS;
-    }
-
-    final ReportDataSchemaModel model = renderContext.getReportDataSchemaModel();
-    final String[] columnNames = model.getColumnNames();
-    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length);
-    final DataSchema dataSchema = model.getDataSchema();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for expression with name '" + columnName + '\'');
-      }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
-      {
-        continue;
-      }
-
-      fields.add(new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext));
-    }
-    return fields.toArray(new FieldDefinition[fields.size()]);
+    return CellEditorUtility.getFields(getRenderContext(), new String[0]);
   }
 
   public JComponent getEditorComponent()

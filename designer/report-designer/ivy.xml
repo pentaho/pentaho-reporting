@@ -56,6 +56,7 @@
                 conf="default_external->default"/>
 
     <dependency org="org.swinglabs" name="swingx" rev="1.6.1"  conf="default_external->default"/>
+    <dependency org="com.typesafe.akka" name="akka-actor_2.10" rev="2.3.3" conf="default_external->default"/>
 
     <!-- testing dependencies -->
     <!-- Testing Dependencies -->

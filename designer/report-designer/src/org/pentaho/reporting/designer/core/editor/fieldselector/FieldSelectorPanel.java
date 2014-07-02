@@ -29,7 +29,7 @@ import javax.swing.TransferHandler;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFieldNode;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import org.pentaho.reporting.designer.core.model.DataSchemaUtility;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.SidePanel;
@@ -38,6 +38,7 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
 public class FieldSelectorPanel extends SidePanel
@@ -59,8 +60,7 @@ public class FieldSelectorPanel extends SidePanel
 
       if (event.getElement() == activeContext.getReportDefinition())
       {
-        final ReportDataSchemaModel model = activeContext.getReportDataSchemaModel();
-        dataModel.setDataSchema(computeColumns(model));
+        dataModel.setDataSchema(computeColumns(activeContext));
       }
     }
 
@@ -72,8 +72,7 @@ public class FieldSelectorPanel extends SidePanel
       {
         return;
       }
-      final ReportDataSchemaModel model = activeContext.getReportDataSchemaModel();
-      dataModel.setDataSchema(computeColumns(model));
+      dataModel.setDataSchema(computeColumns(activeContext));
     }
   }
 
@@ -118,13 +117,13 @@ public class FieldSelectorPanel extends SidePanel
       report = newContext.getReportDefinition();
       report.addReportModelListener(changeHandler);
 
-      final ReportDataSchemaModel model = newContext.getReportDataSchemaModel();
-      dataModel.setDataSchema(computeColumns(model));
+      dataModel.setDataSchema(computeColumns(newContext));
     }
   }
 
-  protected ReportFieldNode[] computeColumns(final ReportDataSchemaModel model)
+  protected ReportFieldNode[] computeColumns(final ReportDocumentContext context)
   {
+    ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
     final ArrayList<ReportFieldNode> nodes = new ArrayList<ReportFieldNode>(columnNames.length);
     for (int i = 0; i < columnNames.length; i++)
@@ -133,17 +132,17 @@ public class FieldSelectorPanel extends SidePanel
       final DataAttributes attributes = model.getDataSchema().getAttributes(name);
       if (attributes != null)
       {
-        if (ReportDataSchemaModel.isFiltered(attributes, model.getDataAttributeContext()))
+        if (DataSchemaUtility.isFiltered(attributes, model.getDataAttributeContext()))
         {
           continue;
         }
         final Class type = (Class) attributes.getMetaAttribute
             (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class, model.getDataAttributeContext());
-        nodes.add(new ReportFieldNode(model, name, type));
+        nodes.add(new ReportFieldNode(context, name, type));
       }
       else
       {
-        nodes.add(new ReportFieldNode(model, name, Object.class));
+        nodes.add(new ReportFieldNode(context, name, Object.class));
       }
     }
     return nodes.toArray(new ReportFieldNode[nodes.size()]);
@@ -158,7 +157,7 @@ public class FieldSelectorPanel extends SidePanel
      * @param c the component holding the data to be transferred; this argument is provided to enable sharing of
      *          <code>TransferHandler</code>s by multiple components
      * @return the representation of the data to be transferred, or <code>null</code> if the property associated with
-     *         <code>c</code> is <code>null</code>
+     * <code>c</code> is <code>null</code>
      */
     protected Transferable createTransferable(final JComponent c)
     {

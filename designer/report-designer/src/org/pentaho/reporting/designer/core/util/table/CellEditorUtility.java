@@ -25,14 +25,15 @@ import java.util.LinkedHashSet;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.model.DataSchemaUtility;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
@@ -120,7 +121,12 @@ public class CellEditorUtility
       return new FieldDefinition[0];
     }
 
-    final ReportDataSchemaModel model = reportContext.getReportDataSchemaModel();
+    return getFields(reportContext, extraFields);
+  }
+
+  public static FieldDefinition[] getFields(final ReportDocumentContext reportContext, final String[] extraFields)
+  {
+    final ContextAwareDataSchemaModel model = reportContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
     final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length + extraFields.length);
     final DataSchema dataSchema = model.getDataSchema();
@@ -140,7 +146,7 @@ public class CellEditorUtility
       {
         throw new IllegalStateException("No data-schema for field with name '" + columnName + '\'');
       }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
+      if (DataSchemaUtility.isFiltered(attributes, dataAttributeContext))
       {
         continue;
       }
@@ -150,49 +156,29 @@ public class CellEditorUtility
     return fields.toArray(new FieldDefinition[fields.size()]);
   }
 
+  public static String[] getFieldsAsString(final ReportDocumentContext designerContext,
+                                           final String[] extraFields)
+  {
+    final FieldDefinition[] fields = getFields(designerContext, extraFields);
+    return convertToColumnNames(fields);
+  }
+
+  public static String[] convertToColumnNames(final FieldDefinition[] fields)
+  {
+    final String[] fieldsAsString = new String[fields.length];
+    for (int i = 0; i < fields.length; i++)
+    {
+      FieldDefinition field = fields[i];
+      fieldsAsString[i] = field.getName();
+    }
+    return fieldsAsString;
+  }
 
   public static String[] getFieldsAsString(final ReportDesignerContext designerContext,
-                                            final String[] extraFields)
+                                           final String[] extraFields)
   {
-    if (designerContext == null)
-    {
-      return extraFields.clone();
-    }
-
-    final ReportDocumentContext reportContext = designerContext.getActiveContext();
-    if (reportContext == null)
-    {
-      return extraFields.clone();
-    }
-
-    final ReportDataSchemaModel model = reportContext.getReportDataSchemaModel();
-    final String[] columnNames = model.getColumnNames();
-    final ArrayList<String> fields = new ArrayList<String>(columnNames.length + extraFields.length);
-    final DataSchema dataSchema = model.getDataSchema();
-    final DefaultDataAttributeContext dataAttributeContext = new DefaultDataAttributeContext();
-
-    for (int i = 0; i < extraFields.length; i++)
-    {
-      final String extraField = extraFields[i];
-      fields.add(extraField);
-    }
-
-    for (int i = columnNames.length - 1; i >= 0; i -= 1)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for field with name '" + columnName + '\'');
-      }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
-      {
-        continue;
-      }
-      fields.add(columnName);
-    }
-
-    return fields.toArray(new String[fields.size()]);
+    final FieldDefinition[] fields = getFields(designerContext, extraFields);
+    return convertToColumnNames(fields);
   }
 
   public static String[] getGroups(final ReportDesignerContext designerContext)

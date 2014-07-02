@@ -25,7 +25,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import org.pentaho.reporting.designer.core.model.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -98,9 +99,8 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     {
       final String[] columnNames = reportEnvironmentDataRow.getColumnNames();
       final String name = columnNames[index];
-      final ReportDataSchemaModel model = getContext().getReportDataSchemaModel();
-      final Class targetClass = reportEnvironmentDataRow.isArray(name) ? String[].class : String.class;
-      return new ReportFieldNode(model, name, targetClass);
+      final Class targetClass = reportEnvironmentDataRow.isArray(name) ? Object[].class : Object.class;
+      return new ReportFieldNode(getContext(), name, targetClass);
     }
     if (parent == reportFunctionNode)
     {
@@ -116,7 +116,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     {
       final ReportQueryNode queryNode = (ReportQueryNode) parent;
       final DataFactory dataFactory = queryNode.getDataFactory();
-      final ReportDataSchemaModel model = context.getReportDataSchemaModel();
+      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
       if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
       {
         final String[] names = getDataFactoryColumns();
@@ -124,7 +124,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
         final DataAttributes attributes = model.getDataSchema().getAttributes(name);
         final Class type = (Class) attributes.getMetaAttribute
             (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class, model.getDataAttributeContext());
-        return new ReportFieldNode(model, dataFactory, name, type);
+        return new ReportFieldNode(context, dataFactory, name, type);
       }
 
       throw new IndexOutOfBoundsException();
@@ -134,7 +134,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
 
   private String[] getDataFactoryColumns()
   {
-    final ReportDataSchemaModel model = context.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
     final ArrayList<String> targetCols = new ArrayList<String>(columnNames.length);
     for (int i = 0; i < columnNames.length; i++)
@@ -146,7 +146,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
         // if in doubt, then do not add.
         continue;
       }
-      if (ReportDataSchemaModel.isFiltered(attributes, model.getDataAttributeContext()))
+      if (DataSchemaUtility.isFiltered(attributes, model.getDataAttributeContext()))
       {
         continue;
       }
@@ -187,7 +187,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     {
       final ReportQueryNode queryNode = (ReportQueryNode) parent;
       final DataFactory dataFactory = queryNode.getDataFactory();
-      final ReportDataSchemaModel model = context.getReportDataSchemaModel();
+      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
       if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
       {
         return getDataFactoryColumns().length;
@@ -214,7 +214,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     {
       final ReportQueryNode queryNode = (ReportQueryNode) node;
       final DataFactory dataFactory = queryNode.getDataFactory();
-      final ReportDataSchemaModel model = context.getReportDataSchemaModel();
+      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
       if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
       {
         return false;

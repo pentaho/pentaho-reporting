@@ -26,10 +26,10 @@ import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.LocationInfo;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
 /**
  * This inspection warns if the datasource contains duplicate column names.
@@ -52,7 +52,7 @@ public class DuplicateFieldInspection implements Inspection
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();
-    final ReportDataSchemaModel model = reportRenderContext.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = reportRenderContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
 
     final HashSet<String> warnedNames = new HashSet<String>();

@@ -56,27 +56,132 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
 {
-  private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
+  public static class DefaultDesignTimeDataSchemaModelChangeTracker
+      implements DesignTimeDataSchemaModelChangeTracker {
 
-  private AbstractReportDefinition parent;
-  private DataSchema dataSchema;
-  private DataSchemaDefinition dataSchemaDefinition;
-  private DataAttributeContext dataAttributeContext;
-  private MasterReport masterReportElement;
-  private String[] columnNames;
+    private final HashMap<InstanceID, Long> nonVisualChangeTrackers;
+    private final HashMap<InstanceID, Long> dataFactoryChangeTrackers;
+    private final AbstractReportDefinition parent;
+    private String query;
+    private int queryTimeout;
+
+    private DefaultDesignTimeDataSchemaModelChangeTracker(final AbstractReportDefinition parent)
+    {
+      this.parent = parent;
+      this.nonVisualChangeTrackers = new HashMap<InstanceID, Long>();
+      this.dataFactoryChangeTrackers = new HashMap<InstanceID, Long>();
+      this.queryTimeout = parent.getQueryTimeout();
+    }
+
+    private boolean isNonVisualsChanged()
+    {
+      AbstractReportDefinition parent = this.parent;
+      while (parent != null)
+      {
+        final InstanceID id = parent.getObjectID();
+        final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
+        if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
+        {
+          return true;
+        }
+
+        final Long nonVisualsChangeTracker = parent.getNonVisualsChangeTracker();
+        if (nonVisualsChangeTracker.equals(nonVisualChangeTrackers.get(id)) == false)
+        {
+          return true;
+        }
+
+        final Section parentSection = parent.getParentSection();
+        if (parentSection == null)
+        {
+          parent = null;
+        }
+        else
+        {
+          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
+        }
+      }
+      return false;
+    }
+
+    private boolean isDataFactoryChanged()
+    {
+      AbstractReportDefinition parent = this.parent;
+      while (parent != null)
+      {
+        final InstanceID id = parent.getObjectID();
+        final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
+        if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
+        {
+          return true;
+        }
+
+        final Section parentSection = parent.getParentSection();
+        if (parentSection == null)
+        {
+          parent = null;
+        }
+        else
+        {
+          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
+        }
+      }
+      return false;
+    }
+
+    public void updateChangeTrackers()
+    {
+      this.query = parent.getQuery();
+      this.queryTimeout = parent.getQueryTimeout();
+      AbstractReportDefinition parent = this.parent;
+      while (parent != null)
+      {
+        final InstanceID id = parent.getObjectID();
+        dataFactoryChangeTrackers.put(id, parent.getDatasourceChangeTracker());
+        nonVisualChangeTrackers.put(id, parent.getNonVisualsChangeTracker());
+
+        final Section parentSection = parent.getParentSection();
+        if (parentSection == null)
+        {
+          parent = null;
+        }
+        else
+        {
+          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
+        }
+      }
+    }
+
+    public boolean isReportQueryChanged()
+    {
+      return ObjectUtilities.equal(this.query, parent.getQuery()) == false ||
+              queryTimeout != parent.getQueryTimeout() ||
+              isDataFactoryChanged();
+    }
+
+    public boolean isReportChanged() {
+      return isNonVisualsChanged() || ObjectUtilities.equal(this.query, parent.getQuery()) == false;
+    }
+  }
+
+  private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
   private static final String[] EMPTY_NAMES = new String[0];
-  private String query;
-  private int oldQueryTimeout;
+
+  private final AbstractReportDefinition parent;
+  private final DataSchemaDefinition dataSchemaDefinition;
+  private final DataAttributeContext dataAttributeContext;
+  private final MasterReport masterReportElement;
+  private DataSchema dataSchema;
+  private String[] columnNames;
   private OfflineTableModel offlineTableModel;
   private Throwable dataFactoryException;
-
-  private HashMap<InstanceID, Long> nonVisualChangeTrackers;
-  private HashMap<InstanceID, Long> dataFactoryChangeTrackers;
+  private final DesignTimeDataSchemaModelChangeTracker changeTracker;
 
   public DesignTimeDataSchemaModel(final AbstractReportDefinition report)
   {
@@ -86,28 +191,30 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
   public DesignTimeDataSchemaModel(final MasterReport masterReportElement,
                                    final AbstractReportDefinition report)
   {
-    if (masterReportElement == null)
-    {
-      throw new NullPointerException();
-    }
-    if (report == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("masterReportElement", masterReportElement);
+    ArgumentNullException.validate("report", report);
+
     this.columnNames = EMPTY_NAMES;
-    this.query = report.getQuery();
     this.masterReportElement = masterReportElement;
     this.parent = report;
-    this.nonVisualChangeTrackers = new HashMap<InstanceID, Long>();
-    this.dataFactoryChangeTrackers = new HashMap<InstanceID, Long>();
 
-    this.dataSchemaDefinition = masterReportElement.getDataSchemaDefinition();
-    if (this.dataSchemaDefinition == null)
-    {
-      this.dataSchemaDefinition = DataSchemaUtility.parseDefaults
-          (masterReportElement.getResourceManager());
-    }
+    this.changeTracker = createChangeTracker();
+    this.dataSchemaDefinition = createDataSchemaDefinition(masterReportElement);
     this.dataAttributeContext = new DefaultDataAttributeContext();
+  }
+
+  protected DesignTimeDataSchemaModelChangeTracker createChangeTracker() {
+    return new DefaultDesignTimeDataSchemaModelChangeTracker(getParent());
+  }
+
+  protected DataSchemaDefinition createDataSchemaDefinition(final MasterReport masterReportElement)
+  {
+    DataSchemaDefinition dataSchemaDefinition = masterReportElement.getDataSchemaDefinition();
+    if (dataSchemaDefinition == null)
+    {
+      return DataSchemaUtility.parseDefaults(masterReportElement.getResourceManager());
+    }
+    return dataSchemaDefinition;
   }
 
   public DataAttributeContext getDataAttributeContext()
@@ -133,102 +240,22 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
     return dataSchema;
   }
 
-  private boolean isNonVisualsChanged()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-      if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Long nonVisualsChangeTracker = parent.getNonVisualsChangeTracker();
-      if (nonVisualsChangeTracker.equals(nonVisualChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-    return false;
-  }
-
-  private boolean isDataFactoryChanged()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-      if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-    return false;
-  }
-
-  private void updateChangeTrackers()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      dataFactoryChangeTrackers.put(id, parent.getDatasourceChangeTracker());
-      nonVisualChangeTrackers.put(id, parent.getNonVisualsChangeTracker());
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-  }
-
   private void ensureDataSchemaValid()
   {
-    if (dataSchema == null || isNonVisualsChanged() ||
-        ObjectUtilities.equal(this.query, parent.getQuery()) == false)
+    if (dataSchema == null || changeTracker.isReportChanged())
     {
       try
       {
         this.dataFactoryException = null;
         this.dataSchema = buildDataSchema();
       }
-      catch (Throwable e)
+      catch (final Throwable e)
       {
         handleError(e);
         this.dataFactoryException = e;
         this.dataSchema = new DefaultDataSchema();
       }
-      this.query = parent.getQuery();
-
-      updateChangeTrackers();
+      changeTracker.updateChangeTrackers();
     }
   }
 
@@ -242,7 +269,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
     return dataFactoryException;
   }
 
-  private DataSchema buildDataSchema() throws ReportDataFactoryException
+  protected DataSchema buildDataSchema() throws ReportDataFactoryException
   {
     this.columnNames = EMPTY_NAMES;
     this.dataFactoryException = null;
@@ -305,7 +332,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
         dataFactory.close();
       }
     }
-    catch (ReportProcessingException e)
+    catch (final ReportProcessingException e)
     {
       final TableModel reportData = new DefaultTableModel();
       final DataSchema dataSchema = dataSchemaCompiler.compile
@@ -346,9 +373,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
                                      final DataFactory dataFactory)
       throws ReportDataFactoryException
   {
-    if (ObjectUtilities.equal(this.query, query) == false ||
-        queryTimeout != oldQueryTimeout ||
-        isDataFactoryChanged())
+    if (offlineTableModel == null || changeTracker.isReportQueryChanged())
     {
       TableModel reportData = null;
       try
@@ -367,8 +392,6 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
           reportData = dataFactory.queryData(query, new QueryDataRowWrapper(new StaticDataRow(), 1, queryTimeout));
         }
 
-        this.query = query;
-        oldQueryTimeout = queryTimeout;
         offlineTableModel = new OfflineTableModel(reportData, new DefaultDataAttributeContext());
       }
       finally
@@ -438,7 +461,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
   {
     ensureDataSchemaValid();
 
-    if (ObjectUtilities.equal(queryName, query) == false)
+    if (ObjectUtilities.equal(queryName, parent.getQuery()) == false)
     {
       // the query/datasource combination given in the parameter cannot be a selected
       // combination if the query does not match the report's active query ..

@@ -25,11 +25,11 @@ import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.AttributeExpressionPropertyLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.AttributeLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.InspectionResult;
+import static org.pentaho.reporting.designer.core.inspections.InspectionResult.Severity;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.LocationInfo;
 import org.pentaho.reporting.designer.core.inspections.PropertyLocationInfo;
 import org.pentaho.reporting.designer.core.inspections.StyleExpressionPropertyLocationInfo;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
@@ -44,8 +44,8 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMeta
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import static org.pentaho.reporting.designer.core.inspections.InspectionResult.Severity;
 
 public class InvalidFieldReferenceInspection extends AbstractStructureInspection
 {
@@ -103,7 +103,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
         if (isValidField(mapping.getName(), columnNames) == false)
         {
           String message = Messages.getString("InvalidFieldReferenceInspection.SubReportInvalidField",
-                  report.getName(), mapping.getName());
+              report.getName(), mapping.getName());
           InspectionResult ir = new InspectionResult(this, Severity.WARNING, message, new LocationInfo(report));
           resultHandler.notifyInspectionResult(ir);
         }
@@ -275,7 +275,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
     final StaticDataRow dataRow = new StaticDataRow(columnNames, new Object[columnNames.length]);
 
     final String[] queries = dataFactory.getQueryNames();
-    final ReportDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
     for (int i = 0; i < queries.length; i++)
     {
       final String query = queries[i];

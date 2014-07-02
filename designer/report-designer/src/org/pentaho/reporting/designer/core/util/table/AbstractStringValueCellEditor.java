@@ -27,7 +27,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -60,10 +59,8 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.DateFormatModel;
 import org.pentaho.reporting.designer.core.settings.NumberFormatModel;
-import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
 import org.pentaho.reporting.designer.core.util.GUIUtils;
 import org.pentaho.reporting.designer.core.util.GroupSelectorDialog;
 import org.pentaho.reporting.designer.core.util.QuerySelectorDialog;
@@ -77,10 +74,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.ReportFormulaContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
@@ -914,40 +908,7 @@ public abstract class AbstractStringValueCellEditor extends JPanel implements Ce
 
   protected FieldDefinition[] getFields()
   {
-    final ReportRenderContext reportContext = getReportContext();
-    if (reportContext == null)
-    {
-      return EMPTY_FIELDS;
-    }
-
-    final ReportDataSchemaModel model = reportContext.getReportDataSchemaModel();
-    final String[] columnNames = model.getColumnNames();
-    final String[] extraFields = getExtraFields();
-    final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length + extraFields.length);
-    final DataSchema dataSchema = model.getDataSchema();
-
-    for (int i = 0; i < extraFields.length; i++)
-    {
-      final String extraField = extraFields[i];
-      fields.add(new DataSchemaFieldDefinition(extraField, new EmptyDataAttributes(), dataAttributeContext));
-    }
-
-    for (int i = columnNames.length - 1; i >= 0; i -= 1)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for field with name '" + columnName + '\'');
-      }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
-      {
-        continue;
-      }
-      fields.add(new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext));
-    }
-
-    return fields.toArray(new FieldDefinition[fields.size()]);
+    return CellEditorUtility.getFields(designerContext, getExtraFields());
   }
 
   protected String[] getGroups()
