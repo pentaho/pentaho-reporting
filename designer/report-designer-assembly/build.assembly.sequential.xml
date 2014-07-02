@@ -271,7 +271,7 @@
       <param name="target-dir" value="${report-designer.dir.winlinux}/${kettle-plugins.dir}"/>
     </antcall>
 
-    <copy todir="${report-designer.dir.mac}/${kettle-plugins.dir}">
+    <copy todir="${report-designer.dir.winlinux}/${kettle-plugins.dir}">
       <fileset dir="${pdi-plugins.stage.dir}">
         <include name="*"/>
       </fileset>
