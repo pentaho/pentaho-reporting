@@ -20,17 +20,21 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 import java.awt.Window;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModelFactory;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.settings.DefaultLocaleSettings;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
 public class DefaultDesignTimeContext implements DesignTimeContext
 {
-  private DesignTimeDataFactoryContext dataFactoryContext;
-  private AbstractReportDefinition report;
+  private final DesignTimeDataFactoryContext dataFactoryContext;
+  private final AbstractReportDefinition report;
+  private final LocaleSettings localeSettings;
   private Window parentWindow;
-  private LocaleSettings localeSettings;
+  private ContextAwareDataSchemaModel dataSchemaModel;
 
   public DefaultDesignTimeContext(final AbstractReportDefinition report)
   {
@@ -70,7 +74,12 @@ public class DefaultDesignTimeContext implements DesignTimeContext
 
   public DataSchemaModel getDataSchemaModel()
   {
-    return new DesignTimeDataSchemaModel(report);
+    if (dataSchemaModel == null) {
+      final ContextAwareDataSchemaModelFactory factory =
+          ClassicEngineBoot.getInstance().getObjectFactory().get(ContextAwareDataSchemaModelFactory.class);
+      dataSchemaModel = factory.create(report);
+    }
+    return dataSchemaModel;
   }
 
   public void error(final Exception e)

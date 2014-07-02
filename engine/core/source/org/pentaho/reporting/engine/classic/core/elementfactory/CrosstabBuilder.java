@@ -42,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.wizard.AutoGeneratorUtility;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -52,7 +53,7 @@ public class CrosstabBuilder
   private ArrayList<CrosstabDimension> columns;
   private ArrayList<String> others;
   private ArrayList<CrosstabDetail> details;
-  private DesignTimeDataSchemaModel dataSchemaModel;
+  private ContextAwareDataSchemaModel dataSchemaModel;
   private String groupNamePrefix;
   private Float minimumWidth;
   private Float minimumHeight;
@@ -63,7 +64,13 @@ public class CrosstabBuilder
   private Boolean allowMetaDataStyling;
   private Boolean allowMetaDataAttributes;
 
+  @Deprecated
   public CrosstabBuilder(final DesignTimeDataSchemaModel dataSchemaModel)
+  {
+    this((ContextAwareDataSchemaModel) dataSchemaModel);
+  }
+
+  public CrosstabBuilder(final ContextAwareDataSchemaModel dataSchemaModel)
   {
     rows = new ArrayList<CrosstabDimension>();
     columns = new ArrayList<CrosstabDimension>();

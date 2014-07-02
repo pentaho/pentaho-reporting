@@ -48,18 +48,18 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaCompiler;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class DesignTimeDataSchemaModel implements DataSchemaModel
+public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
 {
   private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
 
@@ -80,31 +80,7 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
 
   public DesignTimeDataSchemaModel(final AbstractReportDefinition report)
   {
-    this(locateMasterReport(report), report);
-  }
-
-  private static MasterReport locateMasterReport(final AbstractReportDefinition reportDefinition)
-  {
-    if (reportDefinition == null)
-    {
-      return null;
-    }
-    if (reportDefinition instanceof MasterReport)
-    {
-      return (MasterReport) reportDefinition;
-    }
-
-    Section parent = reportDefinition.getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        return (MasterReport) parent;
-      }
-      parent = parent.getParentSection();
-    }
-
-    return null;
+    this((MasterReport) report.getMasterReport(), report);
   }
 
   public DesignTimeDataSchemaModel(final MasterReport masterReportElement,
@@ -418,7 +394,7 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
 
     final LinkedMap columnNamesCollector = new LinkedMap();
 
-    final Map<String,String> envCols = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
+    final Map<String, String> envCols = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
     final Object[] envColArray = envCols.values().toArray();
     for (int i = 0; i < envColArray.length; i++)
     {
