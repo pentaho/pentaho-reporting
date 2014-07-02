@@ -15,11 +15,31 @@
  *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.wizard;
+package org.pentaho.reporting.designer.core.model.data;
 
-public interface ContextAwareDataSchemaModel extends DataSchemaModel
+import akka.actor.ActorSystem;
+import akka.actor.TypedActor;
+import akka.actor.TypedProps;
+
+public class ActorSystemHost
 {
-  public DataAttributeContext getDataAttributeContext();
+  public static final ActorSystemHost INSTANCE = new ActorSystemHost();
 
-  Throwable getDataFactoryException();
+  private ActorSystem system;
+
+  protected ActorSystemHost()
+  {
+    system = ActorSystem.create("Pentaho-Report-Designer");
+  }
+
+  public ActorSystem getSystem()
+  {
+    return system;
+  }
+
+  public <IFace, Impl extends IFace> IFace createActor(Class<IFace> iface, Class<Impl> impl)
+  {
+    final TypedProps<Impl> queryMetaDataActorTypedProps = new TypedProps<Impl>(iface, impl);
+    return TypedActor.get(system).typedActorOf(queryMetaDataActorTypedProps);
+  }
 }

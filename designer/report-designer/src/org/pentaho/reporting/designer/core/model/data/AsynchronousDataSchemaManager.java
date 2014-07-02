@@ -17,43 +17,68 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import akka.dispatch.OnFailure;
+import akka.dispatch.OnSuccess;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import scala.PartialFunction;
+import scala.concurrent.Future;
+import scala.runtime.BoxedUnit;
 
-public class SynchronousDataSchemaManager implements DataSchemaManager
+public class AsynchronousDataSchemaManager implements DataSchemaManager
 {
   private final MasterReport masterReport;
   private final AbstractReportDefinition report;
-  private ContextAwareDataSchemaModel model;
+  private final QueryMetaDataActor actor;
 
-  public SynchronousDataSchemaManager(final MasterReport masterReport,
-                                      final AbstractReportDefinition report)
+  public AsynchronousDataSchemaManager(final MasterReport masterReport,
+                                       final AbstractReportDefinition report)
   {
     ArgumentNullException.validate("masterReport", masterReport);
     ArgumentNullException.validate("report", report);
 
+    this.actor = ActorSystemHost.INSTANCE.createActor(QueryMetaDataActor.class, QueryMetaDataActorImpl.class);
     this.masterReport = masterReport;
     this.report = report;
   }
 
+  public ContextAwareDataSchemaModel getModel()
+  {
+    Future<ContextAwareDataSchemaModel> retrieve = this.actor.retrieve(null, null, null);
+    // IntelliJ does not know how to handle this construct, thinks it is not valid.
+    retrieve.onSuccess(new SuccessHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher());
+    retrieve.onFailure(new FailureHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher());
+    return new TemporaryDataSchemaModel(masterReport, report);
+  }
+
   public void close()
   {
+
   }
 
   public void nodeChanged(final ReportModelEvent event)
   {
-    model = null;
+
   }
 
-  public ContextAwareDataSchemaModel getModel()
+  private static class SuccessHandler extends OnSuccess<ContextAwareDataSchemaModel>
+      implements PartialFunction<ContextAwareDataSchemaModel, BoxedUnit>
   {
-    if (model == null) {
-      model = new ReportDataSchemaModel(masterReport, report);
+    public void onSuccess(final ContextAwareDataSchemaModel result) throws Throwable
+    {
+
     }
-    return model;
+  }
+
+  private static class FailureHandler extends OnFailure
+      implements PartialFunction<Throwable, BoxedUnit>
+  {
+    public void onFailure(final Throwable failure) throws Throwable
+    {
+
+    }
   }
 }

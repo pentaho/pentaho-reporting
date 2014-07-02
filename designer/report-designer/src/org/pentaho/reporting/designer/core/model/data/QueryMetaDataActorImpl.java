@@ -15,11 +15,20 @@
  *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.wizard;
+package org.pentaho.reporting.designer.core.model.data;
 
-public interface ContextAwareDataSchemaModel extends DataSchemaModel
+
+import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import scala.concurrent.Future;
+
+public class QueryMetaDataActorImpl implements QueryMetaDataActor
 {
-  public DataAttributeContext getDataAttributeContext();
-
-  Throwable getDataFactoryException();
+  public Future<ContextAwareDataSchemaModel> retrieve(final DataFactory dataFactory,
+                                                      final String query,
+                                                      final DataRow parameter)
+  {
+    return null;
+  }
 }

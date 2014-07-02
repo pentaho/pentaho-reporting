@@ -38,6 +38,7 @@ import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.InspectionRunner;
 import org.pentaho.reporting.designer.core.inspections.NoOpInspectionRunner;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
+import org.pentaho.reporting.designer.core.model.data.AsynchronousDataSchemaManager;
 import org.pentaho.reporting.designer.core.model.data.DataSchemaManager;
 import org.pentaho.reporting.designer.core.model.data.SynchronousDataSchemaManager;
 import org.pentaho.reporting.designer.core.model.selection.DefaultReportSelectionModel;
@@ -418,11 +419,9 @@ public class ReportRenderContext implements ReportDocumentContext
 
   public void dispose()
   {
-    if (inspectionRunner != null)
-    {
-      this.inspectionRunner.dispose();
-      this.reportDefinition.removeReportModelListener(inspectionRunner);
-    }
+    this.dataSchemaManager.close();
+    this.inspectionRunner.dispose();
+    this.reportDefinition.removeReportModelListener(inspectionRunner);
     this.reportDefinition.removeReportModelListener(deleteListener);
   }
 

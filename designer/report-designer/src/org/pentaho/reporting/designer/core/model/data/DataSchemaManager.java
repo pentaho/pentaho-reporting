@@ -24,4 +24,6 @@ public interface DataSchemaManager extends ReportModelListener
 {
   public ContextAwareDataSchemaModel getModel();
 
+  public void close();
+
 }

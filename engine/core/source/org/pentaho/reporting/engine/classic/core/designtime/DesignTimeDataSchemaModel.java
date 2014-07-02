@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -29,7 +28,6 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
-import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironmentMapping;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
@@ -48,7 +46,6 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
-import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaCompiler;
@@ -60,10 +57,11 @@ import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
+public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 {
   public static class DefaultDesignTimeDataSchemaModelChangeTracker
-      implements DesignTimeDataSchemaModelChangeTracker {
+      implements DesignTimeDataSchemaModelChangeTracker
+  {
 
     private final HashMap<InstanceID, Long> nonVisualChangeTrackers;
     private final HashMap<InstanceID, Long> dataFactoryChangeTrackers;
@@ -161,24 +159,19 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
     public boolean isReportQueryChanged()
     {
       return ObjectUtilities.equal(this.query, parent.getQuery()) == false ||
-              queryTimeout != parent.getQueryTimeout() ||
-              isDataFactoryChanged();
+          queryTimeout != parent.getQueryTimeout() ||
+          isDataFactoryChanged();
     }
 
-    public boolean isReportChanged() {
+    public boolean isReportChanged()
+    {
       return isNonVisualsChanged() || ObjectUtilities.equal(this.query, parent.getQuery()) == false;
     }
   }
 
   private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
-  private static final String[] EMPTY_NAMES = new String[0];
 
-  private final AbstractReportDefinition parent;
-  private final DataSchemaDefinition dataSchemaDefinition;
-  private final DataAttributeContext dataAttributeContext;
-  private final MasterReport masterReportElement;
   private DataSchema dataSchema;
-  private String[] columnNames;
   private OfflineTableModel offlineTableModel;
   private Throwable dataFactoryException;
   private final DesignTimeDataSchemaModelChangeTracker changeTracker;
@@ -191,40 +184,18 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
   public DesignTimeDataSchemaModel(final MasterReport masterReportElement,
                                    final AbstractReportDefinition report)
   {
-    ArgumentNullException.validate("masterReportElement", masterReportElement);
-    ArgumentNullException.validate("report", report);
-
-    this.columnNames = EMPTY_NAMES;
-    this.masterReportElement = masterReportElement;
-    this.parent = report;
-
+    super(masterReportElement, report);
     this.changeTracker = createChangeTracker();
-    this.dataSchemaDefinition = createDataSchemaDefinition(masterReportElement);
-    this.dataAttributeContext = new DefaultDataAttributeContext();
   }
 
-  protected DesignTimeDataSchemaModelChangeTracker createChangeTracker() {
+  protected DesignTimeDataSchemaModelChangeTracker createChangeTracker()
+  {
     return new DefaultDesignTimeDataSchemaModelChangeTracker(getParent());
-  }
-
-  protected DataSchemaDefinition createDataSchemaDefinition(final MasterReport masterReportElement)
-  {
-    DataSchemaDefinition dataSchemaDefinition = masterReportElement.getDataSchemaDefinition();
-    if (dataSchemaDefinition == null)
-    {
-      return DataSchemaUtility.parseDefaults(masterReportElement.getResourceManager());
-    }
-    return dataSchemaDefinition;
-  }
-
-  public DataAttributeContext getDataAttributeContext()
-  {
-    return dataAttributeContext;
   }
 
   public AbstractReportDefinition getParent()
   {
-    return parent;
+    return getReport();
   }
 
   public boolean isValid()
@@ -271,46 +242,20 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
 
   protected DataSchema buildDataSchema() throws ReportDataFactoryException
   {
-    this.columnNames = EMPTY_NAMES;
     this.dataFactoryException = null;
 
-    final ParameterDefinitionEntry[] parameterDefinitions;
-    final ParameterDataRow parameterRow;
-    if (parent instanceof MasterReport)
-    {
-      final MasterReport mr = (MasterReport) parent;
-      parameterDefinitions = mr.getParameterDefinition().getParameterDefinitions();
-      final LinkedMap values = computeParameterValueSet(mr);
-      parameterRow = new ParameterDataRow((String[]) values.keys(new String[values.size()]), values.values());
-    }
-    else if (parent instanceof SubReport)
-    {
-      final SubReport sr = (SubReport) parent;
-      final ParameterMapping[] inputMappings = sr.getInputMappings();
-      final Object[] values = new Object[inputMappings.length];
-      final String[] names = new String[inputMappings.length];
-      parameterDefinitions = null;
-      for (int i = 0; i < inputMappings.length; i++)
-      {
-        final ParameterMapping inputMapping = inputMappings[i];
-        names[i] = inputMapping.getAlias();
-      }
-      parameterRow = new ParameterDataRow(names, values);
-    }
-    else
-    {
-      parameterDefinitions = null;
-      parameterRow = new ParameterDataRow();
-    }
+    AbstractReportDefinition parent = getReport();
+    final ParameterDataRow parameterRow = computeParameterData();
+    final ParameterDefinitionEntry[] parameterDefinitions = computeParameterDefinitionEntries();
 
     final Expression[] expressions = parent.getExpressions().getExpressions();
     final DataSchemaCompiler dataSchemaCompiler =
-        new DataSchemaCompiler(dataSchemaDefinition, dataAttributeContext, masterReportElement.getResourceManager());
+        new DataSchemaCompiler(getDataSchemaDefinition(), getDataAttributeContext(), getMasterReportElement().getResourceManager());
 
     try
     {
       final CachingDataFactory dataFactory = new CachingDataFactory(createDataFactory(parent), true);
-      final MasterReport masterReport = masterReportElement;
+      final MasterReport masterReport = getMasterReportElement();
 
       dataFactory.initialize(new DesignTimeDataFactoryContext(masterReport));
 
@@ -319,7 +264,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
         final TableModel reportData = queryReportData(parent.getQuery(), parent.getQueryTimeout(), dataFactory);
         final DataSchema dataSchema = dataSchemaCompiler.compile
             (reportData, expressions, parameterRow, parameterDefinitions, masterReport.getReportEnvironment());
-        this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
+        // this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
         if (reportData instanceof CloseableTableModel)
         {
           final CloseableTableModel ctm = (CloseableTableModel) reportData;
@@ -336,8 +281,7 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
     {
       final TableModel reportData = new DefaultTableModel();
       final DataSchema dataSchema = dataSchemaCompiler.compile
-          (reportData, expressions, parameterRow, parameterDefinitions, masterReportElement.getReportEnvironment());
-      this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
+          (reportData, expressions, parameterRow, parameterDefinitions, getMasterReportElement().getReportEnvironment());
       this.dataFactoryException = e;
       return dataSchema;
     }
@@ -410,131 +354,14 @@ public class DesignTimeDataSchemaModel implements ContextAwareDataSchemaModel
     return offlineTableModel;
   }
 
-  private String[] collectColumnNames(final TableModel reportData,
-                                      final ParameterDataRow parameterRow,
-                                      final Expression[] expressions)
-  {
-
-    final LinkedMap columnNamesCollector = new LinkedMap();
-
-    final Map<String, String> envCols = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
-    final Object[] envColArray = envCols.values().toArray();
-    for (int i = 0; i < envColArray.length; i++)
-    {
-      final String name = (String) envColArray[i];
-      columnNamesCollector.put(name, Boolean.TRUE);
-    }
-
-    final String[] strings = parameterRow.getColumnNames();
-    for (int i = 0; i < strings.length; i++)
-    {
-      final String string = strings[i];
-      columnNamesCollector.put(string, Boolean.TRUE);
-    }
-
-    final int count = reportData.getColumnCount();
-    for (int i = 0; i < count; i++)
-    {
-      columnNamesCollector.put(reportData.getColumnName(i), Boolean.TRUE);
-    }
-    for (int i = 0; i < expressions.length; i++)
-    {
-      final Expression expression = expressions[i];
-      final String name = expression.getName();
-      if (name != null)
-      {
-        columnNamesCollector.put(name, Boolean.TRUE);
-      }
-    }
-    return (String[]) columnNamesCollector.keys(new String[columnNamesCollector.size()]);
-  }
-
-  public String[] getColumnNames()
-  {
-    ensureDataSchemaValid();
-
-    return columnNames.clone();
-  }
-
+  @Deprecated
   public boolean isSelectedDataSource(final DataFactory dataFactory,
                                       final String queryName)
   {
-    ensureDataSchemaValid();
-
-    if (ObjectUtilities.equal(queryName, parent.getQuery()) == false)
-    {
-      // the query/datasource combination given in the parameter cannot be a selected
-      // combination if the query does not match the report's active query ..
-      return false;
-    }
-
-    AbstractReportDefinition reportDefinition = this.getParent();
-    while (reportDefinition != null)
-    {
-      final DataFactory reportDataFactory = reportDefinition.getDataFactory();
-      if (reportDataFactory instanceof CompoundDataFactory)
-      {
-        final CompoundDataFactory compoundDataFactory = (CompoundDataFactory) reportDataFactory;
-        for (int i = 0; i < compoundDataFactory.size(); i++)
-        {
-          final DataFactory df = compoundDataFactory.getReference(i);
-          for (final String query : df.getQueryNames())
-          {
-            if (!query.equals(queryName))
-            {
-              continue;
-            }
-
-            if (df == dataFactory)
-            {
-              return true;
-            }
-            else
-            {
-              return false;
-            }
-          }
-        }
-      }
-      else
-      {
-        if (reportDataFactory != null)
-        {
-          for (final String query : reportDataFactory.getQueryNames())
-          {
-            if (!query.equals(queryName))
-            {
-              continue;
-            }
-
-            if (reportDataFactory == dataFactory)
-            {
-              return true;
-            }
-            else
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-
-      }
-      final Section parentSection = reportDefinition.getParentSection();
-      if (parentSection == null)
-      {
-        reportDefinition = null;
-      }
-      else
-      {
-        reportDefinition = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-
-    return false;
+    return DesignTimeUtil.isSelectedDataSource(getReport(), dataFactory, queryName);
   }
 
-
+  @Deprecated
   public static LinkedMap computeParameterValueSet(final MasterReport report)
   {
     final LinkedMap retval = new LinkedMap();

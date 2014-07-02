@@ -17,11 +17,10 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import java.util.concurrent.Future;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import scala.concurrent.Future;
 
 public interface QueryMetaDataActor
 {

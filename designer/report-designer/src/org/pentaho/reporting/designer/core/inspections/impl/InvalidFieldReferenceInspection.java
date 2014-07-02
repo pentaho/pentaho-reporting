@@ -36,6 +36,7 @@ import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.SubReport;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
@@ -44,7 +45,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMeta
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
-import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class InvalidFieldReferenceInspection extends AbstractStructureInspection
@@ -158,7 +158,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
         }
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       UncaughtExceptionsModel.getInstance().addException(e);
     }
@@ -203,7 +203,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
         }
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       UncaughtExceptionsModel.getInstance().addException(e);
     }
@@ -244,7 +244,7 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
         }
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       resultHandler.notifyInspectionResult(new InspectionResult(this, InspectionResult.Severity.WARNING,
           e.getMessage(),
@@ -275,11 +275,10 @@ public class InvalidFieldReferenceInspection extends AbstractStructureInspection
     final StaticDataRow dataRow = new StaticDataRow(columnNames, new Object[columnNames.length]);
 
     final String[] queries = dataFactory.getQueryNames();
-    final ContextAwareDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
     for (int i = 0; i < queries.length; i++)
     {
       final String query = queries[i];
-      if (dataSchemaModel.isSelectedDataSource(dataFactory, query))
+      if (DesignTimeUtil.isSelectedDataSource(reportRenderContext.getReportDefinition(), dataFactory, query))
       {
         final DataFactoryMetaData metaData = dataFactory.getMetaData();
         final String[] referencedFields = metaData.getReferencedFields(dataFactory, query, dataRow);

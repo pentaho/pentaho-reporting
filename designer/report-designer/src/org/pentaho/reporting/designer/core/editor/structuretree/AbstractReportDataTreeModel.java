@@ -31,6 +31,7 @@ import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironmentDataRow;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
@@ -115,21 +116,27 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     if (parent instanceof ReportQueryNode)
     {
       final ReportQueryNode queryNode = (ReportQueryNode) parent;
-      final DataFactory dataFactory = queryNode.getDataFactory();
-      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
-      if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
+      if (isSelectedDataSource(queryNode))
       {
         final String[] names = getDataFactoryColumns();
         final String name = names[index];
+        final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
         final DataAttributes attributes = model.getDataSchema().getAttributes(name);
         final Class type = (Class) attributes.getMetaAttribute
             (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class, model.getDataAttributeContext());
+        final DataFactory dataFactory = queryNode.getDataFactory();
         return new ReportFieldNode(context, dataFactory, name, type);
       }
 
       throw new IndexOutOfBoundsException();
     }
     return null;
+  }
+
+  private boolean isSelectedDataSource(final ReportQueryNode queryNode)
+  {
+    AbstractReportDefinition reportDefinition = context.getReportDefinition();
+    return DesignTimeUtil.isSelectedDataSource(reportDefinition, queryNode.getDataFactory(), queryNode.getQueryName());
   }
 
   private String[] getDataFactoryColumns()
@@ -186,9 +193,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     if (parent instanceof ReportQueryNode)
     {
       final ReportQueryNode queryNode = (ReportQueryNode) parent;
-      final DataFactory dataFactory = queryNode.getDataFactory();
-      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
-      if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
+      if (isSelectedDataSource(queryNode))
       {
         return getDataFactoryColumns().length;
       }
@@ -213,9 +218,7 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
     if (node instanceof ReportQueryNode)
     {
       final ReportQueryNode queryNode = (ReportQueryNode) node;
-      final DataFactory dataFactory = queryNode.getDataFactory();
-      final ContextAwareDataSchemaModel model = context.getReportDataSchemaModel();
-      if (model.isSelectedDataSource(dataFactory, queryNode.getQueryName()))
+      if (isSelectedDataSource(queryNode))
       {
         return false;
       }
@@ -287,10 +290,12 @@ public abstract class AbstractReportDataTreeModel implements TreeModel
       {
         return -1;
       }
-
       final ReportFieldNode node = (ReportFieldNode) child;
-      if (context.getReportDataSchemaModel().isSelectedDataSource
-          (node.getSource(), queryNode.getQueryName()) == false)
+      if (node.getSource() != queryNode.getDataFactory())
+      {
+        return -1;
+      }
+      if (isSelectedDataSource(queryNode) == false)
       {
         return -1;
       }
