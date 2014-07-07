@@ -42,14 +42,18 @@
   <target name="continuous-junit" depends="clean-all,resolve,test,dist-source,dist,publish"/>
 
 
-  <target name="longrun-test" depends="clean-all,resolve">
+  <target name="longrun-test" if="junit.longrun.forkmode">
+      <antcall target="clean-all"/>
+      <antcall target="resolve"/>
       <antcall target="test">
           <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
           <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
       </antcall>
   </target>
 
-  <target name="longrun-cobertura" depends="clean-all,resolve">
+  <target name="longrun-cobertura" if="junit.longrun.forkmode">
+      <antcall target="clean-all"/>
+      <antcall target="resolve"/>
       <antcall target="cobertura">
           <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
           <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
