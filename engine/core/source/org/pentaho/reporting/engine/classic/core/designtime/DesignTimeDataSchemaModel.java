@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.designtime;
 
 import java.util.Date;
-import java.util.HashMap;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -30,12 +29,10 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
-import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
 import org.pentaho.reporting.engine.classic.core.cache.IndexedTableModel;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
@@ -44,130 +41,15 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaCompiler;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
-import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 {
-  public static class DefaultDesignTimeDataSchemaModelChangeTracker
-      implements DesignTimeDataSchemaModelChangeTracker
-  {
-
-    private final HashMap<InstanceID, Long> nonVisualChangeTrackers;
-    private final HashMap<InstanceID, Long> dataFactoryChangeTrackers;
-    private final AbstractReportDefinition parent;
-    private String query;
-    private int queryTimeout;
-
-    private DefaultDesignTimeDataSchemaModelChangeTracker(final AbstractReportDefinition parent)
-    {
-      this.parent = parent;
-      this.nonVisualChangeTrackers = new HashMap<InstanceID, Long>();
-      this.dataFactoryChangeTrackers = new HashMap<InstanceID, Long>();
-      this.queryTimeout = parent.getQueryTimeout();
-    }
-
-    private boolean isNonVisualsChanged()
-    {
-      AbstractReportDefinition parent = this.parent;
-      while (parent != null)
-      {
-        final InstanceID id = parent.getObjectID();
-        final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-        if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-        {
-          return true;
-        }
-
-        final Long nonVisualsChangeTracker = parent.getNonVisualsChangeTracker();
-        if (nonVisualsChangeTracker.equals(nonVisualChangeTrackers.get(id)) == false)
-        {
-          return true;
-        }
-
-        final Section parentSection = parent.getParentSection();
-        if (parentSection == null)
-        {
-          parent = null;
-        }
-        else
-        {
-          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-        }
-      }
-      return false;
-    }
-
-    private boolean isDataFactoryChanged()
-    {
-      AbstractReportDefinition parent = this.parent;
-      while (parent != null)
-      {
-        final InstanceID id = parent.getObjectID();
-        final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-        if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-        {
-          return true;
-        }
-
-        final Section parentSection = parent.getParentSection();
-        if (parentSection == null)
-        {
-          parent = null;
-        }
-        else
-        {
-          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-        }
-      }
-      return false;
-    }
-
-    public void updateChangeTrackers()
-    {
-      this.query = parent.getQuery();
-      this.queryTimeout = parent.getQueryTimeout();
-      AbstractReportDefinition parent = this.parent;
-      while (parent != null)
-      {
-        final InstanceID id = parent.getObjectID();
-        dataFactoryChangeTrackers.put(id, parent.getDatasourceChangeTracker());
-        nonVisualChangeTrackers.put(id, parent.getNonVisualsChangeTracker());
-
-        final Section parentSection = parent.getParentSection();
-        if (parentSection == null)
-        {
-          parent = null;
-        }
-        else
-        {
-          parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-        }
-      }
-    }
-
-    public boolean isReportQueryChanged()
-    {
-      return ObjectUtilities.equal(this.query, parent.getQuery()) == false ||
-          queryTimeout != parent.getQueryTimeout() ||
-          isDataFactoryChanged();
-    }
-
-    public boolean isReportChanged()
-    {
-      return isNonVisualsChanged() || ObjectUtilities.equal(this.query, parent.getQuery()) == false;
-    }
-  }
 
   private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
 

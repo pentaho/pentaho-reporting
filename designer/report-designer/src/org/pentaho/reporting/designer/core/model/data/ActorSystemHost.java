@@ -17,9 +17,12 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
+import java.util.concurrent.TimeUnit;
+
 import akka.actor.ActorSystem;
 import akka.actor.TypedActor;
 import akka.actor.TypedProps;
+import akka.util.Timeout;
 
 public class ActorSystemHost
 {
@@ -37,9 +40,18 @@ public class ActorSystemHost
     return system;
   }
 
-  public <IFace, Impl extends IFace> IFace createActor(Class<IFace> iface, Class<Impl> impl)
+  public <IFace, Impl extends IFace> IFace createActor(final Class<IFace> iface, final Class<Impl> impl)
   {
-    final TypedProps<Impl> queryMetaDataActorTypedProps = new TypedProps<Impl>(iface, impl);
+    final TypedProps<Impl> queryMetaDataActorTypedProps =
+        new TypedProps<Impl>(iface, impl).withTimeout(Timeout.apply(30, TimeUnit.MINUTES));
     return TypedActor.get(system).typedActorOf(queryMetaDataActorTypedProps);
+  }
+
+  public void stopNow(final Object actor) {
+    TypedActor.get(system).stop(actor);
+  }
+
+  public void shutdown(final Object actor) {
+    TypedActor.get(system).poisonPill(actor);
   }
 }

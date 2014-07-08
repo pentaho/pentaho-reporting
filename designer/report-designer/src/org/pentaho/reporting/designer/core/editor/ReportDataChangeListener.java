@@ -15,14 +15,11 @@
  *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.designer.core.model.data;
+package org.pentaho.reporting.designer.core.editor;
 
-import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
-import scala.concurrent.Future;
+import java.util.EventListener;
 
-public interface QueryMetaDataActor
+public interface ReportDataChangeListener extends EventListener
 {
-  Future<ContextAwareDataSchemaModel> retrieve(MasterReport master, AbstractReportDefinition report);
+  public void dataModelChanged(ReportDocumentContext context);
 }

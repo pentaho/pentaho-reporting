@@ -17,11 +17,21 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
-import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
+import javax.swing.event.ChangeListener;
+
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
-public interface DataSchemaManager extends ReportModelListener
+public interface DataSchemaManager
 {
+  /**
+   * The change listener is informed whenever a new model is available.
+   *
+   * @param l the change listener to be informed of model changes.
+   */
+  public void addChangeListener(ChangeListener l);
+
+  public void removeChangeListener(ChangeListener l);
+
   public ContextAwareDataSchemaModel getModel();
 
   public void close();

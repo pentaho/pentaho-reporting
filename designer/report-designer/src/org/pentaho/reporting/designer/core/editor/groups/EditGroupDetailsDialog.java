@@ -52,6 +52,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.designer.core.Messages;
+import org.pentaho.reporting.designer.core.editor.ReportDataChangeListener;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -66,7 +67,7 @@ import org.pentaho.reporting.libraries.designtime.swing.bulk.RemoveBulkAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
 
-public class EditGroupDetailsDialog extends CommonDialog
+public class EditGroupDetailsDialog extends CommonDialog implements ReportDataChangeListener
 {
   private class AddSelectionAction extends AbstractAction implements ListSelectionListener
   {
@@ -342,6 +343,17 @@ public class EditGroupDetailsDialog extends CommonDialog
     }
   }
 
+  public void dataModelChanged(final ReportDocumentContext context)
+  {
+    final String[] columnNames = context.getReportDataSchemaModel().getColumnNames();
+    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
+    availableFieldsModel.clear();
+    for (int i = 0; i < columnNames.length; i++)
+    {
+      availableFieldsModel.addElement(columnNames[i]);
+    }
+  }
+
   public boolean editGroupData(final String name,
                                final String[] groupFields,
                                final ReportDocumentContext reportRenderContext)
@@ -354,21 +366,21 @@ public class EditGroupDetailsDialog extends CommonDialog
     setGroupName(name);
     setFields(groupFields);
 
-    nameTextField.setText(name);
-    final String[] columnNames = reportRenderContext.getReportDataSchemaModel().getColumnNames();
-    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
-    availableFieldsModel.clear();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      availableFieldsModel.addElement(columnNames[i]);
-    }
+    try {
+      nameTextField.setText(name);
+      reportRenderContext.addReportDataChangeListener(this);
+      dataModelChanged(reportRenderContext);
 
-    if (performEdit() == false)
-    {
-      return false;
-    }
+      if (performEdit() == false)
+      {
+        return false;
+      }
 
-    return true;
+      return true;
+    }
+    finally {
+      reportRenderContext.removeReportDataChangeListener(this);
+    }
   }
 
   public EditGroupUndoEntry editGroup(final RelationalGroup group,

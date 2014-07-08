@@ -28,6 +28,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public interface ReportDocumentContext extends ReportDesignerDocumentContext<MasterReport>
 {
+  void addReportDataChangeListener(ReportDataChangeListener l);
+  void removeReportDataChangeListener(ReportDataChangeListener l);
+
   AbstractReportDefinition getReportDefinition();
 
   ZoomModel getZoomModel();

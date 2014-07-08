@@ -17,22 +17,33 @@
 
 package org.pentaho.reporting.designer.core.model.data;
 
+import java.util.ArrayList;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import akka.dispatch.OnFailure;
 import akka.dispatch.OnSuccess;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.designtime.DefaultDesignTimeDataSchemaModelChangeTracker;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
+import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import scala.PartialFunction;
 import scala.concurrent.Future;
 import scala.runtime.BoxedUnit;
 
-public class AsynchronousDataSchemaManager implements DataSchemaManager
+public class AsynchronousDataSchemaManager implements DataSchemaManager, ReportModelListener
 {
   private final MasterReport masterReport;
   private final AbstractReportDefinition report;
   private final QueryMetaDataActor actor;
+  private final ArrayList<ChangeListener> listeners;
+  private final DefaultDesignTimeDataSchemaModelChangeTracker changeTracker;
+  private ContextAwareDataSchemaModel model;
 
   public AsynchronousDataSchemaManager(final MasterReport masterReport,
                                        final AbstractReportDefinition report)
@@ -40,45 +51,135 @@ public class AsynchronousDataSchemaManager implements DataSchemaManager
     ArgumentNullException.validate("masterReport", masterReport);
     ArgumentNullException.validate("report", report);
 
+    this.listeners = new ArrayList<ChangeListener>();
     this.actor = ActorSystemHost.INSTANCE.createActor(QueryMetaDataActor.class, QueryMetaDataActorImpl.class);
     this.masterReport = masterReport;
     this.report = report;
+    this.report.addReportModelListener(this);
+
+    this.changeTracker = new DefaultDesignTimeDataSchemaModelChangeTracker(report);
   }
 
-  public ContextAwareDataSchemaModel getModel()
+  public void addChangeListener(final ChangeListener l)
   {
-    Future<ContextAwareDataSchemaModel> retrieve = this.actor.retrieve(null, null, null);
+    ArgumentNullException.validate("l", l);
+
+    this.listeners.add(l);
+  }
+
+  public void removeChangeListener(final ChangeListener l)
+  {
+    ArgumentNullException.validate("l", l);
+
+    this.listeners.remove(l);
+  }
+
+  public synchronized ContextAwareDataSchemaModel getModel()
+  {
+    if (model == null)
+    {
+      model = new TemporaryDataSchemaModel(masterReport, report);
+      startQueryModel();
+    }
+    return model;
+  }
+
+  public synchronized void nodeChanged(final ReportModelEvent event)
+  {
+    if (changeTracker.isReportChanged())
+    {
+      model = new TemporaryDataSchemaModel(masterReport, report);
+      startQueryModel();
+    }
+  }
+
+  private synchronized void startQueryModel()
+  {
+    Future<ContextAwareDataSchemaModel> retrieve = this.actor.retrieve(masterReport, report);
     // IntelliJ does not know how to handle this construct, thinks it is not valid.
     retrieve.onSuccess(new SuccessHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher());
     retrieve.onFailure(new FailureHandler(), ActorSystemHost.INSTANCE.getSystem().dispatcher());
-    return new TemporaryDataSchemaModel(masterReport, report);
   }
 
   public void close()
   {
-
+    ActorSystemHost.INSTANCE.stopNow(actor);
   }
 
-  public void nodeChanged(final ReportModelEvent event)
+  protected void fireChangeEvent()
   {
-
-  }
-
-  private static class SuccessHandler extends OnSuccess<ContextAwareDataSchemaModel>
-      implements PartialFunction<ContextAwareDataSchemaModel, BoxedUnit>
-  {
-    public void onSuccess(final ContextAwareDataSchemaModel result) throws Throwable
+    if (listeners.isEmpty())
     {
+      return;
+    }
 
+    final ChangeEvent event = new ChangeEvent(this);
+    for (final ChangeListener listener : listeners)
+    {
+      listener.stateChanged(event);
     }
   }
 
-  private static class FailureHandler extends OnFailure
+  private void processResultOnEDT(final Runnable r)
+  {
+    synchronized (AsynchronousDataSchemaManager.this)
+    {
+      changeTracker.updateChangeTrackers();
+    }
+    SwingUtilities.invokeLater(r);
+  }
+
+  private class SuccessHandler extends OnSuccess<ContextAwareDataSchemaModel>
+      implements PartialFunction<ContextAwareDataSchemaModel, BoxedUnit>
+  {
+    private SuccessHandler()
+    {
+    }
+
+    public void onSuccess(final ContextAwareDataSchemaModel result) throws Throwable
+    {
+      processResultOnEDT(new SuccessTask(result));
+    }
+  }
+
+  private class SuccessTask implements Runnable
+  {
+    private ContextAwareDataSchemaModel model;
+
+    private SuccessTask(final ContextAwareDataSchemaModel model)
+    {
+      this.model = model;
+    }
+
+    public void run()
+    {
+      AsynchronousDataSchemaManager.this.model = model;
+      fireChangeEvent();
+    }
+  }
+
+  private class FailureHandler extends OnFailure
       implements PartialFunction<Throwable, BoxedUnit>
   {
     public void onFailure(final Throwable failure) throws Throwable
     {
+      processResultOnEDT(new FailureTask(failure));
+    }
+  }
 
+  private static class FailureTask implements Runnable
+  {
+    private Throwable t;
+
+    private FailureTask(final Throwable t)
+    {
+      ArgumentNullException.validate("t", t);
+      this.t = t;
+    }
+
+    public void run()
+    {
+      UncaughtExceptionsModel.getInstance().addException(t);
     }
   }
 }

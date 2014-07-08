@@ -21,11 +21,14 @@ import java.awt.Image;
 import java.beans.BeanInfo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
@@ -54,6 +57,7 @@ import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -179,6 +183,13 @@ public class ReportRenderContext implements ReportDocumentContext
     }
   }
 
+  private class DataSchemaManagerUpdateHandler implements ChangeListener {
+    public void stateChanged(final ChangeEvent e)
+    {
+      fireDataSourceChangedEvent();
+    }
+  }
+
   private static final String AUTHENTICATION_STORE_PROPERTY = "authentication-store";
 
   private final PropertyChangeSupport propertyChangeSupport;
@@ -193,6 +204,7 @@ public class ReportRenderContext implements ReportDocumentContext
   private final HashMap<String, Object> properties;
   private final DataSchemaManager dataSchemaManager;
   private final boolean bandedContext;
+  private final ArrayList<ReportDataChangeListener> dataChangeListeners;
   private String tabName;
   private Icon icon;
   private long changeTracker;
@@ -225,6 +237,7 @@ public class ReportRenderContext implements ReportDocumentContext
       throw new NullPointerException();
     }
 
+    this.dataChangeListeners = new ArrayList<ReportDataChangeListener>();
     this.propertyChangeSupport = new PropertyChangeSupport(this);
 
     this.selectionModel = new DefaultReportSelectionModel();
@@ -241,7 +254,8 @@ public class ReportRenderContext implements ReportDocumentContext
 
     this.bandedContext = computeBandedContext(parentContext);
 
-    this.dataSchemaManager = new SynchronousDataSchemaManager(masterReportElement, report);
+    this.dataSchemaManager = new AsynchronousDataSchemaManager(masterReportElement, report);
+    this.dataSchemaManager.addChangeListener(new DataSchemaManagerUpdateHandler());
 
     if (!computationTarget)
     {
@@ -254,7 +268,6 @@ public class ReportRenderContext implements ReportDocumentContext
       this.inspectionRunner = NoOpInspectionRunner.INSTANCE;
       this.undo = null;
     }
-
 
     final Object f = this.reportDefinition.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM);
     if (f instanceof Float)
@@ -311,6 +324,28 @@ public class ReportRenderContext implements ReportDocumentContext
     else
     {
       icon = null;
+    }
+  }
+
+  public void addReportDataChangeListener(final ReportDataChangeListener l)
+  {
+    ArgumentNullException.validate("l", l);
+    dataChangeListeners.add(l);
+  }
+
+  public void removeReportDataChangeListener(final ReportDataChangeListener l)
+  {
+    ArgumentNullException.validate("l", l);
+    dataChangeListeners.remove(l);
+  }
+
+  protected void fireDataSourceChangedEvent() {
+    if (dataChangeListeners.isEmpty()) {
+      return;
+    }
+    for (final ReportDataChangeListener listener : dataChangeListeners)
+    {
+      listener.dataModelChanged(this);
     }
   }
 

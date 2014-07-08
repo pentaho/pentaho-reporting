@@ -27,6 +27,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDataChangeListener;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFieldNode;
 import org.pentaho.reporting.designer.core.model.DataSchemaUtility;
@@ -43,13 +44,13 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 
 public class FieldSelectorPanel extends SidePanel
 {
-  private class ReportModelChangeHandler implements ReportModelListener, SettingsListener
+  private class ReportModelChangeHandler implements ReportDataChangeListener, SettingsListener
   {
     private ReportModelChangeHandler()
     {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
+    public void dataModelChanged(final ReportDocumentContext context)
     {
       final ReportDesignerContext designerContext = getReportDesignerContext();
       final ReportDocumentContext activeContext = designerContext.getActiveContext();
@@ -58,10 +59,7 @@ public class FieldSelectorPanel extends SidePanel
         return;
       }
 
-      if (event.getElement() == activeContext.getReportDefinition())
-      {
-        dataModel.setDataSchema(computeColumns(activeContext));
-      }
+      dataModel.setDataSchema(computeColumns(activeContext));
     }
 
     public void settingsChanged()
@@ -102,11 +100,11 @@ public class FieldSelectorPanel extends SidePanel
 
   protected void updateActiveContext(final ReportDocumentContext oldContext, final ReportDocumentContext newContext)
   {
-    super.updateActiveContext(oldContext, newContext);
-    if (report != null)
-    {
-      report.removeReportModelListener(changeHandler);
+    if (oldContext != null) {
+      oldContext.removeReportDataChangeListener(changeHandler);
     }
+
+    super.updateActiveContext(oldContext, newContext);
     if (newContext == null)
     {
       report = null;
@@ -115,8 +113,7 @@ public class FieldSelectorPanel extends SidePanel
     else
     {
       report = newContext.getReportDefinition();
-      report.addReportModelListener(changeHandler);
-
+      newContext.addReportDataChangeListener(changeHandler);
       dataModel.setDataSchema(computeColumns(newContext));
     }
   }
