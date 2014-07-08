@@ -33,7 +33,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
  *
  * @author Thomas Morgner
  */
-public class AutoInspectionRunner implements ReportModelListener, InspectionResultListener
+public class AutoInspectionRunner implements InspectionResultListener, InspectionRunner
 {
   private static final Log logger = LogFactory.getLog(AutoInspectionRunner.class);
 

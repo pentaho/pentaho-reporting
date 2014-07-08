@@ -23,9 +23,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.editor.structuretree.ReportFieldNode;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -71,7 +71,7 @@ public class FieldCellRenderer extends DefaultTableCellRenderer
       return this;
     }
     final ReportFieldNode fieldNode = (ReportFieldNode) value;
-    final ReportDataSchemaModel model = fieldNode.getDataSchemaModel();
+    final ContextAwareDataSchemaModel model = fieldNode.getDataSchemaModel();
     final DataAttributes attributes = model.getDataSchema().getAttributes(fieldNode.getFieldName());
     setToolTipText(fieldNode.getFieldClass().getSimpleName());
     if (attributes == null)
@@ -125,14 +125,14 @@ public class FieldCellRenderer extends DefaultTableCellRenderer
       {
         return fieldName;
       }
-      return Messages.getString("FieldCellRenderer.TypedFieldMessage", fieldName , fieldClass.getSimpleName());
+      return Messages.getString("FieldCellRenderer.TypedFieldMessage", fieldName, fieldClass.getSimpleName());
     }
 
     if (fieldClass == null)
     {
-      return Messages.getString("FieldCellRenderer.TypedFieldMessage", displayName , fieldName);
+      return Messages.getString("FieldCellRenderer.TypedFieldMessage", displayName, fieldName);
     }
     return Messages.getString("FieldCellRenderer.AliasedTypedFieldMessage",
-        displayName, fieldName , fieldClass.getSimpleName());
+        displayName, fieldName, fieldClass.getSimpleName());
   }
 }

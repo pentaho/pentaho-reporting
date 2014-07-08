@@ -21,11 +21,14 @@ import java.io.File;
 import java.util.Date;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
@@ -126,7 +129,7 @@ public class DesignTimeUtil
     }
     return null;
   }
-  
+
   public static void resetTemplate(final MasterReport report)
   {
     resetDocumentMetaData(report);
@@ -141,7 +144,7 @@ public class DesignTimeUtil
       final WriteableDocumentMetaData wmd = (WriteableDocumentMetaData) metaData;
       wmd.setBundleAttribute(ODFMetaAttributeNames.Meta.NAMESPACE,
           ODFMetaAttributeNames.Meta.INITIAL_CREATOR, wmd.getBundleAttribute
-          (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.CREATOR));
+              (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.CREATOR));
       try
       {
         wmd.setBundleAttribute(ODFMetaAttributeNames.DublinCore.NAMESPACE,
@@ -163,4 +166,83 @@ public class DesignTimeUtil
           ODFMetaAttributeNames.Meta.KEYWORDS, null);
     }
   }
+
+
+  public static boolean isSelectedDataSource(final AbstractReportDefinition report,
+                                             final DataFactory dataFactory,
+                                             final String queryName)
+  {
+    if (ObjectUtilities.equal(queryName, report.getQuery()) == false)
+    {
+      // the query/datasource combination given in the parameter cannot be a selected
+      // combination if the query does not match the report's active query ..
+      return false;
+    }
+
+    AbstractReportDefinition reportDefinition = report;
+    while (reportDefinition != null)
+    {
+      final DataFactory reportDataFactory = reportDefinition.getDataFactory();
+      if (reportDataFactory instanceof CompoundDataFactory)
+      {
+        final CompoundDataFactory compoundDataFactory = (CompoundDataFactory) reportDataFactory;
+        for (int i = 0; i < compoundDataFactory.size(); i++)
+        {
+          final DataFactory df = compoundDataFactory.getReference(i);
+          for (final String query : df.getQueryNames())
+          {
+            if (!query.equals(queryName))
+            {
+              continue;
+            }
+
+            if (df == dataFactory)
+            {
+              return true;
+            }
+            else
+            {
+              return false;
+            }
+          }
+        }
+      }
+      else
+      {
+        if (reportDataFactory != null)
+        {
+          for (final String query : reportDataFactory.getQueryNames())
+          {
+            if (!query.equals(queryName))
+            {
+              continue;
+            }
+
+            if (reportDataFactory == dataFactory)
+            {
+              return true;
+            }
+            else
+            {
+              return false;
+            }
+          }
+          return true;
+        }
+
+      }
+      final Section parentSection = reportDefinition.getParentSection();
+      if (parentSection == null)
+      {
+        reportDefinition = null;
+      }
+      else
+      {
+        reportDefinition = (AbstractReportDefinition) parentSection.getReportDefinition();
+      }
+    }
+
+    return false;
+  }
+
 }

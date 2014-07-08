@@ -21,13 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.Section;
-import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModelFactory;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
@@ -47,7 +47,7 @@ import org.pentaho.ui.xul.XulEventSourceAdapter;
 public class WizardEditorModel extends XulEventSourceAdapter
 {
   private static final String RELATIONAL_MODEL_PROPERTY_NAME = "relationalModel"; //$NON-NLS-1$
-    
+
   private AbstractReportDefinition reportDefinition;
 
   private AbstractReportDefinition emptyTemplate;
@@ -57,13 +57,13 @@ public class WizardEditorModel extends XulEventSourceAdapter
   private DataSchemaModel dataSchemaModel;
 
   private DataAttributeContext attributeContext;
-  
+
   private WizardSpecification specification;
 
   private boolean materialize;
-  
+
   private boolean editing = false;
-  
+
   private DataFactory dataFactory;
 
   public WizardEditorModel(final AbstractReportDefinition emptyTemplate)
@@ -109,18 +109,18 @@ public class WizardEditorModel extends XulEventSourceAdapter
     {
       dataSchemaModel = null;
       specification = getReportSpec();  // now get the new one if it exists
-      if(dataFactory == null) 
+      if (dataFactory == null)
       {
-      	final DataFactory theDataFactory = reportDefinition.getDataFactory();
-      	if(theDataFactory.getQueryNames().length > 0) 
-      	{
-      		dataFactory = reportDefinition.getDataFactory();
-      	}
+        final DataFactory theDataFactory = reportDefinition.getDataFactory();
+        if (theDataFactory.getQueryNames().length > 0)
+        {
+          dataFactory = reportDefinition.getDataFactory();
+        }
       }
       else
       {
-      	reportDefinition.setQuery(oldDefinition.getQuery());
-      	reportDefinition.setDataFactory(dataFactory);
+        reportDefinition.setQuery(oldDefinition.getQuery());
+        reportDefinition.setDataFactory(dataFactory);
       }
       this.firePropertyChange("reportDefinition", oldDefinition, reportDefinition);
     }
@@ -131,7 +131,7 @@ public class WizardEditorModel extends XulEventSourceAdapter
   {
     setReportDefinition(reportDefinition, false);
   }
-  
+
   public AbstractReportDefinition getEmptyTemplate()
   {
     return (AbstractReportDefinition) emptyTemplate.derive();
@@ -159,7 +159,7 @@ public class WizardEditorModel extends XulEventSourceAdapter
       specification = new DefaultWizardSpecification();
       WizardProcessorUtil.applyWizardSpec(reportDefinition, specification);
     }
-    
+
     return specification;
   }
 
@@ -182,7 +182,7 @@ public class WizardEditorModel extends XulEventSourceAdapter
       this.firePropertyChange(RELATIONAL_MODEL_PROPERTY_NAME, oldRelational, relationalModel);
     }
   }
-  
+
   public List<SourceFieldDefinition> getSelectableFieldsArray()
   {
     final List<SourceFieldDefinition> sourceFields = new ArrayList<SourceFieldDefinition>();
@@ -204,30 +204,12 @@ public class WizardEditorModel extends XulEventSourceAdapter
     getReportDefinition().setQuery(queryName);
     getReportDefinition().setDataFactory(factory);
   }
-  
-  private static MasterReport findMasterReport(final AbstractReportDefinition def)
-  {
-    AbstractReportDefinition loopDef = def;
-    while (loopDef instanceof MasterReport == false)
-    {
-      final Section parentSection = def.getParentSection();
-      if (parentSection == null)
-      {
-        break;
-      }
-      loopDef = (AbstractReportDefinition) parentSection.getReportDefinition();
-    }
-
-    if (loopDef instanceof MasterReport)
-    {
-      return (MasterReport) def;
-    }
-    return new MasterReport();
-  }
 
   public static DataSchemaModel compileDataSchemaModel(final AbstractReportDefinition reportDefinition)
   {
-    return new DesignTimeDataSchemaModel(findMasterReport(reportDefinition), reportDefinition);
+    final ContextAwareDataSchemaModelFactory factory =
+        ClassicEngineBoot.getInstance().getObjectFactory().get(ContextAwareDataSchemaModelFactory.class);
+    return factory.create(reportDefinition);
   }
 
   public DataSchemaModel getDataSchema()

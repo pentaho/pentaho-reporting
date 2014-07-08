@@ -30,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import javax.naming.spi.NamingManager;
 import javax.swing.table.TableModel;
@@ -37,6 +38,7 @@ import javax.swing.table.TableModel;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -213,10 +215,57 @@ public abstract class DataSourceTestBase extends TestCase
     }
   }
 
+  protected void runTestDesignTime(final String[][] queriesAndResults) throws Exception
+  {
+    for (int i = 0; i < queriesAndResults.length; i++)
+    {
+      final String[] queriesAndResult = queriesAndResults[i];
+      final String query = queriesAndResult[0];
+      final String resultFile = queriesAndResult[2];
+      final DataFactoryDesignTimeSupport dataFactory = (DataFactoryDesignTimeSupport) createDataFactory(query);
+      initializeDataFactory(dataFactory);
+      final String queryResult = performDesignTimeTest(dataFactory);
+      compareLineByLine(resultFile, queryResult);
+    }
+  }
+
+  public void runGenerateDesignTime(final String[][] queriesAndResults) throws Exception
+  {
+    for (int i = 0; i < queriesAndResults.length; i++)
+    {
+      final String[] queriesAndResult = queriesAndResults[i];
+      final String query = queriesAndResult[0];
+      final String resultFile = queriesAndResult[2];
+      final DataFactoryDesignTimeSupport dataFactory = (DataFactoryDesignTimeSupport) createDataFactory(query);
+      initializeDataFactory(dataFactory);
+      generateDesignTime(dataFactory, resultFile);
+    }
+  }
+
   protected void generate(final DataFactory dataFactory,
                           final String resultFile) throws ReportDataFactoryException, SQLException, IOException
   {
     final String queryResult = performQueryTest(dataFactory);
+
+    final String packageName = getClass().getPackage().getName();
+    final String pathName = packageName.replace(".", "/");
+    final File file = new File(getTestDirectory() + "/" + pathName + "/" + resultFile);
+    System.out.println("Generating test result: " + file.getAbsolutePath());
+    final FileOutputStream fout = new FileOutputStream(file);
+    try
+    {
+      fout.write(queryResult.getBytes("UTF-8"));
+    }
+    finally
+    {
+      fout.close();
+    }
+  }
+
+  protected void generateDesignTime(final DataFactoryDesignTimeSupport dataFactory,
+                                    final String resultFile) throws ReportDataFactoryException, SQLException, IOException
+  {
+    final String queryResult = performDesignTimeTest(dataFactory);
 
     final String packageName = getClass().getPackage().getName();
     final String pathName = packageName.replace(".", "/");
@@ -286,9 +335,9 @@ public abstract class DataSourceTestBase extends TestCase
   protected String performQueryTest(final DataFactory dataFactory) throws SQLException, ReportDataFactoryException
   {
     final ByteArrayOutputStream sw = new ByteArrayOutputStream();
-    final PrintStream ps = new PrintStream(sw);
     try
     {
+      final PrintStream ps = new PrintStream(sw, true, "UTF-8");
       final TableModel tableModel = dataFactory.queryData(getLogicalQueryForNextTest(), getParameterForNextTest());
       generateCompareText(ps, tableModel);
       if (tableModel instanceof CloseableTableModel)
@@ -296,6 +345,35 @@ public abstract class DataSourceTestBase extends TestCase
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
         ctm.close();
       }
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new ReportDataFactoryException("If UTF-8 is not supported, we are in trouble.");
+    }
+    finally
+    {
+      dataFactory.close();
+    }
+    return sw.toString();
+  }
+
+  protected String performDesignTimeTest(final DataFactoryDesignTimeSupport dataFactory) throws SQLException, ReportDataFactoryException
+  {
+    final ByteArrayOutputStream sw = new ByteArrayOutputStream();
+    try
+    {
+      final PrintStream ps = new PrintStream(sw, true, "UTF-8");
+      final TableModel tableModel = dataFactory.queryDesignTimeStructure(getLogicalQueryForNextTest(), getParameterForNextTest());
+      generateCompareText(ps, tableModel);
+      if (tableModel instanceof CloseableTableModel)
+      {
+        final CloseableTableModel ctm = (CloseableTableModel) tableModel;
+        ctm.close();
+      }
+    }
+    catch (UnsupportedEncodingException e)
+    {
+      throw new ReportDataFactoryException("If UTF-8 is not supported, we are in trouble.");
     }
     finally
     {

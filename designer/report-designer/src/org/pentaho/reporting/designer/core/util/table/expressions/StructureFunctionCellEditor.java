@@ -39,18 +39,15 @@ import javax.swing.table.TableCellEditor;
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
-import org.pentaho.reporting.designer.core.util.DataSchemaFieldDefinition;
 import org.pentaho.reporting.designer.core.util.ExpressionListCellRenderer;
 import org.pentaho.reporting.designer.core.util.UtilMessages;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
+import org.pentaho.reporting.designer.core.util.table.CellEditorUtility;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -144,7 +141,6 @@ public class StructureFunctionCellEditor implements TableCellEditor
   private EventListenerList eventListenerList;
   private ReportDesignerContext designerContext;
   private ReportDocumentContext renderContext;
-  private static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
   private DefaultDataAttributeContext dataAttributeContext;
   private boolean initialized;
 
@@ -213,30 +209,7 @@ public class StructureFunctionCellEditor implements TableCellEditor
 
   public FieldDefinition[] getFields()
   {
-    if (renderContext == null)
-    {
-      return EMPTY_FIELDS;
-    }
-
-    final ReportDataSchemaModel model = renderContext.getReportDataSchemaModel();
-    final String[] columnNames = model.getColumnNames();
-    final FieldDefinition[] fields = new FieldDefinition[columnNames.length];
-    final DataSchema dataSchema = model.getDataSchema();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      final String columnName = columnNames[i];
-      final DataAttributes attributes = dataSchema.getAttributes(columnName);
-      if (attributes == null)
-      {
-        throw new IllegalStateException("No data-schema for expression with name '" + columnName + '\'');
-      }
-      if (ReportDataSchemaModel.isFiltered(attributes, dataAttributeContext))
-      {
-        continue;
-      }
-      fields[i] = new DataSchemaFieldDefinition(columnName, attributes, dataAttributeContext);
-    }
-    return fields;
+    return CellEditorUtility.getFields(renderContext, new String[0]);
   }
 
   /**

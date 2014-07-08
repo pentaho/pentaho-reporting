@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.core;
 import javax.swing.table.DefaultTableModel;
 
 import junit.framework.TestCase;
-import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModel;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 
 public class DesignTimeDataSchemaModelTest extends TestCase
 {
@@ -47,9 +47,8 @@ public class DesignTimeDataSchemaModelTest extends TestCase
     report.setDataFactory(cdf);
     report.setQuery("default");
 
-    final DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel(report);
-    assertFalse(model.isSelectedDataSource(tableDataFactory2, "query"));
-    assertFalse(model.isSelectedDataSource(tableDataFactory1, "query"));
+    assertFalse(DesignTimeUtil.isSelectedDataSource(report, tableDataFactory2, "query"));
+    assertFalse(DesignTimeUtil.isSelectedDataSource(report, tableDataFactory1, "query"));
   }
 
   public void testRunWithValidQuery() throws ReportDataFactoryException
@@ -66,8 +65,7 @@ public class DesignTimeDataSchemaModelTest extends TestCase
     report.setDataFactory(cdf);
     report.setQuery("query");
 
-    final DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel(report);
-    assertFalse(model.isSelectedDataSource(tableDataFactory2, "query"));
-    assertTrue(model.isSelectedDataSource(tableDataFactory1, "query"));
+    assertFalse(DesignTimeUtil.isSelectedDataSource(report, tableDataFactory2, "query"));
+    assertTrue(DesignTimeUtil.isSelectedDataSource(report, tableDataFactory1, "query"));
   }
 }

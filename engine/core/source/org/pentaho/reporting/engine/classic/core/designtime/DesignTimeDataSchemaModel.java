@@ -18,8 +18,6 @@
 package org.pentaho.reporting.engine.classic.core.designtime;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -29,15 +27,12 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
-import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironmentMapping;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
-import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
 import org.pentaho.reporting.engine.classic.core.cache.IndexedTableModel;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
@@ -46,102 +41,43 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaCompiler;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaUtility;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class DesignTimeDataSchemaModel implements DataSchemaModel
+public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 {
+
   private static final Log logger = LogFactory.getLog(DesignTimeDataSchemaModel.class);
 
-  private AbstractReportDefinition parent;
   private DataSchema dataSchema;
-  private DataSchemaDefinition dataSchemaDefinition;
-  private DataAttributeContext dataAttributeContext;
-  private MasterReport masterReportElement;
-  private String[] columnNames;
-  private static final String[] EMPTY_NAMES = new String[0];
-  private String query;
-  private int oldQueryTimeout;
   private OfflineTableModel offlineTableModel;
   private Throwable dataFactoryException;
-
-  private HashMap<InstanceID, Long> nonVisualChangeTrackers;
-  private HashMap<InstanceID, Long> dataFactoryChangeTrackers;
+  private final DesignTimeDataSchemaModelChangeTracker changeTracker;
 
   public DesignTimeDataSchemaModel(final AbstractReportDefinition report)
   {
-    this(locateMasterReport(report), report);
-  }
-
-  private static MasterReport locateMasterReport(final AbstractReportDefinition reportDefinition)
-  {
-    if (reportDefinition == null)
-    {
-      return null;
-    }
-    if (reportDefinition instanceof MasterReport)
-    {
-      return (MasterReport) reportDefinition;
-    }
-
-    Section parent = reportDefinition.getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
-        return (MasterReport) parent;
-      }
-      parent = parent.getParentSection();
-    }
-
-    return null;
+    this((MasterReport) report.getMasterReport(), report);
   }
 
   public DesignTimeDataSchemaModel(final MasterReport masterReportElement,
                                    final AbstractReportDefinition report)
   {
-    if (masterReportElement == null)
-    {
-      throw new NullPointerException();
-    }
-    if (report == null)
-    {
-      throw new NullPointerException();
-    }
-    this.columnNames = EMPTY_NAMES;
-    this.query = report.getQuery();
-    this.masterReportElement = masterReportElement;
-    this.parent = report;
-    this.nonVisualChangeTrackers = new HashMap<InstanceID, Long>();
-    this.dataFactoryChangeTrackers = new HashMap<InstanceID, Long>();
-
-    this.dataSchemaDefinition = masterReportElement.getDataSchemaDefinition();
-    if (this.dataSchemaDefinition == null)
-    {
-      this.dataSchemaDefinition = DataSchemaUtility.parseDefaults
-          (masterReportElement.getResourceManager());
-    }
-    this.dataAttributeContext = new DefaultDataAttributeContext();
+    super(masterReportElement, report);
+    this.changeTracker = createChangeTracker();
   }
 
-  public DataAttributeContext getDataAttributeContext()
+  protected DesignTimeDataSchemaModelChangeTracker createChangeTracker()
   {
-    return dataAttributeContext;
+    return new DefaultDesignTimeDataSchemaModelChangeTracker(getParent());
   }
 
   public AbstractReportDefinition getParent()
   {
-    return parent;
+    return getReport();
   }
 
   public boolean isValid()
@@ -157,102 +93,22 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
     return dataSchema;
   }
 
-  private boolean isNonVisualsChanged()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-      if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Long nonVisualsChangeTracker = parent.getNonVisualsChangeTracker();
-      if (nonVisualsChangeTracker.equals(nonVisualChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-    return false;
-  }
-
-  private boolean isDataFactoryChanged()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      final Long dataSourceChangeTracker = parent.getDatasourceChangeTracker();
-      if (dataSourceChangeTracker.equals(dataFactoryChangeTrackers.get(id)) == false)
-      {
-        return true;
-      }
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-    return false;
-  }
-
-  private void updateChangeTrackers()
-  {
-    AbstractReportDefinition parent = this.parent;
-    while (parent != null)
-    {
-      final InstanceID id = parent.getObjectID();
-      dataFactoryChangeTrackers.put(id, parent.getDatasourceChangeTracker());
-      nonVisualChangeTrackers.put(id, parent.getNonVisualsChangeTracker());
-
-      final Section parentSection = parent.getParentSection();
-      if (parentSection == null)
-      {
-        parent = null;
-      }
-      else
-      {
-        parent = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-  }
-
   private void ensureDataSchemaValid()
   {
-    if (dataSchema == null || isNonVisualsChanged() ||
-        ObjectUtilities.equal(this.query, parent.getQuery()) == false)
+    if (dataSchema == null || changeTracker.isReportChanged())
     {
       try
       {
         this.dataFactoryException = null;
         this.dataSchema = buildDataSchema();
       }
-      catch (Throwable e)
+      catch (final Throwable e)
       {
         handleError(e);
         this.dataFactoryException = e;
         this.dataSchema = new DefaultDataSchema();
       }
-      this.query = parent.getQuery();
-
-      updateChangeTrackers();
+      changeTracker.updateChangeTrackers();
     }
   }
 
@@ -266,48 +122,22 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
     return dataFactoryException;
   }
 
-  private DataSchema buildDataSchema() throws ReportDataFactoryException
+  protected DataSchema buildDataSchema() throws ReportDataFactoryException
   {
-    this.columnNames = EMPTY_NAMES;
     this.dataFactoryException = null;
 
-    final ParameterDefinitionEntry[] parameterDefinitions;
-    final ParameterDataRow parameterRow;
-    if (parent instanceof MasterReport)
-    {
-      final MasterReport mr = (MasterReport) parent;
-      parameterDefinitions = mr.getParameterDefinition().getParameterDefinitions();
-      final LinkedMap values = computeParameterValueSet(mr);
-      parameterRow = new ParameterDataRow((String[]) values.keys(new String[values.size()]), values.values());
-    }
-    else if (parent instanceof SubReport)
-    {
-      final SubReport sr = (SubReport) parent;
-      final ParameterMapping[] inputMappings = sr.getInputMappings();
-      final Object[] values = new Object[inputMappings.length];
-      final String[] names = new String[inputMappings.length];
-      parameterDefinitions = null;
-      for (int i = 0; i < inputMappings.length; i++)
-      {
-        final ParameterMapping inputMapping = inputMappings[i];
-        names[i] = inputMapping.getAlias();
-      }
-      parameterRow = new ParameterDataRow(names, values);
-    }
-    else
-    {
-      parameterDefinitions = null;
-      parameterRow = new ParameterDataRow();
-    }
+    AbstractReportDefinition parent = getReport();
+    final ParameterDataRow parameterRow = computeParameterData();
+    final ParameterDefinitionEntry[] parameterDefinitions = computeParameterDefinitionEntries();
 
     final Expression[] expressions = parent.getExpressions().getExpressions();
     final DataSchemaCompiler dataSchemaCompiler =
-        new DataSchemaCompiler(dataSchemaDefinition, dataAttributeContext, masterReportElement.getResourceManager());
+        new DataSchemaCompiler(getDataSchemaDefinition(), getDataAttributeContext(), getMasterReportElement().getResourceManager());
 
     try
     {
       final CachingDataFactory dataFactory = new CachingDataFactory(createDataFactory(parent), true);
-      final MasterReport masterReport = masterReportElement;
+      final MasterReport masterReport = getMasterReportElement();
 
       dataFactory.initialize(new DesignTimeDataFactoryContext(masterReport));
 
@@ -316,7 +146,7 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
         final TableModel reportData = queryReportData(parent.getQuery(), parent.getQueryTimeout(), dataFactory);
         final DataSchema dataSchema = dataSchemaCompiler.compile
             (reportData, expressions, parameterRow, parameterDefinitions, masterReport.getReportEnvironment());
-        this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
+        // this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
         if (reportData instanceof CloseableTableModel)
         {
           final CloseableTableModel ctm = (CloseableTableModel) reportData;
@@ -329,12 +159,11 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
         dataFactory.close();
       }
     }
-    catch (ReportProcessingException e)
+    catch (final ReportProcessingException e)
     {
       final TableModel reportData = new DefaultTableModel();
       final DataSchema dataSchema = dataSchemaCompiler.compile
-          (reportData, expressions, parameterRow, parameterDefinitions, masterReportElement.getReportEnvironment());
-      this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
+          (reportData, expressions, parameterRow, parameterDefinitions, getMasterReportElement().getReportEnvironment());
       this.dataFactoryException = e;
       return dataSchema;
     }
@@ -370,9 +199,7 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
                                      final DataFactory dataFactory)
       throws ReportDataFactoryException
   {
-    if (ObjectUtilities.equal(this.query, query) == false ||
-        queryTimeout != oldQueryTimeout ||
-        isDataFactoryChanged())
+    if (offlineTableModel == null || changeTracker.isReportQueryChanged())
     {
       TableModel reportData = null;
       try
@@ -391,8 +218,6 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
           reportData = dataFactory.queryData(query, new QueryDataRowWrapper(new StaticDataRow(), 1, queryTimeout));
         }
 
-        this.query = query;
-        oldQueryTimeout = queryTimeout;
         offlineTableModel = new OfflineTableModel(reportData, new DefaultDataAttributeContext());
       }
       finally
@@ -411,131 +236,14 @@ public class DesignTimeDataSchemaModel implements DataSchemaModel
     return offlineTableModel;
   }
 
-  private String[] collectColumnNames(final TableModel reportData,
-                                      final ParameterDataRow parameterRow,
-                                      final Expression[] expressions)
-  {
-
-    final LinkedMap columnNamesCollector = new LinkedMap();
-
-    final Map<String,String> envCols = DefaultReportEnvironmentMapping.INSTANCE.createEnvironmentMapping();
-    final Object[] envColArray = envCols.values().toArray();
-    for (int i = 0; i < envColArray.length; i++)
-    {
-      final String name = (String) envColArray[i];
-      columnNamesCollector.put(name, Boolean.TRUE);
-    }
-
-    final String[] strings = parameterRow.getColumnNames();
-    for (int i = 0; i < strings.length; i++)
-    {
-      final String string = strings[i];
-      columnNamesCollector.put(string, Boolean.TRUE);
-    }
-
-    final int count = reportData.getColumnCount();
-    for (int i = 0; i < count; i++)
-    {
-      columnNamesCollector.put(reportData.getColumnName(i), Boolean.TRUE);
-    }
-    for (int i = 0; i < expressions.length; i++)
-    {
-      final Expression expression = expressions[i];
-      final String name = expression.getName();
-      if (name != null)
-      {
-        columnNamesCollector.put(name, Boolean.TRUE);
-      }
-    }
-    return (String[]) columnNamesCollector.keys(new String[columnNamesCollector.size()]);
-  }
-
-  public String[] getColumnNames()
-  {
-    ensureDataSchemaValid();
-
-    return columnNames.clone();
-  }
-
+  @Deprecated
   public boolean isSelectedDataSource(final DataFactory dataFactory,
                                       final String queryName)
   {
-    ensureDataSchemaValid();
-
-    if (ObjectUtilities.equal(queryName, query) == false)
-    {
-      // the query/datasource combination given in the parameter cannot be a selected
-      // combination if the query does not match the report's active query ..
-      return false;
-    }
-
-    AbstractReportDefinition reportDefinition = this.getParent();
-    while (reportDefinition != null)
-    {
-      final DataFactory reportDataFactory = reportDefinition.getDataFactory();
-      if (reportDataFactory instanceof CompoundDataFactory)
-      {
-        final CompoundDataFactory compoundDataFactory = (CompoundDataFactory) reportDataFactory;
-        for (int i = 0; i < compoundDataFactory.size(); i++)
-        {
-          final DataFactory df = compoundDataFactory.getReference(i);
-          for (final String query : df.getQueryNames())
-          {
-            if (!query.equals(queryName))
-            {
-              continue;
-            }
-
-            if (df == dataFactory)
-            {
-              return true;
-            }
-            else
-            {
-              return false;
-            }
-          }
-        }
-      }
-      else
-      {
-        if (reportDataFactory != null)
-        {
-          for (final String query : reportDataFactory.getQueryNames())
-          {
-            if (!query.equals(queryName))
-            {
-              continue;
-            }
-
-            if (reportDataFactory == dataFactory)
-            {
-              return true;
-            }
-            else
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-
-      }
-      final Section parentSection = reportDefinition.getParentSection();
-      if (parentSection == null)
-      {
-        reportDefinition = null;
-      }
-      else
-      {
-        reportDefinition = (AbstractReportDefinition) parentSection.getReportDefinition();
-      }
-    }
-
-    return false;
+    return DesignTimeUtil.isSelectedDataSource(getReport(), dataFactory, queryName);
   }
 
-
+  @Deprecated
   public static LinkedMap computeParameterValueSet(final MasterReport report)
   {
     final LinkedMap retval = new LinkedMap();

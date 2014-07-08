@@ -26,7 +26,6 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.pentaho.reporting.designer.core.Messages;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -43,6 +42,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -97,7 +97,7 @@ public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
       if (fields instanceof String[])
       {
         final String[] fieldsArray = (String[]) fields;
-        final StringBuffer b = new StringBuffer();
+        final StringBuilder b = new StringBuilder();
         for (int i = 0; i < fieldsArray.length; i++)
         {
           final String f = fieldsArray[i];
@@ -182,7 +182,7 @@ public class StructureTreeCellRenderer extends DefaultTreeCellRenderer
     else if (value instanceof ReportFieldNode)
     {
       final ReportFieldNode fieldNode = (ReportFieldNode) value;
-      final ReportDataSchemaModel model = fieldNode.getDataSchemaModel();
+      final ContextAwareDataSchemaModel model = fieldNode.getDataSchemaModel();
       final DataAttributes attributes = model.getDataSchema().getAttributes(fieldNode.getFieldName());
       setToolTipText(fieldNode.getFieldClass().getSimpleName());
       if (attributes == null)

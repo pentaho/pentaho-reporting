@@ -21,24 +21,28 @@ import java.util.HashMap;
 
 import org.pentaho.reporting.designer.core.ReportDesignerDocumentContext;
 import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public interface ReportDocumentContext extends ReportDesignerDocumentContext<MasterReport>
 {
+  void addReportDataChangeListener(ReportDataChangeListener l);
+  void removeReportDataChangeListener(ReportDataChangeListener l);
+
   AbstractReportDefinition getReportDefinition();
+
   ZoomModel getZoomModel();
 
-  ReportDataSchemaModel getReportDataSchemaModel();
+  ContextAwareDataSchemaModel getReportDataSchemaModel();
 
   SharedElementRenderer getSharedRenderer();
 
   // todo might be able to remove that one
   ResourceManager getResourceManager();
 
-  HashMap<String,Object> getProperties();
+  HashMap<String, Object> getProperties();
 
   // todo codesmell
   boolean isBandedContext();

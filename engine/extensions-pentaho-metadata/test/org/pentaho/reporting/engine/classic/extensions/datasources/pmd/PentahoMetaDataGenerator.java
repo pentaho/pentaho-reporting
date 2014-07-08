@@ -23,7 +23,8 @@ public class PentahoMetaDataGenerator
   {
     final PentahoMetaDataTest test = new PentahoMetaDataTest();
     test.setUp();
-    test.runGenerate(PentahoMetaDataTest.QUERIES_AND_RESULTS_GEN);
+    test.runGenerate(PentahoMetaDataTest.QUERIES_AND_RESULTS);
+    test.runGenerateDesignTime(PentahoMetaDataTest.QUERIES_AND_RESULTS);
     test.runGenerateMultiAgg();
 
   }

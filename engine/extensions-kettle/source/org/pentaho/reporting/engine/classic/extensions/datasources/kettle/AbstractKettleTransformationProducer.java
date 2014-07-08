@@ -36,7 +36,9 @@ import org.pentaho.di.repository.RepositoryMeta;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepInterface;
+import org.pentaho.di.trans.step.StepMeta;
 import org.pentaho.di.trans.step.StepMetaDataCombi;
+import org.pentaho.di.trans.steps.metainject.MetaInjectMeta;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -94,6 +96,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       throw new NullPointerException();
     }
 
+    this.stopOnError = true;
     this.repositoryName = repositoryName;
     this.stepName = stepName;
     this.username = username;
@@ -163,7 +166,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       prod.currentlyRunningTransformation = null;
       return prod;
     }
-    catch (CloneNotSupportedException e)
+    catch (final CloneNotSupportedException e)
     {
       throw new IllegalStateException(e);
     }
@@ -187,12 +190,75 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
+  public TableModel queryDesignTimeStructure(final DataRow parameter,
+                                             final DataFactoryContext context)
+      throws ReportDataFactoryException, KettleException
+  {
+    String stepName = getStepName();
+    if (stepName == null)
+    {
+      throw new ReportDataFactoryException("No step name defined.");
+    }
+
+    final Repository repository = connectToRepository();
+    try
+    {
+      ResourceManager resourceManager = context.getResourceManager();
+      final TransMeta transMeta = loadTransformation(repository, resourceManager, context.getContextKey());
+      if (isDynamicTransformation(transMeta))
+      {
+        // we cannot safely guess columns from transformations that use Metadata-Injection.
+        // So lets solve them the traditional way.
+        return performQueryOnTransformation(parameter, 1, context, transMeta);
+      }
+
+      StepMeta step = transMeta.findStep(stepName);
+      if (step == null)
+      {
+        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
+      }
+
+      final RowMetaInterface row = transMeta.getStepFields(getStepName());
+      final TableProducer tableProducer = new TableProducer(row, 1, true);
+      return tableProducer.getTableModel();
+    }
+    catch (final EvaluationException e)
+    {
+      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
+    }
+    catch (final ParseException e)
+    {
+      throw new ReportDataFactoryException("Failed to evaluate parameter", e);
+    }
+    finally
+    {
+      if (repository != null)
+      {
+        repository.disconnect();
+      }
+    }
+  }
+
+  private boolean isDynamicTransformation(final TransMeta transMeta)
+  {
+    List<StepMeta> steps = transMeta.getSteps();
+    for (final StepMeta step : steps)
+    {
+      if (step.getStepMetaInterface() instanceof MetaInjectMeta)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public TableModel performQuery(final DataRow parameters,
                                  final int queryLimit,
                                  final DataFactoryContext context)
       throws KettleException, ReportDataFactoryException
   {
-    if (getStepName() == null)
+    String targetStepName = getStepName();
+    if (targetStepName == null)
     {
       throw new ReportDataFactoryException("No step name defined.");
     }
@@ -201,49 +267,18 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     try
     {
       final TransMeta transMeta = loadTransformation(repository, context.getResourceManager(), context.getContextKey());
-      final FormulaContext formulaContext = new WrappingFormulaContext(context.getFormulaContext(), parameters);
-      final String[] params = fillArguments(formulaContext);
-
-      final Trans trans = new Trans(transMeta);
-      trans.setArguments(params);
-      updateTransformationParameter(formulaContext, trans);
-      transMeta.setInternalKettleVariables();
-      trans.prepareExecution(params);
-
-      StepInterface targetStep = findTargetStep(trans);
-      if (targetStep == null)
-      {
-        throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
-      }
-
-      final RowMetaInterface row = transMeta.getStepFields(stepName);
-      TableProducer tableProducer = new TableProducer(row, queryLimit, stopOnError);
-      targetStep.addRowListener(tableProducer);
-
-
-      currentlyRunningTransformation = trans;
-      try
-      {
-        trans.startThreads();
-        trans.waitUntilFinished();
-      }
-      finally
-      {
-        trans.cleanup();
-      }
-      return tableProducer.getTableModel();
+      return performQueryOnTransformation(parameters, queryLimit, context, transMeta);
     }
-    catch (EvaluationException e)
+    catch (final EvaluationException e)
     {
       throw new ReportDataFactoryException("Failed to evaluate parameter", e);
     }
-    catch (ParseException e)
+    catch (final ParseException e)
     {
       throw new ReportDataFactoryException("Failed to evaluate parameter", e);
     }
     finally
     {
-      currentlyRunningTransformation = null;
       if (repository != null)
       {
         repository.disconnect();
@@ -251,8 +286,51 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     }
   }
 
-  private StepInterface findTargetStep(Trans trans)
+  private TableModel performQueryOnTransformation(final DataRow parameters,
+                                                  final int queryLimit,
+                                                  final DataFactoryContext context,
+                                                  final TransMeta transMeta) throws EvaluationException, ParseException, KettleException, ReportDataFactoryException
   {
+    final Trans trans = prepareTransformation(parameters, context, transMeta);
+
+    StepInterface targetStep = findTargetStep(trans);
+
+    final RowMetaInterface row = transMeta.getStepFields(getStepName());
+    TableProducer tableProducer = new TableProducer(row, queryLimit, isStopOnError());
+    targetStep.addRowListener(tableProducer);
+
+    currentlyRunningTransformation = trans;
+    try
+    {
+      trans.startThreads();
+      trans.waitUntilFinished();
+    }
+    finally
+    {
+      trans.cleanup();
+      currentlyRunningTransformation = null;
+    }
+    return tableProducer.getTableModel();
+  }
+
+  private Trans prepareTransformation(final DataRow parameters,
+                                      final DataFactoryContext context,
+                                      final TransMeta transMeta) throws EvaluationException, ParseException, KettleException
+  {
+    final FormulaContext formulaContext = new WrappingFormulaContext(context.getFormulaContext(), parameters);
+    final String[] params = fillArguments(formulaContext);
+
+    final Trans trans = new Trans(transMeta);
+    trans.setArguments(params);
+    updateTransformationParameter(formulaContext, trans);
+    transMeta.setInternalKettleVariables();
+    trans.prepareExecution(params);
+    return trans;
+  }
+
+  private StepInterface findTargetStep(final Trans trans) throws ReportDataFactoryException
+  {
+    final String stepName = getStepName();
     final List<StepMetaDataCombi> stepList = trans.getSteps();
     for (int i = 0; i < stepList.size(); i++)
     {
@@ -262,7 +340,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
         return metaDataCombi.step;
       }
     }
-    return null;
+    throw new ReportDataFactoryException("Cannot find the specified transformation step " + stepName);
   }
 
   private void updateTransformationParameter(final FormulaContext formulaContext,
@@ -318,7 +396,7 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
     {
       repositoriesMeta.readData();
     }
-    catch (KettleException ke)
+    catch (final KettleException ke)
     {
       // we're a bit low to bubble a dialog to the user here..
       // when ramaiz fixes readData() to stop throwing exceptions
@@ -362,11 +440,11 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
   {
     final LinkedHashSet<String> retval = new LinkedHashSet<String>();
     HashSet<String> args = new HashSet<String>();
-    for (FormulaArgument argument : arguments)
+    for (final FormulaArgument argument : arguments)
     {
       args.addAll(Arrays.asList(argument.getReferencedFields()));
     }
-    for (FormulaParameter formulaParameter : parameter)
+    for (final FormulaParameter formulaParameter : parameter)
     {
       args.addAll(Arrays.asList(formulaParameter.getReferencedFields()));
     }

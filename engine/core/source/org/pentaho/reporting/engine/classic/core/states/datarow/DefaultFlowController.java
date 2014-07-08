@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryDesignTimeSupport;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
@@ -197,8 +198,39 @@ public final class DefaultFlowController
         dataRow.deriveSubDataRow
             (reportContext, dataFactory, new ParameterDataRow(parameters), resourceBundleFactory);
     final TableModel tableData = performQueryData
-          (masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
-              masterRowWithoutData.getGlobalView());
+        (masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
+            masterRowWithoutData.getGlobalView(), false);
+    final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData(tableData);
+
+    final DefaultFlowController fc = new DefaultFlowController(this, masterRow);
+    fc.dataContextStack.push(new ReportDataContext(advanceRequested));
+    fc.dataRow = masterRow;
+    fc.dataRow.resetDataSchema();
+    return fc;
+  }
+
+  public DefaultFlowController performDesignTimeQuery(final DataFactory dataFactory,
+                                                      final String query,
+                                                      final int queryLimit,
+                                                      final int queryTimeout,
+                                                      final ResourceBundleFactory resourceBundleFactory)
+      throws ReportDataFactoryException
+  {
+    if (dataFactory == null)
+    {
+      throw new NullPointerException();
+    }
+    if (resourceBundleFactory == null)
+    {
+      throw new NullPointerException();
+    }
+
+    final MasterDataRow masterRowWithoutData =
+        dataRow.deriveSubDataRow
+            (reportContext, dataFactory, new ParameterDataRow(parameters), resourceBundleFactory);
+    final TableModel tableData = performQueryData
+        (masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
+            masterRowWithoutData.getGlobalView(), true);
     final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData(tableData);
 
     final DefaultFlowController fc = new DefaultFlowController(this, masterRow);
@@ -212,7 +244,8 @@ public final class DefaultFlowController
                                       final String query,
                                       final int queryLimit,
                                       final int queryTimeout,
-                                      final DataRow parameters)
+                                      final DataRow parameters,
+                                      final boolean designTime)
       throws ReportDataFactoryException
   {
     if (dataFactory == null)
@@ -230,11 +263,20 @@ public final class DefaultFlowController
     }
 
     PerformanceLoggingStopWatch sw = performanceMonitorContext.createStopWatch
-            (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query));
+        (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query));
     try
     {
-      final TableModel reportData = dataFactory.queryData
-          (query, new QueryDataRowWrapper(parameters, queryLimit, queryTimeout));
+      DataRow params = new QueryDataRowWrapper(parameters, queryLimit, queryTimeout);
+      TableModel reportData;
+      if (designTime && dataFactory instanceof DataFactoryDesignTimeSupport) {
+        DataFactoryDesignTimeSupport designTimeSupport = (DataFactoryDesignTimeSupport) dataFactory;
+        reportData = designTimeSupport.queryDesignTimeStructure(query, params);
+      }
+      else
+      {
+        reportData = dataFactory.queryData(query, params);
+      }
+
       if (queryLimit > 0 && reportData.getRowCount() > queryLimit)
       {
         return new LengthLimitingTableModel(reportData, queryLimit);
@@ -300,7 +342,7 @@ public final class DefaultFlowController
     // perform the query ...
     // add the resultset ...
     final TableModel tableData = performQueryData
-          (subReportDataRow.getDataFactory(), query, queryLimit, queryTimeout, subReportDataRow.getGlobalView());
+        (subReportDataRow.getDataFactory(), query, queryLimit, queryTimeout, subReportDataRow.getGlobalView(), false);
     final MasterDataRow masterRow = subReportDataRow.deriveWithQueryData(tableData);
 
     if (isGlobalImportOrExport(outputParameters))

@@ -25,7 +25,6 @@ import org.pentaho.reporting.designer.core.inspections.InspectionResult;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
 import org.pentaho.reporting.designer.core.inspections.LocationInfo;
 import org.pentaho.reporting.designer.core.inspections.ParameterLocationInfo;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
@@ -36,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
 public class InvalidQueryNameReferenceInspection extends AbstractStructureInspection
 {
@@ -78,7 +78,7 @@ public class InvalidQueryNameReferenceInspection extends AbstractStructureInspec
       }
     }
 
-    final ReportDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel dataSchemaModel = reportRenderContext.getReportDataSchemaModel();
     if (dataSchemaModel.isValid() == false)
     {
       final Throwable throwable = dataSchemaModel.getDataFactoryException();

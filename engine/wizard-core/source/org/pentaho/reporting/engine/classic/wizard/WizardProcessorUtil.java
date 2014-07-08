@@ -100,7 +100,7 @@ public class WizardProcessorUtil
 
       try
       {
-        final DefaultFlowController postQueryFlowController = flowController.performQuery
+        final DefaultFlowController postQueryFlowController = flowController.performDesignTimeQuery
             (dataFactory, report.getQuery(), report.getQueryLimit(),
                 report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
 
@@ -139,7 +139,7 @@ public class WizardProcessorUtil
 
       try
       {
-        final DefaultFlowController postQueryFlowController = flowController.performQuery
+        final DefaultFlowController postQueryFlowController = flowController.performDesignTimeQuery
             (dataFactory, report.getQuery(), report.getQueryLimit(),
                 report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
 

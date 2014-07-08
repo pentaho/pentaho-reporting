@@ -17,66 +17,45 @@
 
 package org.pentaho.reporting.designer.core.editor.structuretree;
 
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 
-/**
- * Todo: Document Me
- *
- * @author Michael D'Amour
- */
 public class ReportFieldNode
 {
-  private ReportDataSchemaModel dataSchemaModel;
   private DataFactory source;
   private String fieldName;
   private Class fieldClass;
+  private ReportDocumentContext context;
 
-  public ReportFieldNode(final ReportDataSchemaModel dataSchemaModel,
+  public ReportFieldNode(final ReportDocumentContext context,
                          final String fieldName,
                          final Class fieldClass)
   {
-    if (dataSchemaModel == null)
-    {
-      throw new NullPointerException();
-    }
-    if (fieldName == null)
-    {
-      throw new NullPointerException();
-    }
-
-    this.fieldName = fieldName;
-    this.fieldClass = fieldClass;
-    this.dataSchemaModel = dataSchemaModel;
+    this(context, null, fieldName, fieldClass);
   }
 
-  public ReportFieldNode(final ReportDataSchemaModel dataSchemaModel,
+  public ReportFieldNode(final ReportDocumentContext context,
                          final DataFactory source,
                          final String fieldName,
                          final Class fieldClass)
   {
-    if (dataSchemaModel == null)
-    {
-      throw new NullPointerException();
-    }
-    if (source == null)
-    {
-      throw new NullPointerException();
-    }
-    if (fieldName == null)
-    {
-      throw new NullPointerException();
-    }
-    this.source = source;
+    ArgumentNullException.validate("context", context);
+    ArgumentNullException.validate("fieldName", fieldName);
+    ArgumentNullException.validate("fieldClass", fieldClass);
+
+    this.context = context;
     this.fieldName = fieldName;
     this.fieldClass = fieldClass;
-    this.dataSchemaModel = dataSchemaModel;
+    this.source = source;
   }
 
-  public ReportDataSchemaModel getDataSchemaModel()
+  public ContextAwareDataSchemaModel getDataSchemaModel()
   {
-    return dataSchemaModel;
+    return context.getReportDataSchemaModel();
   }
 
   public DataFactory getSource()
