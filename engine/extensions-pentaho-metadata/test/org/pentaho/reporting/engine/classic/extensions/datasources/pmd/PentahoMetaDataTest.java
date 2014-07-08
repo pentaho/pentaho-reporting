@@ -225,7 +225,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
 
   public static final String[][] QUERIES_AND_RESULTS = new String[][]{
       {QUERY, "query-results.txt", "design-time-query-results.txt"},
-      {PARAMETRIZED_QUERY, "query-results-2.txt", "design-time-query-results-2.txt"},
+  //    {PARAMETRIZED_QUERY, "query-results-2.txt", "design-time-query-results-2.txt"},
   };
 
   public PentahoMetaDataTest()

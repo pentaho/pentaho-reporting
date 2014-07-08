@@ -33,7 +33,7 @@ ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attribut
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:font]=Arial-10
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:hidden]=false
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:mask]=#
-ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:name]=LocalizedStringWrapper{localeStringMap={en_US=Employee ID, es=Identificaci��n Del Empleado}}
+ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:name]=LocalizedStringWrapper{localeStringMap={en_US=Employee ID, es=Identificación Del Empleado}}
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:security]=SecurityWrapper{ownerAclMap={{class=SecurityOwner, ownerType=ROLE, ownerName=Admin}=31}}
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column]=EMPLOYEENUMBER
 ColumnAttribute(2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/pentaho-meta-data:target_column_type]=COLUMN_NAME
