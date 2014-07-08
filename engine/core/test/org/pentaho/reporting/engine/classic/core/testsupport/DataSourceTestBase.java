@@ -345,6 +345,7 @@ public abstract class DataSourceTestBase extends TestCase
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
         ctm.close();
       }
+      return sw.toString("UTF-8");
     }
     catch (UnsupportedEncodingException e)
     {
@@ -354,7 +355,6 @@ public abstract class DataSourceTestBase extends TestCase
     {
       dataFactory.close();
     }
-    return sw.toString();
   }
 
   protected String performDesignTimeTest(final DataFactoryDesignTimeSupport dataFactory) throws SQLException, ReportDataFactoryException
@@ -370,6 +370,7 @@ public abstract class DataSourceTestBase extends TestCase
         final CloseableTableModel ctm = (CloseableTableModel) tableModel;
         ctm.close();
       }
+      return sw.toString("UTF-8");
     }
     catch (UnsupportedEncodingException e)
     {
@@ -379,7 +380,6 @@ public abstract class DataSourceTestBase extends TestCase
     {
       dataFactory.close();
     }
-    return sw.toString();
   }
 
   protected void generateCompareText(final PrintStream ps, final TableModel tableModel)
