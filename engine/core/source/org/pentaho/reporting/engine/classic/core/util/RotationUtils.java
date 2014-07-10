@@ -41,10 +41,10 @@ public class RotationUtils
     if ( r != null && !ROTATE_NONE.equalsIgnoreCase( r ) && !ROTATE_NULL.equalsIgnoreCase( r ) ) {
 
       if ( ROTATE_LEFT.equalsIgnoreCase( r ) ) {
-        return Float.valueOf( -90 );
+        return Float.valueOf( 90 );
 
       } else if ( ROTATE_RIGHT.equalsIgnoreCase (r ) ) {
-        return Float.valueOf( 90 );
+        return Float.valueOf( -90 );
 
       } else if ( isValidNumber( r ) ) {
         // Check if rotation is needed by validating the rotation angle value

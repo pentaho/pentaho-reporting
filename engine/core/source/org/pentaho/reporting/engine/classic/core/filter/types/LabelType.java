@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 
@@ -61,42 +62,9 @@ public class LabelType extends AbstractElementType
     {
       return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
     }
-    // Check if rotation is needed
-    final String rotation = String.valueOf(element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ROTATION));
-    if (rotation.equals("null") || rotation.equalsIgnoreCase("none"))
-    {
-      return String.valueOf(retval);
-    }
-    else if (rotation.equalsIgnoreCase("left"))
-    {
-      return new ReportDrawableRotatedComponent(String.valueOf(retval), Float.valueOf(-90), element);
-    }
-    else if (rotation.equalsIgnoreCase("right"))
-    {
-      return new ReportDrawableRotatedComponent(String.valueOf(retval), Float.valueOf(90), element);
-    }
-    else
-    {
-      try
-      {
-    	// Check if rotation is needed by validating the rotation angle value
-    	final Float rotationValue = Float.valueOf(rotation).floatValue() % 360f;
-    	if (rotationValue.floatValue() == 0)
-    	{
-    	  return String.valueOf(retval);
-    	}
-    	else
-    	{
-    	  return new ReportDrawableRotatedComponent(String.valueOf(retval), rotationValue, element);
-    	}
-      }
-      catch(NumberFormatException nfe)
-      {
-        return String.valueOf(retval);
-      }
-    	
-    }
-    
+    final float rotation = RotationUtils.getRotation(element);
+
+    return rotation == RotationUtils.NO_ROTATION ? String.valueOf(retval) : new ReportDrawableRotatedComponent( String.valueOf(retval), rotation, element );
   }
 
   public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
