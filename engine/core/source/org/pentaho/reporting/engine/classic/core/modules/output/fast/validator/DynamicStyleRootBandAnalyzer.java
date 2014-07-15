@@ -76,13 +76,7 @@ public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor
 
   protected void inspectElement(final ReportElement element)
   {
-
-    Object hide = element.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ONLY_SHOW_CHANGING_VALUES);
-    if (Boolean.TRUE.equals(hide))
-    {
-      dynamicTemplateInfo.add(element.getObjectID(), ElementStyleKeys.VISIBLE);
-    }
-
+    dynamicTemplateInfo.add(element.getObjectID(), ElementStyleKeys.VISIBLE);
     traverseStyleExpressions(element);
   }
 
