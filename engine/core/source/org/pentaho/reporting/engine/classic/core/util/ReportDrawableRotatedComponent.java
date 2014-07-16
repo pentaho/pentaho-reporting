@@ -28,7 +28,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -90,7 +89,6 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     }else if (this.rotationDegree == 0f || this.rotationDegree == 360f || this.rotationDegree == 180f || this.rotationDegree == -180f ){
       breakWidth = (float)bounds.getWidth() - (s*2f+borderLeftWidth.floatValue()+borderRightWidth.floatValue());
     }else{
-      //breakWidth = (float)( bounds.getHeight() / Math.abs(Math.sin(this.rotationRadian)) ) - s*2f;
       breakWidth = (float)( Math.sqrt( Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0d) -borderTopWidth.floatValue() -borderBottomWidth.floatValue()),2d)
           + Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0d) -borderLeftWidth.floatValue() -borderRightWidth.floatValue()),2d) )) - s*2f;
       
@@ -506,11 +504,10 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       linesIE10.add( this.text );
     }
 
-    DecimalFormat dc = new DecimalFormat("#.000000");
     /* IE8 rotates clockwise */
-    String cos = dc.format(Math.cos(-1d*getRotationDegree().doubleValue() * Math.PI / 180d)),
-        M12 = dc.format(Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d)),
-        sin = dc.format(-1d*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d));
+    String cos = String.valueOf( (Math.round(1e5*Math.cos(-1d*getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) ),
+        M12 = String.valueOf( (Math.round(1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) ),
+        sin = String.valueOf( (Math.round(-1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
 
     /* uniquely identify each rotated component's DIV */
     final String rotationComponentId = "r" + this.hashCode();
@@ -630,9 +627,9 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     /* end IE8 JS */
     
     /* non-IE8 rotate counter clockwise */
-    cos = dc.format(Math.cos(getRotationDegree().doubleValue() * Math.PI / 180d));
-    M12 = dc.format(-1d*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d));
-    sin = dc.format(Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d));
+    cos = String.valueOf( (Math.round(1e5*Math.cos(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
+    M12 = String.valueOf( (Math.round(-1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
+    sin = String.valueOf( (Math.round(1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
     
     ((XmlWriter) writer).writeText("});\n}else{\n");
     ((XmlWriter) writer).writeText("window.addEventListener('load', function(){\n");
