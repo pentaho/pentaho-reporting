@@ -1150,4 +1150,14 @@ public abstract class RenderNode implements Cloneable
   {
     return false;
   }
+
+  public int getWidowLeafCount()
+  {
+    return 0;
+  }
+
+  public int getOrphanLeafCount()
+  {
+    return 0;
+  }
 }

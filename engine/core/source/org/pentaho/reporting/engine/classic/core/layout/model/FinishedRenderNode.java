@@ -38,7 +38,8 @@ public final class FinishedRenderNode extends RenderNode
   private long marginsBottom;
   private boolean breakAfter;
   private ReportStateKey stateKey;
-  private final boolean orphan;
+  private final int orphanLeafCount;
+  private final int widowLeafCount;
 
   public FinishedRenderNode(final long layoutedX,
                             final long layoutedY,
@@ -47,9 +48,11 @@ public final class FinishedRenderNode extends RenderNode
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
-                            final boolean orphan)
+                            final int orphanLeafCount,
+                            final int widowLeafCount)
   {
-    this(layoutedX, layoutedY, layoutedWidth, layoutedHeight, marginsTop, marginsBottom, breakAfter, orphan, null);
+    this(layoutedX, layoutedY, layoutedWidth, layoutedHeight,
+        marginsTop, marginsBottom, breakAfter, orphanLeafCount, widowLeafCount, null);
   }
 
   public FinishedRenderNode(final long layoutedX,
@@ -59,7 +62,8 @@ public final class FinishedRenderNode extends RenderNode
                             final long marginsTop,
                             final long marginsBottom,
                             final boolean breakAfter,
-                            final boolean orphan,
+                            final int orphanLeafCount,
+                            final int widowLeafCount,
                             final ReportStateKey stateKey)
   {
     super(NodeLayoutProperties.GENERIC_PROPERTIES);
@@ -81,7 +85,9 @@ public final class FinishedRenderNode extends RenderNode
     this.layoutedHeight = layoutedHeight;
     this.marginsBottom = marginsBottom;
     this.marginsTop = marginsTop;
-    this.orphan = orphan;
+    this.orphanLeafCount = orphanLeafCount;
+    this.widowLeafCount = widowLeafCount;
+
     setFinishedPaginate(true);
     setFinishedTable(true);
     setMinimumChunkWidth(layoutedWidth);
@@ -141,14 +147,24 @@ public final class FinishedRenderNode extends RenderNode
     return stateKey;
   }
 
+  public int getOrphanLeafCount()
+  {
+    return orphanLeafCount;
+  }
+
+  public int getWidowLeafCount()
+  {
+    return widowLeafCount;
+  }
+
   public boolean isOrphanLeaf()
   {
-    return orphan;
+    return widowLeafCount > 0 || orphanLeafCount > 0;
   }
 
   public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
   {
-    if (orphan)
+    if (isOrphanLeaf())
     {
       return RenderBox.RestrictFinishClearOut.LEAF;
     }
