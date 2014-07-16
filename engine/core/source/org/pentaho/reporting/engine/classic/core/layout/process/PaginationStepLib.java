@@ -198,7 +198,7 @@ public final class PaginationStepLib
     final int nodeType = box.getLayoutNodeType();
     if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) != LayoutNodeTypes.MASK_BOX_BLOCK)
     {
-      // Canvas boxes have no notion of lines, and therefore they cannot have orphans and widows.
+      // Canvas, row or inline boxes have no notion of lines, and therefore they cannot have orphans and widows.
       return widowSize;
     }
 
