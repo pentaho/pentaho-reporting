@@ -31,7 +31,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -78,7 +77,7 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     private AddListSelectionAction(final JList availableFields,
-                                   final DefaultListModel data)
+                                   final DefaultBulkListModel data)
     {
 
 
@@ -436,7 +435,7 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
   {
     final ContextAwareDataSchemaModel dataSchemaModel = context.getReportDataSchemaModel();
     final String[] columnNames = dataSchemaModel.getColumnNames();
-    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
+    final DefaultBulkListModel availableFieldsModel = getAvailableFieldsModel();
     availableFieldsModel.setBulkData(columnNames);
   }
 
