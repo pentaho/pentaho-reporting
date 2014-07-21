@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubGroupBodyType;
 import org.pentaho.reporting.engine.classic.core.layout.model.BreakMarkerRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -38,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationS
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationShiftStatePool;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationTableState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * This class uses the concept of shifting to push boxes, which otherwise do not fit on the current page, over the
@@ -160,7 +162,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startBlockLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     final boolean retval = handleStartBlockLevelBox(box);
     installTableContext(box);
@@ -301,7 +303,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startCanvasLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     if (box.isCommited())
     {
@@ -324,7 +326,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startRowLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     if (box.isCommited())
     {
@@ -347,7 +349,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
     {
@@ -496,7 +498,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableSectionLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
     {
@@ -525,7 +527,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableRowLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     return startRowLevelBox(box);
   }
@@ -537,7 +539,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startTableCellLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getCachedHeight());
 
     installTableContext(box);
     return startBlockLevelBox(box);
@@ -551,7 +553,7 @@ public final class PaginationStep extends IterateVisualProcessStep
 
   protected boolean startInlineLevelBox(final RenderBox box)
   {
-    box.setOverflowAreaHeight(0);
+    box.setOverflowAreaHeight(box.getHeight());
 
     BoxShifter.shiftBox(box, shiftState.getShiftForNextChild());
     return false;
@@ -732,10 +734,7 @@ public final class PaginationStep extends IterateVisualProcessStep
       box.setY(boxY + nextShift);
       boxContext.setShift(nextShift);
       updateStateKey(box);
-      if (box.getY() < nextMinorBreak)
-      {
-        box.markPinned(nextMinorBreak);
-      }
+      box.markPinned(nextMinorBreak);
       return true;
     }
 

@@ -33,6 +33,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -169,7 +170,7 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       {
         return false;
       }
-      return startTableSecionStyleBox(box);
+      return startTableSectionStyleBox(box);
     }
 
     return false;
@@ -199,6 +200,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       final RenderNode firstNode = box.getFirstChild();
       RenderNode currentNode = firstNode;
       RenderNode lastToRemove = null;
+      int orphanLeafCount = 0;
+      int widowLeafCount = 0;
 
       while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
@@ -209,13 +212,15 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
           break;
         }
 
+        orphanLeafCount = currentNode.getOrphanLeafCount();
+        widowLeafCount = currentNode.getWidowLeafCount();
         lastToRemove = currentNode;
         currentNode = currentNode.getNext();
       }
 
       if (lastToRemove != null)
       {
-        removeFinishedNodes(box, firstNode, lastToRemove, false);
+        removeFinishedNodes(box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount);
       }
     }
     else
@@ -239,7 +244,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         currentNode = currentNode.getNext();
         if (isSafeForRemoval(nodeForRemoval))
         {
-          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval, true);
+          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval,
+                        nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount());
         }
       }
 
@@ -247,7 +253,7 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return true;
   }
 
-  private boolean startTableSecionStyleBox(final RenderBox box)
+  private boolean startTableSectionStyleBox(final RenderBox box)
   {
     final int nodeType = box.getLayoutNodeType();
     if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
@@ -266,7 +272,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       final RenderNode firstNode = box.getFirstChild();
       RenderNode currentNode = firstNode;
       RenderNode lastToRemove = null;
-
+      int orphanLeafCount = 0;
+      int widowLeafCount = 0;
       while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
       {
         if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
@@ -281,13 +288,15 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
           break;
         }
 
+        orphanLeafCount = currentNode.getOrphanLeafCount();
+        widowLeafCount = currentNode.getWidowLeafCount();
         lastToRemove = currentNode;
         currentNode = currentNode.getNext();
       }
 
       if (lastToRemove != null)
       {
-        removeFinishedNodes(box, firstNode, lastToRemove, false);
+        removeFinishedNodes(box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount);
       }
     }
     else
@@ -315,7 +324,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         currentNode = currentNode.getNext();
         if (isSafeForRemoval(nodeForRemoval))
         {
-          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval, true);
+          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval,
+              nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount());
         }
       }
 
@@ -361,7 +371,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   private void removeFinishedNodes(final RenderBox box,
                                    final RenderNode firstNode,
                                    final RenderNode last,
-                                   final boolean leaf)
+                                   final int orphanLeafCount,
+                                   final int widowLeafCount)
   {
     if (last.isOpen())
     {
@@ -428,7 +439,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     }
 
     final FinishedRenderNode replacement = new FinishedRenderNode
-        (box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom, breakAfter, leaf);
+        (box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom,
+            breakAfter, orphanLeafCount, widowLeafCount);
 
     box.replaceChild(last, replacement);
     if (replacement.getParent() != box)
@@ -494,7 +506,7 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         return false;
       }
 
-      return startTableSecionStyleBox(box);
+      return startTableSectionStyleBox(box);
     }
 
     if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
