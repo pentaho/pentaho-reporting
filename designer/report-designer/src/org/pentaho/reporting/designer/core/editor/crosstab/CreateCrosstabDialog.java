@@ -31,7 +31,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -65,7 +64,6 @@ import org.pentaho.reporting.libraries.designtime.swing.bulk.DefaultBulkListMode
 import org.pentaho.reporting.libraries.designtime.swing.bulk.RemoveBulkAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
-import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTable;
 
 public class CreateCrosstabDialog extends CommonDialog implements ReportDataChangeListener
 {
@@ -79,7 +77,7 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
     private AddListSelectionAction(final JList availableFields,
-                                   final DefaultListModel data)
+                                   final DefaultBulkListModel data)
     {
 
 
@@ -199,12 +197,12 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
     }
   }
 
-  private JList otherFields;
-  private JTable rowFields;
-  private JTable columnFields;
+  private DraggableJList otherFields;
+  private DraggableCrosstabDimensionTable rowFields;
+  private DraggableCrosstabDimensionTable columnFields;
   private JTable detailFields;
 
-  private JList availableFields;
+  private DraggableJList availableFields;
   private DefaultBulkListModel availableFieldsModel;
   private DefaultBulkListModel otherFieldsModel;
   private CrosstabDimensionTableModel rowsFieldsModel;
@@ -238,35 +236,21 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
 
     availableFieldsModel = new DefaultBulkListModel();
 
-    availableFields = new JList(availableFieldsModel);
-    availableFields.setDragEnabled(true);
-    availableFields.setTransferHandler(new ListTransferHandler(availableFields, availableFieldsModel));
-    availableFields.setDropMode(DropMode.ON);
+    availableFields = new DraggableJList(availableFieldsModel);
+    availableFields.setTransferHandler(new CrosstabDialogTransferHandler(availableFields, true));
 
     otherFieldsModel = new DefaultBulkListModel();
-    otherFields = new JList(otherFieldsModel);
+    otherFields = new DraggableJList(otherFieldsModel);
     otherFields.setVisibleRowCount(3);
-    otherFields.setTransferHandler(new ListTransferHandler(otherFields, otherFieldsModel));
-    otherFields.setDragEnabled(true);
-    otherFields.setDropMode(DropMode.ON);
 
     rowsFieldsModel = new CrosstabDimensionTableModel();
-    rowFields = new PropertyTable(rowsFieldsModel);
-    rowFields.setTransferHandler(new CrosstabDimensionTableTransferHandler(rowFields, rowsFieldsModel));
-    rowFields.setDragEnabled(true);
-    rowFields.setDropMode(DropMode.ON);
+    rowFields = new DraggableCrosstabDimensionTable(rowsFieldsModel);
 
     columnsFieldsModel = new CrosstabDimensionTableModel();
-    columnFields = new PropertyTable(columnsFieldsModel);
-    columnFields.setTransferHandler(new CrosstabDimensionTableTransferHandler(columnFields, columnsFieldsModel));
-    columnFields.setDragEnabled(true);
-    columnFields.setDropMode(DropMode.ON);
+    columnFields = new DraggableCrosstabDimensionTable(columnsFieldsModel);
 
     detailFieldsModel = new CrosstabDetailTableModel();
-    detailFields = new PropertyTable(detailFieldsModel);
-    detailFields.setTransferHandler(new CrosstabDetailTableTransferHandler(detailFields, detailFieldsModel));
-    detailFields.setDragEnabled(true);
-    detailFields.setDropMode(DropMode.ON);
+    detailFields = new DraggableCrosstabDetailTable(detailFieldsModel);
 
     super.init();
   }
@@ -451,12 +435,8 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
   {
     final ContextAwareDataSchemaModel dataSchemaModel = context.getReportDataSchemaModel();
     final String[] columnNames = dataSchemaModel.getColumnNames();
-    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
-    availableFieldsModel.clear();
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      availableFieldsModel.addElement(columnNames[i]);
-    }
+    final DefaultBulkListModel availableFieldsModel = getAvailableFieldsModel();
+    availableFieldsModel.setBulkData(columnNames);
   }
 
   public CrosstabGroup createCrosstab(final ReportDesignerContext designerContext,
@@ -528,7 +508,6 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
     }
     finally
     {
-      reportRenderContext.removeReportDataChangeListener(this);
       this.optionsPane.setReportDesignerContext(null);
     }
   }
@@ -538,6 +517,10 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
     ClassicEngineBoot.getInstance().start();
     final CreateCrosstabDialog d = new CreateCrosstabDialog();
     d.getAvailableFieldsModel().addElement("Test"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test2"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test3"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test4"); // NON-NLS
+    d.getAvailableFieldsModel().addElement("Test5"); // NON-NLS
     d.setModal(true);
     d.setVisible(true);
 

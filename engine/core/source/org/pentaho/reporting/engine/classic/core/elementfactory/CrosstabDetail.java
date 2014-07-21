@@ -19,9 +19,9 @@ package org.pentaho.reporting.engine.classic.core.elementfactory;
 
 import java.io.Serializable;
 
-import org.pentaho.reporting.engine.classic.core.function.ItemSumFunction;
+import org.pentaho.reporting.engine.classic.core.function.ItemCountFunction;
 
-public class CrosstabDetail implements Serializable
+public class CrosstabDetail implements Serializable, Cloneable
 {
   private String title;
   private String field;
@@ -29,12 +29,12 @@ public class CrosstabDetail implements Serializable
 
   public CrosstabDetail(final String fieldName)
   {
-    this.field = fieldName;
-    this.aggregation = ItemSumFunction.class;
+    this(fieldName, null, ItemCountFunction.class);
   }
 
   public CrosstabDetail(final String field, final String title, final Class aggregation)
   {
+    this.title = title;
     this.field = field;
     this.aggregation = aggregation;
   }
@@ -67,5 +67,17 @@ public class CrosstabDetail implements Serializable
   public void setAggregation(final Class aggregation)
   {
     this.aggregation = aggregation;
+  }
+
+  public CrosstabDetail clone()
+  {
+    try
+    {
+      return (CrosstabDetail) super.clone();
+    }
+    catch (final CloneNotSupportedException e)
+    {
+      throw new IllegalStateException(e);
+    }
   }
 }
