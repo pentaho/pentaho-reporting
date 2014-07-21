@@ -440,8 +440,16 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     }
     else
     {
-      layoutMode = (String) resolverStyleSheet.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_AUTO);
+      String layout = (String) resolverStyleSheet.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_AUTO);
+      if (BandStyleKeys.LAYOUT_INLINE.equals(layout) &&
+          !this.context.getRenderBox().isAcceptInlineBoxes()) {
+        layoutMode = BandStyleKeys.LAYOUT_BLOCK;
+      }
+      else {
+        layoutMode = layout;
+      }
     }
+
 
     final GroupSection groupSection = new GroupSection
         (renderNodeFactory.produceRenderBox(element, resolverStyleSheet, layoutMode, null),
