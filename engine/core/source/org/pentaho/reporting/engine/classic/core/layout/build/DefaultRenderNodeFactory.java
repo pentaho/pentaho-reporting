@@ -254,7 +254,18 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
                                                final StyleSheet style,
                                                final ReportStateKey stateKey)
   {
-    final String layout = (String) style.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_BLOCK);
+    String layout;
+    if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY)) {
+      layout = BandStyleKeys.LAYOUT_BLOCK;
+    }
+    else {
+      layout = (String) style.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_BLOCK);
+      // Todo: PRD-5172: Filter out inline subreports
+      if (BandStyleKeys.LAYOUT_INLINE.equals(layout)) {
+        layout = BandStyleKeys.LAYOUT_BLOCK;
+      }
+    }
+
     final RenderBox box =
         createBox(layout, stateKey, style, report.getElementType(), report.getAttributes(), report.getObjectID());
     box.getStaticBoxLayoutProperties().setPlaceholderBox(StaticBoxLayoutProperties.PlaceholderType.COMPLEX);
